@@ -1,18 +1,18 @@
 {
-  "updated_at": "2026-05-22T20:52:23Z",
+  "updated_at": "2026-05-22T21:33:01Z",
   "period": "últimos 30 dias",
   "totals": {
-    "sessions": 1687938,
-    "total_users": 852847,
-    "new_users": 659062,
-    "bounce_rate": 25.83,
-    "avg_session_duration": 341.95,
-    "conversions": 217658,
-    "pageviews": 11543894,
-    "sessions_7d": 394244,
-    "users_7d": 249395,
-    "conversions_7d": 71506,
-    "new_users_7d": 161212
+    "sessions": 1688743,
+    "total_users": 853185,
+    "new_users": 659763,
+    "bounce_rate": 25.76,
+    "avg_session_duration": 342.62,
+    "conversions": 217814,
+    "pageviews": 11552646,
+    "sessions_7d": 395676,
+    "users_7d": 250033,
+    "conversions_7d": 71662,
+    "new_users_7d": 161913
   },
   "daily": [
     {
@@ -230,16 +230,16 @@
     {
       "path": "/",
       "title": "Passagem de Ônibus: Compre Online | Viaje Guanabara",
-      "pageviews": 1932704,
-      "users": 522411,
-      "avg_duration": 116.49,
+      "pageviews": 1934951,
+      "users": 522667,
+      "avg_duration": 116.45,
       "bounce_rate": 0,
       "exits": 0
     },
     {
       "path": "/",
       "title": "Viaje Guanabara: Compre sua passagem de ônibus",
-      "pageviews": 1076947,
+      "pageviews": 1076948,
       "users": 298275,
       "avg_duration": 123.22,
       "bounce_rate": 0,
@@ -318,13 +318,58 @@
       "exits": 0
     }
   ],
+  "pages_weekly": {
+    "weeks": [
+      "202617"
+    ],
+    "paths": [
+      "/",
+      "/",
+      "/",
+      "/checkout/comprador",
+      "/checkout/pagamento",
+      "/login",
+      "/checkout/comprador",
+      "/checkout/pagamento/pix",
+      "/checkout/pagamento",
+      "/checkout/pagamento/cartao-de-credito"
+    ],
+    "data": {
+      "202617": {
+        "/": {
+          "pageviews": 420899,
+          "users": 120331
+        },
+        "/checkout/comprador": {
+          "pageviews": 73758,
+          "users": 20481
+        },
+        "/checkout/pagamento": {
+          "pageviews": 55246,
+          "users": 15121
+        },
+        "/login": {
+          "pageviews": 41821,
+          "users": 12368
+        },
+        "/checkout/pagamento/pix": {
+          "pageviews": 33006,
+          "users": 10571
+        },
+        "/checkout/pagamento/cartao-de-credito": {
+          "pageviews": 27101,
+          "users": 8583
+        }
+      }
+    }
+  },
   "landing_pages": [
     {
       "path": "/",
-      "sessions": 1120259,
-      "users": 706488,
-      "conversions": 121080,
-      "bounce_rate": 22.19
+      "sessions": 1120487,
+      "users": 707148,
+      "conversions": 121106,
+      "bounce_rate": 22.2
     },
     {
       "path": "(not set)",
@@ -342,10 +387,10 @@
     },
     {
       "path": "",
-      "sessions": 15321,
-      "users": 13225,
-      "conversions": 406,
-      "bounce_rate": 99.55
+      "sessions": 16066,
+      "users": 13904,
+      "conversions": 417,
+      "bounce_rate": 99.54
     },
     {
       "path": "/checkout/pagamento/sucesso/2",
@@ -370,10 +415,10 @@
     },
     {
       "path": "/viva-fidelidade/",
-      "sessions": 7745,
+      "sessions": 7751,
       "users": 6843,
       "conversions": 432,
-      "bounce_rate": 30.43
+      "bounce_rate": 30.41
     },
     {
       "path": "/login",
@@ -394,112 +439,112 @@
     {
       "source": "google",
       "medium": "cpc",
-      "sessions": 988722,
-      "users": 581645,
-      "conversions": 117732,
-      "conversion_rate": 11.91,
-      "bounce_rate": 17.43,
-      "avg_duration": 387.17
+      "sessions": 989472,
+      "users": 581830,
+      "conversions": 117763,
+      "conversion_rate": 11.9,
+      "bounce_rate": 17.46,
+      "avg_duration": 387.24
     },
     {
       "source": "google",
       "medium": "organic",
-      "sessions": 271557,
-      "users": 149852,
-      "conversions": 23460,
-      "conversion_rate": 8.64,
-      "bounce_rate": 27.2,
-      "avg_duration": 276.1
+      "sessions": 271826,
+      "users": 150033,
+      "conversions": 23471,
+      "conversion_rate": 8.63,
+      "bounce_rate": 27.14,
+      "avg_duration": 276.35
     },
     {
       "source": "(direct)",
       "medium": "(none)",
-      "sessions": 212744,
-      "users": 131206,
-      "conversions": 52789,
-      "conversion_rate": 24.81,
-      "bounce_rate": 38.51,
-      "avg_duration": 281.03
+      "sessions": 212996,
+      "users": 131453,
+      "conversions": 52813,
+      "conversion_rate": 24.8,
+      "bounce_rate": 38.56,
+      "avg_duration": 281.0
     },
     {
       "source": "pushnews",
       "medium": "pushnotification",
       "sessions": 78323,
-      "users": 40905,
+      "users": 40906,
       "conversions": 1689,
       "conversion_rate": 2.16,
       "bounce_rate": 78.9,
-      "avg_duration": 86.01
+      "avg_duration": 86.08
     },
     {
       "source": "(not set)",
       "medium": "(not set)",
-      "sessions": 25665,
-      "users": 22948,
-      "conversions": 2680,
-      "conversion_rate": 10.44,
-      "bounce_rate": 99.47,
-      "avg_duration": 497.41
+      "sessions": 26720,
+      "users": 23899,
+      "conversions": 2758,
+      "conversion_rate": 10.32,
+      "bounce_rate": 99.49,
+      "avg_duration": 503.74
     },
     {
       "source": "(data not available)",
       "medium": "(data not available)",
-      "sessions": 20725,
-      "users": 20743,
-      "conversions": 1425,
-      "conversion_rate": 6.88,
-      "bounce_rate": 9.56,
-      "avg_duration": 439.39
+      "sessions": 20927,
+      "users": 21015,
+      "conversions": 1435,
+      "conversion_rate": 6.86,
+      "bounce_rate": 9.77,
+      "avg_duration": 441.09
     },
     {
       "source": "bing",
       "medium": "organic",
-      "sessions": 14810,
-      "users": 8029,
+      "sessions": 14817,
+      "users": 8037,
       "conversions": 2853,
-      "conversion_rate": 19.26,
-      "bounce_rate": 18.11,
-      "avg_duration": 598.76
+      "conversion_rate": 19.25,
+      "bounce_rate": 18.05,
+      "avg_duration": 598.68
     },
     {
       "source": "whatsapp",
       "medium": "bot",
       "sessions": 12657,
-      "users": 6037,
-      "conversions": 6571,
+      "users": 6040,
+      "conversions": 6572,
       "conversion_rate": 51.92,
-      "bounce_rate": 26.95,
-      "avg_duration": 314.51
+      "bounce_rate": 26.94,
+      "avg_duration": 314.66
     },
     {
       "source": "insider",
       "medium": "architect_whatsapp",
       "sessions": 11472,
-      "users": 9208,
+      "users": 9211,
       "conversions": 975,
       "conversion_rate": 8.5,
       "bounce_rate": 40.66,
-      "avg_duration": 274.22
+      "avg_duration": 274.44
     },
     {
       "source": "social",
       "medium": "meta",
-      "sessions": 11364,
-      "users": 9068,
+      "sessions": 11371,
+      "users": 9072,
       "conversions": 818,
-      "conversion_rate": 7.2,
-      "bounce_rate": 14.66,
-      "avg_duration": 299.49
+      "conversion_rate": 7.19,
+      "bounce_rate": 14.69,
+      "avg_duration": 299.69
     },
     {
       "source": "insider",
       "medium": "web_push",
-      "sessions": 4401,
+      "sessions": 4404,
       "users": 3297,
       "conversions": 66,
       "conversion_rate": 1.5,
-      "bounce_rate": 75.66,
-      "avg_duration": 102.55
+      "bounce_rate": 75.68,
+      "avg_duration": 102.48
     },
     {
       "source": "insider",
@@ -515,513 +560,4059 @@
       "source": "br.search.yahoo.com",
       "medium": "referral",
       "sessions": 2825,
-      "users": 1574,
+      "users": 1575,
       "conversions": 621,
       "conversion_rate": 21.98,
-      "bounce_rate": 17.91,
-      "avg_duration": 623.19
+      "bounce_rate": 17.88,
+      "avg_duration": 623.24
     },
     {
       "source": "insider",
       "medium": "architect_email",
-      "sessions": 2763,
-      "users": 1960,
+      "sessions": 2765,
+      "users": 1962,
       "conversions": 374,
-      "conversion_rate": 13.54,
-      "bounce_rate": 41.91,
-      "avg_duration": 393.15
+      "conversion_rate": 13.53,
+      "bounce_rate": 41.95,
+      "avg_duration": 393.09
     },
     {
       "source": "facebook",
       "medium": "cpc",
-      "sessions": 2038,
-      "users": 1821,
+      "sessions": 2042,
+      "users": 1825,
       "conversions": 54,
-      "conversion_rate": 2.65,
-      "bounce_rate": 72.37,
-      "avg_duration": 97.54
+      "conversion_rate": 2.64,
+      "bounce_rate": 72.43,
+      "avg_duration": 97.35
     }
   ],
   "channels": [
     {
       "channel": "Paid Search",
-      "sessions": 831841,
-      "users": 482444,
-      "conversions": 108120,
-      "conversion_rate": 13.0,
-      "bounce_rate": 14.82,
-      "avg_duration": 410.8,
-      "new_users": 349478
+      "sessions": 724291,
+      "users": 592315,
+      "conversions": 87243,
+      "bounce_rate": 15.05,
+      "avg_duration": 394.67,
+      "new_users": 300400,
+      "conversion_rate": 12.05
     },
     {
       "channel": "Organic Search",
-      "sessions": 293623,
-      "users": 161436,
-      "conversions": 27150,
-      "conversion_rate": 9.25,
-      "bounce_rate": 26.88,
-      "avg_duration": 294.36,
-      "new_users": 51879
+      "sessions": 246362,
+      "users": 191513,
+      "conversions": 22165,
+      "bounce_rate": 26.18,
+      "avg_duration": 299.79,
+      "new_users": 44165,
+      "conversion_rate": 9.0
     },
     {
       "channel": "Direct",
-      "sessions": 212744,
-      "users": 131206,
-      "conversions": 52789,
-      "conversion_rate": 24.81,
-      "bounce_rate": 38.51,
-      "avg_duration": 281.03,
-      "new_users": 117126
+      "sessions": 175026,
+      "users": 143243,
+      "conversions": 41947,
+      "bounce_rate": 40.64,
+      "avg_duration": 231.96,
+      "new_users": 96267,
+      "conversion_rate": 23.97
     },
     {
       "channel": "Cross-network",
-      "sessions": 181512,
-      "users": 139633,
-      "conversions": 11026,
-      "conversion_rate": 6.07,
-      "bounce_rate": 32.32,
-      "avg_duration": 276.69,
-      "new_users": 104158
+      "sessions": 148300,
+      "users": 134138,
+      "conversions": 8604,
+      "bounce_rate": 24.22,
+      "avg_duration": 316.89,
+      "new_users": 83277,
+      "conversion_rate": 5.8
     },
     {
       "channel": "Mobile Push Notifications",
-      "sessions": 84048,
-      "users": 43455,
-      "conversions": 1865,
-      "conversion_rate": 2.22,
-      "bounce_rate": 78.34,
-      "avg_duration": 89.01,
-      "new_users": 7736
-    },
-    {
-      "channel": "Unassigned",
-      "sessions": 46945,
-      "users": 36429,
-      "conversions": 8359,
-      "conversion_rate": 17.81,
-      "bounce_rate": 71.69,
-      "avg_duration": 445.86,
-      "new_users": 11701
+      "sessions": 71223,
+      "users": 59063,
+      "conversions": 1396,
+      "bounce_rate": 77.11,
+      "avg_duration": 93.5,
+      "new_users": 6670,
+      "conversion_rate": 1.96
     },
     {
       "channel": "Organic Social",
-      "sessions": 25327,
-      "users": 16049,
-      "conversions": 7495,
-      "conversion_rate": 29.59,
-      "bounce_rate": 20.72,
-      "avg_duration": 303.17,
-      "new_users": 11367
+      "sessions": 22052,
+      "users": 18588,
+      "conversions": 6327,
+      "bounce_rate": 25.44,
+      "avg_duration": 277.31,
+      "new_users": 9761,
+      "conversion_rate": 28.69
+    },
+    {
+      "channel": "Unassigned",
+      "sessions": 20739,
+      "users": 17690,
+      "conversions": 5184,
+      "bounce_rate": 54.32,
+      "avg_duration": 366.86,
+      "new_users": 9449,
+      "conversion_rate": 25.0
     },
     {
       "channel": "Referral",
-      "sessions": 6774,
-      "users": 3842,
-      "conversions": 656,
-      "conversion_rate": 9.68,
-      "bounce_rate": 38.68,
-      "avg_duration": 339.19,
-      "new_users": 2485
-    },
-    {
-      "channel": "Paid Social",
-      "sessions": 2062,
-      "users": 1845,
-      "conversions": 54,
-      "conversion_rate": 2.62,
-      "bounce_rate": 72.41,
-      "avg_duration": 96.52,
-      "new_users": 1706
+      "sessions": 5351,
+      "users": 4164,
+      "conversions": 501,
+      "bounce_rate": 36.04,
+      "avg_duration": 319.55,
+      "new_users": 2016,
+      "conversion_rate": 9.36
     },
     {
       "channel": "Email",
-      "sessions": 1944,
-      "users": 1616,
-      "conversions": 103,
-      "conversion_rate": 5.3,
-      "bounce_rate": 42.08,
-      "avg_duration": 171.43,
-      "new_users": 1382
+      "sessions": 1759,
+      "users": 1644,
+      "conversions": 79,
+      "bounce_rate": 38.71,
+      "avg_duration": 194.72,
+      "new_users": 1289,
+      "conversion_rate": 4.49
+    },
+    {
+      "channel": "Paid Social",
+      "sessions": 938,
+      "users": 886,
+      "conversions": 34,
+      "bounce_rate": 0.0,
+      "avg_duration": 209.21,
+      "new_users": 778,
+      "conversion_rate": 3.62
+    },
+    {
+      "channel": "Organic Video",
+      "sessions": 281,
+      "users": 168,
+      "conversions": 29,
+      "bounce_rate": 18.75,
+      "avg_duration": 365.56,
+      "new_users": 22,
+      "conversion_rate": 10.32
+    },
+    {
+      "channel": "Paid Video",
+      "sessions": 12,
+      "users": 11,
+      "conversions": 6,
+      "bounce_rate": 0.0,
+      "avg_duration": 132.62,
+      "new_users": 0,
+      "conversion_rate": 50.0
+    },
+    {
+      "channel": "Organic Shopping",
+      "sessions": 11,
+      "users": 11,
+      "conversions": 0,
+      "bounce_rate": 100.0,
+      "avg_duration": 0.0,
+      "new_users": 6,
+      "conversion_rate": 0.0
+    },
+    {
+      "channel": "Display",
+      "sessions": 8,
+      "users": 6,
+      "conversions": 4,
+      "bounce_rate": 0.0,
+      "avg_duration": 80.37,
+      "new_users": 0,
+      "conversion_rate": 50.0
     }
   ],
+  "channels_daily": {
+    "dates": [
+      "2026-04-22",
+      "2026-04-23",
+      "2026-04-24",
+      "2026-04-25",
+      "2026-04-26",
+      "2026-04-27",
+      "2026-04-28",
+      "2026-04-29",
+      "2026-04-30",
+      "2026-05-01",
+      "2026-05-02",
+      "2026-05-03",
+      "2026-05-04",
+      "2026-05-05",
+      "2026-05-06",
+      "2026-05-07",
+      "2026-05-08",
+      "2026-05-09",
+      "2026-05-10",
+      "2026-05-11",
+      "2026-05-12",
+      "2026-05-13",
+      "2026-05-14",
+      "2026-05-15",
+      "2026-05-16",
+      "2026-05-17"
+    ],
+    "channels": [
+      "Paid Search",
+      "Organic Search",
+      "Direct",
+      "Cross-network",
+      "Mobile Push Notifications",
+      "Unassigned",
+      "Organic Social",
+      "Referral",
+      "Email",
+      "Organic Video",
+      "Display",
+      "Paid Video",
+      "Paid Social",
+      "Organic Shopping"
+    ],
+    "data": {
+      "2026-04-22": {
+        "Paid Search": {
+          "sessions": 29929,
+          "users": 24249,
+          "conversions": 2629
+        },
+        "Organic Search": {
+          "sessions": 10506,
+          "users": 8395,
+          "conversions": 828
+        },
+        "Direct": {
+          "sessions": 8303,
+          "users": 7167,
+          "conversions": 1420
+        },
+        "Cross-network": {
+          "sessions": 3377,
+          "users": 3038,
+          "conversions": 251
+        },
+        "Mobile Push Notifications": {
+          "sessions": 3359,
+          "users": 2656,
+          "conversions": 67
+        },
+        "Unassigned": {
+          "sessions": 1031,
+          "users": 890,
+          "conversions": 190
+        },
+        "Organic Social": {
+          "sessions": 916,
+          "users": 750,
+          "conversions": 221
+        },
+        "Referral": {
+          "sessions": 197,
+          "users": 152,
+          "conversions": 16
+        },
+        "Email": {
+          "sessions": 31,
+          "users": 25,
+          "conversions": 0
+        },
+        "Organic Video": {
+          "sessions": 16,
+          "users": 12,
+          "conversions": 4
+        },
+        "Display": {
+          "sessions": 1,
+          "users": 1,
+          "conversions": 1
+        },
+        "Paid Video": {
+          "sessions": 1,
+          "users": 1,
+          "conversions": 1
+        }
+      },
+      "2026-04-23": {
+        "Paid Search": {
+          "sessions": 28733,
+          "users": 23708,
+          "conversions": 2758
+        },
+        "Organic Search": {
+          "sessions": 10192,
+          "users": 8068,
+          "conversions": 850
+        },
+        "Direct": {
+          "sessions": 6808,
+          "users": 5650,
+          "conversions": 1405
+        },
+        "Cross-network": {
+          "sessions": 3759,
+          "users": 3413,
+          "conversions": 246
+        },
+        "Mobile Push Notifications": {
+          "sessions": 3237,
+          "users": 2675,
+          "conversions": 39
+        },
+        "Unassigned": {
+          "sessions": 945,
+          "users": 827,
+          "conversions": 199
+        },
+        "Organic Social": {
+          "sessions": 799,
+          "users": 681,
+          "conversions": 211
+        },
+        "Referral": {
+          "sessions": 209,
+          "users": 154,
+          "conversions": 14
+        },
+        "Email": {
+          "sessions": 186,
+          "users": 179,
+          "conversions": 6
+        },
+        "Organic Video": {
+          "sessions": 19,
+          "users": 9,
+          "conversions": 3
+        },
+        "Paid Social": {
+          "sessions": 1,
+          "users": 1,
+          "conversions": 1
+        },
+        "Paid Video": {
+          "sessions": 1,
+          "users": 1,
+          "conversions": 0
+        }
+      },
+      "2026-04-24": {
+        "Paid Search": {
+          "sessions": 28550,
+          "users": 23523,
+          "conversions": 2832
+        },
+        "Organic Search": {
+          "sessions": 10093,
+          "users": 7795,
+          "conversions": 797
+        },
+        "Direct": {
+          "sessions": 7278,
+          "users": 5881,
+          "conversions": 1440
+        },
+        "Cross-network": {
+          "sessions": 4750,
+          "users": 4323,
+          "conversions": 243
+        },
+        "Mobile Push Notifications": {
+          "sessions": 3520,
+          "users": 2988,
+          "conversions": 51
+        },
+        "Unassigned": {
+          "sessions": 980,
+          "users": 842,
+          "conversions": 238
+        },
+        "Organic Social": {
+          "sessions": 812,
+          "users": 689,
+          "conversions": 206
+        },
+        "Referral": {
+          "sessions": 184,
+          "users": 140,
+          "conversions": 7
+        },
+        "Email": {
+          "sessions": 29,
+          "users": 23,
+          "conversions": 2
+        },
+        "Organic Video": {
+          "sessions": 5,
+          "users": 5,
+          "conversions": 2
+        },
+        "Display": {
+          "sessions": 2,
+          "users": 1,
+          "conversions": 0
+        }
+      },
+      "2026-04-25": {
+        "Paid Search": {
+          "sessions": 23854,
+          "users": 19483,
+          "conversions": 2323
+        },
+        "Organic Search": {
+          "sessions": 8551,
+          "users": 6626,
+          "conversions": 708
+        },
+        "Direct": {
+          "sessions": 5194,
+          "users": 4303,
+          "conversions": 1063
+        },
+        "Cross-network": {
+          "sessions": 3923,
+          "users": 3626,
+          "conversions": 232
+        },
+        "Mobile Push Notifications": {
+          "sessions": 1967,
+          "users": 1659,
+          "conversions": 32
+        },
+        "Unassigned": {
+          "sessions": 847,
+          "users": 718,
+          "conversions": 213
+        },
+        "Organic Social": {
+          "sessions": 781,
+          "users": 657,
+          "conversions": 217
+        },
+        "Referral": {
+          "sessions": 98,
+          "users": 76,
+          "conversions": 8
+        },
+        "Email": {
+          "sessions": 18,
+          "users": 17,
+          "conversions": 2
+        },
+        "Organic Video": {
+          "sessions": 11,
+          "users": 8,
+          "conversions": 3
+        },
+        "Paid Social": {
+          "sessions": 2,
+          "users": 2,
+          "conversions": 1
+        },
+        "Paid Video": {
+          "sessions": 1,
+          "users": 1,
+          "conversions": 1
+        }
+      },
+      "2026-04-26": {
+        "Paid Search": {
+          "sessions": 25849,
+          "users": 20864,
+          "conversions": 2437
+        },
+        "Organic Search": {
+          "sessions": 9109,
+          "users": 7110,
+          "conversions": 679
+        },
+        "Direct": {
+          "sessions": 5700,
+          "users": 4646,
+          "conversions": 1056
+        },
+        "Cross-network": {
+          "sessions": 5540,
+          "users": 4971,
+          "conversions": 252
+        },
+        "Mobile Push Notifications": {
+          "sessions": 2152,
+          "users": 1787,
+          "conversions": 34
+        },
+        "Unassigned": {
+          "sessions": 899,
+          "users": 787,
+          "conversions": 209
+        },
+        "Organic Social": {
+          "sessions": 833,
+          "users": 719,
+          "conversions": 214
+        },
+        "Referral": {
+          "sessions": 132,
+          "users": 106,
+          "conversions": 9
+        },
+        "Email": {
+          "sessions": 21,
+          "users": 16,
+          "conversions": 5
+        },
+        "Organic Video": {
+          "sessions": 9,
+          "users": 7,
+          "conversions": 1
+        },
+        "Paid Social": {
+          "sessions": 1,
+          "users": 1,
+          "conversions": 0
+        }
+      },
+      "2026-04-27": {
+        "Paid Search": {
+          "sessions": 32332,
+          "users": 26533,
+          "conversions": 3008
+        },
+        "Organic Search": {
+          "sessions": 10977,
+          "users": 8397,
+          "conversions": 826
+        },
+        "Direct": {
+          "sessions": 7583,
+          "users": 6207,
+          "conversions": 1628
+        },
+        "Cross-network": {
+          "sessions": 4654,
+          "users": 4125,
+          "conversions": 256
+        },
+        "Mobile Push Notifications": {
+          "sessions": 2523,
+          "users": 2112,
+          "conversions": 52
+        },
+        "Unassigned": {
+          "sessions": 1046,
+          "users": 903,
+          "conversions": 245
+        },
+        "Organic Social": {
+          "sessions": 929,
+          "users": 804,
+          "conversions": 240
+        },
+        "Referral": {
+          "sessions": 161,
+          "users": 120,
+          "conversions": 23
+        },
+        "Email": {
+          "sessions": 117,
+          "users": 110,
+          "conversions": 2
+        },
+        "Organic Video": {
+          "sessions": 16,
+          "users": 7,
+          "conversions": 0
+        },
+        "Paid Video": {
+          "sessions": 2,
+          "users": 2,
+          "conversions": 1
+        },
+        "Paid Social": {
+          "sessions": 1,
+          "users": 1,
+          "conversions": 2
+        }
+      },
+      "2026-04-28": {
+        "Paid Search": {
+          "sessions": 30498,
+          "users": 25193,
+          "conversions": 3004
+        },
+        "Organic Search": {
+          "sessions": 10725,
+          "users": 8161,
+          "conversions": 927
+        },
+        "Direct": {
+          "sessions": 7437,
+          "users": 6021,
+          "conversions": 1474
+        },
+        "Cross-network": {
+          "sessions": 5524,
+          "users": 5060,
+          "conversions": 274
+        },
+        "Mobile Push Notifications": {
+          "sessions": 3684,
+          "users": 3077,
+          "conversions": 55
+        },
+        "Unassigned": {
+          "sessions": 1157,
+          "users": 995,
+          "conversions": 194
+        },
+        "Organic Social": {
+          "sessions": 849,
+          "users": 730,
+          "conversions": 229
+        },
+        "Referral": {
+          "sessions": 189,
+          "users": 147,
+          "conversions": 17
+        },
+        "Email": {
+          "sessions": 24,
+          "users": 22,
+          "conversions": 4
+        },
+        "Organic Video": {
+          "sessions": 13,
+          "users": 10,
+          "conversions": 2
+        },
+        "Paid Social": {
+          "sessions": 1,
+          "users": 1,
+          "conversions": 0
+        }
+      },
+      "2026-04-29": {
+        "Paid Search": {
+          "sessions": 32949,
+          "users": 26322,
+          "conversions": 3095
+        },
+        "Organic Search": {
+          "sessions": 10738,
+          "users": 8257,
+          "conversions": 861
+        },
+        "Direct": {
+          "sessions": 8540,
+          "users": 7040,
+          "conversions": 1530
+        },
+        "Cross-network": {
+          "sessions": 5444,
+          "users": 4907,
+          "conversions": 307
+        },
+        "Mobile Push Notifications": {
+          "sessions": 3951,
+          "users": 3169,
+          "conversions": 84
+        },
+        "Unassigned": {
+          "sessions": 1125,
+          "users": 967,
+          "conversions": 238
+        },
+        "Organic Social": {
+          "sessions": 914,
+          "users": 788,
+          "conversions": 230
+        },
+        "Referral": {
+          "sessions": 189,
+          "users": 150,
+          "conversions": 21
+        },
+        "Email": {
+          "sessions": 174,
+          "users": 172,
+          "conversions": 3
+        },
+        "Organic Video": {
+          "sessions": 22,
+          "users": 11,
+          "conversions": 2
+        },
+        "Paid Social": {
+          "sessions": 9,
+          "users": 4,
+          "conversions": 1
+        },
+        "Display": {
+          "sessions": 1,
+          "users": 1,
+          "conversions": 1
+        }
+      },
+      "2026-04-30": {
+        "Paid Search": {
+          "sessions": 33448,
+          "users": 26872,
+          "conversions": 3027
+        },
+        "Organic Search": {
+          "sessions": 11097,
+          "users": 8442,
+          "conversions": 824
+        },
+        "Direct": {
+          "sessions": 7276,
+          "users": 5658,
+          "conversions": 1563
+        },
+        "Cross-network": {
+          "sessions": 5278,
+          "users": 4846,
+          "conversions": 300
+        },
+        "Mobile Push Notifications": {
+          "sessions": 3428,
+          "users": 2794,
+          "conversions": 38
+        },
+        "Unassigned": {
+          "sessions": 1050,
+          "users": 910,
+          "conversions": 213
+        },
+        "Organic Social": {
+          "sessions": 964,
+          "users": 807,
+          "conversions": 261
+        },
+        "Referral": {
+          "sessions": 189,
+          "users": 148,
+          "conversions": 17
+        },
+        "Email": {
+          "sessions": 175,
+          "users": 168,
+          "conversions": 2
+        },
+        "Organic Video": {
+          "sessions": 9,
+          "users": 5,
+          "conversions": 0
+        },
+        "Display": {
+          "sessions": 2,
+          "users": 1,
+          "conversions": 0
+        },
+        "Paid Social": {
+          "sessions": 2,
+          "users": 2,
+          "conversions": 0
+        }
+      },
+      "2026-05-01": {
+        "Paid Search": {
+          "sessions": 25991,
+          "users": 21173,
+          "conversions": 2524
+        },
+        "Organic Search": {
+          "sessions": 9071,
+          "users": 7255,
+          "conversions": 570
+        },
+        "Direct": {
+          "sessions": 5687,
+          "users": 4683,
+          "conversions": 973
+        },
+        "Cross-network": {
+          "sessions": 4653,
+          "users": 4270,
+          "conversions": 205
+        },
+        "Mobile Push Notifications": {
+          "sessions": 2692,
+          "users": 2259,
+          "conversions": 42
+        },
+        "Organic Social": {
+          "sessions": 897,
+          "users": 748,
+          "conversions": 238
+        },
+        "Unassigned": {
+          "sessions": 804,
+          "users": 672,
+          "conversions": 146
+        },
+        "Referral": {
+          "sessions": 138,
+          "users": 104,
+          "conversions": 10
+        },
+        "Email": {
+          "sessions": 24,
+          "users": 22,
+          "conversions": 2
+        },
+        "Organic Video": {
+          "sessions": 13,
+          "users": 9,
+          "conversions": 1
+        },
+        "Paid Social": {
+          "sessions": 1,
+          "users": 1,
+          "conversions": 0
+        }
+      },
+      "2026-05-02": {
+        "Paid Search": {
+          "sessions": 24186,
+          "users": 19785,
+          "conversions": 2474
+        },
+        "Organic Search": {
+          "sessions": 8919,
+          "users": 6682,
+          "conversions": 612
+        },
+        "Cross-network": {
+          "sessions": 5737,
+          "users": 5271,
+          "conversions": 283
+        },
+        "Direct": {
+          "sessions": 5510,
+          "users": 4422,
+          "conversions": 1139
+        },
+        "Mobile Push Notifications": {
+          "sessions": 1053,
+          "users": 879,
+          "conversions": 41
+        },
+        "Organic Social": {
+          "sessions": 791,
+          "users": 648,
+          "conversions": 220
+        },
+        "Unassigned": {
+          "sessions": 756,
+          "users": 651,
+          "conversions": 222
+        },
+        "Referral": {
+          "sessions": 162,
+          "users": 124,
+          "conversions": 18
+        },
+        "Email": {
+          "sessions": 14,
+          "users": 14,
+          "conversions": 0
+        },
+        "Organic Video": {
+          "sessions": 12,
+          "users": 4,
+          "conversions": 1
+        }
+      },
+      "2026-05-03": {
+        "Paid Search": {
+          "sessions": 26384,
+          "users": 22114,
+          "conversions": 2466
+        },
+        "Organic Search": {
+          "sessions": 9598,
+          "users": 7387,
+          "conversions": 616
+        },
+        "Direct": {
+          "sessions": 5577,
+          "users": 4579,
+          "conversions": 1046
+        },
+        "Cross-network": {
+          "sessions": 5304,
+          "users": 4749,
+          "conversions": 217
+        },
+        "Mobile Push Notifications": {
+          "sessions": 1199,
+          "users": 1011,
+          "conversions": 29
+        },
+        "Organic Social": {
+          "sessions": 818,
+          "users": 691,
+          "conversions": 229
+        },
+        "Unassigned": {
+          "sessions": 728,
+          "users": 627,
+          "conversions": 152
+        },
+        "Referral": {
+          "sessions": 145,
+          "users": 127,
+          "conversions": 6
+        },
+        "Email": {
+          "sessions": 14,
+          "users": 13,
+          "conversions": 2
+        },
+        "Organic Video": {
+          "sessions": 5,
+          "users": 4,
+          "conversions": 0
+        }
+      },
+      "2026-05-04": {
+        "Paid Search": {
+          "sessions": 30568,
+          "users": 25352,
+          "conversions": 3127
+        },
+        "Organic Search": {
+          "sessions": 10649,
+          "users": 8264,
+          "conversions": 883
+        },
+        "Cross-network": {
+          "sessions": 8870,
+          "users": 8102,
+          "conversions": 410
+        },
+        "Direct": {
+          "sessions": 7643,
+          "users": 6148,
+          "conversions": 1558
+        },
+        "Mobile Push Notifications": {
+          "sessions": 3347,
+          "users": 2694,
+          "conversions": 59
+        },
+        "Organic Social": {
+          "sessions": 916,
+          "users": 781,
+          "conversions": 247
+        },
+        "Unassigned": {
+          "sessions": 828,
+          "users": 674,
+          "conversions": 159
+        },
+        "Referral": {
+          "sessions": 225,
+          "users": 170,
+          "conversions": 26
+        },
+        "Email": {
+          "sessions": 173,
+          "users": 163,
+          "conversions": 8
+        },
+        "Paid Social": {
+          "sessions": 19,
+          "users": 19,
+          "conversions": 6
+        },
+        "Organic Video": {
+          "sessions": 16,
+          "users": 8,
+          "conversions": 1
+        },
+        "Display": {
+          "sessions": 2,
+          "users": 2,
+          "conversions": 2
+        },
+        "Paid Video": {
+          "sessions": 1,
+          "users": 1,
+          "conversions": 1
+        }
+      },
+      "2026-05-05": {
+        "Paid Search": {
+          "sessions": 29756,
+          "users": 24350,
+          "conversions": 3149
+        },
+        "Organic Search": {
+          "sessions": 9859,
+          "users": 7818,
+          "conversions": 843
+        },
+        "Direct": {
+          "sessions": 7437,
+          "users": 6139,
+          "conversions": 1577
+        },
+        "Cross-network": {
+          "sessions": 6875,
+          "users": 6151,
+          "conversions": 336
+        },
+        "Mobile Push Notifications": {
+          "sessions": 3496,
+          "users": 2839,
+          "conversions": 44
+        },
+        "Organic Social": {
+          "sessions": 945,
+          "users": 808,
+          "conversions": 273
+        },
+        "Unassigned": {
+          "sessions": 788,
+          "users": 662,
+          "conversions": 228
+        },
+        "Referral": {
+          "sessions": 265,
+          "users": 197,
+          "conversions": 19
+        },
+        "Email": {
+          "sessions": 253,
+          "users": 237,
+          "conversions": 7
+        },
+        "Organic Video": {
+          "sessions": 10,
+          "users": 7,
+          "conversions": 1
+        },
+        "Paid Social": {
+          "sessions": 10,
+          "users": 9,
+          "conversions": 1
+        }
+      },
+      "2026-05-06": {
+        "Paid Search": {
+          "sessions": 30523,
+          "users": 24692,
+          "conversions": 3229
+        },
+        "Organic Search": {
+          "sessions": 9501,
+          "users": 7527,
+          "conversions": 807
+        },
+        "Direct": {
+          "sessions": 7111,
+          "users": 5878,
+          "conversions": 1613
+        },
+        "Cross-network": {
+          "sessions": 6050,
+          "users": 5496,
+          "conversions": 311
+        },
+        "Mobile Push Notifications": {
+          "sessions": 3349,
+          "users": 2796,
+          "conversions": 65
+        },
+        "Organic Social": {
+          "sessions": 881,
+          "users": 760,
+          "conversions": 261
+        },
+        "Unassigned": {
+          "sessions": 755,
+          "users": 623,
+          "conversions": 186
+        },
+        "Referral": {
+          "sessions": 238,
+          "users": 191,
+          "conversions": 22
+        },
+        "Email": {
+          "sessions": 50,
+          "users": 42,
+          "conversions": 4
+        },
+        "Organic Video": {
+          "sessions": 13,
+          "users": 6,
+          "conversions": 0
+        },
+        "Paid Social": {
+          "sessions": 3,
+          "users": 3,
+          "conversions": 0
+        },
+        "Paid Video": {
+          "sessions": 1,
+          "users": 1,
+          "conversions": 0
+        }
+      },
+      "2026-05-07": {
+        "Paid Search": {
+          "sessions": 30704,
+          "users": 24918,
+          "conversions": 3216
+        },
+        "Organic Search": {
+          "sessions": 10141,
+          "users": 7779,
+          "conversions": 811
+        },
+        "Direct": {
+          "sessions": 8018,
+          "users": 6635,
+          "conversions": 1656
+        },
+        "Cross-network": {
+          "sessions": 6333,
+          "users": 5679,
+          "conversions": 312
+        },
+        "Mobile Push Notifications": {
+          "sessions": 3280,
+          "users": 2673,
+          "conversions": 40
+        },
+        "Unassigned": {
+          "sessions": 1080,
+          "users": 953,
+          "conversions": 215
+        },
+        "Organic Social": {
+          "sessions": 943,
+          "users": 766,
+          "conversions": 264
+        },
+        "Email": {
+          "sessions": 294,
+          "users": 282,
+          "conversions": 4
+        },
+        "Referral": {
+          "sessions": 291,
+          "users": 227,
+          "conversions": 25
+        },
+        "Organic Video": {
+          "sessions": 12,
+          "users": 8,
+          "conversions": 1
+        },
+        "Paid Social": {
+          "sessions": 2,
+          "users": 1,
+          "conversions": 1
+        },
+        "Organic Shopping": {
+          "sessions": 1,
+          "users": 1,
+          "conversions": 0
+        },
+        "Paid Video": {
+          "sessions": 1,
+          "users": 1,
+          "conversions": 1
+        }
+      },
+      "2026-05-08": {
+        "Paid Search": {
+          "sessions": 29996,
+          "users": 24367,
+          "conversions": 3119
+        },
+        "Organic Search": {
+          "sessions": 9788,
+          "users": 7614,
+          "conversions": 825
+        },
+        "Direct": {
+          "sessions": 6864,
+          "users": 5448,
+          "conversions": 1491
+        },
+        "Cross-network": {
+          "sessions": 6116,
+          "users": 5496,
+          "conversions": 362
+        },
+        "Mobile Push Notifications": {
+          "sessions": 2845,
+          "users": 2409,
+          "conversions": 48
+        },
+        "Organic Social": {
+          "sessions": 973,
+          "users": 784,
+          "conversions": 298
+        },
+        "Unassigned": {
+          "sessions": 661,
+          "users": 576,
+          "conversions": 204
+        },
+        "Referral": {
+          "sessions": 261,
+          "users": 204,
+          "conversions": 23
+        },
+        "Email": {
+          "sessions": 32,
+          "users": 27,
+          "conversions": 5
+        },
+        "Paid Social": {
+          "sessions": 11,
+          "users": 10,
+          "conversions": 0
+        },
+        "Organic Video": {
+          "sessions": 7,
+          "users": 5,
+          "conversions": 0
+        },
+        "Organic Shopping": {
+          "sessions": 1,
+          "users": 1,
+          "conversions": 0
+        }
+      },
+      "2026-05-09": {
+        "Paid Search": {
+          "sessions": 22930,
+          "users": 19084,
+          "conversions": 2630
+        },
+        "Organic Search": {
+          "sessions": 8217,
+          "users": 6416,
+          "conversions": 657
+        },
+        "Direct": {
+          "sessions": 5437,
+          "users": 4428,
+          "conversions": 1085
+        },
+        "Cross-network": {
+          "sessions": 4218,
+          "users": 3926,
+          "conversions": 255
+        },
+        "Mobile Push Notifications": {
+          "sessions": 2454,
+          "users": 2094,
+          "conversions": 52
+        },
+        "Organic Social": {
+          "sessions": 775,
+          "users": 655,
+          "conversions": 227
+        },
+        "Unassigned": {
+          "sessions": 488,
+          "users": 412,
+          "conversions": 203
+        },
+        "Referral": {
+          "sessions": 212,
+          "users": 168,
+          "conversions": 26
+        },
+        "Email": {
+          "sessions": 11,
+          "users": 8,
+          "conversions": 2
+        },
+        "Organic Video": {
+          "sessions": 3,
+          "users": 2,
+          "conversions": 0
+        },
+        "Paid Social": {
+          "sessions": 3,
+          "users": 1,
+          "conversions": 2
+        },
+        "Organic Shopping": {
+          "sessions": 2,
+          "users": 2,
+          "conversions": 0
+        }
+      },
+      "2026-05-10": {
+        "Paid Search": {
+          "sessions": 22227,
+          "users": 18439,
+          "conversions": 2479
+        },
+        "Organic Search": {
+          "sessions": 7981,
+          "users": 6407,
+          "conversions": 592
+        },
+        "Direct": {
+          "sessions": 5177,
+          "users": 4279,
+          "conversions": 1028
+        },
+        "Cross-network": {
+          "sessions": 5113,
+          "users": 4546,
+          "conversions": 255
+        },
+        "Mobile Push Notifications": {
+          "sessions": 1968,
+          "users": 1656,
+          "conversions": 13
+        },
+        "Organic Social": {
+          "sessions": 734,
+          "users": 622,
+          "conversions": 224
+        },
+        "Unassigned": {
+          "sessions": 482,
+          "users": 395,
+          "conversions": 151
+        },
+        "Referral": {
+          "sessions": 216,
+          "users": 181,
+          "conversions": 19
+        },
+        "Email": {
+          "sessions": 23,
+          "users": 20,
+          "conversions": 2
+        },
+        "Organic Video": {
+          "sessions": 6,
+          "users": 6,
+          "conversions": 1
+        },
+        "Paid Video": {
+          "sessions": 2,
+          "users": 1,
+          "conversions": 0
+        }
+      },
+      "2026-05-11": {
+        "Paid Search": {
+          "sessions": 28755,
+          "users": 23503,
+          "conversions": 3127
+        },
+        "Organic Search": {
+          "sessions": 9925,
+          "users": 7594,
+          "conversions": 726
+        },
+        "Cross-network": {
+          "sessions": 8309,
+          "users": 7450,
+          "conversions": 373
+        },
+        "Direct": {
+          "sessions": 7634,
+          "users": 6162,
+          "conversions": 1592
+        },
+        "Mobile Push Notifications": {
+          "sessions": 3306,
+          "users": 2779,
+          "conversions": 37
+        },
+        "Organic Social": {
+          "sessions": 866,
+          "users": 719,
+          "conversions": 241
+        },
+        "Unassigned": {
+          "sessions": 667,
+          "users": 573,
+          "conversions": 183
+        },
+        "Paid Social": {
+          "sessions": 281,
+          "users": 276,
+          "conversions": 3
+        },
+        "Referral": {
+          "sessions": 259,
+          "users": 200,
+          "conversions": 18
+        },
+        "Email": {
+          "sessions": 25,
+          "users": 22,
+          "conversions": 2
+        },
+        "Organic Video": {
+          "sessions": 11,
+          "users": 7,
+          "conversions": 0
+        },
+        "Organic Shopping": {
+          "sessions": 2,
+          "users": 2,
+          "conversions": 0
+        },
+        "Paid Video": {
+          "sessions": 1,
+          "users": 1,
+          "conversions": 1
+        }
+      },
+      "2026-05-12": {
+        "Paid Search": {
+          "sessions": 27389,
+          "users": 22638,
+          "conversions": 5409
+        },
+        "Organic Search": {
+          "sessions": 8892,
+          "users": 7027,
+          "conversions": 1336
+        },
+        "Cross-network": {
+          "sessions": 8487,
+          "users": 7442,
+          "conversions": 620
+        },
+        "Direct": {
+          "sessions": 6759,
+          "users": 5493,
+          "conversions": 2714
+        },
+        "Mobile Push Notifications": {
+          "sessions": 2741,
+          "users": 2262,
+          "conversions": 60
+        },
+        "Organic Social": {
+          "sessions": 789,
+          "users": 671,
+          "conversions": 267
+        },
+        "Unassigned": {
+          "sessions": 560,
+          "users": 480,
+          "conversions": 205
+        },
+        "Referral": {
+          "sessions": 326,
+          "users": 262,
+          "conversions": 42
+        },
+        "Paid Social": {
+          "sessions": 102,
+          "users": 96,
+          "conversions": 4
+        },
+        "Email": {
+          "sessions": 28,
+          "users": 23,
+          "conversions": 2
+        },
+        "Organic Video": {
+          "sessions": 13,
+          "users": 5,
+          "conversions": 0
+        },
+        "Organic Shopping": {
+          "sessions": 2,
+          "users": 2,
+          "conversions": 0
+        }
+      },
+      "2026-05-13": {
+        "Paid Search": {
+          "sessions": 28898,
+          "users": 23757,
+          "conversions": 5046
+        },
+        "Organic Search": {
+          "sessions": 8774,
+          "users": 6793,
+          "conversions": 1128
+        },
+        "Direct": {
+          "sessions": 7053,
+          "users": 5744,
+          "conversions": 2598
+        },
+        "Cross-network": {
+          "sessions": 6558,
+          "users": 5883,
+          "conversions": 468
+        },
+        "Mobile Push Notifications": {
+          "sessions": 2696,
+          "users": 2239,
+          "conversions": 56
+        },
+        "Organic Social": {
+          "sessions": 930,
+          "users": 765,
+          "conversions": 301
+        },
+        "Unassigned": {
+          "sessions": 855,
+          "users": 699,
+          "conversions": 258
+        },
+        "Referral": {
+          "sessions": 307,
+          "users": 232,
+          "conversions": 33
+        },
+        "Paid Social": {
+          "sessions": 111,
+          "users": 102,
+          "conversions": 4
+        },
+        "Email": {
+          "sessions": 16,
+          "users": 14,
+          "conversions": 6
+        },
+        "Organic Video": {
+          "sessions": 8,
+          "users": 6,
+          "conversions": 2
+        },
+        "Organic Shopping": {
+          "sessions": 1,
+          "users": 1,
+          "conversions": 0
+        }
+      },
+      "2026-05-14": {
+        "Paid Search": {
+          "sessions": 27448,
+          "users": 22671,
+          "conversions": 5413
+        },
+        "Organic Search": {
+          "sessions": 9078,
+          "users": 6955,
+          "conversions": 1217
+        },
+        "Direct": {
+          "sessions": 7350,
+          "users": 6077,
+          "conversions": 2757
+        },
+        "Cross-network": {
+          "sessions": 6616,
+          "users": 6081,
+          "conversions": 484
+        },
+        "Mobile Push Notifications": {
+          "sessions": 2752,
+          "users": 2352,
+          "conversions": 81
+        },
+        "Organic Social": {
+          "sessions": 785,
+          "users": 660,
+          "conversions": 271
+        },
+        "Unassigned": {
+          "sessions": 723,
+          "users": 610,
+          "conversions": 286
+        },
+        "Referral": {
+          "sessions": 280,
+          "users": 202,
+          "conversions": 41
+        },
+        "Paid Social": {
+          "sessions": 82,
+          "users": 74,
+          "conversions": 6
+        },
+        "Email": {
+          "sessions": 13,
+          "users": 13,
+          "conversions": 5
+        },
+        "Organic Video": {
+          "sessions": 10,
+          "users": 5,
+          "conversions": 0
+        },
+        "Organic Shopping": {
+          "sessions": 1,
+          "users": 1,
+          "conversions": 0
+        }
+      },
+      "2026-05-15": {
+        "Paid Search": {
+          "sessions": 27914,
+          "users": 22255,
+          "conversions": 5433
+        },
+        "Organic Search": {
+          "sessions": 8739,
+          "users": 6724,
+          "conversions": 1264
+        },
+        "Direct": {
+          "sessions": 6681,
+          "users": 5514,
+          "conversions": 2693
+        },
+        "Cross-network": {
+          "sessions": 5774,
+          "users": 5221,
+          "conversions": 460
+        },
+        "Mobile Push Notifications": {
+          "sessions": 2145,
+          "users": 1808,
+          "conversions": 79
+        },
+        "Organic Social": {
+          "sessions": 798,
+          "users": 682,
+          "conversions": 280
+        },
+        "Unassigned": {
+          "sessions": 533,
+          "users": 453,
+          "conversions": 191
+        },
+        "Referral": {
+          "sessions": 282,
+          "users": 223,
+          "conversions": 11
+        },
+        "Paid Social": {
+          "sessions": 126,
+          "users": 116,
+          "conversions": 0
+        },
+        "Organic Video": {
+          "sessions": 9,
+          "users": 4,
+          "conversions": 2
+        },
+        "Email": {
+          "sessions": 8,
+          "users": 6,
+          "conversions": 2
+        },
+        "Organic Shopping": {
+          "sessions": 1,
+          "users": 1,
+          "conversions": 0
+        },
+        "Paid Video": {
+          "sessions": 1,
+          "users": 1,
+          "conversions": 0
+        }
+      },
+      "2026-05-16": {
+        "Paid Search": {
+          "sessions": 21166,
+          "users": 17440,
+          "conversions": 4647
+        },
+        "Organic Search": {
+          "sessions": 7589,
+          "users": 5723,
+          "conversions": 1039
+        },
+        "Direct": {
+          "sessions": 5527,
+          "users": 4605,
+          "conversions": 1995
+        },
+        "Cross-network": {
+          "sessions": 5341,
+          "users": 4887,
+          "conversions": 391
+        },
+        "Mobile Push Notifications": {
+          "sessions": 2175,
+          "users": 1815,
+          "conversions": 108
+        },
+        "Organic Social": {
+          "sessions": 685,
+          "users": 580,
+          "conversions": 220
+        },
+        "Unassigned": {
+          "sessions": 434,
+          "users": 366,
+          "conversions": 113
+        },
+        "Referral": {
+          "sessions": 196,
+          "users": 159,
+          "conversions": 30
+        },
+        "Paid Social": {
+          "sessions": 170,
+          "users": 166,
+          "conversions": 2
+        },
+        "Organic Video": {
+          "sessions": 13,
+          "users": 8,
+          "conversions": 2
+        },
+        "Email": {
+          "sessions": 6,
+          "users": 6,
+          "conversions": 0
+        }
+      },
+      "2026-05-17": {
+        "Paid Search": {
+          "sessions": 23314,
+          "users": 19030,
+          "conversions": 4642
+        },
+        "Organic Search": {
+          "sessions": 7653,
+          "users": 6297,
+          "conversions": 939
+        },
+        "Cross-network": {
+          "sessions": 5697,
+          "users": 5179,
+          "conversions": 501
+        },
+        "Direct": {
+          "sessions": 5442,
+          "users": 4436,
+          "conversions": 1853
+        },
+        "Mobile Push Notifications": {
+          "sessions": 1904,
+          "users": 1581,
+          "conversions": 90
+        },
+        "Organic Social": {
+          "sessions": 729,
+          "users": 623,
+          "conversions": 237
+        },
+        "Unassigned": {
+          "sessions": 517,
+          "users": 425,
+          "conversions": 143
+        }
+      }
+    }
+  },
   "devices": [
     {
       "device": "mobile",
-      "sessions": 1288535,
-      "users": 644973,
-      "conversions": 149610,
-      "bounce_rate": 25.8
+      "sessions": 1305939,
+      "users": 990932,
+      "conversions": 149710,
+      "bounce_rate": 22.9
     },
     {
       "device": "desktop",
-      "sessions": 363471,
-      "users": 207905,
-      "conversions": 66880,
-      "bounce_rate": 27.02
+      "sessions": 365940,
+      "users": 290165,
+      "conversions": 66935,
+      "bounce_rate": 28.93
     },
     {
       "device": "tablet",
-      "sessions": 8782,
-      "users": 5369,
-      "conversions": 1168,
-      "bounce_rate": 19.05
+      "sessions": 8735,
+      "users": 7492,
+      "conversions": 1169,
+      "bounce_rate": 24.34
     },
     {
       "device": "smart tv",
       "sessions": 8,
-      "users": 7,
+      "users": 8,
       "conversions": 0,
-      "bounce_rate": 25.0
+      "bounce_rate": 100.0
     }
   ],
+  "devices_daily": {
+    "dates": [
+      "2026-04-22",
+      "2026-04-23",
+      "2026-04-24",
+      "2026-04-25",
+      "2026-04-26",
+      "2026-04-27",
+      "2026-04-28",
+      "2026-04-29",
+      "2026-04-30",
+      "2026-05-01",
+      "2026-05-02",
+      "2026-05-03",
+      "2026-05-04",
+      "2026-05-05",
+      "2026-05-06",
+      "2026-05-07",
+      "2026-05-08",
+      "2026-05-09",
+      "2026-05-10",
+      "2026-05-11",
+      "2026-05-12",
+      "2026-05-13",
+      "2026-05-14",
+      "2026-05-15",
+      "2026-05-16",
+      "2026-05-17",
+      "2026-05-18",
+      "2026-05-19",
+      "2026-05-20",
+      "2026-05-21",
+      "2026-05-22"
+    ],
+    "devices": [
+      "mobile",
+      "desktop",
+      "tablet",
+      "smart tv"
+    ],
+    "data": {
+      "2026-04-22": {
+        "mobile": {
+          "sessions": 41435,
+          "users": 31178,
+          "conversions": 3638
+        },
+        "desktop": {
+          "sessions": 15782,
+          "users": 12603,
+          "conversions": 1967
+        },
+        "tablet": {
+          "sessions": 304,
+          "users": 262,
+          "conversions": 23
+        }
+      },
+      "2026-04-23": {
+        "mobile": {
+          "sessions": 40350,
+          "users": 31242,
+          "conversions": 3942
+        },
+        "desktop": {
+          "sessions": 13690,
+          "users": 10765,
+          "conversions": 1755
+        },
+        "tablet": {
+          "sessions": 259,
+          "users": 235,
+          "conversions": 35
+        }
+      },
+      "2026-04-24": {
+        "mobile": {
+          "sessions": 42862,
+          "users": 32275,
+          "conversions": 3936
+        },
+        "desktop": {
+          "sessions": 13432,
+          "users": 10509,
+          "conversions": 1852
+        },
+        "tablet": {
+          "sessions": 291,
+          "users": 257,
+          "conversions": 30
+        },
+        "smart tv": {
+          "sessions": 1,
+          "users": 1,
+          "conversions": 0
+        }
+      },
+      "2026-04-25": {
+        "mobile": {
+          "sessions": 38200,
+          "users": 28724,
+          "conversions": 3617
+        },
+        "desktop": {
+          "sessions": 6597,
+          "users": 5403,
+          "conversions": 1153
+        },
+        "tablet": {
+          "sessions": 258,
+          "users": 221,
+          "conversions": 33
+        }
+      },
+      "2026-04-26": {
+        "mobile": {
+          "sessions": 42255,
+          "users": 32437,
+          "conversions": 3750
+        },
+        "desktop": {
+          "sessions": 6636,
+          "users": 5461,
+          "conversions": 1118
+        },
+        "tablet": {
+          "sessions": 302,
+          "users": 260,
+          "conversions": 28
+        },
+        "smart tv": {
+          "sessions": 1,
+          "users": 1,
+          "conversions": 0
+        }
+      },
+      "2026-04-27": {
+        "mobile": {
+          "sessions": 45375,
+          "users": 33875,
+          "conversions": 4109
+        },
+        "desktop": {
+          "sessions": 15566,
+          "users": 12209,
+          "conversions": 2140
+        },
+        "tablet": {
+          "sessions": 319,
+          "users": 266,
+          "conversions": 34
+        },
+        "smart tv": {
+          "sessions": 1,
+          "users": 1,
+          "conversions": 0
+        }
+      },
+      "2026-04-28": {
+        "mobile": {
+          "sessions": 45012,
+          "users": 33922,
+          "conversions": 4070
+        },
+        "desktop": {
+          "sessions": 14866,
+          "users": 11947,
+          "conversions": 2083
+        },
+        "tablet": {
+          "sessions": 305,
+          "users": 260,
+          "conversions": 27
+        },
+        "smart tv": {
+          "sessions": 1,
+          "users": 1,
+          "conversions": 0
+        }
+      },
+      "2026-04-29": {
+        "mobile": {
+          "sessions": 48973,
+          "users": 35158,
+          "conversions": 4225
+        },
+        "desktop": {
+          "sessions": 16224,
+          "users": 12846,
+          "conversions": 2124
+        },
+        "tablet": {
+          "sessions": 298,
+          "users": 269,
+          "conversions": 24
+        }
+      },
+      "2026-04-30": {
+        "mobile": {
+          "sessions": 50072,
+          "users": 35953,
+          "conversions": 4331
+        },
+        "desktop": {
+          "sessions": 13769,
+          "users": 10535,
+          "conversions": 1876
+        },
+        "tablet": {
+          "sessions": 290,
+          "users": 233,
+          "conversions": 38
+        }
+      },
+      "2026-05-01": {
+        "mobile": {
+          "sessions": 43570,
+          "users": 32296,
+          "conversions": 3604
+        },
+        "desktop": {
+          "sessions": 6777,
+          "users": 5464,
+          "conversions": 1070
+        },
+        "tablet": {
+          "sessions": 333,
+          "users": 278,
+          "conversions": 37
+        }
+      },
+      "2026-05-02": {
+        "mobile": {
+          "sessions": 40833,
+          "users": 30513,
+          "conversions": 3869
+        },
+        "desktop": {
+          "sessions": 6159,
+          "users": 4893,
+          "conversions": 1113
+        },
+        "tablet": {
+          "sessions": 260,
+          "users": 231,
+          "conversions": 28
+        }
+      },
+      "2026-05-03": {
+        "mobile": {
+          "sessions": 42687,
+          "users": 32662,
+          "conversions": 3717
+        },
+        "desktop": {
+          "sessions": 6152,
+          "users": 5059,
+          "conversions": 1015
+        },
+        "tablet": {
+          "sessions": 273,
+          "users": 239,
+          "conversions": 31
+        },
+        "smart tv": {
+          "sessions": 1,
+          "users": 1,
+          "conversions": 0
+        }
+      },
+      "2026-05-04": {
+        "mobile": {
+          "sessions": 48706,
+          "users": 36938,
+          "conversions": 4341
+        },
+        "desktop": {
+          "sessions": 14687,
+          "users": 11715,
+          "conversions": 2111
+        },
+        "tablet": {
+          "sessions": 340,
+          "users": 292,
+          "conversions": 35
+        },
+        "smart tv": {
+          "sessions": 1,
+          "users": 1,
+          "conversions": 0
+        }
+      },
+      "2026-05-05": {
+        "mobile": {
+          "sessions": 44338,
+          "users": 34125,
+          "conversions": 4264
+        },
+        "desktop": {
+          "sessions": 14547,
+          "users": 11665,
+          "conversions": 2190
+        },
+        "tablet": {
+          "sessions": 302,
+          "users": 257,
+          "conversions": 24
+        },
+        "smart tv": {
+          "sessions": 1,
+          "users": 1,
+          "conversions": 0
+        }
+      },
+      "2026-05-06": {
+        "mobile": {
+          "sessions": 44777,
+          "users": 33480,
+          "conversions": 4295
+        },
+        "desktop": {
+          "sessions": 14270,
+          "users": 11049,
+          "conversions": 2167
+        },
+        "tablet": {
+          "sessions": 306,
+          "users": 261,
+          "conversions": 36
+        }
+      },
+      "2026-05-07": {
+        "mobile": {
+          "sessions": 45068,
+          "users": 34546,
+          "conversions": 4418
+        },
+        "desktop": {
+          "sessions": 14653,
+          "users": 11669,
+          "conversions": 2092
+        },
+        "tablet": {
+          "sessions": 325,
+          "users": 279,
+          "conversions": 36
+        }
+      },
+      "2026-05-08": {
+        "mobile": {
+          "sessions": 44666,
+          "users": 33624,
+          "conversions": 4286
+        },
+        "desktop": {
+          "sessions": 12799,
+          "users": 9737,
+          "conversions": 2065
+        },
+        "tablet": {
+          "sessions": 268,
+          "users": 232,
+          "conversions": 24
+        }
+      },
+      "2026-05-09": {
+        "mobile": {
+          "sessions": 39598,
+          "users": 28949,
+          "conversions": 3837
+        },
+        "desktop": {
+          "sessions": 6396,
+          "users": 5158,
+          "conversions": 1279
+        },
+        "tablet": {
+          "sessions": 218,
+          "users": 192,
+          "conversions": 23
+        }
+      },
+      "2026-05-10": {
+        "mobile": {
+          "sessions": 37971,
+          "users": 28961,
+          "conversions": 3650
+        },
+        "desktop": {
+          "sessions": 5734,
+          "users": 4693,
+          "conversions": 1088
+        },
+        "tablet": {
+          "sessions": 238,
+          "users": 201,
+          "conversions": 26
+        }
+      },
+      "2026-05-11": {
+        "mobile": {
+          "sessions": 44277,
+          "users": 34472,
+          "conversions": 4168
+        },
+        "desktop": {
+          "sessions": 15197,
+          "users": 11706,
+          "conversions": 2114
+        },
+        "tablet": {
+          "sessions": 289,
+          "users": 263,
+          "conversions": 21
+        }
+      },
+      "2026-05-12": {
+        "mobile": {
+          "sessions": 42333,
+          "users": 32397,
+          "conversions": 6974
+        },
+        "desktop": {
+          "sessions": 13510,
+          "users": 10492,
+          "conversions": 3606
+        },
+        "tablet": {
+          "sessions": 315,
+          "users": 257,
+          "conversions": 79
+        }
+      },
+      "2026-05-13": {
+        "mobile": {
+          "sessions": 41932,
+          "users": 32114,
+          "conversions": 6383
+        },
+        "desktop": {
+          "sessions": 13708,
+          "users": 11004,
+          "conversions": 3447
+        },
+        "tablet": {
+          "sessions": 314,
+          "users": 255,
+          "conversions": 70
+        }
+      },
+      "2026-05-14": {
+        "mobile": {
+          "sessions": 41111,
+          "users": 31774,
+          "conversions": 7021
+        },
+        "desktop": {
+          "sessions": 13646,
+          "users": 10790,
+          "conversions": 3465
+        },
+        "tablet": {
+          "sessions": 285,
+          "users": 239,
+          "conversions": 75
+        }
+      },
+      "2026-05-15": {
+        "mobile": {
+          "sessions": 40524,
+          "users": 30556,
+          "conversions": 7070
+        },
+        "desktop": {
+          "sessions": 12295,
+          "users": 9507,
+          "conversions": 3284
+        },
+        "tablet": {
+          "sessions": 269,
+          "users": 233,
+          "conversions": 61
+        }
+      },
+      "2026-05-16": {
+        "mobile": {
+          "sessions": 36506,
+          "users": 28076,
+          "conversions": 6544
+        },
+        "desktop": {
+          "sessions": 6353,
+          "users": 5133,
+          "conversions": 1952
+        },
+        "tablet": {
+          "sessions": 267,
+          "users": 225,
+          "conversions": 51
+        }
+      },
+      "2026-05-17": {
+        "mobile": {
+          "sessions": 39725,
+          "users": 30027,
+          "conversions": 6538
+        },
+        "desktop": {
+          "sessions": 6167,
+          "users": 5043,
+          "conversions": 1851
+        },
+        "tablet": {
+          "sessions": 259,
+          "users": 226,
+          "conversions": 45
+        }
+      },
+      "2026-05-18": {
+        "mobile": {
+          "sessions": 43709,
+          "users": 34048,
+          "conversions": 6244
+        },
+        "desktop": {
+          "sessions": 15777,
+          "users": 12275,
+          "conversions": 3270
+        },
+        "tablet": {
+          "sessions": 292,
+          "users": 244,
+          "conversions": 37
+        }
+      },
+      "2026-05-19": {
+        "mobile": {
+          "sessions": 41948,
+          "users": 32953,
+          "conversions": 5609
+        },
+        "desktop": {
+          "sessions": 14458,
+          "users": 11421,
+          "conversions": 3156
+        },
+        "tablet": {
+          "sessions": 276,
+          "users": 242,
+          "conversions": 33
+        }
+      },
+      "2026-05-20": {
+        "mobile": {
+          "sessions": 41559,
+          "users": 32156,
+          "conversions": 7005
+        },
+        "desktop": {
+          "sessions": 13476,
+          "users": 10535,
+          "conversions": 3647
+        },
+        "tablet": {
+          "sessions": 266,
+          "users": 230,
+          "conversions": 65
+        }
+      },
+      "2026-05-21": {
+        "mobile": {
+          "sessions": 40238,
+          "users": 30934,
+          "conversions": 7089
+        },
+        "desktop": {
+          "sessions": 13230,
+          "users": 10829,
+          "conversions": 3386
+        },
+        "tablet": {
+          "sessions": 269,
+          "users": 222,
+          "conversions": 45
+        }
+      },
+      "2026-05-22": {
+        "mobile": {
+          "sessions": 25329,
+          "users": 20567,
+          "conversions": 3166
+        },
+        "desktop": {
+          "sessions": 9387,
+          "users": 8050,
+          "conversions": 1499
+        },
+        "tablet": {
+          "sessions": 145,
+          "users": 131,
+          "conversions": 15
+        },
+        "smart tv": {
+          "sessions": 1,
+          "users": 1,
+          "conversions": 0
+        }
+      }
+    }
+  },
   "new_vs_returning": [
     {
       "type": "returning",
-      "sessions": 834034,
-      "users": 352427,
-      "conversions": 147767,
-      "bounce_rate": 17.91
+      "sessions": 854868,
+      "users": 602324,
+      "conversions": 147852,
+      "bounce_rate": 19.47
     },
     {
       "type": "new",
-      "sessions": 654565,
-      "users": 638999,
-      "conversions": 68892,
-      "bounce_rate": 20.84
+      "sessions": 662712,
+      "users": 661523,
+      "conversions": 68923,
+      "bounce_rate": 20.3
     },
     {
       "type": "(not set)",
-      "sessions": 155295,
-      "users": 106217,
+      "sessions": 155812,
+      "users": 139032,
       "conversions": 0,
-      "bounce_rate": 88.64
+      "bounce_rate": 89.52
     },
     {
       "type": "",
-      "sessions": 10803,
-      "users": 9995,
-      "conversions": 999,
-      "bounce_rate": 94.16
+      "sessions": 11612,
+      "users": 10577,
+      "conversions": 1039,
+      "bounce_rate": 94.32
     }
   ],
+  "nvr_daily": {
+    "dates": [
+      "2026-04-22",
+      "2026-04-23",
+      "2026-04-24",
+      "2026-04-25",
+      "2026-04-26",
+      "2026-04-27",
+      "2026-04-28",
+      "2026-04-29",
+      "2026-04-30",
+      "2026-05-01",
+      "2026-05-02",
+      "2026-05-03",
+      "2026-05-04",
+      "2026-05-05",
+      "2026-05-06",
+      "2026-05-07",
+      "2026-05-08",
+      "2026-05-09",
+      "2026-05-10",
+      "2026-05-11",
+      "2026-05-12",
+      "2026-05-13",
+      "2026-05-14",
+      "2026-05-15",
+      "2026-05-16",
+      "2026-05-17",
+      "2026-05-18",
+      "2026-05-19",
+      "2026-05-20",
+      "2026-05-21",
+      "2026-05-22"
+    ],
+    "types": [
+      "returning",
+      "new",
+      "(not set)",
+      ""
+    ],
+    "data": {
+      "2026-04-22": {
+        "returning": {
+          "sessions": 29566,
+          "users": 20326,
+          "conversions": 3782
+        },
+        "new": {
+          "sessions": 23360,
+          "users": 23338,
+          "conversions": 1846
+        },
+        "(not set)": {
+          "sessions": 5066,
+          "users": 4471,
+          "conversions": 0
+        }
+      },
+      "2026-04-23": {
+        "returning": {
+          "sessions": 27857,
+          "users": 20087,
+          "conversions": 3901
+        },
+        "new": {
+          "sessions": 21799,
+          "users": 21805,
+          "conversions": 1831
+        },
+        "(not set)": {
+          "sessions": 5027,
+          "users": 4550,
+          "conversions": 0
+        }
+      },
+      "2026-04-24": {
+        "returning": {
+          "sessions": 28806,
+          "users": 20352,
+          "conversions": 4112
+        },
+        "new": {
+          "sessions": 21808,
+          "users": 21963,
+          "conversions": 1706
+        },
+        "(not set)": {
+          "sessions": 5552,
+          "users": 4915,
+          "conversions": 0
+        }
+      },
+      "2026-04-25": {
+        "returning": {
+          "sessions": 24045,
+          "users": 16461,
+          "conversions": 3270
+        },
+        "new": {
+          "sessions": 17525,
+          "users": 17163,
+          "conversions": 1533
+        },
+        "(not set)": {
+          "sessions": 4165,
+          "users": 3765,
+          "conversions": 0
+        }
+      },
+      "2026-04-26": {
+        "returning": {
+          "sessions": 25473,
+          "users": 17917,
+          "conversions": 3367
+        },
+        "new": {
+          "sessions": 19662,
+          "users": 19590,
+          "conversions": 1529
+        },
+        "(not set)": {
+          "sessions": 4476,
+          "users": 3966,
+          "conversions": 0
+        }
+      },
+      "2026-04-27": {
+        "returning": {
+          "sessions": 31766,
+          "users": 22044,
+          "conversions": 4263
+        },
+        "new": {
+          "sessions": 23936,
+          "users": 23880,
+          "conversions": 2020
+        },
+        "(not set)": {
+          "sessions": 5123,
+          "users": 4608,
+          "conversions": 0
+        }
+      },
+      "2026-04-28": {
+        "returning": {
+          "sessions": 30389,
+          "users": 21874,
+          "conversions": 4205
+        },
+        "new": {
+          "sessions": 23391,
+          "users": 23575,
+          "conversions": 1975
+        },
+        "(not set)": {
+          "sessions": 5729,
+          "users": 5066,
+          "conversions": 0
+        }
+      },
+      "2026-04-29": {
+        "returning": {
+          "sessions": 33210,
+          "users": 22727,
+          "conversions": 4413
+        },
+        "new": {
+          "sessions": 24767,
+          "users": 25050,
+          "conversions": 1960
+        },
+        "(not set)": {
+          "sessions": 5845,
+          "users": 5138,
+          "conversions": 0
+        }
+      },
+      "2026-04-30": {
+        "returning": {
+          "sessions": 34867,
+          "users": 23055,
+          "conversions": 4262
+        },
+        "new": {
+          "sessions": 23579,
+          "users": 23429,
+          "conversions": 1983
+        },
+        "(not set)": {
+          "sessions": 5452,
+          "users": 4906,
+          "conversions": 0
+        }
+      },
+      "2026-05-01": {
+        "returning": {
+          "sessions": 26301,
+          "users": 18122,
+          "conversions": 3168
+        },
+        "new": {
+          "sessions": 19348,
+          "users": 19055,
+          "conversions": 1543
+        },
+        "(not set)": {
+          "sessions": 4988,
+          "users": 4573,
+          "conversions": 0
+        }
+      },
+      "2026-05-02": {
+        "returning": {
+          "sessions": 24550,
+          "users": 17151,
+          "conversions": 3470
+        },
+        "new": {
+          "sessions": 18182,
+          "users": 18272,
+          "conversions": 1540
+        },
+        "(not set)": {
+          "sessions": 4080,
+          "users": 3655,
+          "conversions": 0
+        }
+      },
+      "2026-05-03": {
+        "returning": {
+          "sessions": 26379,
+          "users": 18592,
+          "conversions": 3270
+        },
+        "new": {
+          "sessions": 18991,
+          "users": 19307,
+          "conversions": 1493
+        },
+        "(not set)": {
+          "sessions": 4199,
+          "users": 3790,
+          "conversions": 0
+        }
+      },
+      "2026-05-04": {
+        "returning": {
+          "sessions": 32578,
+          "users": 22582,
+          "conversions": 4401
+        },
+        "new": {
+          "sessions": 24786,
+          "users": 24878,
+          "conversions": 2086
+        },
+        "(not set)": {
+          "sessions": 6460,
+          "users": 5811,
+          "conversions": 0
+        }
+      },
+      "2026-05-05": {
+        "returning": {
+          "sessions": 29754,
+          "users": 21523,
+          "conversions": 4412
+        },
+        "new": {
+          "sessions": 23125,
+          "users": 23466,
+          "conversions": 2066
+        },
+        "(not set)": {
+          "sessions": 6194,
+          "users": 5462,
+          "conversions": 0
+        }
+      },
+      "2026-05-06": {
+        "returning": {
+          "sessions": 30225,
+          "users": 21383,
+          "conversions": 4427
+        },
+        "new": {
+          "sessions": 22325,
+          "users": 22420,
+          "conversions": 2071
+        },
+        "(not set)": {
+          "sessions": 5808,
+          "users": 5210,
+          "conversions": 0
+        }
+      },
+      "2026-05-07": {
+        "returning": {
+          "sessions": 30778,
+          "users": 21881,
+          "conversions": 4459
+        },
+        "new": {
+          "sessions": 24103,
+          "users": 23925,
+          "conversions": 2087
+        },
+        "(not set)": {
+          "sessions": 5746,
+          "users": 5052,
+          "conversions": 0
+        }
+      },
+      "2026-05-08": {
+        "returning": {
+          "sessions": 30839,
+          "users": 21241,
+          "conversions": 4403
+        },
+        "new": {
+          "sessions": 21657,
+          "users": 21709,
+          "conversions": 1972
+        },
+        "(not set)": {
+          "sessions": 5296,
+          "users": 4746,
+          "conversions": 0
+        }
+      },
+      "2026-05-09": {
+        "returning": {
+          "sessions": 23442,
+          "users": 16392,
+          "conversions": 3558
+        },
+        "new": {
+          "sessions": 16848,
+          "users": 16750,
+          "conversions": 1581
+        },
+        "(not set)": {
+          "sessions": 4729,
+          "users": 4279,
+          "conversions": 0
+        }
+      },
+      "2026-05-10": {
+        "returning": {
+          "sessions": 22956,
+          "users": 16225,
+          "conversions": 3283
+        },
+        "new": {
+          "sessions": 16801,
+          "users": 16771,
+          "conversions": 1481
+        },
+        "(not set)": {
+          "sessions": 4192,
+          "users": 3873,
+          "conversions": 0
+        }
+      },
+      "2026-05-11": {
+        "returning": {
+          "sessions": 29492,
+          "users": 20971,
+          "conversions": 4223
+        },
+        "new": {
+          "sessions": 24380,
+          "users": 24190,
+          "conversions": 2080
+        },
+        "(not set)": {
+          "sessions": 6119,
+          "users": 5426,
+          "conversions": 0
+        }
+      },
+      "2026-05-12": {
+        "returning": {
+          "sessions": 27890,
+          "users": 20138,
+          "conversions": 7031
+        },
+        "new": {
+          "sessions": 22553,
+          "users": 22579,
+          "conversions": 3628
+        },
+        "(not set)": {
+          "sessions": 5429,
+          "users": 4747,
+          "conversions": 0
+        }
+      },
+      "2026-05-13": {
+        "returning": {
+          "sessions": 28092,
+          "users": 19591,
+          "conversions": 6833
+        },
+        "new": {
+          "sessions": 23023,
+          "users": 22776,
+          "conversions": 3067
+        },
+        "(not set)": {
+          "sessions": 5308,
+          "users": 4780,
+          "conversions": 0
+        }
+      },
+      "2026-05-14": {
+        "returning": {
+          "sessions": 27322,
+          "users": 19813,
+          "conversions": 7106
+        },
+        "new": {
+          "sessions": 22330,
+          "users": 22188,
+          "conversions": 3455
+        },
+        "(not set)": {
+          "sessions": 5321,
+          "users": 4747,
+          "conversions": 0
+        }
+      },
+      "2026-05-15": {
+        "returning": {
+          "sessions": 27183,
+          "users": 18876,
+          "conversions": 7103
+        },
+        "new": {
+          "sessions": 20593,
+          "users": 20879,
+          "conversions": 3312
+        },
+        "(not set)": {
+          "sessions": 4598,
+          "users": 4140,
+          "conversions": 0
+        }
+      },
+      "2026-05-16": {
+        "returning": {
+          "sessions": 21775,
+          "users": 15432,
+          "conversions": 5860
+        },
+        "new": {
+          "sessions": 17004,
+          "users": 16942,
+          "conversions": 2687
+        },
+        "(not set)": {
+          "sessions": 4564,
+          "users": 4053,
+          "conversions": 0
+        }
+      },
+      "2026-05-17": {
+        "returning": {
+          "sessions": 23539,
+          "users": 16545,
+          "conversions": 5572
+        },
+        "new": {
+          "sessions": 18391,
+          "users": 18385,
+          "conversions": 2862
+        },
+        "(not set)": {
+          "sessions": 4188,
+          "users": 3723,
+          "conversions": 0
+        }
+      },
+      "2026-05-18": {
+        "returning": {
+          "sessions": 29325,
+          "users": 20511,
+          "conversions": 6369
+        },
+        "new": {
+          "sessions": 24524,
+          "users": 24644,
+          "conversions": 3182
+        },
+        "(not set)": {
+          "sessions": 6178,
+          "users": 5308,
+          "conversions": 0
+        }
+      },
+      "2026-05-19": {
+        "returning": {
+          "sessions": 26242,
+          "users": 19675,
+          "conversions": 5971
+        },
+        "new": {
+          "sessions": 24141,
+          "users": 24022,
+          "conversions": 2827
+        },
+        "(not set)": {
+          "sessions": 5735,
+          "users": 5108,
+          "conversions": 0
+        }
+      },
+      "2026-05-20": {
+        "returning": {
+          "sessions": 28193,
+          "users": 19507,
+          "conversions": 7500
+        },
+        "new": {
+          "sessions": 22552,
+          "users": 22437,
+          "conversions": 3217
+        },
+        "(not set)": {
+          "sessions": 5321,
+          "users": 4737,
+          "conversions": 0
+        }
+      },
+      "2026-05-21": {
+        "returning": {
+          "sessions": 26420,
+          "users": 19192,
+          "conversions": 7124
+        },
+        "new": {
+          "sessions": 21988,
+          "users": 22188,
+          "conversions": 3396
+        },
+        "(not set)": {
+          "sessions": 4924,
+          "users": 4427,
+          "conversions": 0
+        }
+      },
+      "2026-05-22": {
+        "returning": {
+          "sessions": 15614,
+          "users": 12138,
+          "conversions": 2734
+        },
+        "new": {
+          "sessions": 15240,
+          "users": 13947,
+          "conversions": 907
+        },
+        "": {
+          "sessions": 11612,
+          "users": 10577,
+          "conversions": 1039
+        }
+      }
+    }
+  },
   "funnel": [
     {
       "step": "Busca",
       "event": "search",
-      "event_count": 2683998,
-      "users": 525837,
+      "event_count": 2686214,
+      "users": 526378,
       "drop_rate": 0
     },
     {
       "step": "Selecionou item",
       "event": "select_item",
-      "event_count": 190678,
-      "users": 85642,
+      "event_count": 190850,
+      "users": 85735,
       "drop_rate": 83.7
     },
     {
       "step": "Adicionou ao carrinho",
       "event": "add_to_cart",
-      "event_count": 344827,
-      "users": 148989,
-      "drop_rate": -74.0
+      "event_count": 345097,
+      "users": 149129,
+      "drop_rate": -73.9
     },
     {
       "step": "Iniciou checkout",
       "event": "begin_checkout",
-      "event_count": 220072,
-      "users": 103656,
-      "drop_rate": 30.4
+      "event_count": 220229,
+      "users": 103703,
+      "drop_rate": 30.5
     },
     {
       "step": "Compra",
       "event": "purchase",
-      "event_count": 217658,
-      "users": 110244,
+      "event_count": 217814,
+      "users": 110303,
       "drop_rate": -6.4
     }
   ],
+  "funnel_daily": {
+    "dates": [
+      "2026-04-22",
+      "2026-04-23",
+      "2026-04-24",
+      "2026-04-25",
+      "2026-04-26",
+      "2026-04-27",
+      "2026-04-28",
+      "2026-04-29",
+      "2026-04-30",
+      "2026-05-01",
+      "2026-05-02",
+      "2026-05-03",
+      "2026-05-04",
+      "2026-05-05",
+      "2026-05-06",
+      "2026-05-07",
+      "2026-05-08",
+      "2026-05-09",
+      "2026-05-10",
+      "2026-05-11",
+      "2026-05-12",
+      "2026-05-13",
+      "2026-05-14",
+      "2026-05-15",
+      "2026-05-16",
+      "2026-05-17",
+      "2026-05-18",
+      "2026-05-19",
+      "2026-05-20",
+      "2026-05-21",
+      "2026-05-22"
+    ],
+    "events": [
+      "search",
+      "select_item",
+      "add_to_cart",
+      "begin_checkout",
+      "purchase"
+    ],
+    "data": {
+      "2026-04-22": {
+        "search": {
+          "event_count": 82275,
+          "users": 24729
+        },
+        "select_item": {
+          "event_count": 6744,
+          "users": 3600
+        },
+        "add_to_cart": {
+          "event_count": 12054,
+          "users": 6390
+        },
+        "begin_checkout": {
+          "event_count": 6923,
+          "users": 4063
+        },
+        "purchase": {
+          "event_count": 5628,
+          "users": 4559
+        }
+      },
+      "2026-04-23": {
+        "search": {
+          "event_count": 81959,
+          "users": 24376
+        },
+        "select_item": {
+          "event_count": 6804,
+          "users": 3649
+        },
+        "add_to_cart": {
+          "event_count": 12248,
+          "users": 6471
+        },
+        "begin_checkout": {
+          "event_count": 7151,
+          "users": 4200
+        },
+        "purchase": {
+          "event_count": 5732,
+          "users": 4687
+        }
+      },
+      "2026-04-24": {
+        "search": {
+          "event_count": 83267,
+          "users": 24564
+        },
+        "select_item": {
+          "event_count": 6397,
+          "users": 3474
+        },
+        "add_to_cart": {
+          "event_count": 11976,
+          "users": 6304
+        },
+        "begin_checkout": {
+          "event_count": 7398,
+          "users": 4175
+        },
+        "purchase": {
+          "event_count": 5818,
+          "users": 4683
+        }
+      },
+      "2026-04-25": {
+        "search": {
+          "event_count": 66938,
+          "users": 20183
+        },
+        "select_item": {
+          "event_count": 5247,
+          "users": 2864
+        },
+        "add_to_cart": {
+          "event_count": 9251,
+          "users": 5151
+        },
+        "begin_checkout": {
+          "event_count": 5957,
+          "users": 3565
+        },
+        "purchase": {
+          "event_count": 4803,
+          "users": 3965
+        }
+      },
+      "2026-04-26": {
+        "search": {
+          "event_count": 75601,
+          "users": 22151
+        },
+        "select_item": {
+          "event_count": 6083,
+          "users": 3236
+        },
+        "add_to_cart": {
+          "event_count": 10257,
+          "users": 5662
+        },
+        "begin_checkout": {
+          "event_count": 6249,
+          "users": 3789
+        },
+        "purchase": {
+          "event_count": 4896,
+          "users": 4063
+        }
+      },
+      "2026-04-27": {
+        "search": {
+          "event_count": 92457,
+          "users": 27131
+        },
+        "select_item": {
+          "event_count": 7412,
+          "users": 3883
+        },
+        "add_to_cart": {
+          "event_count": 13271,
+          "users": 6961
+        },
+        "begin_checkout": {
+          "event_count": 7868,
+          "users": 4594
+        },
+        "purchase": {
+          "event_count": 6283,
+          "users": 5067
+        }
+      },
+      "2026-04-28": {
+        "search": {
+          "event_count": 94815,
+          "users": 26249
+        },
+        "select_item": {
+          "event_count": 7406,
+          "users": 3809
+        },
+        "add_to_cart": {
+          "event_count": 13119,
+          "users": 6871
+        },
+        "begin_checkout": {
+          "event_count": 8082,
+          "users": 4565
+        },
+        "purchase": {
+          "event_count": 6180,
+          "users": 5019
+        }
+      },
+      "2026-04-29": {
+        "search": {
+          "event_count": 97980,
+          "users": 27268
+        },
+        "select_item": {
+          "event_count": 7201,
+          "users": 3862
+        },
+        "add_to_cart": {
+          "event_count": 13556,
+          "users": 7010
+        },
+        "begin_checkout": {
+          "event_count": 8414,
+          "users": 4762
+        },
+        "purchase": {
+          "event_count": 6373,
+          "users": 5136
+        }
+      },
+      "2026-04-30": {
+        "search": {
+          "event_count": 95828,
+          "users": 27298
+        },
+        "select_item": {
+          "event_count": 6656,
+          "users": 3648
+        },
+        "add_to_cart": {
+          "event_count": 12830,
+          "users": 6740
+        },
+        "begin_checkout": {
+          "event_count": 8013,
+          "users": 4651
+        },
+        "purchase": {
+          "event_count": 6245,
+          "users": 5048
+        }
+      },
+      "2026-05-01": {
+        "search": {
+          "event_count": 70043,
+          "users": 20666
+        },
+        "select_item": {
+          "event_count": 5568,
+          "users": 2934
+        },
+        "add_to_cart": {
+          "event_count": 9310,
+          "users": 5196
+        },
+        "begin_checkout": {
+          "event_count": 5859,
+          "users": 3588
+        },
+        "purchase": {
+          "event_count": 4711,
+          "users": 3936
+        }
+      },
+      "2026-05-02": {
+        "search": {
+          "event_count": 71602,
+          "users": 20536
+        },
+        "select_item": {
+          "event_count": 4954,
+          "users": 2689
+        },
+        "add_to_cart": {
+          "event_count": 8789,
+          "users": 5062
+        },
+        "begin_checkout": {
+          "event_count": 5801,
+          "users": 3492
+        },
+        "purchase": {
+          "event_count": 5010,
+          "users": 4078
+        }
+      },
+      "2026-05-03": {
+        "search": {
+          "event_count": 74105,
+          "users": 21944
+        },
+        "select_item": {
+          "event_count": 5956,
+          "users": 3149
+        },
+        "add_to_cart": {
+          "event_count": 9355,
+          "users": 5372
+        },
+        "begin_checkout": {
+          "event_count": 6019,
+          "users": 3658
+        },
+        "purchase": {
+          "event_count": 4763,
+          "users": 4006
+        }
+      },
+      "2026-05-04": {
+        "search": {
+          "event_count": 98562,
+          "users": 28044
+        },
+        "select_item": {
+          "event_count": 7637,
+          "users": 3924
+        },
+        "add_to_cart": {
+          "event_count": 13711,
+          "users": 7025
+        },
+        "begin_checkout": {
+          "event_count": 8458,
+          "users": 4742
+        },
+        "purchase": {
+          "event_count": 6487,
+          "users": 5272
+        }
+      },
+      "2026-05-05": {
+        "search": {
+          "event_count": 103480,
+          "users": 28381
+        },
+        "select_item": {
+          "event_count": 7553,
+          "users": 3684
+        },
+        "add_to_cart": {
+          "event_count": 13652,
+          "users": 6815
+        },
+        "begin_checkout": {
+          "event_count": 8725,
+          "users": 4745
+        },
+        "purchase": {
+          "event_count": 6478,
+          "users": 5174
+        }
+      },
+      "2026-05-06": {
+        "search": {
+          "event_count": 100781,
+          "users": 28027
+        },
+        "select_item": {
+          "event_count": 6893,
+          "users": 3598
+        },
+        "add_to_cart": {
+          "event_count": 13387,
+          "users": 6984
+        },
+        "begin_checkout": {
+          "event_count": 8550,
+          "users": 4851
+        },
+        "purchase": {
+          "event_count": 6498,
+          "users": 5327
+        }
+      },
+      "2026-05-07": {
+        "search": {
+          "event_count": 106786,
+          "users": 29091
+        },
+        "select_item": {
+          "event_count": 7072,
+          "users": 3613
+        },
+        "add_to_cart": {
+          "event_count": 14325,
+          "users": 7362
+        },
+        "begin_checkout": {
+          "event_count": 9756,
+          "users": 5252
+        },
+        "purchase": {
+          "event_count": 6546,
+          "users": 5369
+        }
+      },
+      "2026-05-08": {
+        "search": {
+          "event_count": 101886,
+          "users": 27943
+        },
+        "select_item": {
+          "event_count": 5941,
+          "users": 3150
+        },
+        "add_to_cart": {
+          "event_count": 12225,
+          "users": 6459
+        },
+        "begin_checkout": {
+          "event_count": 8442,
+          "users": 4721
+        },
+        "purchase": {
+          "event_count": 6375,
+          "users": 5116
+        }
+      },
+      "2026-05-09": {
+        "search": {
+          "event_count": 76183,
+          "users": 21651
+        },
+        "select_item": {
+          "event_count": 4816,
+          "users": 2578
+        },
+        "add_to_cart": {
+          "event_count": 9115,
+          "users": 5032
+        },
+        "begin_checkout": {
+          "event_count": 6539,
+          "users": 3682
+        },
+        "purchase": {
+          "event_count": 5139,
+          "users": 4155
+        }
+      },
+      "2026-05-10": {
+        "search": {
+          "event_count": 77336,
+          "users": 21856
+        },
+        "select_item": {
+          "event_count": 5339,
+          "users": 2702
+        },
+        "add_to_cart": {
+          "event_count": 9192,
+          "users": 5056
+        },
+        "begin_checkout": {
+          "event_count": 6449,
+          "users": 3672
+        },
+        "purchase": {
+          "event_count": 4764,
+          "users": 3955
+        }
+      },
+      "2026-05-11": {
+        "search": {
+          "event_count": 104098,
+          "users": 28328
+        },
+        "select_item": {
+          "event_count": 7323,
+          "users": 3746
+        },
+        "add_to_cart": {
+          "event_count": 13338,
+          "users": 6877
+        },
+        "begin_checkout": {
+          "event_count": 8561,
+          "users": 4732
+        },
+        "purchase": {
+          "event_count": 6303,
+          "users": 5124
+        }
+      },
+      "2026-05-12": {
+        "search": {
+          "event_count": 94889,
+          "users": 26600
+        },
+        "select_item": {
+          "event_count": 6720,
+          "users": 3507
+        },
+        "add_to_cart": {
+          "event_count": 12866,
+          "users": 6483
+        },
+        "begin_checkout": {
+          "event_count": 8131,
+          "users": 4450
+        },
+        "purchase": {
+          "event_count": 10659,
+          "users": 4804
+        }
+      },
+      "2026-05-13": {
+        "search": {
+          "event_count": 87491,
+          "users": 24125
+        },
+        "select_item": {
+          "event_count": 6225,
+          "users": 3207
+        },
+        "add_to_cart": {
+          "event_count": 11354,
+          "users": 5833
+        },
+        "begin_checkout": {
+          "event_count": 7183,
+          "users": 3945
+        },
+        "purchase": {
+          "event_count": 9900,
+          "users": 4328
+        }
+      },
+      "2026-05-14": {
+        "search": {
+          "event_count": 93021,
+          "users": 26170
+        },
+        "select_item": {
+          "event_count": 6691,
+          "users": 3492
+        },
+        "add_to_cart": {
+          "event_count": 11523,
+          "users": 6114
+        },
+        "begin_checkout": {
+          "event_count": 7369,
+          "users": 4213
+        },
+        "purchase": {
+          "event_count": 10561,
+          "users": 4673
+        }
+      },
+      "2026-05-15": {
+        "search": {
+          "event_count": 90538,
+          "users": 26084
+        },
+        "select_item": {
+          "event_count": 5790,
+          "users": 3104
+        },
+        "add_to_cart": {
+          "event_count": 10513,
+          "users": 5706
+        },
+        "begin_checkout": {
+          "event_count": 7172,
+          "users": 4011
+        },
+        "purchase": {
+          "event_count": 10415,
+          "users": 4538
+        }
+      },
+      "2026-05-16": {
+        "search": {
+          "event_count": 74586,
+          "users": 20970
+        },
+        "select_item": {
+          "event_count": 4487,
+          "users": 2378
+        },
+        "add_to_cart": {
+          "event_count": 8114,
+          "users": 4618
+        },
+        "begin_checkout": {
+          "event_count": 5704,
+          "users": 3366
+        },
+        "purchase": {
+          "event_count": 8547,
+          "users": 3779
+        }
+      },
+      "2026-05-17": {
+        "search": {
+          "event_count": 82221,
+          "users": 23581
+        },
+        "select_item": {
+          "event_count": 5478,
+          "users": 2858
+        },
+        "add_to_cart": {
+          "event_count": 8848,
+          "users": 4985
+        },
+        "begin_checkout": {
+          "event_count": 6094,
+          "users": 3527
+        },
+        "purchase": {
+          "event_count": 8434,
+          "users": 3791
+        }
+      },
+      "2026-05-18": {
+        "search": {
+          "event_count": 83394,
+          "users": 25558
+        },
+        "select_item": {
+          "event_count": 5202,
+          "users": 2778
+        },
+        "add_to_cart": {
+          "event_count": 9485,
+          "users": 5233
+        },
+        "begin_checkout": {
+          "event_count": 5880,
+          "users": 3457
+        },
+        "purchase": {
+          "event_count": 9551,
+          "users": 4498
+        }
+      },
+      "2026-05-19": {
+        "search": {
+          "event_count": 80320,
+          "users": 23307
+        },
+        "select_item": {
+          "event_count": 5289,
+          "users": 2748
+        },
+        "add_to_cart": {
+          "event_count": 9338,
+          "users": 4925
+        },
+        "begin_checkout": {
+          "event_count": 5782,
+          "users": 3255
+        },
+        "purchase": {
+          "event_count": 8798,
+          "users": 4213
+        }
+      },
+      "2026-05-20": {
+        "search": {
+          "event_count": 97977,
+          "users": 27847
+        },
+        "select_item": {
+          "event_count": 6276,
+          "users": 3337
+        },
+        "add_to_cart": {
+          "event_count": 11820,
+          "users": 6194
+        },
+        "begin_checkout": {
+          "event_count": 7357,
+          "users": 4178
+        },
+        "purchase": {
+          "event_count": 10717,
+          "users": 4592
+        }
+      },
+      "2026-05-21": {
+        "search": {
+          "event_count": 95419,
+          "users": 26711
+        },
+        "select_item": {
+          "event_count": 6239,
+          "users": 3371
+        },
+        "add_to_cart": {
+          "event_count": 10978,
+          "users": 5886
+        },
+        "begin_checkout": {
+          "event_count": 6963,
+          "users": 4021
+        },
+        "purchase": {
+          "event_count": 10520,
+          "users": 4460
+        }
+      },
+      "2026-05-22": {
+        "search": {
+          "event_count": 50376,
+          "users": 17162
+        },
+        "select_item": {
+          "event_count": 3451,
+          "users": 1990
+        },
+        "add_to_cart": {
+          "event_count": 5297,
+          "users": 3193
+        },
+        "begin_checkout": {
+          "event_count": 3380,
+          "users": 2123
+        },
+        "purchase": {
+          "event_count": 4680,
+          "users": 2575
+        }
+      }
+    }
+  },
   "routes": {
     "top_routes": [
       {
         "origin": "(other)",
         "destination": "(other)",
-        "ecommercePurchases": 124702,
+        "purchases": 124702,
         "users": 77968
       },
       {
         "origin": "BELO HORIZONTE - MG",
         "destination": "RIO DE JANEIRO - RJ",
-        "ecommercePurchases": 47715,
-        "users": 4665
+        "purchases": 47739,
+        "users": 4666
       },
       {
         "origin": "FORTALEZA - CE",
         "destination": "SOBRAL - CE",
-        "ecommercePurchases": 46174,
-        "users": 5897
+        "purchases": 46210,
+        "users": 5898
       },
       {
         "origin": "TERESINA - PI",
         "destination": "FORTALEZA - CE",
-        "ecommercePurchases": 43955,
-        "users": 5363
+        "purchases": 43975,
+        "users": 5368
       },
       {
         "origin": "SOBRAL - CE",
         "destination": "FORTALEZA - CE",
-        "ecommercePurchases": 43244,
-        "users": 6035
+        "purchases": 43274,
+        "users": 6039
       },
       {
         "origin": "NATAL - RN",
         "destination": "FORTALEZA - CE",
-        "ecommercePurchases": 42576,
-        "users": 5012
+        "purchases": 42603,
+        "users": 5020
       },
       {
         "origin": "RIO DE JANEIRO - RJ",
         "destination": "BELO HORIZONTE - MG",
-        "ecommercePurchases": 42024,
-        "users": 4299
+        "purchases": 42038,
+        "users": 4302
       },
       {
         "origin": "FORTALEZA - CE",
         "destination": "NATAL - RN",
-        "ecommercePurchases": 41237,
-        "users": 5075
+        "purchases": 41254,
+        "users": 5080
       },
       {
         "origin": "RIO DE JANEIRO - RJ - TODOS",
         "destination": "BELO HORIZONTE - MG - TODOS",
-        "ecommercePurchases": 38681,
-        "users": 13796
+        "purchases": 38691,
+        "users": 13797
       },
       {
         "origin": "BELO HORIZONTE - MG - TODOS",
         "destination": "RIO DE JANEIRO - RJ - TODOS",
-        "ecommercePurchases": 34045,
-        "users": 5771
+        "purchases": 34067,
+        "users": 5775
       },
       {
         "origin": "FORTALEZA - CE - TODOS",
         "destination": "NATAL - RN",
-        "ecommercePurchases": 33710,
-        "users": 4920
+        "purchases": 33725,
+        "users": 4924
       },
       {
         "origin": "JUIZ DE FORA - MG",
         "destination": "RIO DE JANEIRO - RJ",
-        "ecommercePurchases": 31944,
-        "users": 3578
+        "purchases": 31973,
+        "users": 3582
       },
       {
         "origin": "BRASILIA - DF",
         "destination": "GOIANIA - GO",
-        "ecommercePurchases": 31636,
-        "users": 4089
+        "purchases": 31718,
+        "users": 4096
       },
       {
         "origin": "FORTALEZA - CE",
         "destination": "RECIFE - PE",
-        "ecommercePurchases": 31411,
-        "users": 4131
+        "purchases": 31422,
+        "users": 4135
       },
       {
         "origin": "FORTALEZA - CE",
         "destination": "JUAZEIRO DO NORTE - CE",
-        "ecommercePurchases": 30945,
-        "users": 4279
+        "purchases": 30961,
+        "users": 4282
       },
       {
         "origin": "TERESINA - PI",
         "destination": "PARNAIBA - PI",
-        "ecommercePurchases": 30841,
-        "users": 4512
+        "purchases": 30869,
+        "users": 4517
       },
       {
         "origin": "JUIZ DE FORA - MG - TODOS",
         "destination": "RIO DE JANEIRO - RJ - TODOS",
-        "ecommercePurchases": 30129,
-        "users": 5129
+        "purchases": 30144,
+        "users": 5131
       },
       {
         "origin": "FORTALEZA - CE",
         "destination": "TERESINA - PI",
-        "ecommercePurchases": 29723,
-        "users": 3950
+        "purchases": 29763,
+        "users": 3953
       }
     ],
     "top_origins": [
       {
         "city": "FORTALEZA - CE",
-        "searches": 579869,
-        "users": 69122,
-        "conversions": 20964
+        "searches": 580249,
+        "users": 69164,
+        "conversions": 20973
       },
       {
         "city": "FORTALEZA - CE - TODOS",
-        "searches": 447981,
-        "users": 59571,
+        "searches": 448301,
+        "users": 59618,
         "conversions": 0
       },
       {
-        "city": "RIO DE JANEIRO - RJ",
-        "searches": 306925,
-        "users": 34606,
-        "conversions": 12604
+        "city": "",
+        "searches": 309277,
+        "users": 43289,
+        "conversions": 1928
       },
       {
-        "city": "",
-        "searches": 295858,
-        "users": 42000,
-        "conversions": 1900
+        "city": "RIO DE JANEIRO - RJ",
+        "searches": 307180,
+        "users": 34642,
+        "conversions": 12619
       },
       {
         "city": "RIO DE JANEIRO - RJ - TODOS",
-        "searches": 265303,
-        "users": 42144,
+        "searches": 265532,
+        "users": 42172,
         "conversions": 0
       },
       {
         "city": "BRASILIA - DF",
-        "searches": 210570,
-        "users": 21853,
-        "conversions": 4032
+        "searches": 210748,
+        "users": 21881,
+        "conversions": 4033
       },
       {
         "city": "TERESINA - PI",
-        "searches": 206535,
-        "users": 24949,
-        "conversions": 5216
+        "searches": 206693,
+        "users": 24982,
+        "conversions": 5220
       },
       {
         "city": "SAO LUIS - MA",
-        "searches": 200723,
-        "users": 21051,
-        "conversions": 4134
+        "searches": 200854,
+        "users": 21072,
+        "conversions": 4138
       },
       {
         "city": "SOBRAL - CE",
-        "searches": 198230,
-        "users": 21763,
-        "conversions": 5420
+        "searches": 198360,
+        "users": 21780,
+        "conversions": 5425
       },
       {
         "city": "JOAO PESSOA - PB",
-        "searches": 173343,
-        "users": 18409,
-        "conversions": 4790
+        "searches": 173567,
+        "users": 18429,
+        "conversions": 4794
       },
       {
         "city": "JUAZEIRO DO NORTE - CE",
-        "searches": 167115,
-        "users": 18516,
-        "conversions": 3670
+        "searches": 167225,
+        "users": 18525,
+        "conversions": 3672
       },
       {
         "city": "BELO HORIZONTE - MG",
-        "searches": 136155,
-        "users": 13059,
-        "conversions": 3561
+        "searches": 136275,
+        "users": 13072,
+        "conversions": 3566
       },
       {
         "city": "SALVADOR - BA",
-        "searches": 133518,
-        "users": 12793,
-        "conversions": 2662
+        "searches": 133657,
+        "users": 12804,
+        "conversions": 2664
       },
       {
         "city": "PARNAIBA - PI",
-        "searches": 132612,
-        "users": 13890,
+        "searches": 132742,
+        "users": 13907,
         "conversions": 2666
       }
     ],
     "top_destinations": [
       {
         "city": "FORTALEZA - CE",
-        "searches": 548765,
-        "users": 67305,
-        "conversions": 17932
+        "searches": 549133,
+        "users": 67334,
+        "conversions": 17941
       },
       {
         "city": "FORTALEZA - CE - TODOS",
-        "searches": 347461,
-        "users": 50127,
+        "searches": 347755,
+        "users": 50184,
         "conversions": 0
       },
       {
         "city": "RIO DE JANEIRO - RJ",
-        "searches": 331237,
-        "users": 36257,
-        "conversions": 12435
+        "searches": 331485,
+        "users": 36297,
+        "conversions": 12453
       },
       {
         "city": "",
-        "searches": 300701,
-        "users": 44702,
-        "conversions": 1879
+        "searches": 314115,
+        "users": 45986,
+        "conversions": 1906
       },
       {
         "city": "RIO DE JANEIRO - RJ - TODOS",
-        "searches": 242417,
-        "users": 33221,
+        "searches": 242593,
+        "users": 33239,
         "conversions": 0
       },
       {
         "city": "SOBRAL - CE",
-        "searches": 193923,
-        "users": 21072,
-        "conversions": 5402
+        "searches": 194071,
+        "users": 21089,
+        "conversions": 5403
       },
       {
         "city": "JOAO PESSOA - PB",
-        "searches": 180870,
-        "users": 20152,
-        "conversions": 4645
+        "searches": 181003,
+        "users": 20157,
+        "conversions": 4646
       },
       {
         "city": "SAO LUIS - MA",
-        "searches": 173834,
-        "users": 20009,
-        "conversions": 3283
+        "searches": 173961,
+        "users": 20023,
+        "conversions": 3284
       },
       {
         "city": "JUAZEIRO DO NORTE - CE",
-        "searches": 169320,
-        "users": 18907,
-        "conversions": 3369
+        "searches": 169449,
+        "users": 18931,
+        "conversions": 3370
       },
       {
         "city": "BRASILIA - DF",
-        "searches": 161701,
-        "users": 17919,
-        "conversions": 4046
+        "searches": 161783,
+        "users": 17934,
+        "conversions": 4048
       },
       {
         "city": "TERESINA - PI",
-        "searches": 159415,
-        "users": 20013,
-        "conversions": 4903
+        "searches": 159552,
+        "users": 20030,
+        "conversions": 4909
       },
       {
         "city": "PARNAIBA - PI",
-        "searches": 134941,
-        "users": 14497,
-        "conversions": 2858
+        "searches": 135042,
+        "users": 14521,
+        "conversions": 2860
       },
       {
         "city": "SAO PAULO - SP",
-        "searches": 122650,
-        "users": 14423,
-        "conversions": 2976
+        "searches": 122759,
+        "users": 14438,
+        "conversions": 2979
       },
       {
         "city": "GOIANIA - GO",
-        "searches": 120213,
-        "users": 13271,
-        "conversions": 3544
+        "searches": 120368,
+        "users": 13292,
+        "conversions": 3546
       }
     ],
     "route_conversion": [
@@ -1036,85 +4627,85 @@
         "route": "RIO DE JANEIRO - RJ - TODOS → BELO HORIZONTE - MG - TODOS",
         "origin": "RIO DE JANEIRO - RJ - TODOS",
         "destination": "BELO HORIZONTE - MG - TODOS",
-        "searches": 38681,
-        "users": 13796
+        "searches": 38691,
+        "users": 13797
       },
       {
         "route": "SOBRAL - CE → FORTALEZA - CE",
         "origin": "SOBRAL - CE",
         "destination": "FORTALEZA - CE",
-        "searches": 43244,
-        "users": 6035
+        "searches": 43274,
+        "users": 6039
       },
       {
         "route": "FORTALEZA - CE → SOBRAL - CE",
         "origin": "FORTALEZA - CE",
         "destination": "SOBRAL - CE",
-        "searches": 46174,
-        "users": 5897
+        "searches": 46210,
+        "users": 5898
       },
       {
         "route": "BELO HORIZONTE - MG - TODOS → RIO DE JANEIRO - RJ - TODOS",
         "origin": "BELO HORIZONTE - MG - TODOS",
         "destination": "RIO DE JANEIRO - RJ - TODOS",
-        "searches": 34045,
-        "users": 5771
+        "searches": 34067,
+        "users": 5775
       },
       {
         "route": "TERESINA - PI → FORTALEZA - CE",
         "origin": "TERESINA - PI",
         "destination": "FORTALEZA - CE",
-        "searches": 43955,
-        "users": 5363
+        "searches": 43975,
+        "users": 5368
       },
       {
         "route": "JUIZ DE FORA - MG - TODOS → RIO DE JANEIRO - RJ - TODOS",
         "origin": "JUIZ DE FORA - MG - TODOS",
         "destination": "RIO DE JANEIRO - RJ - TODOS",
-        "searches": 30129,
-        "users": 5129
+        "searches": 30144,
+        "users": 5131
       },
       {
         "route": "FORTALEZA - CE → NATAL - RN",
         "origin": "FORTALEZA - CE",
         "destination": "NATAL - RN",
-        "searches": 41237,
-        "users": 5075
+        "searches": 41254,
+        "users": 5080
       },
       {
         "route": "NATAL - RN → FORTALEZA - CE",
         "origin": "NATAL - RN",
         "destination": "FORTALEZA - CE",
-        "searches": 42576,
-        "users": 5012
+        "searches": 42603,
+        "users": 5020
       },
       {
         "route": "FORTALEZA - CE - TODOS → NATAL - RN",
         "origin": "FORTALEZA - CE - TODOS",
         "destination": "NATAL - RN",
-        "searches": 33710,
-        "users": 4920
+        "searches": 33725,
+        "users": 4924
       },
       {
         "route": "FORTALEZA - CE - TODOS → SOBRAL - CE",
         "origin": "FORTALEZA - CE - TODOS",
         "destination": "SOBRAL - CE",
-        "searches": 26887,
-        "users": 4742
+        "searches": 26901,
+        "users": 4744
       },
       {
         "route": "BELO HORIZONTE - MG → RIO DE JANEIRO - RJ",
         "origin": "BELO HORIZONTE - MG",
         "destination": "RIO DE JANEIRO - RJ",
-        "searches": 47715,
-        "users": 4665
+        "searches": 47739,
+        "users": 4666
       },
       {
         "route": "TERESINA - PI → PARNAIBA - PI",
         "origin": "TERESINA - PI",
         "destination": "PARNAIBA - PI",
-        "searches": 30841,
-        "users": 4512
+        "searches": 30869,
+        "users": 4517
       }
     ]
   },
