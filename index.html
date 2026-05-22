@@ -61,13 +61,13 @@
 
     /* KPI */
     .kgrid{display:grid;grid-template-columns:repeat(7,1fr);gap:1px;background:var(--border);border:1px solid var(--border);border-radius:10px;overflow:visible;margin-bottom:22px;position:relative;z-index:10}
-    .kpi{background:var(--surface);padding:16px 14px;transition:background .15s;border-top:3px solid transparent;border-right:1px solid var(--border);position:relative;min-width:0;overflow:hidden}
+    .kpi{background:var(--surface);padding:16px 14px;transition:background .15s;border-top:3px solid transparent;border-right:1px solid var(--border);position:relative;min-width:0;overflow:hidden;display:flex;flex-direction:column}
     .kpi:first-child{border-radius:10px 0 0 10px}.kpi:last-child{border-radius:0 10px 10px 0;border-right:none}
     .kpi:hover{background:#fafaf8}
     .kpi.cb{border-top-color:var(--blue)}.kpi.ct{border-top-color:var(--teal)}.kpi.cg{border-top-color:var(--green)}
     .kpi.ci{border-top-color:var(--indigo)}.kpi.ca{border-top-color:var(--amber)}.kpi.cp{border-top-color:var(--purple)}.kpi.cc{border-top-color:var(--cyan)}
     .kl{font-size:10px;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:.07em;margin-bottom:7px;display:flex;align-items:center;gap:5px}
-    .kv{font-family:'IBM Plex Mono',monospace;font-size:clamp(14px,1.3vw,20px);font-weight:600;line-height:1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.ks{font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--muted);margin-top:5px;white-space:normal;line-height:1.3;word-break:break-word}
+    .kv{font-family:'IBM Plex Mono',monospace;font-size:clamp(13px,1.2vw,19px);font-weight:600;line-height:1.1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:100%}.ks{font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--muted);margin-top:4px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;flex-shrink:0}
     
 
     /* Info icon — tooltip opens downward from KPI, upward from cards */
@@ -197,21 +197,21 @@
       <div class="card"><div class="ch"><div class="ct">Usuários novos por dia</div></div><div class="cw h180"><canvas id="ch-new-users"></canvas></div></div>
     </div>
     <div class="g2">
-      <div class="card"><div class="ch"><div class="ct">Dispositivos <span id="dev-tag" class="ctag">filtrado</span></div></div><div class="cw h180"><canvas id="ch-devices"></canvas></div></div>
-      <div class="card"><div class="ch"><div class="ct">Novos vs Recorrentes <span id="nvr-tag" class="ctag">filtrado</span></div></div><div class="cw h180"><canvas id="ch-new-returning"></canvas></div></div>
+      <div class="card"><div class="ch"><div class="ct">Dispositivos <span class="ptag ctag">filtrado</span></div></div><div class="cw h180"><canvas id="ch-devices"></canvas></div></div>
+      <div class="card"><div class="ch"><div class="ct">Novos vs Recorrentes <span class="ptag ctag">filtrado</span></div></div><div class="cw h180"><canvas id="ch-new-returning"></canvas></div></div>
     </div>
   </div>
 
   <!-- ACQUISITION -->
   <div id="sec-acquisition" class="sec">
     <div class="g2">
-      <div class="card"><div class="ch"><div class="ct">Sessões por Canal <span id="ch-tag" class="ctag">filtrado</span></div></div><div class="cw h220"><canvas id="ch-channels"></canvas></div></div>
-      <div class="card"><div class="ch"><div class="ct">Taxa de Conversão por Canal <span id="cvr-tag" class="ctag">filtrado</span></div><div class="ctag">%</div></div><div class="cw h220"><canvas id="ch-conv-rate"></canvas></div></div>
+      <div class="card"><div class="ch"><div class="ct">Sessões por Canal <span class="ptag ctag">filtrado</span></div></div><div class="cw h220"><canvas id="ch-channels"></canvas></div></div>
+      <div class="card"><div class="ch"><div class="ct">Taxa de Conversão por Canal <span class="ptag ctag">filtrado</span></div><div class="ctag">%</div></div><div class="cw h220"><canvas id="ch-conv-rate"></canvas></div></div>
     </div>
     <div class="g2">
       <div class="card">
         <div class="ch">
-          <div class="ct">Taxa de Rejeição por Canal <span id="br-tag" class="ctag">30d</span>
+          <div class="ct">Taxa de Rejeição por Canal <span class="ptag ctag">30d</span>
             <span class="ii up">i<span class="tip">Taxa de Rejeição: % de sessões sem nenhuma interação engajada. No GA4, é uma sessão com menos de 10s sem evento de engajamento. Abaixo de 40% é considerado bom.</span></span>
           </div><div class="ctag">%</div>
         </div>
@@ -219,7 +219,7 @@
       </div>
       <div class="card"><div class="ch"><div class="ct">Duração Média por Canal <span class="ctag">30d</span></div><div class="ctag">seg</div></div><div class="cw h180"><canvas id="ch-duration-channel"></canvas></div></div>
     </div>
-    <div class="card"><div class="ch"><div class="ct">Origens de Tráfego — Top 15 <span id="src-tag" class="ctag">filtrado</span></div></div><div class="tw"><table id="tbl-sources"></table></div></div>
+    <div class="card"><div class="ch"><div class="ct">Origens de Tráfego — Top 15 <span class="ptag ctag">filtrado</span></div></div><div class="tw"><table id="tbl-sources"></table></div></div>
   </div>
 
   <!-- PAGES -->
@@ -254,17 +254,17 @@
   <div id="sec-funnel" class="sec">
     <div class="card" style="margin-bottom:12px">
       <div class="ch">
-        <div class="ct">Funil de Eventos <span id="fnl-tag" class="ctag">filtrado</span></div>
+        <div class="ct">Funil de Eventos <span class="ptag ctag">filtrado</span></div>
         <div class="wsrow" style="margin-bottom:0">
           <span class="wslabel">Semana</span>
-          <select class="wssel" id="wk-funnel" onchange="renderFunnelWeekly()"><option value="all">Agregado 30d</option></select>
+          <select class="wssel" id="wk-funnel" onchange="renderFunnelWeekly()"><option value="all">Agregado (período)</option></select>
         </div>
       </div>
       <div id="funnel-wrap"></div>
     </div>
     <div class="g2">
-      <div class="card"><div class="ch"><div class="ct">Volume de eventos <span id="fvol-tag" class="ctag">filtrado</span></div></div><div class="cw h220"><canvas id="ch-funnel-vol"></canvas></div></div>
-      <div class="card"><div class="ch"><div class="ct">Taxa de abandono entre etapas <span id="fdrop-tag" class="ctag">filtrado</span></div><div class="ctag">%</div></div><div class="cw h220"><canvas id="ch-funnel-drop"></canvas></div></div>
+      <div class="card"><div class="ch"><div class="ct">Volume de eventos <span class="ptag ctag">filtrado</span></div></div><div class="cw h220"><canvas id="ch-funnel-vol"></canvas></div></div>
+      <div class="card"><div class="ch"><div class="ct">Taxa de abandono entre etapas <span class="ptag ctag">filtrado</span></div><div class="ctag">%</div></div><div class="cw h220"><canvas id="ch-funnel-drop"></canvas></div></div>
     </div>
   </div>
 
@@ -322,7 +322,7 @@ function dO(){return{responsive:true,maintainAspectRatio:false,cutout:'55%',plug
 
 let RAW=null, CHARTS={};
 function kill(){Object.values(CHARTS).forEach(c=>{try{c.destroy()}catch(e){}});CHARTS={}}
-function mk(id,type,data,opts){const el=document.getElementById(id);if(!el)return;CHARTS[id]=new Chart(el,{type,data,options:opts})}
+function mk(id,type,data,opts){const el=document.getElementById(id);if(!el)return;if(CHARTS[id])try{CHARTS[id].destroy()}catch(e){}; CHARTS[id]=new Chart(el,{type,data,options:opts})}
 
 function showS(id,btn){
   document.querySelectorAll('.sec').forEach(s=>s.classList.remove('on'));
@@ -331,7 +331,19 @@ function showS(id,btn){
   btn.classList.add('on');
 }
 
-// ── Filter date helpers ───────────────────────────────────────────────────────
+// ── Date / week helpers ───────────────────────────────────────────────────────
+function dateToWeek(dateStr){
+  const d=new Date(dateStr+'T12:00:00');
+  const jan1=new Date(d.getFullYear(),0,1);
+  const week=Math.ceil(((d-jan1)/86400000+jan1.getDay()+1)/7);
+  return `${d.getFullYear()}${String(week).padStart(2,'0')}`;
+}
+function weekLabel(yw){
+  const y=yw.slice(0,4),w=parseInt(yw.slice(4));
+  return `Sem ${w}/${y}`;
+}
+
+// ── Filter helpers ────────────────────────────────────────────────────────────
 function onPC(){
   const v=document.getElementById('fp').value;
   document.getElementById('crange').classList.toggle('on',v==='custom');
@@ -351,87 +363,93 @@ function getF(){
 }
 
 function populateF(d){
+  // Sources
   const ss=document.getElementById('fsrc');
-  [...new Set(d.sources.map(r=>r.source))].sort().forEach(s=>{const o=document.createElement('option');o.value=s;o.textContent=s;ss.appendChild(o)});
+  [...new Set(d.sources.map(r=>r.source))].sort().forEach(s=>{
+    const o=document.createElement('option');o.value=s;o.textContent=s;ss.appendChild(o);
+  });
+  // Devices
   const ds=document.getElementById('fdev');
-  d.devices.forEach(r=>{const o=document.createElement('option');o.value=r.device;o.textContent=r.device.charAt(0).toUpperCase()+r.device.slice(1);ds.appendChild(o)});
+  d.devices.forEach(r=>{
+    const o=document.createElement('option');o.value=r.device;
+    o.textContent=r.device.charAt(0).toUpperCase()+r.device.slice(1);ds.appendChild(o);
+  });
+  // Date range defaults
   if(d.daily&&d.daily.length){
     document.getElementById('fdf').value=d.daily[0].date;
     document.getElementById('fdt').value=d.daily[d.daily.length-1].date;
   }
-  // Populate week selectors
-  populateWeekSel('wk-pages', d.pages_weekly?.weeks||[]);
-  populateWeekSel('wk-funnel', d.funnel_daily?.dates||[], true);
+  // Week selectors — initial population with all data
+  repopulateWeekSels(d.daily);
 }
 
-function populateWeekSel(selId, items, isDates=false){
-  const sel=document.getElementById(selId);
-  if(!sel) return;
-  // Clear existing options except first
-  while(sel.options.length>1) sel.remove(1);
-  if(isDates){
-    // Group dates into weeks
-    const weeks=[...new Set(items.map(d=>dateToWeek(d)))];
-    weeks.forEach(w=>{const o=document.createElement('option');o.value=w;o.textContent=weekLabel(w);sel.appendChild(o)});
-  } else {
-    items.forEach(w=>{const o=document.createElement('option');o.value=w;o.textContent=weekLabel(w);sel.appendChild(o)});
-  }
-}
+function repopulateWeekSels(filteredDaily){
+  // pages weekly: derive weeks from filtered daily dates
+  const filteredDates=filteredDaily.map(r=>r.date);
+  const weeksSet=new Set(filteredDates.map(d=>dateToWeek(d)));
+  const weeks=[...weeksSet].sort();
 
-function dateToWeek(dateStr){
-  // Returns yearWeek string like "202412" from "2024-03-25"
-  const d=new Date(dateStr);
-  const jan1=new Date(d.getFullYear(),0,1);
-  const week=Math.ceil(((d-jan1)/86400000+jan1.getDay()+1)/7);
-  return `${d.getFullYear()}${String(week).padStart(2,'0')}`;
-}
+  // Also intersect with pages_weekly keys if available
+  const pwWeeks=new Set(RAW&&RAW.pages_weekly?RAW.pages_weekly.weeks:[]);
+  const pageWeeks=weeks.filter(w=>pwWeeks.size===0||pwWeeks.has(w));
 
-function weekLabel(yw){
-  // "202412" -> "Sem 12/2024"
-  const y=yw.slice(0,4), w=yw.slice(4);
-  return `Sem ${w}/${y}`;
+  // wk-pages
+  const wkp=document.getElementById('wk-pages');
+  const prevPage=wkp.value;
+  while(wkp.options.length>1) wkp.remove(1);
+  pageWeeks.forEach(w=>{const o=document.createElement('option');o.value=w;o.textContent=weekLabel(w);wkp.appendChild(o)});
+  if([...wkp.options].some(o=>o.value===prevPage)) wkp.value=prevPage;
+
+  // wk-funnel
+  const wkf=document.getElementById('wk-funnel');
+  const prevFunnel=wkf.value;
+  while(wkf.options.length>1) wkf.remove(1);
+  weeks.forEach(w=>{const o=document.createElement('option');o.value=w;o.textContent=weekLabel(w);wkf.appendChild(o)});
+  if([...wkf.options].some(o=>o.value===prevFunnel)) wkf.value=prevFunnel;
+  else wkf.value='all';
+
+  // Update funnel tag label
+  const ftag=document.getElementById('fnl-tag');
+  if(ftag) ftag.textContent=`${filteredDaily.length}d`;
 }
 
 function applyF(){
   if(!RAW) return;
   const f=getF();
+  // Status text
   const active=[];
   if(f.period==='custom'&&f.df&&f.dt) active.push(`${f.df} → ${f.dt}`);
   else if(f.period!=='30') active.push(f.period==='all'?'Todo período':`Últimos ${f.period}d`);
   if(f.src!=='all') active.push(`Origem: ${f.src}`);
   if(f.dev!=='all') active.push(`Dispositivo: ${f.dev}`);
   document.getElementById('fst').textContent=active.length?'● '+active.join(' · '):'';
-  // Re-populate week selectors based on filtered date range
-  const filteredDates=filterDates(RAW.daily,f).map(r=>r.date);
-  const allWeeks=RAW.pages_weekly?.weeks||[];
-  populateWeekSel('wk-pages', allWeeks.filter(w=>filteredDates.some(d=>dateToWeek(d)===w)));
-  populateWeekSel('wk-funnel', filteredDates, true);
+
+  const fd=buildF(RAW,f);
+  repopulateWeekSels(fd.daily);
   kill();
-  render(buildF(RAW,f));
+  render(fd);
 }
 
-// ── Build filtered data ───────────────────────────────────────────────────────
-function filterDates(daily, f){
+// ── Filter date range ─────────────────────────────────────────────────────────
+function filterDates(daily,f){
   if(f.period==='custom'&&f.df&&f.dt) return daily.filter(r=>r.date>=f.df&&r.date<=f.dt);
   if(f.period==='all') return daily;
   return daily.slice(-parseInt(f.period));
 }
 
-function filterDailyBreakdown(dailyObj, f){
-  // dailyObj: {dates:[], channels/devices/types:[], data:{date:{key:{...}}}}
-  if(!dailyObj) return dailyObj;
-  let dates=[...dailyObj.dates];
+function filterDailyObj(obj,f){
+  if(!obj) return obj;
+  let dates=[...obj.dates];
   if(f.period==='custom'&&f.df&&f.dt) dates=dates.filter(d=>d>=f.df&&d<=f.dt);
   else if(f.period!=='all') dates=dates.slice(-parseInt(f.period));
-  return{...dailyObj, dates};
+  return{...obj,dates};
 }
 
-function aggregateFromDaily(dailyObj, keyField, metrics){
-  // Re-aggregate after date filter
+function aggFromDaily(obj,keyField,metrics){
   const agg={};
-  dailyObj.dates.forEach(date=>{
-    const dayData=dailyObj.data[date]||{};
-    Object.entries(dayData).forEach(([key,vals])=>{
+  obj.dates.forEach(date=>{
+    const day=obj.data[date]||{};
+    Object.entries(day).forEach(([key,vals])=>{
       if(!agg[key]) agg[key]={[keyField]:key};
       metrics.forEach(m=>{ agg[key][m]=(agg[key][m]||0)+(vals[m]||0); });
     });
@@ -439,142 +457,207 @@ function aggregateFromDaily(dailyObj, keyField, metrics){
   return Object.values(agg);
 }
 
-function filterFunnelByDates(funnelDaily, f){
-  if(!funnelDaily) return null;
-  let dates=[...funnelDaily.dates];
-  if(f.period==='custom'&&f.df&&f.dt) dates=dates.filter(d=>d>=f.df&&d<=f.dt);
-  else if(f.period!=='all') dates=dates.slice(-parseInt(f.period));
-  return{...funnelDaily,dates};
+// ── Apply device ratio to any aggregated list ─────────────────────────────────
+function applyDevRatio(list, sessKey, RAWdevices, devFilter){
+  if(devFilter==='all') return list;
+  const tot=RAWdevices.reduce((a,r)=>a+r.sessions,0);
+  const row=RAWdevices.find(r=>r.device===devFilter);
+  const ratio=row&&tot>0?row.sessions/tot:1;
+  return list.map(r=>({...r,[sessKey]:Math.round((r[sessKey]||0)*ratio)}));
 }
 
-function buildFunnelFromDaily(funnelDaily, funnelMeta){
-  if(!funnelDaily||!funnelDaily.dates.length) return funnelMeta;
+// ── Apply source ratio to channels ────────────────────────────────────────────
+function applySrcRatio(channels, RAWsources, srcFilter){
+  if(srcFilter==='all') return channels;
+  const tot=RAWsources.reduce((a,r)=>a+r.sessions,0);
+  const row=RAWsources.find(r=>r.source===srcFilter);
+  const ratio=row&&tot>0?row.sessions/tot:1;
+  return channels.map(c=>({...c,
+    sessions:Math.round(c.sessions*ratio),
+    conversions:Math.round(c.conversions*ratio),
+    conversion_rate:Math.round(c.conversions*ratio/Math.max(Math.round(c.sessions*ratio),1)*100*100)/100,
+  }));
+}
+
+// ── Main filter builder ───────────────────────────────────────────────────────
+function buildF(d,f){
+  // 1. Daily series — date filter only
+  const daily=filterDates(d.daily,f);
+
+  // 2. Device ratio (for scaling breakdowns)
+  const devTot=d.devices.reduce((a,r)=>a+r.sessions,0);
+  const devRow=f.dev!=='all'?d.devices.find(r=>r.device===f.dev):null;
+  const devRatio=devRow&&devTot>0?devRow.sessions/devTot:1;
+
+  // 3. Channels — date filter + device ratio + source ratio
+  const chObj=filterDailyObj(d.channels_daily,f);
+  let channels=aggFromDaily(chObj,'channel',['sessions','users','conversions']);
+  channels=channels.map(ch=>{
+    const orig=d.channels.find(c=>c.channel===ch.channel)||{};
+    return{...ch,
+      conversion_rate:Math.round(ch.conversions/Math.max(ch.sessions,1)*10000)/100,
+      bounce_rate:orig.bounce_rate||0,avg_duration:orig.avg_duration||0,new_users:orig.new_users||0};
+  }).sort((a,b)=>b.sessions-a.sessions);
+  if(f.dev!=='all') channels=channels.map(c=>({...c,sessions:Math.round(c.sessions*devRatio),conversions:Math.round(c.conversions*devRatio)}));
+  channels=applySrcRatio(channels,d.sources,f.src);
+
+  // 4. Devices — date filter, then device filter
+  const devObj=filterDailyObj(d.devices_daily,f);
+  let devices=aggFromDaily(devObj,'device',['sessions','users','conversions']);
+  devices=devices.map(dv=>{
+    const orig=d.devices.find(x=>x.device===dv.device)||{};
+    return{...dv,bounce_rate:orig.bounce_rate||0};
+  }).sort((a,b)=>b.sessions-a.sessions);
+  if(f.dev!=='all') devices=devices.filter(r=>r.device===f.dev);
+  // Source filter: scale devices
+  if(f.src!=='all'){
+    const srcTot=d.sources.reduce((a,r)=>a+r.sessions,0);
+    const srcRow=d.sources.find(r=>r.source===f.src);
+    const srcRatio=srcRow&&srcTot>0?srcRow.sessions/srcTot:1;
+    devices=devices.map(dv=>({...dv,sessions:Math.round(dv.sessions*srcRatio),users:Math.round(dv.users*srcRatio)}));
+  }
+
+  // 5. NVR — date filter + device ratio + source ratio
+  const nvrObj=filterDailyObj(d.nvr_daily,f);
+  let nvr=aggFromDaily(nvrObj,'type',['sessions','users','conversions']);
+  if(f.dev!=='all') nvr=nvr.map(r=>({...r,users:Math.round(r.users*devRatio),sessions:Math.round(r.sessions*devRatio)}));
+  if(f.src!=='all'){
+    const srcTot=d.sources.reduce((a,r)=>a+r.sessions,0);
+    const srcRow=d.sources.find(r=>r.source===f.src);
+    const srcRatio=srcRow&&srcTot>0?srcRow.sessions/srcTot:1;
+    nvr=nvr.map(r=>({...r,users:Math.round(r.users*srcRatio),sessions:Math.round(r.sessions*srcRatio)}));
+  }
+
+  // 6. Sources table
+  let sources=[...d.sources];
+  if(f.src!=='all') sources=sources.filter(r=>r.source===f.src);
+  if(f.dev!=='all') sources=sources.map(r=>({...r,sessions:Math.round(r.sessions*devRatio),users:Math.round(r.users*devRatio),conversions:Math.round(r.conversions*devRatio)}));
+
+  // 7. Funnel — date filter + device ratio + source ratio
+  const fnlObj=filterDailyObj(d.funnel_daily,f);
+  let funnel=buildFunnelAgg(fnlObj,d.funnel);
+  if(f.dev!=='all') funnel=scaleFunnel(funnel,devRatio);
+  if(f.src!=='all'){
+    const srcTot=d.sources.reduce((a,r)=>a+r.sessions,0);
+    const srcRow=d.sources.find(r=>r.source===f.src);
+    const srcRatio=srcRow&&srcTot>0?srcRow.sessions/srcTot:1;
+    funnel=scaleFunnel(funnel,srcRatio);
+  }
+
+  // 8. Daily series — apply device + source scaling
+  let scaledDaily=[...daily];
+  if(f.dev!=='all'||f.src!=='all'){
+    let scale=1;
+    if(f.dev!=='all') scale*=devRatio;
+    if(f.src!=='all'){
+      const srcTot=d.sources.reduce((a,r)=>a+r.sessions,0);
+      const srcRow=d.sources.find(r=>r.source===f.src);
+      if(srcRow&&srcTot>0) scale*=srcRow.sessions/srcTot;
+    }
+    scaledDaily=daily.map(r=>({...r,
+      sessions:Math.round(r.sessions*scale),users:Math.round(r.users*scale),
+      conversions:Math.round(r.conversions*scale),new_users:Math.round(r.new_users*scale),
+    }));
+  }
+
+  // 9. Totals from scaled daily
+  const totals={
+    ...d.totals,
+    sessions:   scaledDaily.reduce((a,r)=>a+r.sessions,0),
+    total_users:scaledDaily.reduce((a,r)=>a+r.users,0),
+    conversions:scaledDaily.reduce((a,r)=>a+r.conversions,0),
+    new_users:  scaledDaily.reduce((a,r)=>a+r.new_users,0),
+  };
+
+  return{...d,totals,daily:scaledDaily,channels,devices,new_vs_returning:nvr,sources,funnel,_dLabel:`${daily.length}d`};
+}
+
+function buildFunnelAgg(fnlObj,meta){
+  if(!fnlObj||!fnlObj.dates||!fnlObj.dates.length) return meta;
   const agg={};
-  funnelDaily.events.forEach(ev=>{ agg[ev]={event_count:0,users:0}; });
-  funnelDaily.dates.forEach(date=>{
-    const day=funnelDaily.data[date]||{};
+  fnlObj.events.forEach(ev=>{agg[ev]={event_count:0,users:0}});
+  fnlObj.dates.forEach(date=>{
+    const day=fnlObj.data[date]||{};
     Object.entries(day).forEach(([ev,vals])=>{
-      if(agg[ev]){ agg[ev].event_count+=(vals.event_count||0); agg[ev].users+=(vals.users||0); }
+      if(agg[ev]){agg[ev].event_count+=(vals.event_count||0);agg[ev].users+=(vals.users||0);}
     });
   });
-  const result=funnelMeta.map(s=>({...s,...(agg[s.event]||{}),drop_rate:0}));
+  const result=meta.map(s=>({...s,...(agg[s.event]||{}),drop_rate:0}));
   for(let i=1;i<result.length;i++){
-    const prev=result[i-1].users, curr=result[i].users;
+    const prev=result[i-1].users,curr=result[i].users;
     result[i].drop_rate=prev>0?Math.round((1-curr/prev)*1000)/10:0;
   }
   return result;
 }
 
-function buildF(d,f){
-  // Daily (full date filter)
-  const daily=filterDates(d.daily,f);
-
-  // Channels: re-aggregate from daily breakdown
-  const chDaily=filterDailyBreakdown(d.channels_daily,f);
-  let channels=aggregateFromDaily(chDaily,'channel',['sessions','users','conversions']);
-  channels=channels.map(ch=>{
-    // Get bounce/duration from original 30d for those metrics (no daily breakdown)
-    const orig=d.channels.find(c=>c.channel===ch.channel)||{};
-    return{...ch,conversion_rate:Math.round(ch.conversions/Math.max(ch.sessions,1)*100*100)/100,
-      bounce_rate:orig.bounce_rate||0,avg_duration:orig.avg_duration||0,new_users:orig.new_users||0};
-  }).sort((a,b)=>b.sessions-a.sessions);
-  if(f.src!=='all'){
-    // Source filter approximates channels by ratio
-    const tot=d.sources.reduce((a,r)=>a+r.sessions,0);
-    const row=d.sources.find(r=>r.source===f.src);
-    const ratio=row&&tot>0?row.sessions/tot:1;
-    channels=channels.map(c=>({...c,sessions:Math.round(c.sessions*ratio),conversions:Math.round(c.conversions*ratio)}));
+function scaleFunnel(funnel,ratio){
+  const scaled=funnel.map(s=>({...s,event_count:Math.round(s.event_count*ratio),users:Math.round(s.users*ratio),drop_rate:0}));
+  for(let i=1;i<scaled.length;i++){
+    const prev=scaled[i-1].users,curr=scaled[i].users;
+    scaled[i].drop_rate=prev>0?Math.round((1-curr/prev)*1000)/10:0;
   }
-
-  // Devices: re-aggregate from daily breakdown
-  const devDaily=filterDailyBreakdown(d.devices_daily,f);
-  let devices=aggregateFromDaily(devDaily,'device',['sessions','users','conversions']);
-  devices=devices.sort((a,b)=>b.sessions-a.sessions);
-  if(f.dev!=='all') devices=devices.filter(r=>r.device===f.dev);
-  devices=devices.map(dv=>{
-    const orig=d.devices.find(x=>x.device===dv.device)||{};
-    return{...dv,bounce_rate:orig.bounce_rate||0};
-  });
-
-  // NVR: re-aggregate from daily breakdown
-  const nvrDaily=filterDailyBreakdown(d.nvr_daily,f);
-  const nvrAgg=aggregateFromDaily(nvrDaily,'type',['sessions','users','conversions']);
-  const new_vs_returning=nvrAgg;
-
-  // Sources: filter by source name
-  let sources=[...d.sources];
-  if(f.src!=='all') sources=sources.filter(r=>r.source===f.src);
-
-  // Funnel: re-aggregate from daily
-  const fnlDaily=filterFunnelByDates(d.funnel_daily,f);
-  const funnel=buildFunnelFromDaily(fnlDaily,d.funnel);
-
-  // Totals from filtered daily
-  const totals={
-    ...d.totals,
-    sessions:   daily.reduce((a,r)=>a+r.sessions,0),
-    total_users:daily.reduce((a,r)=>a+r.users,0),
-    conversions:daily.reduce((a,r)=>a+r.conversions,0),
-    new_users:  daily.reduce((a,r)=>a+r.new_users,0),
-  };
-
-  // tag labels
-  const dn=daily.length;
-  const dLabel=`${dn}d`;
-
-  return{...d, totals, daily, channels, devices, new_vs_returning, sources, funnel, _dLabel:dLabel};
+  return scaled;
 }
 
-// ── Render pages weekly chart ─────────────────────────────────────────────────
-function renderPagesWeekly(){
-  if(!RAW) return;
-  const wk=document.getElementById('wk-pages').value;
-  const pw=RAW.pages_weekly;
-  if(!pw||!pw.weeks) return;
-
-  let weeks=pw.weeks;
-  let labels, datasets;
-
-  if(wk==='all'){
-    // Line chart: each page a line, x=weeks
-    labels=weeks.map(w=>weekLabel(w));
-    datasets=pw.paths.slice(0,5).map((path,i)=>({
-      label:path.length>25?path.slice(0,25)+'…':path,
-      data:weeks.map(w=>(pw.data[w]&&pw.data[w][path])?pw.data[w][path].pageviews:0),
-      borderColor:PAL[i%PAL.length],backgroundColor:'transparent',tension:.3,pointRadius:2,borderWidth:2,
-    }));
-    if(CHARTS['ch-pages-weekly']) CHARTS['ch-pages-weekly'].destroy();
-    CHARTS['ch-pages-weekly']=new Chart(document.getElementById('ch-pages-weekly'),{type:'line',data:{labels,datasets},options:bO()});
-  } else {
-    // Bar chart: pages for that week
-    const weekData=pw.data[wk]||{};
-    labels=pw.paths.map(p=>p.length>25?p.slice(0,25)+'…':p);
-    const dataVals=pw.paths.map(p=>(weekData[p]?weekData[p].pageviews:0));
-    if(CHARTS['ch-pages-weekly']) CHARTS['ch-pages-weekly'].destroy();
-    CHARTS['ch-pages-weekly']=new Chart(document.getElementById('ch-pages-weekly'),{type:'bar',
-      data:{labels,datasets:[{label:'Pageviews',data:dataVals,backgroundColor:C.blue+'cc',borderRadius:3}]},
-      options:bOH()});
-  }
-}
-
-// ── Render funnel weekly ──────────────────────────────────────────────────────
+// ── Funnel weekly selector ────────────────────────────────────────────────────
 function renderFunnelWeekly(){
   if(!RAW) return;
   const wk=document.getElementById('wk-funnel').value;
-  const fd=RAW.funnel_daily;
-  if(!fd) return;
-
+  const f=getF();
   let funnel;
   if(wk==='all'){
-    funnel=RAW.funnel;
+    funnel=buildF(RAW,f).funnel;
   } else {
-    // Filter funnel_daily to only dates in that week
-    const fakef={period:'custom',df:'0000-00-00',dt:'9999-99-99',src:'all',dev:'all'};
-    const datesInWeek=fd.dates.filter(d=>dateToWeek(d)===wk);
-    const subFd={...fd,dates:datesInWeek};
-    funnel=buildFunnelFromDaily(subFd,RAW.funnel);
+    // Get dates in selected week, intersect with current filter range
+    const allFiltered=filterDates(RAW.daily,f).map(r=>r.date);
+    const weekDates=allFiltered.filter(d=>dateToWeek(d)===wk);
+    const subObj={...RAW.funnel_daily,dates:weekDates};
+    let baseFunnel=buildFunnelAgg(subObj,RAW.funnel);
+    if(f.dev!=='all'){
+      const devTot=RAW.devices.reduce((a,r)=>a+r.sessions,0);
+      const devRow=RAW.devices.find(r=>r.device===f.dev);
+      if(devRow&&devTot>0) baseFunnel=scaleFunnel(baseFunnel,devRow.sessions/devTot);
+    }
+    if(f.src!=='all'){
+      const srcTot=RAW.sources.reduce((a,r)=>a+r.sessions,0);
+      const srcRow=RAW.sources.find(r=>r.source===f.src);
+      if(srcRow&&srcTot>0) baseFunnel=scaleFunnel(baseFunnel,srcRow.sessions/srcTot);
+    }
+    funnel=baseFunnel;
   }
+  renderFunnelCharts(funnel);
+}
 
+// ── Pages weekly selector ─────────────────────────────────────────────────────
+function renderPagesWeekly(){
+  if(!RAW||!RAW.pages_weekly) return;
+  const wk=document.getElementById('wk-pages').value;
+  const pw=RAW.pages_weekly;
+  const f=getF();
+  // Filter weeks available in current date range
+  const filteredDates=filterDates(RAW.daily,f).map(r=>r.date);
+  const availWeeks=new Set(filteredDates.map(d=>dateToWeek(d)));
+  const weeksToUse=wk==='all'?[...availWeeks].filter(w=>pw.weeks.includes(w)).sort():[wk];
+
+  if(wk==='all'){
+    const labels=weeksToUse.map(w=>weekLabel(w));
+    const datasets=pw.paths.slice(0,5).map((path,i)=>({
+      label:path.length>25?path.slice(0,25)+'…':path,
+      data:weeksToUse.map(w=>(pw.data[w]&&pw.data[w][path])?pw.data[w][path].pageviews:0),
+      borderColor:PAL[i%PAL.length],backgroundColor:'transparent',tension:.3,pointRadius:3,borderWidth:2,
+    }));
+    mk('ch-pages-weekly','line',{labels,datasets},bO());
+  } else {
+    const weekData=pw.data[wk]||{};
+    const labels=pw.paths.map(p=>p.length>25?p.slice(0,25)+'…':p);
+    mk('ch-pages-weekly','bar',{
+      labels,datasets:[{label:'Pageviews',data:pw.paths.map(p=>weekData[p]?weekData[p].pageviews:0),backgroundColor:C.blue+'cc',borderRadius:3}]
+    },bOH());
+  }
+}
+
+// ── Funnel charts (shared by main render and weekly selector) ─────────────────
+function renderFunnelCharts(funnel){
   const maxU=funnel.length>0?funnel[0].users:1;
   document.getElementById('funnel-wrap').innerHTML=funnel.map((s,i)=>{
     const pct=maxU>0?Math.round(s.users/maxU*100):0;
@@ -586,17 +669,10 @@ function renderFunnelWeekly(){
       <div class="fd ${i===0?'':dc}">${i===0?'—':`▾ ${s.drop_rate}%`}</div>
     </div>`;
   }).join('');
-
-  if(CHARTS['ch-funnel-vol']) CHARTS['ch-funnel-vol'].destroy();
-  CHARTS['ch-funnel-vol']=new Chart(document.getElementById('ch-funnel-vol'),{type:'bar',
-    data:{labels:funnel.map(s=>s.step),datasets:[{label:'Eventos',data:funnel.map(s=>s.event_count),backgroundColor:FCOL,borderRadius:4}]},
-    options:bO()});
-  if(CHARTS['ch-funnel-drop']) CHARTS['ch-funnel-drop'].destroy();
-  CHARTS['ch-funnel-drop']=new Chart(document.getElementById('ch-funnel-drop'),{type:'bar',
-    data:{labels:funnel.slice(1).map(s=>s.step),datasets:[{label:'% abandono',
-      data:funnel.slice(1).map(s=>s.drop_rate),
-      backgroundColor:funnel.slice(1).map(s=>s.drop_rate>60?C.red+'cc':s.drop_rate>30?C.amber+'cc':C.green+'cc'),borderRadius:4}]},
-    options:bO()});
+  mk('ch-funnel-vol','bar',{labels:funnel.map(s=>s.step),datasets:[{label:'Eventos',data:funnel.map(s=>s.event_count),backgroundColor:FCOL,borderRadius:4}]},bO());
+  mk('ch-funnel-drop','bar',{labels:funnel.slice(1).map(s=>s.step),datasets:[{label:'% abandono',
+    data:funnel.slice(1).map(s=>s.drop_rate),
+    backgroundColor:funnel.slice(1).map(s=>s.drop_rate>60?C.red+'cc':s.drop_rate>30?C.amber+'cc':C.green+'cc'),borderRadius:4}]},bO());
 }
 
 // ── Main render ───────────────────────────────────────────────────────────────
@@ -605,11 +681,8 @@ function render(d){
   const convRate=t.sessions>0?((t.conversions/t.sessions)*100).toFixed(2):'0.00';
   const dLabel=d._dLabel||'30d';
 
-  // Update tags
-  ['dtag','dev-tag','nvr-tag','ch-tag','cvr-tag','br-tag','src-tag','fnl-tag','fvol-tag','fdrop-tag'].forEach(id=>{
-    const el=document.getElementById(id);
-    if(el) el.textContent=dLabel;
-  });
+  // Update period tags
+  document.querySelectorAll('.ptag').forEach(el=>el.textContent=dLabel);
 
   const BTIP='Taxa de Rejeição: % de sessões sem nenhuma interação engajada. No GA4, é uma sessão com menos de 10s sem evento de engajamento. Abaixo de 40% é considerado bom.';
   const kpis=[
@@ -617,7 +690,7 @@ function render(d){
     {l:'Usuários',     v:fmt(t.total_users),s:`${fmt(t.new_users)} novos`,         c:'ct'},
     {l:'Compras',      v:fmt(t.conversions),s:`${fmt(t.conversions_7d||0)} / 7d`, c:'cg'},
     {l:'Taxa Conv.',   v:`${convRate}%`,    s:'sessões → compra',                  c:'ci'},
-    {l:'Taxa Rejeição',v:`${t.bounce_rate}%`,s:'média do período',                 c:'ca',tip:BTIP},
+    {l:'Rejeição',     v:`${t.bounce_rate}%`,s:'média do período',                 c:'ca',tip:BTIP},
     {l:'Duração Média',v:fmtS(t.avg_session_duration),s:'por sessão',              c:'cp'},
     {l:'Pageviews',    v:fmt(t.pageviews),  s:`${t.sessions>0?(t.pageviews/t.sessions).toFixed(1):'—'} / sessão`,c:'cc'},
   ];
@@ -627,7 +700,6 @@ function render(d){
       <div class="kv">${k.v}</div><div class="ks">${k.s}</div>
     </div>`).join('');
 
-  // Daily
   const dl=d.daily.map(r=>r.date.slice(5));
   mk('ch-daily','line',{labels:dl,datasets:[
     {label:'Sessões', data:d.daily.map(r=>r.sessions),borderColor:C.blue,  backgroundColor:C.blue+'18',fill:true,tension:.35,pointRadius:0,borderWidth:2},
@@ -636,29 +708,24 @@ function render(d){
   mk('ch-conv-daily','bar',{labels:dl,datasets:[{label:'Compras',data:d.daily.map(r=>r.conversions),backgroundColor:C.green+'cc',borderRadius:3}]},bO());
   mk('ch-new-users', 'bar',{labels:dl,datasets:[{label:'Novos usuários',data:d.daily.map(r=>r.new_users||0),backgroundColor:C.cyan+'cc',borderRadius:3}]},bO());
 
-  // Devices donut
   const devBg=[C.blue,C.teal,C.purple,C.amber,C.green].slice(0,d.devices.length);
   mk('ch-devices','doughnut',{
     labels:d.devices.map(r=>r.device.charAt(0).toUpperCase()+r.device.slice(1)),
     datasets:[{data:d.devices.map(r=>r.sessions),backgroundColor:devBg,borderWidth:2,borderColor:'#fff'}]
   },dO());
 
-  // NVR donut — deduplicate
   const nvr={};
   d.new_vs_returning.forEach(r=>{const k=r.type==='new'?'Novos':'Recorrentes';nvr[k]=(nvr[k]||0)+r.users});
   mk('ch-new-returning','doughnut',{
-    labels:Object.keys(nvr),
-    datasets:[{data:Object.values(nvr),backgroundColor:[C.blue,C.amber],borderWidth:2,borderColor:'#fff'}]
+    labels:Object.keys(nvr),datasets:[{data:Object.values(nvr),backgroundColor:[C.blue,C.amber],borderWidth:2,borderColor:'#fff'}]
   },dO());
 
-  // Channels
   const chC=d.channels.map((r,i)=>cch(r.channel,i));
   mk('ch-channels',       'bar',{labels:d.channels.map(r=>r.channel),datasets:[{label:'Sessões',    data:d.channels.map(r=>r.sessions),         backgroundColor:chC,borderRadius:4}]},bOH());
   mk('ch-conv-rate',      'bar',{labels:d.channels.map(r=>r.channel),datasets:[{label:'Conv %',     data:d.channels.map(r=>r.conversion_rate||0),backgroundColor:chC,borderRadius:4}]},bOH());
   mk('ch-bounce-channel', 'bar',{labels:d.channels.map(r=>r.channel),datasets:[{label:'Rejeição %', data:d.channels.map(r=>r.bounce_rate||0),backgroundColor:d.channels.map(r=>r.bounce_rate>50?C.red+'cc':r.bounce_rate>30?C.amber+'cc':C.green+'cc'),borderRadius:3}]},bOH());
   mk('ch-duration-channel','bar',{labels:d.channels.map(r=>r.channel),datasets:[{label:'Duração (s)',data:d.channels.map(r=>r.avg_duration||0),backgroundColor:C.teal+'cc',borderRadius:3}]},bOH());
 
-  // Sources table
   document.getElementById('tbl-sources').innerHTML=`
     <thead><tr><th>#</th><th>Origem</th><th>Mídia</th><th class="nr">Sessões</th><th class="nr">Usuários</th><th class="nr">Compras</th><th class="nr">Conv%</th><th class="nr">Rejeição</th><th class="nr">Duração</th></tr></thead>
     <tbody>${d.sources.map((r,i)=>`<tr>
@@ -670,16 +737,13 @@ function render(d){
       <td class="nr">${fmtP(r.bounce_rate)}</td><td class="nr">${fmtS(r.avg_duration)}</td>
     </tr>`).join('')}</tbody>`;
 
-  // Landing pages
   const lp=(d.landing_pages||[]).slice(0,8);
   const lpL=lp.map(r=>r.path.length>28?r.path.slice(0,28)+'…':r.path);
   mk('ch-landing',       'bar',{labels:lpL,datasets:[{label:'Sessões',   data:lp.map(r=>r.sessions),         backgroundColor:C.blue+'cc',borderRadius:3}]},bOH());
   mk('ch-landing-bounce','bar',{labels:lpL,datasets:[{label:'Rejeição %',data:lp.map(r=>r.bounce_rate||0),backgroundColor:lp.map(r=>r.bounce_rate>50?C.red+'cc':r.bounce_rate>30?C.amber+'cc':C.green+'cc'),borderRadius:3}]},bOH());
 
-  // Pages weekly (initial render)
   renderPagesWeekly();
 
-  // Pages table
   document.getElementById('tbl-pages').innerHTML=`
     <thead><tr><th>#</th><th>Título</th><th>Path</th><th class="nr">Pageviews</th><th class="nr">Usuários</th><th class="nr">Duração</th></tr></thead>
     <tbody>${d.pages.map((r,i)=>`<tr>
@@ -689,12 +753,10 @@ function render(d){
       <td class="nr">${fmtF(r.pageviews)}</td><td class="nr">${fmtF(r.users)}</td><td class="nr">${fmtS(r.avg_duration)}</td>
     </tr>`).join('')}</tbody>`;
 
-  // Funnel (uses weekly selector — initial render with aggregated)
-  renderFunnelWeekly();
+  renderFunnelCharts(d.funnel);
 
-  // Routes
   const rt=d.routes||{};
-  const ori=(rt.top_origins||[]).slice(0,10), dst=(rt.top_destinations||[]).slice(0,10);
+  const ori=(rt.top_origins||[]).slice(0,10),dst=(rt.top_destinations||[]).slice(0,10);
   mk('ch-origins',     'bar',{labels:ori.map(r=>r.city),datasets:[{label:'Buscas',data:ori.map(r=>r.searches),backgroundColor:C.blue+'cc',  borderRadius:3}]},bOH());
   mk('ch-destinations','bar',{labels:dst.map(r=>r.city),datasets:[{label:'Buscas',data:dst.map(r=>r.searches),backgroundColor:C.indigo+'cc',borderRadius:3}]},bOH());
 
@@ -713,7 +775,6 @@ function render(d){
       <td class="nr">${fmtF(r.searches)}</td><td class="nr">${fmtF(r.users)}</td>
     </tr>`).join('')}</tbody>`;
 
-  // Insights
   const list=document.getElementById('insights-list');
   if(!d.insights||d.insights.length===0){
     list.innerHTML=`<div class="ins"><div class="ins-t"><div class="idot di"></div><span style="font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:.06em;font-weight:600">Info</span></div><div class="ins-title">Nenhum insight disponível</div><div class="ins-body">Use o prompt abaixo para gerar insights no Claude.ai e cole o resultado no campo <code>insights</code> do data.json.</div></div>`;
