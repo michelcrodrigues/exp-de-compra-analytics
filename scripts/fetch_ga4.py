@@ -1,12 +1,17 @@
 """
-Script de coleta de dados do Google Analytics 4 — v3
+Script de coleta de dados do Google Analytics 4 — v4
 Gera o arquivo data.json com todas as métricas do dashboard.
-Usa a métrica `purchases` em vez de `conversions` para refletir apenas o evento purchase.
+
+Novidades v4:
+- Canais, Dispositivos e Novos vs Recorrentes com breakdown diário
+- Funil com breakdown por data (para filtro semanal)
+- Páginas top 10 com breakdown semanal
+- Rotas mantém 30d fixo (cardinalidade alta)
 """
 
 import json
 import os
-from datetime import datetime
+from datetime import datetime, timedelta
 from google.analytics.data_v1beta import BetaAnalyticsDataClient
 from google.analytics.data_v1beta.types import (
     RunReportRequest, DateRange, Metric, Dimension, OrderBy,
@@ -37,13 +42,33 @@ def report_nodim(metrics, date_range=None):
     )
     return client.run_report(req)
 
-def dim(row, i): return row.dimension_values[i].value
-def met(row, i): return row.metric_values[i].value
-def intf(v):     return int(float(v))
-def rnd(v):      return round(float(v), 2)
+def report_filtered(dimensions, metrics, filter_field, filter_value, date_range=None, limit=50):
+    req = RunReportRequest(
+        property=f"properties/{PROPERTY_ID}",
+        dimensions=[Dimension(name=d) for d in dimensions],
+        metrics=[Metric(name=m) for m in metrics],
+        date_ranges=[date_range or DATE_RANGE],
+        dimension_filter=FilterExpression(
+            filter=Filter(
+                field_name=filter_field,
+                string_filter=Filter.StringFilter(
+                    value=filter_value,
+                    match_type=Filter.StringFilter.MatchType.EXACT
+                )
+            )
+        ),
+        limit=limit,
+    )
+    return client.run_report(req)
 
-# ── 1. Totais ───────────────────────────────────────────────────────────────
-print("1/11 Totais gerais...")
+def fmt_date(raw): return f"{raw[:4]}-{raw[4:6]}-{raw[6:]}"
+def dim(row, i):   return row.dimension_values[i].value
+def met(row, i):   return row.metric_values[i].value
+def intf(v):       return int(float(v))
+def rnd(v):        return round(float(v), 2)
+
+# ── 1. Totais ────────────────────────────────────────────────────────────────
+print("1/14 Totais gerais...")
 r = report_nodim(["sessions","totalUsers","newUsers","bounceRate",
                   "averageSessionDuration","ecommercePurchases","screenPageViews"])
 mv = r.rows[0].metric_values
@@ -65,23 +90,22 @@ totals.update({
     "new_users_7d":   intf(mv7[3].value),
 })
 
-# ── 2. Sessões por dia ──────────────────────────────────────────────────────
-print("2/11 Sessões por dia...")
+# ── 2. Sessões por dia ───────────────────────────────────────────────────────
+print("2/14 Sessões por dia...")
 r = report(["date"], ["sessions","totalUsers","ecommercePurchases","newUsers"],
            order_bys=[OrderBy(dimension=OrderBy.DimensionOrderBy(dimension_name="date"))], limit=30)
 daily = []
 for row in r.rows:
-    raw = dim(row, 0)
     daily.append({
-        "date":        f"{raw[:4]}-{raw[4:6]}-{raw[6:]}",
-        "sessions":    intf(met(row, 0)),
-        "users":       intf(met(row, 1)),
-        "conversions": intf(met(row, 2)),
-        "new_users":   intf(met(row, 3)),
+        "date":        fmt_date(dim(row,0)),
+        "sessions":    intf(met(row,0)),
+        "users":       intf(met(row,1)),
+        "conversions": intf(met(row,2)),
+        "new_users":   intf(met(row,3)),
     })
 
-# ── 3. Páginas mais acessadas ───────────────────────────────────────────────
-print("3/11 Páginas...")
+# ── 3. Páginas mais acessadas ────────────────────────────────────────────────
+print("3/14 Páginas...")
 r = report(["pagePath","pageTitle"],
            ["screenPageViews","totalUsers","averageSessionDuration"],
            order_bys=[OrderBy(metric=OrderBy.MetricOrderBy(metric_name="screenPageViews"), desc=True)], limit=10)
@@ -89,8 +113,8 @@ pages = [{"path": dim(row,0), "title": dim(row,1),
           "pageviews": intf(met(row,0)), "users": intf(met(row,1)),
           "avg_duration": rnd(met(row,2)), "bounce_rate": 0, "exits": 0} for row in r.rows]
 
-# ── 4. Páginas de entrada ───────────────────────────────────────────────────
-print("4/11 Páginas de entrada...")
+# ── 4. Páginas de entrada ────────────────────────────────────────────────────
+print("4/14 Páginas de entrada...")
 r = report(["landingPagePlusQueryString"],
            ["sessions","totalUsers","ecommercePurchases","bounceRate"],
            order_bys=[OrderBy(metric=OrderBy.MetricOrderBy(metric_name="sessions"), desc=True)], limit=10)
@@ -98,8 +122,38 @@ landing_pages = [{"path": dim(row,0), "sessions": intf(met(row,0)),
                   "users": intf(met(row,1)), "conversions": intf(met(row,2)),
                   "bounce_rate": round(float(met(row,3))*100, 2)} for row in r.rows]
 
-# ── 5. Origens ──────────────────────────────────────────────────────────────
-print("5/11 Origens...")
+# ── 5. Páginas top 10 com breakdown semanal ───────────────────────────────────
+print("5/14 Páginas por semana...")
+# Collect top 10 page paths first
+top_paths = [p["path"] for p in pages[:10]]
+
+# Get weekly data for top pages using yearWeek dimension
+r = report(["yearWeek","pagePath"],
+           ["screenPageViews","totalUsers"],
+           order_bys=[OrderBy(dimension=OrderBy.DimensionOrderBy(dimension_name="yearWeek"))],
+           limit=200)
+
+pages_weekly_raw = {}
+for row in r.rows:
+    week = dim(row,0)   # e.g. "202412"
+    path = dim(row,1)
+    if path not in top_paths:
+        continue
+    if week not in pages_weekly_raw:
+        pages_weekly_raw[week] = {}
+    pages_weekly_raw[week][path] = {
+        "pageviews": intf(met(row,0)),
+        "users":     intf(met(row,1)),
+    }
+
+pages_weekly = {
+    "weeks":  sorted(pages_weekly_raw.keys()),
+    "paths":  top_paths,
+    "data":   pages_weekly_raw,
+}
+
+# ── 6. Origens ───────────────────────────────────────────────────────────────
+print("6/14 Origens...")
 r = report(["sessionSource","sessionMedium"],
            ["sessions","totalUsers","ecommercePurchases","bounceRate","averageSessionDuration"],
            order_bys=[OrderBy(metric=OrderBy.MetricOrderBy(metric_name="sessions"), desc=True)], limit=15)
@@ -111,37 +165,118 @@ sources = [{"source": dim(row,0), "medium": dim(row,1),
             "bounce_rate":     round(float(met(row,3))*100, 2),
             "avg_duration":    rnd(met(row,4))} for row in r.rows]
 
-# ── 6. Canais ───────────────────────────────────────────────────────────────
-print("6/11 Canais...")
-r = report(["sessionDefaultChannelGroup"],
+# ── 7. Canais com breakdown diário ───────────────────────────────────────────
+print("7/14 Canais por dia...")
+r = report(["date","sessionDefaultChannelGroup"],
            ["sessions","totalUsers","ecommercePurchases","bounceRate","averageSessionDuration","newUsers"],
-           order_bys=[OrderBy(metric=OrderBy.MetricOrderBy(metric_name="sessions"), desc=True)], limit=10)
-channels = [{"channel": dim(row,0),
-             "sessions":        intf(met(row,0)),
-             "users":           intf(met(row,1)),
-             "conversions":     intf(met(row,2)),
-             "conversion_rate": round(intf(met(row,2))/max(intf(met(row,0)),1)*100, 2),
-             "bounce_rate":     round(float(met(row,3))*100, 2),
-             "avg_duration":    rnd(met(row,4)),
-             "new_users":       intf(met(row,5))} for row in r.rows]
+           order_bys=[OrderBy(dimension=OrderBy.DimensionOrderBy(dimension_name="date"))],
+           limit=300)
 
-# ── 7. Dispositivos ─────────────────────────────────────────────────────────
-print("7/11 Dispositivos...")
-r = report(["deviceCategory"], ["sessions","totalUsers","ecommercePurchases","bounceRate"],
-           order_bys=[OrderBy(metric=OrderBy.MetricOrderBy(metric_name="sessions"), desc=True)])
-devices = [{"device": dim(row,0), "sessions": intf(met(row,0)),
-            "users": intf(met(row,1)), "conversions": intf(met(row,2)),
-            "bounce_rate": round(float(met(row,3))*100, 2)} for row in r.rows]
+channels_daily_raw = {}
+channels_agg = {}
+for row in r.rows:
+    date    = fmt_date(dim(row,0))
+    channel = dim(row,1)
+    sess    = intf(met(row,0))
+    users   = intf(met(row,1))
+    conv    = intf(met(row,2))
+    bounce  = round(float(met(row,3))*100, 2)
+    dur     = rnd(met(row,4))
+    new_u   = intf(met(row,5))
 
-# ── 8. Novos vs recorrentes ─────────────────────────────────────────────────
-print("8/11 Novos vs recorrentes...")
-r = report(["newVsReturning"], ["sessions","totalUsers","ecommercePurchases","bounceRate"])
-new_vs_returning = [{"type": dim(row,0), "sessions": intf(met(row,0)),
-                     "users": intf(met(row,1)), "conversions": intf(met(row,2)),
-                     "bounce_rate": round(float(met(row,3))*100, 2)} for row in r.rows]
+    if date not in channels_daily_raw:
+        channels_daily_raw[date] = {}
+    channels_daily_raw[date][channel] = {"sessions":sess,"users":users,"conversions":conv}
 
-# ── 9. Funil por eventos ────────────────────────────────────────────────────
-print("9/11 Funil de eventos...")
+    if channel not in channels_agg:
+        channels_agg[channel] = {"channel":channel,"sessions":0,"users":0,"conversions":0,"bounce_rate":bounce,"avg_duration":dur,"new_users":0}
+    channels_agg[channel]["sessions"]   += sess
+    channels_agg[channel]["users"]      += users
+    channels_agg[channel]["conversions"]+= conv
+    channels_agg[channel]["new_users"]  += new_u
+
+channels = []
+for ch in channels_agg.values():
+    ch["conversion_rate"] = round(ch["conversions"]/max(ch["sessions"],1)*100, 2)
+    channels.append(ch)
+channels.sort(key=lambda x: x["sessions"], reverse=True)
+
+channels_daily = {
+    "dates":    sorted(channels_daily_raw.keys()),
+    "channels": list(channels_agg.keys()),
+    "data":     channels_daily_raw,
+}
+
+# ── 8. Dispositivos com breakdown diário ──────────────────────────────────────
+print("8/14 Dispositivos por dia...")
+r = report(["date","deviceCategory"],
+           ["sessions","totalUsers","ecommercePurchases","bounceRate"],
+           order_bys=[OrderBy(dimension=OrderBy.DimensionOrderBy(dimension_name="date"))],
+           limit=200)
+
+devices_daily_raw = {}
+devices_agg = {}
+for row in r.rows:
+    date   = fmt_date(dim(row,0))
+    device = dim(row,1)
+    sess   = intf(met(row,0))
+    users  = intf(met(row,1))
+    conv   = intf(met(row,2))
+    bounce = round(float(met(row,3))*100, 2)
+
+    if date not in devices_daily_raw:
+        devices_daily_raw[date] = {}
+    devices_daily_raw[date][device] = {"sessions":sess,"users":users,"conversions":conv}
+
+    if device not in devices_agg:
+        devices_agg[device] = {"device":device,"sessions":0,"users":0,"conversions":0,"bounce_rate":bounce}
+    devices_agg[device]["sessions"]   += sess
+    devices_agg[device]["users"]      += users
+    devices_agg[device]["conversions"]+= conv
+
+devices = sorted(devices_agg.values(), key=lambda x: x["sessions"], reverse=True)
+devices_daily = {
+    "dates":   sorted(devices_daily_raw.keys()),
+    "devices": list(devices_agg.keys()),
+    "data":    devices_daily_raw,
+}
+
+# ── 9. Novos vs Recorrentes com breakdown diário ──────────────────────────────
+print("9/14 Novos vs recorrentes por dia...")
+r = report(["date","newVsReturning"],
+           ["sessions","totalUsers","ecommercePurchases","bounceRate"],
+           order_bys=[OrderBy(dimension=OrderBy.DimensionOrderBy(dimension_name="date"))],
+           limit=200)
+
+nvr_daily_raw = {}
+nvr_agg = {}
+for row in r.rows:
+    date  = fmt_date(dim(row,0))
+    ntype = dim(row,1)
+    sess  = intf(met(row,0))
+    users = intf(met(row,1))
+    conv  = intf(met(row,2))
+    bounce= round(float(met(row,3))*100, 2)
+
+    if date not in nvr_daily_raw:
+        nvr_daily_raw[date] = {}
+    nvr_daily_raw[date][ntype] = {"sessions":sess,"users":users,"conversions":conv}
+
+    if ntype not in nvr_agg:
+        nvr_agg[ntype] = {"type":ntype,"sessions":0,"users":0,"conversions":0,"bounce_rate":bounce}
+    nvr_agg[ntype]["sessions"]   += sess
+    nvr_agg[ntype]["users"]      += users
+    nvr_agg[ntype]["conversions"]+= conv
+
+new_vs_returning = list(nvr_agg.values())
+nvr_daily = {
+    "dates": sorted(nvr_daily_raw.keys()),
+    "types": list(nvr_agg.keys()),
+    "data":  nvr_daily_raw,
+}
+
+# ── 10. Funil com breakdown por data ──────────────────────────────────────────
+print("10/14 Funil de eventos...")
 FUNNEL_EVENTS = [
     {"name": "Busca",                 "event": "search"},
     {"name": "Selecionou item",       "event": "select_item"},
@@ -149,9 +284,14 @@ FUNNEL_EVENTS = [
     {"name": "Iniciou checkout",      "event": "begin_checkout"},
     {"name": "Compra",                "event": "purchase"},
 ]
+
 funnel = []
+funnel_daily_raw = {}  # date -> event -> {event_count, users}
+
 for step in FUNNEL_EVENTS:
-    req = RunReportRequest(
+    print(f"   funil: {step['event']}...")
+    # Aggregate (30d)
+    req_agg = RunReportRequest(
         property=f"properties/{PROPERTY_ID}",
         dimensions=[Dimension(name="eventName")],
         metrics=[Metric(name="eventCount"), Metric(name="totalUsers")],
@@ -162,59 +302,76 @@ for step in FUNNEL_EVENTS:
                           match_type=Filter.StringFilter.MatchType.EXACT))
         ),
     )
-    resp = client.run_report(req)
-    count = intf(resp.rows[0].metric_values[0].value) if resp.rows else 0
-    users = intf(resp.rows[0].metric_values[1].value) if resp.rows else 0
+    resp_agg = client.run_report(req_agg)
+    count = intf(resp_agg.rows[0].metric_values[0].value) if resp_agg.rows else 0
+    users = intf(resp_agg.rows[0].metric_values[1].value) if resp_agg.rows else 0
     funnel.append({"step": step["name"], "event": step["event"],
                    "event_count": count, "users": users, "drop_rate": 0})
+
+    # Daily breakdown
+    req_daily = RunReportRequest(
+        property=f"properties/{PROPERTY_ID}",
+        dimensions=[Dimension(name="date"), Dimension(name="eventName")],
+        metrics=[Metric(name="eventCount"), Metric(name="totalUsers")],
+        date_ranges=[DATE_RANGE],
+        dimension_filter=FilterExpression(
+            filter=Filter(field_name="eventName",
+                          string_filter=Filter.StringFilter(value=step["event"],
+                          match_type=Filter.StringFilter.MatchType.EXACT))
+        ),
+        order_bys=[OrderBy(dimension=OrderBy.DimensionOrderBy(dimension_name="date"))],
+        limit=31,
+    )
+    resp_daily = client.run_report(req_daily)
+    for row in resp_daily.rows:
+        date = fmt_date(dim(row,0))
+        if date not in funnel_daily_raw:
+            funnel_daily_raw[date] = {}
+        funnel_daily_raw[date][step["event"]] = {
+            "event_count": intf(met(row,0)),
+            "users":       intf(met(row,1)),
+        }
 
 for i in range(1, len(funnel)):
     prev = funnel[i-1]["users"]
     curr = funnel[i]["users"]
     funnel[i]["drop_rate"] = round((1 - curr/prev)*100, 1) if prev > 0 else 0
 
-# ── 10. Rotas ────────────────────────────────────────────────────────────────
-print("10/11 Rotas...")
+funnel_daily = {
+    "dates":  sorted(funnel_daily_raw.keys()),
+    "events": [s["event"] for s in FUNNEL_EVENTS],
+    "data":   funnel_daily_raw,
+}
 
+# ── 11. Rotas (30d fixo) ──────────────────────────────────────────────────────
+print("11/14 Rotas...")
 r = report(["customEvent:originCity","customEvent:destinationCity"],
            ["eventCount","totalUsers"],
-           order_bys=[OrderBy(metric=OrderBy.MetricOrderBy(metric_name="eventCount"), desc=True)],
-           limit=20)
+           order_bys=[OrderBy(metric=OrderBy.MetricOrderBy(metric_name="eventCount"), desc=True)], limit=20)
 top_routes = []
 for row in r.rows:
     o, d = dim(row,0), dim(row,1)
     if o and d and o != "(not set)" and d != "(not set)":
-        top_routes.append({"origin": o, "destination": d,
-                           "ecommercePurchases": intf(met(row,0)), "users": intf(met(row,1))})
+        top_routes.append({"origin":o,"destination":d,"purchases":intf(met(row,0)),"users":intf(met(row,1))})
 
-r = report(["customEvent:originCity"],
-           ["eventCount","totalUsers","ecommercePurchases"],
-           order_bys=[OrderBy(metric=OrderBy.MetricOrderBy(metric_name="eventCount"), desc=True)],
-           limit=15)
-top_origins = [{"city": dim(row,0), "searches": intf(met(row,0)),
-                "users": intf(met(row,1)), "conversions": intf(met(row,2))}
+r = report(["customEvent:originCity"],["eventCount","totalUsers","ecommercePurchases"],
+           order_bys=[OrderBy(metric=OrderBy.MetricOrderBy(metric_name="eventCount"), desc=True)], limit=15)
+top_origins = [{"city":dim(row,0),"searches":intf(met(row,0)),"users":intf(met(row,1)),"conversions":intf(met(row,2))}
                for row in r.rows if dim(row,0) != "(not set)"]
 
-r = report(["customEvent:destinationCity"],
-           ["eventCount","totalUsers","ecommercePurchases"],
-           order_bys=[OrderBy(metric=OrderBy.MetricOrderBy(metric_name="eventCount"), desc=True)],
-           limit=15)
-top_destinations = [{"city": dim(row,0), "searches": intf(met(row,0)),
-                     "users": intf(met(row,1)), "conversions": intf(met(row,2))}
+r = report(["customEvent:destinationCity"],["eventCount","totalUsers","ecommercePurchases"],
+           order_bys=[OrderBy(metric=OrderBy.MetricOrderBy(metric_name="eventCount"), desc=True)], limit=15)
+top_destinations = [{"city":dim(row,0),"searches":intf(met(row,0)),"users":intf(met(row,1)),"conversions":intf(met(row,2))}
                     for row in r.rows if dim(row,0) != "(not set)"]
 
-r = report(["customEvent:originCity","customEvent:destinationCity"],
-           ["eventCount","totalUsers"],
-           order_bys=[OrderBy(metric=OrderBy.MetricOrderBy(metric_name="totalUsers"), desc=True)],
-           limit=15)
+r = report(["customEvent:originCity","customEvent:destinationCity"],["eventCount","totalUsers"],
+           order_bys=[OrderBy(metric=OrderBy.MetricOrderBy(metric_name="totalUsers"), desc=True)], limit=15)
 route_conversion = []
 for row in r.rows:
     o, d = dim(row,0), dim(row,1)
     if o and d and o != "(not set)" and d != "(not set)":
-        route_conversion.append({
-            "route": f"{o} → {d}", "origin": o, "destination": d,
-            "searches": intf(met(row,0)), "users": intf(met(row,1)),
-        })
+        route_conversion.append({"route":f"{o} → {d}","origin":o,"destination":d,
+                                  "searches":intf(met(row,0)),"users":intf(met(row,1))})
 
 routes = {
     "top_routes":       top_routes,
@@ -223,23 +380,31 @@ routes = {
     "route_conversion": route_conversion,
 }
 
-# ── 11. Saída ───────────────────────────────────────────────────────────────
-print("11/11 Salvando...")
+# ── 12. Saída ─────────────────────────────────────────────────────────────────
+print("12/14 Montando JSON...")
 data = {
-    "updated_at":       datetime.utcnow().strftime("%Y-%m-%dT%H:%M:%SZ"),
-    "period":           "últimos 30 dias",
-    "totals":           totals,
-    "daily":            daily,
-    "pages":            pages,
-    "landing_pages":    landing_pages,
-    "sources":          sources,
-    "channels":         channels,
-    "devices":          devices,
-    "new_vs_returning": new_vs_returning,
-    "funnel":           funnel,
-    "routes":           routes,
-    "insights":         [],
+    "updated_at":         datetime.utcnow().strftime("%Y-%m-%dT%H:%M:%SZ"),
+    "period":             "últimos 30 dias",
+    "totals":             totals,
+    "daily":              daily,
+    "pages":              pages,
+    "pages_weekly":       pages_weekly,
+    "landing_pages":      landing_pages,
+    "sources":            sources,
+    "channels":           channels,
+    "channels_daily":     channels_daily,
+    "devices":            devices,
+    "devices_daily":      devices_daily,
+    "new_vs_returning":   new_vs_returning,
+    "nvr_daily":          nvr_daily,
+    "funnel":             funnel,
+    "funnel_daily":       funnel_daily,
+    "routes":             routes,
+    "insights":           [],
 }
+
+print("13/14 Salvando data.json...")
 with open("data.json", "w", encoding="utf-8") as f:
     json.dump(data, f, ensure_ascii=False, indent=2)
-print(f"✅ data.json gerado — {datetime.utcnow().strftime('%Y-%m-%d %H:%M')} UTC")
+
+print(f"14/14 ✅ data.json gerado — {datetime.utcnow().strftime('%Y-%m-%d %H:%M')} UTC")
