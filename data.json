@@ -1,18 +1,18 @@
 {
-  "updated_at": "2026-05-22T21:45:22Z",
+  "updated_at": "2026-05-22T21:57:21Z",
   "period": "últimos 90 dias",
   "totals": {
     "sessions": 4655448,
-    "total_users": 2142456,
-    "new_users": 1842664,
+    "total_users": 2143973,
+    "new_users": 1843514,
     "bounce_rate": 22.85,
-    "avg_session_duration": 339.21,
-    "conversions": 501759,
-    "pageviews": 24433091,
-    "sessions_7d": 396823,
-    "users_7d": 250878,
-    "conversions_7d": 71791,
-    "new_users_7d": 162419
+    "avg_session_duration": 339.68,
+    "conversions": 501968,
+    "pageviews": 24446432,
+    "sessions_7d": 398469,
+    "users_7d": 252133,
+    "conversions_7d": 72000,
+    "new_users_7d": 163269
   },
   "daily": [
     {
@@ -647,10 +647,10 @@
     },
     {
       "date": "2026-05-22",
-      "sessions": 35304,
-      "users": 29542,
-      "conversions": 4809,
-      "new_users": 12828
+      "sessions": 37051,
+      "users": 31010,
+      "conversions": 5018,
+      "new_users": 13678
     }
   ],
   "pages": [
@@ -666,9 +666,9 @@
     {
       "path": "/",
       "title": "Passagem de Ônibus: Compre Online | Viaje Guanabara",
-      "pageviews": 1936856,
-      "users": 523387,
-      "avg_duration": 116.48,
+      "pageviews": 1940439,
+      "users": 524232,
+      "avg_duration": 116.64,
       "bounce_rate": 0,
       "exits": 0
     },
@@ -782,8 +782,8 @@
     {
       "path": "/",
       "sessions": 2960687,
-      "users": 1718226,
-      "conversions": 268673,
+      "users": 1718785,
+      "conversions": 268712,
       "bounce_rate": 18.71
     },
     {
@@ -836,18 +836,18 @@
       "bounce_rate": 13.46
     },
     {
+      "path": "",
+      "sessions": 17510,
+      "users": 15061,
+      "conversions": 442,
+      "bounce_rate": 99.52
+    },
+    {
       "path": "/checkout/pagamento/sucesso/2",
       "sessions": 17102,
       "users": 13116,
       "conversions": 362,
       "bounce_rate": 40.95
-    },
-    {
-      "path": "",
-      "sessions": 16645,
-      "users": 14324,
-      "conversions": 424,
-      "bounce_rate": 99.54
     }
   ],
   "sources": [
@@ -855,101 +855,101 @@
       "source": "google",
       "medium": "cpc",
       "sessions": 2646164,
-      "users": 1443501,
-      "conversions": 259185,
-      "conversion_rate": 9.79,
+      "users": 1443985,
+      "conversions": 259235,
+      "conversion_rate": 9.8,
       "bounce_rate": 16.37,
-      "avg_duration": 379.05
+      "avg_duration": 379.29
     },
     {
       "source": "google",
       "medium": "organic",
       "sessions": 905320,
-      "users": 493579,
-      "conversions": 70664,
+      "users": 493618,
+      "conversions": 70682,
       "conversion_rate": 7.81,
       "bounce_rate": 22.48,
-      "avg_duration": 300.76
+      "avg_duration": 301.02
     },
     {
       "source": "(direct)",
       "medium": "(none)",
-      "sessions": 560803,
-      "users": 326937,
-      "conversions": 121764,
+      "sessions": 560905,
+      "users": 327156,
+      "conversions": 121791,
       "conversion_rate": 21.71,
       "bounce_rate": 34.01,
-      "avg_duration": 296.29
+      "avg_duration": 296.64
     },
     {
       "source": "pushnews",
       "medium": "pushnotification",
-      "sessions": 174014,
+      "sessions": 174151,
       "users": 81226,
-      "conversions": 3734,
-      "conversion_rate": 2.15,
-      "bounce_rate": 77.11,
-      "avg_duration": 98.07
+      "conversions": 3735,
+      "conversion_rate": 2.14,
+      "bounce_rate": 77.13,
+      "avg_duration": 98.06
     },
     {
       "source": "(not set)",
       "medium": "(not set)",
-      "sessions": 38983,
-      "users": 35363,
-      "conversions": 4013,
-      "conversion_rate": 10.29,
-      "bounce_rate": 92.87,
-      "avg_duration": 457.84
+      "sessions": 40217,
+      "users": 36300,
+      "conversions": 4105,
+      "conversion_rate": 10.21,
+      "bounce_rate": 93.09,
+      "avg_duration": 465.99
     },
     {
       "source": "(data not available)",
       "medium": "(data not available)",
-      "sessions": 37491,
-      "users": 36984,
-      "conversions": 2258,
+      "sessions": 37763,
+      "users": 37296,
+      "conversions": 2272,
       "conversion_rate": 6.02,
-      "bounce_rate": 6.94,
-      "avg_duration": 437.4
+      "bounce_rate": 7.14,
+      "avg_duration": 438.78
     },
     {
       "source": "whatsapp",
       "medium": "bot",
-      "sessions": 34497,
-      "users": 15210,
-      "conversions": 17481,
-      "conversion_rate": 50.67,
-      "bounce_rate": 23.25,
-      "avg_duration": 315.12
+      "sessions": 34500,
+      "users": 15213,
+      "conversions": 17485,
+      "conversion_rate": 50.68,
+      "bounce_rate": 23.22,
+      "avg_duration": 315.25
     },
     {
       "source": "social",
       "medium": "meta",
       "sessions": 33907,
-      "users": 25582,
+      "users": 25586,
       "conversions": 1416,
       "conversion_rate": 4.18,
-      "bounce_rate": 17.47,
-      "avg_duration": 271.21
+      "bounce_rate": 17.46,
+      "avg_duration": 271.27
     },
     {
       "source": "insider",
       "medium": "architect_whatsapp",
       "sessions": 29173,
-      "users": 23190,
+      "users": 23198,
       "conversions": 2126,
       "conversion_rate": 7.29,
       "bounce_rate": 30.26,
-      "avg_duration": 250.36
+      "avg_duration": 250.45
     },
     {
       "source": "bing",
       "medium": "organic",
-      "sessions": 27618,
-      "users": 14303,
-      "conversions": 4689,
-      "conversion_rate": 16.98,
-      "bounce_rate": 18.21,
-      "avg_duration": 634.42
+      "sessions": 27629,
+      "users": 14305,
+      "conversions": 4690,
+      "conversion_rate": 16.97,
+      "bounce_rate": 18.2,
+      "avg_duration": 634.88
     },
     {
       "source": "insider",
@@ -964,22 +964,22 @@
     {
       "source": "insider",
       "medium": "web_push",
-      "sessions": 17405,
-      "users": 10794,
-      "conversions": 275,
-      "conversion_rate": 1.58,
-      "bounce_rate": 60.06,
-      "avg_duration": 107.21
+      "sessions": 17549,
+      "users": 10881,
+      "conversions": 276,
+      "conversion_rate": 1.57,
+      "bounce_rate": 60.37,
+      "avg_duration": 106.51
     },
     {
       "source": "insider",
       "medium": "architect_email",
-      "sessions": 9071,
-      "users": 6104,
+      "sessions": 9078,
+      "users": 6106,
       "conversions": 1119,
-      "conversion_rate": 12.34,
-      "bounce_rate": 39.25,
-      "avg_duration": 386.04
+      "conversion_rate": 12.33,
+      "bounce_rate": 39.24,
+      "avg_duration": 385.91
     },
     {
       "source": "insider",
@@ -994,12 +994,12 @@
     {
       "source": "facebook",
       "medium": "cpc",
-      "sessions": 6846,
-      "users": 5477,
+      "sessions": 6850,
+      "users": 5481,
       "conversions": 139,
       "conversion_rate": 2.03,
-      "bounce_rate": 50.82,
-      "avg_duration": 125.59
+      "bounce_rate": 50.85,
+      "avg_duration": 125.52
     }
   ],
   "channels": [
@@ -8405,37 +8405,37 @@
     {
       "step": "Busca",
       "event": "search",
-      "event_count": 7904860,
-      "users": 1386975,
+      "event_count": 7908019,
+      "users": 1387761,
       "drop_rate": 0
     },
     {
       "step": "Selecionou item",
       "event": "select_item",
-      "event_count": 258616,
-      "users": 114418,
-      "drop_rate": 91.8
+      "event_count": 258827,
+      "users": 114552,
+      "drop_rate": 91.7
     },
     {
       "step": "Adicionou ao carrinho",
       "event": "add_to_cart",
-      "event_count": 971248,
-      "users": 389133,
-      "drop_rate": -240.1
+      "event_count": 971611,
+      "users": 389265,
+      "drop_rate": -239.8
     },
     {
       "step": "Iniciou checkout",
       "event": "begin_checkout",
-      "event_count": 299296,
-      "users": 139250,
+      "event_count": 299556,
+      "users": 139436,
       "drop_rate": 64.2
     },
     {
       "step": "Compra",
       "event": "purchase",
-      "event_count": 501759,
-      "users": 272839,
-      "drop_rate": -95.9
+      "event_count": 501968,
+      "users": 272952,
+      "drop_rate": -95.8
     }
   ],
   "funnel_daily": {
@@ -10506,24 +10506,24 @@
       },
       "2026-05-22": {
         "search": {
-          "event_count": 52151,
-          "users": 17740
+          "event_count": 55310,
+          "users": 18699
         },
         "select_item": {
-          "event_count": 3617,
-          "users": 2084
+          "event_count": 3828,
+          "users": 2204
         },
         "add_to_cart": {
-          "event_count": 5507,
-          "users": 3301
+          "event_count": 5870,
+          "users": 3496
         },
         "begin_checkout": {
-          "event_count": 3538,
-          "users": 2211
+          "event_count": 3798,
+          "users": 2360
         },
         "purchase": {
-          "event_count": 4809,
-          "users": 2679
+          "event_count": 5018,
+          "users": 2840
         }
       }
     }
@@ -10539,135 +10539,135 @@
       {
         "origin": "BELO HORIZONTE - MG",
         "destination": "RIO DE JANEIRO - RJ",
-        "purchases": 130783,
-        "users": 12936
+        "purchases": 130821,
+        "users": 12938
       },
       {
         "origin": "RIO DE JANEIRO - RJ",
         "destination": "BELO HORIZONTE - MG",
-        "purchases": 123394,
+        "purchases": 123412,
         "users": 11912
       },
       {
         "origin": "FORTALEZA - CE",
         "destination": "SOBRAL - CE",
-        "purchases": 94936,
-        "users": 13986
+        "purchases": 94984,
+        "users": 13989
       },
       {
         "origin": "FORTALEZA - CE",
         "destination": "NATAL - RN",
-        "purchases": 89799,
-        "users": 13026
+        "purchases": 89821,
+        "users": 13032
       },
       {
         "origin": "SOBRAL - CE",
         "destination": "FORTALEZA - CE",
-        "purchases": 89163,
-        "users": 13533
+        "purchases": 89190,
+        "users": 13539
       },
       {
         "origin": "NATAL - RN",
         "destination": "FORTALEZA - CE",
-        "purchases": 87681,
-        "users": 11237
+        "purchases": 87738,
+        "users": 11239
       },
       {
         "origin": "TERESINA - PI",
         "destination": "FORTALEZA - CE",
-        "purchases": 77845,
-        "users": 11323
+        "purchases": 77937,
+        "users": 11369
       },
       {
         "origin": "RIO DE JANEIRO - RJ - TODOS",
         "destination": "BELO HORIZONTE - MG - TODOS",
-        "purchases": 73984,
-        "users": 27231
+        "purchases": 74005,
+        "users": 27244
       },
       {
         "origin": "JUIZ DE FORA - MG",
         "destination": "RIO DE JANEIRO - RJ",
-        "purchases": 68221,
-        "users": 9173
+        "purchases": 68251,
+        "users": 9180
       },
       {
         "origin": "FORTALEZA - CE",
         "destination": "RECIFE - PE",
-        "purchases": 67650,
+        "purchases": 67666,
         "users": 10290
       },
       {
         "origin": "TERESINA - PI",
         "destination": "PARNAIBA - PI",
-        "purchases": 65756,
-        "users": 10217
+        "purchases": 65817,
+        "users": 10221
       },
       {
         "origin": "FORTALEZA - CE",
         "destination": "JUAZEIRO DO NORTE - CE",
-        "purchases": 65297,
-        "users": 9530
+        "purchases": 65333,
+        "users": 9532
       },
       {
         "origin": "RIO DE JANEIRO - RJ",
         "destination": "JUIZ DE FORA - MG",
-        "purchases": 64809,
-        "users": 9246
+        "purchases": 64813,
+        "users": 9250
       },
       {
         "origin": "SHOPPING INDEPENDENCIA - MG (term adicional de JUIZ DE FORA)",
         "destination": "RIO DE JANEIRO - RJ",
-        "purchases": 61770,
-        "users": 8868
+        "purchases": 61796,
+        "users": 8871
       },
       {
         "origin": "JUAZEIRO DO NORTE - CE",
         "destination": "FORTALEZA - CE",
-        "purchases": 61573,
-        "users": 9119
+        "purchases": 61600,
+        "users": 9124
       },
       {
         "origin": "RECIFE - PE",
         "destination": "FORTALEZA - CE",
-        "purchases": 60614,
-        "users": 8610
+        "purchases": 60635,
+        "users": 8614
       },
       {
         "origin": "PARNAIBA - PI",
         "destination": "TERESINA - PI",
-        "purchases": 59121,
-        "users": 8823
+        "purchases": 59153,
+        "users": 8833
       }
     ],
     "top_origins": [
       {
         "city": "FORTALEZA - CE",
-        "searches": 1151530,
-        "users": 154179,
-        "conversions": 45493
+        "searches": 1152215,
+        "users": 154301,
+        "conversions": 45518
       },
       {
         "city": "RIO DE JANEIRO - RJ",
-        "searches": 681883,
-        "users": 82941,
-        "conversions": 31744
+        "searches": 682221,
+        "users": 82946,
+        "conversions": 31761
       },
       {
         "city": "FORTALEZA - CE - TODOS",
-        "searches": 588295,
-        "users": 77449,
+        "searches": 588710,
+        "users": 77504,
         "conversions": 0
       },
       {
         "city": "TERESINA - PI",
-        "searches": 392053,
-        "users": 51097,
-        "conversions": 12192
+        "searches": 392343,
+        "users": 51162,
+        "conversions": 12196
       },
       {
         "city": "RIO DE JANEIRO - RJ - TODOS",
-        "searches": 375977,
-        "users": 64675,
+        "searches": 376244,
+        "users": 64722,
         "conversions": 0
       },
       {
@@ -10678,9 +10678,15 @@
       },
       {
         "city": "BRASILIA - DF",
-        "searches": 363181,
-        "users": 44510,
-        "conversions": 9000
+        "searches": 363379,
+        "users": 44518,
+        "conversions": 9007
+      },
+      {
+        "city": "",
+        "searches": 346249,
+        "users": 49852,
+        "conversions": 1975
       },
       {
         "city": "Fortaleza - CE - TODOS",
@@ -10690,76 +10696,70 @@
       },
       {
         "city": "SOBRAL - CE",
-        "searches": 342230,
-        "users": 41032,
-        "conversions": 12147
+        "searches": 342469,
+        "users": 41072,
+        "conversions": 12149
       },
       {
         "city": "SAO LUIS - MA",
-        "searches": 342132,
-        "users": 39708,
-        "conversions": 9307
-      },
-      {
-        "city": "",
-        "searches": 326830,
-        "users": 48317,
-        "conversions": 1951
+        "searches": 342310,
+        "users": 39723,
+        "conversions": 9308
       },
       {
         "city": "BELO HORIZONTE - MG",
-        "searches": 311027,
-        "users": 34361,
-        "conversions": 8233
+        "searches": 311139,
+        "users": 34373,
+        "conversions": 8234
       },
       {
         "city": "JOAO PESSOA - PB",
-        "searches": 294674,
-        "users": 34149,
-        "conversions": 8323
+        "searches": 294891,
+        "users": 34170,
+        "conversions": 8328
       },
       {
         "city": "JUAZEIRO DO NORTE - CE",
-        "searches": 288910,
-        "users": 34501,
+        "searches": 289126,
+        "users": 34524,
         "conversions": 8105
       }
     ],
     "top_destinations": [
       {
         "city": "FORTALEZA - CE",
-        "searches": 1058552,
-        "users": 146171,
-        "conversions": 38398
+        "searches": 1059114,
+        "users": 146237,
+        "conversions": 38409
       },
       {
         "city": "RIO DE JANEIRO - RJ",
-        "searches": 702372,
-        "users": 86391,
-        "conversions": 30167
+        "searches": 702750,
+        "users": 86434,
+        "conversions": 30183
       },
       {
         "city": "FORTALEZA - CE - TODOS",
-        "searches": 474269,
-        "users": 66156,
+        "searches": 474631,
+        "users": 66244,
         "conversions": 0
       },
       {
         "city": "",
-        "searches": 336762,
-        "users": 53508,
-        "conversions": 1929
+        "searches": 356178,
+        "users": 55074,
+        "conversions": 1953
       },
       {
         "city": "SOBRAL - CE",
-        "searches": 332388,
-        "users": 39405,
-        "conversions": 12189
+        "searches": 332528,
+        "users": 39422,
+        "conversions": 12191
       },
       {
         "city": "RIO DE JANEIRO - RJ - TODOS",
-        "searches": 325863,
-        "users": 44363,
+        "searches": 326107,
+        "users": 44381,
         "conversions": 0
       },
       {
@@ -10770,27 +10770,27 @@
       },
       {
         "city": "TERESINA - PI",
-        "searches": 311073,
-        "users": 42922,
-        "conversions": 11428
+        "searches": 311312,
+        "users": 42955,
+        "conversions": 11434
       },
       {
         "city": "JOAO PESSOA - PB",
-        "searches": 308220,
-        "users": 37355,
-        "conversions": 7829
+        "searches": 308419,
+        "users": 37381,
+        "conversions": 7834
       },
       {
         "city": "SAO LUIS - MA",
-        "searches": 304250,
-        "users": 37320,
-        "conversions": 7697
+        "searches": 304498,
+        "users": 37332,
+        "conversions": 7699
       },
       {
         "city": "BRASILIA - DF",
-        "searches": 286435,
-        "users": 36770,
-        "conversions": 8711
+        "searches": 286563,
+        "users": 36793,
+        "conversions": 8715
       },
       {
         "city": "Fortaleza - CE",
@@ -10800,15 +10800,15 @@
       },
       {
         "city": "JUAZEIRO DO NORTE - CE",
-        "searches": 283955,
-        "users": 34485,
-        "conversions": 7223
+        "searches": 284091,
+        "users": 34499,
+        "conversions": 7226
       },
       {
         "city": "BELO HORIZONTE - MG",
-        "searches": 259347,
-        "users": 30244,
-        "conversions": 8447
+        "searches": 259410,
+        "users": 30251,
+        "conversions": 8450
       }
     ],
     "route_conversion": [
@@ -10823,78 +10823,78 @@
         "route": "RIO DE JANEIRO - RJ - TODOS → BELO HORIZONTE - MG - TODOS",
         "origin": "RIO DE JANEIRO - RJ - TODOS",
         "destination": "BELO HORIZONTE - MG - TODOS",
-        "searches": 73984,
-        "users": 27231
+        "searches": 74005,
+        "users": 27244
       },
       {
         "route": "FORTALEZA - CE → SOBRAL - CE",
         "origin": "FORTALEZA - CE",
         "destination": "SOBRAL - CE",
-        "searches": 94936,
-        "users": 13986
+        "searches": 94984,
+        "users": 13989
       },
       {
         "route": "SOBRAL - CE → FORTALEZA - CE",
         "origin": "SOBRAL - CE",
         "destination": "FORTALEZA - CE",
-        "searches": 89163,
-        "users": 13533
+        "searches": 89190,
+        "users": 13539
       },
       {
         "route": "FORTALEZA - CE → NATAL - RN",
         "origin": "FORTALEZA - CE",
         "destination": "NATAL - RN",
-        "searches": 89799,
-        "users": 13026
+        "searches": 89821,
+        "users": 13032
       },
       {
         "route": "BELO HORIZONTE - MG → RIO DE JANEIRO - RJ",
         "origin": "BELO HORIZONTE - MG",
         "destination": "RIO DE JANEIRO - RJ",
-        "searches": 130783,
-        "users": 12936
+        "searches": 130821,
+        "users": 12938
       },
       {
         "route": "RIO DE JANEIRO - RJ → BELO HORIZONTE - MG",
         "origin": "RIO DE JANEIRO - RJ",
         "destination": "BELO HORIZONTE - MG",
-        "searches": 123394,
+        "searches": 123412,
         "users": 11912
       },
       {
         "route": "TERESINA - PI → FORTALEZA - CE",
         "origin": "TERESINA - PI",
         "destination": "FORTALEZA - CE",
-        "searches": 77845,
-        "users": 11323
+        "searches": 77937,
+        "users": 11369
       },
       {
         "route": "NATAL - RN → FORTALEZA - CE",
         "origin": "NATAL - RN",
         "destination": "FORTALEZA - CE",
-        "searches": 87681,
-        "users": 11237
+        "searches": 87738,
+        "users": 11239
       },
       {
         "route": "FORTALEZA - CE → RECIFE - PE",
         "origin": "FORTALEZA - CE",
         "destination": "RECIFE - PE",
-        "searches": 67650,
+        "searches": 67666,
         "users": 10290
       },
       {
         "route": "TERESINA - PI → PARNAIBA - PI",
         "origin": "TERESINA - PI",
         "destination": "PARNAIBA - PI",
-        "searches": 65756,
-        "users": 10217
+        "searches": 65817,
+        "users": 10221
       },
       {
         "route": "FORTALEZA - CE → JUAZEIRO DO NORTE - CE",
         "origin": "FORTALEZA - CE",
         "destination": "JUAZEIRO DO NORTE - CE",
-        "searches": 65297,
-        "users": 9530
+        "searches": 65333,
+        "users": 9532
       },
       {
         "route": "Fortaleza - CE → Natal - RN",
