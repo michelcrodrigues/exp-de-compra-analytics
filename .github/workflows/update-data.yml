@@ -2,8 +2,8 @@ name: Atualizar Dados GA4
 
 on:
   schedule:
-    - cron: '0 11 * * *'  # Todo dia às 08:00 horário de Brasília (UTC-3)
-  workflow_dispatch:       # Permite rodar manualmente pelo GitHub
+    - cron: '0 11 * * *'
+  workflow_dispatch:
 
 jobs:
   update:
@@ -23,8 +23,8 @@ jobs:
 
       - name: Criar arquivo de credenciais do Google
         run: echo '${{ secrets.GA4_CREDENTIALS_JSON }}' > /tmp/ga4_credentials.json
-        
-    - name: Executar script de coleta
+
+      - name: Executar script de coleta
         env:
           GA4_PROPERTY_ID: ${{ secrets.GA4_PROPERTY_ID }}
           GOOGLE_APPLICATION_CREDENTIALS: /tmp/ga4_credentials.json
