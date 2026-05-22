@@ -165,7 +165,7 @@ for i in range(1, len(funnel)):
 # ── 10. Rotas ────────────────────────────────────────────────────────────────
 print("10/11 Rotas...")
 
-r = report(["customEvent:origin_city","customEvent:destination_city"],
+r = report(["customEvent:originCity","customEvent:destinationCity"],
            ["eventCount","totalUsers"],
            order_bys=[OrderBy(metric=OrderBy.MetricOrderBy(metric_name="eventCount"), desc=True)],
            limit=20)
@@ -176,7 +176,7 @@ for row in r.rows:
         top_routes.append({"origin": o, "destination": d,
                            "purchases": intf(met(row,0)), "users": intf(met(row,1))})
 
-r = report(["customEvent:origin_city"],
+r = report(["customEvent:originCity"],
            ["eventCount","totalUsers","conversions"],
            order_bys=[OrderBy(metric=OrderBy.MetricOrderBy(metric_name="eventCount"), desc=True)],
            limit=15)
@@ -184,7 +184,7 @@ top_origins = [{"city": dim(row,0), "searches": intf(met(row,0)),
                 "users": intf(met(row,1)), "conversions": intf(met(row,2))}
                for row in r.rows if dim(row,0) != "(not set)"]
 
-r = report(["customEvent:destination_city"],
+r = report(["customEvent:destinationCity"],
            ["eventCount","totalUsers","conversions"],
            order_bys=[OrderBy(metric=OrderBy.MetricOrderBy(metric_name="eventCount"), desc=True)],
            limit=15)
@@ -192,7 +192,7 @@ top_destinations = [{"city": dim(row,0), "searches": intf(met(row,0)),
                      "users": intf(met(row,1)), "conversions": intf(met(row,2))}
                     for row in r.rows if dim(row,0) != "(not set)"]
 
-r = report(["customEvent:origin_city","customEvent:destination_city"],
+r = report(["customEvent:originCity","customEvent:destinationCity"],
            ["eventCount","totalUsers"],
            order_bys=[OrderBy(metric=OrderBy.MetricOrderBy(metric_name="totalUsers"), desc=True)],
            limit=15)
