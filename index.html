@@ -61,14 +61,14 @@
 
     /* KPI */
     .kgrid{display:grid;grid-template-columns:repeat(7,1fr);gap:1px;background:var(--border);border:1px solid var(--border);border-radius:10px;overflow:visible;margin-bottom:22px;position:relative;z-index:10}
-    .kpi{background:var(--surface);padding:16px 14px;transition:background .15s;border-top:3px solid transparent;border-right:1px solid var(--border);position:relative}
+    .kpi{background:var(--surface);padding:16px 14px;transition:background .15s;border-top:3px solid transparent;border-right:1px solid var(--border);position:relative;min-width:0;overflow:hidden}
     .kpi:first-child{border-radius:10px 0 0 10px}.kpi:last-child{border-radius:0 10px 10px 0;border-right:none}
     .kpi:hover{background:#fafaf8}
     .kpi.cb{border-top-color:var(--blue)}.kpi.ct{border-top-color:var(--teal)}.kpi.cg{border-top-color:var(--green)}
     .kpi.ci{border-top-color:var(--indigo)}.kpi.ca{border-top-color:var(--amber)}.kpi.cp{border-top-color:var(--purple)}.kpi.cc{border-top-color:var(--cyan)}
     .kl{font-size:10px;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:.07em;margin-bottom:7px;display:flex;align-items:center;gap:5px}
-    .kv{font-family:'IBM Plex Mono',monospace;font-size:20px;font-weight:600;line-height:1}
-    .ks{font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--muted);margin-top:5px}
+    .kv{font-family:'IBM Plex Mono',monospace;font-size:clamp(14px,1.3vw,20px);font-weight:600;line-height:1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.ks{font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--muted);margin-top:5px;white-space:normal;line-height:1.3;word-break:break-word}
+    
 
     /* Info icon — tooltip opens downward from KPI, upward from cards */
     .ii{display:inline-flex;align-items:center;justify-content:center;width:13px;height:13px;border-radius:50%;background:var(--border);color:var(--muted);font-size:9px;font-weight:700;cursor:default;position:relative;font-style:normal;font-family:'IBM Plex Mono',monospace;flex-shrink:0}
@@ -147,6 +147,8 @@
       <option value="30">Últimos 30 dias</option>
       <option value="7">Últimos 7 dias</option>
       <option value="14">Últimos 14 dias</option>
+      <option value="60">Últimos 60 dias</option>
+      <option value="90">Últimos 90 dias</option>
       <option value="all">Todo o período</option>
       <option value="custom">Personalizado…</option>
     </select>
@@ -399,6 +401,11 @@ function applyF(){
   if(f.src!=='all') active.push(`Origem: ${f.src}`);
   if(f.dev!=='all') active.push(`Dispositivo: ${f.dev}`);
   document.getElementById('fst').textContent=active.length?'● '+active.join(' · '):'';
+  // Re-populate week selectors based on filtered date range
+  const filteredDates=filterDates(RAW.daily,f).map(r=>r.date);
+  const allWeeks=RAW.pages_weekly?.weeks||[];
+  populateWeekSel('wk-pages', allWeeks.filter(w=>filteredDates.some(d=>dateToWeek(d)===w)));
+  populateWeekSel('wk-funnel', filteredDates, true);
   kill();
   render(buildF(RAW,f));
 }
