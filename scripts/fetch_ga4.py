@@ -208,7 +208,7 @@ for row in r.rows:
 
     if date not in channels_daily_raw:
         channels_daily_raw[date] = {}
-    channels_daily_raw[date][channel] = {"sessions":sess,"users":users,"conversions":conv}
+    channels_daily_raw[date][channel] = {"sessions":sess,"users":users,"conversions":conv,"bounce_rate":bounce,"avg_duration":dur}
 
     if channel not in channels_agg:
         channels_agg[channel] = {"channel":channel,"sessions":0,"users":0,"conversions":0,"bounce_rate":bounce,"avg_duration":dur,"new_users":0}
@@ -278,7 +278,7 @@ for row in r.rows:
 
     if date not in devices_daily_raw:
         devices_daily_raw[date] = {}
-    devices_daily_raw[date][device] = {"sessions":sess,"users":users,"conversions":conv}
+    devices_daily_raw[date][device] = {"sessions":sess,"users":users,"conversions":conv,"bounce_rate":bounce}
 
     if device not in devices_agg:
         devices_agg[device] = {"device":device,"sessions":0,"users":0,"conversions":0,"bounce_rate":bounce}
