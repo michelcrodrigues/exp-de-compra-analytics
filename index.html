@@ -508,26 +508,36 @@ function buildF(d,f){
 
   // 4. Channels — real data filtered by date; device+source scaling applied
   const chObj=filterDailyObj(d.channels_daily,f);
-  let channels=aggFromDaily(chObj,'channel',['sessions','users','conversions']);
-  // Compute weighted bounce_rate and avg_duration from daily breakdown (real filtered data)
-  const chBounceMap={}, chDurMap={}, chSessMap={}, chNewMap={};
+  // Single pass: aggregate sessions/users/conversions (sum) and bounce/duration (weighted avg)
+  const chAgg={};
   chObj.dates.forEach(date=>{
     const day=chObj.data[date]||{};
     Object.entries(day).forEach(([ch,v])=>{
-      chBounceMap[ch]=(chBounceMap[ch]||0)+(v.bounce_rate||0)*(v.sessions||0);
-      chDurMap[ch]   =(chDurMap[ch]   ||0)+(v.avg_duration||0)*(v.sessions||0);
-      chSessMap[ch]  =(chSessMap[ch]  ||0)+(v.sessions||0);
-      chNewMap[ch]   =(chNewMap[ch]   ||0)+(v.new_users||0);
+      if(!chAgg[ch]) chAgg[ch]={channel:ch,sessions:0,users:0,conversions:0,wBounce:0,wDur:0,new_users:0};
+      const s=v.sessions||0;
+      chAgg[ch].sessions   +=s;
+      chAgg[ch].users      +=(v.users||0);
+      chAgg[ch].conversions+=(v.conversions||0);
+      chAgg[ch].new_users  +=(v.new_users||0);
+      chAgg[ch].wBounce    +=(v.bounce_rate||0)*s;
+      chAgg[ch].wDur       +=(v.avg_duration||0)*s;
     });
   });
-  channels=channels.map(ch=>{
-    const s=Math.max(chSessMap[ch.channel]||ch.sessions,1);
+  let channels=Object.values(chAgg).map(ch=>{
     const orig=d.channels.find(c=>c.channel===ch.channel)||{};
-    return{...ch,
-      conversion_rate:Math.round(ch.conversions/Math.max(ch.sessions,1)*10000)/100,
-      bounce_rate:    chSessMap[ch.channel]>0?Math.round(chBounceMap[ch.channel]/s*100)/100:(orig.bounce_rate||0),
-      avg_duration:   chSessMap[ch.channel]>0?Math.round(chDurMap[ch.channel]/s*100)/100:(orig.avg_duration||0),
-      new_users:      chNewMap[ch.channel]||orig.new_users||0,
+    const s=Math.max(ch.sessions,1);
+    // Use weighted avg from daily if available, else fall back to orig 30d value
+    const hasBounce = ch.wBounce > 0;
+    const hasDur    = ch.wDur    > 0;
+    return{
+      channel:         ch.channel,
+      sessions:        ch.sessions,
+      users:           ch.users,
+      conversions:     ch.conversions,
+      new_users:       ch.new_users||orig.new_users||0,
+      conversion_rate: Math.round(ch.conversions/s*10000)/100,
+      bounce_rate:     hasBounce ? Math.round(ch.wBounce/s*100)/100 : (orig.bounce_rate||0),
+      avg_duration:    hasDur    ? Math.round(ch.wDur/s*100)/100    : (orig.avg_duration||0),
     };
   }).sort((a,b)=>b.sessions-a.sessions);
 
@@ -637,23 +647,58 @@ function buildF(d,f){
 
   // 10. Totals — sessions/users/conversions from scaled daily
   //     bounce_rate and avg_duration from weighted average of filtered channels
+  // Compute overall bounce_rate and avg_duration:
+  // 1. Try weighted avg from filtered channels (most accurate, needs re-collected data)
+  // 2. If device filter active, use devices_daily weighted avg (always available)
+  // 3. Fall back to original totals
   let wBounce=0, wDur=0, wSess=0;
   channels.forEach(ch=>{
-    wBounce+=( ch.bounce_rate||0)*ch.sessions;
+    wBounce+=(ch.bounce_rate||0)*ch.sessions;
     wDur   +=(ch.avg_duration||0)*ch.sessions;
     wSess  +=ch.sessions;
   });
-  const filtBounce = wSess>0 ? Math.round(wBounce/wSess*100)/100 : d.totals.bounce_rate;
-  const filtDur    = wSess>0 ? Math.round(wDur/wSess*100)/100    : d.totals.avg_session_duration;
+  let filtBounce, filtDur;
+  if(wSess>0 && wBounce>0){
+    // Channels have real bounce data (after pipeline re-runs with new fetch_ga4.py)
+    filtBounce = Math.round(wBounce/wSess*100)/100;
+    filtDur    = Math.round(wDur/wSess*100)/100;
+  } else if(devFilter!=='all'){
+    // Use devices_daily weighted avg for this device
+    const devObj2=filterDailyObj(d.devices_daily,f);
+    let dWb=0,dWd=0,dWs=0;
+    devObj2.dates.forEach(date=>{
+      const v=(devObj2.data[date]||{})[devFilter]||{};
+      const s=v.sessions||0;
+      dWb+=(v.bounce_rate||0)*s;
+      dWs+=s;
+    });
+    let dWd2=0;
+    devObj2.dates.forEach(date=>{
+      const v=(devObj2.data[date]||{})[devFilter]||{};
+      const s=v.sessions||0;
+      dWd2+=(v.avg_duration||0)*s;
+    });
+    filtBounce = dWs>0&&dWb>0 ? Math.round(dWb/dWs*100)/100     : d.totals.bounce_rate;
+    filtDur    = dWs>0&&dWd2>0 ? Math.round(dWd2/dWs*100)/100 : d.totals.avg_session_duration;
+  } else if(srcFilter!=='all'){
+    // Source filter: use sources table weighted avg
+    const srcRows=d.sources.filter(r=>(r.source_medium||`${r.source} / ${r.medium}`)===srcFilter);
+    const sWb=srcRows.reduce((a,r)=>a+(r.bounce_rate||0)*r.sessions,0);
+    const sWs=srcRows.reduce((a,r)=>a+r.sessions,0);
+    filtBounce = sWs>0 ? Math.round(sWb/sWs*100)/100 : d.totals.bounce_rate;
+    filtDur    = sWs>0 ? Math.round(srcRows.reduce((a,r)=>a+(r.avg_duration||0)*r.sessions,0)/sWs*100)/100 : d.totals.avg_session_duration;
+  } else {
+    filtBounce = d.totals.bounce_rate;
+    filtDur    = d.totals.avg_session_duration;
+  }
 
-  // Sessions and users come from scaled daily (has date dimension)
-  // Conversions come from channels aggregate (has real device/source breakdown)
-  // This ensures conv rate = real filtered conversions / real filtered sessions
-  const filtSessions    = scaledDaily.reduce((a,r)=>a+r.sessions,0);
-  const filtUsers       = scaledDaily.reduce((a,r)=>a+r.users,0);
-  const filtNewUsers    = scaledDaily.reduce((a,r)=>a+r.new_users,0);
-  // Conversions: sum from filtered channels (real data per channel per period)
+  // Sessions, users and conversions all come from channels_daily (same source).
+  // This guarantees conv_rate = Σconversions / Σsessions using identical filtered data.
+  // new_users comes from scaled daily (only place that has it).
+  const filtSessions    = channels.reduce((a,c)=>a+c.sessions,0);
+  const filtUsers       = channels.reduce((a,c)=>a+c.users,0);
   const filtConversions = channels.reduce((a,c)=>a+c.conversions,0);
+  const filtNewUsers    = scaledDaily.reduce((a,r)=>a+r.new_users,0);
 
   const totals={
     ...d.totals,
