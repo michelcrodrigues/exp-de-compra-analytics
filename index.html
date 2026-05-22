@@ -10,200 +10,146 @@
   <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
   <style>
     :root {
-      --bg:       #f5f4f0;
-      --surface:  #ffffff;
-      --surface2: #eeede9;
-      --border:   #dddbd4;
-      --text:     #1a1917;
-      --muted:    #7a7870;
-      --accent:   #1a1917;
-      --blue:     #1d4ed8;
-      --green:    #15803d;
-      --red:      #b91c1c;
-      --amber:    #b45309;
-      --tag-bg:   #e8e6e0;
+      --bg:      #f5f4f0;
+      --surface: #ffffff;
+      --s2:      #f0efe9;
+      --border:  #dddbd4;
+      --text:    #1a1917;
+      --muted:   #7a7870;
+      --blue:    #1d4ed8;
+      --indigo:  #4f46e5;
+      --teal:    #0d9488;
+      --green:   #16a34a;
+      --amber:   #d97706;
+      --red:     #dc2626;
+      --purple:  #7c3aed;
+      --cyan:    #0891b2;
+      --pink:    #db2777;
+      --orange:  #ea580c;
     }
-    * { box-sizing: border-box; margin: 0; padding: 0; }
-    body {
-      background: var(--bg);
-      color: var(--text);
-      font-family: 'IBM Plex Sans', sans-serif;
-      font-size: 13px;
-      min-height: 100vh;
+    *{box-sizing:border-box;margin:0;padding:0}
+    body{background:var(--bg);color:var(--text);font-family:'IBM Plex Sans',sans-serif;font-size:13px;min-height:100vh}
+
+    /* Loading */
+    #loading{position:fixed;inset:0;background:var(--bg);display:flex;align-items:center;justify-content:center;z-index:999;flex-direction:column;gap:12px}
+    .spinner{width:28px;height:28px;border:2px solid var(--border);border-top-color:var(--text);border-radius:50%;animation:spin .7s linear infinite}
+    @keyframes spin{to{transform:rotate(360deg)}}
+    #loading p{font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--muted)}
+
+    /* Header */
+    header{background:var(--text);color:#f5f4f0;padding:0 40px;height:52px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100}
+    .logo{font-family:'IBM Plex Mono',monospace;font-size:13px;font-weight:600;letter-spacing:.04em}
+    .logo em{color:#a09e98;font-style:normal}
+    .live{display:flex;align-items:center;gap:5px;font-family:'IBM Plex Mono',monospace;font-size:10px;color:#6ee7b7}
+    .live-dot{width:5px;height:5px;background:#6ee7b7;border-radius:50%;animation:pulse 2s infinite}
+    @keyframes pulse{0%,100%{opacity:1}50%{opacity:.3}}
+    .header-meta{font-family:'IBM Plex Mono',monospace;font-size:10px;color:#a09e98;text-align:right}
+
+    /* Filters bar */
+    .filters-bar{background:var(--surface);border-bottom:1px solid var(--border);padding:10px 40px;display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+    .filter-group{display:flex;align-items:center;gap:6px}
+    .filter-label{font-size:10px;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:.06em;white-space:nowrap}
+    .filter-select{font-family:'IBM Plex Sans',sans-serif;font-size:12px;background:var(--s2);border:1px solid var(--border);border-radius:6px;padding:5px 10px;color:var(--text);cursor:pointer;outline:none;transition:border-color .15s}
+    .filter-select:focus{border-color:var(--blue)}
+    .filter-divider{width:1px;height:24px;background:var(--border)}
+    .filter-reset{font-size:11px;color:var(--muted);background:none;border:none;cursor:pointer;font-family:'IBM Plex Sans',sans-serif;padding:4px 8px;border-radius:4px;transition:background .15s}
+    .filter-reset:hover{background:var(--s2);color:var(--text)}
+    .active-filters{font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--blue);margin-left:auto}
+
+    /* Nav */
+    .nav-wrap{background:var(--surface);border-bottom:1px solid var(--border);padding:0 40px}
+    .nav{display:flex}
+    .nav-btn{padding:13px 18px;font-size:12px;font-weight:500;font-family:'IBM Plex Sans',sans-serif;letter-spacing:.01em;border:none;background:none;color:var(--muted);cursor:pointer;border-bottom:2px solid transparent;transition:color .15s,border-color .15s}
+    .nav-btn:hover{color:var(--text)}
+    .nav-btn.active{color:var(--text);border-bottom-color:var(--text)}
+
+    /* Layout */
+    .container{max-width:1360px;margin:0 auto;padding:24px 40px}
+    .section{display:none}
+    .section.active{display:block}
+
+    /* KPI Grid */
+    .kpi-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:1px;background:var(--border);border:1px solid var(--border);border-radius:10px;overflow:hidden;margin-bottom:20px}
+    .kpi{background:var(--surface);padding:18px 16px;transition:background .15s;border-top:3px solid transparent}
+    .kpi:hover{background:#fafaf8}
+    .kpi.accent-blue{border-top-color:var(--blue)}
+    .kpi.accent-teal{border-top-color:var(--teal)}
+    .kpi.accent-green{border-top-color:var(--green)}
+    .kpi.accent-indigo{border-top-color:var(--indigo)}
+    .kpi.accent-amber{border-top-color:var(--amber)}
+    .kpi.accent-purple{border-top-color:var(--purple)}
+    .kpi.accent-cyan{border-top-color:var(--cyan)}
+    .kpi-label{font-size:10px;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:.07em;margin-bottom:8px}
+    .kpi-value{font-family:'IBM Plex Mono',monospace;font-size:21px;font-weight:600;line-height:1;color:var(--text)}
+    .kpi-sub{font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--muted);margin-top:5px}
+
+    /* Cards */
+    .grid-2{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:14px}
+    .grid-3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:14px;margin-bottom:14px}
+    .grid-1{display:grid;grid-template-columns:1fr;gap:14px;margin-bottom:14px}
+    .card{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:18px}
+    .card-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px}
+    .card-title{font-size:10px;font-weight:600;letter-spacing:.07em;text-transform:uppercase;color:var(--muted)}
+    .card-tag{font-family:'IBM Plex Mono',monospace;font-size:10px;background:var(--s2);color:var(--muted);padding:2px 7px;border-radius:4px}
+    .chart-wrap{position:relative}
+    .h-180{height:180px}.h-220{height:220px}.h-260{height:260px}.h-300{height:300px}
+
+    /* No data */
+    .no-data{display:flex;align-items:center;justify-content:center;height:120px;color:var(--muted);font-size:12px;font-family:'IBM Plex Mono',monospace}
+
+    /* Tables */
+    .table-wrap{overflow-x:auto}
+    table{width:100%;border-collapse:collapse}
+    thead{border-bottom:1px solid var(--border)}
+    th{text-align:left;padding:8px 10px;font-size:10px;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:.06em;white-space:nowrap}
+    td{padding:8px 10px;border-bottom:1px solid var(--s2);font-size:12px}
+    tr:last-child td{border-bottom:none}
+    tbody tr:hover td{background:#fafaf8}
+    .mono{font-family:'IBM Plex Mono',monospace;font-size:11.5px}
+    .num{text-align:right;font-family:'IBM Plex Mono',monospace;font-size:11.5px}
+    th.num{text-align:right}
+    .row-idx{font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--muted);width:28px}
+    .tag{display:inline-block;padding:2px 7px;border-radius:4px;font-family:'IBM Plex Mono',monospace;font-size:10px;font-weight:500}
+    .tag-blue{background:#dbeafe;color:#1d4ed8}
+    .tag-green{background:#dcfce7;color:#15803d}
+    .tag-red{background:#fee2e2;color:#b91c1c}
+    .tag-amber{background:#fef3c7;color:#b45309}
+    .tag-gray{background:var(--s2);color:var(--muted)}
+
+    /* Funnel */
+    .funnel-row{display:flex;align-items:center;gap:12px;margin-bottom:8px}
+    .funnel-label{width:160px;flex-shrink:0}
+    .funnel-name{font-size:12px;font-weight:500}
+    .funnel-event{font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--muted)}
+    .funnel-track{flex:1;background:var(--s2);border-radius:4px;height:28px;overflow:hidden}
+    .funnel-fill{height:100%;border-radius:4px;display:flex;align-items:center;padding:0 10px;font-family:'IBM Plex Mono',monospace;font-size:11px;font-weight:600;color:#fff;transition:width .7s cubic-bezier(.4,0,.2,1);white-space:nowrap;min-width:3%}
+    .funnel-pct{width:48px;text-align:right;font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--muted);flex-shrink:0}
+    .funnel-drop{width:72px;text-align:right;font-family:'IBM Plex Mono',monospace;font-size:11px;flex-shrink:0}
+    .drop-hi{color:var(--red)}.drop-mid{color:var(--amber)}.drop-lo{color:var(--green)}
+
+    /* Insights */
+    .insight{border:1px solid var(--border);border-radius:10px;padding:16px 18px;margin-bottom:10px}
+    .insight-type{display:flex;align-items:center;gap:8px;margin-bottom:7px}
+    .insight-dot{width:6px;height:6px;border-radius:50%;flex-shrink:0}
+    .dot-positive{background:var(--green)}.dot-warning{background:var(--amber)}.dot-info{background:var(--muted)}
+    .insight-title{font-size:13px;font-weight:600;margin-bottom:5px}
+    .insight-body{font-size:12px;color:var(--muted);line-height:1.65}
+    .insight-meta{font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--border);margin-top:8px}
+    .prompt-box{border:1px dashed var(--border);border-radius:10px;padding:22px;text-align:center;margin-top:16px;background:#fafaf8}
+    .prompt-box h3{font-size:12px;font-weight:600;margin-bottom:6px}
+    .prompt-box p{font-size:12px;color:var(--muted);margin-bottom:14px;line-height:1.6}
+    .copy-btn{background:var(--text);color:var(--bg);border:none;border-radius:6px;padding:9px 20px;font-size:12px;font-weight:600;cursor:pointer;font-family:'IBM Plex Sans',sans-serif;transition:opacity .15s}
+    .copy-btn:hover{opacity:.8}
+    .copy-btn.copied{background:var(--green);color:#fff}
+
+    @media(max-width:1024px){
+      header,.filters-bar,.nav-wrap{padding-left:16px;padding-right:16px}
+      .container{padding:16px}
+      .kpi-grid{grid-template-columns:repeat(4,1fr)}
+      .grid-2,.grid-3{grid-template-columns:1fr}
     }
-
-    /* ── Loading ── */
-    #loading {
-      position: fixed; inset: 0; background: var(--bg);
-      display: flex; align-items: center; justify-content: center;
-      z-index: 999; flex-direction: column; gap: 12px;
-    }
-    .spinner {
-      width: 28px; height: 28px;
-      border: 2px solid var(--border); border-top-color: var(--text);
-      border-radius: 50%; animation: spin .7s linear infinite;
-    }
-    @keyframes spin { to { transform: rotate(360deg); } }
-    #loading p { font-family: 'IBM Plex Mono', monospace; font-size: 11px; color: var(--muted); }
-
-    /* ── Header ── */
-    header {
-      background: var(--text); color: #f5f4f0;
-      padding: 0 40px; height: 52px;
-      display: flex; align-items: center; justify-content: space-between;
-      position: sticky; top: 0; z-index: 100;
-    }
-    .logo {
-      font-family: 'IBM Plex Mono', monospace;
-      font-size: 13px; font-weight: 600; letter-spacing: .04em;
-    }
-    .logo em { color: #a09e98; font-style: normal; }
-    .header-right {
-      display: flex; align-items: center; gap: 20px;
-    }
-    .header-meta {
-      font-family: 'IBM Plex Mono', monospace;
-      font-size: 10px; color: #a09e98; text-align: right;
-    }
-    .live { display: flex; align-items: center; gap: 5px; font-family: 'IBM Plex Mono', monospace; font-size: 10px; color: #6ee7b7; }
-    .live-dot { width: 5px; height: 5px; background: #6ee7b7; border-radius: 50%; animation: pulse 2s infinite; }
-    @keyframes pulse { 0%,100%{opacity:1}50%{opacity:.3} }
-
-    /* ── Nav ── */
-    .nav-wrap {
-      background: var(--surface); border-bottom: 1px solid var(--border);
-      padding: 0 40px;
-    }
-    .nav { display: flex; gap: 0; }
-    .nav-btn {
-      padding: 14px 18px; font-size: 12px; font-weight: 500;
-      font-family: 'IBM Plex Sans', sans-serif; letter-spacing: .01em;
-      border: none; background: none; color: var(--muted); cursor: pointer;
-      border-bottom: 2px solid transparent; transition: color .15s, border-color .15s;
-    }
-    .nav-btn:hover { color: var(--text); }
-    .nav-btn.active { color: var(--text); border-bottom-color: var(--text); }
-
-    /* ── Layout ── */
-    .container { max-width: 1360px; margin: 0 auto; padding: 28px 40px; }
-    .section { display: none; }
-    .section.active { display: block; }
-
-    /* ── Section header ── */
-    .sec-header { display: flex; align-items: baseline; justify-content: space-between; margin-bottom: 20px; }
-    .sec-title { font-size: 11px; font-weight: 600; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); }
-
-    /* ── KPI Grid ── */
-    .kpi-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 1px; background: var(--border); border: 1px solid var(--border); border-radius: 10px; overflow: hidden; margin-bottom: 24px; }
-    .kpi {
-      background: var(--surface); padding: 20px 18px;
-      transition: background .15s;
-    }
-    .kpi:hover { background: #fafaf8; }
-    .kpi-label { font-size: 10px; font-weight: 600; color: var(--muted); text-transform: uppercase; letter-spacing: .07em; margin-bottom: 10px; }
-    .kpi-value { font-family: 'IBM Plex Mono', monospace; font-size: 22px; font-weight: 600; line-height: 1; color: var(--text); }
-    .kpi-sub { font-family: 'IBM Plex Mono', monospace; font-size: 10px; color: var(--muted); margin-top: 6px; }
-    .kpi-delta { display: inline-flex; align-items: center; gap: 3px; font-family: 'IBM Plex Mono', monospace; font-size: 10px; margin-top: 4px; }
-    .delta-up { color: var(--green); }
-    .delta-dn { color: var(--red); }
-
-    /* ── Cards ── */
-    .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 16px; }
-    .grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 16px; margin-bottom: 16px; }
-    .grid-1 { display: grid; grid-template-columns: 1fr; gap: 16px; margin-bottom: 16px; }
-    .grid-3-1 { display: grid; grid-template-columns: 2fr 1fr; gap: 16px; margin-bottom: 16px; }
-
-    .card {
-      background: var(--surface); border: 1px solid var(--border);
-      border-radius: 10px; padding: 20px;
-    }
-    .card-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 16px; }
-    .card-title { font-size: 10px; font-weight: 600; letter-spacing: .07em; text-transform: uppercase; color: var(--muted); }
-    .card-tag { font-family: 'IBM Plex Mono', monospace; font-size: 10px; background: var(--tag-bg); color: var(--muted); padding: 2px 7px; border-radius: 4px; }
-
-    .chart-wrap { position: relative; }
-    .h-180 { height: 180px; }
-    .h-220 { height: 220px; }
-    .h-260 { height: 260px; }
-    .h-300 { height: 300px; }
-
-    /* ── Tables ── */
-    .table-wrap { overflow-x: auto; }
-    table { width: 100%; border-collapse: collapse; }
-    thead { border-bottom: 1px solid var(--border); }
-    th { text-align: left; padding: 8px 10px; font-size: 10px; font-weight: 600; color: var(--muted); text-transform: uppercase; letter-spacing: .06em; white-space: nowrap; }
-    td { padding: 9px 10px; border-bottom: 1px solid var(--surface2); font-size: 12px; }
-    tr:last-child td { border-bottom: none; }
-    tbody tr:hover td { background: #fafaf8; }
-    .mono { font-family: 'IBM Plex Mono', monospace; font-size: 11.5px; }
-    .num { text-align: right; font-family: 'IBM Plex Mono', monospace; font-size: 11.5px; }
-    th.num { text-align: right; }
-    .row-idx { font-family: 'IBM Plex Mono', monospace; font-size: 10px; color: var(--muted); width: 28px; }
-
-    /* ── Tags / Pills ── */
-    .tag { display: inline-block; padding: 2px 7px; border-radius: 4px; font-family: 'IBM Plex Mono', monospace; font-size: 10px; font-weight: 500; }
-    .tag-blue   { background: #dbeafe; color: #1d4ed8; }
-    .tag-green  { background: #dcfce7; color: #15803d; }
-    .tag-red    { background: #fee2e2; color: #b91c1c; }
-    .tag-amber  { background: #fef3c7; color: #b45309; }
-    .tag-gray   { background: var(--tag-bg); color: var(--muted); }
-
-    /* ── Funnel ── */
-    .funnel-row { display: flex; align-items: center; gap: 12px; margin-bottom: 8px; }
-    .funnel-label { width: 160px; flex-shrink: 0; }
-    .funnel-name { font-size: 12px; font-weight: 500; }
-    .funnel-event { font-family: 'IBM Plex Mono', monospace; font-size: 10px; color: var(--muted); }
-    .funnel-track { flex: 1; background: var(--surface2); border-radius: 4px; height: 28px; overflow: hidden; }
-    .funnel-fill {
-      height: 100%; border-radius: 4px; background: var(--text);
-      display: flex; align-items: center; padding: 0 10px;
-      font-family: 'IBM Plex Mono', monospace; font-size: 11px; font-weight: 600;
-      color: var(--bg); transition: width .7s cubic-bezier(.4,0,.2,1);
-      white-space: nowrap;
-    }
-    .funnel-pct { width: 48px; text-align: right; font-family: 'IBM Plex Mono', monospace; font-size: 11px; color: var(--muted); flex-shrink: 0; }
-    .funnel-drop { width: 72px; text-align: right; font-family: 'IBM Plex Mono', monospace; font-size: 11px; flex-shrink: 0; }
-    .drop-hi  { color: var(--red); }
-    .drop-mid { color: var(--amber); }
-    .drop-lo  { color: var(--green); }
-
-    /* ── Insights ── */
-    .insight { border: 1px solid var(--border); border-radius: 10px; padding: 18px 20px; margin-bottom: 10px; }
-    .insight-type { display: flex; align-items: center; gap: 8px; margin-bottom: 8px; }
-    .insight-dot { width: 6px; height: 6px; border-radius: 50%; flex-shrink: 0; }
-    .dot-positive { background: var(--green); }
-    .dot-warning  { background: var(--amber); }
-    .dot-info     { background: var(--muted); }
-    .insight-title { font-size: 13px; font-weight: 600; }
-    .insight-body  { font-size: 12px; color: var(--muted); line-height: 1.65; }
-    .insight-meta  { font-family: 'IBM Plex Mono', monospace; font-size: 10px; color: var(--border); margin-top: 8px; }
-
-    .prompt-box {
-      border: 1px dashed var(--border); border-radius: 10px;
-      padding: 24px; text-align: center; margin-top: 16px; background: #fafaf8;
-    }
-    .prompt-box h3 { font-size: 12px; font-weight: 600; margin-bottom: 6px; }
-    .prompt-box p  { font-size: 12px; color: var(--muted); margin-bottom: 14px; line-height: 1.6; }
-    .copy-btn {
-      background: var(--text); color: var(--bg);
-      border: none; border-radius: 6px; padding: 9px 20px;
-      font-size: 12px; font-weight: 600; cursor: pointer;
-      font-family: 'IBM Plex Sans', sans-serif; transition: opacity .15s;
-    }
-    .copy-btn:hover { opacity: .8; }
-    .copy-btn.copied { background: var(--green); color: #fff; }
-
-    /* ── Divider ── */
-    .divider { height: 1px; background: var(--border); margin: 20px 0; }
-
-    @media (max-width: 1024px) {
-      header, .nav-wrap { padding: 0 20px; }
-      .container { padding: 20px; }
-      .kpi-grid { grid-template-columns: repeat(4, 1fr); }
-      .grid-2, .grid-3, .grid-3-1 { grid-template-columns: 1fr; }
-    }
-    @media (max-width: 600px) {
-      .kpi-grid { grid-template-columns: repeat(2, 1fr); }
+    @media(max-width:600px){
+      .kpi-grid{grid-template-columns:repeat(2,1fr)}
     }
   </style>
 </head>
@@ -213,11 +159,40 @@
 
 <header>
   <div class="logo">ANALYTICS <em>/</em> EXP DE COMPRA</div>
-  <div class="header-right">
+  <div style="display:flex;align-items:center;gap:20px">
     <div class="live"><div class="live-dot"></div><span id="updated-label">—</span></div>
     <div class="header-meta" id="period-label">—</div>
   </div>
 </header>
+
+<!-- Filters -->
+<div class="filters-bar">
+  <div class="filter-group">
+    <span class="filter-label">Período</span>
+    <select class="filter-select" id="f-period" onchange="applyFilters()">
+      <option value="30">Últimos 30 dias</option>
+      <option value="7">Últimos 7 dias</option>
+      <option value="14">Últimos 14 dias</option>
+      <option value="all">Todo o período</option>
+    </select>
+  </div>
+  <div class="filter-divider"></div>
+  <div class="filter-group">
+    <span class="filter-label">Origem</span>
+    <select class="filter-select" id="f-source" onchange="applyFilters()">
+      <option value="all">Todas</option>
+    </select>
+  </div>
+  <div class="filter-divider"></div>
+  <div class="filter-group">
+    <span class="filter-label">Dispositivo</span>
+    <select class="filter-select" id="f-device" onchange="applyFilters()">
+      <option value="all">Todos</option>
+    </select>
+  </div>
+  <button class="filter-reset" onclick="resetFilters()">↺ Limpar filtros</button>
+  <span class="active-filters" id="filter-status"></span>
+</div>
 
 <div class="nav-wrap">
   <nav class="nav">
@@ -232,15 +207,12 @@
 
 <div class="container">
 
-  <!-- ── OVERVIEW ── -->
+  <!-- OVERVIEW -->
   <div id="sec-overview" class="section active">
     <div class="kpi-grid" id="kpi-grid"></div>
     <div class="grid-1">
       <div class="card">
-        <div class="card-header">
-          <div class="card-title">Sessões e Usuários — 30 dias</div>
-          <div class="card-tag">diário</div>
-        </div>
+        <div class="card-header"><div class="card-title">Sessões e Usuários — diário</div><div class="card-tag" id="daily-range-tag">30d</div></div>
         <div class="chart-wrap h-260"><canvas id="ch-daily"></canvas></div>
       </div>
     </div>
@@ -257,16 +229,16 @@
     <div class="grid-2">
       <div class="card">
         <div class="card-header"><div class="card-title">Dispositivos</div></div>
-        <div class="chart-wrap h-180"><canvas id="ch-devices"></canvas></div>
+        <div class="chart-wrap h-200"><canvas id="ch-devices"></canvas></div>
       </div>
       <div class="card">
         <div class="card-header"><div class="card-title">Novos vs Recorrentes</div></div>
-        <div class="chart-wrap h-180"><canvas id="ch-new-returning"></canvas></div>
+        <div class="chart-wrap h-200"><canvas id="ch-new-returning"></canvas></div>
       </div>
     </div>
   </div>
 
-  <!-- ── ACQUISITION ── -->
+  <!-- ACQUISITION -->
   <div id="sec-acquisition" class="section">
     <div class="grid-2">
       <div class="card">
@@ -294,7 +266,7 @@
     </div>
   </div>
 
-  <!-- ── PAGES ── -->
+  <!-- PAGES -->
   <div id="sec-pages" class="section">
     <div class="grid-2">
       <div class="card">
@@ -312,13 +284,10 @@
     </div>
   </div>
 
-  <!-- ── FUNNEL ── -->
+  <!-- FUNNEL -->
   <div id="sec-funnel" class="section">
-    <div class="card" style="margin-bottom:16px">
-      <div class="card-header">
-        <div class="card-title">Funil de Eventos — Usuários por etapa</div>
-        <div class="card-tag">30 dias</div>
-      </div>
+    <div class="card" style="margin-bottom:14px">
+      <div class="card-header"><div class="card-title">Funil de Eventos — Usuários por etapa</div><div class="card-tag">30 dias</div></div>
       <div id="funnel-wrap"></div>
     </div>
     <div class="grid-2">
@@ -333,7 +302,7 @@
     </div>
   </div>
 
-  <!-- ── ROUTES ── -->
+  <!-- ROUTES -->
   <div id="sec-routes" class="section">
     <div class="grid-2">
       <div class="card">
@@ -357,10 +326,10 @@
     </div>
   </div>
 
-  <!-- ── INSIGHTS ── -->
+  <!-- INSIGHTS -->
   <div id="sec-insights" class="section">
-    <div class="sec-header">
-      <div class="sec-title">Insights gerados via Claude.ai</div>
+    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px">
+      <span style="font-size:11px;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:.07em">Insights gerados via Claude.ai</span>
       <span class="tag tag-gray">atualização manual</span>
     </div>
     <div id="insights-list"></div>
@@ -371,7 +340,7 @@
     </div>
   </div>
 
-</div><!-- /container -->
+</div>
 
 <script>
 const PROMPT = `Você é um analista de growth sênior especializado em e-commerce de viagens. Analise os dados de GA4 abaixo e gere entre 5 e 7 insights acionáveis para o time de marketing e produto, com foco em rotas, funil de conversão e aquisição.
@@ -387,287 +356,359 @@ Retorne APENAS um array JSON válido, sem texto adicional.
 DADOS:
 [COLE O CONTEÚDO DO data.json AQUI]`;
 
-// ── Formatação ──────────────────────────────────────────────────────────────
-const fmt = n => {
-  if (n == null) return '—';
-  const v = Number(n);
-  if (v >= 1e6) return (v/1e6).toFixed(1).replace('.',',') + 'M';
-  if (v >= 1e3) return (v/1e3).toFixed(1).replace('.',',') + 'K';
-  return v.toLocaleString('pt-BR');
+// ── Palettes ────────────────────────────────────────────────────────────────
+const C = {
+  blue:'#1d4ed8', indigo:'#4f46e5', teal:'#0d9488', green:'#16a34a',
+  amber:'#d97706', red:'#dc2626', purple:'#7c3aed', cyan:'#0891b2',
+  pink:'#db2777', orange:'#ea580c', sky:'#0284c7', lime:'#65a30d'
 };
-const fmtFull = n => n == null ? '—' : Number(n).toLocaleString('pt-BR');
-const fmtP  = n => n == null ? '—' : `${n}%`;
-const fmtS  = s => { const m = Math.floor(s/60), ss = Math.round(s%60); return `${m}m${String(ss).padStart(2,'0')}s`; };
-const fmtPct = (a,b) => b > 0 ? ((a/b)*100).toFixed(1)+'%' : '—';
+const PALETTE  = Object.values(C);
+const PALETTE_A = PALETTE.map(c => c + 'cc');
 
-// ── Chart defaults ──────────────────────────────────────────────────────────
-const MONO = { family: "'IBM Plex Mono', monospace", size: 10 };
-const SANS = { family: "'IBM Plex Sans', sans-serif", size: 11 };
-
-const baseOpts = () => ({
-  responsive: true, maintainAspectRatio: false,
-  plugins: {
-    legend: { labels: { color: '#7a7870', font: SANS, boxWidth: 8, padding: 12 } },
-    tooltip: {
-      backgroundColor: '#1a1917', titleColor: '#f5f4f0', bodyColor: '#a09e98',
-      titleFont: MONO, bodyFont: MONO, padding: 10, cornerRadius: 6,
-    }
-  },
-  scales: {
-    x: { ticks: { color: '#a09e98', font: MONO, maxRotation: 40 }, grid: { color: '#eeede9' }, border: { color: '#dddbd4' } },
-    y: { ticks: { color: '#a09e98', font: MONO }, grid: { color: '#eeede9' }, border: { color: '#dddbd4' } },
-  }
-});
-
-const baseOptsH = () => {
-  const o = baseOpts();
-  o.indexAxis = 'y';
-  return o;
+// Color map for channels
+const CHANNEL_COLORS = {
+  'Organic Search': C.blue, 'Direct': C.indigo, 'Referral': C.teal,
+  'Paid Search': C.amber, 'Social': C.pink, 'Email': C.cyan,
+  'Display': C.orange, 'Organic Social': C.purple,
+  'Organic Video': C.green, 'Unassigned': '#9ca3af',
 };
+const channelColor = (ch, i) => CHANNEL_COLORS[ch] || PALETTE[i % PALETTE.length];
 
-const donutOpts = () => ({
-  responsive: true, maintainAspectRatio: false,
-  cutout: '62%',
-  plugins: {
-    legend: { position: 'right', labels: { color: '#7a7870', font: SANS, boxWidth: 8, padding: 10 } },
-    tooltip: {
-      backgroundColor: '#1a1917', titleColor: '#f5f4f0', bodyColor: '#a09e98',
-      titleFont: MONO, bodyFont: MONO, padding: 10, cornerRadius: 6,
+// Funnel step colors
+const FUNNEL_COLORS = [C.blue, C.indigo, C.teal, C.amber, C.green];
+
+// ── Formatters ───────────────────────────────────────────────────────────────
+const fmt  = n => { if(n==null)return'—'; const v=Number(n); if(v>=1e6)return(v/1e6).toFixed(1).replace('.',',')+' M'; if(v>=1e3)return(v/1e3).toFixed(1).replace('.',',')+' K'; return v.toLocaleString('pt-BR'); };
+const fmtF = n => n==null?'—':Number(n).toLocaleString('pt-BR');
+const fmtP = n => n==null?'—':`${n}%`;
+const fmtS = s => { const m=Math.floor(s/60),ss=Math.round(s%60); return `${m}m${String(ss).padStart(2,'0')}s`; };
+
+// ── Chart base options ───────────────────────────────────────────────────────
+const MONO = {family:"'IBM Plex Mono',monospace",size:10};
+const SANS = {family:"'IBM Plex Sans',sans-serif",size:11};
+const TT   = { backgroundColor:'#1a1917', titleColor:'#f5f4f0', bodyColor:'#d1d0cb', titleFont:MONO, bodyFont:MONO, padding:10, cornerRadius:6, displayColors:true };
+
+function baseOpts(extra={}) {
+  return {
+    responsive:true, maintainAspectRatio:false,
+    plugins:{ legend:{labels:{color:'#7a7870',font:SANS,boxWidth:8,padding:10}}, tooltip:TT },
+    scales:{
+      x:{ticks:{color:'#a09e98',font:MONO,maxRotation:40},grid:{color:'#eeede9'},border:{color:'#dddbd4'}},
+      y:{ticks:{color:'#a09e98',font:MONO},grid:{color:'#eeede9'},border:{color:'#dddbd4'}},
+    },
+    ...extra
+  };
+}
+function baseOptsH(extra={}) { return baseOpts({indexAxis:'y',...extra}); }
+
+function donutOpts() {
+  return {
+    responsive:true, maintainAspectRatio:false, cutout:'55%',
+    plugins:{
+      legend:{position:'right',labels:{color:'#7a7870',font:SANS,boxWidth:8,padding:10,generateLabels(chart){
+        const ds=chart.data.datasets[0]; const total=ds.data.reduce((a,b)=>a+b,0);
+        return chart.data.labels.map((l,i)=>({
+          text:`${l}  ${total>0?Math.round(ds.data[i]/total*100):0}%`,
+          fillStyle:ds.backgroundColor[i], strokeStyle:'transparent',
+          fontColor:'#7a7870', index:i
+        }));
+      }}},
+      tooltip:{...TT,callbacks:{label:ctx=>{
+        const total=ctx.dataset.data.reduce((a,b)=>a+b,0);
+        const pct=total>0?Math.round(ctx.parsed/total*100):0;
+        return ` ${ctx.label}: ${fmtF(ctx.parsed)} (${pct}%)`;
+      }}}
     }
-  }
-});
+  };
+}
 
-const PALETTE = ['#1a1917','#3b3a38','#5e5c58','#7a7870','#a09e98','#c8c5be','#dddbd4','#eeede9'];
-const ACCENT  = ['#1d4ed8','#15803d','#b45309','#7c3aed','#0369a1','#b91c1c','#065f46','#92400e'];
+// ── State ────────────────────────────────────────────────────────────────────
+let RAW = null;
+let CHARTS = {};
 
-// ── Nav ─────────────────────────────────────────────────────────────────────
+function destroyCharts() {
+  Object.values(CHARTS).forEach(c => { try{ c.destroy(); }catch(e){} });
+  CHARTS = {};
+}
+
+// ── Nav ──────────────────────────────────────────────────────────────────────
 function show(id, btn) {
-  document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
-  document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+  document.querySelectorAll('.section').forEach(s=>s.classList.remove('active'));
+  document.querySelectorAll('.nav-btn').forEach(b=>b.classList.remove('active'));
   document.getElementById('sec-'+id).classList.add('active');
   btn.classList.add('active');
 }
 
-function copyPrompt() {
-  navigator.clipboard.writeText(PROMPT).then(() => {
-    const b = document.getElementById('copy-btn');
-    b.textContent = '✓ Copiado'; b.classList.add('copied');
-    setTimeout(() => { b.textContent = 'Copiar prompt'; b.classList.remove('copied'); }, 2000);
-  });
+// ── Filters ──────────────────────────────────────────────────────────────────
+function populateFilters(d) {
+  // Sources
+  const srcSel = document.getElementById('f-source');
+  const sources = [...new Set(d.sources.map(r=>r.source))].sort();
+  sources.forEach(s => { const o=document.createElement('option'); o.value=s; o.textContent=s; srcSel.appendChild(o); });
+  // Devices
+  const devSel = document.getElementById('f-device');
+  d.devices.forEach(r => { const o=document.createElement('option'); o.value=r.device; o.textContent=r.device.charAt(0).toUpperCase()+r.device.slice(1); devSel.appendChild(o); });
 }
 
-// ── Render ───────────────────────────────────────────────────────────────────
-function render(d) {
+function getFilters() {
+  return {
+    period: document.getElementById('f-period').value,
+    source: document.getElementById('f-source').value,
+    device: document.getElementById('f-device').value,
+  };
+}
+
+function resetFilters() {
+  document.getElementById('f-period').value = '30';
+  document.getElementById('f-source').value = 'all';
+  document.getElementById('f-device').value = 'all';
+  applyFilters();
+}
+
+function applyFilters() {
+  if (!RAW) return;
+  const f = getFilters();
+
+  // Filter status
+  const active = [];
+  if (f.period !== '30') active.push(`${f.period === 'all' ? 'Todo período' : 'Últimos '+f.period+'d'}`);
+  if (f.source !== 'all') active.push(`Origem: ${f.source}`);
+  if (f.device !== 'all') active.push(`Dispositivo: ${f.device}`);
+  document.getElementById('filter-status').textContent = active.length ? '● '+active.join(' · ') : '';
+
+  // Build filtered view of data
+  const d = buildFilteredData(RAW, f);
+  destroyCharts();
+  renderDashboard(d);
+}
+
+function buildFilteredData(d, f) {
+  // Period filter on daily data
+  let daily = [...d.daily];
+  if (f.period !== 'all') {
+    const n = parseInt(f.period);
+    daily = daily.slice(-n);
+  }
+
+  // Source filter: filter sources table and channels
+  let sources  = [...d.sources];
+  let channels = [...d.channels];
+  if (f.source !== 'all') {
+    sources = sources.filter(r => r.source === f.source);
+  }
+
+  // Device filter: filter devices list and scale daily by device ratio
+  let devices = [...d.devices];
+  let deviceRatio = 1;
+  if (f.device !== 'all') {
+    const totalSess = d.devices.reduce((a,r)=>a+r.sessions,0);
+    const devRow    = d.devices.find(r=>r.device===f.device);
+    deviceRatio     = devRow && totalSess > 0 ? devRow.sessions/totalSess : 1;
+    devices = devices.filter(r=>r.device===f.device);
+    daily   = daily.map(r=>({...r,
+      sessions:    Math.round(r.sessions*deviceRatio),
+      users:       Math.round(r.users*deviceRatio),
+      conversions: Math.round(r.conversions*deviceRatio),
+      new_users:   Math.round(r.new_users*deviceRatio),
+    }));
+  }
+
+  // Recompute totals from filtered daily
+  const totals = {
+    ...d.totals,
+    sessions:    daily.reduce((a,r)=>a+r.sessions,0),
+    total_users: daily.reduce((a,r)=>a+r.users,0),
+    conversions: daily.reduce((a,r)=>a+r.conversions,0),
+    new_users:   daily.reduce((a,r)=>a+r.new_users,0),
+  };
+
+  return { ...d, totals, daily, sources, channels, devices };
+}
+
+// ── Render ────────────────────────────────────────────────────────────────────
+function renderDashboard(d) {
   const t = d.totals;
 
-  document.getElementById('period-label').textContent = d.period.toUpperCase();
-  document.getElementById('updated-label').textContent =
-    new Date(d.updated_at).toLocaleString('pt-BR', {
-      timeZone:'America/Sao_Paulo', day:'2-digit', month:'2-digit',
-      year:'numeric', hour:'2-digit', minute:'2-digit'
-    });
-
-  // ── KPIs ──
+  // KPIs
   const convRate = t.sessions > 0 ? ((t.conversions/t.sessions)*100).toFixed(2) : '0.00';
-  const kpis = [
-    { label:'Sessões',       value: fmt(t.sessions),    sub: `${fmt(t.sessions_7d)} / 7d` },
-    { label:'Usuários',      value: fmt(t.total_users), sub: `${fmt(t.new_users)} novos` },
-    { label:'Compras',       value: fmt(t.conversions), sub: `${fmt(t.conversions_7d)} / 7d` },
-    { label:'Taxa Conv.',    value: `${convRate}%`,     sub: 'sessões → compra' },
-    { label:'Taxa Rejeição', value: `${t.bounce_rate}%`, sub: 'média 30d' },
-    { label:'Duração Média', value: fmtS(t.avg_session_duration), sub: 'por sessão' },
-    { label:'Pageviews',     value: fmt(t.pageviews),   sub: `${t.sessions>0?(t.pageviews/t.sessions).toFixed(1):'—'} / sessão` },
+  const kpiDefs = [
+    {label:'Sessões',       value:fmt(t.sessions),    sub:`${fmt(t.sessions_7d||0)} / 7d`,   accent:'accent-blue'},
+    {label:'Usuários',      value:fmt(t.total_users), sub:`${fmt(t.new_users)} novos`,         accent:'accent-teal'},
+    {label:'Compras',       value:fmt(t.conversions), sub:`${fmt(t.conversions_7d||0)} / 7d`, accent:'accent-green'},
+    {label:'Taxa Conv.',    value:`${convRate}%`,     sub:'sessões → compra',                  accent:'accent-indigo'},
+    {label:'Taxa Rejeição', value:`${t.bounce_rate}%`,sub:'média do período',                  accent:'accent-amber'},
+    {label:'Duração Média', value:fmtS(t.avg_session_duration),sub:'por sessão',               accent:'accent-purple'},
+    {label:'Pageviews',     value:fmt(t.pageviews),   sub:`${t.sessions>0?(t.pageviews/t.sessions).toFixed(1):'—'} / sessão`, accent:'accent-cyan'},
   ];
-  document.getElementById('kpi-grid').innerHTML = kpis.map(k => `
-    <div class="kpi">
+  document.getElementById('kpi-grid').innerHTML = kpiDefs.map(k=>`
+    <div class="kpi ${k.accent}">
       <div class="kpi-label">${k.label}</div>
       <div class="kpi-value">${k.value}</div>
       <div class="kpi-sub">${k.sub}</div>
     </div>`).join('');
 
-  // ── Daily ──
-  const dl = d.daily.map(r => r.date.slice(5));
-  new Chart(document.getElementById('ch-daily'), { type:'line', data:{ labels:dl, datasets:[
-    { label:'Sessões',  data:d.daily.map(r=>r.sessions), borderColor:'#1a1917', backgroundColor:'rgba(26,25,23,.05)', fill:true, tension:.35, pointRadius:0, borderWidth:1.5 },
-    { label:'Usuários', data:d.daily.map(r=>r.users),    borderColor:'#7a7870', backgroundColor:'rgba(122,120,112,.03)', fill:true, tension:.35, pointRadius:0, borderWidth:1.5 },
-  ]}, options: baseOpts() });
+  // Daily charts
+  const dl = d.daily.map(r=>r.date.slice(5));
+  document.getElementById('daily-range-tag').textContent = `${d.daily.length}d`;
 
-  new Chart(document.getElementById('ch-conv-daily'), { type:'bar', data:{ labels:dl, datasets:[
-    { label:'Compras', data:d.daily.map(r=>r.conversions), backgroundColor:'#1a1917', borderRadius:3, barThickness:'flex' }
-  ]}, options: baseOpts() });
+  CHARTS['ch-daily'] = new Chart(document.getElementById('ch-daily'), {type:'line', data:{labels:dl, datasets:[
+    {label:'Sessões',  data:d.daily.map(r=>r.sessions), borderColor:C.blue,   backgroundColor:C.blue+'18', fill:true, tension:.35, pointRadius:0, borderWidth:2},
+    {label:'Usuários', data:d.daily.map(r=>r.users),    borderColor:C.indigo, backgroundColor:C.indigo+'10', fill:true, tension:.35, pointRadius:0, borderWidth:1.5},
+  ]}, options:baseOpts()});
 
-  new Chart(document.getElementById('ch-new-users'), { type:'bar', data:{ labels:dl, datasets:[
-    { label:'Novos usuários', data:d.daily.map(r=>r.new_users||0), backgroundColor:'#7a7870', borderRadius:3, barThickness:'flex' }
-  ]}, options: baseOpts() });
+  CHARTS['ch-conv-daily'] = new Chart(document.getElementById('ch-conv-daily'), {type:'bar', data:{labels:dl, datasets:[
+    {label:'Compras', data:d.daily.map(r=>r.conversions), backgroundColor:C.green+'cc', borderRadius:3},
+  ]}, options:baseOpts()});
 
-  new Chart(document.getElementById('ch-devices'), { type:'doughnut', data:{
-    labels: d.devices.map(r=>r.device),
-    datasets:[{ data:d.devices.map(r=>r.sessions), backgroundColor: PALETTE, borderWidth:0 }]
-  }, options: donutOpts() });
+  CHARTS['ch-new-users'] = new Chart(document.getElementById('ch-new-users'), {type:'bar', data:{labels:dl, datasets:[
+    {label:'Novos usuários', data:d.daily.map(r=>r.new_users||0), backgroundColor:C.cyan+'cc', borderRadius:3},
+  ]}, options:baseOpts()});
 
-  new Chart(document.getElementById('ch-new-returning'), { type:'doughnut', data:{
-    labels: d.new_vs_returning.map(r=>r.type==='new'?'Novos':'Recorrentes'),
-    datasets:[{ data:d.new_vs_returning.map(r=>r.users), backgroundColor:['#1a1917','#c8c5be'], borderWidth:0 }]
-  }, options: donutOpts() });
+  // Devices donut — fix label: use deviceCategory field
+  const devLabels = d.devices.map(r => r.device.charAt(0).toUpperCase()+r.device.slice(1));
+  const devColors = [C.blue, C.teal, C.purple, C.amber, C.green];
+  CHARTS['ch-devices'] = new Chart(document.getElementById('ch-devices'), {type:'doughnut', data:{
+    labels: devLabels,
+    datasets:[{data:d.devices.map(r=>r.sessions), backgroundColor:devColors.slice(0,d.devices.length), borderWidth:2, borderColor:'#fff'}]
+  }, options:donutOpts()});
 
-  // ── Channels ──
-  new Chart(document.getElementById('ch-channels'), { type:'bar', data:{
-    labels: d.channels.map(r=>r.channel),
-    datasets:[{ label:'Sessões', data:d.channels.map(r=>r.sessions), backgroundColor: PALETTE, borderRadius:4 }]
-  }, options: baseOptsH() });
+  // New vs Returning — fix: deduplicate by type key
+  const nvr = {};
+  d.new_vs_returning.forEach(r => {
+    const key = r.type === 'new' ? 'Novos' : 'Recorrentes';
+    if (!nvr[key]) nvr[key] = 0;
+    nvr[key] += r.users;
+  });
+  const nvrLabels = Object.keys(nvr);
+  const nvrData   = Object.values(nvr);
+  CHARTS['ch-new-returning'] = new Chart(document.getElementById('ch-new-returning'), {type:'doughnut', data:{
+    labels: nvrLabels,
+    datasets:[{data:nvrData, backgroundColor:[C.blue, C.amber], borderWidth:2, borderColor:'#fff'}]
+  }, options:donutOpts()});
 
-  new Chart(document.getElementById('ch-conv-rate'), { type:'bar', data:{
-    labels: d.channels.map(r=>r.channel),
-    datasets:[{ label:'Conv %', data:d.channels.map(r=>r.conversion_rate||0), backgroundColor: PALETTE, borderRadius:4 }]
-  }, options: baseOptsH() });
+  // Channels
+  const chColors = d.channels.map((r,i)=>channelColor(r.channel,i));
+  CHARTS['ch-channels'] = new Chart(document.getElementById('ch-channels'), {type:'bar', data:{
+    labels:d.channels.map(r=>r.channel),
+    datasets:[{label:'Sessões', data:d.channels.map(r=>r.sessions), backgroundColor:chColors, borderRadius:4}]
+  }, options:baseOptsH()});
 
-  new Chart(document.getElementById('ch-bounce-channel'), { type:'bar', data:{
-    labels: d.channels.map(r=>r.channel),
-    datasets:[{ label:'Rejeição %', data:d.channels.map(r=>r.bounce_rate||0), backgroundColor:'#7a7870', borderRadius:3 }]
-  }, options: baseOptsH() });
+  CHARTS['ch-conv-rate'] = new Chart(document.getElementById('ch-conv-rate'), {type:'bar', data:{
+    labels:d.channels.map(r=>r.channel),
+    datasets:[{label:'Conv %', data:d.channels.map(r=>r.conversion_rate||0), backgroundColor:chColors, borderRadius:4}]
+  }, options:baseOptsH()});
 
-  new Chart(document.getElementById('ch-duration-channel'), { type:'bar', data:{
-    labels: d.channels.map(r=>r.channel),
-    datasets:[{ label:'Duração (s)', data:d.channels.map(r=>r.avg_duration||0), backgroundColor:'#3b3a38', borderRadius:3 }]
-  }, options: baseOptsH() });
+  CHARTS['ch-bounce-channel'] = new Chart(document.getElementById('ch-bounce-channel'), {type:'bar', data:{
+    labels:d.channels.map(r=>r.channel),
+    datasets:[{label:'Rejeição %', data:d.channels.map(r=>r.bounce_rate||0),
+      backgroundColor:d.channels.map(r=>r.bounce_rate>50?C.red+'cc':r.bounce_rate>30?C.amber+'cc':C.green+'cc'), borderRadius:3}]
+  }, options:baseOptsH()});
 
-  // ── Sources table ──
+  CHARTS['ch-duration-channel'] = new Chart(document.getElementById('ch-duration-channel'), {type:'bar', data:{
+    labels:d.channels.map(r=>r.channel),
+    datasets:[{label:'Duração (s)', data:d.channels.map(r=>r.avg_duration||0), backgroundColor:C.teal+'cc', borderRadius:3}]
+  }, options:baseOptsH()});
+
+  // Sources table
   document.getElementById('tbl-sources').innerHTML = `
-    <thead><tr>
-      <th>#</th><th>Origem</th><th>Mídia</th>
-      <th class="num">Sessões</th><th class="num">Usuários</th>
-      <th class="num">Compras</th><th class="num">Conv%</th>
-      <th class="num">Rejeição</th><th class="num">Duração</th>
-    </tr></thead>
+    <thead><tr><th>#</th><th>Origem</th><th>Mídia</th><th class="num">Sessões</th><th class="num">Usuários</th><th class="num">Compras</th><th class="num">Conv%</th><th class="num">Rejeição</th><th class="num">Duração</th></tr></thead>
     <tbody>${d.sources.map((r,i)=>`<tr>
       <td class="row-idx">${String(i+1).padStart(2,'0')}</td>
       <td>${r.source}</td>
       <td><span class="tag tag-gray">${r.medium}</span></td>
-      <td class="num">${fmtFull(r.sessions)}</td>
-      <td class="num">${fmtFull(r.users)}</td>
-      <td class="num">${fmtFull(r.conversions)}</td>
-      <td class="num">${fmtP(r.conversion_rate)}</td>
+      <td class="num">${fmtF(r.sessions)}</td><td class="num">${fmtF(r.users)}</td>
+      <td class="num">${fmtF(r.conversions)}</td>
+      <td class="num"><span class="tag ${r.conversion_rate>3?'tag-green':r.conversion_rate>1?'tag-amber':'tag-red'}">${fmtP(r.conversion_rate)}</span></td>
       <td class="num">${fmtP(r.bounce_rate)}</td>
       <td class="num">${fmtS(r.avg_duration)}</td>
     </tr>`).join('')}</tbody>`;
 
-  // ── Landing pages ──
+  // Landing pages
   const lp = (d.landing_pages||[]).slice(0,8);
-  const lpLabels = lp.map(r => r.path.length>28 ? r.path.slice(0,28)+'…' : r.path);
+  const lpLabels = lp.map(r=>r.path.length>28?r.path.slice(0,28)+'…':r.path);
+  CHARTS['ch-landing'] = new Chart(document.getElementById('ch-landing'), {type:'bar', data:{
+    labels:lpLabels,
+    datasets:[{label:'Sessões', data:lp.map(r=>r.sessions), backgroundColor:C.blue+'cc', borderRadius:3}]
+  }, options:baseOptsH()});
+  CHARTS['ch-landing-bounce'] = new Chart(document.getElementById('ch-landing-bounce'), {type:'bar', data:{
+    labels:lpLabels,
+    datasets:[{label:'Rejeição %', data:lp.map(r=>r.bounce_rate||0),
+      backgroundColor:lp.map(r=>r.bounce_rate>50?C.red+'cc':r.bounce_rate>30?C.amber+'cc':C.green+'cc'), borderRadius:3}]
+  }, options:baseOptsH()});
 
-  new Chart(document.getElementById('ch-landing'), { type:'bar', data:{
-    labels: lpLabels,
-    datasets:[{ label:'Sessões', data:lp.map(r=>r.sessions), backgroundColor:'#1a1917', borderRadius:3 }]
-  }, options: baseOptsH() });
-
-  new Chart(document.getElementById('ch-landing-bounce'), { type:'bar', data:{
-    labels: lpLabels,
-    datasets:[{ label:'Rejeição %', data:lp.map(r=>r.bounce_rate||0), backgroundColor:'#7a7870', borderRadius:3 }]
-  }, options: baseOptsH() });
-
-  // ── Pages table ──
+  // Pages table
   document.getElementById('tbl-pages').innerHTML = `
-    <thead><tr>
-      <th>#</th><th>Título</th><th>Path</th>
-      <th class="num">Pageviews</th><th class="num">Usuários</th>
-      <th class="num">Duração</th>
-    </tr></thead>
+    <thead><tr><th>#</th><th>Título</th><th>Path</th><th class="num">Pageviews</th><th class="num">Usuários</th><th class="num">Duração</th></tr></thead>
     <tbody>${d.pages.map((r,i)=>`<tr>
       <td class="row-idx">${String(i+1).padStart(2,'0')}</td>
       <td style="max-width:200px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${r.title}</td>
       <td class="mono" style="color:var(--muted);max-width:180px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${r.path}</td>
-      <td class="num">${fmtFull(r.pageviews)}</td>
-      <td class="num">${fmtFull(r.users)}</td>
+      <td class="num">${fmtF(r.pageviews)}</td><td class="num">${fmtF(r.users)}</td>
       <td class="num">${fmtS(r.avg_duration)}</td>
     </tr>`).join('')}</tbody>`;
 
-  // ── Funnel ──
+  // Funnel
   const maxU = d.funnel.length > 0 ? d.funnel[0].users : 1;
-  document.getElementById('funnel-wrap').innerHTML = d.funnel.map((s,i) => {
-    const pct = maxU > 0 ? Math.round(s.users/maxU*100) : 0;
-    const dc = s.drop_rate > 60 ? 'drop-hi' : s.drop_rate > 30 ? 'drop-mid' : 'drop-lo';
+  document.getElementById('funnel-wrap').innerHTML = d.funnel.map((s,i)=>{
+    const pct = maxU>0?Math.round(s.users/maxU*100):0;
+    const dc  = s.drop_rate>60?'drop-hi':s.drop_rate>30?'drop-mid':'drop-lo';
+    const bg  = FUNNEL_COLORS[i] || C.blue;
     return `<div class="funnel-row">
-      <div class="funnel-label">
-        <div class="funnel-name">${s.step}</div>
-        <div class="funnel-event">${s.event}</div>
-      </div>
-      <div class="funnel-track">
-        <div class="funnel-fill" style="width:${Math.max(pct,3)}%">${fmt(s.users)}</div>
-      </div>
+      <div class="funnel-label"><div class="funnel-name">${s.step}</div><div class="funnel-event">${s.event}</div></div>
+      <div class="funnel-track"><div class="funnel-fill" style="width:${Math.max(pct,3)}%;background:${bg}">${fmt(s.users)}</div></div>
       <div class="funnel-pct">${pct}%</div>
       <div class="funnel-drop ${i===0?'':dc}">${i===0?'—':`▾ ${s.drop_rate}%`}</div>
     </div>`;
   }).join('');
 
-  new Chart(document.getElementById('ch-funnel-vol'), { type:'bar', data:{
-    labels: d.funnel.map(s=>s.step),
-    datasets:[{ label:'Eventos', data:d.funnel.map(s=>s.event_count), backgroundColor: PALETTE, borderRadius:4 }]
-  }, options: baseOpts() });
+  CHARTS['ch-funnel-vol'] = new Chart(document.getElementById('ch-funnel-vol'), {type:'bar', data:{
+    labels:d.funnel.map(s=>s.step),
+    datasets:[{label:'Eventos', data:d.funnel.map(s=>s.event_count), backgroundColor:FUNNEL_COLORS, borderRadius:4}]
+  }, options:baseOpts()});
 
-  new Chart(document.getElementById('ch-funnel-drop'), { type:'bar', data:{
-    labels: d.funnel.slice(1).map(s=>s.step),
-    datasets:[{
-      label:'% abandono',
-      data: d.funnel.slice(1).map(s=>s.drop_rate),
-      backgroundColor: d.funnel.slice(1).map(s => s.drop_rate>60?'#b91c1c': s.drop_rate>30?'#b45309':'#15803d'),
-      borderRadius:4
-    }]
-  }, options: baseOpts() });
+  CHARTS['ch-funnel-drop'] = new Chart(document.getElementById('ch-funnel-drop'), {type:'bar', data:{
+    labels:d.funnel.slice(1).map(s=>s.step),
+    datasets:[{label:'% abandono', data:d.funnel.slice(1).map(s=>s.drop_rate),
+      backgroundColor:d.funnel.slice(1).map(s=>s.drop_rate>60?C.red+'cc':s.drop_rate>30?C.amber+'cc':C.green+'cc'), borderRadius:4}]
+  }, options:baseOpts()});
 
-  // ── Routes ──
-  const rt = d.routes || {};
+  // Routes
+  const rt = d.routes||{};
   const origins = (rt.top_origins||[]).slice(0,10);
   const dests   = (rt.top_destinations||[]).slice(0,10);
-
-  new Chart(document.getElementById('ch-origins'), { type:'bar', data:{
-    labels: origins.map(r=>r.city),
-    datasets:[{ label:'Buscas', data:origins.map(r=>r.searches), backgroundColor:'#1a1917', borderRadius:3 }]
-  }, options: baseOptsH() });
-
-  new Chart(document.getElementById('ch-destinations'), { type:'bar', data:{
-    labels: dests.map(r=>r.city),
-    datasets:[{ label:'Buscas', data:dests.map(r=>r.searches), backgroundColor:'#3b3a38', borderRadius:3 }]
-  }, options: baseOptsH() });
+  CHARTS['ch-origins'] = new Chart(document.getElementById('ch-origins'), {type:'bar', data:{
+    labels:origins.map(r=>r.city),
+    datasets:[{label:'Buscas', data:origins.map(r=>r.searches), backgroundColor:C.blue+'cc', borderRadius:3}]
+  }, options:baseOptsH()});
+  CHARTS['ch-destinations'] = new Chart(document.getElementById('ch-destinations'), {type:'bar', data:{
+    labels:dests.map(r=>r.city),
+    datasets:[{label:'Buscas', data:dests.map(r=>r.searches), backgroundColor:C.indigo+'cc', borderRadius:3}]
+  }, options:baseOptsH()});
 
   document.getElementById('tbl-routes').innerHTML = `
-    <thead><tr>
-      <th>#</th><th>Origem</th><th>Destino</th>
-      <th class="num">Eventos</th><th class="num">Usuários</th>
-    </tr></thead>
+    <thead><tr><th>#</th><th>Origem</th><th>Destino</th><th class="num">Eventos</th><th class="num">Usuários</th></tr></thead>
     <tbody>${(rt.top_routes||[]).slice(0,15).map((r,i)=>`<tr>
       <td class="row-idx">${String(i+1).padStart(2,'0')}</td>
       <td>${r.origin}</td><td>${r.destination}</td>
-      <td class="num">${fmtFull(r.purchases)}</td>
-      <td class="num">${fmtFull(r.users)}</td>
+      <td class="num">${fmtF(r.purchases)}</td><td class="num">${fmtF(r.users)}</td>
     </tr>`).join('')}</tbody>`;
 
   document.getElementById('tbl-route-conv').innerHTML = `
-    <thead><tr>
-      <th>#</th><th>Rota</th>
-      <th class="num">Buscas</th><th class="num">Usuários</th>
-    </tr></thead>
+    <thead><tr><th>#</th><th>Rota</th><th class="num">Buscas</th><th class="num">Usuários</th></tr></thead>
     <tbody>${(rt.route_conversion||[]).slice(0,15).map((r,i)=>`<tr>
       <td class="row-idx">${String(i+1).padStart(2,'0')}</td>
       <td><strong>${r.route}</strong></td>
-      <td class="num">${fmtFull(r.searches)}</td>
-      <td class="num">${fmtFull(r.users)}</td>
+      <td class="num">${fmtF(r.searches)}</td><td class="num">${fmtF(r.users)}</td>
     </tr>`).join('')}</tbody>`;
 
-  // ── Insights ──
+  // Insights
   const list = document.getElementById('insights-list');
-  if (!d.insights || d.insights.length === 0) {
-    list.innerHTML = `<div class="insight">
-      <div class="insight-type"><div class="insight-dot dot-info"></div><span style="font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:.06em;font-weight:600">Info</span></div>
-      <div class="insight-title">Nenhum insight disponível</div>
-      <div class="insight-body">Use o prompt abaixo para gerar insights no Claude.ai e cole o resultado no campo <code>insights</code> do data.json.</div>
-    </div>`;
+  if (!d.insights||d.insights.length===0) {
+    list.innerHTML = `<div class="insight"><div class="insight-type"><div class="insight-dot dot-info"></div><span style="font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:.06em;font-weight:600">Info</span></div><div class="insight-title">Nenhum insight disponível</div><div class="insight-body">Use o prompt abaixo para gerar insights no Claude.ai e cole o resultado no campo <code>insights</code> do data.json.</div></div>`;
   } else {
-    list.innerHTML = d.insights.map(ins => `
+    list.innerHTML = d.insights.map(ins=>`
       <div class="insight">
-        <div class="insight-type">
-          <div class="insight-dot dot-${ins.type||'info'}"></div>
-          <span style="font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:.06em;font-weight:600">${ins.type||'info'}</span>
-        </div>
+        <div class="insight-type"><div class="insight-dot dot-${ins.type||'info'}"></div><span style="font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:.06em;font-weight:600">${ins.type||'info'}</span></div>
         <div class="insight-title">${ins.title}</div>
         <div class="insight-body">${ins.body}</div>
         <div class="insight-meta">${ins.generated_at}</div>
@@ -675,12 +716,27 @@ function render(d) {
   }
 }
 
-fetch('data.json?t=' + Date.now())
-  .then(r => r.json())
-  .then(d => { render(d); document.getElementById('loading').style.display = 'none'; })
-  .catch(e => {
-    document.getElementById('loading').innerHTML =
-      `<p style="color:#b91c1c;font-family:'IBM Plex Mono',monospace;font-size:11px">Erro ao carregar data.json: ${e.message}</p>`;
+function copyPrompt() {
+  navigator.clipboard.writeText(PROMPT).then(()=>{
+    const b=document.getElementById('copy-btn');
+    b.textContent='✓ Copiado'; b.classList.add('copied');
+    setTimeout(()=>{ b.textContent='Copiar prompt'; b.classList.remove('copied'); },2000);
+  });
+}
+
+// ── Boot ─────────────────────────────────────────────────────────────────────
+fetch('data.json?t='+Date.now())
+  .then(r=>r.json())
+  .then(d=>{
+    RAW = d;
+    document.getElementById('period-label').textContent = (d.period||'').toUpperCase();
+    document.getElementById('updated-label').textContent = new Date(d.updated_at).toLocaleString('pt-BR',{timeZone:'America/Sao_Paulo',day:'2-digit',month:'2-digit',year:'numeric',hour:'2-digit',minute:'2-digit'});
+    populateFilters(d);
+    renderDashboard(d);
+    document.getElementById('loading').style.display='none';
+  })
+  .catch(e=>{
+    document.getElementById('loading').innerHTML=`<p style="color:#dc2626;font-family:'IBM Plex Mono',monospace;font-size:11px">Erro ao carregar data.json: ${e.message}</p>`;
   });
 </script>
 </body>
