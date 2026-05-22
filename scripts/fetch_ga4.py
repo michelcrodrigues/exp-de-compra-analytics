@@ -1,6 +1,7 @@
 """
-Script de coleta de dados do Google Analytics 4 — v2
+Script de coleta de dados do Google Analytics 4 — v3
 Gera o arquivo data.json com todas as métricas do dashboard.
+Usa a métrica `purchases` em vez de `conversions` para refletir apenas o evento purchase.
 """
 
 import json
@@ -44,32 +45,39 @@ def rnd(v):      return round(float(v), 2)
 # ── 1. Totais ───────────────────────────────────────────────────────────────
 print("1/11 Totais gerais...")
 r = report_nodim(["sessions","totalUsers","newUsers","bounceRate",
-                  "averageSessionDuration","conversions","screenPageViews"])
+                  "averageSessionDuration","purchases","screenPageViews"])
 mv = r.rows[0].metric_values
 totals = {
-    "sessions": intf(mv[0].value), "total_users": intf(mv[1].value),
-    "new_users": intf(mv[2].value), "bounce_rate": round(float(mv[3].value)*100,2),
+    "sessions":             intf(mv[0].value),
+    "total_users":          intf(mv[1].value),
+    "new_users":            intf(mv[2].value),
+    "bounce_rate":          round(float(mv[3].value)*100, 2),
     "avg_session_duration": rnd(mv[4].value),
-    "conversions": intf(mv[5].value), "pageviews": intf(mv[6].value),
+    "conversions":          intf(mv[5].value),
+    "pageviews":            intf(mv[6].value),
 }
-r7 = report_nodim(["sessions","totalUsers","conversions","newUsers"], DATE_RANGE_7D)
+r7 = report_nodim(["sessions","totalUsers","purchases","newUsers"], DATE_RANGE_7D)
 mv7 = r7.rows[0].metric_values
 totals.update({
-    "sessions_7d": intf(mv7[0].value), "users_7d": intf(mv7[1].value),
-    "conversions_7d": intf(mv7[2].value), "new_users_7d": intf(mv7[3].value),
+    "sessions_7d":    intf(mv7[0].value),
+    "users_7d":       intf(mv7[1].value),
+    "conversions_7d": intf(mv7[2].value),
+    "new_users_7d":   intf(mv7[3].value),
 })
 
 # ── 2. Sessões por dia ──────────────────────────────────────────────────────
 print("2/11 Sessões por dia...")
-r = report(["date"], ["sessions","totalUsers","conversions","newUsers"],
+r = report(["date"], ["sessions","totalUsers","purchases","newUsers"],
            order_bys=[OrderBy(dimension=OrderBy.DimensionOrderBy(dimension_name="date"))], limit=30)
 daily = []
 for row in r.rows:
-    raw = dim(row,0)
+    raw = dim(row, 0)
     daily.append({
-        "date": f"{raw[:4]}-{raw[4:6]}-{raw[6:]}",
-        "sessions": intf(met(row,0)), "users": intf(met(row,1)),
-        "conversions": intf(met(row,2)), "new_users": intf(met(row,3)),
+        "date":        f"{raw[:4]}-{raw[4:6]}-{raw[6:]}",
+        "sessions":    intf(met(row, 0)),
+        "users":       intf(met(row, 1)),
+        "conversions": intf(met(row, 2)),
+        "new_users":   intf(met(row, 3)),
     })
 
 # ── 3. Páginas mais acessadas ───────────────────────────────────────────────
@@ -79,55 +87,58 @@ r = report(["pagePath","pageTitle"],
            order_bys=[OrderBy(metric=OrderBy.MetricOrderBy(metric_name="screenPageViews"), desc=True)], limit=10)
 pages = [{"path": dim(row,0), "title": dim(row,1),
           "pageviews": intf(met(row,0)), "users": intf(met(row,1)),
-          "avg_duration": rnd(met(row,2)), "bounce_rate": 0,
-          "exits": 0} for row in r.rows]
+          "avg_duration": rnd(met(row,2)), "bounce_rate": 0, "exits": 0} for row in r.rows]
 
 # ── 4. Páginas de entrada ───────────────────────────────────────────────────
 print("4/11 Páginas de entrada...")
 r = report(["landingPagePlusQueryString"],
-           ["sessions","totalUsers","conversions","bounceRate"],
+           ["sessions","totalUsers","purchases","bounceRate"],
            order_bys=[OrderBy(metric=OrderBy.MetricOrderBy(metric_name="sessions"), desc=True)], limit=10)
 landing_pages = [{"path": dim(row,0), "sessions": intf(met(row,0)),
                   "users": intf(met(row,1)), "conversions": intf(met(row,2)),
-                  "bounce_rate": round(float(met(row,3))*100,2)} for row in r.rows]
+                  "bounce_rate": round(float(met(row,3))*100, 2)} for row in r.rows]
 
 # ── 5. Origens ──────────────────────────────────────────────────────────────
 print("5/11 Origens...")
 r = report(["sessionSource","sessionMedium"],
-           ["sessions","totalUsers","conversions","bounceRate","averageSessionDuration"],
+           ["sessions","totalUsers","purchases","bounceRate","averageSessionDuration"],
            order_bys=[OrderBy(metric=OrderBy.MetricOrderBy(metric_name="sessions"), desc=True)], limit=15)
 sources = [{"source": dim(row,0), "medium": dim(row,1),
-            "sessions": intf(met(row,0)), "users": intf(met(row,1)),
-            "conversions": intf(met(row,2)),
-            "conversion_rate": round(intf(met(row,2))/max(intf(met(row,0)),1)*100,2),
-            "bounce_rate": round(float(met(row,3))*100,2),
-            "avg_duration": rnd(met(row,4))} for row in r.rows]
+            "sessions":        intf(met(row,0)),
+            "users":           intf(met(row,1)),
+            "conversions":     intf(met(row,2)),
+            "conversion_rate": round(intf(met(row,2))/max(intf(met(row,0)),1)*100, 2),
+            "bounce_rate":     round(float(met(row,3))*100, 2),
+            "avg_duration":    rnd(met(row,4))} for row in r.rows]
 
 # ── 6. Canais ───────────────────────────────────────────────────────────────
 print("6/11 Canais...")
 r = report(["sessionDefaultChannelGroup"],
-           ["sessions","totalUsers","conversions","bounceRate","averageSessionDuration","newUsers"],
+           ["sessions","totalUsers","purchases","bounceRate","averageSessionDuration","newUsers"],
            order_bys=[OrderBy(metric=OrderBy.MetricOrderBy(metric_name="sessions"), desc=True)], limit=10)
-channels = [{"channel": dim(row,0), "sessions": intf(met(row,0)),
-             "users": intf(met(row,1)), "conversions": intf(met(row,2)),
-             "conversion_rate": round(intf(met(row,2))/max(intf(met(row,0)),1)*100,2),
-             "bounce_rate": round(float(met(row,3))*100,2),
-             "avg_duration": rnd(met(row,4)), "new_users": intf(met(row,5))} for row in r.rows]
+channels = [{"channel": dim(row,0),
+             "sessions":        intf(met(row,0)),
+             "users":           intf(met(row,1)),
+             "conversions":     intf(met(row,2)),
+             "conversion_rate": round(intf(met(row,2))/max(intf(met(row,0)),1)*100, 2),
+             "bounce_rate":     round(float(met(row,3))*100, 2),
+             "avg_duration":    rnd(met(row,4)),
+             "new_users":       intf(met(row,5))} for row in r.rows]
 
 # ── 7. Dispositivos ─────────────────────────────────────────────────────────
 print("7/11 Dispositivos...")
-r = report(["deviceCategory"], ["sessions","totalUsers","conversions","bounceRate"],
+r = report(["deviceCategory"], ["sessions","totalUsers","purchases","bounceRate"],
            order_bys=[OrderBy(metric=OrderBy.MetricOrderBy(metric_name="sessions"), desc=True)])
 devices = [{"device": dim(row,0), "sessions": intf(met(row,0)),
             "users": intf(met(row,1)), "conversions": intf(met(row,2)),
-            "bounce_rate": round(float(met(row,3))*100,2)} for row in r.rows]
+            "bounce_rate": round(float(met(row,3))*100, 2)} for row in r.rows]
 
 # ── 8. Novos vs recorrentes ─────────────────────────────────────────────────
 print("8/11 Novos vs recorrentes...")
-r = report(["newVsReturning"], ["sessions","totalUsers","conversions","bounceRate"])
+r = report(["newVsReturning"], ["sessions","totalUsers","purchases","bounceRate"])
 new_vs_returning = [{"type": dim(row,0), "sessions": intf(met(row,0)),
                      "users": intf(met(row,1)), "conversions": intf(met(row,2)),
-                     "bounce_rate": round(float(met(row,3))*100,2)} for row in r.rows]
+                     "bounce_rate": round(float(met(row,3))*100, 2)} for row in r.rows]
 
 # ── 9. Funil por eventos ────────────────────────────────────────────────────
 print("9/11 Funil de eventos...")
@@ -177,7 +188,7 @@ for row in r.rows:
                            "purchases": intf(met(row,0)), "users": intf(met(row,1))})
 
 r = report(["customEvent:originCity"],
-           ["eventCount","totalUsers","conversions"],
+           ["eventCount","totalUsers","purchases"],
            order_bys=[OrderBy(metric=OrderBy.MetricOrderBy(metric_name="eventCount"), desc=True)],
            limit=15)
 top_origins = [{"city": dim(row,0), "searches": intf(met(row,0)),
@@ -185,7 +196,7 @@ top_origins = [{"city": dim(row,0), "searches": intf(met(row,0)),
                for row in r.rows if dim(row,0) != "(not set)"]
 
 r = report(["customEvent:destinationCity"],
-           ["eventCount","totalUsers","conversions"],
+           ["eventCount","totalUsers","purchases"],
            order_bys=[OrderBy(metric=OrderBy.MetricOrderBy(metric_name="eventCount"), desc=True)],
            limit=15)
 top_destinations = [{"city": dim(row,0), "searches": intf(met(row,0)),
