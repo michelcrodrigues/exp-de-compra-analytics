@@ -23,8 +23,8 @@ jobs:
 
       - name: Criar arquivo de credenciais do Google
         run: echo '${{ secrets.GA4_CREDENTIALS_JSON }}' > /tmp/ga4_credentials.json
-
-      - name: Executar script de coleta
+# v2
+    - name: Executar script de coleta
         env:
           GA4_PROPERTY_ID: ${{ secrets.GA4_PROPERTY_ID }}
           GOOGLE_APPLICATION_CREDENTIALS: /tmp/ga4_credentials.json
