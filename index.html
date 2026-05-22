@@ -9,89 +9,87 @@
   <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@300;400;500;600&display=swap" rel="stylesheet"/>
   <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
   <style>
-    :root{
-      --bg:#f5f4f0;--surface:#fff;--s2:#f0efe9;--border:#dddbd4;
-      --text:#1a1917;--muted:#7a7870;
-      --blue:#1d4ed8;--indigo:#4f46e5;--teal:#0d9488;--green:#16a34a;
-      --amber:#d97706;--red:#dc2626;--purple:#7c3aed;--cyan:#0891b2;
-      --pink:#db2777;--orange:#ea580c;
-    }
+    :root{--bg:#f5f4f0;--surface:#fff;--s2:#f0efe9;--border:#dddbd4;--text:#1a1917;--muted:#7a7870;
+      --blue:#1d4ed8;--indigo:#4f46e5;--teal:#0d9488;--green:#16a34a;--amber:#d97706;
+      --red:#dc2626;--purple:#7c3aed;--cyan:#0891b2;--pink:#db2777;--orange:#ea580c;}
     *{box-sizing:border-box;margin:0;padding:0}
     body{background:var(--bg);color:var(--text);font-family:'IBM Plex Sans',sans-serif;font-size:13px;min-height:100vh}
 
-    /* Loading */
     #loading{position:fixed;inset:0;background:var(--bg);display:flex;align-items:center;justify-content:center;z-index:999;flex-direction:column;gap:12px}
     .spinner{width:28px;height:28px;border:2px solid var(--border);border-top-color:var(--text);border-radius:50%;animation:spin .7s linear infinite}
     @keyframes spin{to{transform:rotate(360deg)}}
     #loading p{font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--muted)}
 
-    /* Header */
-    header{background:var(--text);color:#f5f4f0;padding:0 40px;height:52px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100}
+    header{background:var(--text);color:#f5f4f0;padding:0 40px;height:52px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:50}
     .logo{font-family:'IBM Plex Mono',monospace;font-size:13px;font-weight:600;letter-spacing:.04em}
     .logo em{color:#a09e98;font-style:normal}
     .live{display:flex;align-items:center;gap:5px;font-family:'IBM Plex Mono',monospace;font-size:10px;color:#6ee7b7}
     .live-dot{width:5px;height:5px;background:#6ee7b7;border-radius:50%;animation:pulse 2s infinite}
     @keyframes pulse{0%,100%{opacity:1}50%{opacity:.3}}
-    .header-meta{font-family:'IBM Plex Mono',monospace;font-size:10px;color:#a09e98;text-align:right}
+    .hm{font-family:'IBM Plex Mono',monospace;font-size:10px;color:#a09e98}
 
-    /* Filters bar */
-    .filters-bar{background:var(--surface);border-bottom:1px solid var(--border);padding:9px 40px;display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+    .fbar{background:var(--surface);border-bottom:1px solid var(--border);padding:9px 40px;display:flex;align-items:center;gap:10px;flex-wrap:wrap;position:sticky;top:52px;z-index:40}
     .fg{display:flex;align-items:center;gap:6px}
     .fl{font-size:10px;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:.06em;white-space:nowrap}
-    .fsel{font-family:'IBM Plex Sans',sans-serif;font-size:12px;background:var(--s2);border:1px solid var(--border);border-radius:6px;padding:5px 9px;color:var(--text);cursor:pointer;outline:none;transition:border-color .15s}
+    .fsel{font-family:'IBM Plex Sans',sans-serif;font-size:12px;background:var(--s2);border:1px solid var(--border);border-radius:6px;padding:5px 9px;color:var(--text);cursor:pointer;outline:none}
     .fsel:focus{border-color:var(--blue)}
-    .finput{font-family:'IBM Plex Mono',monospace;font-size:11px;background:var(--s2);border:1px solid var(--border);border-radius:6px;padding:5px 9px;color:var(--text);outline:none;width:120px;transition:border-color .15s}
+    .finput{font-family:'IBM Plex Mono',monospace;font-size:11px;background:var(--s2);border:1px solid var(--border);border-radius:6px;padding:5px 9px;color:var(--text);outline:none;width:130px}
     .finput:focus{border-color:var(--blue)}
     .fdiv{width:1px;height:22px;background:var(--border)}
-    .freset{font-size:11px;color:var(--muted);background:none;border:none;cursor:pointer;font-family:'IBM Plex Sans',sans-serif;padding:4px 8px;border-radius:4px;transition:background .15s}
+    .freset{font-size:11px;color:var(--muted);background:none;border:none;cursor:pointer;font-family:'IBM Plex Sans',sans-serif;padding:4px 8px;border-radius:4px}
     .freset:hover{background:var(--s2);color:var(--text)}
-    .fstatus{font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--blue);margin-left:auto;white-space:nowrap}
-    #custom-range{display:none;align-items:center;gap:6px}
-    #custom-range.visible{display:flex}
-    .fapply{font-family:'IBM Plex Sans',sans-serif;font-size:11px;font-weight:600;background:var(--blue);color:#fff;border:none;border-radius:5px;padding:5px 12px;cursor:pointer;transition:opacity .15s}
+    .fapply{font-family:'IBM Plex Sans',sans-serif;font-size:11px;font-weight:600;background:var(--blue);color:#fff;border:none;border-radius:5px;padding:5px 12px;cursor:pointer}
     .fapply:hover{opacity:.85}
+    .fstatus{font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--blue);margin-left:auto}
+    #crange{display:none;align-items:center;gap:6px}
+    #crange.on{display:flex}
 
-    /* Nav */
     .nav-wrap{background:var(--surface);border-bottom:1px solid var(--border);padding:0 40px}
     .nav{display:flex}
-    .nav-btn{padding:13px 18px;font-size:12px;font-weight:500;font-family:'IBM Plex Sans',sans-serif;border:none;background:none;color:var(--muted);cursor:pointer;border-bottom:2px solid transparent;transition:color .15s,border-color .15s}
-    .nav-btn:hover{color:var(--text)}
-    .nav-btn.active{color:var(--text);border-bottom-color:var(--text)}
+    .nbtn{padding:13px 18px;font-size:12px;font-weight:500;font-family:'IBM Plex Sans',sans-serif;border:none;background:none;color:var(--muted);cursor:pointer;border-bottom:2px solid transparent;transition:color .15s,border-color .15s}
+    .nbtn:hover{color:var(--text)}.nbtn.on{color:var(--text);border-bottom-color:var(--text)}
 
-    /* Layout */
     .container{max-width:1360px;margin:0 auto;padding:22px 40px}
-    .section{display:none}.section.active{display:block}
+    .sec{display:none}.sec.on{display:block}
 
-    /* KPIs */
-    .kpi-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:1px;background:var(--border);border:1px solid var(--border);border-radius:10px;overflow:hidden;margin-bottom:18px}
-    .kpi{background:var(--surface);padding:16px 14px;transition:background .15s;border-top:3px solid transparent}
+    /* week selector */
+    .wsrow{display:flex;align-items:center;gap:8px;margin-bottom:14px}
+    .wslabel{font-size:10px;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:.06em}
+    .wssel{font-family:'IBM Plex Mono',monospace;font-size:11px;background:var(--s2);border:1px solid var(--border);border-radius:6px;padding:4px 9px;color:var(--text);cursor:pointer;outline:none}
+    .wssel:focus{border-color:var(--blue)}
+    .ws-note{font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--muted);margin-left:4px}
+
+    /* KPI */
+    .kgrid{display:grid;grid-template-columns:repeat(7,1fr);gap:1px;background:var(--border);border:1px solid var(--border);border-radius:10px;overflow:visible;margin-bottom:22px;position:relative;z-index:10}
+    .kpi{background:var(--surface);padding:16px 14px;transition:background .15s;border-top:3px solid transparent;border-right:1px solid var(--border);position:relative}
+    .kpi:first-child{border-radius:10px 0 0 10px}.kpi:last-child{border-radius:0 10px 10px 0;border-right:none}
     .kpi:hover{background:#fafaf8}
-    .kpi.c-blue{border-top-color:var(--blue)}.kpi.c-teal{border-top-color:var(--teal)}
-    .kpi.c-green{border-top-color:var(--green)}.kpi.c-indigo{border-top-color:var(--indigo)}
-    .kpi.c-amber{border-top-color:var(--amber)}.kpi.c-purple{border-top-color:var(--purple)}
-    .kpi.c-cyan{border-top-color:var(--cyan)}
-    .kpi-label{font-size:10px;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:.07em;margin-bottom:7px;display:flex;align-items:center;gap:5px}
-    .kpi-value{font-family:'IBM Plex Mono',monospace;font-size:20px;font-weight:600;line-height:1;color:var(--text)}
-    .kpi-sub{font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--muted);margin-top:5px}
+    .kpi.cb{border-top-color:var(--blue)}.kpi.ct{border-top-color:var(--teal)}.kpi.cg{border-top-color:var(--green)}
+    .kpi.ci{border-top-color:var(--indigo)}.kpi.ca{border-top-color:var(--amber)}.kpi.cp{border-top-color:var(--purple)}.kpi.cc{border-top-color:var(--cyan)}
+    .kl{font-size:10px;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:.07em;margin-bottom:7px;display:flex;align-items:center;gap:5px}
+    .kv{font-family:'IBM Plex Mono',monospace;font-size:20px;font-weight:600;line-height:1}
+    .ks{font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--muted);margin-top:5px}
 
-    /* Info tooltip */
-    .info-icon{display:inline-flex;align-items:center;justify-content:center;width:13px;height:13px;border-radius:50%;background:var(--border);color:var(--muted);font-size:9px;font-weight:700;cursor:default;position:relative;font-style:normal;font-family:'IBM Plex Mono',monospace;line-height:1}
-    .info-icon:hover .info-tip{opacity:1;pointer-events:auto;transform:translateY(0)}
-    .info-tip{position:absolute;bottom:calc(100% + 6px);left:50%;transform:translateX(-50%) translateY(4px);background:#1a1917;color:#f5f4f0;font-family:'IBM Plex Sans',sans-serif;font-size:11px;font-weight:400;line-height:1.5;padding:8px 11px;border-radius:7px;width:230px;opacity:0;pointer-events:none;transition:opacity .2s,transform .2s;z-index:200;white-space:normal;text-align:left;letter-spacing:0;text-transform:none}
-    .info-tip::after{content:'';position:absolute;top:100%;left:50%;transform:translateX(-50%);border:5px solid transparent;border-top-color:#1a1917}
+    /* Info icon — tooltip opens downward from KPI, upward from cards */
+    .ii{display:inline-flex;align-items:center;justify-content:center;width:13px;height:13px;border-radius:50%;background:var(--border);color:var(--muted);font-size:9px;font-weight:700;cursor:default;position:relative;font-style:normal;font-family:'IBM Plex Mono',monospace;flex-shrink:0}
+    .ii .tip{position:absolute;top:calc(100% + 7px);left:50%;transform:translateX(-50%);background:#1a1917;color:#f5f4f0;font-family:'IBM Plex Sans',sans-serif;font-size:11px;font-weight:400;line-height:1.55;padding:9px 12px;border-radius:7px;width:240px;opacity:0;pointer-events:none;transition:opacity .18s;z-index:300;white-space:normal;text-align:left;letter-spacing:0;text-transform:none;box-shadow:0 4px 16px rgba(0,0,0,.18)}
+    .ii .tip::before{content:'';position:absolute;bottom:100%;left:50%;transform:translateX(-50%);border:5px solid transparent;border-bottom-color:#1a1917}
+    .ii:hover .tip{opacity:1}
+    /* card variant: tooltip opens upward */
+    .ii.up .tip{top:auto;bottom:calc(100% + 7px)}
+    .ii.up .tip::before{display:none}
+    .ii.up .tip::after{content:'';position:absolute;top:100%;left:50%;transform:translateX(-50%);border:5px solid transparent;border-top-color:#1a1917}
 
-    /* Cards */
     .g2{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:12px}
     .g3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;margin-bottom:12px}
     .g1{display:grid;grid-template-columns:1fr;gap:12px;margin-bottom:12px}
     .card{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:16px}
     .ch{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px}
-    .ct{font-size:10px;font-weight:600;letter-spacing:.07em;text-transform:uppercase;color:var(--muted);display:flex;align-items:center;gap:5px}
+    .ct{font-size:10px;font-weight:600;letter-spacing:.07em;text-transform:uppercase;color:var(--muted);display:flex;align-items:center;gap:6px}
     .ctag{font-family:'IBM Plex Mono',monospace;font-size:10px;background:var(--s2);color:var(--muted);padding:2px 7px;border-radius:4px}
     .cw{position:relative}
-    .h160{height:160px}.h180{height:180px}.h220{height:220px}.h260{height:260px}
+    .h180{height:180px}.h220{height:220px}.h260{height:260px}
 
-    /* Tables */
     .tw{overflow-x:auto}
     table{width:100%;border-collapse:collapse}
     thead{border-bottom:1px solid var(--border)}
@@ -104,21 +102,16 @@
     th.nr{text-align:right}
     .ri{font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--muted);width:26px}
     .tag{display:inline-block;padding:2px 6px;border-radius:4px;font-family:'IBM Plex Mono',monospace;font-size:10px;font-weight:500}
-    .tg{background:var(--s2);color:var(--muted)}
-    .tgr{background:#dcfce7;color:#15803d}.tga{background:#fef3c7;color:#b45309}.trd{background:#fee2e2;color:#b91c1c}
+    .tg{background:var(--s2);color:var(--muted)}.tgr{background:#dcfce7;color:#15803d}.tga{background:#fef3c7;color:#b45309}.trd{background:#fee2e2;color:#b91c1c}
 
-    /* Funnel */
     .fr{display:flex;align-items:center;gap:10px;margin-bottom:7px}
-    .flab{width:155px;flex-shrink:0}
-    .fn{font-size:12px;font-weight:500}
-    .fe{font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--muted)}
+    .flab{width:155px;flex-shrink:0}.fn{font-size:12px;font-weight:500}.fe{font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--muted)}
     .ftr{flex:1;background:var(--s2);border-radius:4px;height:26px;overflow:hidden}
     .ff{height:100%;border-radius:4px;display:flex;align-items:center;padding:0 9px;font-family:'IBM Plex Mono',monospace;font-size:11px;font-weight:600;color:#fff;transition:width .7s cubic-bezier(.4,0,.2,1);white-space:nowrap;min-width:3%}
     .fp{width:44px;text-align:right;font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--muted);flex-shrink:0}
     .fd{width:68px;text-align:right;font-family:'IBM Plex Mono',monospace;font-size:11px;flex-shrink:0}
     .dhi{color:var(--red)}.dmd{color:var(--amber)}.dlo{color:var(--green)}
 
-    /* Insights */
     .ins{border:1px solid var(--border);border-radius:10px;padding:15px 17px;margin-bottom:10px}
     .ins-t{display:flex;align-items:center;gap:7px;margin-bottom:6px}
     .idot{width:6px;height:6px;border-radius:50%;flex-shrink:0}
@@ -129,11 +122,11 @@
     .pbox{border:1px dashed var(--border);border-radius:10px;padding:22px;text-align:center;margin-top:14px;background:#fafaf8}
     .pbox h3{font-size:12px;font-weight:600;margin-bottom:5px}
     .pbox p{font-size:12px;color:var(--muted);margin-bottom:13px;line-height:1.6}
-    .cbtn{background:var(--text);color:var(--bg);border:none;border-radius:6px;padding:8px 18px;font-size:12px;font-weight:600;cursor:pointer;font-family:'IBM Plex Sans',sans-serif;transition:opacity .15s}
+    .cbtn{background:var(--text);color:var(--bg);border:none;border-radius:6px;padding:8px 18px;font-size:12px;font-weight:600;cursor:pointer;font-family:'IBM Plex Sans',sans-serif}
     .cbtn:hover{opacity:.8}.cbtn.done{background:var(--green);color:#fff}
 
-    @media(max-width:1024px){header,.filters-bar,.nav-wrap{padding-left:16px;padding-right:16px}.container{padding:16px}.kpi-grid{grid-template-columns:repeat(4,1fr)}.g2,.g3{grid-template-columns:1fr}}
-    @media(max-width:600px){.kpi-grid{grid-template-columns:repeat(2,1fr)}}
+    @media(max-width:1024px){header,.fbar,.nav-wrap{padding-left:16px;padding-right:16px}.container{padding:16px}.kgrid{grid-template-columns:repeat(4,1fr)}.g2,.g3{grid-template-columns:1fr}}
+    @media(max-width:600px){.kgrid{grid-template-columns:repeat(2,1fr)}}
   </style>
 </head>
 <body>
@@ -143,15 +136,14 @@
   <div class="logo">ANALYTICS <em>/</em> EXP DE COMPRA</div>
   <div style="display:flex;align-items:center;gap:20px">
     <div class="live"><div class="live-dot"></div><span id="upd">—</span></div>
-    <div class="header-meta" id="per">—</div>
+    <div class="hm" id="per">—</div>
   </div>
 </header>
 
-<!-- Filters -->
-<div class="filters-bar">
+<div class="fbar">
   <div class="fg">
     <span class="fl">Período</span>
-    <select class="fsel" id="f-period" onchange="onPeriodChange()">
+    <select class="fsel" id="fp" onchange="onPC()">
       <option value="30">Últimos 30 dias</option>
       <option value="7">Últimos 7 dias</option>
       <option value="14">Últimos 14 dias</option>
@@ -159,49 +151,43 @@
       <option value="custom">Personalizado…</option>
     </select>
   </div>
-  <div id="custom-range" class="fg">
-    <span class="fl">De</span>
-    <input class="finput" type="date" id="f-date-from"/>
-    <span class="fl">Até</span>
-    <input class="finput" type="date" id="f-date-to"/>
-    <button class="fapply" onclick="applyFilters()">Aplicar</button>
+  <div id="crange" class="fg">
+    <span class="fl">De</span><input class="finput" type="date" id="fdf"/>
+    <span class="fl">Até</span><input class="finput" type="date" id="fdt"/>
+    <button class="fapply" onclick="applyF()">Aplicar</button>
   </div>
   <div class="fdiv"></div>
   <div class="fg">
     <span class="fl">Origem</span>
-    <select class="fsel" id="f-source" onchange="applyFilters()">
-      <option value="all">Todas</option>
-    </select>
+    <select class="fsel" id="fsrc" onchange="applyF()"><option value="all">Todas</option></select>
   </div>
   <div class="fdiv"></div>
   <div class="fg">
     <span class="fl">Dispositivo</span>
-    <select class="fsel" id="f-device" onchange="applyFilters()">
-      <option value="all">Todos</option>
-    </select>
+    <select class="fsel" id="fdev" onchange="applyF()"><option value="all">Todos</option></select>
   </div>
-  <button class="freset" onclick="resetFilters()">↺ Limpar</button>
-  <span class="fstatus" id="fstatus"></span>
+  <button class="freset" onclick="resetF()">↺ Limpar</button>
+  <span class="fstatus" id="fst"></span>
 </div>
 
 <div class="nav-wrap">
   <nav class="nav">
-    <button class="nav-btn active" onclick="show('overview',this)">Visão Geral</button>
-    <button class="nav-btn" onclick="show('acquisition',this)">Aquisição</button>
-    <button class="nav-btn" onclick="show('pages',this)">Páginas</button>
-    <button class="nav-btn" onclick="show('funnel',this)">Funil</button>
-    <button class="nav-btn" onclick="show('routes',this)">Rotas</button>
-    <button class="nav-btn" onclick="show('insights',this)">Insights IA</button>
+    <button class="nbtn on"  onclick="showS('overview',this)">Visão Geral</button>
+    <button class="nbtn" onclick="showS('acquisition',this)">Aquisição</button>
+    <button class="nbtn" onclick="showS('pages',this)">Páginas</button>
+    <button class="nbtn" onclick="showS('funnel',this)">Funil</button>
+    <button class="nbtn" onclick="showS('routes',this)">Rotas</button>
+    <button class="nbtn" onclick="showS('insights',this)">Insights IA</button>
   </nav>
 </div>
 
 <div class="container">
 
   <!-- OVERVIEW -->
-  <div id="sec-overview" class="section active">
-    <div class="kpi-grid" id="kpi-grid"></div>
+  <div id="sec-overview" class="sec on">
+    <div class="kgrid" id="kgrid"></div>
     <div class="g1"><div class="card">
-      <div class="ch"><div class="ct">Sessões e Usuários — diário<span id="daily-tag" class="ctag">30d</span></div></div>
+      <div class="ch"><div class="ct">Sessões e Usuários — diário <span id="dtag" class="ctag">30d</span></div></div>
       <div class="cw h260"><canvas id="ch-daily"></canvas></div>
     </div></div>
     <div class="g2">
@@ -209,77 +195,91 @@
       <div class="card"><div class="ch"><div class="ct">Usuários novos por dia</div></div><div class="cw h180"><canvas id="ch-new-users"></canvas></div></div>
     </div>
     <div class="g2">
-      <div class="card"><div class="ch"><div class="ct">Dispositivos</div></div><div class="cw h180"><canvas id="ch-devices"></canvas></div></div>
-      <div class="card"><div class="ch"><div class="ct">Novos vs Recorrentes</div></div><div class="cw h180"><canvas id="ch-new-returning"></canvas></div></div>
+      <div class="card"><div class="ch"><div class="ct">Dispositivos <span id="dev-tag" class="ctag">filtrado</span></div></div><div class="cw h180"><canvas id="ch-devices"></canvas></div></div>
+      <div class="card"><div class="ch"><div class="ct">Novos vs Recorrentes <span id="nvr-tag" class="ctag">filtrado</span></div></div><div class="cw h180"><canvas id="ch-new-returning"></canvas></div></div>
     </div>
   </div>
 
   <!-- ACQUISITION -->
-  <div id="sec-acquisition" class="section">
+  <div id="sec-acquisition" class="sec">
     <div class="g2">
-      <div class="card"><div class="ch"><div class="ct">Sessões por Canal</div></div><div class="cw h220"><canvas id="ch-channels"></canvas></div></div>
-      <div class="card"><div class="ch"><div class="ct">Taxa de Conversão por Canal</div><div class="ctag">%</div></div><div class="cw h220"><canvas id="ch-conv-rate"></canvas></div></div>
+      <div class="card"><div class="ch"><div class="ct">Sessões por Canal <span id="ch-tag" class="ctag">filtrado</span></div></div><div class="cw h220"><canvas id="ch-channels"></canvas></div></div>
+      <div class="card"><div class="ch"><div class="ct">Taxa de Conversão por Canal <span id="cvr-tag" class="ctag">filtrado</span></div><div class="ctag">%</div></div><div class="cw h220"><canvas id="ch-conv-rate"></canvas></div></div>
     </div>
     <div class="g2">
       <div class="card">
         <div class="ch">
-          <div class="ct">
-            Taxa de Rejeição por Canal
-            <span class="info-icon">i<span class="info-tip">Taxa de Rejeição (Bounce Rate): percentual de sessões em que o usuário acessou apenas uma página e saiu sem nenhuma interação. No GA4, uma sessão é contada como rejeição quando não há evento engajado registrado. Valores abaixo de 40% são considerados bons.</span></span>
-          </div>
-          <div class="ctag">%</div>
+          <div class="ct">Taxa de Rejeição por Canal <span id="br-tag" class="ctag">30d</span>
+            <span class="ii up">i<span class="tip">Taxa de Rejeição: % de sessões sem nenhuma interação engajada. No GA4, é uma sessão com menos de 10s sem evento de engajamento. Abaixo de 40% é considerado bom.</span></span>
+          </div><div class="ctag">%</div>
         </div>
         <div class="cw h180"><canvas id="ch-bounce-channel"></canvas></div>
       </div>
-      <div class="card"><div class="ch"><div class="ct">Duração Média por Canal</div><div class="ctag">seg</div></div><div class="cw h180"><canvas id="ch-duration-channel"></canvas></div></div>
+      <div class="card"><div class="ch"><div class="ct">Duração Média por Canal <span class="ctag">30d</span></div><div class="ctag">seg</div></div><div class="cw h180"><canvas id="ch-duration-channel"></canvas></div></div>
     </div>
-    <div class="card"><div class="ch"><div class="ct">Origens de Tráfego — Top 15</div></div><div class="tw"><table id="tbl-sources"></table></div></div>
+    <div class="card"><div class="ch"><div class="ct">Origens de Tráfego — Top 15 <span id="src-tag" class="ctag">filtrado</span></div></div><div class="tw"><table id="tbl-sources"></table></div></div>
   </div>
 
   <!-- PAGES -->
-  <div id="sec-pages" class="section">
+  <div id="sec-pages" class="sec">
     <div class="g2">
-      <div class="card"><div class="ch"><div class="ct">Top Páginas de Entrada</div></div><div class="cw h220"><canvas id="ch-landing"></canvas></div></div>
+      <div class="card"><div class="ch"><div class="ct">Top Páginas de Entrada <span class="ctag">30d</span></div></div><div class="cw h220"><canvas id="ch-landing"></canvas></div></div>
       <div class="card">
         <div class="ch">
-          <div class="ct">
-            Rejeição por Página de Entrada
-            <span class="info-icon">i<span class="info-tip">Taxa de Rejeição: percentual de sessões iniciadas nessa página em que o usuário saiu sem realizar nenhuma interação. Alta rejeição pode indicar desalinhamento entre o anúncio/link e o conteúdo da página.</span></span>
-          </div>
-          <div class="ctag">%</div>
+          <div class="ct">Rejeição por Página de Entrada <span class="ctag">30d</span>
+            <span class="ii up">i<span class="tip">Taxa de Rejeição: % de sessões iniciadas nessa página sem interação engajada. Alta rejeição pode indicar desalinhamento entre anúncio/link e o conteúdo da página.</span></span>
+          </div><div class="ctag">%</div>
         </div>
         <div class="cw h220"><canvas id="ch-landing-bounce"></canvas></div>
       </div>
     </div>
-    <div class="card"><div class="ch"><div class="ct">Páginas mais acessadas — Top 10</div></div><div class="tw"><table id="tbl-pages"></table></div></div>
+    <!-- weekly pages -->
+    <div class="card" style="margin-bottom:12px">
+      <div class="ch">
+        <div class="ct">Pageviews por Semana — Top 10 páginas</div>
+        <div class="wsrow" style="margin-bottom:0">
+          <span class="wslabel">Semana</span>
+          <select class="wssel" id="wk-pages" onchange="renderPagesWeekly()"><option value="all">Todas</option></select>
+          <span class="ws-note">yearWeek</span>
+        </div>
+      </div>
+      <div class="cw h220"><canvas id="ch-pages-weekly"></canvas></div>
+    </div>
+    <div class="card"><div class="ch"><div class="ct">Páginas mais acessadas — Top 10 <span class="ctag">30d</span></div></div><div class="tw"><table id="tbl-pages"></table></div></div>
   </div>
 
   <!-- FUNNEL -->
-  <div id="sec-funnel" class="section">
+  <div id="sec-funnel" class="sec">
     <div class="card" style="margin-bottom:12px">
-      <div class="ch"><div class="ct">Funil de Eventos — Usuários por etapa</div><div class="ctag" id="funnel-tag">30d</div></div>
+      <div class="ch">
+        <div class="ct">Funil de Eventos <span id="fnl-tag" class="ctag">filtrado</span></div>
+        <div class="wsrow" style="margin-bottom:0">
+          <span class="wslabel">Semana</span>
+          <select class="wssel" id="wk-funnel" onchange="renderFunnelWeekly()"><option value="all">Agregado 30d</option></select>
+        </div>
+      </div>
       <div id="funnel-wrap"></div>
     </div>
     <div class="g2">
-      <div class="card"><div class="ch"><div class="ct">Volume de eventos</div></div><div class="cw h220"><canvas id="ch-funnel-vol"></canvas></div></div>
-      <div class="card"><div class="ch"><div class="ct">Taxa de abandono entre etapas</div><div class="ctag">%</div></div><div class="cw h220"><canvas id="ch-funnel-drop"></canvas></div></div>
+      <div class="card"><div class="ch"><div class="ct">Volume de eventos <span id="fvol-tag" class="ctag">filtrado</span></div></div><div class="cw h220"><canvas id="ch-funnel-vol"></canvas></div></div>
+      <div class="card"><div class="ch"><div class="ct">Taxa de abandono entre etapas <span id="fdrop-tag" class="ctag">filtrado</span></div><div class="ctag">%</div></div><div class="cw h220"><canvas id="ch-funnel-drop"></canvas></div></div>
     </div>
   </div>
 
   <!-- ROUTES -->
-  <div id="sec-routes" class="section">
+  <div id="sec-routes" class="sec">
     <div class="g2">
-      <div class="card"><div class="ch"><div class="ct">Top Origens</div></div><div class="cw h220"><canvas id="ch-origins"></canvas></div></div>
-      <div class="card"><div class="ch"><div class="ct">Top Destinos</div></div><div class="cw h220"><canvas id="ch-destinations"></canvas></div></div>
+      <div class="card"><div class="ch"><div class="ct">Top Origens <span class="ctag">30d</span></div></div><div class="cw h220"><canvas id="ch-origins"></canvas></div></div>
+      <div class="card"><div class="ch"><div class="ct">Top Destinos <span class="ctag">30d</span></div></div><div class="cw h220"><canvas id="ch-destinations"></canvas></div></div>
     </div>
     <div class="g2">
-      <div class="card"><div class="ch"><div class="ct">Top Rotas</div></div><div class="tw"><table id="tbl-routes"></table></div></div>
-      <div class="card"><div class="ch"><div class="ct">Rotas por Usuários</div></div><div class="tw"><table id="tbl-route-conv"></table></div></div>
+      <div class="card"><div class="ch"><div class="ct">Top Rotas <span class="ctag">30d</span></div></div><div class="tw"><table id="tbl-routes"></table></div></div>
+      <div class="card"><div class="ch"><div class="ct">Rotas por Usuários <span class="ctag">30d</span></div></div><div class="tw"><table id="tbl-route-conv"></table></div></div>
     </div>
   </div>
 
   <!-- INSIGHTS -->
-  <div id="sec-insights" class="section">
+  <div id="sec-insights" class="sec">
     <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:14px">
       <span style="font-size:10px;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:.07em">Insights gerados via Claude.ai</span>
       <span class="tag tg">atualização manual</span>
@@ -288,228 +288,368 @@
     <div class="pbox">
       <h3>Gerar novos insights</h3>
       <p>Copie o prompt, abra o Claude.ai (plano Team), cole junto com o conteúdo do <code>data.json</code> e cole o resultado no campo <code>insights</code>.</p>
-      <button class="cbtn" id="copy-btn" onclick="copyPrompt()">Copiar prompt</button>
+      <button class="cbtn" id="cpbtn" onclick="copyP()">Copiar prompt</button>
     </div>
   </div>
-
-</div><!-- /container -->
+</div>
 
 <script>
 const PROMPT=`Você é um analista de growth sênior especializado em e-commerce de viagens. Analise os dados de GA4 abaixo e gere entre 5 e 7 insights acionáveis para o time de marketing e produto, com foco em rotas, funil de conversão e aquisição.\n\nPara cada insight, retorne um objeto JSON com:\n- "title": título curto e direto\n- "body": análise em 2-3 frases com o insight e a recomendação concreta\n- "type": "positive" | "warning" | "info"\n- "generated_at": data de hoje no formato YYYY-MM-DD\n\nRetorne APENAS um array JSON válido, sem texto adicional.\n\nDADOS:\n[COLE O CONTEÚDO DO data.json AQUI]`;
 
-// ── Palettes ─────────────────────────────────────────────────────────────────
-const C={blue:'#1d4ed8',indigo:'#4f46e5',teal:'#0d9488',green:'#16a34a',amber:'#d97706',red:'#dc2626',purple:'#7c3aed',cyan:'#0891b2',pink:'#db2777',orange:'#ea580c',sky:'#0284c7',lime:'#65a30d'};
+const C={blue:'#1d4ed8',indigo:'#4f46e5',teal:'#0d9488',green:'#16a34a',amber:'#d97706',red:'#dc2626',purple:'#7c3aed',cyan:'#0891b2',pink:'#db2777',orange:'#ea580c'};
 const PAL=Object.values(C);
-const CHANNEL_C={'Organic Search':C.blue,'Direct':C.indigo,'Referral':C.teal,'Paid Search':C.amber,'Social':C.pink,'Email':C.cyan,'Display':C.orange,'Organic Social':C.purple,'Organic Video':C.green,'Unassigned':'#9ca3af'};
-const cch=(ch,i)=>CHANNEL_C[ch]||PAL[i%PAL.length];
+const CHC={'Organic Search':C.blue,'Direct':C.indigo,'Referral':C.teal,'Paid Search':C.amber,'Social':C.pink,'Email':C.cyan,'Display':C.orange,'Organic Social':C.purple,'Organic Video':C.green,'Unassigned':'#9ca3af'};
+const cch=(ch,i)=>CHC[ch]||PAL[i%PAL.length];
 const FCOL=[C.blue,C.indigo,C.teal,C.amber,C.green];
 
-// ── Formatters ────────────────────────────────────────────────────────────────
 const fmt=n=>{if(n==null)return'—';const v=Number(n);if(v>=1e6)return(v/1e6).toFixed(1).replace('.',',')+' M';if(v>=1e3)return(v/1e3).toFixed(1).replace('.',',')+' K';return v.toLocaleString('pt-BR')};
 const fmtF=n=>n==null?'—':Number(n).toLocaleString('pt-BR');
 const fmtP=n=>n==null?'—':`${n}%`;
 const fmtS=s=>{const m=Math.floor(s/60),ss=Math.round(s%60);return`${m}m${String(ss).padStart(2,'0')}s`};
-
-// ── Chart helpers ─────────────────────────────────────────────────────────────
 const MONO={family:"'IBM Plex Mono',monospace",size:10};
 const SANS={family:"'IBM Plex Sans',sans-serif",size:11};
 const TT={backgroundColor:'#1a1917',titleColor:'#f5f4f0',bodyColor:'#d1d0cb',titleFont:MONO,bodyFont:MONO,padding:10,cornerRadius:6,displayColors:true};
-
-function bOpts(ex={}){return{responsive:true,maintainAspectRatio:false,plugins:{legend:{labels:{color:'#7a7870',font:SANS,boxWidth:8,padding:10}},tooltip:TT},scales:{x:{ticks:{color:'#a09e98',font:MONO,maxRotation:40},grid:{color:'#eeede9'},border:{color:'#dddbd4'}},y:{ticks:{color:'#a09e98',font:MONO},grid:{color:'#eeede9'},border:{color:'#dddbd4'}}},...ex}}
-function bOptsH(ex={}){return bOpts({indexAxis:'y',...ex})}
-function donutOpts(){return{responsive:true,maintainAspectRatio:false,cutout:'55%',plugins:{
+function bO(ex={}){return{responsive:true,maintainAspectRatio:false,plugins:{legend:{labels:{color:'#7a7870',font:SANS,boxWidth:8,padding:10}},tooltip:TT},scales:{x:{ticks:{color:'#a09e98',font:MONO,maxRotation:40},grid:{color:'#eeede9'},border:{color:'#dddbd4'}},y:{ticks:{color:'#a09e98',font:MONO},grid:{color:'#eeede9'},border:{color:'#dddbd4'}}},...ex}}
+function bOH(ex={}){return bO({indexAxis:'y',...ex})}
+function dO(){return{responsive:true,maintainAspectRatio:false,cutout:'55%',plugins:{
   legend:{position:'right',labels:{color:'#7a7870',font:SANS,boxWidth:8,padding:10,
     generateLabels(chart){const ds=chart.data.datasets[0];const tot=ds.data.reduce((a,b)=>a+b,0);
-      return chart.data.labels.map((l,i)=>({text:`${l}  ${tot>0?Math.round(ds.data[i]/tot*100):0}%`,fillStyle:ds.backgroundColor[i],strokeStyle:'transparent',fontColor:'#7a7870',index:i}))}}},
+      return chart.data.labels.map((l,i)=>({text:`${l}  ${tot>0?Math.round(ds.data[i]/tot*100):0}%`,fillStyle:ds.backgroundColor[i],strokeStyle:'transparent',index:i}))}}},
   tooltip:{...TT,callbacks:{label:ctx=>{const tot=ctx.dataset.data.reduce((a,b)=>a+b,0);const pct=tot>0?Math.round(ctx.parsed/tot*100):0;return` ${ctx.label}: ${fmtF(ctx.parsed)} (${pct}%)`}}}
 }}}
 
-// ── State ─────────────────────────────────────────────────────────────────────
 let RAW=null, CHARTS={};
-function destroyAll(){Object.values(CHARTS).forEach(c=>{try{c.destroy()}catch(e){}});CHARTS={}}
+function kill(){Object.values(CHARTS).forEach(c=>{try{c.destroy()}catch(e){}});CHARTS={}}
+function mk(id,type,data,opts){const el=document.getElementById(id);if(!el)return;CHARTS[id]=new Chart(el,{type,data,options:opts})}
 
-// ── Nav ───────────────────────────────────────────────────────────────────────
-function show(id,btn){
-  document.querySelectorAll('.section').forEach(s=>s.classList.remove('active'));
-  document.querySelectorAll('.nav-btn').forEach(b=>b.classList.remove('active'));
-  document.getElementById('sec-'+id).classList.add('active');
-  btn.classList.add('active');
+function showS(id,btn){
+  document.querySelectorAll('.sec').forEach(s=>s.classList.remove('on'));
+  document.querySelectorAll('.nbtn').forEach(b=>b.classList.remove('on'));
+  document.getElementById('sec-'+id).classList.add('on');
+  btn.classList.add('on');
 }
 
-// ── Filters ───────────────────────────────────────────────────────────────────
-function onPeriodChange(){
-  const v=document.getElementById('f-period').value;
-  const cr=document.getElementById('custom-range');
-  if(v==='custom'){cr.classList.add('visible')}
-  else{cr.classList.remove('visible');applyFilters()}
+// ── Filter date helpers ───────────────────────────────────────────────────────
+function onPC(){
+  const v=document.getElementById('fp').value;
+  document.getElementById('crange').classList.toggle('on',v==='custom');
+  if(v!=='custom') applyF();
+}
+function resetF(){
+  document.getElementById('fp').value='30';
+  document.getElementById('fsrc').value='all';
+  document.getElementById('fdev').value='all';
+  document.getElementById('crange').classList.remove('on');
+  applyF();
+}
+function getF(){
+  return{period:document.getElementById('fp').value,
+    df:document.getElementById('fdf').value,dt:document.getElementById('fdt').value,
+    src:document.getElementById('fsrc').value,dev:document.getElementById('fdev').value};
 }
 
-function populateFilters(d){
-  const ss=document.getElementById('f-source');
+function populateF(d){
+  const ss=document.getElementById('fsrc');
   [...new Set(d.sources.map(r=>r.source))].sort().forEach(s=>{const o=document.createElement('option');o.value=s;o.textContent=s;ss.appendChild(o)});
-  const ds=document.getElementById('f-device');
+  const ds=document.getElementById('fdev');
   d.devices.forEach(r=>{const o=document.createElement('option');o.value=r.device;o.textContent=r.device.charAt(0).toUpperCase()+r.device.slice(1);ds.appendChild(o)});
-  // Set date range defaults from daily data
   if(d.daily&&d.daily.length){
-    document.getElementById('f-date-from').value=d.daily[0].date;
-    document.getElementById('f-date-to').value=d.daily[d.daily.length-1].date;
+    document.getElementById('fdf').value=d.daily[0].date;
+    document.getElementById('fdt').value=d.daily[d.daily.length-1].date;
+  }
+  // Populate week selectors
+  populateWeekSel('wk-pages', d.pages_weekly?.weeks||[]);
+  populateWeekSel('wk-funnel', d.funnel_daily?.dates||[], true);
+}
+
+function populateWeekSel(selId, items, isDates=false){
+  const sel=document.getElementById(selId);
+  if(!sel) return;
+  // Clear existing options except first
+  while(sel.options.length>1) sel.remove(1);
+  if(isDates){
+    // Group dates into weeks
+    const weeks=[...new Set(items.map(d=>dateToWeek(d)))];
+    weeks.forEach(w=>{const o=document.createElement('option');o.value=w;o.textContent=weekLabel(w);sel.appendChild(o)});
+  } else {
+    items.forEach(w=>{const o=document.createElement('option');o.value=w;o.textContent=weekLabel(w);sel.appendChild(o)});
   }
 }
 
-function getFilters(){
-  return{
-    period:document.getElementById('f-period').value,
-    dateFrom:document.getElementById('f-date-from').value,
-    dateTo:document.getElementById('f-date-to').value,
-    source:document.getElementById('f-source').value,
-    device:document.getElementById('f-device').value,
-  }
+function dateToWeek(dateStr){
+  // Returns yearWeek string like "202412" from "2024-03-25"
+  const d=new Date(dateStr);
+  const jan1=new Date(d.getFullYear(),0,1);
+  const week=Math.ceil(((d-jan1)/86400000+jan1.getDay()+1)/7);
+  return `${d.getFullYear()}${String(week).padStart(2,'0')}`;
 }
 
-function resetFilters(){
-  document.getElementById('f-period').value='30';
-  document.getElementById('f-source').value='all';
-  document.getElementById('f-device').value='all';
-  document.getElementById('custom-range').classList.remove('visible');
-  applyFilters();
+function weekLabel(yw){
+  // "202412" -> "Sem 12/2024"
+  const y=yw.slice(0,4), w=yw.slice(4);
+  return `Sem ${w}/${y}`;
 }
 
-function applyFilters(){
-  if(!RAW)return;
-  const f=getFilters();
+function applyF(){
+  if(!RAW) return;
+  const f=getF();
   const active=[];
-  if(f.period==='custom'){active.push(`${f.dateFrom} → ${f.dateTo}`)}
-  else if(f.period!=='30'){active.push(f.period==='all'?'Todo período':`Últimos ${f.period}d`)}
-  if(f.source!=='all')active.push(`Origem: ${f.source}`);
-  if(f.device!=='all')active.push(`Dispositivo: ${f.device}`);
-  document.getElementById('fstatus').textContent=active.length?'● '+active.join(' · '):'';
-  destroyAll();
-  renderDashboard(buildFiltered(RAW,f));
+  if(f.period==='custom'&&f.df&&f.dt) active.push(`${f.df} → ${f.dt}`);
+  else if(f.period!=='30') active.push(f.period==='all'?'Todo período':`Últimos ${f.period}d`);
+  if(f.src!=='all') active.push(`Origem: ${f.src}`);
+  if(f.dev!=='all') active.push(`Dispositivo: ${f.dev}`);
+  document.getElementById('fst').textContent=active.length?'● '+active.join(' · '):'';
+  kill();
+  render(buildF(RAW,f));
 }
 
-function buildFiltered(d,f){
-  // 1. Period filter on daily
-  let daily=[...d.daily];
-  if(f.period==='custom'&&f.dateFrom&&f.dateTo){
-    daily=daily.filter(r=>r.date>=f.dateFrom&&r.date<=f.dateTo);
-  } else if(f.period!=='all'){
-    const n=parseInt(f.period);
-    daily=daily.slice(-n);
+// ── Build filtered data ───────────────────────────────────────────────────────
+function filterDates(daily, f){
+  if(f.period==='custom'&&f.df&&f.dt) return daily.filter(r=>r.date>=f.df&&r.date<=f.dt);
+  if(f.period==='all') return daily;
+  return daily.slice(-parseInt(f.period));
+}
+
+function filterDailyBreakdown(dailyObj, f){
+  // dailyObj: {dates:[], channels/devices/types:[], data:{date:{key:{...}}}}
+  if(!dailyObj) return dailyObj;
+  let dates=[...dailyObj.dates];
+  if(f.period==='custom'&&f.df&&f.dt) dates=dates.filter(d=>d>=f.df&&d<=f.dt);
+  else if(f.period!=='all') dates=dates.slice(-parseInt(f.period));
+  return{...dailyObj, dates};
+}
+
+function aggregateFromDaily(dailyObj, keyField, metrics){
+  // Re-aggregate after date filter
+  const agg={};
+  dailyObj.dates.forEach(date=>{
+    const dayData=dailyObj.data[date]||{};
+    Object.entries(dayData).forEach(([key,vals])=>{
+      if(!agg[key]) agg[key]={[keyField]:key};
+      metrics.forEach(m=>{ agg[key][m]=(agg[key][m]||0)+(vals[m]||0); });
+    });
+  });
+  return Object.values(agg);
+}
+
+function filterFunnelByDates(funnelDaily, f){
+  if(!funnelDaily) return null;
+  let dates=[...funnelDaily.dates];
+  if(f.period==='custom'&&f.df&&f.dt) dates=dates.filter(d=>d>=f.df&&d<=f.dt);
+  else if(f.period!=='all') dates=dates.slice(-parseInt(f.period));
+  return{...funnelDaily,dates};
+}
+
+function buildFunnelFromDaily(funnelDaily, funnelMeta){
+  if(!funnelDaily||!funnelDaily.dates.length) return funnelMeta;
+  const agg={};
+  funnelDaily.events.forEach(ev=>{ agg[ev]={event_count:0,users:0}; });
+  funnelDaily.dates.forEach(date=>{
+    const day=funnelDaily.data[date]||{};
+    Object.entries(day).forEach(([ev,vals])=>{
+      if(agg[ev]){ agg[ev].event_count+=(vals.event_count||0); agg[ev].users+=(vals.users||0); }
+    });
+  });
+  const result=funnelMeta.map(s=>({...s,...(agg[s.event]||{}),drop_rate:0}));
+  for(let i=1;i<result.length;i++){
+    const prev=result[i-1].users, curr=result[i].users;
+    result[i].drop_rate=prev>0?Math.round((1-curr/prev)*1000)/10:0;
+  }
+  return result;
+}
+
+function buildF(d,f){
+  // Daily (full date filter)
+  const daily=filterDates(d.daily,f);
+
+  // Channels: re-aggregate from daily breakdown
+  const chDaily=filterDailyBreakdown(d.channels_daily,f);
+  let channels=aggregateFromDaily(chDaily,'channel',['sessions','users','conversions']);
+  channels=channels.map(ch=>{
+    // Get bounce/duration from original 30d for those metrics (no daily breakdown)
+    const orig=d.channels.find(c=>c.channel===ch.channel)||{};
+    return{...ch,conversion_rate:Math.round(ch.conversions/Math.max(ch.sessions,1)*100*100)/100,
+      bounce_rate:orig.bounce_rate||0,avg_duration:orig.avg_duration||0,new_users:orig.new_users||0};
+  }).sort((a,b)=>b.sessions-a.sessions);
+  if(f.src!=='all'){
+    // Source filter approximates channels by ratio
+    const tot=d.sources.reduce((a,r)=>a+r.sessions,0);
+    const row=d.sources.find(r=>r.source===f.src);
+    const ratio=row&&tot>0?row.sessions/tot:1;
+    channels=channels.map(c=>({...c,sessions:Math.round(c.sessions*ratio),conversions:Math.round(c.conversions*ratio)}));
   }
 
-  // 2. Device filter — scale ratios
-  let devices=[...d.devices];
-  let devRatio=1;
-  if(f.device!=='all'){
-    const tot=d.devices.reduce((a,r)=>a+r.sessions,0);
-    const row=d.devices.find(r=>r.device===f.device);
-    devRatio=row&&tot>0?row.sessions/tot:1;
-    devices=devices.filter(r=>r.device===f.device);
-    daily=daily.map(r=>({...r,sessions:Math.round(r.sessions*devRatio),users:Math.round(r.users*devRatio),conversions:Math.round(r.conversions*devRatio),new_users:Math.round(r.new_users*devRatio)}));
-  }
+  // Devices: re-aggregate from daily breakdown
+  const devDaily=filterDailyBreakdown(d.devices_daily,f);
+  let devices=aggregateFromDaily(devDaily,'device',['sessions','users','conversions']);
+  devices=devices.sort((a,b)=>b.sessions-a.sessions);
+  if(f.dev!=='all') devices=devices.filter(r=>r.device===f.dev);
+  devices=devices.map(dv=>{
+    const orig=d.devices.find(x=>x.device===dv.device)||{};
+    return{...dv,bounce_rate:orig.bounce_rate||0};
+  });
 
-  // 3. Source filter
+  // NVR: re-aggregate from daily breakdown
+  const nvrDaily=filterDailyBreakdown(d.nvr_daily,f);
+  const nvrAgg=aggregateFromDaily(nvrDaily,'type',['sessions','users','conversions']);
+  const new_vs_returning=nvrAgg;
+
+  // Sources: filter by source name
   let sources=[...d.sources];
-  let channels=[...d.channels];
-  if(f.source!=='all'){
-    sources=sources.filter(r=>r.source===f.source);
-    // Approximate channel data by source ratio
-    const srcTot=d.sources.reduce((a,r)=>a+r.sessions,0);
-    const srcRow=d.sources.find(r=>r.source===f.source);
-    const srcRatio=srcRow&&srcTot>0?srcRow.sessions/srcTot:1;
-    channels=channels.map(r=>({...r,sessions:Math.round(r.sessions*srcRatio),conversions:Math.round(r.conversions*srcRatio)}));
-  }
+  if(f.src!=='all') sources=sources.filter(r=>r.source===f.src);
 
-  // 4. Recompute totals from filtered daily
+  // Funnel: re-aggregate from daily
+  const fnlDaily=filterFunnelByDates(d.funnel_daily,f);
+  const funnel=buildFunnelFromDaily(fnlDaily,d.funnel);
+
+  // Totals from filtered daily
   const totals={
     ...d.totals,
-    sessions:daily.reduce((a,r)=>a+r.sessions,0),
+    sessions:   daily.reduce((a,r)=>a+r.sessions,0),
     total_users:daily.reduce((a,r)=>a+r.users,0),
     conversions:daily.reduce((a,r)=>a+r.conversions,0),
-    new_users:daily.reduce((a,r)=>a+r.new_users,0),
+    new_users:  daily.reduce((a,r)=>a+r.new_users,0),
   };
 
-  // 5. New vs returning — keep as is (device-filtered if needed)
-  let nvr=[...d.new_vs_returning];
-  if(f.device!=='all'){
-    nvr=nvr.map(r=>({...r,users:Math.round(r.users*devRatio),sessions:Math.round(r.sessions*devRatio)}));
-  }
+  // tag labels
+  const dn=daily.length;
+  const dLabel=`${dn}d`;
 
-  // 6. Landing pages and pages — filter by period only (no daily breakdown available)
-  const landing_pages=[...d.landing_pages||[]];
-  const pages=[...d.pages||[]];
-
-  // 7. Funnel — scale by device ratio if filtered
-  let funnel=[...d.funnel];
-  if(f.device!=='all'){
-    funnel=funnel.map((s,i)=>{
-      const ec=Math.round(s.event_count*devRatio);
-      const u=Math.round(s.users*devRatio);
-      return{...s,event_count:ec,users:u};
-    });
-    // Recompute drop rates
-    for(let i=1;i<funnel.length;i++){
-      const prev=funnel[i-1].users;
-      const curr=funnel[i].users;
-      funnel[i]={...funnel[i],drop_rate:prev>0?Math.round((1-curr/prev)*1000)/10:0};
-    }
-  }
-
-  return{...d,totals,daily,sources,channels,devices,new_vs_returning:nvr,landing_pages,pages,funnel};
+  return{...d, totals, daily, channels, devices, new_vs_returning, sources, funnel, _dLabel:dLabel};
 }
 
-// ── Render ────────────────────────────────────────────────────────────────────
-function renderDashboard(d){
+// ── Render pages weekly chart ─────────────────────────────────────────────────
+function renderPagesWeekly(){
+  if(!RAW) return;
+  const wk=document.getElementById('wk-pages').value;
+  const pw=RAW.pages_weekly;
+  if(!pw||!pw.weeks) return;
+
+  let weeks=pw.weeks;
+  let labels, datasets;
+
+  if(wk==='all'){
+    // Line chart: each page a line, x=weeks
+    labels=weeks.map(w=>weekLabel(w));
+    datasets=pw.paths.slice(0,5).map((path,i)=>({
+      label:path.length>25?path.slice(0,25)+'…':path,
+      data:weeks.map(w=>(pw.data[w]&&pw.data[w][path])?pw.data[w][path].pageviews:0),
+      borderColor:PAL[i%PAL.length],backgroundColor:'transparent',tension:.3,pointRadius:2,borderWidth:2,
+    }));
+    if(CHARTS['ch-pages-weekly']) CHARTS['ch-pages-weekly'].destroy();
+    CHARTS['ch-pages-weekly']=new Chart(document.getElementById('ch-pages-weekly'),{type:'line',data:{labels,datasets},options:bO()});
+  } else {
+    // Bar chart: pages for that week
+    const weekData=pw.data[wk]||{};
+    labels=pw.paths.map(p=>p.length>25?p.slice(0,25)+'…':p);
+    const dataVals=pw.paths.map(p=>(weekData[p]?weekData[p].pageviews:0));
+    if(CHARTS['ch-pages-weekly']) CHARTS['ch-pages-weekly'].destroy();
+    CHARTS['ch-pages-weekly']=new Chart(document.getElementById('ch-pages-weekly'),{type:'bar',
+      data:{labels,datasets:[{label:'Pageviews',data:dataVals,backgroundColor:C.blue+'cc',borderRadius:3}]},
+      options:bOH()});
+  }
+}
+
+// ── Render funnel weekly ──────────────────────────────────────────────────────
+function renderFunnelWeekly(){
+  if(!RAW) return;
+  const wk=document.getElementById('wk-funnel').value;
+  const fd=RAW.funnel_daily;
+  if(!fd) return;
+
+  let funnel;
+  if(wk==='all'){
+    funnel=RAW.funnel;
+  } else {
+    // Filter funnel_daily to only dates in that week
+    const fakef={period:'custom',df:'0000-00-00',dt:'9999-99-99',src:'all',dev:'all'};
+    const datesInWeek=fd.dates.filter(d=>dateToWeek(d)===wk);
+    const subFd={...fd,dates:datesInWeek};
+    funnel=buildFunnelFromDaily(subFd,RAW.funnel);
+  }
+
+  const maxU=funnel.length>0?funnel[0].users:1;
+  document.getElementById('funnel-wrap').innerHTML=funnel.map((s,i)=>{
+    const pct=maxU>0?Math.round(s.users/maxU*100):0;
+    const dc=s.drop_rate>60?'dhi':s.drop_rate>30?'dmd':'dlo';
+    return`<div class="fr">
+      <div class="flab"><div class="fn">${s.step}</div><div class="fe">${s.event}</div></div>
+      <div class="ftr"><div class="ff" style="width:${Math.max(pct,3)}%;background:${FCOL[i]||C.blue}">${fmt(s.users)}</div></div>
+      <div class="fp">${pct}%</div>
+      <div class="fd ${i===0?'':dc}">${i===0?'—':`▾ ${s.drop_rate}%`}</div>
+    </div>`;
+  }).join('');
+
+  if(CHARTS['ch-funnel-vol']) CHARTS['ch-funnel-vol'].destroy();
+  CHARTS['ch-funnel-vol']=new Chart(document.getElementById('ch-funnel-vol'),{type:'bar',
+    data:{labels:funnel.map(s=>s.step),datasets:[{label:'Eventos',data:funnel.map(s=>s.event_count),backgroundColor:FCOL,borderRadius:4}]},
+    options:bO()});
+  if(CHARTS['ch-funnel-drop']) CHARTS['ch-funnel-drop'].destroy();
+  CHARTS['ch-funnel-drop']=new Chart(document.getElementById('ch-funnel-drop'),{type:'bar',
+    data:{labels:funnel.slice(1).map(s=>s.step),datasets:[{label:'% abandono',
+      data:funnel.slice(1).map(s=>s.drop_rate),
+      backgroundColor:funnel.slice(1).map(s=>s.drop_rate>60?C.red+'cc':s.drop_rate>30?C.amber+'cc':C.green+'cc'),borderRadius:4}]},
+    options:bO()});
+}
+
+// ── Main render ───────────────────────────────────────────────────────────────
+function render(d){
   const t=d.totals;
   const convRate=t.sessions>0?((t.conversions/t.sessions)*100).toFixed(2):'0.00';
+  const dLabel=d._dLabel||'30d';
 
-  // KPIs
-  const BOUNCE_TIP='Taxa de Rejeição: percentual de sessões sem nenhuma interação engajada. No GA4, sessão é "rejeitada" quando dura menos de 10 segundos sem evento de engajamento. Valores abaixo de 40% são considerados bons.';
+  // Update tags
+  ['dtag','dev-tag','nvr-tag','ch-tag','cvr-tag','br-tag','src-tag','fnl-tag','fvol-tag','fdrop-tag'].forEach(id=>{
+    const el=document.getElementById(id);
+    if(el) el.textContent=dLabel;
+  });
+
+  const BTIP='Taxa de Rejeição: % de sessões sem nenhuma interação engajada. No GA4, é uma sessão com menos de 10s sem evento de engajamento. Abaixo de 40% é considerado bom.';
   const kpis=[
-    {l:'Sessões',      v:fmt(t.sessions),   s:`${fmt(t.sessions_7d||0)} / 7d`,  c:'c-blue'},
-    {l:'Usuários',     v:fmt(t.total_users),s:`${fmt(t.new_users)} novos`,        c:'c-teal'},
-    {l:'Compras',      v:fmt(t.conversions),s:`${fmt(t.conversions_7d||0)} / 7d`,c:'c-green'},
-    {l:'Taxa Conv.',   v:`${convRate}%`,    s:'sessões → compra',                 c:'c-indigo'},
-    {l:'Taxa Rejeição',v:`${t.bounce_rate}%`,s:'média do período',                c:'c-amber',tip:BOUNCE_TIP},
-    {l:'Duração Média',v:fmtS(t.avg_session_duration),s:'por sessão',             c:'c-purple'},
-    {l:'Pageviews',    v:fmt(t.pageviews),  s:`${t.sessions>0?(t.pageviews/t.sessions).toFixed(1):'—'} / sessão`,c:'c-cyan'},
+    {l:'Sessões',      v:fmt(t.sessions),   s:`${fmt(t.sessions_7d||0)} / 7d`,   c:'cb'},
+    {l:'Usuários',     v:fmt(t.total_users),s:`${fmt(t.new_users)} novos`,         c:'ct'},
+    {l:'Compras',      v:fmt(t.conversions),s:`${fmt(t.conversions_7d||0)} / 7d`, c:'cg'},
+    {l:'Taxa Conv.',   v:`${convRate}%`,    s:'sessões → compra',                  c:'ci'},
+    {l:'Taxa Rejeição',v:`${t.bounce_rate}%`,s:'média do período',                 c:'ca',tip:BTIP},
+    {l:'Duração Média',v:fmtS(t.avg_session_duration),s:'por sessão',              c:'cp'},
+    {l:'Pageviews',    v:fmt(t.pageviews),  s:`${t.sessions>0?(t.pageviews/t.sessions).toFixed(1):'—'} / sessão`,c:'cc'},
   ];
-  document.getElementById('kpi-grid').innerHTML=kpis.map(k=>`
+  document.getElementById('kgrid').innerHTML=kpis.map(k=>`
     <div class="kpi ${k.c}">
-      <div class="kpi-label">${k.l}${k.tip?`<span class="info-icon">i<span class="info-tip">${k.tip}</span></span>`:''}</div>
-      <div class="kpi-value">${k.v}</div>
-      <div class="kpi-sub">${k.s}</div>
+      <div class="kl">${k.l}${k.tip?`<span class="ii">i<span class="tip">${k.tip}</span></span>`:''}</div>
+      <div class="kv">${k.v}</div><div class="ks">${k.s}</div>
     </div>`).join('');
 
   // Daily
   const dl=d.daily.map(r=>r.date.slice(5));
-  document.getElementById('daily-tag').textContent=`${d.daily.length}d`;
-  document.getElementById('funnel-tag').textContent=`${d.daily.length}d`;
-
   mk('ch-daily','line',{labels:dl,datasets:[
-    {label:'Sessões', data:d.daily.map(r=>r.sessions),borderColor:C.blue,backgroundColor:C.blue+'18',fill:true,tension:.35,pointRadius:0,borderWidth:2},
-    {label:'Usuários',data:d.daily.map(r=>r.users),  borderColor:C.indigo,backgroundColor:C.indigo+'10',fill:true,tension:.35,pointRadius:0,borderWidth:1.5},
-  ]},bOpts());
-
-  mk('ch-conv-daily','bar',{labels:dl,datasets:[{label:'Compras',data:d.daily.map(r=>r.conversions),backgroundColor:C.green+'cc',borderRadius:3}]},bOpts());
-  mk('ch-new-users','bar',{labels:dl,datasets:[{label:'Novos usuários',data:d.daily.map(r=>r.new_users||0),backgroundColor:C.cyan+'cc',borderRadius:3}]},bOpts());
+    {label:'Sessões', data:d.daily.map(r=>r.sessions),borderColor:C.blue,  backgroundColor:C.blue+'18',fill:true,tension:.35,pointRadius:0,borderWidth:2},
+    {label:'Usuários',data:d.daily.map(r=>r.users),   borderColor:C.indigo,backgroundColor:C.indigo+'10',fill:true,tension:.35,pointRadius:0,borderWidth:1.5},
+  ]},bO());
+  mk('ch-conv-daily','bar',{labels:dl,datasets:[{label:'Compras',data:d.daily.map(r=>r.conversions),backgroundColor:C.green+'cc',borderRadius:3}]},bO());
+  mk('ch-new-users', 'bar',{labels:dl,datasets:[{label:'Novos usuários',data:d.daily.map(r=>r.new_users||0),backgroundColor:C.cyan+'cc',borderRadius:3}]},bO());
 
   // Devices donut
-  const devL=d.devices.map(r=>r.device.charAt(0).toUpperCase()+r.device.slice(1));
   const devBg=[C.blue,C.teal,C.purple,C.amber,C.green].slice(0,d.devices.length);
-  mk('ch-devices','doughnut',{labels:devL,datasets:[{data:d.devices.map(r=>r.sessions),backgroundColor:devBg,borderWidth:2,borderColor:'#fff'}]},donutOpts());
+  mk('ch-devices','doughnut',{
+    labels:d.devices.map(r=>r.device.charAt(0).toUpperCase()+r.device.slice(1)),
+    datasets:[{data:d.devices.map(r=>r.sessions),backgroundColor:devBg,borderWidth:2,borderColor:'#fff'}]
+  },dO());
 
-  // New vs returning — deduplicate
+  // NVR donut — deduplicate
   const nvr={};
   d.new_vs_returning.forEach(r=>{const k=r.type==='new'?'Novos':'Recorrentes';nvr[k]=(nvr[k]||0)+r.users});
-  mk('ch-new-returning','doughnut',{labels:Object.keys(nvr),datasets:[{data:Object.values(nvr),backgroundColor:[C.blue,C.amber],borderWidth:2,borderColor:'#fff'}]},donutOpts());
+  mk('ch-new-returning','doughnut',{
+    labels:Object.keys(nvr),
+    datasets:[{data:Object.values(nvr),backgroundColor:[C.blue,C.amber],borderWidth:2,borderColor:'#fff'}]
+  },dO());
 
   // Channels
   const chC=d.channels.map((r,i)=>cch(r.channel,i));
-  mk('ch-channels','bar',{labels:d.channels.map(r=>r.channel),datasets:[{label:'Sessões',data:d.channels.map(r=>r.sessions),backgroundColor:chC,borderRadius:4}]},bOptsH());
-  mk('ch-conv-rate','bar',{labels:d.channels.map(r=>r.channel),datasets:[{label:'Conv %',data:d.channels.map(r=>r.conversion_rate||0),backgroundColor:chC,borderRadius:4}]},bOptsH());
-  mk('ch-bounce-channel','bar',{labels:d.channels.map(r=>r.channel),datasets:[{label:'Rejeição %',data:d.channels.map(r=>r.bounce_rate||0),backgroundColor:d.channels.map(r=>r.bounce_rate>50?C.red+'cc':r.bounce_rate>30?C.amber+'cc':C.green+'cc'),borderRadius:3}]},bOptsH());
-  mk('ch-duration-channel','bar',{labels:d.channels.map(r=>r.channel),datasets:[{label:'Duração (s)',data:d.channels.map(r=>r.avg_duration||0),backgroundColor:C.teal+'cc',borderRadius:3}]},bOptsH());
+  mk('ch-channels',       'bar',{labels:d.channels.map(r=>r.channel),datasets:[{label:'Sessões',    data:d.channels.map(r=>r.sessions),         backgroundColor:chC,borderRadius:4}]},bOH());
+  mk('ch-conv-rate',      'bar',{labels:d.channels.map(r=>r.channel),datasets:[{label:'Conv %',     data:d.channels.map(r=>r.conversion_rate||0),backgroundColor:chC,borderRadius:4}]},bOH());
+  mk('ch-bounce-channel', 'bar',{labels:d.channels.map(r=>r.channel),datasets:[{label:'Rejeição %', data:d.channels.map(r=>r.bounce_rate||0),backgroundColor:d.channels.map(r=>r.bounce_rate>50?C.red+'cc':r.bounce_rate>30?C.amber+'cc':C.green+'cc'),borderRadius:3}]},bOH());
+  mk('ch-duration-channel','bar',{labels:d.channels.map(r=>r.channel),datasets:[{label:'Duração (s)',data:d.channels.map(r=>r.avg_duration||0),backgroundColor:C.teal+'cc',borderRadius:3}]},bOH());
 
   // Sources table
   document.getElementById('tbl-sources').innerHTML=`
@@ -526,8 +666,11 @@ function renderDashboard(d){
   // Landing pages
   const lp=(d.landing_pages||[]).slice(0,8);
   const lpL=lp.map(r=>r.path.length>28?r.path.slice(0,28)+'…':r.path);
-  mk('ch-landing','bar',{labels:lpL,datasets:[{label:'Sessões',data:lp.map(r=>r.sessions),backgroundColor:C.blue+'cc',borderRadius:3}]},bOptsH());
-  mk('ch-landing-bounce','bar',{labels:lpL,datasets:[{label:'Rejeição %',data:lp.map(r=>r.bounce_rate||0),backgroundColor:lp.map(r=>r.bounce_rate>50?C.red+'cc':r.bounce_rate>30?C.amber+'cc':C.green+'cc'),borderRadius:3}]},bOptsH());
+  mk('ch-landing',       'bar',{labels:lpL,datasets:[{label:'Sessões',   data:lp.map(r=>r.sessions),         backgroundColor:C.blue+'cc',borderRadius:3}]},bOH());
+  mk('ch-landing-bounce','bar',{labels:lpL,datasets:[{label:'Rejeição %',data:lp.map(r=>r.bounce_rate||0),backgroundColor:lp.map(r=>r.bounce_rate>50?C.red+'cc':r.bounce_rate>30?C.amber+'cc':C.green+'cc'),borderRadius:3}]},bOH());
+
+  // Pages weekly (initial render)
+  renderPagesWeekly();
 
   // Pages table
   document.getElementById('tbl-pages').innerHTML=`
@@ -539,28 +682,14 @@ function renderDashboard(d){
       <td class="nr">${fmtF(r.pageviews)}</td><td class="nr">${fmtF(r.users)}</td><td class="nr">${fmtS(r.avg_duration)}</td>
     </tr>`).join('')}</tbody>`;
 
-  // Funnel
-  const maxU=d.funnel.length>0?d.funnel[0].users:1;
-  document.getElementById('funnel-wrap').innerHTML=d.funnel.map((s,i)=>{
-    const pct=maxU>0?Math.round(s.users/maxU*100):0;
-    const dc=s.drop_rate>60?'dhi':s.drop_rate>30?'dmd':'dlo';
-    return`<div class="fr">
-      <div class="flab"><div class="fn">${s.step}</div><div class="fe">${s.event}</div></div>
-      <div class="ftr"><div class="ff" style="width:${Math.max(pct,3)}%;background:${FCOL[i]||C.blue}">${fmt(s.users)}</div></div>
-      <div class="fp">${pct}%</div>
-      <div class="fd ${i===0?'':dc}">${i===0?'—':`▾ ${s.drop_rate}%`}</div>
-    </div>`;
-  }).join('');
-
-  mk('ch-funnel-vol','bar',{labels:d.funnel.map(s=>s.step),datasets:[{label:'Eventos',data:d.funnel.map(s=>s.event_count),backgroundColor:FCOL,borderRadius:4}]},bOpts());
-  mk('ch-funnel-drop','bar',{labels:d.funnel.slice(1).map(s=>s.step),datasets:[{label:'% abandono',data:d.funnel.slice(1).map(s=>s.drop_rate),backgroundColor:d.funnel.slice(1).map(s=>s.drop_rate>60?C.red+'cc':s.drop_rate>30?C.amber+'cc':C.green+'cc'),borderRadius:4}]},bOpts());
+  // Funnel (uses weekly selector — initial render with aggregated)
+  renderFunnelWeekly();
 
   // Routes
   const rt=d.routes||{};
-  const ori=(rt.top_origins||[]).slice(0,10);
-  const dst=(rt.top_destinations||[]).slice(0,10);
-  mk('ch-origins','bar',{labels:ori.map(r=>r.city),datasets:[{label:'Buscas',data:ori.map(r=>r.searches),backgroundColor:C.blue+'cc',borderRadius:3}]},bOptsH());
-  mk('ch-destinations','bar',{labels:dst.map(r=>r.city),datasets:[{label:'Buscas',data:dst.map(r=>r.searches),backgroundColor:C.indigo+'cc',borderRadius:3}]},bOptsH());
+  const ori=(rt.top_origins||[]).slice(0,10), dst=(rt.top_destinations||[]).slice(0,10);
+  mk('ch-origins',     'bar',{labels:ori.map(r=>r.city),datasets:[{label:'Buscas',data:ori.map(r=>r.searches),backgroundColor:C.blue+'cc',  borderRadius:3}]},bOH());
+  mk('ch-destinations','bar',{labels:dst.map(r=>r.city),datasets:[{label:'Buscas',data:dst.map(r=>r.searches),backgroundColor:C.indigo+'cc',borderRadius:3}]},bOH());
 
   document.getElementById('tbl-routes').innerHTML=`
     <thead><tr><th>#</th><th>Origem</th><th>Destino</th><th class="nr">Eventos</th><th class="nr">Usuários</th></tr></thead>
@@ -584,36 +713,28 @@ function renderDashboard(d){
   } else {
     list.innerHTML=d.insights.map(ins=>`<div class="ins">
       <div class="ins-t"><div class="idot d${(ins.type||'i')[0]}"></div><span style="font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:.06em;font-weight:600">${ins.type||'info'}</span></div>
-      <div class="ins-title">${ins.title}</div>
-      <div class="ins-body">${ins.body}</div>
+      <div class="ins-title">${ins.title}</div><div class="ins-body">${ins.body}</div>
       <div class="ins-meta">${ins.generated_at}</div>
     </div>`).join('');
   }
 }
 
-function mk(id,type,data,opts){
-  const el=document.getElementById(id);
-  if(!el)return;
-  CHARTS[id]=new Chart(el,{type,data,options:opts});
-}
-
-function copyPrompt(){
+function copyP(){
   navigator.clipboard.writeText(PROMPT).then(()=>{
-    const b=document.getElementById('copy-btn');
+    const b=document.getElementById('cpbtn');
     b.textContent='✓ Copiado';b.classList.add('done');
     setTimeout(()=>{b.textContent='Copiar prompt';b.classList.remove('done')},2000);
   });
 }
 
-// ── Boot ──────────────────────────────────────────────────────────────────────
 fetch('data.json?t='+Date.now())
   .then(r=>r.json())
   .then(d=>{
     RAW=d;
     document.getElementById('per').textContent=(d.period||'').toUpperCase();
     document.getElementById('upd').textContent=new Date(d.updated_at).toLocaleString('pt-BR',{timeZone:'America/Sao_Paulo',day:'2-digit',month:'2-digit',year:'numeric',hour:'2-digit',minute:'2-digit'});
-    populateFilters(d);
-    renderDashboard(d);
+    populateF(d);
+    render(buildF(d,getF()));
     document.getElementById('loading').style.display='none';
   })
   .catch(e=>{document.getElementById('loading').innerHTML=`<p style="color:#dc2626;font-family:'IBM Plex Mono',monospace;font-size:11px">Erro ao carregar data.json: ${e.message}</p>`});
