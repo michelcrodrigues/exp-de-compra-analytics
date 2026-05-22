@@ -1,0 +1,39 @@
+name: Atualizar Dados GA4
+
+on:
+  schedule:
+    - cron: '0 11 * * *'  # Todo dia às 08:00 horário de Brasília (UTC-3)
+  workflow_dispatch:       # Permite rodar manualmente pelo GitHub
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout do repositório
+        uses: actions/checkout@v4
+
+      - name: Configurar Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Instalar dependências
+        run: pip install google-analytics-data google-auth
+
+      - name: Criar arquivo de credenciais do Google
+        run: echo '${{ secrets.GA4_CREDENTIALS_JSON }}' > /tmp/ga4_credentials.json
+
+      - name: Executar script de coleta
+        env:
+          GA4_PROPERTY_ID: ${{ secrets.GA4_PROPERTY_ID }}
+          GOOGLE_APPLICATION_CREDENTIALS: /tmp/ga4_credentials.json
+        run: python scripts/fetch_ga4.py
+
+      - name: Commit e push dos dados atualizados
+        run: |
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+          git add data.json
+          git diff --staged --quiet || git commit -m "chore: atualiza dados GA4 - $(date +'%Y-%m-%d')"
+          git push
