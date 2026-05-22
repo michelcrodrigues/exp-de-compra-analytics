@@ -1,30 +1,543 @@
 {
-  "updated_at": "2024-01-01T00:00:00Z",
+  "updated_at": "2026-05-22T18:10:23Z",
   "period": "últimos 30 dias",
   "totals": {
-    "sessions": 0,
-    "total_users": 0,
-    "new_users": 0,
-    "bounce_rate": 0,
-    "avg_session_duration": 0,
-    "conversions": 0,
-    "pageviews": 0,
-    "sessions_7d": 0,
-    "users_7d": 0,
-    "conversions_7d": 0
+    "sessions": 1676155,
+    "total_users": 849159,
+    "new_users": 656422,
+    "bounce_rate": 25.59,
+    "avg_session_duration": 340.0,
+    "conversions": 5112860,
+    "pageviews": 11500519,
+    "sessions_7d": 382579,
+    "users_7d": 244925,
+    "conversions_7d": 1220320
   },
-  "daily": [],
-  "pages": [],
-  "sources": [],
-  "channels": [],
-  "funnel": [],
-  "devices": [],
-  "insights": [
+  "daily": [
     {
-      "title": "Configure o pipeline",
-      "body": "Siga o passo a passo do README.md para conectar o GA4 e gerar os primeiros dados.",
-      "type": "info",
-      "generated_at": "2024-01-01"
+      "date": "2026-04-22",
+      "sessions": 58006,
+      "users": 43926,
+      "conversions": 163950
+    },
+    {
+      "date": "2026-04-23",
+      "sessions": 53857,
+      "users": 42161,
+      "conversions": 162337
+    },
+    {
+      "date": "2026-04-24",
+      "sessions": 55835,
+      "users": 42735,
+      "conversions": 164716
+    },
+    {
+      "date": "2026-04-25",
+      "sessions": 45513,
+      "users": 33863,
+      "conversions": 131717
+    },
+    {
+      "date": "2026-04-26",
+      "sessions": 48981,
+      "users": 37756,
+      "conversions": 146046
+    },
+    {
+      "date": "2026-04-27",
+      "sessions": 61652,
+      "users": 46181,
+      "conversions": 179782
+    },
+    {
+      "date": "2026-04-28",
+      "sessions": 60347,
+      "users": 45983,
+      "conversions": 182342
+    },
+    {
+      "date": "2026-04-29",
+      "sessions": 64271,
+      "users": 48290,
+      "conversions": 189571
+    },
+    {
+      "date": "2026-04-30",
+      "sessions": 63983,
+      "users": 46688,
+      "conversions": 185642
+    },
+    {
+      "date": "2026-05-01",
+      "sessions": 50981,
+      "users": 37736,
+      "conversions": 140076
+    },
+    {
+      "date": "2026-05-02",
+      "sessions": 47635,
+      "users": 35806,
+      "conversions": 137857
+    },
+    {
+      "date": "2026-05-03",
+      "sessions": 49686,
+      "users": 37743,
+      "conversions": 144484
+    },
+    {
+      "date": "2026-05-04",
+      "sessions": 64190,
+      "users": 48993,
+      "conversions": 190917
+    },
+    {
+      "date": "2026-05-05",
+      "sessions": 59058,
+      "users": 46095,
+      "conversions": 192172
+    },
+    {
+      "date": "2026-05-06",
+      "sessions": 58791,
+      "users": 44939,
+      "conversions": 187608
+    },
+    {
+      "date": "2026-05-07",
+      "sessions": 60442,
+      "users": 46551,
+      "conversions": 197991
+    },
+    {
+      "date": "2026-05-08",
+      "sessions": 58375,
+      "users": 43375,
+      "conversions": 186224
+    },
+    {
+      "date": "2026-05-09",
+      "sessions": 46355,
+      "users": 34075,
+      "conversions": 141776
+    },
+    {
+      "date": "2026-05-10",
+      "sessions": 44067,
+      "users": 33719,
+      "conversions": 141611
+    },
+    {
+      "date": "2026-05-11",
+      "sessions": 58909,
+      "users": 46003,
+      "conversions": 192377
+    },
+    {
+      "date": "2026-05-12",
+      "sessions": 56441,
+      "users": 42988,
+      "conversions": 182542
+    },
+    {
+      "date": "2026-05-13",
+      "sessions": 56413,
+      "users": 43075,
+      "conversions": 172405
+    },
+    {
+      "date": "2026-05-14",
+      "sessions": 54936,
+      "users": 42599,
+      "conversions": 178397
+    },
+    {
+      "date": "2026-05-15",
+      "sessions": 53359,
+      "users": 40185,
+      "conversions": 171088
+    },
+    {
+      "date": "2026-05-16",
+      "sessions": 43488,
+      "users": 33101,
+      "conversions": 139991
+    },
+    {
+      "date": "2026-05-17",
+      "sessions": 46913,
+      "users": 35235,
+      "conversions": 150685
+    },
+    {
+      "date": "2026-05-18",
+      "sessions": 60699,
+      "users": 46716,
+      "conversions": 167742
+    },
+    {
+      "date": "2026-05-19",
+      "sessions": 56009,
+      "users": 44448,
+      "conversions": 161141
+    },
+    {
+      "date": "2026-05-20",
+      "sessions": 55059,
+      "users": 42584,
+      "conversions": 182829
+    },
+    {
+      "date": "2026-05-21",
+      "sessions": 53882,
+      "users": 41850,
+      "conversions": 177879
     }
-  ]
+  ],
+  "pages": [
+    {
+      "path": "/",
+      "title": "Passagem de Ônibus: Compre Online | Viaje Guanabara",
+      "pageviews": 1921791,
+      "users": 519193,
+      "avg_duration": 116.3,
+      "bounce_rate": 22.83
+    },
+    {
+      "path": "/",
+      "title": "Viaje Guanabara: Compre sua passagem de ônibus",
+      "pageviews": 1076945,
+      "users": 298275,
+      "avg_duration": 123.2,
+      "bounce_rate": 19.0
+    },
+    {
+      "path": "/",
+      "title": "(not set)",
+      "pageviews": 369480,
+      "users": 166983,
+      "avg_duration": 35.1,
+      "bounce_rate": 0.22
+    },
+    {
+      "path": "/checkout/comprador",
+      "title": "Viaje Guanabara",
+      "pageviews": 356027,
+      "users": 87525,
+      "avg_duration": 36.4,
+      "bounce_rate": 0.5
+    },
+    {
+      "path": "/checkout/pagamento",
+      "title": "Viaje Guanabara",
+      "pageviews": 279416,
+      "users": 68090,
+      "avg_duration": 122.5,
+      "bounce_rate": 1.98
+    },
+    {
+      "path": "/login",
+      "title": "Viaje Guanabara",
+      "pageviews": 230754,
+      "users": 62127,
+      "avg_duration": 77.4,
+      "bounce_rate": 5.5
+    },
+    {
+      "path": "/checkout/comprador",
+      "title": "Viaje Guanabara: Compre sua passagem de ônibus",
+      "pageviews": 204500,
+      "users": 54448,
+      "avg_duration": 34.8,
+      "bounce_rate": 0.98
+    },
+    {
+      "path": "/checkout/pagamento/pix",
+      "title": "Viaje Guanabara",
+      "pageviews": 161227,
+      "users": 45660,
+      "avg_duration": 82.8,
+      "bounce_rate": 9.88
+    },
+    {
+      "path": "/checkout/pagamento",
+      "title": "Viaje Guanabara: Compre sua passagem de ônibus",
+      "pageviews": 151781,
+      "users": 40469,
+      "avg_duration": 150.0,
+      "bounce_rate": 2.54
+    },
+    {
+      "path": "/checkout/pagamento/cartao-de-credito",
+      "title": "Viaje Guanabara",
+      "pageviews": 123793,
+      "users": 36469,
+      "avg_duration": 169.8,
+      "bounce_rate": 1.97
+    }
+  ],
+  "sources": [
+    {
+      "source": "google",
+      "medium": "cpc",
+      "sessions": 984587,
+      "users": 580683,
+      "conversions": 3449153,
+      "bounce_rate": 17.37,
+      "avg_duration": 386.9
+    },
+    {
+      "source": "google",
+      "medium": "organic",
+      "sessions": 270480,
+      "users": 149338,
+      "conversions": 737402,
+      "bounce_rate": 27.07,
+      "avg_duration": 274.5
+    },
+    {
+      "source": "(direct)",
+      "medium": "(none)",
+      "sessions": 211084,
+      "users": 130519,
+      "conversions": 477451,
+      "bounce_rate": 38.38,
+      "avg_duration": 279.5
+    },
+    {
+      "source": "pushnews",
+      "medium": "pushnotification",
+      "sessions": 78069,
+      "users": 40820,
+      "conversions": 92131,
+      "bounce_rate": 78.84,
+      "avg_duration": 86.0
+    },
+    {
+      "source": "(not set)",
+      "medium": "(not set)",
+      "sessions": 20034,
+      "users": 18130,
+      "conversions": 31742,
+      "bounce_rate": 99.32,
+      "avg_duration": 454.7
+    },
+    {
+      "source": "(data not available)",
+      "medium": "(data not available)",
+      "sessions": 19432,
+      "users": 19360,
+      "conversions": 66651,
+      "bounce_rate": 7.95,
+      "avg_duration": 435.6
+    },
+    {
+      "source": "bing",
+      "medium": "organic",
+      "sessions": 14688,
+      "users": 7993,
+      "conversions": 67274,
+      "bounce_rate": 17.91,
+      "avg_duration": 599.7
+    },
+    {
+      "source": "whatsapp",
+      "medium": "bot",
+      "sessions": 12592,
+      "users": 6015,
+      "conversions": 24225,
+      "bounce_rate": 26.83,
+      "avg_duration": 313.1
+    },
+    {
+      "source": "insider",
+      "medium": "architect_whatsapp",
+      "sessions": 11424,
+      "users": 9178,
+      "conversions": 31197,
+      "bounce_rate": 40.61,
+      "avg_duration": 274.5
+    },
+    {
+      "source": "social",
+      "medium": "meta",
+      "sessions": 11340,
+      "users": 9037,
+      "conversions": 36150,
+      "bounce_rate": 14.69,
+      "avg_duration": 298.3
+    },
+    {
+      "source": "insider",
+      "medium": "web_push",
+      "sessions": 4389,
+      "users": 3289,
+      "conversions": 5597,
+      "bounce_rate": 75.69,
+      "avg_duration": 101.5
+    },
+    {
+      "source": "insider",
+      "medium": "insite",
+      "sessions": 3372,
+      "users": 485,
+      "conversions": 26268,
+      "bounce_rate": 14.5,
+      "avg_duration": 937.1
+    },
+    {
+      "source": "br.search.yahoo.com",
+      "medium": "referral",
+      "sessions": 2821,
+      "users": 1572,
+      "conversions": 14270,
+      "bounce_rate": 17.9,
+      "avg_duration": 623.2
+    },
+    {
+      "source": "insider",
+      "medium": "architect_email",
+      "sessions": 2752,
+      "users": 1952,
+      "conversions": 8071,
+      "bounce_rate": 41.86,
+      "avg_duration": 391.9
+    },
+    {
+      "source": "facebook",
+      "medium": "cpc",
+      "sessions": 2022,
+      "users": 1808,
+      "conversions": 2965,
+      "bounce_rate": 72.16,
+      "avg_duration": 98.3
+    }
+  ],
+  "channels": [
+    {
+      "channel": "Paid Search",
+      "sessions": 828718,
+      "users": 481744,
+      "conversions": 3015776
+    },
+    {
+      "channel": "Organic Search",
+      "sessions": 292365,
+      "users": 160926,
+      "conversions": 826084
+    },
+    {
+      "channel": "Direct",
+      "sessions": 211142,
+      "users": 130560,
+      "conversions": 477540
+    },
+    {
+      "channel": "Cross-network",
+      "sessions": 180126,
+      "users": 138168,
+      "conversions": 500746
+    },
+    {
+      "channel": "Mobile Push Notifications",
+      "sessions": 83792,
+      "users": 43381,
+      "conversions": 100229
+    },
+    {
+      "channel": "Unassigned",
+      "sessions": 41522,
+      "users": 31993,
+      "conversions": 104871
+    },
+    {
+      "channel": "Organic Social",
+      "sessions": 25215,
+      "users": 16008,
+      "conversions": 63451
+    },
+    {
+      "channel": "Referral",
+      "sessions": 6744,
+      "users": 3827,
+      "conversions": 16070
+    },
+    {
+      "channel": "Paid Social",
+      "sessions": 2046,
+      "users": 1832,
+      "conversions": 2990
+    },
+    {
+      "channel": "Email",
+      "sessions": 1942,
+      "users": 1614,
+      "conversions": 4096
+    }
+  ],
+  "funnel": [
+    {
+      "step": "Página Inicial",
+      "path": "/",
+      "pageviews": 3388736,
+      "users": 766366,
+      "drop_rate": 0
+    },
+    {
+      "step": "Produto / Lista",
+      "path": "/produtos",
+      "pageviews": 0,
+      "users": 0,
+      "drop_rate": 100.0
+    },
+    {
+      "step": "Carrinho",
+      "path": "/carrinho",
+      "pageviews": 2,
+      "users": 2,
+      "drop_rate": 0
+    },
+    {
+      "step": "Checkout",
+      "path": "/checkout",
+      "pageviews": 567176,
+      "users": 136401,
+      "drop_rate": -6819950.0
+    },
+    {
+      "step": "Confirmação",
+      "path": "/obrigado",
+      "pageviews": 0,
+      "users": 0,
+      "drop_rate": 100.0
+    }
+  ],
+  "devices": [
+    {
+      "device": "mobile",
+      "sessions": 1281210,
+      "users": 642913,
+      "conversions": 3693503
+    },
+    {
+      "device": "desktop",
+      "sessions": 361055,
+      "users": 206639,
+      "conversions": 1384077
+    },
+    {
+      "device": "tablet",
+      "sessions": 8725,
+      "users": 5345,
+      "conversions": 35266
+    },
+    {
+      "device": "smart tv",
+      "sessions": 7,
+      "users": 6,
+      "conversions": 14
+    }
+  ],
+  "insights": []
 }
