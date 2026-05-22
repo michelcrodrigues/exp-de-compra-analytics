@@ -1,543 +1,1122 @@
 {
-  "updated_at": "2026-05-22T18:10:23Z",
+  "updated_at": "2026-05-22T20:02:03Z",
   "period": "últimos 30 dias",
   "totals": {
-    "sessions": 1676155,
-    "total_users": 849159,
-    "new_users": 656422,
-    "bounce_rate": 25.59,
-    "avg_session_duration": 340.0,
-    "conversions": 5112860,
-    "pageviews": 11500519,
-    "sessions_7d": 382579,
-    "users_7d": 244925,
-    "conversions_7d": 1220320
+    "sessions": 1684416,
+    "total_users": 852301,
+    "new_users": 658581,
+    "bounce_rate": 25.74,
+    "avg_session_duration": 341.94,
+    "conversions": 5129382,
+    "pageviews": 11536125,
+    "sessions_7d": 391307,
+    "users_7d": 248727,
+    "conversions_7d": 1236842,
+    "new_users_7d": 160731
   },
   "daily": [
     {
       "date": "2026-04-22",
       "sessions": 58006,
       "users": 43926,
-      "conversions": 163950
+      "conversions": 163950,
+      "new_users": 23499
     },
     {
       "date": "2026-04-23",
       "sessions": 53857,
       "users": 42161,
-      "conversions": 162337
+      "conversions": 162337,
+      "new_users": 21712
     },
     {
       "date": "2026-04-24",
       "sessions": 55835,
       "users": 42735,
-      "conversions": 164716
+      "conversions": 164716,
+      "new_users": 21808
     },
     {
       "date": "2026-04-25",
       "sessions": 45513,
       "users": 33863,
-      "conversions": 131717
+      "conversions": 131717,
+      "new_users": 17310
     },
     {
       "date": "2026-04-26",
       "sessions": 48981,
       "users": 37756,
-      "conversions": 146046
+      "conversions": 146046,
+      "new_users": 19484
     },
     {
       "date": "2026-04-27",
       "sessions": 61652,
       "users": 46181,
-      "conversions": 179782
+      "conversions": 179782,
+      "new_users": 23648
     },
     {
       "date": "2026-04-28",
       "sessions": 60347,
       "users": 45983,
-      "conversions": 182342
+      "conversions": 182342,
+      "new_users": 23489
     },
     {
       "date": "2026-04-29",
       "sessions": 64271,
       "users": 48290,
-      "conversions": 189571
+      "conversions": 189571,
+      "new_users": 24756
     },
     {
       "date": "2026-04-30",
       "sessions": 63983,
       "users": 46688,
-      "conversions": 185642
+      "conversions": 185642,
+      "new_users": 23558
     },
     {
       "date": "2026-05-01",
       "sessions": 50981,
       "users": 37736,
-      "conversions": 140076
+      "conversions": 140076,
+      "new_users": 19088
     },
     {
       "date": "2026-05-02",
       "sessions": 47635,
       "users": 35806,
-      "conversions": 137857
+      "conversions": 137857,
+      "new_users": 18031
     },
     {
       "date": "2026-05-03",
       "sessions": 49686,
       "users": 37743,
-      "conversions": 144484
+      "conversions": 144484,
+      "new_users": 19305
     },
     {
       "date": "2026-05-04",
       "sessions": 64190,
       "users": 48993,
-      "conversions": 190917
+      "conversions": 190917,
+      "new_users": 25108
     },
     {
       "date": "2026-05-05",
       "sessions": 59058,
       "users": 46095,
-      "conversions": 192172
+      "conversions": 192172,
+      "new_users": 23419
     },
     {
       "date": "2026-05-06",
       "sessions": 58791,
       "users": 44939,
-      "conversions": 187608
+      "conversions": 187608,
+      "new_users": 22425
     },
     {
       "date": "2026-05-07",
       "sessions": 60442,
       "users": 46551,
-      "conversions": 197991
+      "conversions": 197991,
+      "new_users": 24019
     },
     {
       "date": "2026-05-08",
       "sessions": 58375,
       "users": 43375,
-      "conversions": 186224
+      "conversions": 186224,
+      "new_users": 21640
     },
     {
       "date": "2026-05-09",
       "sessions": 46355,
       "users": 34075,
-      "conversions": 141776
+      "conversions": 141776,
+      "new_users": 16726
     },
     {
       "date": "2026-05-10",
       "sessions": 44067,
       "users": 33719,
-      "conversions": 141611
+      "conversions": 141611,
+      "new_users": 16840
     },
     {
       "date": "2026-05-11",
       "sessions": 58909,
       "users": 46003,
-      "conversions": 192377
+      "conversions": 192377,
+      "new_users": 24270
     },
     {
       "date": "2026-05-12",
       "sessions": 56441,
       "users": 42988,
-      "conversions": 182542
+      "conversions": 182542,
+      "new_users": 22586
     },
     {
       "date": "2026-05-13",
       "sessions": 56413,
       "users": 43075,
-      "conversions": 172405
+      "conversions": 172405,
+      "new_users": 22840
     },
     {
       "date": "2026-05-14",
       "sessions": 54936,
       "users": 42599,
-      "conversions": 178397
+      "conversions": 178397,
+      "new_users": 22289
     },
     {
       "date": "2026-05-15",
       "sessions": 53359,
       "users": 40185,
-      "conversions": 171088
+      "conversions": 171088,
+      "new_users": 20957
     },
     {
       "date": "2026-05-16",
       "sessions": 43488,
       "users": 33101,
-      "conversions": 139991
+      "conversions": 139991,
+      "new_users": 17094
     },
     {
       "date": "2026-05-17",
       "sessions": 46913,
       "users": 35235,
-      "conversions": 150685
+      "conversions": 150685,
+      "new_users": 18365
     },
     {
       "date": "2026-05-18",
       "sessions": 60699,
       "users": 46716,
-      "conversions": 167742
+      "conversions": 167742,
+      "new_users": 24743
     },
     {
       "date": "2026-05-19",
       "sessions": 56009,
       "users": 44448,
-      "conversions": 161141
+      "conversions": 161141,
+      "new_users": 23925
     },
     {
       "date": "2026-05-20",
       "sessions": 55059,
       "users": 42584,
-      "conversions": 182829
+      "conversions": 182829,
+      "new_users": 22362
     },
     {
       "date": "2026-05-21",
       "sessions": 53882,
       "users": 41850,
-      "conversions": 177879
+      "conversions": 177879,
+      "new_users": 22145
     }
   ],
   "pages": [
     {
       "path": "/",
       "title": "Passagem de Ônibus: Compre Online | Viaje Guanabara",
-      "pageviews": 1921791,
-      "users": 519193,
-      "avg_duration": 116.3,
-      "bounce_rate": 22.83
+      "pageviews": 1930341,
+      "users": 521697,
+      "avg_duration": 116.48,
+      "bounce_rate": 0,
+      "exits": 0
     },
     {
       "path": "/",
       "title": "Viaje Guanabara: Compre sua passagem de ônibus",
-      "pageviews": 1076945,
+      "pageviews": 1076947,
       "users": 298275,
-      "avg_duration": 123.2,
-      "bounce_rate": 19.0
+      "avg_duration": 123.22,
+      "bounce_rate": 0,
+      "exits": 0
     },
     {
       "path": "/",
       "title": "(not set)",
       "pageviews": 369480,
       "users": 166983,
-      "avg_duration": 35.1,
-      "bounce_rate": 0.22
+      "avg_duration": 35.08,
+      "bounce_rate": 0,
+      "exits": 0
     },
     {
       "path": "/checkout/comprador",
       "title": "Viaje Guanabara",
       "pageviews": 356027,
       "users": 87525,
-      "avg_duration": 36.4,
-      "bounce_rate": 0.5
+      "avg_duration": 36.38,
+      "bounce_rate": 0,
+      "exits": 0
     },
     {
       "path": "/checkout/pagamento",
       "title": "Viaje Guanabara",
       "pageviews": 279416,
       "users": 68090,
-      "avg_duration": 122.5,
-      "bounce_rate": 1.98
+      "avg_duration": 122.47,
+      "bounce_rate": 0,
+      "exits": 0
     },
     {
       "path": "/login",
       "title": "Viaje Guanabara",
       "pageviews": 230754,
       "users": 62127,
-      "avg_duration": 77.4,
-      "bounce_rate": 5.5
+      "avg_duration": 77.38,
+      "bounce_rate": 0,
+      "exits": 0
     },
     {
       "path": "/checkout/comprador",
       "title": "Viaje Guanabara: Compre sua passagem de ônibus",
       "pageviews": 204500,
       "users": 54448,
-      "avg_duration": 34.8,
-      "bounce_rate": 0.98
+      "avg_duration": 34.77,
+      "bounce_rate": 0,
+      "exits": 0
     },
     {
       "path": "/checkout/pagamento/pix",
       "title": "Viaje Guanabara",
       "pageviews": 161227,
       "users": 45660,
-      "avg_duration": 82.8,
-      "bounce_rate": 9.88
+      "avg_duration": 82.78,
+      "bounce_rate": 0,
+      "exits": 0
     },
     {
       "path": "/checkout/pagamento",
       "title": "Viaje Guanabara: Compre sua passagem de ônibus",
       "pageviews": 151781,
       "users": 40469,
-      "avg_duration": 150.0,
-      "bounce_rate": 2.54
+      "avg_duration": 150.02,
+      "bounce_rate": 0,
+      "exits": 0
     },
     {
       "path": "/checkout/pagamento/cartao-de-credito",
       "title": "Viaje Guanabara",
       "pageviews": 123793,
       "users": 36469,
-      "avg_duration": 169.8,
-      "bounce_rate": 1.97
+      "avg_duration": 169.75,
+      "bounce_rate": 0,
+      "exits": 0
+    }
+  ],
+  "landing_pages": [
+    {
+      "path": "/",
+      "sessions": 1119348,
+      "users": 706350,
+      "conversions": 3780697,
+      "bounce_rate": 22.13
+    },
+    {
+      "path": "(not set)",
+      "sessions": 399027,
+      "users": 362898,
+      "conversions": 53537,
+      "bounce_rate": 99.53
+    },
+    {
+      "path": "/vem-pro-rio/",
+      "sessions": 16324,
+      "users": 10348,
+      "conversions": 16319,
+      "bounce_rate": 80.5
+    },
+    {
+      "path": "",
+      "sessions": 14537,
+      "users": 12679,
+      "conversions": 9508,
+      "bounce_rate": 99.55
+    },
+    {
+      "path": "/checkout/pagamento/sucesso/2",
+      "sessions": 12951,
+      "users": 10329,
+      "conversions": 16632,
+      "bounce_rate": 34.19
+    },
+    {
+      "path": "/checkout/pagamento/pix",
+      "sessions": 12287,
+      "users": 8692,
+      "conversions": 15961,
+      "bounce_rate": 71.99
+    },
+    {
+      "path": "/checkout/pagamento/sucesso/1",
+      "sessions": 8598,
+      "users": 7010,
+      "conversions": 14396,
+      "bounce_rate": 28.66
+    },
+    {
+      "path": "/viva-fidelidade/",
+      "sessions": 7744,
+      "users": 6840,
+      "conversions": 13719,
+      "bounce_rate": 30.42
+    },
+    {
+      "path": "/login",
+      "sessions": 6140,
+      "users": 5163,
+      "conversions": 12964,
+      "bounce_rate": 52.05
+    },
+    {
+      "path": "/checkout/comprador",
+      "sessions": 5568,
+      "users": 5254,
+      "conversions": 21510,
+      "bounce_rate": 4.4
     }
   ],
   "sources": [
     {
       "source": "google",
       "medium": "cpc",
-      "sessions": 984587,
-      "users": 580683,
-      "conversions": 3449153,
-      "bounce_rate": 17.37,
-      "avg_duration": 386.9
+      "sessions": 988101,
+      "users": 581552,
+      "conversions": 3453581,
+      "conversion_rate": 349.52,
+      "bounce_rate": 17.42,
+      "avg_duration": 387.13
     },
     {
       "source": "google",
       "medium": "organic",
-      "sessions": 270480,
-      "users": 149338,
-      "conversions": 737402,
-      "bounce_rate": 27.07,
-      "avg_duration": 274.5
+      "sessions": 270984,
+      "users": 149729,
+      "conversions": 739170,
+      "conversion_rate": 272.77,
+      "bounce_rate": 27.08,
+      "avg_duration": 276.33
     },
     {
       "source": "(direct)",
       "medium": "(none)",
-      "sessions": 211084,
-      "users": 130519,
-      "conversions": 477451,
-      "bounce_rate": 38.38,
-      "avg_duration": 279.5
+      "sessions": 212111,
+      "users": 131102,
+      "conversions": 478947,
+      "conversion_rate": 225.8,
+      "bounce_rate": 38.4,
+      "avg_duration": 281.54
     },
     {
       "source": "pushnews",
       "medium": "pushnotification",
-      "sessions": 78069,
-      "users": 40820,
-      "conversions": 92131,
-      "bounce_rate": 78.84,
-      "avg_duration": 86.0
+      "sessions": 78289,
+      "users": 40891,
+      "conversions": 92327,
+      "conversion_rate": 117.93,
+      "bounce_rate": 78.89,
+      "avg_duration": 85.99
     },
     {
       "source": "(not set)",
       "medium": "(not set)",
-      "sessions": 20034,
-      "users": 18130,
-      "conversions": 31742,
-      "bounce_rate": 99.32,
-      "avg_duration": 454.7
+      "sessions": 24777,
+      "users": 22119,
+      "conversions": 38867,
+      "conversion_rate": 156.87,
+      "bounce_rate": 99.45,
+      "avg_duration": 489.41
     },
     {
       "source": "(data not available)",
       "medium": "(data not available)",
-      "sessions": 19432,
-      "users": 19360,
-      "conversions": 66651,
-      "bounce_rate": 7.95,
-      "avg_duration": 435.6
+      "sessions": 20514,
+      "users": 20492,
+      "conversions": 68969,
+      "conversion_rate": 336.2,
+      "bounce_rate": 9.32,
+      "avg_duration": 438.39
     },
     {
       "source": "bing",
       "medium": "organic",
-      "sessions": 14688,
-      "users": 7993,
-      "conversions": 67274,
-      "bounce_rate": 17.91,
-      "avg_duration": 599.7
+      "sessions": 14795,
+      "users": 8024,
+      "conversions": 67450,
+      "conversion_rate": 455.9,
+      "bounce_rate": 18.09,
+      "avg_duration": 598.87
     },
     {
       "source": "whatsapp",
       "medium": "bot",
-      "sessions": 12592,
-      "users": 6015,
-      "conversions": 24225,
-      "bounce_rate": 26.83,
-      "avg_duration": 313.1
+      "sessions": 12650,
+      "users": 6032,
+      "conversions": 24288,
+      "conversion_rate": 192.0,
+      "bounce_rate": 26.92,
+      "avg_duration": 314.54
     },
     {
       "source": "insider",
       "medium": "architect_whatsapp",
-      "sessions": 11424,
-      "users": 9178,
-      "conversions": 31197,
-      "bounce_rate": 40.61,
-      "avg_duration": 274.5
+      "sessions": 11457,
+      "users": 9199,
+      "conversions": 31242,
+      "conversion_rate": 272.69,
+      "bounce_rate": 40.68,
+      "avg_duration": 274.35
     },
     {
       "source": "social",
       "medium": "meta",
-      "sessions": 11340,
-      "users": 9037,
-      "conversions": 36150,
-      "bounce_rate": 14.69,
-      "avg_duration": 298.3
+      "sessions": 11364,
+      "users": 9065,
+      "conversions": 36207,
+      "conversion_rate": 318.61,
+      "bounce_rate": 14.68,
+      "avg_duration": 299.42
     },
     {
       "source": "insider",
       "medium": "web_push",
-      "sessions": 4389,
-      "users": 3289,
-      "conversions": 5597,
-      "bounce_rate": 75.69,
-      "avg_duration": 101.5
+      "sessions": 4399,
+      "users": 3297,
+      "conversions": 5628,
+      "conversion_rate": 127.94,
+      "bounce_rate": 75.65,
+      "avg_duration": 102.59
     },
     {
       "source": "insider",
       "medium": "insite",
-      "sessions": 3372,
+      "sessions": 3376,
       "users": 485,
-      "conversions": 26268,
-      "bounce_rate": 14.5,
-      "avg_duration": 937.1
+      "conversions": 26274,
+      "conversion_rate": 778.26,
+      "bounce_rate": 14.54,
+      "avg_duration": 937.69
     },
     {
       "source": "br.search.yahoo.com",
       "medium": "referral",
-      "sessions": 2821,
-      "users": 1572,
-      "conversions": 14270,
-      "bounce_rate": 17.9,
-      "avg_duration": 623.2
+      "sessions": 2825,
+      "users": 1574,
+      "conversions": 14277,
+      "conversion_rate": 505.38,
+      "bounce_rate": 17.95,
+      "avg_duration": 623.19
     },
     {
       "source": "insider",
       "medium": "architect_email",
-      "sessions": 2752,
-      "users": 1952,
-      "conversions": 8071,
-      "bounce_rate": 41.86,
-      "avg_duration": 391.9
+      "sessions": 2762,
+      "users": 1959,
+      "conversions": 8096,
+      "conversion_rate": 293.12,
+      "bounce_rate": 41.93,
+      "avg_duration": 392.85
     },
     {
       "source": "facebook",
       "medium": "cpc",
-      "sessions": 2022,
-      "users": 1808,
-      "conversions": 2965,
-      "bounce_rate": 72.16,
-      "avg_duration": 98.3
+      "sessions": 2037,
+      "users": 1820,
+      "conversions": 2981,
+      "conversion_rate": 146.34,
+      "bounce_rate": 72.36,
+      "avg_duration": 97.59
     }
   ],
   "channels": [
     {
       "channel": "Paid Search",
-      "sessions": 828718,
-      "users": 481744,
-      "conversions": 3015776
+      "sessions": 831401,
+      "users": 482398,
+      "conversions": 3019271,
+      "conversion_rate": 363.15,
+      "bounce_rate": 14.81,
+      "avg_duration": 410.7,
+      "new_users": 349401
     },
     {
       "channel": "Organic Search",
-      "sessions": 292365,
-      "users": 160926,
-      "conversions": 826084
+      "sessions": 292953,
+      "users": 161289,
+      "conversions": 827870,
+      "conversion_rate": 282.59,
+      "bounce_rate": 26.75,
+      "avg_duration": 294.68,
+      "new_users": 51846
     },
     {
       "channel": "Direct",
-      "sessions": 211142,
-      "users": 130560,
-      "conversions": 477540
+      "sessions": 212111,
+      "users": 131102,
+      "conversions": 478947,
+      "conversion_rate": 225.8,
+      "bounce_rate": 38.4,
+      "avg_duration": 281.54,
+      "new_users": 117022
     },
     {
       "channel": "Cross-network",
-      "sessions": 180126,
-      "users": 138168,
-      "conversions": 500746
+      "sessions": 181220,
+      "users": 139432,
+      "conversions": 503447,
+      "conversion_rate": 277.81,
+      "bounce_rate": 32.34,
+      "avg_duration": 276.42,
+      "new_users": 103913
     },
     {
       "channel": "Mobile Push Notifications",
-      "sessions": 83792,
-      "users": 43381,
-      "conversions": 100229
+      "sessions": 84010,
+      "users": 43440,
+      "conversions": 100439,
+      "conversion_rate": 119.56,
+      "bounce_rate": 78.34,
+      "avg_duration": 89.0,
+      "new_users": 7731
     },
     {
       "channel": "Unassigned",
-      "sessions": 41522,
-      "users": 31993,
-      "conversions": 104871
+      "sessions": 45919,
+      "users": 35613,
+      "conversions": 111608,
+      "conversion_rate": 243.05,
+      "bounce_rate": 71.1,
+      "avg_duration": 441.79,
+      "new_users": 11690
     },
     {
       "channel": "Organic Social",
-      "sessions": 25215,
-      "users": 16008,
-      "conversions": 63451
+      "sessions": 25320,
+      "users": 16039,
+      "conversions": 63564,
+      "conversion_rate": 251.04,
+      "bounce_rate": 20.73,
+      "avg_duration": 303.12,
+      "new_users": 11363
     },
     {
       "channel": "Referral",
-      "sessions": 6744,
-      "users": 3827,
-      "conversions": 16070
+      "sessions": 6774,
+      "users": 3841,
+      "conversions": 16122,
+      "conversion_rate": 238.0,
+      "bounce_rate": 38.68,
+      "avg_duration": 338.84,
+      "new_users": 2484
     },
     {
       "channel": "Paid Social",
-      "sessions": 2046,
-      "users": 1832,
-      "conversions": 2990
+      "sessions": 2061,
+      "users": 1844,
+      "conversions": 3006,
+      "conversion_rate": 145.85,
+      "bounce_rate": 72.39,
+      "avg_duration": 96.56,
+      "new_users": 1705
     },
     {
       "channel": "Email",
-      "sessions": 1942,
-      "users": 1614,
-      "conversions": 4096
-    }
-  ],
-  "funnel": [
-    {
-      "step": "Página Inicial",
-      "path": "/",
-      "pageviews": 3388736,
-      "users": 766366,
-      "drop_rate": 0
-    },
-    {
-      "step": "Produto / Lista",
-      "path": "/produtos",
-      "pageviews": 0,
-      "users": 0,
-      "drop_rate": 100.0
-    },
-    {
-      "step": "Carrinho",
-      "path": "/carrinho",
-      "pageviews": 2,
-      "users": 2,
-      "drop_rate": 0
-    },
-    {
-      "step": "Checkout",
-      "path": "/checkout",
-      "pageviews": 567176,
-      "users": 136401,
-      "drop_rate": -6819950.0
-    },
-    {
-      "step": "Confirmação",
-      "path": "/obrigado",
-      "pageviews": 0,
-      "users": 0,
-      "drop_rate": 100.0
+      "sessions": 1944,
+      "users": 1615,
+      "conversions": 4099,
+      "conversion_rate": 210.85,
+      "bounce_rate": 42.08,
+      "avg_duration": 170.83,
+      "new_users": 1382
     }
   ],
   "devices": [
     {
       "device": "mobile",
-      "sessions": 1281210,
-      "users": 642913,
-      "conversions": 3693503
+      "sessions": 1284731,
+      "users": 644677,
+      "conversions": 3703778,
+      "bounce_rate": 25.65
     },
     {
       "device": "desktop",
-      "sessions": 361055,
-      "users": 206639,
-      "conversions": 1384077
+      "sessions": 362696,
+      "users": 207682,
+      "conversions": 1390230,
+      "bounce_rate": 26.9
     },
     {
       "device": "tablet",
-      "sessions": 8725,
-      "users": 5345,
-      "conversions": 35266
+      "sessions": 8776,
+      "users": 5361,
+      "conversions": 35359,
+      "bounce_rate": 19.01
     },
     {
       "device": "smart tv",
-      "sessions": 7,
-      "users": 6,
-      "conversions": 14
+      "sessions": 8,
+      "users": 7,
+      "conversions": 15,
+      "bounce_rate": 37.5
     }
   ],
+  "new_vs_returning": [
+    {
+      "type": "returning",
+      "sessions": 833059,
+      "users": 352352,
+      "conversions": 2919765,
+      "bounce_rate": 17.82
+    },
+    {
+      "type": "new",
+      "sessions": 653495,
+      "users": 638735,
+      "conversions": 2018822,
+      "bounce_rate": 20.86
+    },
+    {
+      "type": "(not set)",
+      "sessions": 155295,
+      "users": 106217,
+      "conversions": 173111,
+      "bounce_rate": 88.64
+    },
+    {
+      "type": "",
+      "sessions": 10217,
+      "users": 9527,
+      "conversions": 17684,
+      "bounce_rate": 94.09
+    }
+  ],
+  "funnel": [
+    {
+      "step": "Busca",
+      "event": "search",
+      "event_count": 2681996,
+      "users": 525815,
+      "drop_rate": 0
+    },
+    {
+      "step": "Selecionou item",
+      "event": "select_item",
+      "event_count": 190535,
+      "users": 85588,
+      "drop_rate": 83.7
+    },
+    {
+      "step": "Adicionou ao carrinho",
+      "event": "add_to_cart",
+      "event_count": 344607,
+      "users": 148876,
+      "drop_rate": -73.9
+    },
+    {
+      "step": "Iniciou checkout",
+      "event": "begin_checkout",
+      "event_count": 219927,
+      "users": 103594,
+      "drop_rate": 30.4
+    },
+    {
+      "step": "Compra",
+      "event": "purchase",
+      "event_count": 217533,
+      "users": 110187,
+      "drop_rate": -6.4
+    }
+  ],
+  "routes": {
+    "top_routes": [
+      {
+        "origin": "(other)",
+        "destination": "(other)",
+        "purchases": 124702,
+        "users": 77968
+      },
+      {
+        "origin": "BELO HORIZONTE - MG",
+        "destination": "RIO DE JANEIRO - RJ",
+        "purchases": 47694,
+        "users": 4662
+      },
+      {
+        "origin": "FORTALEZA - CE",
+        "destination": "SOBRAL - CE",
+        "purchases": 46147,
+        "users": 5891
+      },
+      {
+        "origin": "TERESINA - PI",
+        "destination": "FORTALEZA - CE",
+        "purchases": 43942,
+        "users": 5359
+      },
+      {
+        "origin": "SOBRAL - CE",
+        "destination": "FORTALEZA - CE",
+        "purchases": 43197,
+        "users": 6027
+      },
+      {
+        "origin": "NATAL - RN",
+        "destination": "FORTALEZA - CE",
+        "purchases": 42549,
+        "users": 5008
+      },
+      {
+        "origin": "RIO DE JANEIRO - RJ",
+        "destination": "BELO HORIZONTE - MG",
+        "purchases": 42001,
+        "users": 4293
+      },
+      {
+        "origin": "FORTALEZA - CE",
+        "destination": "NATAL - RN",
+        "purchases": 41220,
+        "users": 5072
+      },
+      {
+        "origin": "RIO DE JANEIRO - RJ - TODOS",
+        "destination": "BELO HORIZONTE - MG - TODOS",
+        "purchases": 38659,
+        "users": 13789
+      },
+      {
+        "origin": "BELO HORIZONTE - MG - TODOS",
+        "destination": "RIO DE JANEIRO - RJ - TODOS",
+        "purchases": 34023,
+        "users": 5761
+      },
+      {
+        "origin": "FORTALEZA - CE - TODOS",
+        "destination": "NATAL - RN",
+        "purchases": 33688,
+        "users": 4917
+      },
+      {
+        "origin": "JUIZ DE FORA - MG",
+        "destination": "RIO DE JANEIRO - RJ",
+        "purchases": 31923,
+        "users": 3577
+      },
+      {
+        "origin": "BRASILIA - DF",
+        "destination": "GOIANIA - GO",
+        "purchases": 31595,
+        "users": 4069
+      },
+      {
+        "origin": "FORTALEZA - CE",
+        "destination": "RECIFE - PE",
+        "purchases": 31393,
+        "users": 4128
+      },
+      {
+        "origin": "FORTALEZA - CE",
+        "destination": "JUAZEIRO DO NORTE - CE",
+        "purchases": 30917,
+        "users": 4275
+      },
+      {
+        "origin": "TERESINA - PI",
+        "destination": "PARNAIBA - PI",
+        "purchases": 30807,
+        "users": 4509
+      },
+      {
+        "origin": "JUIZ DE FORA - MG - TODOS",
+        "destination": "RIO DE JANEIRO - RJ - TODOS",
+        "purchases": 30110,
+        "users": 5123
+      },
+      {
+        "origin": "FORTALEZA - CE",
+        "destination": "TERESINA - PI",
+        "purchases": 29697,
+        "users": 3944
+      }
+    ],
+    "top_origins": [
+      {
+        "city": "FORTALEZA - CE",
+        "searches": 579534,
+        "users": 68997,
+        "conversions": 264516
+      },
+      {
+        "city": "FORTALEZA - CE - TODOS",
+        "searches": 447703,
+        "users": 59528,
+        "conversions": 223672
+      },
+      {
+        "city": "RIO DE JANEIRO - RJ",
+        "searches": 306676,
+        "users": 34565,
+        "conversions": 123680
+      },
+      {
+        "city": "",
+        "searches": 284411,
+        "users": 40824,
+        "conversions": 31929
+      },
+      {
+        "city": "RIO DE JANEIRO - RJ - TODOS",
+        "searches": 265096,
+        "users": 42101,
+        "conversions": 123375
+      },
+      {
+        "city": "BRASILIA - DF",
+        "searches": 210455,
+        "users": 21810,
+        "conversions": 92371
+      },
+      {
+        "city": "TERESINA - PI",
+        "searches": 206398,
+        "users": 24929,
+        "conversions": 93240
+      },
+      {
+        "city": "SAO LUIS - MA",
+        "searches": 200603,
+        "users": 21027,
+        "conversions": 92862
+      },
+      {
+        "city": "SOBRAL - CE",
+        "searches": 198080,
+        "users": 21747,
+        "conversions": 94683
+      },
+      {
+        "city": "JOAO PESSOA - PB",
+        "searches": 173171,
+        "users": 18398,
+        "conversions": 83342
+      },
+      {
+        "city": "JUAZEIRO DO NORTE - CE",
+        "searches": 166956,
+        "users": 18501,
+        "conversions": 76582
+      },
+      {
+        "city": "BELO HORIZONTE - MG",
+        "searches": 136074,
+        "users": 13055,
+        "conversions": 44302
+      },
+      {
+        "city": "SALVADOR - BA",
+        "searches": 133440,
+        "users": 12782,
+        "conversions": 60058
+      },
+      {
+        "city": "PARNAIBA - PI",
+        "searches": 132543,
+        "users": 13882,
+        "conversions": 63110
+      }
+    ],
+    "top_destinations": [
+      {
+        "city": "FORTALEZA - CE",
+        "searches": 548402,
+        "users": 67234,
+        "conversions": 251094
+      },
+      {
+        "city": "FORTALEZA - CE - TODOS",
+        "searches": 347135,
+        "users": 50062,
+        "conversions": 172913
+      },
+      {
+        "city": "RIO DE JANEIRO - RJ",
+        "searches": 331029,
+        "users": 36216,
+        "conversions": 132603
+      },
+      {
+        "city": "",
+        "searches": 289258,
+        "users": 43536,
+        "conversions": 31927
+      },
+      {
+        "city": "RIO DE JANEIRO - RJ - TODOS",
+        "searches": 242211,
+        "users": 33184,
+        "conversions": 119736
+      },
+      {
+        "city": "SOBRAL - CE",
+        "searches": 193831,
+        "users": 21048,
+        "conversions": 92507
+      },
+      {
+        "city": "JOAO PESSOA - PB",
+        "searches": 180732,
+        "users": 20147,
+        "conversions": 86683
+      },
+      {
+        "city": "SAO LUIS - MA",
+        "searches": 173751,
+        "users": 20000,
+        "conversions": 81167
+      },
+      {
+        "city": "JUAZEIRO DO NORTE - CE",
+        "searches": 169170,
+        "users": 18883,
+        "conversions": 76913
+      },
+      {
+        "city": "BRASILIA - DF",
+        "searches": 161543,
+        "users": 17904,
+        "conversions": 71605
+      },
+      {
+        "city": "TERESINA - PI",
+        "searches": 159348,
+        "users": 19992,
+        "conversions": 73154
+      },
+      {
+        "city": "PARNAIBA - PI",
+        "searches": 134847,
+        "users": 14488,
+        "conversions": 64345
+      },
+      {
+        "city": "SAO PAULO - SP",
+        "searches": 122559,
+        "users": 14415,
+        "conversions": 49973
+      },
+      {
+        "city": "GOIANIA - GO",
+        "searches": 120114,
+        "users": 13230,
+        "conversions": 53336
+      }
+    ],
+    "route_conversion": [
+      {
+        "route": "(other) → (other)",
+        "origin": "(other)",
+        "destination": "(other)",
+        "searches": 124702,
+        "users": 77968
+      },
+      {
+        "route": "RIO DE JANEIRO - RJ - TODOS → BELO HORIZONTE - MG - TODOS",
+        "origin": "RIO DE JANEIRO - RJ - TODOS",
+        "destination": "BELO HORIZONTE - MG - TODOS",
+        "searches": 38659,
+        "users": 13789
+      },
+      {
+        "route": "SOBRAL - CE → FORTALEZA - CE",
+        "origin": "SOBRAL - CE",
+        "destination": "FORTALEZA - CE",
+        "searches": 43197,
+        "users": 6027
+      },
+      {
+        "route": "FORTALEZA - CE → SOBRAL - CE",
+        "origin": "FORTALEZA - CE",
+        "destination": "SOBRAL - CE",
+        "searches": 46147,
+        "users": 5891
+      },
+      {
+        "route": "BELO HORIZONTE - MG - TODOS → RIO DE JANEIRO - RJ - TODOS",
+        "origin": "BELO HORIZONTE - MG - TODOS",
+        "destination": "RIO DE JANEIRO - RJ - TODOS",
+        "searches": 34023,
+        "users": 5761
+      },
+      {
+        "route": "TERESINA - PI → FORTALEZA - CE",
+        "origin": "TERESINA - PI",
+        "destination": "FORTALEZA - CE",
+        "searches": 43942,
+        "users": 5359
+      },
+      {
+        "route": "JUIZ DE FORA - MG - TODOS → RIO DE JANEIRO - RJ - TODOS",
+        "origin": "JUIZ DE FORA - MG - TODOS",
+        "destination": "RIO DE JANEIRO - RJ - TODOS",
+        "searches": 30110,
+        "users": 5123
+      },
+      {
+        "route": "FORTALEZA - CE → NATAL - RN",
+        "origin": "FORTALEZA - CE",
+        "destination": "NATAL - RN",
+        "searches": 41220,
+        "users": 5072
+      },
+      {
+        "route": "NATAL - RN → FORTALEZA - CE",
+        "origin": "NATAL - RN",
+        "destination": "FORTALEZA - CE",
+        "searches": 42549,
+        "users": 5008
+      },
+      {
+        "route": "FORTALEZA - CE - TODOS → NATAL - RN",
+        "origin": "FORTALEZA - CE - TODOS",
+        "destination": "NATAL - RN",
+        "searches": 33688,
+        "users": 4917
+      },
+      {
+        "route": "FORTALEZA - CE - TODOS → SOBRAL - CE",
+        "origin": "FORTALEZA - CE - TODOS",
+        "destination": "SOBRAL - CE",
+        "searches": 26880,
+        "users": 4741
+      },
+      {
+        "route": "BELO HORIZONTE - MG → RIO DE JANEIRO - RJ",
+        "origin": "BELO HORIZONTE - MG",
+        "destination": "RIO DE JANEIRO - RJ",
+        "searches": 47694,
+        "users": 4662
+      },
+      {
+        "route": "TERESINA - PI → PARNAIBA - PI",
+        "origin": "TERESINA - PI",
+        "destination": "PARNAIBA - PI",
+        "searches": 30807,
+        "users": 4509
+      }
+    ]
+  },
   "insights": []
 }
