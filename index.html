@@ -363,10 +363,11 @@ function getF(){
 }
 
 function populateF(d){
-  // Sources
+  // Sources — use source_medium top5 + outros
   const ss=document.getElementById('fsrc');
-  [...new Set(d.sources.map(r=>r.source))].sort().forEach(s=>{
-    const o=document.createElement('option');o.value=s;o.textContent=s;ss.appendChild(o);
+  const srcKeys=d.top5_sources||[...new Set(d.sources.map(r=>r.source_medium||r.source))];
+  [...srcKeys,'outros / —'].forEach(sm=>{
+    const o=document.createElement('option');o.value=sm;o.textContent=sm;ss.appendChild(o);
   });
   // Devices
   const ds=document.getElementById('fdev');
@@ -481,86 +482,144 @@ function applySrcRatio(channels, RAWsources, srcFilter){
 
 // ── Main filter builder ───────────────────────────────────────────────────────
 function buildF(d,f){
-  // 1. Daily series — date filter only
+  // 1. Date-filter daily series
   const daily=filterDates(d.daily,f);
 
-  // 2. Device ratio (for scaling breakdowns)
-  const devTot=d.devices.reduce((a,r)=>a+r.sessions,0);
-  const devRow=f.dev!=='all'?d.devices.find(r=>r.device===f.dev):null;
-  const devRatio=devRow&&devTot>0?devRow.sessions/devTot:1;
+  // 2. Source filter: use real sources_daily breakdown
+  //    f.src is "source / medium" key or "all"
+  const srcFilter=f.src; // e.g. "google / cpc" or "all"
 
-  // 3. Channels — date filter + device ratio + source ratio
+  // 3. Device filter
+  const devFilter=f.dev; // e.g. "mobile" or "all"
+
+  // helper: filter a dailyObj by date AND optionally by a key within it
+  function filterObjByDateAndKey(obj, keyField, keyVal){
+    if(!obj) return obj;
+    const filtered=filterDailyObj(obj,f);
+    if(keyVal==='all') return filtered;
+    // Rebuild data keeping only the matching key
+    const newData={};
+    filtered.dates.forEach(date=>{
+      const day=filtered.data[date]||{};
+      if(day[keyVal]) newData[date]={[keyVal]:day[keyVal]};
+    });
+    return{...filtered,data:newData};
+  }
+
+  // 4. Channels — real data filtered by date; device+source scaling applied
   const chObj=filterDailyObj(d.channels_daily,f);
   let channels=aggFromDaily(chObj,'channel',['sessions','users','conversions']);
   channels=channels.map(ch=>{
     const orig=d.channels.find(c=>c.channel===ch.channel)||{};
-    return{...ch,
-      conversion_rate:Math.round(ch.conversions/Math.max(ch.sessions,1)*10000)/100,
+    return{...ch,conversion_rate:Math.round(ch.conversions/Math.max(ch.sessions,1)*10000)/100,
       bounce_rate:orig.bounce_rate||0,avg_duration:orig.avg_duration||0,new_users:orig.new_users||0};
   }).sort((a,b)=>b.sessions-a.sessions);
-  if(f.dev!=='all') channels=channels.map(c=>({...c,sessions:Math.round(c.sessions*devRatio),conversions:Math.round(c.conversions*devRatio)}));
-  channels=applySrcRatio(channels,d.sources,f.src);
 
-  // 4. Devices — date filter, then device filter
+  // Device ratio for channels (no device breakdown in channels, use ratio)
+  let devRatio=1;
+  if(devFilter!=='all'){
+    const devTot=d.devices.reduce((a,r)=>a+r.sessions,0);
+    const devRow=d.devices.find(r=>r.device===devFilter);
+    devRatio=devRow&&devTot>0?devRow.sessions/devTot:1;
+    channels=channels.map(c=>({...c,sessions:Math.round(c.sessions*devRatio),conversions:Math.round(c.conversions*devRatio)}));
+  }
+
+  // Source ratio for channels (use sources_daily)
+  if(srcFilter!=='all'&&d.sources_daily){
+    const srcObj=filterObjByDateAndKey(d.sources_daily,'source',srcFilter);
+    const srcAgg=aggFromDaily(srcObj,'source',['sessions','users','conversions']);
+    const srcSess=srcAgg.reduce((a,r)=>a+r.sessions,0);
+    const allSrcObj=filterDailyObj(d.sources_daily,f);
+    const allAgg=aggFromDaily(allSrcObj,'source',['sessions','users','conversions']);
+    const totSess=allAgg.reduce((a,r)=>a+r.sessions,0);
+    const srcRatio=totSess>0?srcSess/totSess:1;
+    channels=channels.map(c=>({...c,sessions:Math.round(c.sessions*srcRatio),conversions:Math.round(c.conversions*srcRatio)}));
+  }
+
+  // 5. Devices — real daily data by date; filter by device
   const devObj=filterDailyObj(d.devices_daily,f);
   let devices=aggFromDaily(devObj,'device',['sessions','users','conversions']);
   devices=devices.map(dv=>{
     const orig=d.devices.find(x=>x.device===dv.device)||{};
     return{...dv,bounce_rate:orig.bounce_rate||0};
   }).sort((a,b)=>b.sessions-a.sessions);
-  if(f.dev!=='all') devices=devices.filter(r=>r.device===f.dev);
-  // Source filter: scale devices
-  if(f.src!=='all'){
-    const srcTot=d.sources.reduce((a,r)=>a+r.sessions,0);
-    const srcRow=d.sources.find(r=>r.source===f.src);
-    const srcRatio=srcRow&&srcTot>0?srcRow.sessions/srcTot:1;
+  if(devFilter!=='all') devices=devices.filter(r=>r.device===devFilter);
+  // Source filter on devices: scale
+  if(srcFilter!=='all'){
+    const srcTot=d.sources.reduce((a,r)=>a+(r.source_medium===srcFilter?r.sessions:0),0);
+    const allTot=d.sources.reduce((a,r)=>a+r.sessions,0);
+    const srcRatio=allTot>0?srcTot/allTot:1;
     devices=devices.map(dv=>({...dv,sessions:Math.round(dv.sessions*srcRatio),users:Math.round(dv.users*srcRatio)}));
   }
 
-  // 5. NVR — date filter + device ratio + source ratio
-  const nvrObj=filterDailyObj(d.nvr_daily,f);
-  let nvr=aggFromDaily(nvrObj,'type',['sessions','users','conversions']);
-  if(f.dev!=='all') nvr=nvr.map(r=>({...r,users:Math.round(r.users*devRatio),sessions:Math.round(r.sessions*devRatio)}));
-  if(f.src!=='all'){
-    const srcTot=d.sources.reduce((a,r)=>a+r.sessions,0);
-    const srcRow=d.sources.find(r=>r.source===f.src);
-    const srcRatio=srcRow&&srcTot>0?srcRow.sessions/srcTot:1;
-    nvr=nvr.map(r=>({...r,users:Math.round(r.users*srcRatio),sessions:Math.round(r.sessions*srcRatio)}));
+  // 6. NVR — use real nvr_by_device when device filter active, else nvr_daily
+  let nvr;
+  if(devFilter!=='all'&&d.nvr_by_device){
+    // Real data: filter nvr_by_device by date and device
+    const nbrObj=filterDailyObj(d.nvr_by_device,f);
+    const nvrAgg={};
+    nbrObj.dates.forEach(date=>{
+      const day=nbrObj.data[date]||{};
+      const devData=day[devFilter]||{};
+      Object.entries(devData).forEach(([ntype,vals])=>{
+        if(!nvrAgg[ntype]) nvrAgg[ntype]={type:ntype,sessions:0,users:0,conversions:0};
+        nvrAgg[ntype].sessions+=(vals.sessions||0);
+        nvrAgg[ntype].users+=(vals.users||0);
+      });
+    });
+    nvr=Object.values(nvrAgg);
+    // Apply source ratio if needed
+    if(srcFilter!=='all'){
+      const srcTot=d.sources.reduce((a,r)=>a+(r.source_medium===srcFilter?r.sessions:0),0);
+      const allTot=d.sources.reduce((a,r)=>a+r.sessions,0);
+      const srcRatio=allTot>0?srcTot/allTot:1;
+      nvr=nvr.map(r=>({...r,users:Math.round(r.users*srcRatio),sessions:Math.round(r.sessions*srcRatio)}));
+    }
+  } else {
+    // No device filter: use nvr_daily, apply source ratio if needed
+    const nvrObj=filterDailyObj(d.nvr_daily,f);
+    nvr=aggFromDaily(nvrObj,'type',['sessions','users','conversions']);
+    if(srcFilter!=='all'){
+      const srcTot=d.sources.reduce((a,r)=>a+(r.source_medium===srcFilter?r.sessions:0),0);
+      const allTot=d.sources.reduce((a,r)=>a+r.sessions,0);
+      const srcRatio=allTot>0?srcTot/allTot:1;
+      nvr=nvr.map(r=>({...r,users:Math.round(r.users*srcRatio),sessions:Math.round(r.sessions*srcRatio)}));
+    }
   }
 
-  // 6. Sources table
+  // 7. Sources table
   let sources=[...d.sources];
-  if(f.src!=='all') sources=sources.filter(r=>r.source===f.src);
-  if(f.dev!=='all') sources=sources.map(r=>({...r,sessions:Math.round(r.sessions*devRatio),users:Math.round(r.users*devRatio),conversions:Math.round(r.conversions*devRatio)}));
+  if(srcFilter!=='all') sources=sources.filter(r=>(r.source_medium||`${r.source} / ${r.medium}`)===srcFilter);
+  if(devFilter!=='all') sources=sources.map(r=>({...r,sessions:Math.round(r.sessions*devRatio),users:Math.round(r.users*devRatio),conversions:Math.round(r.conversions*devRatio)}));
 
-  // 7. Funnel — date filter + device ratio + source ratio
+  // 8. Funnel — real daily data filtered by date, then device+source scaling
   const fnlObj=filterDailyObj(d.funnel_daily,f);
   let funnel=buildFunnelAgg(fnlObj,d.funnel);
-  if(f.dev!=='all') funnel=scaleFunnel(funnel,devRatio);
-  if(f.src!=='all'){
-    const srcTot=d.sources.reduce((a,r)=>a+r.sessions,0);
-    const srcRow=d.sources.find(r=>r.source===f.src);
-    const srcRatio=srcRow&&srcTot>0?srcRow.sessions/srcTot:1;
+  if(devFilter!=='all') funnel=scaleFunnel(funnel,devRatio);
+  if(srcFilter!=='all'){
+    const srcTot=d.sources.reduce((a,r)=>a+(r.source_medium===srcFilter?r.sessions:0),0);
+    const allTot=d.sources.reduce((a,r)=>a+r.sessions,0);
+    const srcRatio=allTot>0?srcTot/allTot:1;
     funnel=scaleFunnel(funnel,srcRatio);
   }
 
-  // 8. Daily series — apply device + source scaling
+  // 9. Daily series scaling (for daily charts)
   let scaledDaily=[...daily];
-  if(f.dev!=='all'||f.src!=='all'){
-    let scale=1;
-    if(f.dev!=='all') scale*=devRatio;
-    if(f.src!=='all'){
-      const srcTot=d.sources.reduce((a,r)=>a+r.sessions,0);
-      const srcRow=d.sources.find(r=>r.source===f.src);
-      if(srcRow&&srcTot>0) scale*=srcRow.sessions/srcTot;
-    }
+  let totalScale=1;
+  if(devFilter!=='all') totalScale*=devRatio;
+  if(srcFilter!=='all'){
+    const srcTot=d.sources.reduce((a,r)=>a+(r.source_medium===srcFilter?r.sessions:0),0);
+    const allTot=d.sources.reduce((a,r)=>a+r.sessions,0);
+    if(allTot>0) totalScale*=srcTot/allTot;
+  }
+  if(totalScale!==1){
     scaledDaily=daily.map(r=>({...r,
-      sessions:Math.round(r.sessions*scale),users:Math.round(r.users*scale),
-      conversions:Math.round(r.conversions*scale),new_users:Math.round(r.new_users*scale),
+      sessions:Math.round(r.sessions*totalScale),users:Math.round(r.users*totalScale),
+      conversions:Math.round(r.conversions*totalScale),new_users:Math.round(r.new_users*totalScale),
     }));
   }
 
-  // 9. Totals from scaled daily
+  // 10. Totals from scaled daily
   const totals={
     ...d.totals,
     sessions:   scaledDaily.reduce((a,r)=>a+r.sessions,0),
