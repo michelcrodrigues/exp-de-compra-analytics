@@ -1,33 +1,24 @@
 """
-Script de coleta de dados do Google Analytics 4.
+Script de coleta de dados do Google Analytics 4 — v2
 Gera o arquivo data.json com todas as métricas do dashboard.
 """
 
 import json
 import os
-from datetime import datetime, timedelta
+from datetime import datetime
 from google.analytics.data_v1beta import BetaAnalyticsDataClient
 from google.analytics.data_v1beta.types import (
-    RunReportRequest,
-    DateRange,
-    Metric,
-    Dimension,
-    OrderBy,
-    Filter,
-    FilterExpression,
+    RunReportRequest, DateRange, Metric, Dimension, OrderBy,
+    Filter, FilterExpression,
 )
 
-PROPERTY_ID = os.environ["GA4_PROPERTY_ID"]
+PROPERTY_ID   = os.environ["GA4_PROPERTY_ID"]
+client        = BetaAnalyticsDataClient()
+DATE_RANGE    = DateRange(start_date="30daysAgo", end_date="today")
+DATE_RANGE_7D = DateRange(start_date="7daysAgo",  end_date="today")
 
-client = BetaAnalyticsDataClient()
-
-# ── Período: últimos 30 dias ────────────────────────────────────────────────
-DATE_RANGE = DateRange(start_date="30daysAgo", end_date="today")
-DATE_RANGE_7D = DateRange(start_date="7daysAgo", end_date="today")
-
-def run_report(dimensions, metrics, date_range=None, order_bys=None, limit=10):
-    """Helper para executar um relatório no GA4."""
-    request = RunReportRequest(
+def report(dimensions, metrics, date_range=None, order_bys=None, limit=20):
+    req = RunReportRequest(
         property=f"properties/{PROPERTY_ID}",
         dimensions=[Dimension(name=d) for d in dimensions],
         metrics=[Metric(name=m) for m in metrics],
@@ -35,216 +26,215 @@ def run_report(dimensions, metrics, date_range=None, order_bys=None, limit=10):
         order_bys=order_bys or [],
         limit=limit,
     )
-    return client.run_report(request)
+    return client.run_report(req)
 
-
-def run_report_no_dim(metrics, date_range=None):
-    """Helper para relatórios sem dimensão (totais)."""
-    request = RunReportRequest(
+def report_nodim(metrics, date_range=None):
+    req = RunReportRequest(
         property=f"properties/{PROPERTY_ID}",
         metrics=[Metric(name=m) for m in metrics],
         date_ranges=[date_range or DATE_RANGE],
     )
-    return client.run_report(request)
+    return client.run_report(req)
 
+def dim(row, i): return row.dimension_values[i].value
+def met(row, i): return row.metric_values[i].value
+def intf(v):     return int(float(v))
+def rnd(v):      return round(float(v), 2)
 
-def parse_rows(response, dim_count):
-    """Converte linhas do response em lista de dicts."""
-    rows = []
-    for row in response.rows:
-        item = {}
-        for i, dim in enumerate(row.dimension_values):
-            item[f"dim_{i}"] = dim.value
-        for i, met in enumerate(row.metric_values):
-            item[f"met_{i}"] = met.value
-        rows.append(item)
-    return rows
-
-
-# ── 1. Totais gerais ────────────────────────────────────────────────────────
-print("Buscando totais gerais...")
-totals_resp = run_report_no_dim(
-    ["sessions", "totalUsers", "newUsers", "bounceRate",
-     "averageSessionDuration", "conversions", "screenPageViews"]
-)
-row = totals_resp.rows[0].metric_values
+# ── 1. Totais ───────────────────────────────────────────────────────────────
+print("1/11 Totais gerais...")
+r = report_nodim(["sessions","totalUsers","newUsers","bounceRate",
+                  "averageSessionDuration","conversions","screenPageViews"])
+mv = r.rows[0].metric_values
 totals = {
-    "sessions":               int(row[0].value),
-    "total_users":            int(row[1].value),
-    "new_users":              int(row[2].value),
-    "bounce_rate":            round(float(row[3].value) * 100, 2),
-    "avg_session_duration":   round(float(row[4].value), 1),
-    "conversions":            int(row[5].value),
-    "pageviews":              int(row[6].value),
+    "sessions": intf(mv[0].value), "total_users": intf(mv[1].value),
+    "new_users": intf(mv[2].value), "bounce_rate": round(float(mv[3].value)*100,2),
+    "avg_session_duration": rnd(mv[4].value),
+    "conversions": intf(mv[5].value), "pageviews": intf(mv[6].value),
 }
+r7 = report_nodim(["sessions","totalUsers","conversions","newUsers"], DATE_RANGE_7D)
+mv7 = r7.rows[0].metric_values
+totals.update({
+    "sessions_7d": intf(mv7[0].value), "users_7d": intf(mv7[1].value),
+    "conversions_7d": intf(mv7[2].value), "new_users_7d": intf(mv7[3].value),
+})
 
-# Totais da semana anterior para calcular variação
-totals_7d_resp = run_report_no_dim(
-    ["sessions", "totalUsers", "conversions"],
-    date_range=DATE_RANGE_7D
-)
-row7 = totals_7d_resp.rows[0].metric_values
-totals["sessions_7d"]     = int(row7[0].value)
-totals["users_7d"]        = int(row7[1].value)
-totals["conversions_7d"]  = int(row7[2].value)
-
-
-# ── 2. Sessões por dia (últimos 30 dias) ────────────────────────────────────
-print("Buscando sessões por dia...")
-daily_resp = run_report(
-    dimensions=["date"],
-    metrics=["sessions", "totalUsers", "conversions"],
-    order_bys=[OrderBy(dimension=OrderBy.DimensionOrderBy(dimension_name="date"))],
-    limit=30,
-)
+# ── 2. Sessões por dia ──────────────────────────────────────────────────────
+print("2/11 Sessões por dia...")
+r = report(["date"], ["sessions","totalUsers","conversions","newUsers"],
+           order_bys=[OrderBy(dimension=OrderBy.DimensionOrderBy(dimension_name="date"))], limit=30)
 daily = []
-for row in daily_resp.rows:
-    raw = row.dimension_values[0].value  # "20240115"
-    date_fmt = f"{raw[:4]}-{raw[4:6]}-{raw[6:]}"
+for row in r.rows:
+    raw = dim(row,0)
     daily.append({
-        "date":        date_fmt,
-        "sessions":    int(row.metric_values[0].value),
-        "users":       int(row.metric_values[1].value),
-        "conversions": int(row.metric_values[2].value),
+        "date": f"{raw[:4]}-{raw[4:6]}-{raw[6:]}",
+        "sessions": intf(met(row,0)), "users": intf(met(row,1)),
+        "conversions": intf(met(row,2)), "new_users": intf(met(row,3)),
     })
-
 
 # ── 3. Páginas mais acessadas ───────────────────────────────────────────────
-print("Buscando páginas mais acessadas...")
-pages_resp = run_report(
-    dimensions=["pagePath", "pageTitle"],
-    metrics=["screenPageViews", "totalUsers", "averageSessionDuration", "bounceRate"],
-    order_bys=[OrderBy(metric=OrderBy.MetricOrderBy(metric_name="screenPageViews"), desc=True)],
-    limit=10,
-)
-pages = []
-for row in pages_resp.rows:
-    pages.append({
-        "path":         row.dimension_values[0].value,
-        "title":        row.dimension_values[1].value,
-        "pageviews":    int(row.metric_values[0].value),
-        "users":        int(row.metric_values[1].value),
-        "avg_duration": round(float(row.metric_values[2].value), 1),
-        "bounce_rate":  round(float(row.metric_values[3].value) * 100, 2),
-    })
+print("3/11 Páginas...")
+r = report(["pagePath","pageTitle"],
+           ["screenPageViews","totalUsers","averageSessionDuration","bounceRate","exits"],
+           order_bys=[OrderBy(metric=OrderBy.MetricOrderBy(metric_name="screenPageViews"), desc=True)], limit=10)
+pages = [{"path": dim(row,0), "title": dim(row,1),
+          "pageviews": intf(met(row,0)), "users": intf(met(row,1)),
+          "avg_duration": rnd(met(row,2)), "bounce_rate": round(float(met(row,3))*100,2),
+          "exits": intf(met(row,4))} for row in r.rows]
 
+# ── 4. Páginas de entrada ───────────────────────────────────────────────────
+print("4/11 Páginas de entrada...")
+r = report(["landingPagePlusQueryString"],
+           ["sessions","totalUsers","conversions","bounceRate"],
+           order_bys=[OrderBy(metric=OrderBy.MetricOrderBy(metric_name="sessions"), desc=True)], limit=10)
+landing_pages = [{"path": dim(row,0), "sessions": intf(met(row,0)),
+                  "users": intf(met(row,1)), "conversions": intf(met(row,2)),
+                  "bounce_rate": round(float(met(row,3))*100,2)} for row in r.rows]
 
-# ── 4. Por origem/mídia ────────────────────────────────────────────────────
-print("Buscando dados por origem...")
-source_resp = run_report(
-    dimensions=["sessionSource", "sessionMedium"],
-    metrics=["sessions", "totalUsers", "conversions", "bounceRate", "averageSessionDuration"],
-    order_bys=[OrderBy(metric=OrderBy.MetricOrderBy(metric_name="sessions"), desc=True)],
-    limit=15,
-)
-sources = []
-for row in source_resp.rows:
-    sources.append({
-        "source":       row.dimension_values[0].value,
-        "medium":       row.dimension_values[1].value,
-        "sessions":     int(row.metric_values[0].value),
-        "users":        int(row.metric_values[1].value),
-        "conversions":  int(row.metric_values[2].value),
-        "bounce_rate":  round(float(row.metric_values[3].value) * 100, 2),
-        "avg_duration": round(float(row.metric_values[4].value), 1),
-    })
+# ── 5. Origens ──────────────────────────────────────────────────────────────
+print("5/11 Origens...")
+r = report(["sessionSource","sessionMedium"],
+           ["sessions","totalUsers","conversions","bounceRate","averageSessionDuration"],
+           order_bys=[OrderBy(metric=OrderBy.MetricOrderBy(metric_name="sessions"), desc=True)], limit=15)
+sources = [{"source": dim(row,0), "medium": dim(row,1),
+            "sessions": intf(met(row,0)), "users": intf(met(row,1)),
+            "conversions": intf(met(row,2)),
+            "conversion_rate": round(intf(met(row,2))/max(intf(met(row,0)),1)*100,2),
+            "bounce_rate": round(float(met(row,3))*100,2),
+            "avg_duration": rnd(met(row,4))} for row in r.rows]
 
+# ── 6. Canais ───────────────────────────────────────────────────────────────
+print("6/11 Canais...")
+r = report(["sessionDefaultChannelGroup"],
+           ["sessions","totalUsers","conversions","bounceRate","averageSessionDuration","newUsers"],
+           order_bys=[OrderBy(metric=OrderBy.MetricOrderBy(metric_name="sessions"), desc=True)], limit=10)
+channels = [{"channel": dim(row,0), "sessions": intf(met(row,0)),
+             "users": intf(met(row,1)), "conversions": intf(met(row,2)),
+             "conversion_rate": round(intf(met(row,2))/max(intf(met(row,0)),1)*100,2),
+             "bounce_rate": round(float(met(row,3))*100,2),
+             "avg_duration": rnd(met(row,4)), "new_users": intf(met(row,5))} for row in r.rows]
 
-# ── 5. Por canal agrupado ──────────────────────────────────────────────────
-print("Buscando dados por canal...")
-channel_resp = run_report(
-    dimensions=["sessionDefaultChannelGroup"],
-    metrics=["sessions", "totalUsers", "conversions"],
-    order_bys=[OrderBy(metric=OrderBy.MetricOrderBy(metric_name="sessions"), desc=True)],
-    limit=10,
-)
-channels = []
-for row in channel_resp.rows:
-    channels.append({
-        "channel":     row.dimension_values[0].value,
-        "sessions":    int(row.metric_values[0].value),
-        "users":       int(row.metric_values[1].value),
-        "conversions": int(row.metric_values[2].value),
-    })
+# ── 7. Dispositivos ─────────────────────────────────────────────────────────
+print("7/11 Dispositivos...")
+r = report(["deviceCategory"], ["sessions","totalUsers","conversions","bounceRate"],
+           order_bys=[OrderBy(metric=OrderBy.MetricOrderBy(metric_name="sessions"), desc=True)])
+devices = [{"device": dim(row,0), "sessions": intf(met(row,0)),
+            "users": intf(met(row,1)), "conversions": intf(met(row,2)),
+            "bounce_rate": round(float(met(row,3))*100,2)} for row in r.rows]
 
+# ── 8. Novos vs recorrentes ─────────────────────────────────────────────────
+print("8/11 Novos vs recorrentes...")
+r = report(["newVsReturning"], ["sessions","totalUsers","conversions","bounceRate"])
+new_vs_returning = [{"type": dim(row,0), "sessions": intf(met(row,0)),
+                     "users": intf(met(row,1)), "conversions": intf(met(row,2)),
+                     "bounce_rate": round(float(met(row,3))*100,2)} for row in r.rows]
 
-# ── 6. Funil de abandono (por etapa de página) ─────────────────────────────
-# Reconstrói o funil a partir de pageviews das etapas principais.
-# Ajuste os paths abaixo para os caminhos reais do seu funil.
-print("Buscando dados de funil...")
-
-FUNNEL_STEPS = [
-    {"name": "Página Inicial",  "path": "/"},
-    {"name": "Produto / Lista", "path": "/produtos"},
-    {"name": "Carrinho",        "path": "/carrinho"},
-    {"name": "Checkout",        "path": "/checkout"},
-    {"name": "Confirmação",     "path": "/obrigado"},
+# ── 9. Funil por eventos ────────────────────────────────────────────────────
+print("9/11 Funil de eventos...")
+FUNNEL_EVENTS = [
+    {"name": "Busca",           "event": "search"},
+    {"name": "Selecionou item", "event": "select_item"},
+    {"name": "Adicionou ao carrinho", "event": "add_to_cart"},
+    {"name": "Iniciou checkout","event": "begin_checkout"},
+    {"name": "Compra",          "event": "purchase"},
 ]
-
 funnel = []
-for step in FUNNEL_STEPS:
+for step in FUNNEL_EVENTS:
     req = RunReportRequest(
         property=f"properties/{PROPERTY_ID}",
-        dimensions=[Dimension(name="pagePath")],
-        metrics=[Metric(name="screenPageViews"), Metric(name="totalUsers")],
+        dimensions=[Dimension(name="eventName")],
+        metrics=[Metric(name="eventCount"), Metric(name="totalUsers")],
         date_ranges=[DATE_RANGE],
         dimension_filter=FilterExpression(
-            filter=Filter(
-                field_name="pagePath",
-                string_filter=Filter.StringFilter(
-                    value=step["path"],
-                    match_type=Filter.StringFilter.MatchType.BEGINS_WITH,
-                ),
-            )
+            filter=Filter(field_name="eventName",
+                          string_filter=Filter.StringFilter(value=step["event"],
+                          match_type=Filter.StringFilter.MatchType.EXACT))
         ),
     )
     resp = client.run_report(req)
-    views = int(resp.rows[0].metric_values[0].value) if resp.rows else 0
-    users = int(resp.rows[0].metric_values[1].value) if resp.rows else 0
-    funnel.append({"step": step["name"], "path": step["path"], "pageviews": views, "users": users})
+    count = intf(resp.rows[0].metric_values[0].value) if resp.rows else 0
+    users = intf(resp.rows[0].metric_values[1].value) if resp.rows else 0
+    funnel.append({"step": step["name"], "event": step["event"],
+                   "event_count": count, "users": users, "drop_rate": 0})
 
-# Calcula taxa de abandono entre etapas
 for i in range(1, len(funnel)):
-    prev = funnel[i - 1]["users"]
+    prev = funnel[i-1]["users"]
     curr = funnel[i]["users"]
-    drop = round((1 - curr / prev) * 100, 1) if prev > 0 else 0
-    funnel[i]["drop_rate"] = drop
-funnel[0]["drop_rate"] = 0
+    funnel[i]["drop_rate"] = round((1 - curr/prev)*100, 1) if prev > 0 else 0
 
+# ── 10. Rotas — Top origens/destinos ────────────────────────────────────────
+print("10/11 Rotas...")
 
-# ── 7. Por dispositivo ─────────────────────────────────────────────────────
-print("Buscando dados por dispositivo...")
-device_resp = run_report(
-    dimensions=["deviceCategory"],
-    metrics=["sessions", "totalUsers", "conversions"],
-    order_bys=[OrderBy(metric=OrderBy.MetricOrderBy(metric_name="sessions"), desc=True)],
-    limit=5,
-)
-devices = []
-for row in device_resp.rows:
-    devices.append({
-        "device":      row.dimension_values[0].value,
-        "sessions":    int(row.metric_values[0].value),
-        "users":       int(row.metric_values[1].value),
-        "conversions": int(row.metric_values[2].value),
-    })
+# Top rotas (origin_city → destination_city) por evento purchase
+r = report(["customEvent:origin_city","customEvent:destination_city"],
+           ["eventCount","totalUsers"],
+           order_bys=[OrderBy(metric=OrderBy.MetricOrderBy(metric_name="eventCount"), desc=True)],
+           limit=20)
+top_routes = []
+for row in r.rows:
+    o, d = dim(row,0), dim(row,1)
+    if o and d and o != "(not set)" and d != "(not set)":
+        top_routes.append({"origin": o, "destination": d,
+                           "purchases": intf(met(row,0)), "users": intf(met(row,1))})
 
+# Top cidades de origem
+r = report(["customEvent:origin_city"],
+           ["eventCount","totalUsers","conversions"],
+           order_bys=[OrderBy(metric=OrderBy.MetricOrderBy(metric_name="eventCount"), desc=True)],
+           limit=15)
+top_origins = [{"city": dim(row,0), "searches": intf(met(row,0)),
+                "users": intf(met(row,1)), "conversions": intf(met(row,2))}
+               for row in r.rows if dim(row,0) != "(not set)"]
 
-# ── Monta e salva o JSON final ─────────────────────────────────────────────
-data = {
-    "updated_at": datetime.utcnow().strftime("%Y-%m-%dT%H:%M:%SZ"),
-    "period":     "últimos 30 dias",
-    "totals":     totals,
-    "daily":      daily,
-    "pages":      pages,
-    "sources":    sources,
-    "channels":   channels,
-    "funnel":     funnel,
-    "devices":    devices,
-    "insights":   []   # Preenchido manualmente via Claude.ai
+# Top cidades de destino
+r = report(["customEvent:destination_city"],
+           ["eventCount","totalUsers","conversions"],
+           order_bys=[OrderBy(metric=OrderBy.MetricOrderBy(metric_name="eventCount"), desc=True)],
+           limit=15)
+top_destinations = [{"city": dim(row,0), "searches": intf(met(row,0)),
+                     "users": intf(met(row,1)), "conversions": intf(met(row,2))}
+                    for row in r.rows if dim(row,0) != "(not set)"]
+
+# Conversão por rota (search → purchase)
+r = report(["customEvent:origin_city","customEvent:destination_city"],
+           ["eventCount","totalUsers"],
+           order_bys=[OrderBy(metric=OrderBy.MetricOrderBy(metric_name="totalUsers"), desc=True)],
+           limit=15)
+route_conversion = []
+for row in r.rows:
+    o, d = dim(row,0), dim(row,1)
+    if o and d and o != "(not set)" and d != "(not set)":
+        searches = intf(met(row,0))
+        users    = intf(met(row,1))
+        route_conversion.append({
+            "route": f"{o} → {d}", "origin": o, "destination": d,
+            "searches": searches, "users": users,
+        })
+
+routes = {
+    "top_routes":       top_routes,
+    "top_origins":      top_origins,
+    "top_destinations": top_destinations,
+    "route_conversion": route_conversion,
 }
 
+# ── 11. Saída ───────────────────────────────────────────────────────────────
+print("11/11 Salvando...")
+data = {
+    "updated_at":       datetime.utcnow().strftime("%Y-%m-%dT%H:%M:%SZ"),
+    "period":           "últimos 30 dias",
+    "totals":           totals,
+    "daily":            daily,
+    "pages":            pages,
+    "landing_pages":    landing_pages,
+    "sources":          sources,
+    "channels":         channels,
+    "devices":          devices,
+    "new_vs_returning": new_vs_returning,
+    "funnel":           funnel,
+    "routes":           routes,
+    "insights":         [],
+}
 with open("data.json", "w", encoding="utf-8") as f:
     json.dump(data, f, ensure_ascii=False, indent=2)
-
-print(f"✅ data.json gerado com sucesso — {datetime.utcnow().strftime('%Y-%m-%d %H:%M')} UTC")
+print(f"✅ data.json gerado — {datetime.utcnow().strftime('%Y-%m-%d %H:%M')} UTC")
