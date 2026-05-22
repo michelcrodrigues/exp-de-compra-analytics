@@ -1,18 +1,18 @@
 {
-  "updated_at": "2026-05-22T22:26:01Z",
+  "updated_at": "2026-05-22T22:38:23Z",
   "period": "últimos 90 dias",
   "totals": {
     "sessions": 4655448,
-    "total_users": 2144066,
-    "new_users": 1843826,
+    "total_users": 2144246,
+    "new_users": 1843907,
     "bounce_rate": 22.85,
-    "avg_session_duration": 339.86,
-    "conversions": 502054,
-    "pageviews": 24451425,
-    "sessions_7d": 399188,
-    "users_7d": 252475,
-    "conversions_7d": 72086,
-    "new_users_7d": 163581
+    "avg_session_duration": 339.9,
+    "conversions": 502073,
+    "pageviews": 24452687,
+    "sessions_7d": 399807,
+    "users_7d": 252616,
+    "conversions_7d": 72105,
+    "new_users_7d": 163662
   },
   "daily": [
     {
@@ -647,10 +647,10 @@
     },
     {
       "date": "2026-05-22",
-      "sessions": 37754,
-      "users": 31515,
-      "conversions": 5104,
-      "new_users": 13990
+      "sessions": 37988,
+      "users": 31643,
+      "conversions": 5123,
+      "new_users": 14071
     }
   ],
   "pages": [
@@ -666,9 +666,9 @@
     {
       "path": "/",
       "title": "Passagem de Ônibus: Compre Online | Viaje Guanabara",
-      "pageviews": 1941813,
-      "users": 524739,
-      "avg_duration": 116.68,
+      "pageviews": 1942160,
+      "users": 524825,
+      "avg_duration": 116.7,
       "bounce_rate": 0,
       "exits": 0
     },
@@ -764,7 +764,7 @@
     "data": {
       "202608": {
         "/": {
-          "pageviews": 45700,
+          "pageviews": 45701,
           "users": 24699
         },
         "/onibus/checkout": {
@@ -782,8 +782,8 @@
     {
       "path": "/",
       "sessions": 2961395,
-      "users": 1718785,
-      "conversions": 268731,
+      "users": 1718874,
+      "conversions": 268734,
       "bounce_rate": 18.73
     },
     {
@@ -837,9 +837,9 @@
     },
     {
       "path": "",
-      "sessions": 17838,
-      "users": 15300,
-      "conversions": 449,
+      "sessions": 17906,
+      "users": 15400,
+      "conversions": 450,
       "bounce_rate": 99.52
     },
     {
@@ -856,11 +856,11 @@
       "medium": "cpc",
       "source_medium": "google / cpc",
       "sessions": 2646164,
-      "users": 1443985,
+      "users": 1444048,
       "conversions": 259255,
       "conversion_rate": 9.8,
       "bounce_rate": 16.37,
-      "avg_duration": 379.37
+      "avg_duration": 379.39
     },
     {
       "source": "google",
@@ -868,10 +868,10 @@
       "source_medium": "google / organic",
       "sessions": 905320,
       "users": 493618,
-      "conversions": 70690,
+      "conversions": 70693,
       "conversion_rate": 7.81,
       "bounce_rate": 22.48,
-      "avg_duration": 301.12
+      "avg_duration": 301.14
     },
     {
       "source": "(direct)",
@@ -879,10 +879,10 @@
       "source_medium": "(direct) / (none)",
       "sessions": 561350,
       "users": 327286,
-      "conversions": 121802,
+      "conversions": 121805,
       "conversion_rate": 21.7,
       "bounce_rate": 34.03,
-      "avg_duration": 296.54
+      "avg_duration": 296.58
     },
     {
       "source": "pushnews",
@@ -899,23 +899,23 @@
       "source": "(not set)",
       "medium": "(not set)",
       "source_medium": "(not set) / (not set)",
-      "sessions": 40599,
-      "users": 36708,
-      "conversions": 4144,
-      "conversion_rate": 10.21,
-      "bounce_rate": 93.16,
-      "avg_duration": 470.44
+      "sessions": 40772,
+      "users": 36801,
+      "conversions": 4154,
+      "conversion_rate": 10.19,
+      "bounce_rate": 93.18,
+      "avg_duration": 470.06
     },
     {
       "source": "outros",
       "medium": "—",
       "source_medium": "outros / —",
-      "sessions": 278320,
-      "users": 181518,
-      "conversions": 42018,
-      "conversion_rate": 15.1,
+      "sessions": 278401,
+      "users": 181587,
+      "conversions": 42021,
+      "conversion_rate": 15.09,
       "bounce_rate": 26.32,
-      "avg_duration": 361.94
+      "avg_duration": 361.92
     }
   ],
   "sources_daily": {
@@ -8586,29 +8586,29 @@
   "devices": [
     {
       "device": "mobile",
-      "sessions": 2421863,
-      "users": 1854310,
-      "conversions": 211257,
+      "sessions": 3606147,
+      "users": 2752865,
+      "conversions": 349758,
       "bounce_rate": 22.0
     },
     {
       "device": "desktop",
-      "sessions": 683876,
-      "users": 531526,
-      "conversions": 86235,
+      "sessions": 1021163,
+      "users": 798975,
+      "conversions": 149583,
       "bounce_rate": 27.0
     },
     {
       "device": "tablet",
-      "sessions": 16795,
-      "users": 14302,
-      "conversions": 1619,
+      "sessions": 24988,
+      "users": 21314,
+      "conversions": 2731,
       "bounce_rate": 15.5
     },
     {
       "device": "smart tv",
-      "sessions": 16,
-      "users": 16,
+      "sessions": 24,
+      "users": 24,
       "conversions": 1,
       "bounce_rate": 0.0
     }
@@ -8677,7 +8677,35 @@
       "2026-04-21",
       "2026-04-22",
       "2026-04-23",
-      "2026-04-24"
+      "2026-04-24",
+      "2026-04-25",
+      "2026-04-26",
+      "2026-04-27",
+      "2026-04-28",
+      "2026-04-29",
+      "2026-04-30",
+      "2026-05-01",
+      "2026-05-02",
+      "2026-05-03",
+      "2026-05-04",
+      "2026-05-05",
+      "2026-05-06",
+      "2026-05-07",
+      "2026-05-08",
+      "2026-05-09",
+      "2026-05-10",
+      "2026-05-11",
+      "2026-05-12",
+      "2026-05-13",
+      "2026-05-14",
+      "2026-05-15",
+      "2026-05-16",
+      "2026-05-17",
+      "2026-05-18",
+      "2026-05-19",
+      "2026-05-20",
+      "2026-05-21",
+      "2026-05-22"
     ],
     "devices": [
       "mobile",
@@ -8691,19 +8719,22 @@
           "sessions": 35062,
           "users": 27645,
           "conversions": 2860,
-          "bounce_rate": 22.0
+          "bounce_rate": 22.0,
+          "avg_duration": 274.14
         },
         "desktop": {
           "sessions": 6466,
           "users": 5019,
           "conversions": 819,
-          "bounce_rate": 27.0
+          "bounce_rate": 27.0,
+          "avg_duration": 467.53
         },
         "tablet": {
           "sessions": 271,
           "users": 229,
           "conversions": 26,
-          "bounce_rate": 15.5
+          "bounce_rate": 15.5,
+          "avg_duration": 341.68
         }
       },
       "2026-02-22": {
@@ -8711,19 +8742,22 @@
           "sessions": 33041,
           "users": 25497,
           "conversions": 2713,
-          "bounce_rate": 19.96
+          "bounce_rate": 19.96,
+          "avg_duration": 279.2
         },
         "desktop": {
           "sessions": 5306,
           "users": 4284,
           "conversions": 735,
-          "bounce_rate": 25.37
+          "bounce_rate": 25.37,
+          "avg_duration": 488.5
         },
         "tablet": {
           "sessions": 214,
           "users": 188,
           "conversions": 20,
-          "bounce_rate": 11.68
+          "bounce_rate": 11.68,
+          "avg_duration": 288.71
         }
       },
       "2026-02-23": {
@@ -8731,25 +8765,29 @@
           "sessions": 35475,
           "users": 28077,
           "conversions": 2414,
-          "bounce_rate": 19.53
+          "bounce_rate": 19.53,
+          "avg_duration": 269.63
         },
         "desktop": {
           "sessions": 12287,
           "users": 9461,
           "conversions": 1128,
-          "bounce_rate": 22.27
+          "bounce_rate": 22.27,
+          "avg_duration": 462.28
         },
         "tablet": {
           "sessions": 271,
           "users": 238,
           "conversions": 10,
-          "bounce_rate": 14.39
+          "bounce_rate": 14.39,
+          "avg_duration": 319.38
         },
         "smart tv": {
           "sessions": 2,
           "users": 2,
           "conversions": 1,
-          "bounce_rate": 0.0
+          "bounce_rate": 0.0,
+          "avg_duration": 272.11
         }
       },
       "2026-02-24": {
@@ -8757,19 +8795,22 @@
           "sessions": 35093,
           "users": 27118,
           "conversions": 2613,
-          "bounce_rate": 20.95
+          "bounce_rate": 20.95,
+          "avg_duration": 286.31
         },
         "desktop": {
           "sessions": 11700,
           "users": 8907,
           "conversions": 1237,
-          "bounce_rate": 23.17
+          "bounce_rate": 23.17,
+          "avg_duration": 491.94
         },
         "tablet": {
           "sessions": 280,
           "users": 232,
           "conversions": 23,
-          "bounce_rate": 19.64
+          "bounce_rate": 19.64,
+          "avg_duration": 365.17
         }
       },
       "2026-02-25": {
@@ -8777,25 +8818,29 @@
           "sessions": 38051,
           "users": 30392,
           "conversions": 2774,
-          "bounce_rate": 22.48
+          "bounce_rate": 22.48,
+          "avg_duration": 271.24
         },
         "desktop": {
           "sessions": 12415,
           "users": 9642,
           "conversions": 1277,
-          "bounce_rate": 24.2
+          "bounce_rate": 24.2,
+          "avg_duration": 462.04
         },
         "tablet": {
           "sessions": 278,
           "users": 229,
           "conversions": 23,
-          "bounce_rate": 17.27
+          "bounce_rate": 17.27,
+          "avg_duration": 357.16
         },
         "smart tv": {
           "sessions": 1,
           "users": 1,
           "conversions": 0,
-          "bounce_rate": 0.0
+          "bounce_rate": 0.0,
+          "avg_duration": 53.15
         }
       },
       "2026-02-26": {
@@ -8803,19 +8848,22 @@
           "sessions": 35679,
           "users": 27607,
           "conversions": 2926,
-          "bounce_rate": 20.79
+          "bounce_rate": 20.79,
+          "avg_duration": 268.44
         },
         "desktop": {
           "sessions": 11840,
           "users": 8710,
           "conversions": 1390,
-          "bounce_rate": 21.12
+          "bounce_rate": 21.12,
+          "avg_duration": 467.92
         },
         "tablet": {
           "sessions": 237,
           "users": 204,
           "conversions": 28,
-          "bounce_rate": 16.88
+          "bounce_rate": 16.88,
+          "avg_duration": 328.29
         }
       },
       "2026-02-27": {
@@ -8823,25 +8871,29 @@
           "sessions": 42064,
           "users": 32628,
           "conversions": 3276,
-          "bounce_rate": 23.75
+          "bounce_rate": 23.75,
+          "avg_duration": 259.33
         },
         "desktop": {
           "sessions": 11541,
           "users": 9000,
           "conversions": 1386,
-          "bounce_rate": 24.17
+          "bounce_rate": 24.17,
+          "avg_duration": 481.06
         },
         "tablet": {
           "sessions": 269,
           "users": 234,
           "conversions": 25,
-          "bounce_rate": 15.61
+          "bounce_rate": 15.61,
+          "avg_duration": 336.41
         },
         "smart tv": {
           "sessions": 1,
           "users": 1,
           "conversions": 0,
-          "bounce_rate": 0.0
+          "bounce_rate": 0.0,
+          "avg_duration": 38.77
         }
       },
       "2026-02-28": {
@@ -8849,19 +8901,22 @@
           "sessions": 35153,
           "users": 27015,
           "conversions": 3061,
-          "bounce_rate": 21.53
+          "bounce_rate": 21.53,
+          "avg_duration": 269.65
         },
         "desktop": {
           "sessions": 5898,
           "users": 4771,
           "conversions": 851,
-          "bounce_rate": 24.89
+          "bounce_rate": 24.89,
+          "avg_duration": 538.33
         },
         "tablet": {
           "sessions": 243,
           "users": 199,
           "conversions": 23,
-          "bounce_rate": 14.81
+          "bounce_rate": 14.81,
+          "avg_duration": 303.95
         }
       },
       "2026-03-01": {
@@ -8869,25 +8924,29 @@
           "sessions": 35944,
           "users": 27892,
           "conversions": 3080,
-          "bounce_rate": 18.43
+          "bounce_rate": 18.43,
+          "avg_duration": 281.57
         },
         "desktop": {
           "sessions": 5704,
           "users": 4561,
           "conversions": 829,
-          "bounce_rate": 23.11
+          "bounce_rate": 23.11,
+          "avg_duration": 539.23
         },
         "tablet": {
           "sessions": 270,
           "users": 238,
           "conversions": 30,
-          "bounce_rate": 16.3
+          "bounce_rate": 16.3,
+          "avg_duration": 293.91
         },
         "smart tv": {
           "sessions": 1,
           "users": 1,
           "conversions": 0,
-          "bounce_rate": 100.0
+          "bounce_rate": 100.0,
+          "avg_duration": 0.0
         }
       },
       "2026-03-02": {
@@ -8895,25 +8954,29 @@
           "sessions": 44707,
           "users": 34844,
           "conversions": 3272,
-          "bounce_rate": 22.66
+          "bounce_rate": 22.66,
+          "avg_duration": 265.34
         },
         "desktop": {
           "sessions": 13894,
           "users": 10708,
           "conversions": 1593,
-          "bounce_rate": 22.43
+          "bounce_rate": 22.43,
+          "avg_duration": 481.52
         },
         "tablet": {
           "sessions": 287,
           "users": 248,
           "conversions": 29,
-          "bounce_rate": 16.72
+          "bounce_rate": 16.72,
+          "avg_duration": 330.2
         },
         "smart tv": {
           "sessions": 3,
           "users": 3,
           "conversions": 0,
-          "bounce_rate": 0.0
+          "bounce_rate": 0.0,
+          "avg_duration": 744.67
         }
       },
       "2026-03-03": {
@@ -8921,19 +8984,22 @@
           "sessions": 40012,
           "users": 31127,
           "conversions": 3140,
-          "bounce_rate": 20.7
+          "bounce_rate": 20.7,
+          "avg_duration": 272.51
         },
         "desktop": {
           "sessions": 13458,
           "users": 10021,
           "conversions": 1423,
-          "bounce_rate": 24.74
+          "bounce_rate": 24.74,
+          "avg_duration": 464.18
         },
         "tablet": {
           "sessions": 311,
           "users": 245,
           "conversions": 25,
-          "bounce_rate": 17.04
+          "bounce_rate": 17.04,
+          "avg_duration": 360.08
         }
       },
       "2026-03-04": {
@@ -8941,19 +9007,22 @@
           "sessions": 38134,
           "users": 29445,
           "conversions": 3318,
-          "bounce_rate": 23.02
+          "bounce_rate": 23.02,
+          "avg_duration": 280.81
         },
         "desktop": {
           "sessions": 12523,
           "users": 9349,
           "conversions": 1618,
-          "bounce_rate": 23.22
+          "bounce_rate": 23.22,
+          "avg_duration": 496.51
         },
         "tablet": {
           "sessions": 293,
           "users": 245,
           "conversions": 28,
-          "bounce_rate": 16.72
+          "bounce_rate": 16.72,
+          "avg_duration": 324.39
         }
       },
       "2026-03-05": {
@@ -8961,19 +9030,22 @@
           "sessions": 38663,
           "users": 30522,
           "conversions": 3523,
-          "bounce_rate": 20.81
+          "bounce_rate": 20.81,
+          "avg_duration": 287.15
         },
         "desktop": {
           "sessions": 12809,
           "users": 9413,
           "conversions": 1620,
-          "bounce_rate": 23.05
+          "bounce_rate": 23.05,
+          "avg_duration": 489.38
         },
         "tablet": {
           "sessions": 287,
           "users": 245,
           "conversions": 29,
-          "bounce_rate": 18.47
+          "bounce_rate": 18.47,
+          "avg_duration": 305.99
         }
       },
       "2026-03-06": {
@@ -8981,19 +9053,22 @@
           "sessions": 39118,
           "users": 29656,
           "conversions": 3542,
-          "bounce_rate": 22.25
+          "bounce_rate": 22.25,
+          "avg_duration": 283.74
         },
         "desktop": {
           "sessions": 11544,
           "users": 8714,
           "conversions": 1618,
-          "bounce_rate": 23.86
+          "bounce_rate": 23.86,
+          "avg_duration": 491.52
         },
         "tablet": {
           "sessions": 265,
           "users": 221,
           "conversions": 30,
-          "bounce_rate": 14.34
+          "bounce_rate": 14.34,
+          "avg_duration": 350.71
         }
       },
       "2026-03-07": {
@@ -9001,19 +9076,22 @@
           "sessions": 39634,
           "users": 31145,
           "conversions": 3341,
-          "bounce_rate": 22.69
+          "bounce_rate": 22.69,
+          "avg_duration": 276.6
         },
         "desktop": {
           "sessions": 6550,
           "users": 5276,
           "conversions": 933,
-          "bounce_rate": 23.71
+          "bounce_rate": 23.71,
+          "avg_duration": 498.59
         },
         "tablet": {
           "sessions": 257,
           "users": 221,
           "conversions": 27,
-          "bounce_rate": 15.95
+          "bounce_rate": 15.95,
+          "avg_duration": 361.47
         }
       },
       "2026-03-08": {
@@ -9021,19 +9099,22 @@
           "sessions": 41031,
           "users": 32294,
           "conversions": 3150,
-          "bounce_rate": 23.4
+          "bounce_rate": 23.4,
+          "avg_duration": 270.44
         },
         "desktop": {
           "sessions": 6063,
           "users": 4954,
           "conversions": 840,
-          "bounce_rate": 25.32
+          "bounce_rate": 25.32,
+          "avg_duration": 511.41
         },
         "tablet": {
           "sessions": 254,
           "users": 221,
           "conversions": 21,
-          "bounce_rate": 23.62
+          "bounce_rate": 23.62,
+          "avg_duration": 279.54
         }
       },
       "2026-03-09": {
@@ -9041,19 +9122,22 @@
           "sessions": 40286,
           "users": 32411,
           "conversions": 3260,
-          "bounce_rate": 23.48
+          "bounce_rate": 23.48,
+          "avg_duration": 297.64
         },
         "desktop": {
           "sessions": 13574,
           "users": 10354,
           "conversions": 1520,
-          "bounce_rate": 23.17
+          "bounce_rate": 23.17,
+          "avg_duration": 507.34
         },
         "tablet": {
           "sessions": 322,
           "users": 271,
           "conversions": 18,
-          "bounce_rate": 20.19
+          "bounce_rate": 20.19,
+          "avg_duration": 314.9
         }
       },
       "2026-03-10": {
@@ -9061,25 +9145,29 @@
           "sessions": 39074,
           "users": 30395,
           "conversions": 3149,
-          "bounce_rate": 21.56
+          "bounce_rate": 21.56,
+          "avg_duration": 285.15
         },
         "desktop": {
           "sessions": 13209,
           "users": 10044,
           "conversions": 1711,
-          "bounce_rate": 23.04
+          "bounce_rate": 23.04,
+          "avg_duration": 516.43
         },
         "tablet": {
           "sessions": 310,
           "users": 263,
           "conversions": 27,
-          "bounce_rate": 20.97
+          "bounce_rate": 20.97,
+          "avg_duration": 361.02
         },
         "smart tv": {
           "sessions": 1,
           "users": 1,
           "conversions": 0,
-          "bounce_rate": 100.0
+          "bounce_rate": 100.0,
+          "avg_duration": 5.05
         }
       },
       "2026-03-11": {
@@ -9087,19 +9175,22 @@
           "sessions": 40179,
           "users": 30633,
           "conversions": 3287,
-          "bounce_rate": 23.02
+          "bounce_rate": 23.02,
+          "avg_duration": 277.02
         },
         "desktop": {
           "sessions": 13749,
           "users": 10549,
           "conversions": 1657,
-          "bounce_rate": 23.63
+          "bounce_rate": 23.63,
+          "avg_duration": 495.32
         },
         "tablet": {
           "sessions": 286,
           "users": 245,
           "conversions": 30,
-          "bounce_rate": 16.43
+          "bounce_rate": 16.43,
+          "avg_duration": 412.32
         }
       },
       "2026-03-12": {
@@ -9107,19 +9198,22 @@
           "sessions": 40843,
           "users": 31407,
           "conversions": 3373,
-          "bounce_rate": 23.05
+          "bounce_rate": 23.05,
+          "avg_duration": 275.29
         },
         "desktop": {
           "sessions": 13957,
           "users": 10375,
           "conversions": 1583,
-          "bounce_rate": 23.85
+          "bounce_rate": 23.85,
+          "avg_duration": 488.78
         },
         "tablet": {
           "sessions": 269,
           "users": 236,
           "conversions": 19,
-          "bounce_rate": 18.22
+          "bounce_rate": 18.22,
+          "avg_duration": 380.9
         }
       },
       "2026-03-13": {
@@ -9127,19 +9221,22 @@
           "sessions": 39497,
           "users": 30460,
           "conversions": 3435,
-          "bounce_rate": 20.82
+          "bounce_rate": 20.82,
+          "avg_duration": 280.58
         },
         "desktop": {
           "sessions": 11914,
           "users": 9131,
           "conversions": 1526,
-          "bounce_rate": 22.23
+          "bounce_rate": 22.23,
+          "avg_duration": 504.74
         },
         "tablet": {
           "sessions": 270,
           "users": 217,
           "conversions": 24,
-          "bounce_rate": 16.67
+          "bounce_rate": 16.67,
+          "avg_duration": 310.0
         }
       },
       "2026-03-14": {
@@ -9147,19 +9244,22 @@
           "sessions": 33691,
           "users": 25769,
           "conversions": 3096,
-          "bounce_rate": 21.16
+          "bounce_rate": 21.16,
+          "avg_duration": 283.69
         },
         "desktop": {
           "sessions": 6373,
           "users": 5062,
           "conversions": 845,
-          "bounce_rate": 26.2
+          "bounce_rate": 26.2,
+          "avg_duration": 513.67
         },
         "tablet": {
           "sessions": 225,
           "users": 192,
           "conversions": 18,
-          "bounce_rate": 17.78
+          "bounce_rate": 17.78,
+          "avg_duration": 333.02
         }
       },
       "2026-03-15": {
@@ -9167,19 +9267,22 @@
           "sessions": 40710,
           "users": 32406,
           "conversions": 3261,
-          "bounce_rate": 22.51
+          "bounce_rate": 22.51,
+          "avg_duration": 279.6
         },
         "desktop": {
           "sessions": 7180,
           "users": 5602,
           "conversions": 919,
-          "bounce_rate": 24.69
+          "bounce_rate": 24.69,
+          "avg_duration": 502.21
         },
         "tablet": {
           "sessions": 312,
           "users": 267,
           "conversions": 24,
-          "bounce_rate": 15.38
+          "bounce_rate": 15.38,
+          "avg_duration": 352.98
         }
       },
       "2026-03-16": {
@@ -9187,19 +9290,22 @@
           "sessions": 39793,
           "users": 31059,
           "conversions": 3267,
-          "bounce_rate": 22.41
+          "bounce_rate": 22.41,
+          "avg_duration": 286.4
         },
         "desktop": {
           "sessions": 13736,
           "users": 10606,
           "conversions": 1629,
-          "bounce_rate": 21.22
+          "bounce_rate": 21.22,
+          "avg_duration": 530.75
         },
         "tablet": {
           "sessions": 292,
           "users": 255,
           "conversions": 30,
-          "bounce_rate": 20.55
+          "bounce_rate": 20.55,
+          "avg_duration": 335.24
         }
       },
       "2026-03-17": {
@@ -9207,25 +9313,29 @@
           "sessions": 38346,
           "users": 29027,
           "conversions": 3234,
-          "bounce_rate": 22.43
+          "bounce_rate": 22.43,
+          "avg_duration": 288.11
         },
         "desktop": {
           "sessions": 12974,
           "users": 9973,
           "conversions": 1571,
-          "bounce_rate": 21.71
+          "bounce_rate": 21.71,
+          "avg_duration": 550.08
         },
         "tablet": {
           "sessions": 261,
           "users": 221,
           "conversions": 17,
-          "bounce_rate": 14.56
+          "bounce_rate": 14.56,
+          "avg_duration": 284.19
         },
         "smart tv": {
           "sessions": 1,
           "users": 1,
           "conversions": 0,
-          "bounce_rate": 0.0
+          "bounce_rate": 0.0,
+          "avg_duration": 353.65
         }
       },
       "2026-03-18": {
@@ -9233,19 +9343,22 @@
           "sessions": 39899,
           "users": 29525,
           "conversions": 3489,
-          "bounce_rate": 22.18
+          "bounce_rate": 22.18,
+          "avg_duration": 284.65
         },
         "desktop": {
           "sessions": 12898,
           "users": 9699,
           "conversions": 1485,
-          "bounce_rate": 23.29
+          "bounce_rate": 23.29,
+          "avg_duration": 486.36
         },
         "tablet": {
           "sessions": 269,
           "users": 226,
           "conversions": 19,
-          "bounce_rate": 16.73
+          "bounce_rate": 16.73,
+          "avg_duration": 320.03
         }
       },
       "2026-03-19": {
@@ -9253,19 +9366,22 @@
           "sessions": 36940,
           "users": 28265,
           "conversions": 3335,
-          "bounce_rate": 21.93
+          "bounce_rate": 21.93,
+          "avg_duration": 294.06
         },
         "desktop": {
           "sessions": 10816,
           "users": 8132,
           "conversions": 1365,
-          "bounce_rate": 23.63
+          "bounce_rate": 23.63,
+          "avg_duration": 524.94
         },
         "tablet": {
           "sessions": 288,
           "users": 245,
           "conversions": 31,
-          "bounce_rate": 16.32
+          "bounce_rate": 16.32,
+          "avg_duration": 368.92
         }
       },
       "2026-03-20": {
@@ -9273,25 +9389,29 @@
           "sessions": 37762,
           "users": 28972,
           "conversions": 3309,
-          "bounce_rate": 22.98
+          "bounce_rate": 22.98,
+          "avg_duration": 282.74
         },
         "desktop": {
           "sessions": 11831,
           "users": 8888,
           "conversions": 1555,
-          "bounce_rate": 22.84
+          "bounce_rate": 22.84,
+          "avg_duration": 510.74
         },
         "tablet": {
           "sessions": 233,
           "users": 192,
           "conversions": 28,
-          "bounce_rate": 13.73
+          "bounce_rate": 13.73,
+          "avg_duration": 360.36
         },
         "smart tv": {
           "sessions": 1,
           "users": 1,
           "conversions": 0,
-          "bounce_rate": 0.0
+          "bounce_rate": 0.0,
+          "avg_duration": 30.09
         }
       },
       "2026-03-21": {
@@ -9299,19 +9419,22 @@
           "sessions": 34171,
           "users": 26118,
           "conversions": 3208,
-          "bounce_rate": 21.95
+          "bounce_rate": 21.95,
+          "avg_duration": 294.97
         },
         "desktop": {
           "sessions": 6046,
           "users": 4831,
           "conversions": 821,
-          "bounce_rate": 26.2
+          "bounce_rate": 26.2,
+          "avg_duration": 539.33
         },
         "tablet": {
           "sessions": 237,
           "users": 207,
           "conversions": 20,
-          "bounce_rate": 14.77
+          "bounce_rate": 14.77,
+          "avg_duration": 429.93
         }
       },
       "2026-03-22": {
@@ -9319,19 +9442,22 @@
           "sessions": 36615,
           "users": 27499,
           "conversions": 3162,
-          "bounce_rate": 19.78
+          "bounce_rate": 19.78,
+          "avg_duration": 286.95
         },
         "desktop": {
           "sessions": 5945,
           "users": 5676,
           "conversions": 853,
-          "bounce_rate": 24.63
+          "bounce_rate": 24.63,
+          "avg_duration": 538.62
         },
         "tablet": {
           "sessions": 268,
           "users": 234,
           "conversions": 20,
-          "bounce_rate": 20.52
+          "bounce_rate": 20.52,
+          "avg_duration": 344.56
         }
       },
       "2026-03-23": {
@@ -9339,19 +9465,22 @@
           "sessions": 38753,
           "users": 29455,
           "conversions": 3450,
-          "bounce_rate": 21.27
+          "bounce_rate": 21.27,
+          "avg_duration": 295.52
         },
         "desktop": {
           "sessions": 13580,
           "users": 10307,
           "conversions": 1686,
-          "bounce_rate": 22.35
+          "bounce_rate": 22.35,
+          "avg_duration": 505.43
         },
         "tablet": {
           "sessions": 285,
           "users": 242,
           "conversions": 22,
-          "bounce_rate": 18.25
+          "bounce_rate": 18.25,
+          "avg_duration": 267.69
         }
       },
       "2026-03-24": {
@@ -9359,19 +9488,22 @@
           "sessions": 36622,
           "users": 27683,
           "conversions": 3309,
-          "bounce_rate": 20.43
+          "bounce_rate": 20.43,
+          "avg_duration": 293.75
         },
         "desktop": {
           "sessions": 12898,
           "users": 9804,
           "conversions": 1613,
-          "bounce_rate": 21.3
+          "bounce_rate": 21.3,
+          "avg_duration": 516.75
         },
         "tablet": {
           "sessions": 271,
           "users": 222,
           "conversions": 24,
-          "bounce_rate": 20.3
+          "bounce_rate": 20.3,
+          "avg_duration": 341.48
         }
       },
       "2026-03-25": {
@@ -9379,19 +9511,22 @@
           "sessions": 36136,
           "users": 27829,
           "conversions": 3420,
-          "bounce_rate": 18.36
+          "bounce_rate": 18.36,
+          "avg_duration": 298.18
         },
         "desktop": {
           "sessions": 12030,
           "users": 9058,
           "conversions": 1476,
-          "bounce_rate": 24.69
+          "bounce_rate": 24.69,
+          "avg_duration": 512.81
         },
         "tablet": {
           "sessions": 285,
           "users": 246,
           "conversions": 33,
-          "bounce_rate": 16.14
+          "bounce_rate": 16.14,
+          "avg_duration": 290.69
         }
       },
       "2026-03-26": {
@@ -9399,25 +9534,29 @@
           "sessions": 37865,
           "users": 28454,
           "conversions": 3521,
-          "bounce_rate": 22.05
+          "bounce_rate": 22.05,
+          "avg_duration": 296.8
         },
         "desktop": {
           "sessions": 15417,
           "users": 12335,
           "conversions": 1664,
-          "bounce_rate": 30.0
+          "bounce_rate": 30.0,
+          "avg_duration": 427.8
         },
         "tablet": {
           "sessions": 278,
           "users": 238,
           "conversions": 18,
-          "bounce_rate": 15.83
+          "bounce_rate": 15.83,
+          "avg_duration": 325.11
         },
         "smart tv": {
           "sessions": 1,
           "users": 1,
           "conversions": 0,
-          "bounce_rate": 0.0
+          "bounce_rate": 0.0,
+          "avg_duration": 14.27
         }
       },
       "2026-03-27": {
@@ -9425,25 +9564,29 @@
           "sessions": 39397,
           "users": 29857,
           "conversions": 3523,
-          "bounce_rate": 21.09
+          "bounce_rate": 21.09,
+          "avg_duration": 285.75
         },
         "desktop": {
           "sessions": 13321,
           "users": 10585,
           "conversions": 1645,
-          "bounce_rate": 27.01
+          "bounce_rate": 27.01,
+          "avg_duration": 479.37
         },
         "tablet": {
           "sessions": 277,
           "users": 234,
           "conversions": 29,
-          "bounce_rate": 11.91
+          "bounce_rate": 11.91,
+          "avg_duration": 348.18
         },
         "smart tv": {
           "sessions": 1,
           "users": 1,
           "conversions": 0,
-          "bounce_rate": 100.0
+          "bounce_rate": 100.0,
+          "avg_duration": 0.0
         }
       },
       "2026-03-28": {
@@ -9451,19 +9594,22 @@
           "sessions": 33837,
           "users": 26581,
           "conversions": 3321,
-          "bounce_rate": 18.71
+          "bounce_rate": 18.71,
+          "avg_duration": 304.69
         },
         "desktop": {
           "sessions": 6659,
           "users": 5277,
           "conversions": 1015,
-          "bounce_rate": 23.76
+          "bounce_rate": 23.76,
+          "avg_duration": 514.64
         },
         "tablet": {
           "sessions": 243,
           "users": 202,
           "conversions": 29,
-          "bounce_rate": 10.29
+          "bounce_rate": 10.29,
+          "avg_duration": 357.82
         }
       },
       "2026-03-29": {
@@ -9471,19 +9617,22 @@
           "sessions": 37698,
           "users": 28697,
           "conversions": 3384,
-          "bounce_rate": 18.58
+          "bounce_rate": 18.58,
+          "avg_duration": 295.24
         },
         "desktop": {
           "sessions": 6863,
           "users": 5433,
           "conversions": 935,
-          "bounce_rate": 24.81
+          "bounce_rate": 24.81,
+          "avg_duration": 506.1
         },
         "tablet": {
           "sessions": 283,
           "users": 231,
           "conversions": 33,
-          "bounce_rate": 15.19
+          "bounce_rate": 15.19,
+          "avg_duration": 317.66
         }
       },
       "2026-03-30": {
@@ -9491,25 +9640,29 @@
           "sessions": 46649,
           "users": 34960,
           "conversions": 3985,
-          "bounce_rate": 20.45
+          "bounce_rate": 20.45,
+          "avg_duration": 301.61
         },
         "desktop": {
           "sessions": 18375,
           "users": 14653,
           "conversions": 1981,
-          "bounce_rate": 26.9
+          "bounce_rate": 26.9,
+          "avg_duration": 497.08
         },
         "tablet": {
           "sessions": 356,
           "users": 289,
           "conversions": 44,
-          "bounce_rate": 18.54
+          "bounce_rate": 18.54,
+          "avg_duration": 411.63
         },
         "smart tv": {
           "sessions": 1,
           "users": 1,
           "conversions": 0,
-          "bounce_rate": 100.0
+          "bounce_rate": 100.0,
+          "avg_duration": 0.0
         }
       },
       "2026-03-31": {
@@ -9517,19 +9670,22 @@
           "sessions": 45831,
           "users": 33945,
           "conversions": 3865,
-          "bounce_rate": 19.89
+          "bounce_rate": 19.89,
+          "avg_duration": 313.57
         },
         "desktop": {
           "sessions": 15656,
           "users": 11732,
           "conversions": 1693,
-          "bounce_rate": 22.47
+          "bounce_rate": 22.47,
+          "avg_duration": 518.81
         },
         "tablet": {
           "sessions": 376,
           "users": 312,
           "conversions": 38,
-          "bounce_rate": 17.29
+          "bounce_rate": 17.29,
+          "avg_duration": 358.36
         }
       },
       "2026-04-01": {
@@ -9537,19 +9693,22 @@
           "sessions": 45880,
           "users": 34148,
           "conversions": 3682,
-          "bounce_rate": 19.23
+          "bounce_rate": 19.23,
+          "avg_duration": 310.57
         },
         "desktop": {
           "sessions": 14607,
           "users": 11012,
           "conversions": 1716,
-          "bounce_rate": 20.8
+          "bounce_rate": 20.8,
+          "avg_duration": 539.43
         },
         "tablet": {
           "sessions": 349,
           "users": 297,
           "conversions": 39,
-          "bounce_rate": 14.04
+          "bounce_rate": 14.04,
+          "avg_duration": 354.83
         }
       },
       "2026-04-02": {
@@ -9557,19 +9716,22 @@
           "sessions": 41864,
           "users": 30454,
           "conversions": 3464,
-          "bounce_rate": 18.5
+          "bounce_rate": 18.5,
+          "avg_duration": 301.96
         },
         "desktop": {
           "sessions": 11280,
           "users": 8749,
           "conversions": 1444,
-          "bounce_rate": 23.9
+          "bounce_rate": 23.9,
+          "avg_duration": 533.5
         },
         "tablet": {
           "sessions": 267,
           "users": 222,
           "conversions": 34,
-          "bounce_rate": 13.86
+          "bounce_rate": 13.86,
+          "avg_duration": 404.04
         }
       },
       "2026-04-03": {
@@ -9577,19 +9739,22 @@
           "sessions": 34627,
           "users": 26017,
           "conversions": 2799,
-          "bounce_rate": 18.37
+          "bounce_rate": 18.37,
+          "avg_duration": 299.81
         },
         "desktop": {
           "sessions": 5650,
           "users": 4525,
           "conversions": 795,
-          "bounce_rate": 25.73
+          "bounce_rate": 25.73,
+          "avg_duration": 516.85
         },
         "tablet": {
           "sessions": 217,
           "users": 186,
           "conversions": 31,
-          "bounce_rate": 22.58
+          "bounce_rate": 22.58,
+          "avg_duration": 303.18
         }
       },
       "2026-04-04": {
@@ -9597,19 +9762,22 @@
           "sessions": 33593,
           "users": 25651,
           "conversions": 3075,
-          "bounce_rate": 17.91
+          "bounce_rate": 17.91,
+          "avg_duration": 318.09
         },
         "desktop": {
           "sessions": 5964,
           "users": 4627,
           "conversions": 820,
-          "bounce_rate": 27.65
+          "bounce_rate": 27.65,
+          "avg_duration": 509.36
         },
         "tablet": {
           "sessions": 228,
           "users": 207,
           "conversions": 18,
-          "bounce_rate": 14.91
+          "bounce_rate": 14.91,
+          "avg_duration": 323.87
         }
       },
       "2026-04-05": {
@@ -9617,19 +9785,22 @@
           "sessions": 36400,
           "users": 28202,
           "conversions": 3145,
-          "bounce_rate": 18.2
+          "bounce_rate": 18.2,
+          "avg_duration": 313.6
         },
         "desktop": {
           "sessions": 5890,
           "users": 4768,
           "conversions": 807,
-          "bounce_rate": 26.06
+          "bounce_rate": 26.06,
+          "avg_duration": 486.84
         },
         "tablet": {
           "sessions": 257,
           "users": 221,
           "conversions": 28,
-          "bounce_rate": 13.62
+          "bounce_rate": 13.62,
+          "avg_duration": 394.23
         }
       },
       "2026-04-06": {
@@ -9637,19 +9808,22 @@
           "sessions": 37907,
           "users": 29532,
           "conversions": 3351,
-          "bounce_rate": 20.12
+          "bounce_rate": 20.12,
+          "avg_duration": 297.76
         },
         "desktop": {
           "sessions": 14428,
           "users": 11164,
           "conversions": 1733,
-          "bounce_rate": 25.53
+          "bounce_rate": 25.53,
+          "avg_duration": 494.88
         },
         "tablet": {
           "sessions": 258,
           "users": 229,
           "conversions": 26,
-          "bounce_rate": 17.44
+          "bounce_rate": 17.44,
+          "avg_duration": 358.88
         }
       },
       "2026-04-07": {
@@ -9657,25 +9831,29 @@
           "sessions": 34876,
           "users": 26576,
           "conversions": 3250,
-          "bounce_rate": 21.48
+          "bounce_rate": 21.48,
+          "avg_duration": 292.49
         },
         "desktop": {
           "sessions": 13514,
           "users": 10467,
           "conversions": 1677,
-          "bounce_rate": 24.57
+          "bounce_rate": 24.57,
+          "avg_duration": 486.89
         },
         "tablet": {
           "sessions": 247,
           "users": 219,
           "conversions": 17,
-          "bounce_rate": 14.98
+          "bounce_rate": 14.98,
+          "avg_duration": 341.75
         },
         "smart tv": {
           "sessions": 1,
           "users": 1,
           "conversions": 0,
-          "bounce_rate": 100.0
+          "bounce_rate": 100.0,
+          "avg_duration": 0.0
         }
       },
       "2026-04-08": {
@@ -9683,19 +9861,22 @@
           "sessions": 35369,
           "users": 26100,
           "conversions": 3342,
-          "bounce_rate": 20.24
+          "bounce_rate": 20.24,
+          "avg_duration": 286.36
         },
         "desktop": {
           "sessions": 13064,
           "users": 9755,
           "conversions": 1774,
-          "bounce_rate": 25.26
+          "bounce_rate": 25.26,
+          "avg_duration": 500.67
         },
         "tablet": {
           "sessions": 244,
           "users": 215,
           "conversions": 22,
-          "bounce_rate": 20.08
+          "bounce_rate": 20.08,
+          "avg_duration": 271.09
         }
       },
       "2026-04-09": {
@@ -9703,19 +9884,22 @@
           "sessions": 36178,
           "users": 27055,
           "conversions": 3492,
-          "bounce_rate": 20.66
+          "bounce_rate": 20.66,
+          "avg_duration": 287.34
         },
         "desktop": {
           "sessions": 13144,
           "users": 10176,
           "conversions": 1800,
-          "bounce_rate": 26.41
+          "bounce_rate": 26.41,
+          "avg_duration": 503.23
         },
         "tablet": {
           "sessions": 261,
           "users": 221,
           "conversions": 22,
-          "bounce_rate": 16.09
+          "bounce_rate": 16.09,
+          "avg_duration": 353.19
         }
       },
       "2026-04-10": {
@@ -9723,19 +9907,22 @@
           "sessions": 35957,
           "users": 27433,
           "conversions": 3338,
-          "bounce_rate": 19.72
+          "bounce_rate": 19.72,
+          "avg_duration": 297.61
         },
         "desktop": {
           "sessions": 11860,
           "users": 9218,
           "conversions": 1638,
-          "bounce_rate": 26.99
+          "bounce_rate": 26.99,
+          "avg_duration": 511.13
         },
         "tablet": {
           "sessions": 249,
           "users": 208,
           "conversions": 19,
-          "bounce_rate": 23.29
+          "bounce_rate": 23.29,
+          "avg_duration": 257.9
         }
       },
       "2026-04-11": {
@@ -9743,19 +9930,22 @@
           "sessions": 32124,
           "users": 24893,
           "conversions": 3265,
-          "bounce_rate": 19.37
+          "bounce_rate": 19.37,
+          "avg_duration": 294.88
         },
         "desktop": {
           "sessions": 6711,
           "users": 5786,
           "conversions": 950,
-          "bounce_rate": 29.82
+          "bounce_rate": 29.82,
+          "avg_duration": 511.14
         },
         "tablet": {
           "sessions": 222,
           "users": 184,
           "conversions": 14,
-          "bounce_rate": 15.32
+          "bounce_rate": 15.32,
+          "avg_duration": 348.7
         }
       },
       "2026-04-12": {
@@ -9763,19 +9953,22 @@
           "sessions": 34077,
           "users": 26867,
           "conversions": 3208,
-          "bounce_rate": 20.92
+          "bounce_rate": 20.92,
+          "avg_duration": 293.1
         },
         "desktop": {
           "sessions": 6352,
           "users": 5189,
           "conversions": 949,
-          "bounce_rate": 29.14
+          "bounce_rate": 29.14,
+          "avg_duration": 496.84
         },
         "tablet": {
           "sessions": 228,
           "users": 198,
           "conversions": 34,
-          "bounce_rate": 14.47
+          "bounce_rate": 14.47,
+          "avg_duration": 391.36
         }
       },
       "2026-04-13": {
@@ -9783,25 +9976,29 @@
           "sessions": 39234,
           "users": 30271,
           "conversions": 3501,
-          "bounce_rate": 22.45
+          "bounce_rate": 22.45,
+          "avg_duration": 293.82
         },
         "desktop": {
           "sessions": 14421,
           "users": 11435,
           "conversions": 1821,
-          "bounce_rate": 27.33
+          "bounce_rate": 27.33,
+          "avg_duration": 480.37
         },
         "tablet": {
           "sessions": 266,
           "users": 228,
           "conversions": 24,
-          "bounce_rate": 18.05
+          "bounce_rate": 18.05,
+          "avg_duration": 326.43
         },
         "smart tv": {
           "sessions": 1,
           "users": 1,
           "conversions": 0,
-          "bounce_rate": 0.0
+          "bounce_rate": 0.0,
+          "avg_duration": 106.77
         }
       },
       "2026-04-14": {
@@ -9809,19 +10006,22 @@
           "sessions": 38195,
           "users": 29486,
           "conversions": 3552,
-          "bounce_rate": 22.32
+          "bounce_rate": 22.32,
+          "avg_duration": 309.75
         },
         "desktop": {
           "sessions": 13761,
           "users": 10658,
           "conversions": 1844,
-          "bounce_rate": 25.18
+          "bounce_rate": 25.18,
+          "avg_duration": 515.99
         },
         "tablet": {
           "sessions": 285,
           "users": 244,
           "conversions": 35,
-          "bounce_rate": 14.39
+          "bounce_rate": 14.39,
+          "avg_duration": 404.13
         }
       },
       "2026-04-15": {
@@ -9829,19 +10029,22 @@
           "sessions": 38520,
           "users": 29165,
           "conversions": 3701,
-          "bounce_rate": 20.1
+          "bounce_rate": 20.1,
+          "avg_duration": 300.05
         },
         "desktop": {
           "sessions": 13821,
           "users": 10748,
           "conversions": 2020,
-          "bounce_rate": 27.19
+          "bounce_rate": 27.19,
+          "avg_duration": 496.87
         },
         "tablet": {
           "sessions": 247,
           "users": 205,
           "conversions": 24,
-          "bounce_rate": 16.6
+          "bounce_rate": 16.6,
+          "avg_duration": 319.71
         }
       },
       "2026-04-16": {
@@ -9849,19 +10052,22 @@
           "sessions": 41351,
           "users": 31459,
           "conversions": 3825,
-          "bounce_rate": 20.13
+          "bounce_rate": 20.13,
+          "avg_duration": 315.97
         },
         "desktop": {
           "sessions": 14159,
           "users": 10829,
           "conversions": 2037,
-          "bounce_rate": 27.06
+          "bounce_rate": 27.06,
+          "avg_duration": 521.26
         },
         "tablet": {
           "sessions": 301,
           "users": 256,
           "conversions": 41,
-          "bounce_rate": 17.28
+          "bounce_rate": 17.28,
+          "avg_duration": 412.68
         }
       },
       "2026-04-17": {
@@ -9869,19 +10075,22 @@
           "sessions": 45472,
           "users": 32759,
           "conversions": 4011,
-          "bounce_rate": 21.66
+          "bounce_rate": 21.66,
+          "avg_duration": 301.51
         },
         "desktop": {
           "sessions": 13433,
           "users": 10686,
           "conversions": 1834,
-          "bounce_rate": 30.26
+          "bounce_rate": 30.26,
+          "avg_duration": 503.45
         },
         "tablet": {
           "sessions": 263,
           "users": 231,
           "conversions": 31,
-          "bounce_rate": 14.45
+          "bounce_rate": 14.45,
+          "avg_duration": 371.7
         }
       },
       "2026-04-18": {
@@ -9889,19 +10098,22 @@
           "sessions": 36317,
           "users": 26997,
           "conversions": 3406,
-          "bounce_rate": 22.95
+          "bounce_rate": 22.95,
+          "avg_duration": 301.95
         },
         "desktop": {
           "sessions": 5916,
           "users": 4869,
           "conversions": 839,
-          "bounce_rate": 31.66
+          "bounce_rate": 31.66,
+          "avg_duration": 476.47
         },
         "tablet": {
           "sessions": 192,
           "users": 169,
           "conversions": 20,
-          "bounce_rate": 17.19
+          "bounce_rate": 17.19,
+          "avg_duration": 353.07
         }
       },
       "2026-04-19": {
@@ -9909,19 +10121,22 @@
           "sessions": 38093,
           "users": 28235,
           "conversions": 3676,
-          "bounce_rate": 22.27
+          "bounce_rate": 22.27,
+          "avg_duration": 299.91
         },
         "desktop": {
           "sessions": 5872,
           "users": 4780,
           "conversions": 755,
-          "bounce_rate": 33.33
+          "bounce_rate": 33.33,
+          "avg_duration": 486.67
         },
         "tablet": {
           "sessions": 261,
           "users": 227,
           "conversions": 25,
-          "bounce_rate": 16.09
+          "bounce_rate": 16.09,
+          "avg_duration": 423.96
         }
       },
       "2026-04-20": {
@@ -9929,19 +10144,22 @@
           "sessions": 41802,
           "users": 31712,
           "conversions": 4177,
-          "bounce_rate": 22.7
+          "bounce_rate": 22.7,
+          "avg_duration": 313.93
         },
         "desktop": {
           "sessions": 13090,
           "users": 10880,
           "conversions": 1858,
-          "bounce_rate": 29.77
+          "bounce_rate": 29.77,
+          "avg_duration": 453.98
         },
         "tablet": {
           "sessions": 290,
           "users": 243,
           "conversions": 37,
-          "bounce_rate": 17.24
+          "bounce_rate": 17.24,
+          "avg_duration": 353.35
         }
       },
       "2026-04-21": {
@@ -9949,19 +10167,22 @@
           "sessions": 41925,
           "users": 32292,
           "conversions": 3835,
-          "bounce_rate": 23.29
+          "bounce_rate": 23.29,
+          "avg_duration": 311.82
         },
         "desktop": {
           "sessions": 8468,
           "users": 6941,
           "conversions": 1357,
-          "bounce_rate": 29.55
+          "bounce_rate": 29.55,
+          "avg_duration": 477.67
         },
         "tablet": {
           "sessions": 317,
           "users": 271,
           "conversions": 28,
-          "bounce_rate": 13.25
+          "bounce_rate": 13.25,
+          "avg_duration": 384.27
         }
       },
       "2026-04-22": {
@@ -9969,19 +10190,22 @@
           "sessions": 41435,
           "users": 31178,
           "conversions": 3638,
-          "bounce_rate": 22.9
+          "bounce_rate": 22.9,
+          "avg_duration": 286.57
         },
         "desktop": {
           "sessions": 15782,
           "users": 12603,
           "conversions": 1967,
-          "bounce_rate": 28.93
+          "bounce_rate": 28.93,
+          "avg_duration": 444.74
         },
         "tablet": {
           "sessions": 304,
           "users": 262,
           "conversions": 23,
-          "bounce_rate": 24.34
+          "bounce_rate": 24.34,
+          "avg_duration": 282.56
         }
       },
       "2026-04-23": {
@@ -9989,19 +10213,22 @@
           "sessions": 40350,
           "users": 31242,
           "conversions": 3942,
-          "bounce_rate": 23.01
+          "bounce_rate": 23.01,
+          "avg_duration": 306.42
         },
         "desktop": {
           "sessions": 13690,
           "users": 10765,
           "conversions": 1755,
-          "bounce_rate": 29.63
+          "bounce_rate": 29.63,
+          "avg_duration": 465.14
         },
         "tablet": {
           "sessions": 259,
           "users": 235,
           "conversions": 35,
-          "bounce_rate": 20.85
+          "bounce_rate": 20.85,
+          "avg_duration": 321.56
         }
       },
       "2026-04-24": {
@@ -10009,7 +10236,722 @@
           "sessions": 42862,
           "users": 32275,
           "conversions": 3936,
-          "bounce_rate": 25.61
+          "bounce_rate": 25.61,
+          "avg_duration": 295.04
+        },
+        "desktop": {
+          "sessions": 13432,
+          "users": 10509,
+          "conversions": 1852,
+          "bounce_rate": 28.25,
+          "avg_duration": 454.8
+        },
+        "tablet": {
+          "sessions": 291,
+          "users": 257,
+          "conversions": 30,
+          "bounce_rate": 16.49,
+          "avg_duration": 371.52
+        },
+        "smart tv": {
+          "sessions": 1,
+          "users": 1,
+          "conversions": 0,
+          "bounce_rate": 100.0,
+          "avg_duration": 0.0
+        }
+      },
+      "2026-04-25": {
+        "mobile": {
+          "sessions": 38200,
+          "users": 28724,
+          "conversions": 3617,
+          "bounce_rate": 23.92,
+          "avg_duration": 287.08
+        },
+        "desktop": {
+          "sessions": 6597,
+          "users": 5403,
+          "conversions": 1153,
+          "bounce_rate": 29.27,
+          "avg_duration": 563.27
+        },
+        "tablet": {
+          "sessions": 258,
+          "users": 221,
+          "conversions": 33,
+          "bounce_rate": 18.99,
+          "avg_duration": 357.6
+        }
+      },
+      "2026-04-26": {
+        "mobile": {
+          "sessions": 42255,
+          "users": 32437,
+          "conversions": 3750,
+          "bounce_rate": 22.65,
+          "avg_duration": 298.48
+        },
+        "desktop": {
+          "sessions": 6636,
+          "users": 5461,
+          "conversions": 1118,
+          "bounce_rate": 29.1,
+          "avg_duration": 542.5
+        },
+        "tablet": {
+          "sessions": 302,
+          "users": 260,
+          "conversions": 28,
+          "bounce_rate": 23.84,
+          "avg_duration": 322.43
+        },
+        "smart tv": {
+          "sessions": 1,
+          "users": 1,
+          "conversions": 0,
+          "bounce_rate": 0.0,
+          "avg_duration": 163.13
+        }
+      },
+      "2026-04-27": {
+        "mobile": {
+          "sessions": 45375,
+          "users": 33875,
+          "conversions": 4109,
+          "bounce_rate": 24.18,
+          "avg_duration": 293.72
+        },
+        "desktop": {
+          "sessions": 15566,
+          "users": 12209,
+          "conversions": 2140,
+          "bounce_rate": 25.93,
+          "avg_duration": 494.64
+        },
+        "tablet": {
+          "sessions": 319,
+          "users": 266,
+          "conversions": 34,
+          "bounce_rate": 16.93,
+          "avg_duration": 349.36
+        },
+        "smart tv": {
+          "sessions": 1,
+          "users": 1,
+          "conversions": 0,
+          "bounce_rate": 0.0,
+          "avg_duration": 493.51
+        }
+      },
+      "2026-04-28": {
+        "mobile": {
+          "sessions": 45012,
+          "users": 33922,
+          "conversions": 4070,
+          "bounce_rate": 26.91,
+          "avg_duration": 295.27
+        },
+        "desktop": {
+          "sessions": 14866,
+          "users": 11947,
+          "conversions": 2083,
+          "bounce_rate": 25.52,
+          "avg_duration": 508.79
+        },
+        "tablet": {
+          "sessions": 305,
+          "users": 260,
+          "conversions": 27,
+          "bounce_rate": 22.3,
+          "avg_duration": 359.17
+        },
+        "smart tv": {
+          "sessions": 1,
+          "users": 1,
+          "conversions": 0,
+          "bounce_rate": 100.0,
+          "avg_duration": 0.0
+        }
+      },
+      "2026-04-29": {
+        "mobile": {
+          "sessions": 48973,
+          "users": 35158,
+          "conversions": 4225,
+          "bounce_rate": 26.81,
+          "avg_duration": 292.99
+        },
+        "desktop": {
+          "sessions": 16224,
+          "users": 12846,
+          "conversions": 2124,
+          "bounce_rate": 28.88,
+          "avg_duration": 458.79
+        },
+        "tablet": {
+          "sessions": 298,
+          "users": 269,
+          "conversions": 24,
+          "bounce_rate": 18.79,
+          "avg_duration": 334.28
+        }
+      },
+      "2026-04-30": {
+        "mobile": {
+          "sessions": 50072,
+          "users": 35953,
+          "conversions": 4331,
+          "bounce_rate": 24.47,
+          "avg_duration": 295.96
+        },
+        "desktop": {
+          "sessions": 13769,
+          "users": 10535,
+          "conversions": 1876,
+          "bounce_rate": 25.4,
+          "avg_duration": 482.26
+        },
+        "tablet": {
+          "sessions": 290,
+          "users": 233,
+          "conversions": 38,
+          "bounce_rate": 16.55,
+          "avg_duration": 425.27
+        }
+      },
+      "2026-05-01": {
+        "mobile": {
+          "sessions": 43570,
+          "users": 32296,
+          "conversions": 3604,
+          "bounce_rate": 25.57,
+          "avg_duration": 294.94
+        },
+        "desktop": {
+          "sessions": 6777,
+          "users": 5464,
+          "conversions": 1070,
+          "bounce_rate": 29.39,
+          "avg_duration": 506.4
+        },
+        "tablet": {
+          "sessions": 333,
+          "users": 278,
+          "conversions": 37,
+          "bounce_rate": 19.22,
+          "avg_duration": 379.45
+        }
+      },
+      "2026-05-02": {
+        "mobile": {
+          "sessions": 40833,
+          "users": 30513,
+          "conversions": 3869,
+          "bounce_rate": 22.72,
+          "avg_duration": 296.47
+        },
+        "desktop": {
+          "sessions": 6159,
+          "users": 4893,
+          "conversions": 1113,
+          "bounce_rate": 29.7,
+          "avg_duration": 523.15
+        },
+        "tablet": {
+          "sessions": 260,
+          "users": 231,
+          "conversions": 28,
+          "bounce_rate": 16.15,
+          "avg_duration": 358.18
+        }
+      },
+      "2026-05-03": {
+        "mobile": {
+          "sessions": 42687,
+          "users": 32662,
+          "conversions": 3717,
+          "bounce_rate": 22.66,
+          "avg_duration": 309.25
+        },
+        "desktop": {
+          "sessions": 6152,
+          "users": 5059,
+          "conversions": 1015,
+          "bounce_rate": 29.57,
+          "avg_duration": 486.91
+        },
+        "tablet": {
+          "sessions": 273,
+          "users": 239,
+          "conversions": 31,
+          "bounce_rate": 19.05,
+          "avg_duration": 348.08
+        },
+        "smart tv": {
+          "sessions": 1,
+          "users": 1,
+          "conversions": 0,
+          "bounce_rate": 0.0,
+          "avg_duration": 1060.1
+        }
+      },
+      "2026-05-04": {
+        "mobile": {
+          "sessions": 48706,
+          "users": 36938,
+          "conversions": 4341,
+          "bounce_rate": 27.5,
+          "avg_duration": 287.78
+        },
+        "desktop": {
+          "sessions": 14687,
+          "users": 11715,
+          "conversions": 2111,
+          "bounce_rate": 25.31,
+          "avg_duration": 503.7
+        },
+        "tablet": {
+          "sessions": 340,
+          "users": 292,
+          "conversions": 35,
+          "bounce_rate": 23.53,
+          "avg_duration": 394.56
+        },
+        "smart tv": {
+          "sessions": 1,
+          "users": 1,
+          "conversions": 0,
+          "bounce_rate": 0.0,
+          "avg_duration": 159.77
+        }
+      },
+      "2026-05-05": {
+        "mobile": {
+          "sessions": 44338,
+          "users": 34125,
+          "conversions": 4264,
+          "bounce_rate": 24.31,
+          "avg_duration": 296.22
+        },
+        "desktop": {
+          "sessions": 14547,
+          "users": 11665,
+          "conversions": 2190,
+          "bounce_rate": 25.46,
+          "avg_duration": 483.13
+        },
+        "tablet": {
+          "sessions": 302,
+          "users": 257,
+          "conversions": 24,
+          "bounce_rate": 15.56,
+          "avg_duration": 309.63
+        },
+        "smart tv": {
+          "sessions": 1,
+          "users": 1,
+          "conversions": 0,
+          "bounce_rate": 0.0,
+          "avg_duration": 239.89
+        }
+      },
+      "2026-05-06": {
+        "mobile": {
+          "sessions": 44777,
+          "users": 33480,
+          "conversions": 4295,
+          "bounce_rate": 24.85,
+          "avg_duration": 282.96
+        },
+        "desktop": {
+          "sessions": 14270,
+          "users": 11049,
+          "conversions": 2167,
+          "bounce_rate": 26.85,
+          "avg_duration": 483.84
+        },
+        "tablet": {
+          "sessions": 306,
+          "users": 261,
+          "conversions": 36,
+          "bounce_rate": 14.71,
+          "avg_duration": 301.91
+        }
+      },
+      "2026-05-07": {
+        "mobile": {
+          "sessions": 45068,
+          "users": 34546,
+          "conversions": 4418,
+          "bounce_rate": 24.87,
+          "avg_duration": 302.72
+        },
+        "desktop": {
+          "sessions": 14653,
+          "users": 11669,
+          "conversions": 2092,
+          "bounce_rate": 26.92,
+          "avg_duration": 467.4
+        },
+        "tablet": {
+          "sessions": 325,
+          "users": 279,
+          "conversions": 36,
+          "bounce_rate": 16.0,
+          "avg_duration": 353.79
+        }
+      },
+      "2026-05-08": {
+        "mobile": {
+          "sessions": 44666,
+          "users": 33624,
+          "conversions": 4286,
+          "bounce_rate": 22.65,
+          "avg_duration": 304.81
+        },
+        "desktop": {
+          "sessions": 12799,
+          "users": 9737,
+          "conversions": 2065,
+          "bounce_rate": 25.83,
+          "avg_duration": 526.32
+        },
+        "tablet": {
+          "sessions": 268,
+          "users": 232,
+          "conversions": 24,
+          "bounce_rate": 14.55,
+          "avg_duration": 389.01
+        }
+      },
+      "2026-05-09": {
+        "mobile": {
+          "sessions": 39598,
+          "users": 28949,
+          "conversions": 3837,
+          "bounce_rate": 23.44,
+          "avg_duration": 277.71
+        },
+        "desktop": {
+          "sessions": 6396,
+          "users": 5158,
+          "conversions": 1279,
+          "bounce_rate": 30.38,
+          "avg_duration": 492.84
+        },
+        "tablet": {
+          "sessions": 218,
+          "users": 192,
+          "conversions": 23,
+          "bounce_rate": 15.14,
+          "avg_duration": 332.54
+        }
+      },
+      "2026-05-10": {
+        "mobile": {
+          "sessions": 37971,
+          "users": 28961,
+          "conversions": 3650,
+          "bounce_rate": 23.48,
+          "avg_duration": 289.32
+        },
+        "desktop": {
+          "sessions": 5734,
+          "users": 4693,
+          "conversions": 1088,
+          "bounce_rate": 29.25,
+          "avg_duration": 521.72
+        },
+        "tablet": {
+          "sessions": 238,
+          "users": 201,
+          "conversions": 26,
+          "bounce_rate": 14.29,
+          "avg_duration": 373.85
+        }
+      },
+      "2026-05-11": {
+        "mobile": {
+          "sessions": 44277,
+          "users": 34472,
+          "conversions": 4168,
+          "bounce_rate": 25.38,
+          "avg_duration": 293.08
+        },
+        "desktop": {
+          "sessions": 15197,
+          "users": 11706,
+          "conversions": 2114,
+          "bounce_rate": 27.64,
+          "avg_duration": 477.12
+        },
+        "tablet": {
+          "sessions": 289,
+          "users": 263,
+          "conversions": 21,
+          "bounce_rate": 14.53,
+          "avg_duration": 327.69
+        }
+      },
+      "2026-05-12": {
+        "mobile": {
+          "sessions": 42333,
+          "users": 32397,
+          "conversions": 6974,
+          "bounce_rate": 24.17,
+          "avg_duration": 291.0
+        },
+        "desktop": {
+          "sessions": 13510,
+          "users": 10492,
+          "conversions": 3606,
+          "bounce_rate": 25.54,
+          "avg_duration": 475.93
+        },
+        "tablet": {
+          "sessions": 315,
+          "users": 257,
+          "conversions": 79,
+          "bounce_rate": 16.19,
+          "avg_duration": 417.17
+        }
+      },
+      "2026-05-13": {
+        "mobile": {
+          "sessions": 41932,
+          "users": 32114,
+          "conversions": 6383,
+          "bounce_rate": 25.29,
+          "avg_duration": 295.06
+        },
+        "desktop": {
+          "sessions": 13708,
+          "users": 11004,
+          "conversions": 3447,
+          "bounce_rate": 25.12,
+          "avg_duration": 483.1
+        },
+        "tablet": {
+          "sessions": 314,
+          "users": 255,
+          "conversions": 70,
+          "bounce_rate": 14.01,
+          "avg_duration": 383.99
+        }
+      },
+      "2026-05-14": {
+        "mobile": {
+          "sessions": 41111,
+          "users": 31774,
+          "conversions": 7021,
+          "bounce_rate": 23.71,
+          "avg_duration": 295.41
+        },
+        "desktop": {
+          "sessions": 13646,
+          "users": 10790,
+          "conversions": 3465,
+          "bounce_rate": 26.87,
+          "avg_duration": 467.72
+        },
+        "tablet": {
+          "sessions": 285,
+          "users": 239,
+          "conversions": 75,
+          "bounce_rate": 18.25,
+          "avg_duration": 361.05
+        }
+      },
+      "2026-05-15": {
+        "mobile": {
+          "sessions": 40524,
+          "users": 30556,
+          "conversions": 7070,
+          "bounce_rate": 22.28,
+          "avg_duration": 284.62
+        },
+        "desktop": {
+          "sessions": 12295,
+          "users": 9507,
+          "conversions": 3284,
+          "bounce_rate": 26.59,
+          "avg_duration": 490.01
+        },
+        "tablet": {
+          "sessions": 269,
+          "users": 233,
+          "conversions": 61,
+          "bounce_rate": 21.19,
+          "avg_duration": 332.79
+        }
+      },
+      "2026-05-16": {
+        "mobile": {
+          "sessions": 36506,
+          "users": 28076,
+          "conversions": 6544,
+          "bounce_rate": 24.43,
+          "avg_duration": 282.83
+        },
+        "desktop": {
+          "sessions": 6353,
+          "users": 5133,
+          "conversions": 1952,
+          "bounce_rate": 27.73,
+          "avg_duration": 492.56
+        },
+        "tablet": {
+          "sessions": 267,
+          "users": 225,
+          "conversions": 51,
+          "bounce_rate": 15.36,
+          "avg_duration": 325.53
+        }
+      },
+      "2026-05-17": {
+        "mobile": {
+          "sessions": 39725,
+          "users": 30027,
+          "conversions": 6538,
+          "bounce_rate": 23.53,
+          "avg_duration": 280.71
+        },
+        "desktop": {
+          "sessions": 6167,
+          "users": 5043,
+          "conversions": 1851,
+          "bounce_rate": 28.98,
+          "avg_duration": 516.14
+        },
+        "tablet": {
+          "sessions": 259,
+          "users": 226,
+          "conversions": 45,
+          "bounce_rate": 14.67,
+          "avg_duration": 288.74
+        }
+      },
+      "2026-05-18": {
+        "mobile": {
+          "sessions": 43709,
+          "users": 34048,
+          "conversions": 6244,
+          "bounce_rate": 27.15,
+          "avg_duration": 282.67
+        },
+        "desktop": {
+          "sessions": 15777,
+          "users": 12275,
+          "conversions": 3270,
+          "bounce_rate": 27.21,
+          "avg_duration": 421.02
+        },
+        "tablet": {
+          "sessions": 292,
+          "users": 244,
+          "conversions": 37,
+          "bounce_rate": 17.47,
+          "avg_duration": 360.58
+        }
+      },
+      "2026-05-19": {
+        "mobile": {
+          "sessions": 41948,
+          "users": 32953,
+          "conversions": 5609,
+          "bounce_rate": 27.26,
+          "avg_duration": 273.3
+        },
+        "desktop": {
+          "sessions": 14458,
+          "users": 11421,
+          "conversions": 3156,
+          "bounce_rate": 26.57,
+          "avg_duration": 449.03
+        },
+        "tablet": {
+          "sessions": 276,
+          "users": 242,
+          "conversions": 33,
+          "bounce_rate": 22.1,
+          "avg_duration": 285.99
+        }
+      },
+      "2026-05-20": {
+        "mobile": {
+          "sessions": 41559,
+          "users": 32156,
+          "conversions": 7005,
+          "bounce_rate": 24.72,
+          "avg_duration": 281.16
+        },
+        "desktop": {
+          "sessions": 13476,
+          "users": 10535,
+          "conversions": 3647,
+          "bounce_rate": 25.84,
+          "avg_duration": 477.14
+        },
+        "tablet": {
+          "sessions": 266,
+          "users": 230,
+          "conversions": 65,
+          "bounce_rate": 16.54,
+          "avg_duration": 316.34
+        }
+      },
+      "2026-05-21": {
+        "mobile": {
+          "sessions": 40238,
+          "users": 30934,
+          "conversions": 7089,
+          "bounce_rate": 22.8,
+          "avg_duration": 287.93
+        },
+        "desktop": {
+          "sessions": 13230,
+          "users": 10829,
+          "conversions": 3386,
+          "bounce_rate": 26.49,
+          "avg_duration": 450.04
+        },
+        "tablet": {
+          "sessions": 269,
+          "users": 222,
+          "conversions": 45,
+          "bounce_rate": 21.93,
+          "avg_duration": 284.97
+        }
+      },
+      "2026-05-22": {
+        "mobile": {
+          "sessions": 28321,
+          "users": 22885,
+          "conversions": 3473,
+          "bounce_rate": 49.74,
+          "avg_duration": 741.37
+        },
+        "desktop": {
+          "sessions": 10206,
+          "users": 8702,
+          "conversions": 1634,
+          "bounce_rate": 51.06,
+          "avg_duration": 1385.28
+        },
+        "tablet": {
+          "sessions": 166,
+          "users": 148,
+          "conversions": 16,
+          "bounce_rate": 43.37,
+          "avg_duration": 923.4
+        },
+        "smart tv": {
+          "sessions": 1,
+          "users": 1,
+          "conversions": 0,
+          "bounce_rate": 0.0,
+          "avg_duration": 61.2
         }
       }
     }
@@ -14278,37 +15220,37 @@
     {
       "step": "Busca",
       "event": "search",
-      "event_count": 7909172,
+      "event_count": 7909441,
       "users": 1387873,
       "drop_rate": 0
     },
     {
       "step": "Selecionou item",
       "event": "select_item",
-      "event_count": 258914,
+      "event_count": 258936,
       "users": 114588,
       "drop_rate": 91.7
     },
     {
       "step": "Adicionou ao carrinho",
       "event": "add_to_cart",
-      "event_count": 971751,
-      "users": 389320,
+      "event_count": 971780,
+      "users": 389341,
       "drop_rate": -239.8
     },
     {
       "step": "Iniciou checkout",
       "event": "begin_checkout",
-      "event_count": 299647,
-      "users": 139439,
+      "event_count": 299668,
+      "users": 139506,
       "drop_rate": 64.2
     },
     {
       "step": "Compra",
       "event": "purchase",
-      "event_count": 502054,
+      "event_count": 502073,
       "users": 273061,
-      "drop_rate": -95.8
+      "drop_rate": -95.7
     }
   ],
   "funnel_daily": {
@@ -16379,24 +17321,24 @@
       },
       "2026-05-22": {
         "search": {
-          "event_count": 56463,
-          "users": 19016
+          "event_count": 56732,
+          "users": 19121
         },
         "select_item": {
-          "event_count": 3915,
-          "users": 2259
+          "event_count": 3937,
+          "users": 2272
         },
         "add_to_cart": {
-          "event_count": 6010,
-          "users": 3584
+          "event_count": 6039,
+          "users": 3595
         },
         "begin_checkout": {
-          "event_count": 3889,
-          "users": 2419
+          "event_count": 3910,
+          "users": 2436
         },
         "purchase": {
-          "event_count": 5104,
-          "users": 2906
+          "event_count": 5123,
+          "users": 2920
         }
       }
     }
@@ -16412,7 +17354,7 @@
       {
         "origin": "BELO HORIZONTE - MG",
         "destination": "RIO DE JANEIRO - RJ",
-        "purchases": 130827,
+        "purchases": 130830,
         "users": 12940
       },
       {
@@ -16424,67 +17366,67 @@
       {
         "origin": "FORTALEZA - CE",
         "destination": "SOBRAL - CE",
-        "purchases": 95006,
+        "purchases": 95017,
         "users": 13990
       },
       {
         "origin": "FORTALEZA - CE",
         "destination": "NATAL - RN",
-        "purchases": 89826,
+        "purchases": 89827,
         "users": 13035
       },
       {
         "origin": "SOBRAL - CE",
         "destination": "FORTALEZA - CE",
-        "purchases": 89205,
+        "purchases": 89207,
         "users": 13542
       },
       {
         "origin": "NATAL - RN",
         "destination": "FORTALEZA - CE",
-        "purchases": 87765,
+        "purchases": 87774,
         "users": 11243
       },
       {
         "origin": "TERESINA - PI",
         "destination": "FORTALEZA - CE",
-        "purchases": 77954,
+        "purchases": 77965,
         "users": 11371
       },
       {
         "origin": "RIO DE JANEIRO - RJ - TODOS",
         "destination": "BELO HORIZONTE - MG - TODOS",
-        "purchases": 74017,
+        "purchases": 74018,
         "users": 27250
       },
       {
         "origin": "JUIZ DE FORA - MG",
         "destination": "RIO DE JANEIRO - RJ",
-        "purchases": 68255,
+        "purchases": 68258,
         "users": 9180
       },
       {
         "origin": "FORTALEZA - CE",
         "destination": "RECIFE - PE",
-        "purchases": 67672,
+        "purchases": 67674,
         "users": 10290
       },
       {
         "origin": "TERESINA - PI",
         "destination": "PARNAIBA - PI",
-        "purchases": 65832,
-        "users": 10225
+        "purchases": 65838,
+        "users": 10226
       },
       {
         "origin": "FORTALEZA - CE",
         "destination": "JUAZEIRO DO NORTE - CE",
-        "purchases": 65343,
-        "users": 9536
+        "purchases": 65349,
+        "users": 9537
       },
       {
         "origin": "RIO DE JANEIRO - RJ",
         "destination": "JUIZ DE FORA - MG",
-        "purchases": 64820,
+        "purchases": 64821,
         "users": 9250
       },
       {
@@ -16496,7 +17438,7 @@
       {
         "origin": "JUAZEIRO DO NORTE - CE",
         "destination": "FORTALEZA - CE",
-        "purchases": 61614,
+        "purchases": 61623,
         "users": 9124
       },
       {
@@ -16515,32 +17457,32 @@
     "top_origins": [
       {
         "city": "FORTALEZA - CE",
-        "searches": 1152394,
+        "searches": 1152440,
         "users": 154316,
-        "conversions": 45526
+        "conversions": 45529
       },
       {
         "city": "RIO DE JANEIRO - RJ",
-        "searches": 682321,
+        "searches": 682344,
         "users": 82953,
         "conversions": 31765
       },
       {
         "city": "FORTALEZA - CE - TODOS",
-        "searches": 588869,
-        "users": 77511,
+        "searches": 588899,
+        "users": 77523,
         "conversions": 0
       },
       {
         "city": "TERESINA - PI",
-        "searches": 392427,
+        "searches": 392461,
         "users": 51183,
-        "conversions": 12199
+        "conversions": 12200
       },
       {
         "city": "RIO DE JANEIRO - RJ - TODOS",
-        "searches": 376334,
-        "users": 64723,
+        "searches": 376347,
+        "users": 64726,
         "conversions": 0
       },
       {
@@ -16551,15 +17493,15 @@
       },
       {
         "city": "BRASILIA - DF",
-        "searches": 363456,
-        "users": 44523,
-        "conversions": 9010
+        "searches": 363485,
+        "users": 44534,
+        "conversions": 9013
       },
       {
         "city": "",
-        "searches": 353558,
-        "users": 50308,
-        "conversions": 1980
+        "searches": 355441,
+        "users": 50458,
+        "conversions": 1982
       },
       {
         "city": "Fortaleza - CE - TODOS",
@@ -16569,70 +17511,70 @@
       },
       {
         "city": "SOBRAL - CE",
-        "searches": 342548,
+        "searches": 342567,
         "users": 41077,
-        "conversions": 12151
+        "conversions": 12152
       },
       {
         "city": "SAO LUIS - MA",
-        "searches": 342366,
-        "users": 39723,
+        "searches": 342403,
+        "users": 39733,
         "conversions": 9308
       },
       {
         "city": "BELO HORIZONTE - MG",
-        "searches": 311169,
-        "users": 34378,
-        "conversions": 8236
+        "searches": 311181,
+        "users": 34383,
+        "conversions": 8237
       },
       {
         "city": "JOAO PESSOA - PB",
-        "searches": 294975,
+        "searches": 294991,
         "users": 34179,
-        "conversions": 8329
+        "conversions": 8331
       },
       {
         "city": "JUAZEIRO DO NORTE - CE",
-        "searches": 289189,
-        "users": 34527,
+        "searches": 289206,
+        "users": 34530,
         "conversions": 8110
       }
     ],
     "top_destinations": [
       {
         "city": "FORTALEZA - CE",
-        "searches": 1059320,
+        "searches": 1059373,
         "users": 146241,
-        "conversions": 38417
+        "conversions": 38420
       },
       {
         "city": "RIO DE JANEIRO - RJ",
-        "searches": 702882,
-        "users": 86443,
-        "conversions": 30188
+        "searches": 702913,
+        "users": 86453,
+        "conversions": 30190
       },
       {
         "city": "FORTALEZA - CE - TODOS",
-        "searches": 474764,
-        "users": 66254,
+        "searches": 474794,
+        "users": 66279,
         "conversions": 0
       },
       {
         "city": "",
-        "searches": 363489,
-        "users": 55499,
-        "conversions": 1962
+        "searches": 365372,
+        "users": 55676,
+        "conversions": 1964
       },
       {
         "city": "SOBRAL - CE",
-        "searches": 332607,
-        "users": 39434,
-        "conversions": 12196
+        "searches": 332634,
+        "users": 39439,
+        "conversions": 12198
       },
       {
         "city": "RIO DE JANEIRO - RJ - TODOS",
-        "searches": 326203,
-        "users": 44393,
+        "searches": 326222,
+        "users": 44404,
         "conversions": 0
       },
       {
@@ -16643,27 +17585,27 @@
       },
       {
         "city": "TERESINA - PI",
-        "searches": 311349,
+        "searches": 311358,
         "users": 42960,
         "conversions": 11436
       },
       {
         "city": "JOAO PESSOA - PB",
-        "searches": 308490,
+        "searches": 308502,
         "users": 37385,
-        "conversions": 7835
+        "conversions": 7836
       },
       {
         "city": "SAO LUIS - MA",
-        "searches": 304598,
+        "searches": 304629,
         "users": 37347,
         "conversions": 7700
       },
       {
         "city": "BRASILIA - DF",
-        "searches": 286611,
+        "searches": 286624,
         "users": 36801,
-        "conversions": 8717
+        "conversions": 8719
       },
       {
         "city": "Fortaleza - CE",
@@ -16673,13 +17615,13 @@
       },
       {
         "city": "JUAZEIRO DO NORTE - CE",
-        "searches": 284151,
-        "users": 34508,
+        "searches": 284167,
+        "users": 34520,
         "conversions": 7228
       },
       {
         "city": "BELO HORIZONTE - MG",
-        "searches": 259453,
+        "searches": 259462,
         "users": 30261,
         "conversions": 8452
       }
@@ -16696,35 +17638,35 @@
         "route": "RIO DE JANEIRO - RJ - TODOS → BELO HORIZONTE - MG - TODOS",
         "origin": "RIO DE JANEIRO - RJ - TODOS",
         "destination": "BELO HORIZONTE - MG - TODOS",
-        "searches": 74017,
+        "searches": 74018,
         "users": 27250
       },
       {
         "route": "FORTALEZA - CE → SOBRAL - CE",
         "origin": "FORTALEZA - CE",
         "destination": "SOBRAL - CE",
-        "searches": 95006,
+        "searches": 95017,
         "users": 13990
       },
       {
         "route": "SOBRAL - CE → FORTALEZA - CE",
         "origin": "SOBRAL - CE",
         "destination": "FORTALEZA - CE",
-        "searches": 89205,
+        "searches": 89207,
         "users": 13542
       },
       {
         "route": "FORTALEZA - CE → NATAL - RN",
         "origin": "FORTALEZA - CE",
         "destination": "NATAL - RN",
-        "searches": 89826,
+        "searches": 89827,
         "users": 13035
       },
       {
         "route": "BELO HORIZONTE - MG → RIO DE JANEIRO - RJ",
         "origin": "BELO HORIZONTE - MG",
         "destination": "RIO DE JANEIRO - RJ",
-        "searches": 130827,
+        "searches": 130830,
         "users": 12940
       },
       {
@@ -16738,36 +17680,36 @@
         "route": "TERESINA - PI → FORTALEZA - CE",
         "origin": "TERESINA - PI",
         "destination": "FORTALEZA - CE",
-        "searches": 77954,
+        "searches": 77965,
         "users": 11371
       },
       {
         "route": "NATAL - RN → FORTALEZA - CE",
         "origin": "NATAL - RN",
         "destination": "FORTALEZA - CE",
-        "searches": 87765,
+        "searches": 87774,
         "users": 11243
       },
       {
         "route": "FORTALEZA - CE → RECIFE - PE",
         "origin": "FORTALEZA - CE",
         "destination": "RECIFE - PE",
-        "searches": 67672,
+        "searches": 67674,
         "users": 10290
       },
       {
         "route": "TERESINA - PI → PARNAIBA - PI",
         "origin": "TERESINA - PI",
         "destination": "PARNAIBA - PI",
-        "searches": 65832,
-        "users": 10225
+        "searches": 65838,
+        "users": 10226
       },
       {
         "route": "FORTALEZA - CE → JUAZEIRO DO NORTE - CE",
         "origin": "FORTALEZA - CE",
         "destination": "JUAZEIRO DO NORTE - CE",
-        "searches": 65343,
-        "users": 9536
+        "searches": 65349,
+        "users": 9537
       },
       {
         "route": "Fortaleza - CE → Natal - RN",
