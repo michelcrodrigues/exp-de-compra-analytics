@@ -6,149 +6,220 @@
   <title>Analytics Dashboard</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Syne:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@300;400;500;600&display=swap" rel="stylesheet" />
   <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
   <style>
     :root {
-      --bg:      #080c14;
-      --surface: #0e1420;
-      --border:  #1c2436;
-      --accent:  #3b82f6;
-      --accent2: #8b5cf6;
-      --green:   #10b981;
-      --red:     #ef4444;
-      --yellow:  #f59e0b;
-      --cyan:    #06b6d4;
-      --pink:    #ec4899;
-      --text:    #e2e8f0;
-      --muted:   #64748b;
+      --bg:       #f5f4f0;
+      --surface:  #ffffff;
+      --surface2: #eeede9;
+      --border:   #dddbd4;
+      --text:     #1a1917;
+      --muted:    #7a7870;
+      --accent:   #1a1917;
+      --blue:     #1d4ed8;
+      --green:    #15803d;
+      --red:      #b91c1c;
+      --amber:    #b45309;
+      --tag-bg:   #e8e6e0;
     }
     * { box-sizing: border-box; margin: 0; padding: 0; }
-    body { background: var(--bg); color: var(--text); font-family: 'Syne', sans-serif; min-height: 100vh; padding-bottom: 60px; }
-
-    /* Header */
-    header {
-      background: #0e1420; border-bottom: 1px solid var(--border);
-      padding: 20px 40px; display: flex; align-items: center;
-      justify-content: space-between; position: sticky; top: 0; z-index: 100;
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'IBM Plex Sans', sans-serif;
+      font-size: 13px;
+      min-height: 100vh;
     }
-    .logo { font-size: 18px; font-weight: 800; letter-spacing: -.02em; }
-    .logo span { color: var(--accent); }
-    .header-right { text-align: right; }
-    .header-right .period { font-size: 12px; color: var(--muted); font-family: 'DM Mono', monospace; }
-    .header-right .updated { font-size: 11px; color: var(--muted); margin-top: 2px; font-family: 'DM Mono', monospace; }
-    .live-dot { display: inline-block; width: 6px; height: 6px; background: var(--green); border-radius: 50%; margin-right: 5px; animation: pulse 2s infinite; }
+
+    /* ── Loading ── */
+    #loading {
+      position: fixed; inset: 0; background: var(--bg);
+      display: flex; align-items: center; justify-content: center;
+      z-index: 999; flex-direction: column; gap: 12px;
+    }
+    .spinner {
+      width: 28px; height: 28px;
+      border: 2px solid var(--border); border-top-color: var(--text);
+      border-radius: 50%; animation: spin .7s linear infinite;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+    #loading p { font-family: 'IBM Plex Mono', monospace; font-size: 11px; color: var(--muted); }
+
+    /* ── Header ── */
+    header {
+      background: var(--text); color: #f5f4f0;
+      padding: 0 40px; height: 52px;
+      display: flex; align-items: center; justify-content: space-between;
+      position: sticky; top: 0; z-index: 100;
+    }
+    .logo {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 13px; font-weight: 600; letter-spacing: .04em;
+    }
+    .logo em { color: #a09e98; font-style: normal; }
+    .header-right {
+      display: flex; align-items: center; gap: 20px;
+    }
+    .header-meta {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 10px; color: #a09e98; text-align: right;
+    }
+    .live { display: flex; align-items: center; gap: 5px; font-family: 'IBM Plex Mono', monospace; font-size: 10px; color: #6ee7b7; }
+    .live-dot { width: 5px; height: 5px; background: #6ee7b7; border-radius: 50%; animation: pulse 2s infinite; }
     @keyframes pulse { 0%,100%{opacity:1}50%{opacity:.3} }
 
-    /* Layout */
-    .container { max-width: 1400px; margin: 0 auto; padding: 28px 40px; }
-
-    /* Nav */
-    .nav { display: flex; gap: 2px; margin-bottom: 28px; border-bottom: 1px solid var(--border); flex-wrap: wrap; }
+    /* ── Nav ── */
+    .nav-wrap {
+      background: var(--surface); border-bottom: 1px solid var(--border);
+      padding: 0 40px;
+    }
+    .nav { display: flex; gap: 0; }
     .nav-btn {
-      padding: 10px 18px; font-size: 13px; font-weight: 600; font-family: 'Syne', sans-serif;
+      padding: 14px 18px; font-size: 12px; font-weight: 500;
+      font-family: 'IBM Plex Sans', sans-serif; letter-spacing: .01em;
       border: none; background: none; color: var(--muted); cursor: pointer;
-      border-bottom: 2px solid transparent; margin-bottom: -1px; transition: color .2s, border-color .2s;
+      border-bottom: 2px solid transparent; transition: color .15s, border-color .15s;
     }
     .nav-btn:hover { color: var(--text); }
-    .nav-btn.active { color: var(--accent); border-bottom-color: var(--accent); }
+    .nav-btn.active { color: var(--text); border-bottom-color: var(--text); }
 
-    /* Sections */
+    /* ── Layout ── */
+    .container { max-width: 1360px; margin: 0 auto; padding: 28px 40px; }
     .section { display: none; }
     .section.active { display: block; }
 
-    /* KPI */
-    .kpi-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 14px; margin-bottom: 28px; }
+    /* ── Section header ── */
+    .sec-header { display: flex; align-items: baseline; justify-content: space-between; margin-bottom: 20px; }
+    .sec-title { font-size: 11px; font-weight: 600; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); }
+
+    /* ── KPI Grid ── */
+    .kpi-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 1px; background: var(--border); border: 1px solid var(--border); border-radius: 10px; overflow: hidden; margin-bottom: 24px; }
     .kpi {
-      background: var(--surface); border: 1px solid var(--border); border-radius: 14px;
-      padding: 18px 20px; transition: border-color .2s, transform .15s; position: relative; overflow: hidden;
+      background: var(--surface); padding: 20px 18px;
+      transition: background .15s;
     }
-    .kpi:hover { border-color: var(--accent); transform: translateY(-2px); }
-    .kpi-label { font-size: 10px; font-weight: 700; color: var(--muted); text-transform: uppercase; letter-spacing: .09em; margin-bottom: 8px; }
-    .kpi-value { font-size: 26px; font-weight: 800; line-height: 1; letter-spacing: -.03em; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-    .kpi-sub { font-size: 11px; color: var(--muted); margin-top: 5px; font-family: 'DM Mono', monospace; }
+    .kpi:hover { background: #fafaf8; }
+    .kpi-label { font-size: 10px; font-weight: 600; color: var(--muted); text-transform: uppercase; letter-spacing: .07em; margin-bottom: 10px; }
+    .kpi-value { font-family: 'IBM Plex Mono', monospace; font-size: 22px; font-weight: 600; line-height: 1; color: var(--text); }
+    .kpi-sub { font-family: 'IBM Plex Mono', monospace; font-size: 10px; color: var(--muted); margin-top: 6px; }
+    .kpi-delta { display: inline-flex; align-items: center; gap: 3px; font-family: 'IBM Plex Mono', monospace; font-size: 10px; margin-top: 4px; }
+    .delta-up { color: var(--green); }
+    .delta-dn { color: var(--red); }
 
-    /* Cards */
-    .chart-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; margin-bottom: 18px; }
-    .chart-grid.full { grid-template-columns: 1fr; }
-    .chart-grid.thirds { grid-template-columns: 1fr 1fr 1fr; }
-    .card { background: var(--surface); border: 1px solid var(--border); border-radius: 14px; padding: 22px; }
-    .card-title { font-size: 11px; font-weight: 700; letter-spacing: .07em; text-transform: uppercase; color: var(--muted); margin-bottom: 18px; }
-    .chart-wrap { position: relative; height: 240px; }
-    .chart-wrap.sm { height: 180px; }
-    .chart-wrap.lg { height: 300px; }
+    /* ── Cards ── */
+    .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 16px; }
+    .grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 16px; margin-bottom: 16px; }
+    .grid-1 { display: grid; grid-template-columns: 1fr; gap: 16px; margin-bottom: 16px; }
+    .grid-3-1 { display: grid; grid-template-columns: 2fr 1fr; gap: 16px; margin-bottom: 16px; }
 
-    /* Tables */
+    .card {
+      background: var(--surface); border: 1px solid var(--border);
+      border-radius: 10px; padding: 20px;
+    }
+    .card-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 16px; }
+    .card-title { font-size: 10px; font-weight: 600; letter-spacing: .07em; text-transform: uppercase; color: var(--muted); }
+    .card-tag { font-family: 'IBM Plex Mono', monospace; font-size: 10px; background: var(--tag-bg); color: var(--muted); padding: 2px 7px; border-radius: 4px; }
+
+    .chart-wrap { position: relative; }
+    .h-180 { height: 180px; }
+    .h-220 { height: 220px; }
+    .h-260 { height: 260px; }
+    .h-300 { height: 300px; }
+
+    /* ── Tables ── */
     .table-wrap { overflow-x: auto; }
-    table { width: 100%; border-collapse: collapse; font-size: 12.5px; }
-    th { text-align: left; padding: 7px 10px; font-size: 10px; font-weight: 700; color: var(--muted); text-transform: uppercase; letter-spacing: .07em; border-bottom: 1px solid var(--border); white-space: nowrap; }
-    td { padding: 9px 10px; border-bottom: 1px solid rgba(28,36,54,.5); }
+    table { width: 100%; border-collapse: collapse; }
+    thead { border-bottom: 1px solid var(--border); }
+    th { text-align: left; padding: 8px 10px; font-size: 10px; font-weight: 600; color: var(--muted); text-transform: uppercase; letter-spacing: .06em; white-space: nowrap; }
+    td { padding: 9px 10px; border-bottom: 1px solid var(--surface2); font-size: 12px; }
     tr:last-child td { border-bottom: none; }
-    tr:hover td { background: rgba(59,130,246,.04); }
-    .mono { font-family: 'DM Mono', monospace; font-size: 12px; }
-    .pill { display: inline-block; padding: 2px 7px; border-radius: 20px; font-size: 10px; font-weight: 700; }
-    .pill-blue { background: rgba(59,130,246,.15); color: #93c5fd; }
-    .pill-green { background: rgba(16,185,129,.15); color: #6ee7b7; }
-    .pill-red { background: rgba(239,68,68,.15); color: #fca5a5; }
-    .pill-yellow { background: rgba(245,158,11,.15); color: #fcd34d; }
+    tbody tr:hover td { background: #fafaf8; }
+    .mono { font-family: 'IBM Plex Mono', monospace; font-size: 11.5px; }
+    .num { text-align: right; font-family: 'IBM Plex Mono', monospace; font-size: 11.5px; }
+    th.num { text-align: right; }
+    .row-idx { font-family: 'IBM Plex Mono', monospace; font-size: 10px; color: var(--muted); width: 28px; }
 
-    /* Funnel */
-    .funnel-step { display: flex; align-items: center; gap: 14px; margin-bottom: 10px; }
-    .funnel-label { width: 170px; font-size: 12.5px; flex-shrink: 0; }
-    .funnel-sub { font-size: 10px; color: var(--muted); font-family: 'DM Mono', monospace; }
-    .funnel-bar-wrap { flex: 1; background: var(--border); border-radius: 6px; height: 30px; overflow: hidden; }
-    .funnel-bar { height: 100%; border-radius: 6px; background: linear-gradient(90deg, var(--accent), var(--accent2)); display: flex; align-items: center; padding: 0 10px; font-size: 12px; font-weight: 700; font-family: 'DM Mono', monospace; min-width: 60px; transition: width .8s cubic-bezier(.4,0,.2,1); }
-    .funnel-drop { width: 70px; text-align: right; font-size: 11px; font-family: 'DM Mono', monospace; flex-shrink: 0; }
-    .drop-bad  { color: var(--red); }
-    .drop-ok   { color: var(--yellow); }
-    .drop-good { color: var(--green); }
+    /* ── Tags / Pills ── */
+    .tag { display: inline-block; padding: 2px 7px; border-radius: 4px; font-family: 'IBM Plex Mono', monospace; font-size: 10px; font-weight: 500; }
+    .tag-blue   { background: #dbeafe; color: #1d4ed8; }
+    .tag-green  { background: #dcfce7; color: #15803d; }
+    .tag-red    { background: #fee2e2; color: #b91c1c; }
+    .tag-amber  { background: #fef3c7; color: #b45309; }
+    .tag-gray   { background: var(--tag-bg); color: var(--muted); }
 
-    /* Insights */
-    .insight-card { background: var(--surface); border: 1px solid var(--border); border-left: 3px solid var(--accent); border-radius: 12px; padding: 18px 20px; margin-bottom: 12px; }
-    .insight-card.warning  { border-left-color: var(--yellow); }
-    .insight-card.positive { border-left-color: var(--green); }
-    .insight-card.info     { border-left-color: var(--muted); }
-    .insight-title { font-size: 13px; font-weight: 700; margin-bottom: 5px; }
-    .insight-body  { font-size: 12.5px; color: #94a3b8; line-height: 1.65; }
-    .insight-meta  { font-size: 10px; color: var(--muted); margin-top: 7px; font-family: 'DM Mono', monospace; }
-    .prompt-box { background: rgba(59,130,246,.06); border: 1px dashed rgba(59,130,246,.3); border-radius: 12px; padding: 22px; text-align: center; margin-top: 18px; }
-    .prompt-box h3 { font-size: 13px; font-weight: 700; margin-bottom: 7px; }
-    .prompt-box p  { font-size: 12px; color: var(--muted); line-height: 1.6; margin-bottom: 12px; }
-    .copy-btn { background: var(--accent); color: #fff; border: none; border-radius: 8px; padding: 9px 18px; font-size: 12px; font-weight: 700; cursor: pointer; font-family: 'Syne', sans-serif; transition: opacity .2s; }
-    .copy-btn:hover { opacity: .85; }
-    .copy-btn.copied { background: var(--green); }
+    /* ── Funnel ── */
+    .funnel-row { display: flex; align-items: center; gap: 12px; margin-bottom: 8px; }
+    .funnel-label { width: 160px; flex-shrink: 0; }
+    .funnel-name { font-size: 12px; font-weight: 500; }
+    .funnel-event { font-family: 'IBM Plex Mono', monospace; font-size: 10px; color: var(--muted); }
+    .funnel-track { flex: 1; background: var(--surface2); border-radius: 4px; height: 28px; overflow: hidden; }
+    .funnel-fill {
+      height: 100%; border-radius: 4px; background: var(--text);
+      display: flex; align-items: center; padding: 0 10px;
+      font-family: 'IBM Plex Mono', monospace; font-size: 11px; font-weight: 600;
+      color: var(--bg); transition: width .7s cubic-bezier(.4,0,.2,1);
+      white-space: nowrap;
+    }
+    .funnel-pct { width: 48px; text-align: right; font-family: 'IBM Plex Mono', monospace; font-size: 11px; color: var(--muted); flex-shrink: 0; }
+    .funnel-drop { width: 72px; text-align: right; font-family: 'IBM Plex Mono', monospace; font-size: 11px; flex-shrink: 0; }
+    .drop-hi  { color: var(--red); }
+    .drop-mid { color: var(--amber); }
+    .drop-lo  { color: var(--green); }
 
-    /* Badges */
-    .badge-row { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 18px; }
-    .badge-stat { background: var(--surface); border: 1px solid var(--border); border-radius: 8px; padding: 8px 14px; font-size: 12px; }
-    .badge-stat strong { color: var(--accent); }
+    /* ── Insights ── */
+    .insight { border: 1px solid var(--border); border-radius: 10px; padding: 18px 20px; margin-bottom: 10px; }
+    .insight-type { display: flex; align-items: center; gap: 8px; margin-bottom: 8px; }
+    .insight-dot { width: 6px; height: 6px; border-radius: 50%; flex-shrink: 0; }
+    .dot-positive { background: var(--green); }
+    .dot-warning  { background: var(--amber); }
+    .dot-info     { background: var(--muted); }
+    .insight-title { font-size: 13px; font-weight: 600; }
+    .insight-body  { font-size: 12px; color: var(--muted); line-height: 1.65; }
+    .insight-meta  { font-family: 'IBM Plex Mono', monospace; font-size: 10px; color: var(--border); margin-top: 8px; }
 
-    /* Loading */
-    #loading { position: fixed; inset: 0; background: var(--bg); display: flex; align-items: center; justify-content: center; z-index: 999; flex-direction: column; gap: 14px; }
-    .spinner { width: 36px; height: 36px; border: 3px solid var(--border); border-top-color: var(--accent); border-radius: 50%; animation: spin .8s linear infinite; }
-    @keyframes spin { to { transform: rotate(360deg); } }
-    #loading p { font-size: 12px; color: var(--muted); font-family: 'DM Mono', monospace; }
+    .prompt-box {
+      border: 1px dashed var(--border); border-radius: 10px;
+      padding: 24px; text-align: center; margin-top: 16px; background: #fafaf8;
+    }
+    .prompt-box h3 { font-size: 12px; font-weight: 600; margin-bottom: 6px; }
+    .prompt-box p  { font-size: 12px; color: var(--muted); margin-bottom: 14px; line-height: 1.6; }
+    .copy-btn {
+      background: var(--text); color: var(--bg);
+      border: none; border-radius: 6px; padding: 9px 20px;
+      font-size: 12px; font-weight: 600; cursor: pointer;
+      font-family: 'IBM Plex Sans', sans-serif; transition: opacity .15s;
+    }
+    .copy-btn:hover { opacity: .8; }
+    .copy-btn.copied { background: var(--green); color: #fff; }
 
-    @media (max-width: 900px) {
-      header { padding: 14px 16px; }
-      .container { padding: 16px; }
-      .chart-grid, .chart-grid.thirds { grid-template-columns: 1fr; }
+    /* ── Divider ── */
+    .divider { height: 1px; background: var(--border); margin: 20px 0; }
+
+    @media (max-width: 1024px) {
+      header, .nav-wrap { padding: 0 20px; }
+      .container { padding: 20px; }
+      .kpi-grid { grid-template-columns: repeat(4, 1fr); }
+      .grid-2, .grid-3, .grid-3-1 { grid-template-columns: 1fr; }
+    }
+    @media (max-width: 600px) {
+      .kpi-grid { grid-template-columns: repeat(2, 1fr); }
     }
   </style>
 </head>
 <body>
 
-<div id="loading"><div class="spinner"></div><p>Carregando dados...</p></div>
+<div id="loading"><div class="spinner"></div><p>carregando dados...</p></div>
 
 <header>
-  <div class="logo">Analytics<span>.</span></div>
+  <div class="logo">ANALYTICS <em>/</em> EXP DE COMPRA</div>
   <div class="header-right">
-    <div class="period" id="period-label">—</div>
-    <div class="updated"><span class="live-dot"></span><span id="updated-label">—</span></div>
+    <div class="live"><div class="live-dot"></div><span id="updated-label">—</span></div>
+    <div class="header-meta" id="period-label">—</div>
   </div>
 </header>
 
-<div class="container">
+<div class="nav-wrap">
   <nav class="nav">
     <button class="nav-btn active" onclick="show('overview',this)">Visão Geral</button>
     <button class="nav-btn" onclick="show('acquisition',this)">Aquisição</button>
@@ -157,138 +228,150 @@
     <button class="nav-btn" onclick="show('routes',this)">Rotas</button>
     <button class="nav-btn" onclick="show('insights',this)">Insights IA</button>
   </nav>
+</div>
 
-  <!-- OVERVIEW -->
+<div class="container">
+
+  <!-- ── OVERVIEW ── -->
   <div id="sec-overview" class="section active">
     <div class="kpi-grid" id="kpi-grid"></div>
-    <div class="chart-grid full">
+    <div class="grid-1">
       <div class="card">
-        <div class="card-title">Sessões e Usuários — Últimos 30 dias</div>
-        <div class="chart-wrap lg"><canvas id="ch-daily"></canvas></div>
+        <div class="card-header">
+          <div class="card-title">Sessões e Usuários — 30 dias</div>
+          <div class="card-tag">diário</div>
+        </div>
+        <div class="chart-wrap h-260"><canvas id="ch-daily"></canvas></div>
       </div>
     </div>
-    <div class="chart-grid">
+    <div class="grid-2">
       <div class="card">
-        <div class="card-title">Conversões por dia</div>
-        <div class="chart-wrap"><canvas id="ch-conv-daily"></canvas></div>
+        <div class="card-header"><div class="card-title">Compras por dia</div><div class="card-tag">purchase</div></div>
+        <div class="chart-wrap h-180"><canvas id="ch-conv-daily"></canvas></div>
       </div>
       <div class="card">
-        <div class="card-title">Dispositivos</div>
-        <div class="chart-wrap"><canvas id="ch-devices"></canvas></div>
+        <div class="card-header"><div class="card-title">Usuários novos por dia</div></div>
+        <div class="chart-wrap h-180"><canvas id="ch-new-users"></canvas></div>
       </div>
     </div>
-    <div class="chart-grid">
+    <div class="grid-2">
       <div class="card">
-        <div class="card-title">Novos vs Recorrentes</div>
-        <div class="chart-wrap sm"><canvas id="ch-new-returning"></canvas></div>
+        <div class="card-header"><div class="card-title">Dispositivos</div></div>
+        <div class="chart-wrap h-180"><canvas id="ch-devices"></canvas></div>
       </div>
       <div class="card">
-        <div class="card-title">Usuários novos por dia</div>
-        <div class="chart-wrap sm"><canvas id="ch-new-users"></canvas></div>
+        <div class="card-header"><div class="card-title">Novos vs Recorrentes</div></div>
+        <div class="chart-wrap h-180"><canvas id="ch-new-returning"></canvas></div>
       </div>
     </div>
   </div>
 
-  <!-- ACQUISITION -->
+  <!-- ── ACQUISITION ── -->
   <div id="sec-acquisition" class="section">
-    <div class="chart-grid">
+    <div class="grid-2">
       <div class="card">
-        <div class="card-title">Sessões por Canal</div>
-        <div class="chart-wrap"><canvas id="ch-channels"></canvas></div>
+        <div class="card-header"><div class="card-title">Sessões por Canal</div></div>
+        <div class="chart-wrap h-220"><canvas id="ch-channels"></canvas></div>
       </div>
       <div class="card">
-        <div class="card-title">Taxa de Conversão por Canal (%)</div>
-        <div class="chart-wrap"><canvas id="ch-conv-rate"></canvas></div>
-      </div>
-    </div>
-    <div class="chart-grid">
-      <div class="card">
-        <div class="card-title">Taxa de Rejeição por Canal (%)</div>
-        <div class="chart-wrap sm"><canvas id="ch-bounce-channel"></canvas></div>
-      </div>
-      <div class="card">
-        <div class="card-title">Duração média por Canal (seg)</div>
-        <div class="chart-wrap sm"><canvas id="ch-duration-channel"></canvas></div>
+        <div class="card-header"><div class="card-title">Taxa de Conversão por Canal</div><div class="card-tag">%</div></div>
+        <div class="chart-wrap h-220"><canvas id="ch-conv-rate"></canvas></div>
       </div>
     </div>
-    <div class="card" style="margin-bottom:18px">
-      <div class="card-title">Origens de Tráfego — Top 15</div>
+    <div class="grid-2">
+      <div class="card">
+        <div class="card-header"><div class="card-title">Taxa de Rejeição por Canal</div><div class="card-tag">%</div></div>
+        <div class="chart-wrap h-180"><canvas id="ch-bounce-channel"></canvas></div>
+      </div>
+      <div class="card">
+        <div class="card-header"><div class="card-title">Duração Média por Canal</div><div class="card-tag">seg</div></div>
+        <div class="chart-wrap h-180"><canvas id="ch-duration-channel"></canvas></div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-header"><div class="card-title">Origens de Tráfego — Top 15</div></div>
       <div class="table-wrap"><table id="tbl-sources"></table></div>
     </div>
   </div>
 
-  <!-- PAGES -->
+  <!-- ── PAGES ── -->
   <div id="sec-pages" class="section">
-    <div class="chart-grid">
+    <div class="grid-2">
       <div class="card">
-        <div class="card-title">Top Páginas de Entrada</div>
-        <div class="chart-wrap"><canvas id="ch-landing"></canvas></div>
+        <div class="card-header"><div class="card-title">Top Páginas de Entrada — Sessões</div></div>
+        <div class="chart-wrap h-220"><canvas id="ch-landing"></canvas></div>
       </div>
       <div class="card">
-        <div class="card-title">Rejeição por Página de Entrada (%)</div>
-        <div class="chart-wrap"><canvas id="ch-landing-bounce"></canvas></div>
+        <div class="card-header"><div class="card-title">Rejeição por Página de Entrada</div><div class="card-tag">%</div></div>
+        <div class="chart-wrap h-220"><canvas id="ch-landing-bounce"></canvas></div>
       </div>
     </div>
-    <div class="card" style="margin-bottom:18px">
-      <div class="card-title">Páginas mais acessadas — Top 10</div>
+    <div class="card">
+      <div class="card-header"><div class="card-title">Páginas mais acessadas — Top 10</div></div>
       <div class="table-wrap"><table id="tbl-pages"></table></div>
     </div>
   </div>
 
-  <!-- FUNNEL -->
+  <!-- ── FUNNEL ── -->
   <div id="sec-funnel" class="section">
-    <div class="card" style="margin-bottom:18px">
-      <div class="card-title">Funil de Eventos — Usuários por etapa</div>
-      <div id="funnel-wrap" style="padding:8px 0"></div>
+    <div class="card" style="margin-bottom:16px">
+      <div class="card-header">
+        <div class="card-title">Funil de Eventos — Usuários por etapa</div>
+        <div class="card-tag">30 dias</div>
+      </div>
+      <div id="funnel-wrap"></div>
     </div>
-    <div class="chart-grid">
+    <div class="grid-2">
       <div class="card">
-        <div class="card-title">Volume de eventos por etapa</div>
-        <div class="chart-wrap"><canvas id="ch-funnel-vol"></canvas></div>
+        <div class="card-header"><div class="card-title">Volume de eventos</div></div>
+        <div class="chart-wrap h-220"><canvas id="ch-funnel-vol"></canvas></div>
       </div>
       <div class="card">
-        <div class="card-title">Taxa de abandono entre etapas (%)</div>
-        <div class="chart-wrap"><canvas id="ch-funnel-drop"></canvas></div>
+        <div class="card-header"><div class="card-title">Taxa de abandono entre etapas</div><div class="card-tag">%</div></div>
+        <div class="chart-wrap h-220"><canvas id="ch-funnel-drop"></canvas></div>
       </div>
     </div>
   </div>
 
-  <!-- ROUTES -->
+  <!-- ── ROUTES ── -->
   <div id="sec-routes" class="section">
-    <div class="chart-grid">
+    <div class="grid-2">
       <div class="card">
-        <div class="card-title">Top Cidades de Origem — Buscas</div>
-        <div class="chart-wrap"><canvas id="ch-origins"></canvas></div>
+        <div class="card-header"><div class="card-title">Top Origens</div></div>
+        <div class="chart-wrap h-220"><canvas id="ch-origins"></canvas></div>
       </div>
       <div class="card">
-        <div class="card-title">Top Cidades de Destino — Buscas</div>
-        <div class="chart-wrap"><canvas id="ch-destinations"></canvas></div>
+        <div class="card-header"><div class="card-title">Top Destinos</div></div>
+        <div class="chart-wrap h-220"><canvas id="ch-destinations"></canvas></div>
       </div>
     </div>
-    <div class="card" style="margin-bottom:18px">
-      <div class="card-title">Top Rotas — Origem → Destino</div>
-      <div class="table-wrap"><table id="tbl-routes"></table></div>
-    </div>
-    <div class="card" style="margin-bottom:18px">
-      <div class="card-title">Conversão por Rota</div>
-      <div class="table-wrap"><table id="tbl-route-conv"></table></div>
+    <div class="grid-2">
+      <div class="card">
+        <div class="card-header"><div class="card-title">Top Rotas</div></div>
+        <div class="table-wrap"><table id="tbl-routes"></table></div>
+      </div>
+      <div class="card">
+        <div class="card-header"><div class="card-title">Rotas por Usuários</div></div>
+        <div class="table-wrap"><table id="tbl-route-conv"></table></div>
+      </div>
     </div>
   </div>
 
-  <!-- INSIGHTS -->
+  <!-- ── INSIGHTS ── -->
   <div id="sec-insights" class="section">
-    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:18px">
-      <h2 style="font-size:15px;font-weight:700">Insights gerados via Claude.ai</h2>
-      <span class="pill pill-blue">Atualização manual</span>
+    <div class="sec-header">
+      <div class="sec-title">Insights gerados via Claude.ai</div>
+      <span class="tag tag-gray">atualização manual</span>
     </div>
     <div id="insights-list"></div>
     <div class="prompt-box">
-      <h3>Como gerar novos insights</h3>
-      <p>Copie o prompt, acesse o <strong>Claude.ai</strong> (plano Team), cole com o conteúdo do <code>data.json</code> e cole o resultado no campo <code>insights</code> do JSON.</p>
-      <button class="copy-btn" id="copy-btn" onclick="copyPrompt()">Copiar prompt para Claude.ai</button>
+      <h3>Gerar novos insights</h3>
+      <p>Copie o prompt, abra o Claude.ai (plano Team), cole junto com o conteúdo do <code>data.json</code> e cole o resultado no campo <code>insights</code>.</p>
+      <button class="copy-btn" id="copy-btn" onclick="copyPrompt()">Copiar prompt</button>
     </div>
   </div>
-</div>
+
+</div><!-- /container -->
 
 <script>
 const PROMPT = `Você é um analista de growth sênior especializado em e-commerce de viagens. Analise os dados de GA4 abaixo e gere entre 5 e 7 insights acionáveis para o time de marketing e produto, com foco em rotas, funil de conversão e aquisição.
@@ -304,39 +387,60 @@ Retorne APENAS um array JSON válido, sem texto adicional.
 DADOS:
 [COLE O CONTEÚDO DO data.json AQUI]`;
 
-// ── Formatação ───────────────────────────────────────────────────────────────
-const fmt  = n => {
+// ── Formatação ──────────────────────────────────────────────────────────────
+const fmt = n => {
   if (n == null) return '—';
   const v = Number(n);
-  if (v >= 1e6)  return (v/1e6).toFixed(1).replace('.',',') + 'M';
-  if (v >= 1e3)  return (v/1e3).toFixed(1).replace('.',',') + 'K';
+  if (v >= 1e6) return (v/1e6).toFixed(1).replace('.',',') + 'M';
+  if (v >= 1e3) return (v/1e3).toFixed(1).replace('.',',') + 'K';
   return v.toLocaleString('pt-BR');
 };
 const fmtFull = n => n == null ? '—' : Number(n).toLocaleString('pt-BR');
-const fmtP = n => n == null ? '—' : `${n}%`;
-const fmtS = s => { const m = Math.floor(s/60), ss = Math.round(s%60); return `${m}m${ss}s`; };
+const fmtP  = n => n == null ? '—' : `${n}%`;
+const fmtS  = s => { const m = Math.floor(s/60), ss = Math.round(s%60); return `${m}m${String(ss).padStart(2,'0')}s`; };
+const fmtPct = (a,b) => b > 0 ? ((a/b)*100).toFixed(1)+'%' : '—';
 
-const COLORS = ['#3b82f6','#8b5cf6','#10b981','#f59e0b','#ec4899','#06b6d4','#f97316','#a78bfa','#34d399','#fbbf24'];
-const colorFor = (_, i) => COLORS[i % COLORS.length];
+// ── Chart defaults ──────────────────────────────────────────────────────────
+const MONO = { family: "'IBM Plex Mono', monospace", size: 10 };
+const SANS = { family: "'IBM Plex Sans', sans-serif", size: 11 };
 
-const CHANNEL_MAP = {
-  'Organic Search':'#3b82f6','Direct':'#8b5cf6','Referral':'#10b981',
-  'Paid Search':'#f59e0b','Social':'#ec4899','Email':'#06b6d4',
-  'Display':'#f97316','Organic Social':'#a78bfa',
-};
-const channelColor = (ch, i) => CHANNEL_MAP[ch] || COLORS[i % COLORS.length];
-
-const CD = () => ({
+const baseOpts = () => ({
   responsive: true, maintainAspectRatio: false,
-  plugins: { legend: { labels: { color:'#94a3b8', font:{family:'Syne',size:11}, boxWidth:10, padding:12 } } },
+  plugins: {
+    legend: { labels: { color: '#7a7870', font: SANS, boxWidth: 8, padding: 12 } },
+    tooltip: {
+      backgroundColor: '#1a1917', titleColor: '#f5f4f0', bodyColor: '#a09e98',
+      titleFont: MONO, bodyFont: MONO, padding: 10, cornerRadius: 6,
+    }
+  },
   scales: {
-    x: { ticks:{color:'#475569',font:{family:'DM Mono',size:10},maxRotation:45}, grid:{color:'#1c2436'} },
-    y: { ticks:{color:'#475569',font:{family:'DM Mono',size:10}}, grid:{color:'#1c2436'} },
+    x: { ticks: { color: '#a09e98', font: MONO, maxRotation: 40 }, grid: { color: '#eeede9' }, border: { color: '#dddbd4' } },
+    y: { ticks: { color: '#a09e98', font: MONO }, grid: { color: '#eeede9' }, border: { color: '#dddbd4' } },
   }
 });
-const CD_NOAXIS = () => ({ responsive:true, maintainAspectRatio:false, plugins:{ legend:{ position:'right', labels:{color:'#94a3b8',font:{family:'Syne',size:11},boxWidth:10} } } });
 
-// ── Nav ──────────────────────────────────────────────────────────────────────
+const baseOptsH = () => {
+  const o = baseOpts();
+  o.indexAxis = 'y';
+  return o;
+};
+
+const donutOpts = () => ({
+  responsive: true, maintainAspectRatio: false,
+  cutout: '62%',
+  plugins: {
+    legend: { position: 'right', labels: { color: '#7a7870', font: SANS, boxWidth: 8, padding: 10 } },
+    tooltip: {
+      backgroundColor: '#1a1917', titleColor: '#f5f4f0', bodyColor: '#a09e98',
+      titleFont: MONO, bodyFont: MONO, padding: 10, cornerRadius: 6,
+    }
+  }
+});
+
+const PALETTE = ['#1a1917','#3b3a38','#5e5c58','#7a7870','#a09e98','#c8c5be','#dddbd4','#eeede9'];
+const ACCENT  = ['#1d4ed8','#15803d','#b45309','#7c3aed','#0369a1','#b91c1c','#065f46','#92400e'];
+
+// ── Nav ─────────────────────────────────────────────────────────────────────
 function show(id, btn) {
   document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
   document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
@@ -344,205 +448,240 @@ function show(id, btn) {
   btn.classList.add('active');
 }
 
-// ── Copy ─────────────────────────────────────────────────────────────────────
 function copyPrompt() {
   navigator.clipboard.writeText(PROMPT).then(() => {
     const b = document.getElementById('copy-btn');
-    b.textContent = '✓ Copiado!'; b.classList.add('copied');
-    setTimeout(() => { b.textContent = 'Copiar prompt para Claude.ai'; b.classList.remove('copied'); }, 2000);
+    b.textContent = '✓ Copiado'; b.classList.add('copied');
+    setTimeout(() => { b.textContent = 'Copiar prompt'; b.classList.remove('copied'); }, 2000);
   });
 }
 
 // ── Render ───────────────────────────────────────────────────────────────────
 function render(d) {
   const t = d.totals;
-  document.getElementById('period-label').textContent = d.period;
-  document.getElementById('updated-label').textContent =
-    'Atualizado ' + new Date(d.updated_at).toLocaleString('pt-BR',
-      {timeZone:'America/Sao_Paulo',day:'2-digit',month:'2-digit',year:'numeric',hour:'2-digit',minute:'2-digit'});
 
-  // KPIs
-  const convRate = t.sessions > 0 ? ((t.conversions / t.sessions)*100).toFixed(2) : 0;
+  document.getElementById('period-label').textContent = d.period.toUpperCase();
+  document.getElementById('updated-label').textContent =
+    new Date(d.updated_at).toLocaleString('pt-BR', {
+      timeZone:'America/Sao_Paulo', day:'2-digit', month:'2-digit',
+      year:'numeric', hour:'2-digit', minute:'2-digit'
+    });
+
+  // ── KPIs ──
+  const convRate = t.sessions > 0 ? ((t.conversions/t.sessions)*100).toFixed(2) : '0.00';
   const kpis = [
-    {label:'Sessões (30d)',   value:fmt(t.sessions),     sub:`${fmt(t.sessions_7d)} nos últimos 7d`},
-    {label:'Usuários',        value:fmt(t.total_users),  sub:`${fmt(t.new_users)} novos`},
-    {label:'Conversões',      value:fmt(t.conversions),  sub:`${fmt(t.conversions_7d)} nos últimos 7d`},
-    {label:'Taxa Conversão',  value:`${convRate}%`,      sub:'Sessões → conversão'},
-    {label:'Taxa Rejeição',   value:fmtP(t.bounce_rate), sub:'Média 30 dias'},
-    {label:'Duração Média',   value:fmtS(t.avg_session_duration), sub:'Por sessão'},
-    {label:'Pageviews',       value:fmt(t.pageviews),    sub:`${t.sessions>0?(t.pageviews/t.sessions).toFixed(1):'—'} por sessão`},
+    { label:'Sessões',       value: fmt(t.sessions),    sub: `${fmt(t.sessions_7d)} / 7d` },
+    { label:'Usuários',      value: fmt(t.total_users), sub: `${fmt(t.new_users)} novos` },
+    { label:'Compras',       value: fmt(t.conversions), sub: `${fmt(t.conversions_7d)} / 7d` },
+    { label:'Taxa Conv.',    value: `${convRate}%`,     sub: 'sessões → compra' },
+    { label:'Taxa Rejeição', value: `${t.bounce_rate}%`, sub: 'média 30d' },
+    { label:'Duração Média', value: fmtS(t.avg_session_duration), sub: 'por sessão' },
+    { label:'Pageviews',     value: fmt(t.pageviews),   sub: `${t.sessions>0?(t.pageviews/t.sessions).toFixed(1):'—'} / sessão` },
   ];
   document.getElementById('kpi-grid').innerHTML = kpis.map(k => `
     <div class="kpi">
       <div class="kpi-label">${k.label}</div>
-      <div class="kpi-value" title="${k.value}">${k.value}</div>
+      <div class="kpi-value">${k.value}</div>
       <div class="kpi-sub">${k.sub}</div>
     </div>`).join('');
 
-  // Daily
+  // ── Daily ──
   const dl = d.daily.map(r => r.date.slice(5));
-  new Chart(document.getElementById('ch-daily'), { type:'line', data:{ labels:dl,
-    datasets:[
-      {label:'Sessões', data:d.daily.map(r=>r.sessions), borderColor:'#3b82f6', backgroundColor:'rgba(59,130,246,.08)', fill:true, tension:.4, pointRadius:2},
-      {label:'Usuários', data:d.daily.map(r=>r.users), borderColor:'#8b5cf6', backgroundColor:'rgba(139,92,246,.04)', fill:true, tension:.4, pointRadius:2},
-    ]}, options:CD() });
+  new Chart(document.getElementById('ch-daily'), { type:'line', data:{ labels:dl, datasets:[
+    { label:'Sessões',  data:d.daily.map(r=>r.sessions), borderColor:'#1a1917', backgroundColor:'rgba(26,25,23,.05)', fill:true, tension:.35, pointRadius:0, borderWidth:1.5 },
+    { label:'Usuários', data:d.daily.map(r=>r.users),    borderColor:'#7a7870', backgroundColor:'rgba(122,120,112,.03)', fill:true, tension:.35, pointRadius:0, borderWidth:1.5 },
+  ]}, options: baseOpts() });
 
-  new Chart(document.getElementById('ch-conv-daily'), { type:'bar', data:{ labels:dl,
-    datasets:[{label:'Conversões', data:d.daily.map(r=>r.conversions), backgroundColor:'rgba(16,185,129,.7)', borderRadius:4}]
-  }, options:CD() });
+  new Chart(document.getElementById('ch-conv-daily'), { type:'bar', data:{ labels:dl, datasets:[
+    { label:'Compras', data:d.daily.map(r=>r.conversions), backgroundColor:'#1a1917', borderRadius:3, barThickness:'flex' }
+  ]}, options: baseOpts() });
+
+  new Chart(document.getElementById('ch-new-users'), { type:'bar', data:{ labels:dl, datasets:[
+    { label:'Novos usuários', data:d.daily.map(r=>r.new_users||0), backgroundColor:'#7a7870', borderRadius:3, barThickness:'flex' }
+  ]}, options: baseOpts() });
 
   new Chart(document.getElementById('ch-devices'), { type:'doughnut', data:{
-    labels:d.devices.map(r=>r.device),
-    datasets:[{data:d.devices.map(r=>r.sessions), backgroundColor:COLORS, borderWidth:0}]
-  }, options:CD_NOAXIS() });
+    labels: d.devices.map(r=>r.device),
+    datasets:[{ data:d.devices.map(r=>r.sessions), backgroundColor: PALETTE, borderWidth:0 }]
+  }, options: donutOpts() });
 
-  // New vs returning
   new Chart(document.getElementById('ch-new-returning'), { type:'doughnut', data:{
-    labels:d.new_vs_returning.map(r=>r.type==='new'?'Novos':'Recorrentes'),
-    datasets:[{data:d.new_vs_returning.map(r=>r.users), backgroundColor:['#3b82f6','#8b5cf6'], borderWidth:0}]
-  }, options:CD_NOAXIS() });
+    labels: d.new_vs_returning.map(r=>r.type==='new'?'Novos':'Recorrentes'),
+    datasets:[{ data:d.new_vs_returning.map(r=>r.users), backgroundColor:['#1a1917','#c8c5be'], borderWidth:0 }]
+  }, options: donutOpts() });
 
-  new Chart(document.getElementById('ch-new-users'), { type:'bar', data:{ labels:dl,
-    datasets:[{label:'Novos usuários', data:d.daily.map(r=>r.new_users||0), backgroundColor:'rgba(6,182,212,.7)', borderRadius:3}]
-  }, options:CD() });
-
-  // Channels
+  // ── Channels ──
   new Chart(document.getElementById('ch-channels'), { type:'bar', data:{
-    labels:d.channels.map(r=>r.channel),
-    datasets:[{label:'Sessões', data:d.channels.map(r=>r.sessions), backgroundColor:d.channels.map((r,i)=>channelColor(r.channel,i)), borderRadius:5}]
-  }, options:{...CD(), indexAxis:'y'} });
+    labels: d.channels.map(r=>r.channel),
+    datasets:[{ label:'Sessões', data:d.channels.map(r=>r.sessions), backgroundColor: PALETTE, borderRadius:4 }]
+  }, options: baseOptsH() });
 
   new Chart(document.getElementById('ch-conv-rate'), { type:'bar', data:{
-    labels:d.channels.map(r=>r.channel),
-    datasets:[{label:'Taxa Conv. %', data:d.channels.map(r=>r.conversion_rate||0), backgroundColor:d.channels.map((r,i)=>channelColor(r.channel,i)), borderRadius:5}]
-  }, options:{...CD(), indexAxis:'y'} });
+    labels: d.channels.map(r=>r.channel),
+    datasets:[{ label:'Conv %', data:d.channels.map(r=>r.conversion_rate||0), backgroundColor: PALETTE, borderRadius:4 }]
+  }, options: baseOptsH() });
 
   new Chart(document.getElementById('ch-bounce-channel'), { type:'bar', data:{
-    labels:d.channels.map(r=>r.channel),
-    datasets:[{label:'Rejeição %', data:d.channels.map(r=>r.bounce_rate||0), backgroundColor:'rgba(239,68,68,.6)', borderRadius:4}]
-  }, options:{...CD(), indexAxis:'y'} });
+    labels: d.channels.map(r=>r.channel),
+    datasets:[{ label:'Rejeição %', data:d.channels.map(r=>r.bounce_rate||0), backgroundColor:'#7a7870', borderRadius:3 }]
+  }, options: baseOptsH() });
 
   new Chart(document.getElementById('ch-duration-channel'), { type:'bar', data:{
-    labels:d.channels.map(r=>r.channel),
-    datasets:[{label:'Duração (s)', data:d.channels.map(r=>r.avg_duration||0), backgroundColor:'rgba(245,158,11,.6)', borderRadius:4}]
-  }, options:{...CD(), indexAxis:'y'} });
+    labels: d.channels.map(r=>r.channel),
+    datasets:[{ label:'Duração (s)', data:d.channels.map(r=>r.avg_duration||0), backgroundColor:'#3b3a38', borderRadius:3 }]
+  }, options: baseOptsH() });
 
-  // Sources table
+  // ── Sources table ──
   document.getElementById('tbl-sources').innerHTML = `
-    <thead><tr><th>Origem</th><th>Mídia</th><th>Sessões</th><th>Usuários</th><th>Conversões</th><th>Conv%</th><th>Rejeição</th><th>Duração</th></tr></thead>
-    <tbody>${d.sources.map(r=>`<tr>
+    <thead><tr>
+      <th>#</th><th>Origem</th><th>Mídia</th>
+      <th class="num">Sessões</th><th class="num">Usuários</th>
+      <th class="num">Compras</th><th class="num">Conv%</th>
+      <th class="num">Rejeição</th><th class="num">Duração</th>
+    </tr></thead>
+    <tbody>${d.sources.map((r,i)=>`<tr>
+      <td class="row-idx">${String(i+1).padStart(2,'0')}</td>
       <td>${r.source}</td>
-      <td><span class="pill pill-blue">${r.medium}</span></td>
-      <td class="mono">${fmtFull(r.sessions)}</td><td class="mono">${fmtFull(r.users)}</td>
-      <td class="mono">${fmtFull(r.conversions)}</td>
-      <td class="mono">${fmtP(r.conversion_rate)}</td>
-      <td class="mono">${fmtP(r.bounce_rate)}</td>
-      <td class="mono">${fmtS(r.avg_duration)}</td>
+      <td><span class="tag tag-gray">${r.medium}</span></td>
+      <td class="num">${fmtFull(r.sessions)}</td>
+      <td class="num">${fmtFull(r.users)}</td>
+      <td class="num">${fmtFull(r.conversions)}</td>
+      <td class="num">${fmtP(r.conversion_rate)}</td>
+      <td class="num">${fmtP(r.bounce_rate)}</td>
+      <td class="num">${fmtS(r.avg_duration)}</td>
     </tr>`).join('')}</tbody>`;
 
-  // Landing pages
+  // ── Landing pages ──
   const lp = (d.landing_pages||[]).slice(0,8);
+  const lpLabels = lp.map(r => r.path.length>28 ? r.path.slice(0,28)+'…' : r.path);
+
   new Chart(document.getElementById('ch-landing'), { type:'bar', data:{
-    labels:lp.map(r=>r.path.length>25?r.path.slice(0,25)+'…':r.path),
-    datasets:[{label:'Sessões', data:lp.map(r=>r.sessions), backgroundColor:'rgba(59,130,246,.7)', borderRadius:4}]
-  }, options:{...CD(), indexAxis:'y'} });
+    labels: lpLabels,
+    datasets:[{ label:'Sessões', data:lp.map(r=>r.sessions), backgroundColor:'#1a1917', borderRadius:3 }]
+  }, options: baseOptsH() });
 
   new Chart(document.getElementById('ch-landing-bounce'), { type:'bar', data:{
-    labels:lp.map(r=>r.path.length>25?r.path.slice(0,25)+'…':r.path),
-    datasets:[{label:'Rejeição %', data:lp.map(r=>r.bounce_rate||0), backgroundColor:'rgba(239,68,68,.6)', borderRadius:4}]
-  }, options:{...CD(), indexAxis:'y'} });
+    labels: lpLabels,
+    datasets:[{ label:'Rejeição %', data:lp.map(r=>r.bounce_rate||0), backgroundColor:'#7a7870', borderRadius:3 }]
+  }, options: baseOptsH() });
 
-  // Pages table
+  // ── Pages table ──
   document.getElementById('tbl-pages').innerHTML = `
-    <thead><tr><th>#</th><th>Título</th><th>Path</th><th>Pageviews</th><th>Usuários</th><th>Duração</th><th>Rejeição</th><th>Saídas</th></tr></thead>
+    <thead><tr>
+      <th>#</th><th>Título</th><th>Path</th>
+      <th class="num">Pageviews</th><th class="num">Usuários</th>
+      <th class="num">Duração</th>
+    </tr></thead>
     <tbody>${d.pages.map((r,i)=>`<tr>
-      <td class="mono" style="color:var(--muted)">${String(i+1).padStart(2,'0')}</td>
-      <td style="max-width:180px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${r.title}</td>
-      <td class="mono" style="color:var(--muted);max-width:160px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${r.path}</td>
-      <td class="mono">${fmtFull(r.pageviews)}</td><td class="mono">${fmtFull(r.users)}</td>
-      <td class="mono">${fmtS(r.avg_duration)}</td>
-      <td class="mono">${fmtP(r.bounce_rate)}</td>
-      <td class="mono">${fmtFull(r.exits)}</td>
+      <td class="row-idx">${String(i+1).padStart(2,'0')}</td>
+      <td style="max-width:200px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${r.title}</td>
+      <td class="mono" style="color:var(--muted);max-width:180px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${r.path}</td>
+      <td class="num">${fmtFull(r.pageviews)}</td>
+      <td class="num">${fmtFull(r.users)}</td>
+      <td class="num">${fmtS(r.avg_duration)}</td>
     </tr>`).join('')}</tbody>`;
 
-  // Funnel
+  // ── Funnel ──
   const maxU = d.funnel.length > 0 ? d.funnel[0].users : 1;
   document.getElementById('funnel-wrap').innerHTML = d.funnel.map((s,i) => {
     const pct = maxU > 0 ? Math.round(s.users/maxU*100) : 0;
-    const dc = s.drop_rate > 60 ? 'drop-bad' : s.drop_rate > 30 ? 'drop-ok' : 'drop-good';
-    return `<div class="funnel-step">
+    const dc = s.drop_rate > 60 ? 'drop-hi' : s.drop_rate > 30 ? 'drop-mid' : 'drop-lo';
+    return `<div class="funnel-row">
       <div class="funnel-label">
-        <div>${s.step}</div>
-        <div class="funnel-sub">${s.event}</div>
+        <div class="funnel-name">${s.step}</div>
+        <div class="funnel-event">${s.event}</div>
       </div>
-      <div class="funnel-bar-wrap">
-        <div class="funnel-bar" style="width:${Math.max(pct,4)}%">${fmt(s.users)}</div>
+      <div class="funnel-track">
+        <div class="funnel-fill" style="width:${Math.max(pct,3)}%">${fmt(s.users)}</div>
       </div>
-      <div class="funnel-drop ${i===0?'':dc}">${i===0?'—':`▼ ${s.drop_rate}%`}</div>
+      <div class="funnel-pct">${pct}%</div>
+      <div class="funnel-drop ${i===0?'':dc}">${i===0?'—':`▾ ${s.drop_rate}%`}</div>
     </div>`;
   }).join('');
 
   new Chart(document.getElementById('ch-funnel-vol'), { type:'bar', data:{
-    labels:d.funnel.map(s=>s.step),
-    datasets:[{label:'Eventos', data:d.funnel.map(s=>s.event_count), backgroundColor:COLORS, borderRadius:5}]
-  }, options:CD() });
+    labels: d.funnel.map(s=>s.step),
+    datasets:[{ label:'Eventos', data:d.funnel.map(s=>s.event_count), backgroundColor: PALETTE, borderRadius:4 }]
+  }, options: baseOpts() });
 
   new Chart(document.getElementById('ch-funnel-drop'), { type:'bar', data:{
-    labels:d.funnel.slice(1).map(s=>s.step),
-    datasets:[{label:'% abandono', data:d.funnel.slice(1).map(s=>s.drop_rate),
-      backgroundColor:d.funnel.slice(1).map(s=>s.drop_rate>60?'rgba(239,68,68,.7)':s.drop_rate>30?'rgba(245,158,11,.7)':'rgba(16,185,129,.7)'), borderRadius:5}]
-  }, options:CD() });
+    labels: d.funnel.slice(1).map(s=>s.step),
+    datasets:[{
+      label:'% abandono',
+      data: d.funnel.slice(1).map(s=>s.drop_rate),
+      backgroundColor: d.funnel.slice(1).map(s => s.drop_rate>60?'#b91c1c': s.drop_rate>30?'#b45309':'#15803d'),
+      borderRadius:4
+    }]
+  }, options: baseOpts() });
 
-  // Routes
+  // ── Routes ──
   const rt = d.routes || {};
   const origins = (rt.top_origins||[]).slice(0,10);
   const dests   = (rt.top_destinations||[]).slice(0,10);
 
   new Chart(document.getElementById('ch-origins'), { type:'bar', data:{
-    labels:origins.map(r=>r.city),
-    datasets:[{label:'Buscas', data:origins.map(r=>r.searches), backgroundColor:'rgba(59,130,246,.7)', borderRadius:4}]
-  }, options:{...CD(), indexAxis:'y'} });
+    labels: origins.map(r=>r.city),
+    datasets:[{ label:'Buscas', data:origins.map(r=>r.searches), backgroundColor:'#1a1917', borderRadius:3 }]
+  }, options: baseOptsH() });
 
   new Chart(document.getElementById('ch-destinations'), { type:'bar', data:{
-    labels:dests.map(r=>r.city),
-    datasets:[{label:'Buscas', data:dests.map(r=>r.searches), backgroundColor:'rgba(139,92,246,.7)', borderRadius:4}]
-  }, options:{...CD(), indexAxis:'y'} });
+    labels: dests.map(r=>r.city),
+    datasets:[{ label:'Buscas', data:dests.map(r=>r.searches), backgroundColor:'#3b3a38', borderRadius:3 }]
+  }, options: baseOptsH() });
 
   document.getElementById('tbl-routes').innerHTML = `
-    <thead><tr><th>#</th><th>Origem</th><th>Destino</th><th>Compras</th><th>Usuários</th></tr></thead>
+    <thead><tr>
+      <th>#</th><th>Origem</th><th>Destino</th>
+      <th class="num">Eventos</th><th class="num">Usuários</th>
+    </tr></thead>
     <tbody>${(rt.top_routes||[]).slice(0,15).map((r,i)=>`<tr>
-      <td class="mono" style="color:var(--muted)">${String(i+1).padStart(2,'0')}</td>
+      <td class="row-idx">${String(i+1).padStart(2,'0')}</td>
       <td>${r.origin}</td><td>${r.destination}</td>
-      <td class="mono">${fmtFull(r.purchases)}</td>
-      <td class="mono">${fmtFull(r.users)}</td>
+      <td class="num">${fmtFull(r.purchases)}</td>
+      <td class="num">${fmtFull(r.users)}</td>
     </tr>`).join('')}</tbody>`;
 
   document.getElementById('tbl-route-conv').innerHTML = `
-    <thead><tr><th>Rota</th><th>Buscas</th><th>Usuários</th></tr></thead>
-    <tbody>${(rt.route_conversion||[]).slice(0,15).map(r=>`<tr>
+    <thead><tr>
+      <th>#</th><th>Rota</th>
+      <th class="num">Buscas</th><th class="num">Usuários</th>
+    </tr></thead>
+    <tbody>${(rt.route_conversion||[]).slice(0,15).map((r,i)=>`<tr>
+      <td class="row-idx">${String(i+1).padStart(2,'0')}</td>
       <td><strong>${r.route}</strong></td>
-      <td class="mono">${fmtFull(r.searches)}</td>
-      <td class="mono">${fmtFull(r.users)}</td>
+      <td class="num">${fmtFull(r.searches)}</td>
+      <td class="num">${fmtFull(r.users)}</td>
     </tr>`).join('')}</tbody>`;
 
-  // Insights
+  // ── Insights ──
   const list = document.getElementById('insights-list');
   if (!d.insights || d.insights.length === 0) {
-    list.innerHTML = '<div class="insight-card info"><div class="insight-title">Nenhum insight disponível</div><div class="insight-body">Use o prompt abaixo para gerar insights no Claude.ai e cole o resultado no campo <code>insights</code> do data.json.</div></div>';
+    list.innerHTML = `<div class="insight">
+      <div class="insight-type"><div class="insight-dot dot-info"></div><span style="font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:.06em;font-weight:600">Info</span></div>
+      <div class="insight-title">Nenhum insight disponível</div>
+      <div class="insight-body">Use o prompt abaixo para gerar insights no Claude.ai e cole o resultado no campo <code>insights</code> do data.json.</div>
+    </div>`;
   } else {
-    list.innerHTML = d.insights.map(ins=>`
-      <div class="insight-card ${ins.type||'info'}">
+    list.innerHTML = d.insights.map(ins => `
+      <div class="insight">
+        <div class="insight-type">
+          <div class="insight-dot dot-${ins.type||'info'}"></div>
+          <span style="font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:.06em;font-weight:600">${ins.type||'info'}</span>
+        </div>
         <div class="insight-title">${ins.title}</div>
         <div class="insight-body">${ins.body}</div>
-        <div class="insight-meta">Gerado em ${ins.generated_at}</div>
+        <div class="insight-meta">${ins.generated_at}</div>
       </div>`).join('');
   }
 }
 
-fetch('data.json?t='+Date.now())
-  .then(r=>r.json())
-  .then(d=>{ render(d); document.getElementById('loading').style.display='none'; })
-  .catch(e=>{ document.getElementById('loading').innerHTML=`<p style="color:#ef4444;font-family:'DM Mono',monospace">Erro ao carregar data.json: ${e.message}</p>`; });
+fetch('data.json?t=' + Date.now())
+  .then(r => r.json())
+  .then(d => { render(d); document.getElementById('loading').style.display = 'none'; })
+  .catch(e => {
+    document.getElementById('loading').innerHTML =
+      `<p style="color:#b91c1c;font-family:'IBM Plex Mono',monospace;font-size:11px">Erro ao carregar data.json: ${e.message}</p>`;
+  });
 </script>
 </body>
 </html>
