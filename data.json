@@ -1,18 +1,18 @@
 {
-  "updated_at": "2026-05-22T21:57:21Z",
+  "updated_at": "2026-05-22T22:11:01Z",
   "period": "últimos 90 dias",
   "totals": {
     "sessions": 4655448,
     "total_users": 2143973,
-    "new_users": 1843514,
+    "new_users": 1843705,
     "bounce_rate": 22.85,
-    "avg_session_duration": 339.68,
-    "conversions": 501968,
-    "pageviews": 24446432,
-    "sessions_7d": 398469,
-    "users_7d": 252133,
-    "conversions_7d": 72000,
-    "new_users_7d": 163269
+    "avg_session_duration": 339.8,
+    "conversions": 502024,
+    "pageviews": 24449592,
+    "sessions_7d": 398700,
+    "users_7d": 252340,
+    "conversions_7d": 72056,
+    "new_users_7d": 163460
   },
   "daily": [
     {
@@ -647,10 +647,10 @@
     },
     {
       "date": "2026-05-22",
-      "sessions": 37051,
-      "users": 31010,
-      "conversions": 5018,
-      "new_users": 13678
+      "sessions": 37449,
+      "users": 31302,
+      "conversions": 5074,
+      "new_users": 13869
     }
   ],
   "pages": [
@@ -666,9 +666,9 @@
     {
       "path": "/",
       "title": "Passagem de Ônibus: Compre Online | Viaje Guanabara",
-      "pageviews": 1940439,
-      "users": 524232,
-      "avg_duration": 116.64,
+      "pageviews": 1941321,
+      "users": 524500,
+      "avg_duration": 116.65,
       "bounce_rate": 0,
       "exits": 0
     },
@@ -764,16 +764,16 @@
     "data": {
       "202608": {
         "/": {
-          "pageviews": 45711,
-          "users": 24715
+          "pageviews": 45701,
+          "users": 24699
         },
         "/onibus/checkout": {
-          "pageviews": 6170,
-          "users": 4093
+          "pageviews": 6185,
+          "users": 4106
         },
         "/onibus/conclusion": {
-          "pageviews": 5977,
-          "users": 3661
+          "pageviews": 5980,
+          "users": 3669
         }
       }
     }
@@ -781,10 +781,10 @@
   "landing_pages": [
     {
       "path": "/",
-      "sessions": 2960687,
+      "sessions": 2961395,
       "users": 1718785,
-      "conversions": 268712,
-      "bounce_rate": 18.71
+      "conversions": 268725,
+      "bounce_rate": 18.73
     },
     {
       "path": "(not set)",
@@ -837,9 +837,9 @@
     },
     {
       "path": "",
-      "sessions": 17510,
-      "users": 15061,
-      "conversions": 442,
+      "sessions": 17755,
+      "users": 15194,
+      "conversions": 448,
       "bounce_rate": 99.52
     },
     {
@@ -854,153 +854,981 @@
     {
       "source": "google",
       "medium": "cpc",
+      "source_medium": "google / cpc",
       "sessions": 2646164,
       "users": 1443985,
-      "conversions": 259235,
+      "conversions": 259244,
       "conversion_rate": 9.8,
       "bounce_rate": 16.37,
-      "avg_duration": 379.29
+      "avg_duration": 379.34
     },
     {
       "source": "google",
       "medium": "organic",
+      "source_medium": "google / organic",
       "sessions": 905320,
       "users": 493618,
-      "conversions": 70682,
+      "conversions": 70690,
       "conversion_rate": 7.81,
       "bounce_rate": 22.48,
-      "avg_duration": 301.02
+      "avg_duration": 301.09
     },
     {
       "source": "(direct)",
       "medium": "(none)",
-      "sessions": 560905,
-      "users": 327156,
-      "conversions": 121791,
-      "conversion_rate": 21.71,
-      "bounce_rate": 34.01,
-      "avg_duration": 296.64
+      "source_medium": "(direct) / (none)",
+      "sessions": 561350,
+      "users": 327286,
+      "conversions": 121799,
+      "conversion_rate": 21.7,
+      "bounce_rate": 34.03,
+      "avg_duration": 296.49
     },
     {
       "source": "pushnews",
       "medium": "pushnotification",
-      "sessions": 174151,
-      "users": 81226,
+      "source_medium": "pushnews / pushnotification",
+      "sessions": 174154,
+      "users": 81232,
       "conversions": 3735,
       "conversion_rate": 2.14,
       "bounce_rate": 77.13,
-      "avg_duration": 98.06
+      "avg_duration": 98.07
     },
     {
       "source": "(not set)",
       "medium": "(not set)",
-      "sessions": 40217,
-      "users": 36300,
-      "conversions": 4105,
-      "conversion_rate": 10.21,
-      "bounce_rate": 93.09,
-      "avg_duration": 465.99
+      "source_medium": "(not set) / (not set)",
+      "sessions": 40377,
+      "users": 36491,
+      "conversions": 4132,
+      "conversion_rate": 10.23,
+      "bounce_rate": 93.12,
+      "avg_duration": 469.86
     },
     {
-      "source": "(data not available)",
-      "medium": "(data not available)",
-      "sessions": 37763,
-      "users": 37296,
-      "conversions": 2272,
-      "conversion_rate": 6.02,
-      "bounce_rate": 7.14,
-      "avg_duration": 438.78
-    },
-    {
-      "source": "whatsapp",
-      "medium": "bot",
-      "sessions": 34500,
-      "users": 15213,
-      "conversions": 17485,
-      "conversion_rate": 50.68,
-      "bounce_rate": 23.22,
-      "avg_duration": 315.25
-    },
-    {
-      "source": "social",
-      "medium": "meta",
-      "sessions": 33907,
-      "users": 25586,
-      "conversions": 1416,
-      "conversion_rate": 4.18,
-      "bounce_rate": 17.46,
-      "avg_duration": 271.27
-    },
-    {
-      "source": "insider",
-      "medium": "architect_whatsapp",
-      "sessions": 29173,
-      "users": 23198,
-      "conversions": 2126,
-      "conversion_rate": 7.29,
-      "bounce_rate": 30.26,
-      "avg_duration": 250.45
-    },
-    {
-      "source": "bing",
-      "medium": "organic",
-      "sessions": 27629,
-      "users": 14305,
-      "conversions": 4690,
-      "conversion_rate": 16.97,
-      "bounce_rate": 18.2,
-      "avg_duration": 634.88
-    },
-    {
-      "source": "insider",
-      "medium": "insite",
-      "sessions": 27343,
-      "users": 9054,
-      "conversions": 8591,
-      "conversion_rate": 31.42,
-      "bounce_rate": 21.78,
-      "avg_duration": 617.16
-    },
-    {
-      "source": "insider",
-      "medium": "web_push",
-      "sessions": 17549,
-      "users": 10881,
-      "conversions": 276,
-      "conversion_rate": 1.57,
-      "bounce_rate": 60.37,
-      "avg_duration": 106.51
-    },
-    {
-      "source": "insider",
-      "medium": "architect_email",
-      "sessions": 9078,
-      "users": 6106,
-      "conversions": 1119,
-      "conversion_rate": 12.33,
-      "bounce_rate": 39.24,
-      "avg_duration": 385.91
-    },
-    {
-      "source": "insider",
-      "medium": "architect_web_push",
-      "sessions": 6979,
-      "users": 3719,
-      "conversions": 328,
-      "conversion_rate": 4.7,
-      "bounce_rate": 35.85,
-      "avg_duration": 214.84
-    },
-    {
-      "source": "facebook",
-      "medium": "cpc",
-      "sessions": 6850,
-      "users": 5481,
-      "conversions": 139,
-      "conversion_rate": 2.03,
-      "bounce_rate": 50.85,
-      "avg_duration": 125.52
+      "source": "outros",
+      "medium": "—",
+      "source_medium": "outros / —",
+      "sessions": 278232,
+      "users": 181421,
+      "conversions": 42014,
+      "conversion_rate": 15.1,
+      "bounce_rate": 26.32,
+      "avg_duration": 361.94
     }
+  ],
+  "sources_daily": {
+    "dates": [
+      "2026-02-21",
+      "2026-02-22",
+      "2026-02-23",
+      "2026-02-24",
+      "2026-02-25",
+      "2026-02-26",
+      "2026-02-27",
+      "2026-02-28",
+      "2026-03-01",
+      "2026-03-02",
+      "2026-03-03",
+      "2026-03-04",
+      "2026-03-05",
+      "2026-03-06",
+      "2026-03-07",
+      "2026-03-08",
+      "2026-03-09",
+      "2026-03-10",
+      "2026-03-11",
+      "2026-03-12",
+      "2026-03-13",
+      "2026-03-14",
+      "2026-03-15",
+      "2026-03-16",
+      "2026-03-17",
+      "2026-03-18",
+      "2026-03-19"
+    ],
+    "sources": [
+      "google / cpc",
+      "google / organic",
+      "(direct) / (none)",
+      "pushnews / pushnotification",
+      "(not set) / (not set)",
+      "outros / —"
+    ],
+    "data": {
+      "2026-02-21": {
+        "google / cpc": {
+          "sessions": 27039,
+          "users": 23181,
+          "conversions": 2123
+        },
+        "google / organic": {
+          "sessions": 6443,
+          "users": 5113,
+          "conversions": 402
+        },
+        "(direct) / (none)": {
+          "sessions": 4581,
+          "users": 3749,
+          "conversions": 892
+        },
+        "pushnews / pushnotification": {
+          "sessions": 1320,
+          "users": 1110,
+          "conversions": 21
+        },
+        "outros / —": {
+          "sessions": 1980,
+          "users": 1742,
+          "conversions": 252
+        },
+        "(not set) / (not set)": {
+          "sessions": 88,
+          "users": 88,
+          "conversions": 15
+        }
+      },
+      "2026-02-22": {
+        "google / cpc": {
+          "sessions": 25714,
+          "users": 21886,
+          "conversions": 2116
+        },
+        "google / organic": {
+          "sessions": 6180,
+          "users": 5053,
+          "conversions": 360
+        },
+        "(direct) / (none)": {
+          "sessions": 4375,
+          "users": 3455,
+          "conversions": 753
+        },
+        "pushnews / pushnotification": {
+          "sessions": 445,
+          "users": 383,
+          "conversions": 13
+        },
+        "outros / —": {
+          "sessions": 1671,
+          "users": 1467,
+          "conversions": 221
+        },
+        "(not set) / (not set)": {
+          "sessions": 78,
+          "users": 78,
+          "conversions": 5
+        }
+      },
+      "2026-02-23": {
+        "google / cpc": {
+          "sessions": 23512,
+          "users": 19657,
+          "conversions": 1773
+        },
+        "google / organic": {
+          "sessions": 15368,
+          "users": 12781,
+          "conversions": 534
+        },
+        "(direct) / (none)": {
+          "sessions": 5099,
+          "users": 4137,
+          "conversions": 987
+        },
+        "outros / —": {
+          "sessions": 2835,
+          "users": 2437,
+          "conversions": 232
+        },
+        "pushnews / pushnotification": {
+          "sessions": 542,
+          "users": 467,
+          "conversions": 24
+        },
+        "(not set) / (not set)": {
+          "sessions": 96,
+          "users": 95,
+          "conversions": 3
+        }
+      },
+      "2026-02-24": {
+        "google / cpc": {
+          "sessions": 26931,
+          "users": 22456,
+          "conversions": 2118
+        },
+        "google / organic": {
+          "sessions": 11058,
+          "users": 9155,
+          "conversions": 554
+        },
+        "(direct) / (none)": {
+          "sessions": 4815,
+          "users": 3835,
+          "conversions": 951
+        },
+        "pushnews / pushnotification": {
+          "sessions": 1348,
+          "users": 1180,
+          "conversions": 22
+        },
+        "outros / —": {
+          "sessions": 2116,
+          "users": 1866,
+          "conversions": 220
+        },
+        "(not set) / (not set)": {
+          "sessions": 115,
+          "users": 114,
+          "conversions": 8
+        }
+      },
+      "2026-02-25": {
+        "google / cpc": {
+          "sessions": 34451,
+          "users": 29257,
+          "conversions": 2285
+        },
+        "google / organic": {
+          "sessions": 7133,
+          "users": 5698,
+          "conversions": 440
+        },
+        "(direct) / (none)": {
+          "sessions": 4878,
+          "users": 3973,
+          "conversions": 1036
+        },
+        "pushnews / pushnotification": {
+          "sessions": 1540,
+          "users": 1316,
+          "conversions": 27
+        },
+        "outros / —": {
+          "sessions": 2393,
+          "users": 2064,
+          "conversions": 265
+        },
+        "(not set) / (not set)": {
+          "sessions": 126,
+          "users": 126,
+          "conversions": 21
+        }
+      },
+      "2026-02-26": {
+        "google / cpc": {
+          "sessions": 32140,
+          "users": 26320,
+          "conversions": 2490
+        },
+        "google / organic": {
+          "sessions": 7445,
+          "users": 5833,
+          "conversions": 437
+        },
+        "(direct) / (none)": {
+          "sessions": 5240,
+          "users": 3892,
+          "conversions": 1122
+        },
+        "outros / —": {
+          "sessions": 2898,
+          "users": 2468,
+          "conversions": 262
+        },
+        "pushnews / pushnotification": {
+          "sessions": 392,
+          "users": 332,
+          "conversions": 24
+        },
+        "(not set) / (not set)": {
+          "sessions": 102,
+          "users": 102,
+          "conversions": 9
+        }
+      },
+      "2026-02-27": {
+        "google / cpc": {
+          "sessions": 36587,
+          "users": 30403,
+          "conversions": 2719
+        },
+        "google / organic": {
+          "sessions": 7659,
+          "users": 6177,
+          "conversions": 516
+        },
+        "(direct) / (none)": {
+          "sessions": 5297,
+          "users": 4203,
+          "conversions": 1161
+        },
+        "pushnews / pushnotification": {
+          "sessions": 1456,
+          "users": 1217,
+          "conversions": 27
+        },
+        "outros / —": {
+          "sessions": 2291,
+          "users": 2013,
+          "conversions": 253
+        },
+        "(not set) / (not set)": {
+          "sessions": 106,
+          "users": 105,
+          "conversions": 11
+        }
+      },
+      "2026-02-28": {
+        "google / cpc": {
+          "sessions": 26145,
+          "users": 22097,
+          "conversions": 2270
+        },
+        "google / organic": {
+          "sessions": 6820,
+          "users": 5443,
+          "conversions": 426
+        },
+        "(direct) / (none)": {
+          "sessions": 4631,
+          "users": 3680,
+          "conversions": 963
+        },
+        "outros / —": {
+          "sessions": 2578,
+          "users": 2249,
+          "conversions": 256
+        },
+        "pushnews / pushnotification": {
+          "sessions": 357,
+          "users": 306,
+          "conversions": 11
+        },
+        "(not set) / (not set)": {
+          "sessions": 90,
+          "users": 90,
+          "conversions": 9
+        }
+      },
+      "2026-03-01": {
+        "google / cpc": {
+          "sessions": 27158,
+          "users": 23271,
+          "conversions": 2339
+        },
+        "google / organic": {
+          "sessions": 7355,
+          "users": 5712,
+          "conversions": 463
+        },
+        "(direct) / (none)": {
+          "sessions": 4477,
+          "users": 3632,
+          "conversions": 867
+        },
+        "outros / —": {
+          "sessions": 2046,
+          "users": 1802,
+          "conversions": 250
+        },
+        "pushnews / pushnotification": {
+          "sessions": 263,
+          "users": 226,
+          "conversions": 13
+        },
+        "(not set) / (not set)": {
+          "sessions": 82,
+          "users": 81,
+          "conversions": 7
+        }
+      },
+      "2026-03-02": {
+        "google / cpc": {
+          "sessions": 37667,
+          "users": 31031,
+          "conversions": 2840
+        },
+        "google / organic": {
+          "sessions": 8384,
+          "users": 6679,
+          "conversions": 486
+        },
+        "(direct) / (none)": {
+          "sessions": 5677,
+          "users": 4553,
+          "conversions": 1209
+        },
+        "outros / —": {
+          "sessions": 5253,
+          "users": 4419,
+          "conversions": 310
+        },
+        "pushnews / pushnotification": {
+          "sessions": 1772,
+          "users": 1484,
+          "conversions": 34
+        },
+        "(not set) / (not set)": {
+          "sessions": 125,
+          "users": 125,
+          "conversions": 15
+        }
+      },
+      "2026-03-03": {
+        "google / cpc": {
+          "sessions": 35537,
+          "users": 29594,
+          "conversions": 2645
+        },
+        "google / organic": {
+          "sessions": 7923,
+          "users": 6415,
+          "conversions": 487
+        },
+        "(direct) / (none)": {
+          "sessions": 5519,
+          "users": 4204,
+          "conversions": 1146
+        },
+        "pushnews / pushnotification": {
+          "sessions": 1679,
+          "users": 1397,
+          "conversions": 31
+        },
+        "outros / —": {
+          "sessions": 2956,
+          "users": 2530,
+          "conversions": 259
+        },
+        "(not set) / (not set)": {
+          "sessions": 142,
+          "users": 140,
+          "conversions": 20
+        }
+      },
+      "2026-03-04": {
+        "google / cpc": {
+          "sessions": 32946,
+          "users": 26881,
+          "conversions": 2818
+        },
+        "google / organic": {
+          "sessions": 8055,
+          "users": 6376,
+          "conversions": 567
+        },
+        "(direct) / (none)": {
+          "sessions": 5534,
+          "users": 4407,
+          "conversions": 1220
+        },
+        "pushnews / pushnotification": {
+          "sessions": 1649,
+          "users": 1374,
+          "conversions": 32
+        },
+        "outros / —": {
+          "sessions": 2709,
+          "users": 2334,
+          "conversions": 304
+        },
+        "(not set) / (not set)": {
+          "sessions": 111,
+          "users": 111,
+          "conversions": 23
+        }
+      },
+      "2026-03-05": {
+        "google / cpc": {
+          "sessions": 33737,
+          "users": 26509,
+          "conversions": 2879
+        },
+        "google / organic": {
+          "sessions": 8244,
+          "users": 6269,
+          "conversions": 543
+        },
+        "(direct) / (none)": {
+          "sessions": 5526,
+          "users": 4401,
+          "conversions": 1271
+        },
+        "(not set) / (not set)": {
+          "sessions": 1624,
+          "users": 1230,
+          "conversions": 147
+        },
+        "outros / —": {
+          "sessions": 3506,
+          "users": 2972,
+          "conversions": 295
+        },
+        "pushnews / pushnotification": {
+          "sessions": 507,
+          "users": 430,
+          "conversions": 37
+        }
+      },
+      "2026-03-06": {
+        "google / cpc": {
+          "sessions": 31963,
+          "users": 26114,
+          "conversions": 3025
+        },
+        "google / organic": {
+          "sessions": 8407,
+          "users": 6619,
+          "conversions": 582
+        },
+        "(direct) / (none)": {
+          "sessions": 5592,
+          "users": 4372,
+          "conversions": 1221
+        },
+        "pushnews / pushnotification": {
+          "sessions": 1710,
+          "users": 1443,
+          "conversions": 45
+        },
+        "outros / —": {
+          "sessions": 2771,
+          "users": 2391,
+          "conversions": 308
+        },
+        "(not set) / (not set)": {
+          "sessions": 104,
+          "users": 102,
+          "conversions": 9
+        }
+      },
+      "2026-03-07": {
+        "google / cpc": {
+          "sessions": 31177,
+          "users": 26405,
+          "conversions": 2431
+        },
+        "google / organic": {
+          "sessions": 6579,
+          "users": 5390,
+          "conversions": 400
+        },
+        "(direct) / (none)": {
+          "sessions": 4555,
+          "users": 3750,
+          "conversions": 1005
+        },
+        "outros / —": {
+          "sessions": 4217,
+          "users": 3580,
+          "conversions": 438
+        },
+        "pushnews / pushnotification": {
+          "sessions": 389,
+          "users": 334,
+          "conversions": 19
+        },
+        "(not set) / (not set)": {
+          "sessions": 89,
+          "users": 89,
+          "conversions": 8
+        }
+      },
+      "2026-03-08": {
+        "google / cpc": {
+          "sessions": 30153,
+          "users": 26805,
+          "conversions": 2248
+        },
+        "google / organic": {
+          "sessions": 6577,
+          "users": 5406,
+          "conversions": 441
+        },
+        "(direct) / (none)": {
+          "sessions": 4208,
+          "users": 3440,
+          "conversions": 827
+        },
+        "outros / —": {
+          "sessions": 4049,
+          "users": 3370,
+          "conversions": 450
+        },
+        "pushnews / pushnotification": {
+          "sessions": 1535,
+          "users": 1296,
+          "conversions": 23
+        },
+        "(not set) / (not set)": {
+          "sessions": 212,
+          "users": 185,
+          "conversions": 22
+        }
+      },
+      "2026-03-09": {
+        "google / cpc": {
+          "sessions": 35381,
+          "users": 29814,
+          "conversions": 2587
+        },
+        "google / organic": {
+          "sessions": 7610,
+          "users": 6312,
+          "conversions": 522
+        },
+        "(direct) / (none)": {
+          "sessions": 5209,
+          "users": 4283,
+          "conversions": 1122
+        },
+        "outros / —": {
+          "sessions": 4618,
+          "users": 3759,
+          "conversions": 498
+        },
+        "pushnews / pushnotification": {
+          "sessions": 2020,
+          "users": 1712,
+          "conversions": 32
+        },
+        "(not set) / (not set)": {
+          "sessions": 314,
+          "users": 263,
+          "conversions": 37
+        }
+      },
+      "2026-03-10": {
+        "google / cpc": {
+          "sessions": 32306,
+          "users": 26967,
+          "conversions": 2605
+        },
+        "google / organic": {
+          "sessions": 7064,
+          "users": 5813,
+          "conversions": 448
+        },
+        "(direct) / (none)": {
+          "sessions": 5329,
+          "users": 4318,
+          "conversions": 1168
+        },
+        "outros / —": {
+          "sessions": 4957,
+          "users": 4095,
+          "conversions": 568
+        },
+        "pushnews / pushnotification": {
+          "sessions": 1911,
+          "users": 1602,
+          "conversions": 28
+        },
+        "(not set) / (not set)": {
+          "sessions": 894,
+          "users": 711,
+          "conversions": 70
+        }
+      },
+      "2026-03-11": {
+        "google / cpc": {
+          "sessions": 34051,
+          "users": 27844,
+          "conversions": 2697
+        },
+        "google / organic": {
+          "sessions": 7318,
+          "users": 5964,
+          "conversions": 499
+        },
+        "(direct) / (none)": {
+          "sessions": 5204,
+          "users": 4404,
+          "conversions": 1114
+        },
+        "outros / —": {
+          "sessions": 5471,
+          "users": 4447,
+          "conversions": 605
+        },
+        "pushnews / pushnotification": {
+          "sessions": 1849,
+          "users": 1516,
+          "conversions": 41
+        },
+        "(not set) / (not set)": {
+          "sessions": 111,
+          "users": 111,
+          "conversions": 18
+        }
+      },
+      "2026-03-12": {
+        "google / cpc": {
+          "sessions": 33910,
+          "users": 27440,
+          "conversions": 2671
+        },
+        "google / organic": {
+          "sessions": 8585,
+          "users": 6815,
+          "conversions": 572
+        },
+        "(direct) / (none)": {
+          "sessions": 5944,
+          "users": 4855,
+          "conversions": 1193
+        },
+        "outros / —": {
+          "sessions": 6140,
+          "users": 5015,
+          "conversions": 491
+        },
+        "pushnews / pushnotification": {
+          "sessions": 656,
+          "users": 544,
+          "conversions": 32
+        },
+        "(not set) / (not set)": {
+          "sessions": 118,
+          "users": 118,
+          "conversions": 16
+        }
+      },
+      "2026-03-13": {
+        "google / cpc": {
+          "sessions": 32234,
+          "users": 26698,
+          "conversions": 2642
+        },
+        "google / organic": {
+          "sessions": 9239,
+          "users": 7156,
+          "conversions": 622
+        },
+        "(direct) / (none)": {
+          "sessions": 5792,
+          "users": 4541,
+          "conversions": 1204
+        },
+        "outros / —": {
+          "sessions": 4196,
+          "users": 3346,
+          "conversions": 484
+        },
+        "pushnews / pushnotification": {
+          "sessions": 457,
+          "users": 368,
+          "conversions": 24
+        },
+        "(not set) / (not set)": {
+          "sessions": 112,
+          "users": 109,
+          "conversions": 9
+        }
+      },
+      "2026-03-14": {
+        "google / cpc": {
+          "sessions": 23452,
+          "users": 19404,
+          "conversions": 2115
+        },
+        "google / organic": {
+          "sessions": 7477,
+          "users": 6023,
+          "conversions": 536
+        },
+        "(direct) / (none)": {
+          "sessions": 4899,
+          "users": 3957,
+          "conversions": 969
+        },
+        "pushnews / pushnotification": {
+          "sessions": 1326,
+          "users": 1116,
+          "conversions": 23
+        },
+        "outros / —": {
+          "sessions": 3153,
+          "users": 2588,
+          "conversions": 311
+        },
+        "(not set) / (not set)": {
+          "sessions": 82,
+          "users": 80,
+          "conversions": 5
+        }
+      },
+      "2026-03-15": {
+        "google / cpc": {
+          "sessions": 30880,
+          "users": 26179,
+          "conversions": 2382
+        },
+        "google / organic": {
+          "sessions": 8845,
+          "users": 7077,
+          "conversions": 569
+        },
+        "(direct) / (none)": {
+          "sessions": 4789,
+          "users": 3953,
+          "conversions": 860
+        },
+        "pushnews / pushnotification": {
+          "sessions": 1351,
+          "users": 1101,
+          "conversions": 14
+        },
+        "outros / —": {
+          "sessions": 2793,
+          "users": 2329,
+          "conversions": 372
+        },
+        "(not set) / (not set)": {
+          "sessions": 94,
+          "users": 93,
+          "conversions": 7
+        }
+      },
+      "2026-03-16": {
+        "google / cpc": {
+          "sessions": 33228,
+          "users": 27459,
+          "conversions": 2591
+        },
+        "google / organic": {
+          "sessions": 10064,
+          "users": 8029,
+          "conversions": 627
+        },
+        "(direct) / (none)": {
+          "sessions": 5736,
+          "users": 4563,
+          "conversions": 1204
+        },
+        "pushnews / pushnotification": {
+          "sessions": 2008,
+          "users": 1683,
+          "conversions": 37
+        },
+        "outros / —": {
+          "sessions": 3363,
+          "users": 2765,
+          "conversions": 454
+        },
+        "(not set) / (not set)": {
+          "sessions": 124,
+          "users": 124,
+          "conversions": 13
+        }
+      },
+      "2026-03-17": {
+        "google / cpc": {
+          "sessions": 30336,
+          "users": 24747,
+          "conversions": 2531
+        },
+        "google / organic": {
+          "sessions": 9380,
+          "users": 7368,
+          "conversions": 651
+        },
+        "(direct) / (none)": {
+          "sessions": 5939,
+          "users": 4637,
+          "conversions": 1215
+        },
+        "pushnews / pushnotification": {
+          "sessions": 2092,
+          "users": 1727,
+          "conversions": 25
+        },
+        "outros / —": {
+          "sessions": 3570,
+          "users": 2987,
+          "conversions": 380
+        },
+        "(not set) / (not set)": {
+          "sessions": 97,
+          "users": 97,
+          "conversions": 20
+        }
+      },
+      "2026-03-18": {
+        "google / cpc": {
+          "sessions": 31071,
+          "users": 24923,
+          "conversions": 2589
+        },
+        "google / organic": {
+          "sessions": 9842,
+          "users": 7632,
+          "conversions": 699
+        },
+        "(direct) / (none)": {
+          "sessions": 5837,
+          "users": 4705,
+          "conversions": 1226
+        },
+        "pushnews / pushnotification": {
+          "sessions": 3025,
+          "users": 2494,
+          "conversions": 46
+        },
+        "outros / —": {
+          "sessions": 3068,
+          "users": 2514,
+          "conversions": 426
+        },
+        "(not set) / (not set)": {
+          "sessions": 114,
+          "users": 113,
+          "conversions": 7
+        }
+      },
+      "2026-03-19": {
+        "google / cpc": {
+          "sessions": 27353,
+          "users": 22995,
+          "conversions": 2543
+        },
+        "google / organic": {
+          "sessions": 9403,
+          "users": 7332,
+          "conversions": 657
+        },
+        "(direct) / (none)": {
+          "sessions": 5229,
+          "users": 4242,
+          "conversions": 1083
+        },
+        "pushnews / pushnotification": {
+          "sessions": 2760,
+          "users": 2332,
+          "conversions": 39
+        },
+        "outros / —": {
+          "sessions": 2908,
+          "users": 2335,
+          "conversions": 379
+        },
+        "(not set) / (not set)": {
+          "sessions": 111,
+          "users": 111,
+          "conversions": 20
+        }
+      }
+    }
+  },
+  "top5_sources": [
+    "google / cpc",
+    "google / organic",
+    "(direct) / (none)",
+    "pushnews / pushnotification",
+    "(not set) / (not set)"
   ],
   "channels": [
     {
@@ -8401,40 +9229,3065 @@
       }
     }
   },
+  "nvr_by_device": {
+    "dates": [
+      "2026-02-21",
+      "2026-02-22",
+      "2026-02-23",
+      "2026-02-24",
+      "2026-02-25",
+      "2026-02-26",
+      "2026-02-27",
+      "2026-02-28",
+      "2026-03-01",
+      "2026-03-02",
+      "2026-03-03",
+      "2026-03-04",
+      "2026-03-05",
+      "2026-03-06",
+      "2026-03-07",
+      "2026-03-08",
+      "2026-03-09",
+      "2026-03-10",
+      "2026-03-11",
+      "2026-03-12",
+      "2026-03-13",
+      "2026-03-14",
+      "2026-03-15",
+      "2026-03-16",
+      "2026-03-17",
+      "2026-03-18",
+      "2026-03-19",
+      "2026-03-20",
+      "2026-03-21",
+      "2026-03-22",
+      "2026-03-23",
+      "2026-03-24",
+      "2026-03-25",
+      "2026-03-26",
+      "2026-03-27",
+      "2026-03-28",
+      "2026-03-29",
+      "2026-03-30",
+      "2026-03-31",
+      "2026-04-01",
+      "2026-04-02",
+      "2026-04-03",
+      "2026-04-04",
+      "2026-04-05",
+      "2026-04-06",
+      "2026-04-07",
+      "2026-04-08",
+      "2026-04-09",
+      "2026-04-10",
+      "2026-04-11",
+      "2026-04-12",
+      "2026-04-13",
+      "2026-04-14",
+      "2026-04-15",
+      "2026-04-16",
+      "2026-04-17",
+      "2026-04-18",
+      "2026-04-19",
+      "2026-04-20",
+      "2026-04-21",
+      "2026-04-22",
+      "2026-04-23",
+      "2026-04-24",
+      "2026-04-25",
+      "2026-04-26"
+    ],
+    "devices": [
+      "mobile",
+      "desktop",
+      "tablet",
+      "smart tv"
+    ],
+    "data": {
+      "2026-02-21": {
+        "mobile": {
+          "returning": {
+            "sessions": 18122,
+            "users": 13120
+          },
+          "new": {
+            "sessions": 14215,
+            "users": 14491
+          },
+          "(not set)": {
+            "sessions": 2867,
+            "users": 2593
+          }
+        },
+        "desktop": {
+          "returning": {
+            "sessions": 3195,
+            "users": 2320
+          },
+          "new": {
+            "sessions": 2749,
+            "users": 2749
+          },
+          "(not set)": {
+            "sessions": 361,
+            "users": 322
+          }
+        },
+        "tablet": {
+          "returning": {
+            "sessions": 136,
+            "users": 111
+          },
+          "new": {
+            "sessions": 124,
+            "users": 124
+          },
+          "(not set)": {
+            "sessions": 11,
+            "users": 11
+          }
+        }
+      },
+      "2026-02-22": {
+        "mobile": {
+          "returning": {
+            "sessions": 17521,
+            "users": 12706
+          },
+          "new": {
+            "sessions": 13738,
+            "users": 13251
+          },
+          "(not set)": {
+            "sessions": 2289,
+            "users": 2075
+          }
+        },
+        "desktop": {
+          "returning": {
+            "sessions": 2673,
+            "users": 1985
+          },
+          "new": {
+            "sessions": 2319,
+            "users": 2320
+          },
+          "(not set)": {
+            "sessions": 324,
+            "users": 289
+          }
+        },
+        "tablet": {
+          "returning": {
+            "sessions": 108,
+            "users": 93
+          },
+          "new": {
+            "sessions": 95,
+            "users": 95
+          },
+          "(not set)": {
+            "sessions": 11,
+            "users": 11
+          }
+        }
+      },
+      "2026-02-23": {
+        "mobile": {
+          "returning": {
+            "sessions": 18042,
+            "users": 12972
+          },
+          "new": {
+            "sessions": 15403,
+            "users": 15210
+          },
+          "(not set)": {
+            "sessions": 2407,
+            "users": 2220
+          }
+        },
+        "desktop": {
+          "returning": {
+            "sessions": 6663,
+            "users": 4879
+          },
+          "new": {
+            "sessions": 4890,
+            "users": 4805
+          },
+          "(not set)": {
+            "sessions": 643,
+            "users": 577
+          }
+        },
+        "tablet": {
+          "new": {
+            "sessions": 128,
+            "users": 128
+          },
+          "returning": {
+            "sessions": 126,
+            "users": 103
+          },
+          "(not set)": {
+            "sessions": 17,
+            "users": 17
+          }
+        },
+        "smart tv": {
+          "new": {
+            "sessions": 1,
+            "users": 1
+          },
+          "returning": {
+            "sessions": 1,
+            "users": 1
+          }
+        }
+      },
+      "2026-02-24": {
+        "mobile": {
+          "returning": {
+            "sessions": 17453,
+            "users": 12664
+          },
+          "new": {
+            "sessions": 15360,
+            "users": 15054
+          },
+          "(not set)": {
+            "sessions": 2183,
+            "users": 2017
+          }
+        },
+        "desktop": {
+          "returning": {
+            "sessions": 6452,
+            "users": 4573
+          },
+          "new": {
+            "sessions": 4630,
+            "users": 4624
+          },
+          "(not set)": {
+            "sessions": 571,
+            "users": 522
+          }
+        },
+        "tablet": {
+          "returning": {
+            "sessions": 138,
+            "users": 109
+          },
+          "new": {
+            "sessions": 114,
+            "users": 114
+          },
+          "(not set)": {
+            "sessions": 28,
+            "users": 25
+          }
+        }
+      },
+      "2026-02-25": {
+        "mobile": {
+          "returning": {
+            "sessions": 18646,
+            "users": 13518
+          },
+          "new": {
+            "sessions": 17119,
+            "users": 17266
+          },
+          "(not set)": {
+            "sessions": 2568,
+            "users": 2310
+          }
+        },
+        "desktop": {
+          "returning": {
+            "sessions": 6509,
+            "users": 4666
+          },
+          "new": {
+            "sessions": 5208,
+            "users": 5185
+          },
+          "(not set)": {
+            "sessions": 547,
+            "users": 493
+          }
+        },
+        "tablet": {
+          "returning": {
+            "sessions": 135,
+            "users": 101
+          },
+          "new": {
+            "sessions": 131,
+            "users": 132
+          },
+          "(not set)": {
+            "sessions": 13,
+            "users": 13
+          }
+        },
+        "smart tv": {
+          "new": {
+            "sessions": 1,
+            "users": 1
+          }
+        }
+      },
+      "2026-02-26": {
+        "mobile": {
+          "returning": {
+            "sessions": 19150,
+            "users": 13450
+          },
+          "new": {
+            "sessions": 14804,
+            "users": 14769
+          },
+          "(not set)": {
+            "sessions": 2600,
+            "users": 2341
+          }
+        },
+        "desktop": {
+          "returning": {
+            "sessions": 6610,
+            "users": 4703
+          },
+          "new": {
+            "sessions": 4560,
+            "users": 4395
+          },
+          "(not set)": {
+            "sessions": 574,
+            "users": 511
+          }
+        },
+        "tablet": {
+          "returning": {
+            "sessions": 112,
+            "users": 90
+          },
+          "new": {
+            "sessions": 107,
+            "users": 107
+          },
+          "(not set)": {
+            "sessions": 18,
+            "users": 18
+          }
+        }
+      },
+      "2026-02-27": {
+        "mobile": {
+          "returning": {
+            "sessions": 20496,
+            "users": 14765
+          },
+          "new": {
+            "sessions": 18150,
+            "users": 18087
+          },
+          "(not set)": {
+            "sessions": 3002,
+            "users": 2772
+          }
+        },
+        "desktop": {
+          "returning": {
+            "sessions": 6279,
+            "users": 4470
+          },
+          "new": {
+            "sessions": 4706,
+            "users": 4657
+          },
+          "(not set)": {
+            "sessions": 604,
+            "users": 510
+          }
+        },
+        "tablet": {
+          "new": {
+            "sessions": 138,
+            "users": 138
+          },
+          "returning": {
+            "sessions": 114,
+            "users": 96
+          },
+          "(not set)": {
+            "sessions": 17,
+            "users": 16
+          }
+        },
+        "smart tv": {
+          "new": {
+            "sessions": 1,
+            "users": 1
+          }
+        }
+      },
+      "2026-02-28": {
+        "mobile": {
+          "returning": {
+            "sessions": 17595,
+            "users": 12909
+          },
+          "new": {
+            "sessions": 14522,
+            "users": 14090
+          },
+          "(not set)": {
+            "sessions": 2620,
+            "users": 2391
+          }
+        },
+        "desktop": {
+          "returning": {
+            "sessions": 3044,
+            "users": 2220
+          },
+          "new": {
+            "sessions": 2572,
+            "users": 2570
+          },
+          "(not set)": {
+            "sessions": 346,
+            "users": 302
+          }
+        },
+        "tablet": {
+          "returning": {
+            "sessions": 126,
+            "users": 93
+          },
+          "new": {
+            "sessions": 99,
+            "users": 99
+          },
+          "(not set)": {
+            "sessions": 19,
+            "users": 19
+          }
+        }
+      },
+      "2026-03-01": {
+        "mobile": {
+          "returning": {
+            "sessions": 18652,
+            "users": 13480
+          },
+          "new": {
+            "sessions": 14728,
+            "users": 15045
+          },
+          "(not set)": {
+            "sessions": 2299,
+            "users": 2089
+          }
+        },
+        "desktop": {
+          "returning": {
+            "sessions": 2924,
+            "users": 2149
+          },
+          "new": {
+            "sessions": 2448,
+            "users": 2451
+          },
+          "(not set)": {
+            "sessions": 322,
+            "users": 286
+          }
+        },
+        "tablet": {
+          "new": {
+            "sessions": 125,
+            "users": 125
+          },
+          "returning": {
+            "sessions": 124,
+            "users": 102
+          },
+          "(not set)": {
+            "sessions": 21,
+            "users": 21
+          }
+        },
+        "smart tv": {
+          "new": {
+            "sessions": 1,
+            "users": 1
+          }
+        }
+      },
+      "2026-03-02": {
+        "mobile": {
+          "returning": {
+            "sessions": 22618,
+            "users": 16079
+          },
+          "new": {
+            "sessions": 19464,
+            "users": 19575
+          },
+          "(not set)": {
+            "sessions": 3196,
+            "users": 2915
+          }
+        },
+        "desktop": {
+          "returning": {
+            "sessions": 7734,
+            "users": 5489
+          },
+          "new": {
+            "sessions": 5415,
+            "users": 5472
+          },
+          "(not set)": {
+            "sessions": 680,
+            "users": 596
+          }
+        },
+        "tablet": {
+          "returning": {
+            "sessions": 157,
+            "users": 132
+          },
+          "new": {
+            "sessions": 110,
+            "users": 110
+          },
+          "(not set)": {
+            "sessions": 20,
+            "users": 19
+          }
+        },
+        "smart tv": {
+          "new": {
+            "sessions": 2,
+            "users": 2
+          },
+          "returning": {
+            "sessions": 1,
+            "users": 1
+          }
+        }
+      },
+      "2026-03-03": {
+        "mobile": {
+          "returning": {
+            "sessions": 19924,
+            "users": 14534
+          },
+          "new": {
+            "sessions": 17168,
+            "users": 16866
+          },
+          "(not set)": {
+            "sessions": 3229,
+            "users": 2875
+          }
+        },
+        "desktop": {
+          "returning": {
+            "sessions": 7363,
+            "users": 5180
+          },
+          "new": {
+            "sessions": 5227,
+            "users": 5215
+          },
+          "(not set)": {
+            "sessions": 678,
+            "users": 588
+          }
+        },
+        "tablet": {
+          "returning": {
+            "sessions": 165,
+            "users": 119
+          },
+          "new": {
+            "sessions": 124,
+            "users": 124
+          },
+          "(not set)": {
+            "sessions": 22,
+            "users": 20
+          }
+        }
+      },
+      "2026-03-04": {
+        "mobile": {
+          "returning": {
+            "sessions": 19469,
+            "users": 13735
+          },
+          "new": {
+            "sessions": 14797,
+            "users": 15481
+          },
+          "(not set)": {
+            "sessions": 3252,
+            "users": 2878
+          }
+        },
+        "desktop": {
+          "returning": {
+            "sessions": 6930,
+            "users": 4991
+          },
+          "new": {
+            "sessions": 4906,
+            "users": 4745
+          },
+          "(not set)": {
+            "sessions": 667,
+            "users": 593
+          }
+        },
+        "tablet": {
+          "returning": {
+            "sessions": 159,
+            "users": 127
+          },
+          "new": {
+            "sessions": 110,
+            "users": 110
+          },
+          "(not set)": {
+            "sessions": 24,
+            "users": 21
+          }
+        }
+      },
+      "2026-03-05": {
+        "mobile": {
+          "returning": {
+            "sessions": 20747,
+            "users": 14901
+          },
+          "new": {
+            "sessions": 15605,
+            "users": 15976
+          },
+          "(not set)": {
+            "sessions": 2973,
+            "users": 2650
+          }
+        },
+        "desktop": {
+          "returning": {
+            "sessions": 7203,
+            "users": 5098
+          },
+          "new": {
+            "sessions": 4820,
+            "users": 4712
+          },
+          "(not set)": {
+            "sessions": 585,
+            "users": 526
+          }
+        },
+        "tablet": {
+          "returning": {
+            "sessions": 135,
+            "users": 114
+          },
+          "new": {
+            "sessions": 129,
+            "users": 129
+          },
+          "(not set)": {
+            "sessions": 23,
+            "users": 19
+          }
+        }
+      },
+      "2026-03-06": {
+        "mobile": {
+          "returning": {
+            "sessions": 20705,
+            "users": 14656
+          },
+          "new": {
+            "sessions": 15199,
+            "users": 15074
+          },
+          "(not set)": {
+            "sessions": 3212,
+            "users": 2897
+          }
+        },
+        "desktop": {
+          "returning": {
+            "sessions": 6582,
+            "users": 4604
+          },
+          "new": {
+            "sessions": 4430,
+            "users": 4330
+          },
+          "(not set)": {
+            "sessions": 602,
+            "users": 540
+          }
+        },
+        "tablet": {
+          "returning": {
+            "sessions": 129,
+            "users": 101
+          },
+          "new": {
+            "sessions": 116,
+            "users": 116
+          },
+          "(not set)": {
+            "sessions": 20,
+            "users": 19
+          }
+        }
+      },
+      "2026-03-07": {
+        "mobile": {
+          "returning": {
+            "sessions": 19420,
+            "users": 13806
+          },
+          "new": {
+            "sessions": 17260,
+            "users": 17317
+          },
+          "(not set)": {
+            "sessions": 3204,
+            "users": 2926
+          }
+        },
+        "desktop": {
+          "returning": {
+            "sessions": 3363,
+            "users": 2448
+          },
+          "new": {
+            "sessions": 2863,
+            "users": 2886
+          },
+          "(not set)": {
+            "sessions": 326,
+            "users": 294
+          }
+        },
+        "tablet": {
+          "returning": {
+            "sessions": 127,
+            "users": 102
+          },
+          "new": {
+            "sessions": 113,
+            "users": 113
+          },
+          "(not set)": {
+            "sessions": 17,
+            "users": 17
+          }
+        }
+      },
+      "2026-03-08": {
+        "mobile": {
+          "returning": {
+            "sessions": 20207,
+            "users": 14495
+          },
+          "new": {
+            "sessions": 17608,
+            "users": 17601
+          },
+          "(not set)": {
+            "sessions": 3479,
+            "users": 3151
+          }
+        },
+        "desktop": {
+          "returning": {
+            "sessions": 3029,
+            "users": 2196
+          },
+          "new": {
+            "sessions": 2776,
+            "users": 2775
+          },
+          "(not set)": {
+            "sessions": 380,
+            "users": 346
+          }
+        },
+        "tablet": {
+          "new": {
+            "sessions": 118,
+            "users": 118
+          },
+          "returning": {
+            "sessions": 110,
+            "users": 90
+          },
+          "(not set)": {
+            "sessions": 26,
+            "users": 25
+          }
+        }
+      },
+      "2026-03-09": {
+        "mobile": {
+          "returning": {
+            "sessions": 20385,
+            "users": 14958
+          },
+          "new": {
+            "sessions": 16815,
+            "users": 17264
+          },
+          "(not set)": {
+            "sessions": 3612,
+            "users": 3340
+          }
+        },
+        "desktop": {
+          "returning": {
+            "sessions": 7487,
+            "users": 5335
+          },
+          "new": {
+            "sessions": 5299,
+            "users": 5402
+          },
+          "(not set)": {
+            "sessions": 708,
+            "users": 621
+          }
+        },
+        "tablet": {
+          "returning": {
+            "sessions": 158,
+            "users": 121
+          },
+          "new": {
+            "sessions": 138,
+            "users": 138
+          },
+          "(not set)": {
+            "sessions": 27,
+            "users": 27
+          }
+        }
+      },
+      "2026-03-10": {
+        "mobile": {
+          "returning": {
+            "sessions": 19847,
+            "users": 14060
+          },
+          "new": {
+            "sessions": 16119,
+            "users": 16017
+          },
+          "(not set)": {
+            "sessions": 3509,
+            "users": 3068
+          }
+        },
+        "desktop": {
+          "returning": {
+            "sessions": 7362,
+            "users": 5210
+          },
+          "new": {
+            "sessions": 5222,
+            "users": 5157
+          },
+          "(not set)": {
+            "sessions": 690,
+            "users": 605
+          }
+        },
+        "tablet": {
+          "returning": {
+            "sessions": 142,
+            "users": 107
+          },
+          "new": {
+            "sessions": 131,
+            "users": 131
+          },
+          "(not set)": {
+            "sessions": 37,
+            "users": 35
+          }
+        },
+        "smart tv": {
+          "new": {
+            "sessions": 1,
+            "users": 1
+          }
+        }
+      },
+      "2026-03-11": {
+        "mobile": {
+          "returning": {
+            "sessions": 20209,
+            "users": 14174
+          },
+          "new": {
+            "sessions": 16570,
+            "users": 16299
+          },
+          "(not set)": {
+            "sessions": 3521,
+            "users": 3080
+          }
+        },
+        "desktop": {
+          "returning": {
+            "sessions": 7482,
+            "users": 5274
+          },
+          "new": {
+            "sessions": 5686,
+            "users": 5646
+          },
+          "(not set)": {
+            "sessions": 658,
+            "users": 584
+          }
+        },
+        "tablet": {
+          "returning": {
+            "sessions": 134,
+            "users": 113
+          },
+          "new": {
+            "sessions": 129,
+            "users": 129
+          },
+          "(not set)": {
+            "sessions": 23,
+            "users": 23
+          }
+        }
+      },
+      "2026-03-12": {
+        "mobile": {
+          "returning": {
+            "sessions": 21197,
+            "users": 14966
+          },
+          "new": {
+            "sessions": 15997,
+            "users": 15992
+          },
+          "(not set)": {
+            "sessions": 4000,
+            "users": 3482
+          }
+        },
+        "desktop": {
+          "returning": {
+            "sessions": 7781,
+            "users": 5555
+          },
+          "new": {
+            "sessions": 5097,
+            "users": 5096
+          },
+          "(not set)": {
+            "sessions": 768,
+            "users": 666
+          }
+        },
+        "tablet": {
+          "returning": {
+            "sessions": 124,
+            "users": 105
+          },
+          "new": {
+            "sessions": 115,
+            "users": 115
+          },
+          "(not set)": {
+            "sessions": 30,
+            "users": 27
+          }
+        }
+      },
+      "2026-03-13": {
+        "mobile": {
+          "returning": {
+            "sessions": 20632,
+            "users": 14646
+          },
+          "new": {
+            "sessions": 15913,
+            "users": 15970
+          },
+          "(not set)": {
+            "sessions": 3174,
+            "users": 2833
+          }
+        },
+        "desktop": {
+          "returning": {
+            "sessions": 6585,
+            "users": 4713
+          },
+          "new": {
+            "sessions": 4696,
+            "users": 4677
+          },
+          "(not set)": {
+            "sessions": 520,
+            "users": 468
+          }
+        },
+        "tablet": {
+          "returning": {
+            "sessions": 135,
+            "users": 101
+          },
+          "new": {
+            "sessions": 114,
+            "users": 114
+          },
+          "(not set)": {
+            "sessions": 22,
+            "users": 22
+          }
+        }
+      },
+      "2026-03-14": {
+        "mobile": {
+          "returning": {
+            "sessions": 17719,
+            "users": 12742
+          },
+          "new": {
+            "sessions": 12863,
+            "users": 12840
+          },
+          "(not set)": {
+            "sessions": 3021,
+            "users": 2709
+          }
+        },
+        "desktop": {
+          "returning": {
+            "sessions": 3395,
+            "users": 2529
+          },
+          "new": {
+            "sessions": 2538,
+            "users": 2537
+          },
+          "(not set)": {
+            "sessions": 372,
+            "users": 331
+          }
+        },
+        "tablet": {
+          "returning": {
+            "sessions": 106,
+            "users": 83
+          },
+          "new": {
+            "sessions": 100,
+            "users": 100
+          },
+          "(not set)": {
+            "sessions": 19,
+            "users": 17
+          }
+        }
+      },
+      "2026-03-15": {
+        "mobile": {
+          "returning": {
+            "sessions": 20447,
+            "users": 14895
+          },
+          "new": {
+            "sessions": 17954,
+            "users": 18151
+          },
+          "(not set)": {
+            "sessions": 3032,
+            "users": 2691
+          }
+        },
+        "desktop": {
+          "returning": {
+            "sessions": 3643,
+            "users": 2639
+          },
+          "new": {
+            "sessions": 3027,
+            "users": 3043
+          },
+          "(not set)": {
+            "sessions": 380,
+            "users": 344
+          }
+        },
+        "tablet": {
+          "new": {
+            "sessions": 151,
+            "users": 151
+          },
+          "returning": {
+            "sessions": 143,
+            "users": 112
+          },
+          "(not set)": {
+            "sessions": 18,
+            "users": 18
+          }
+        }
+      },
+      "2026-03-16": {
+        "mobile": {
+          "returning": {
+            "sessions": 20081,
+            "users": 14650
+          },
+          "new": {
+            "sessions": 16561,
+            "users": 16376
+          },
+          "(not set)": {
+            "sessions": 3347,
+            "users": 3001
+          }
+        },
+        "desktop": {
+          "returning": {
+            "sessions": 7850,
+            "users": 5470
+          },
+          "new": {
+            "sessions": 5345,
+            "users": 5329
+          },
+          "(not set)": {
+            "sessions": 824,
+            "users": 746
+          }
+        },
+        "tablet": {
+          "returning": {
+            "sessions": 146,
+            "users": 121
+          },
+          "new": {
+            "sessions": 117,
+            "users": 118
+          },
+          "(not set)": {
+            "sessions": 29,
+            "users": 28
+          }
+        }
+      },
+      "2026-03-17": {
+        "mobile": {
+          "returning": {
+            "sessions": 19470,
+            "users": 13737
+          },
+          "new": {
+            "sessions": 15675,
+            "users": 15578
+          },
+          "(not set)": {
+            "sessions": 3011,
+            "users": 2660
+          }
+        },
+        "desktop": {
+          "returning": {
+            "sessions": 7270,
+            "users": 5147
+          },
+          "new": {
+            "sessions": 4971,
+            "users": 4938
+          },
+          "(not set)": {
+            "sessions": 666,
+            "users": 587
+          }
+        },
+        "tablet": {
+          "returning": {
+            "sessions": 136,
+            "users": 107
+          },
+          "new": {
+            "sessions": 102,
+            "users": 102
+          },
+          "(not set)": {
+            "sessions": 23,
+            "users": 23
+          }
+        },
+        "smart tv": {
+          "new": {
+            "sessions": 1,
+            "users": 1
+          }
+        }
+      },
+      "2026-03-18": {
+        "mobile": {
+          "returning": {
+            "sessions": 20913,
+            "users": 14332
+          },
+          "new": {
+            "sessions": 15504,
+            "users": 15501
+          },
+          "(not set)": {
+            "sessions": 3284,
+            "users": 2895
+          }
+        },
+        "desktop": {
+          "returning": {
+            "sessions": 7454,
+            "users": 5215
+          },
+          "new": {
+            "sessions": 4750,
+            "users": 4761
+          },
+          "(not set)": {
+            "sessions": 736,
+            "users": 646
+          }
+        },
+        "tablet": {
+          "returning": {
+            "sessions": 137,
+            "users": 107
+          },
+          "new": {
+            "sessions": 114,
+            "users": 114
+          },
+          "(not set)": {
+            "sessions": 18,
+            "users": 18
+          }
+        }
+      },
+      "2026-03-19": {
+        "mobile": {
+          "returning": {
+            "sessions": 19455,
+            "users": 13883
+          },
+          "new": {
+            "sessions": 14130,
+            "users": 14299
+          },
+          "(not set)": {
+            "sessions": 3377,
+            "users": 2964
+          }
+        },
+        "desktop": {
+          "returning": {
+            "sessions": 6276,
+            "users": 4376
+          },
+          "new": {
+            "sessions": 3786,
+            "users": 3830
+          },
+          "(not set)": {
+            "sessions": 681,
+            "users": 595
+          }
+        },
+        "tablet": {
+          "returning": {
+            "sessions": 134,
+            "users": 107
+          },
+          "new": {
+            "sessions": 131,
+            "users": 131
+          },
+          "(not set)": {
+            "sessions": 23,
+            "users": 22
+          }
+        }
+      },
+      "2026-03-20": {
+        "mobile": {
+          "returning": {
+            "sessions": 20325,
+            "users": 14181
+          },
+          "new": {
+            "sessions": 13933,
+            "users": 14358
+          },
+          "(not set)": {
+            "sessions": 3318,
+            "users": 2946
+          }
+        },
+        "desktop": {
+          "returning": {
+            "sessions": 6985,
+            "users": 4841
+          },
+          "new": {
+            "sessions": 4230,
+            "users": 4255
+          },
+          "(not set)": {
+            "sessions": 660,
+            "users": 582
+          }
+        },
+        "tablet": {
+          "returning": {
+            "sessions": 126,
+            "users": 102
+          },
+          "new": {
+            "sessions": 90,
+            "users": 90
+          },
+          "(not set)": {
+            "sessions": 17,
+            "users": 15
+          }
+        },
+        "smart tv": {
+          "new": {
+            "sessions": 1,
+            "users": 1
+          }
+        }
+      },
+      "2026-03-21": {
+        "mobile": {
+          "returning": {
+            "sessions": 18390,
+            "users": 13057
+          },
+          "new": {
+            "sessions": 12802,
+            "users": 12990
+          },
+          "(not set)": {
+            "sessions": 3055,
+            "users": 2758
+          }
+        },
+        "desktop": {
+          "returning": {
+            "sessions": 3267,
+            "users": 2346
+          },
+          "new": {
+            "sessions": 2457,
+            "users": 2469
+          },
+          "(not set)": {
+            "sessions": 370,
+            "users": 332
+          }
+        },
+        "tablet": {
+          "returning": {
+            "sessions": 123,
+            "users": 98
+          },
+          "new": {
+            "sessions": 95,
+            "users": 95
+          },
+          "(not set)": {
+            "sessions": 19,
+            "users": 19
+          }
+        }
+      },
+      "2026-03-22": {
+        "mobile": {
+          "returning": {
+            "sessions": 19711,
+            "users": 13658
+          },
+          "new": {
+            "sessions": 14425,
+            "users": 14331
+          },
+          "(not set)": {
+            "sessions": 2808,
+            "users": 2526
+          }
+        },
+        "desktop": {
+          "returning": {
+            "sessions": 3093,
+            "users": 2316
+          },
+          "new": {
+            "sessions": 2435,
+            "users": 2441
+          },
+          "(not set)": {
+            "sessions": 343,
+            "users": 2898
+          }
+        },
+        "tablet": {
+          "returning": {
+            "sessions": 129,
+            "users": 110
+          },
+          "new": {
+            "sessions": 110,
+            "users": 110
+          },
+          "(not set)": {
+            "sessions": 29,
+            "users": 27
+          }
+        }
+      },
+      "2026-03-23": {
+        "mobile": {
+          "returning": {
+            "sessions": 20426,
+            "users": 14365
+          },
+          "new": {
+            "sessions": 15514,
+            "users": 15204
+          },
+          "(not set)": {
+            "sessions": 3072,
+            "users": 2770
+          }
+        },
+        "desktop": {
+          "returning": {
+            "sessions": 7548,
+            "users": 5421
+          },
+          "new": {
+            "sessions": 5227,
+            "users": 5229
+          },
+          "(not set)": {
+            "sessions": 673,
+            "users": 595
+          }
+        },
+        "tablet": {
+          "returning": {
+            "sessions": 137,
+            "users": 110
+          },
+          "new": {
+            "sessions": 124,
+            "users": 123
+          },
+          "(not set)": {
+            "sessions": 24,
+            "users": 22
+          }
+        }
+      },
+      "2026-03-24": {
+        "mobile": {
+          "returning": {
+            "sessions": 19343,
+            "users": 13650
+          },
+          "new": {
+            "sessions": 14272,
+            "users": 14200
+          },
+          "(not set)": {
+            "sessions": 2871,
+            "users": 2550
+          }
+        },
+        "desktop": {
+          "returning": {
+            "sessions": 7252,
+            "users": 5271
+          },
+          "new": {
+            "sessions": 4930,
+            "users": 4893
+          },
+          "(not set)": {
+            "sessions": 637,
+            "users": 559
+          }
+        },
+        "tablet": {
+          "returning": {
+            "sessions": 148,
+            "users": 111
+          },
+          "new": {
+            "sessions": 97,
+            "users": 97
+          },
+          "(not set)": {
+            "sessions": 26,
+            "users": 25
+          }
+        }
+      },
+      "2026-03-25": {
+        "mobile": {
+          "returning": {
+            "sessions": 19724,
+            "users": 13893
+          },
+          "new": {
+            "sessions": 14002,
+            "users": 14261
+          },
+          "(not set)": {
+            "sessions": 2752,
+            "users": 2466
+          }
+        },
+        "desktop": {
+          "returning": {
+            "sessions": 6661,
+            "users": 4610
+          },
+          "new": {
+            "sessions": 4637,
+            "users": 4653
+          },
+          "(not set)": {
+            "sessions": 621,
+            "users": 553
+          }
+        },
+        "tablet": {
+          "returning": {
+            "sessions": 137,
+            "users": 112
+          },
+          "new": {
+            "sessions": 126,
+            "users": 126
+          },
+          "(not set)": {
+            "sessions": 22,
+            "users": 21
+          }
+        }
+      },
+      "2026-03-26": {
+        "mobile": {
+          "returning": {
+            "sessions": 20182,
+            "users": 14282
+          },
+          "new": {
+            "sessions": 14681,
+            "users": 14197
+          },
+          "(not set)": {
+            "sessions": 3069,
+            "users": 2694
+          }
+        },
+        "desktop": {
+          "returning": {
+            "sessions": 7793,
+            "users": 5431
+          },
+          "new": {
+            "sessions": 6904,
+            "users": 7027
+          },
+          "(not set)": {
+            "sessions": 762,
+            "users": 675
+          }
+        },
+        "tablet": {
+          "returning": {
+            "sessions": 137,
+            "users": 107
+          },
+          "new": {
+            "sessions": 116,
+            "users": 116
+          },
+          "(not set)": {
+            "sessions": 25,
+            "users": 22
+          }
+        },
+        "smart tv": {
+          "new": {
+            "sessions": 1,
+            "users": 1
+          }
+        }
+      },
+      "2026-03-27": {
+        "mobile": {
+          "returning": {
+            "sessions": 20844,
+            "users": 14729
+          },
+          "new": {
+            "sessions": 15026,
+            "users": 14956
+          },
+          "(not set)": {
+            "sessions": 3227,
+            "users": 2848
+          }
+        },
+        "desktop": {
+          "returning": {
+            "sessions": 6997,
+            "users": 4982
+          },
+          "new": {
+            "sessions": 5717,
+            "users": 5667
+          },
+          "(not set)": {
+            "sessions": 718,
+            "users": 630
+          }
+        },
+        "tablet": {
+          "returning": {
+            "sessions": 138,
+            "users": 105
+          },
+          "new": {
+            "sessions": 122,
+            "users": 122
+          },
+          "(not set)": {
+            "sessions": 17,
+            "users": 16
+          }
+        },
+        "smart tv": {
+          "new": {
+            "sessions": 1,
+            "users": 1
+          }
+        }
+      },
+      "2026-03-28": {
+        "mobile": {
+          "returning": {
+            "sessions": 18380,
+            "users": 13201
+          },
+          "new": {
+            "sessions": 12930,
+            "users": 13481
+          },
+          "(not set)": {
+            "sessions": 2702,
+            "users": 2422
+          }
+        },
+        "desktop": {
+          "returning": {
+            "sessions": 3587,
+            "users": 2591
+          },
+          "new": {
+            "sessions": 2676,
+            "users": 2680
+          },
+          "(not set)": {
+            "sessions": 367,
+            "users": 344
+          }
+        },
+        "tablet": {
+          "returning": {
+            "sessions": 127,
+            "users": 97
+          },
+          "new": {
+            "sessions": 101,
+            "users": 101
+          },
+          "(not set)": {
+            "sessions": 15,
+            "users": 15
+          }
+        }
+      },
+      "2026-03-29": {
+        "mobile": {
+          "returning": {
+            "sessions": 20312,
+            "users": 14614
+          },
+          "new": {
+            "sessions": 14609,
+            "users": 14666
+          },
+          "(not set)": {
+            "sessions": 2609,
+            "users": 2357
+          }
+        },
+        "desktop": {
+          "returning": {
+            "sessions": 3573,
+            "users": 2620
+          },
+          "new": {
+            "sessions": 2843,
+            "users": 2842
+          },
+          "(not set)": {
+            "sessions": 342,
+            "users": 319
+          }
+        },
+        "tablet": {
+          "returning": {
+            "sessions": 156,
+            "users": 121
+          },
+          "new": {
+            "sessions": 113,
+            "users": 113
+          },
+          "(not set)": {
+            "sessions": 14,
+            "users": 14
+          }
+        }
+      },
+      "2026-03-30": {
+        "mobile": {
+          "returning": {
+            "sessions": 25198,
+            "users": 17190
+          },
+          "new": {
+            "sessions": 17472,
+            "users": 17765
+          },
+          "(not set)": {
+            "sessions": 3752,
+            "users": 3304
+          }
+        },
+        "desktop": {
+          "returning": {
+            "sessions": 9372,
+            "users": 6796
+          },
+          "new": {
+            "sessions": 8157,
+            "users": 8168
+          },
+          "(not set)": {
+            "sessions": 911,
+            "users": 811
+          }
+        },
+        "tablet": {
+          "returning": {
+            "sessions": 193,
+            "users": 142
+          },
+          "new": {
+            "sessions": 141,
+            "users": 141
+          },
+          "(not set)": {
+            "sessions": 24,
+            "users": 21
+          }
+        },
+        "smart tv": {
+          "new": {
+            "sessions": 1,
+            "users": 1
+          }
+        }
+      },
+      "2026-03-31": {
+        "mobile": {
+          "returning": {
+            "sessions": 25529,
+            "users": 17202
+          },
+          "new": {
+            "sessions": 16766,
+            "users": 16793
+          },
+          "(not set)": {
+            "sessions": 3452,
+            "users": 3132
+          }
+        },
+        "desktop": {
+          "returning": {
+            "sessions": 9104,
+            "users": 6388
+          },
+          "new": {
+            "sessions": 5683,
+            "users": 5667
+          },
+          "(not set)": {
+            "sessions": 859,
+            "users": 753
+          }
+        },
+        "tablet": {
+          "returning": {
+            "sessions": 191,
+            "users": 148
+          },
+          "new": {
+            "sessions": 155,
+            "users": 155
+          },
+          "(not set)": {
+            "sessions": 31,
+            "users": 30
+          }
+        }
+      },
+      "2026-04-01": {
+        "mobile": {
+          "returning": {
+            "sessions": 25943,
+            "users": 17524
+          },
+          "new": {
+            "sessions": 16826,
+            "users": 17199
+          },
+          "(not set)": {
+            "sessions": 3165,
+            "users": 2835
+          }
+        },
+        "desktop": {
+          "returning": {
+            "sessions": 8637,
+            "users": 5951
+          },
+          "new": {
+            "sessions": 5416,
+            "users": 5374
+          },
+          "(not set)": {
+            "sessions": 662,
+            "users": 597
+          }
+        },
+        "tablet": {
+          "returning": {
+            "sessions": 178,
+            "users": 135
+          },
+          "new": {
+            "sessions": 154,
+            "users": 154
+          },
+          "(not set)": {
+            "sessions": 17,
+            "users": 17
+          }
+        }
+      },
+      "2026-04-02": {
+        "mobile": {
+          "returning": {
+            "sessions": 23144,
+            "users": 15506
+          },
+          "new": {
+            "sessions": 16323,
+            "users": 16013
+          },
+          "(not set)": {
+            "sessions": 2218,
+            "users": 2032
+          }
+        },
+        "desktop": {
+          "returning": {
+            "sessions": 6317,
+            "users": 4358
+          },
+          "new": {
+            "sessions": 4532,
+            "users": 4609
+          },
+          "(not set)": {
+            "sessions": 561,
+            "users": 512
+          }
+        },
+        "tablet": {
+          "returning": {
+            "sessions": 135,
+            "users": 106
+          },
+          "new": {
+            "sessions": 114,
+            "users": 114
+          },
+          "(not set)": {
+            "sessions": 18,
+            "users": 16
+          }
+        }
+      },
+      "2026-04-03": {
+        "mobile": {
+          "returning": {
+            "sessions": 19165,
+            "users": 13246
+          },
+          "new": {
+            "sessions": 13298,
+            "users": 13344
+          },
+          "(not set)": {
+            "sessions": 2170,
+            "users": 1974
+          }
+        },
+        "desktop": {
+          "returning": {
+            "sessions": 2806,
+            "users": 2097
+          },
+          "new": {
+            "sessions": 2401,
+            "users": 2412
+          },
+          "(not set)": {
+            "sessions": 368,
+            "users": 322
+          }
+        },
+        "tablet": {
+          "returning": {
+            "sessions": 106,
+            "users": 84
+          },
+          "new": {
+            "sessions": 90,
+            "users": 90
+          },
+          "(not set)": {
+            "sessions": 21,
+            "users": 19
+          }
+        }
+      },
+      "2026-04-04": {
+        "mobile": {
+          "returning": {
+            "sessions": 19178,
+            "users": 13379
+          },
+          "new": {
+            "sessions": 12808,
+            "users": 12685
+          },
+          "(not set)": {
+            "sessions": 2141,
+            "users": 1944
+          }
+        },
+        "desktop": {
+          "returning": {
+            "sessions": 3110,
+            "users": 2206
+          },
+          "new": {
+            "sessions": 2403,
+            "users": 2405
+          },
+          "(not set)": {
+            "sessions": 373,
+            "users": 319
+          }
+        },
+        "tablet": {
+          "returning": {
+            "sessions": 114,
+            "users": 102
+          },
+          "new": {
+            "sessions": 103,
+            "users": 104
+          },
+          "(not set)": {
+            "sessions": 12,
+            "users": 12
+          }
+        }
+      },
+      "2026-04-05": {
+        "mobile": {
+          "returning": {
+            "sessions": 20495,
+            "users": 14744
+          },
+          "new": {
+            "sessions": 14192,
+            "users": 14176
+          },
+          "(not set)": {
+            "sessions": 2332,
+            "users": 2127
+          }
+        },
+        "desktop": {
+          "returning": {
+            "sessions": 2912,
+            "users": 2120
+          },
+          "new": {
+            "sessions": 2648,
+            "users": 2639
+          },
+          "(not set)": {
+            "sessions": 323,
+            "users": 293
+          }
+        },
+        "tablet": {
+          "returning": {
+            "sessions": 139,
+            "users": 112
+          },
+          "new": {
+            "sessions": 100,
+            "users": 100
+          },
+          "(not set)": {
+            "sessions": 18,
+            "users": 18
+          }
+        }
+      },
+      "2026-04-06": {
+        "mobile": {
+          "returning": {
+            "sessions": 20413,
+            "users": 14507
+          },
+          "new": {
+            "sessions": 15375,
+            "users": 15225
+          },
+          "(not set)": {
+            "sessions": 2613,
+            "users": 2384
+          }
+        },
+        "desktop": {
+          "returning": {
+            "sessions": 7779,
+            "users": 5561
+          },
+          "new": {
+            "sessions": 5896,
+            "users": 5903
+          },
+          "(not set)": {
+            "sessions": 797,
+            "users": 709
+          }
+        },
+        "tablet": {
+          "returning": {
+            "sessions": 135,
+            "users": 119
+          },
+          "new": {
+            "sessions": 97,
+            "users": 97
+          },
+          "(not set)": {
+            "sessions": 26,
+            "users": 25
+          }
+        }
+      },
+      "2026-04-07": {
+        "mobile": {
+          "returning": {
+            "sessions": 18671,
+            "users": 13133
+          },
+          "new": {
+            "sessions": 13706,
+            "users": 13792
+          },
+          "(not set)": {
+            "sessions": 2500,
+            "users": 2226
+          }
+        },
+        "desktop": {
+          "returning": {
+            "sessions": 7157,
+            "users": 5100
+          },
+          "new": {
+            "sessions": 5695,
+            "users": 5597
+          },
+          "(not set)": {
+            "sessions": 688,
+            "users": 626
+          }
+        },
+        "tablet": {
+          "returning": {
+            "sessions": 119,
+            "users": 98
+          },
+          "new": {
+            "sessions": 107,
+            "users": 107
+          },
+          "(not set)": {
+            "sessions": 22,
+            "users": 22
+          }
+        },
+        "smart tv": {
+          "returning": {
+            "sessions": 1,
+            "users": 1
+          }
+        }
+      },
+      "2026-04-08": {
+        "mobile": {
+          "returning": {
+            "sessions": 18826,
+            "users": 13071
+          },
+          "new": {
+            "sessions": 14032,
+            "users": 13701
+          },
+          "(not set)": {
+            "sessions": 2345,
+            "users": 2106
+          }
+        },
+        "desktop": {
+          "returning": {
+            "sessions": 7067,
+            "users": 4927
+          },
+          "new": {
+            "sessions": 5182,
+            "users": 5117
+          },
+          "(not set)": {
+            "sessions": 692,
+            "users": 617
+          }
+        },
+        "tablet": {
+          "returning": {
+            "sessions": 107,
+            "users": 93
+          },
+          "new": {
+            "sessions": 104,
+            "users": 104
+          },
+          "(not set)": {
+            "sessions": 33,
+            "users": 30
+          }
+        }
+      },
+      "2026-04-09": {
+        "mobile": {
+          "returning": {
+            "sessions": 19493,
+            "users": 13422
+          },
+          "new": {
+            "sessions": 13946,
+            "users": 13845
+          },
+          "(not set)": {
+            "sessions": 2805,
+            "users": 2527
+          }
+        },
+        "desktop": {
+          "returning": {
+            "sessions": 6927,
+            "users": 5014
+          },
+          "new": {
+            "sessions": 5330,
+            "users": 5293
+          },
+          "(not set)": {
+            "sessions": 812,
+            "users": 721
+          }
+        },
+        "tablet": {
+          "returning": {
+            "sessions": 126,
+            "users": 104
+          },
+          "new": {
+            "sessions": 114,
+            "users": 114
+          },
+          "(not set)": {
+            "sessions": 21,
+            "users": 19
+          }
+        }
+      },
+      "2026-04-10": {
+        "mobile": {
+          "returning": {
+            "sessions": 19158,
+            "users": 13685
+          },
+          "new": {
+            "sessions": 14019,
+            "users": 14125
+          },
+          "(not set)": {
+            "sessions": 2568,
+            "users": 2307
+          }
+        },
+        "desktop": {
+          "returning": {
+            "sessions": 6344,
+            "users": 4530
+          },
+          "new": {
+            "sessions": 4878,
+            "users": 4832
+          },
+          "(not set)": {
+            "sessions": 676,
+            "users": 612
+          }
+        },
+        "tablet": {
+          "returning": {
+            "sessions": 127,
+            "users": 103
+          },
+          "new": {
+            "sessions": 96,
+            "users": 96
+          },
+          "(not set)": {
+            "sessions": 26,
+            "users": 24
+          }
+        }
+      },
+      "2026-04-11": {
+        "mobile": {
+          "returning": {
+            "sessions": 17427,
+            "users": 12489
+          },
+          "new": {
+            "sessions": 12829,
+            "users": 12520
+          },
+          "(not set)": {
+            "sessions": 2409,
+            "users": 2191
+          }
+        },
+        "desktop": {
+          "returning": {
+            "sessions": 3266,
+            "users": 2372
+          },
+          "new": {
+            "sessions": 2963,
+            "users": 2936
+          },
+          "(not set)": {
+            "sessions": 414,
+            "users": 1408
+          }
+        },
+        "tablet": {
+          "returning": {
+            "sessions": 109,
+            "users": 83
+          },
+          "new": {
+            "sessions": 93,
+            "users": 93
+          },
+          "(not set)": {
+            "sessions": 20,
+            "users": 17
+          }
+        }
+      },
+      "2026-04-12": {
+        "mobile": {
+          "returning": {
+            "sessions": 17760,
+            "users": 13166
+          },
+          "new": {
+            "sessions": 14042,
+            "users": 13884
+          },
+          "(not set)": {
+            "sessions": 2577,
+            "users": 2316
+          }
+        },
+        "desktop": {
+          "returning": {
+            "sessions": 3061,
+            "users": 2198
+          },
+          "new": {
+            "sessions": 2891,
+            "users": 2904
+          },
+          "(not set)": {
+            "sessions": 421,
+            "users": 382
+          }
+        },
+        "tablet": {
+          "new": {
+            "sessions": 107,
+            "users": 107
+          },
+          "returning": {
+            "sessions": 104,
+            "users": 81
+          },
+          "(not set)": {
+            "sessions": 17,
+            "users": 16
+          }
+        }
+      },
+      "2026-04-13": {
+        "mobile": {
+          "returning": {
+            "sessions": 20861,
+            "users": 14727
+          },
+          "new": {
+            "sessions": 15504,
+            "users": 15340
+          },
+          "(not set)": {
+            "sessions": 3350,
+            "users": 3078
+          }
+        },
+        "desktop": {
+          "returning": {
+            "sessions": 7572,
+            "users": 5436
+          },
+          "new": {
+            "sessions": 6064,
+            "users": 6079
+          },
+          "(not set)": {
+            "sessions": 936,
+            "users": 834
+          }
+        },
+        "tablet": {
+          "returning": {
+            "sessions": 123,
+            "users": 95
+          },
+          "new": {
+            "sessions": 116,
+            "users": 116
+          },
+          "(not set)": {
+            "sessions": 27,
+            "users": 26
+          }
+        },
+        "smart tv": {
+          "new": {
+            "sessions": 1,
+            "users": 1
+          }
+        }
+      },
+      "2026-04-14": {
+        "mobile": {
+          "returning": {
+            "sessions": 19885,
+            "users": 14307
+          },
+          "new": {
+            "sessions": 15009,
+            "users": 15017
+          },
+          "(not set)": {
+            "sessions": 3190,
+            "users": 2822
+          }
+        },
+        "desktop": {
+          "returning": {
+            "sessions": 7280,
+            "users": 5259
+          },
+          "new": {
+            "sessions": 5453,
+            "users": 5540
+          },
+          "(not set)": {
+            "sessions": 830,
+            "users": 748
+          }
+        },
+        "tablet": {
+          "new": {
+            "sessions": 133,
+            "users": 133
+          },
+          "returning": {
+            "sessions": 132,
+            "users": 100
+          },
+          "(not set)": {
+            "sessions": 20,
+            "users": 19
+          }
+        }
+      },
+      "2026-04-15": {
+        "mobile": {
+          "returning": {
+            "sessions": 20619,
+            "users": 14426
+          },
+          "new": {
+            "sessions": 15184,
+            "users": 14897
+          },
+          "(not set)": {
+            "sessions": 2998,
+            "users": 2667
+          }
+        },
+        "desktop": {
+          "returning": {
+            "sessions": 7542,
+            "users": 5333
+          },
+          "new": {
+            "sessions": 5294,
+            "users": 5311
+          },
+          "(not set)": {
+            "sessions": 982,
+            "users": 857
+          }
+        },
+        "tablet": {
+          "returning": {
+            "sessions": 123,
+            "users": 93
+          },
+          "new": {
+            "sessions": 105,
+            "users": 105
+          },
+          "(not set)": {
+            "sessions": 19,
+            "users": 18
+          }
+        }
+      },
+      "2026-04-16": {
+        "mobile": {
+          "returning": {
+            "sessions": 22583,
+            "users": 16060
+          },
+          "new": {
+            "sessions": 15739,
+            "users": 15970
+          },
+          "(not set)": {
+            "sessions": 3181,
+            "users": 2804
+          }
+        },
+        "desktop": {
+          "returning": {
+            "sessions": 7521,
+            "users": 5494
+          },
+          "new": {
+            "sessions": 5419,
+            "users": 5402
+          },
+          "(not set)": {
+            "sessions": 944,
+            "users": 828
+          }
+        },
+        "tablet": {
+          "new": {
+            "sessions": 141,
+            "users": 141
+          },
+          "returning": {
+            "sessions": 138,
+            "users": 111
+          },
+          "(not set)": {
+            "sessions": 23,
+            "users": 21
+          }
+        }
+      },
+      "2026-04-17": {
+        "mobile": {
+          "returning": {
+            "sessions": 24879,
+            "users": 16411
+          },
+          "new": {
+            "sessions": 16860,
+            "users": 16598
+          },
+          "(not set)": {
+            "sessions": 3673,
+            "users": 3319
+          }
+        },
+        "desktop": {
+          "returning": {
+            "sessions": 6729,
+            "users": 4811
+          },
+          "new": {
+            "sessions": 5879,
+            "users": 5901
+          },
+          "(not set)": {
+            "sessions": 838,
+            "users": 745
+          }
+        },
+        "tablet": {
+          "returning": {
+            "sessions": 133,
+            "users": 113
+          },
+          "new": {
+            "sessions": 114,
+            "users": 113
+          },
+          "(not set)": {
+            "sessions": 16,
+            "users": 16
+          }
+        }
+      },
+      "2026-04-18": {
+        "mobile": {
+          "returning": {
+            "sessions": 19581,
+            "users": 13682
+          },
+          "new": {
+            "sessions": 13135,
+            "users": 13147
+          },
+          "(not set)": {
+            "sessions": 3406,
+            "users": 3037
+          }
+        },
+        "desktop": {
+          "returning": {
+            "sessions": 2906,
+            "users": 2118
+          },
+          "new": {
+            "sessions": 2653,
+            "users": 2657
+          },
+          "(not set)": {
+            "sessions": 430,
+            "users": 378
+          }
+        },
+        "tablet": {
+          "new": {
+            "sessions": 89,
+            "users": 89
+          },
+          "returning": {
+            "sessions": 89,
+            "users": 72
+          },
+          "(not set)": {
+            "sessions": 14,
+            "users": 13
+          }
+        }
+      },
+      "2026-04-19": {
+        "mobile": {
+          "returning": {
+            "sessions": 20496,
+            "users": 14299
+          },
+          "new": {
+            "sessions": 14113,
+            "users": 14172
+          },
+          "(not set)": {
+            "sessions": 3133,
+            "users": 2821
+          }
+        },
+        "desktop": {
+          "new": {
+            "sessions": 2784,
+            "users": 2775
+          },
+          "returning": {
+            "sessions": 2654,
+            "users": 1986
+          },
+          "(not set)": {
+            "sessions": 292,
+            "users": 263
+          }
+        },
+        "tablet": {
+          "returning": {
+            "sessions": 123,
+            "users": 99
+          },
+          "new": {
+            "sessions": 122,
+            "users": 122
+          },
+          "(not set)": {
+            "sessions": 16,
+            "users": 16
+          }
+        }
+      },
+      "2026-04-20": {
+        "mobile": {
+          "returning": {
+            "sessions": 22929,
+            "users": 16042
+          },
+          "new": {
+            "sessions": 15795,
+            "users": 16311
+          },
+          "(not set)": {
+            "sessions": 3498,
+            "users": 3130
+          }
+        },
+        "desktop": {
+          "new": {
+            "sessions": 6374,
+            "users": 6468
+          },
+          "returning": {
+            "sessions": 6268,
+            "users": 4475
+          },
+          "(not set)": {
+            "sessions": 725,
+            "users": 659
+          }
+        },
+        "tablet": {
+          "returning": {
+            "sessions": 144,
+            "users": 113
+          },
+          "new": {
+            "sessions": 123,
+            "users": 123
+          },
+          "(not set)": {
+            "sessions": 23,
+            "users": 22
+          }
+        }
+      },
+      "2026-04-21": {
+        "mobile": {
+          "returning": {
+            "sessions": 22038,
+            "users": 15871
+          },
+          "new": {
+            "sessions": 16208,
+            "users": 16314
+          },
+          "(not set)": {
+            "sessions": 3702,
+            "users": 3337
+          }
+        },
+        "desktop": {
+          "returning": {
+            "sessions": 4024,
+            "users": 3012
+          },
+          "new": {
+            "sessions": 3946,
+            "users": 3938
+          },
+          "(not set)": {
+            "sessions": 478,
+            "users": 414
+          }
+        },
+        "tablet": {
+          "new": {
+            "sessions": 156,
+            "users": 156
+          },
+          "returning": {
+            "sessions": 145,
+            "users": 109
+          },
+          "(not set)": {
+            "sessions": 16,
+            "users": 16
+          }
+        }
+      },
+      "2026-04-22": {
+        "mobile": {
+          "returning": {
+            "sessions": 21759,
+            "users": 14826
+          },
+          "new": {
+            "sessions": 16147,
+            "users": 16007
+          },
+          "(not set)": {
+            "sessions": 4104,
+            "users": 3603
+          }
+        },
+        "desktop": {
+          "returning": {
+            "sessions": 7351,
+            "users": 5373
+          },
+          "new": {
+            "sessions": 7251,
+            "users": 7305
+          },
+          "(not set)": {
+            "sessions": 955,
+            "users": 832
+          }
+        },
+        "tablet": {
+          "returning": {
+            "sessions": 147,
+            "users": 117
+          },
+          "new": {
+            "sessions": 120,
+            "users": 120
+          },
+          "(not set)": {
+            "sessions": 37,
+            "users": 37
+          }
+        }
+      },
+      "2026-04-23": {
+        "mobile": {
+          "returning": {
+            "sessions": 20965,
+            "users": 14919
+          },
+          "new": {
+            "sessions": 15733,
+            "users": 15927
+          },
+          "(not set)": {
+            "sessions": 4077,
+            "users": 3706
+          }
+        },
+        "desktop": {
+          "returning": {
+            "sessions": 7054,
+            "users": 5034
+          },
+          "new": {
+            "sessions": 5765,
+            "users": 5769
+          },
+          "(not set)": {
+            "sessions": 938,
+            "users": 818
+          }
+        },
+        "tablet": {
+          "new": {
+            "sessions": 119,
+            "users": 119
+          },
+          "returning": {
+            "sessions": 113,
+            "users": 100
+          },
+          "(not set)": {
+            "sessions": 27,
+            "users": 26
+          }
+        }
+      },
+      "2026-04-24": {
+        "mobile": {
+          "returning": {
+            "sessions": 22148,
+            "users": 15446
+          },
+          "new": {
+            "sessions": 15723,
+            "users": 16271
+          },
+          "(not set)": {
+            "sessions": 4610,
+            "users": 4086
+          }
+        },
+        "desktop": {
+          "returning": {
+            "sessions": 6718,
+            "users": 4867
+          },
+          "new": {
+            "sessions": 5841,
+            "users": 5692
+          },
+          "(not set)": {
+            "sessions": 923,
+            "users": 809
+          }
+        },
+        "tablet": {
+          "returning": {
+            "sessions": 141,
+            "users": 118
+          },
+          "new": {
+            "sessions": 126,
+            "users": 127
+          },
+          "(not set)": {
+            "sessions": 24,
+            "users": 22
+          }
+        },
+        "smart tv": {
+          "new": {
+            "sessions": 1,
+            "users": 1
+          }
+        }
+      },
+      "2026-04-25": {
+        "mobile": {
+          "returning": {
+            "sessions": 20284,
+            "users": 13994
+          },
+          "new": {
+            "sessions": 14519,
+            "users": 14301
+          },
+          "(not set)": {
+            "sessions": 3706,
+            "users": 3325
+          }
+        },
+        "desktop": {
+          "returning": {
+            "sessions": 3388,
+            "users": 2466
+          },
+          "new": {
+            "sessions": 2799,
+            "users": 2868
+          },
+          "(not set)": {
+            "sessions": 469,
+            "users": 418
+          }
+        },
+        "tablet": {
+          "returning": {
+            "sessions": 124,
+            "users": 103
+          },
+          "new": {
+            "sessions": 108,
+            "users": 108
+          },
+          "(not set)": {
+            "sessions": 26,
+            "users": 23
+          }
+        }
+      },
+      "2026-04-26": {
+        "mobile": {
+          "returning": {
+            "sessions": 22146,
+            "users": 15521
+          },
+          "new": {
+            "sessions": 16518,
+            "users": 16606
+          },
+          "(not set)": {
+            "sessions": 3993,
+            "users": 3544
+          }
+        },
+        "desktop": {
+          "returning": {
+            "sessions": 3221,
+            "users": 2407
+          },
+          "new": {
+            "sessions": 2988,
+            "users": 3028
+          },
+          "(not set)": {
+            "sessions": 433,
+            "users": 385
+          }
+        },
+        "tablet": {
+          "returning": {
+            "sessions": 135,
+            "users": 104
+          },
+          "new": {
+            "sessions": 129,
+            "users": 129
+          }
+        }
+      }
+    }
+  },
   "funnel": [
     {
       "step": "Busca",
       "event": "search",
-      "event_count": 7908019,
-      "users": 1387761,
+      "event_count": 7908779,
+      "users": 1387873,
       "drop_rate": 0
     },
     {
       "step": "Selecionou item",
       "event": "select_item",
-      "event_count": 258827,
-      "users": 114552,
+      "event_count": 258877,
+      "users": 114588,
       "drop_rate": 91.7
     },
     {
       "step": "Adicionou ao carrinho",
       "event": "add_to_cart",
-      "event_count": 971611,
-      "users": 389265,
+      "event_count": 971708,
+      "users": 389320,
       "drop_rate": -239.8
     },
     {
       "step": "Iniciou checkout",
       "event": "begin_checkout",
-      "event_count": 299556,
-      "users": 139436,
+      "event_count": 299625,
+      "users": 139439,
       "drop_rate": 64.2
     },
     {
       "step": "Compra",
       "event": "purchase",
-      "event_count": 501968,
-      "users": 272952,
+      "event_count": 502024,
+      "users": 273061,
       "drop_rate": -95.8
     }
   ],
@@ -10506,24 +14359,24 @@
       },
       "2026-05-22": {
         "search": {
-          "event_count": 55310,
-          "users": 18699
+          "event_count": 56070,
+          "users": 18901
         },
         "select_item": {
-          "event_count": 3828,
-          "users": 2204
+          "event_count": 3878,
+          "users": 2234
         },
         "add_to_cart": {
-          "event_count": 5870,
-          "users": 3496
+          "event_count": 5967,
+          "users": 3558
         },
         "begin_checkout": {
-          "event_count": 3798,
-          "users": 2360
+          "event_count": 3867,
+          "users": 2401
         },
         "purchase": {
-          "event_count": 5018,
-          "users": 2840
+          "event_count": 5074,
+          "users": 2881
         }
       }
     }
@@ -10539,134 +14392,134 @@
       {
         "origin": "BELO HORIZONTE - MG",
         "destination": "RIO DE JANEIRO - RJ",
-        "purchases": 130821,
+        "purchases": 130823,
         "users": 12938
       },
       {
         "origin": "RIO DE JANEIRO - RJ",
         "destination": "BELO HORIZONTE - MG",
-        "purchases": 123412,
-        "users": 11912
+        "purchases": 123418,
+        "users": 11913
       },
       {
         "origin": "FORTALEZA - CE",
         "destination": "SOBRAL - CE",
-        "purchases": 94984,
-        "users": 13989
+        "purchases": 94996,
+        "users": 13990
       },
       {
         "origin": "FORTALEZA - CE",
         "destination": "NATAL - RN",
-        "purchases": 89821,
-        "users": 13032
+        "purchases": 89825,
+        "users": 13035
       },
       {
         "origin": "SOBRAL - CE",
         "destination": "FORTALEZA - CE",
-        "purchases": 89190,
+        "purchases": 89198,
         "users": 13539
       },
       {
         "origin": "NATAL - RN",
         "destination": "FORTALEZA - CE",
-        "purchases": 87738,
-        "users": 11239
+        "purchases": 87753,
+        "users": 11241
       },
       {
         "origin": "TERESINA - PI",
         "destination": "FORTALEZA - CE",
-        "purchases": 77937,
+        "purchases": 77948,
         "users": 11369
       },
       {
         "origin": "RIO DE JANEIRO - RJ - TODOS",
         "destination": "BELO HORIZONTE - MG - TODOS",
-        "purchases": 74005,
+        "purchases": 74015,
         "users": 27244
       },
       {
         "origin": "JUIZ DE FORA - MG",
         "destination": "RIO DE JANEIRO - RJ",
-        "purchases": 68251,
+        "purchases": 68253,
         "users": 9180
       },
       {
         "origin": "FORTALEZA - CE",
         "destination": "RECIFE - PE",
-        "purchases": 67666,
+        "purchases": 67670,
         "users": 10290
       },
       {
         "origin": "TERESINA - PI",
         "destination": "PARNAIBA - PI",
-        "purchases": 65817,
-        "users": 10221
+        "purchases": 65826,
+        "users": 10223
       },
       {
         "origin": "FORTALEZA - CE",
         "destination": "JUAZEIRO DO NORTE - CE",
-        "purchases": 65333,
-        "users": 9532
+        "purchases": 65338,
+        "users": 9534
       },
       {
         "origin": "RIO DE JANEIRO - RJ",
         "destination": "JUIZ DE FORA - MG",
-        "purchases": 64813,
+        "purchases": 64815,
         "users": 9250
       },
       {
         "origin": "SHOPPING INDEPENDENCIA - MG (term adicional de JUIZ DE FORA)",
         "destination": "RIO DE JANEIRO - RJ",
-        "purchases": 61796,
+        "purchases": 61805,
         "users": 8871
       },
       {
         "origin": "JUAZEIRO DO NORTE - CE",
         "destination": "FORTALEZA - CE",
-        "purchases": 61600,
+        "purchases": 61613,
         "users": 9124
       },
       {
         "origin": "RECIFE - PE",
         "destination": "FORTALEZA - CE",
-        "purchases": 60635,
+        "purchases": 60641,
         "users": 8614
       },
       {
         "origin": "PARNAIBA - PI",
         "destination": "TERESINA - PI",
-        "purchases": 59153,
-        "users": 8833
+        "purchases": 59155,
+        "users": 8835
       }
     ],
     "top_origins": [
       {
         "city": "FORTALEZA - CE",
-        "searches": 1152215,
-        "users": 154301,
-        "conversions": 45518
+        "searches": 1152336,
+        "users": 154304,
+        "conversions": 45524
       },
       {
         "city": "RIO DE JANEIRO - RJ",
-        "searches": 682221,
-        "users": 82946,
-        "conversions": 31761
+        "searches": 682286,
+        "users": 82953,
+        "conversions": 31764
       },
       {
         "city": "FORTALEZA - CE - TODOS",
-        "searches": 588710,
-        "users": 77504,
+        "searches": 588815,
+        "users": 77507,
         "conversions": 0
       },
       {
         "city": "TERESINA - PI",
-        "searches": 392343,
-        "users": 51162,
-        "conversions": 12196
+        "searches": 392395,
+        "users": 51169,
+        "conversions": 12197
       },
       {
         "city": "RIO DE JANEIRO - RJ - TODOS",
-        "searches": 376244,
+        "searches": 376307,
         "users": 64722,
         "conversions": 0
       },
@@ -10678,15 +14531,15 @@
       },
       {
         "city": "BRASILIA - DF",
-        "searches": 363379,
-        "users": 44518,
-        "conversions": 9007
+        "searches": 363431,
+        "users": 44523,
+        "conversions": 9010
       },
       {
         "city": "",
-        "searches": 346249,
-        "users": 49852,
-        "conversions": 1975
+        "searches": 350862,
+        "users": 50126,
+        "conversions": 1979
       },
       {
         "city": "Fortaleza - CE - TODOS",
@@ -10696,70 +14549,70 @@
       },
       {
         "city": "SOBRAL - CE",
-        "searches": 342469,
-        "users": 41072,
+        "searches": 342517,
+        "users": 41077,
         "conversions": 12149
       },
       {
         "city": "SAO LUIS - MA",
-        "searches": 342310,
+        "searches": 342338,
         "users": 39723,
         "conversions": 9308
       },
       {
         "city": "BELO HORIZONTE - MG",
-        "searches": 311139,
+        "searches": 311154,
         "users": 34373,
-        "conversions": 8234
+        "conversions": 8236
       },
       {
         "city": "JOAO PESSOA - PB",
-        "searches": 294891,
-        "users": 34170,
-        "conversions": 8328
+        "searches": 294949,
+        "users": 34178,
+        "conversions": 8329
       },
       {
         "city": "JUAZEIRO DO NORTE - CE",
-        "searches": 289126,
-        "users": 34524,
-        "conversions": 8105
+        "searches": 289174,
+        "users": 34527,
+        "conversions": 8108
       }
     ],
     "top_destinations": [
       {
         "city": "FORTALEZA - CE",
-        "searches": 1059114,
+        "searches": 1059254,
         "users": 146237,
-        "conversions": 38409
+        "conversions": 38413
       },
       {
         "city": "RIO DE JANEIRO - RJ",
-        "searches": 702750,
+        "searches": 702839,
         "users": 86434,
-        "conversions": 30183
+        "conversions": 30187
       },
       {
         "city": "FORTALEZA - CE - TODOS",
-        "searches": 474631,
-        "users": 66244,
+        "searches": 474720,
+        "users": 66253,
         "conversions": 0
       },
       {
         "city": "",
-        "searches": 356178,
-        "users": 55074,
-        "conversions": 1953
+        "searches": 360791,
+        "users": 55322,
+        "conversions": 1958
       },
       {
         "city": "SOBRAL - CE",
-        "searches": 332528,
-        "users": 39422,
-        "conversions": 12191
+        "searches": 332579,
+        "users": 39434,
+        "conversions": 12196
       },
       {
         "city": "RIO DE JANEIRO - RJ - TODOS",
-        "searches": 326107,
-        "users": 44381,
+        "searches": 326164,
+        "users": 44382,
         "conversions": 0
       },
       {
@@ -10770,27 +14623,27 @@
       },
       {
         "city": "TERESINA - PI",
-        "searches": 311312,
-        "users": 42955,
-        "conversions": 11434
+        "searches": 311340,
+        "users": 42960,
+        "conversions": 11436
       },
       {
         "city": "JOAO PESSOA - PB",
-        "searches": 308419,
-        "users": 37381,
+        "searches": 308464,
+        "users": 37385,
         "conversions": 7834
       },
       {
         "city": "SAO LUIS - MA",
-        "searches": 304498,
-        "users": 37332,
-        "conversions": 7699
+        "searches": 304563,
+        "users": 37340,
+        "conversions": 7700
       },
       {
         "city": "BRASILIA - DF",
-        "searches": 286563,
-        "users": 36793,
-        "conversions": 8715
+        "searches": 286594,
+        "users": 36795,
+        "conversions": 8717
       },
       {
         "city": "Fortaleza - CE",
@@ -10800,15 +14653,15 @@
       },
       {
         "city": "JUAZEIRO DO NORTE - CE",
-        "searches": 284091,
-        "users": 34499,
+        "searches": 284130,
+        "users": 34501,
         "conversions": 7226
       },
       {
         "city": "BELO HORIZONTE - MG",
-        "searches": 259410,
-        "users": 30251,
-        "conversions": 8450
+        "searches": 259443,
+        "users": 30258,
+        "conversions": 8452
       }
     ],
     "route_conversion": [
@@ -10823,78 +14676,78 @@
         "route": "RIO DE JANEIRO - RJ - TODOS → BELO HORIZONTE - MG - TODOS",
         "origin": "RIO DE JANEIRO - RJ - TODOS",
         "destination": "BELO HORIZONTE - MG - TODOS",
-        "searches": 74005,
+        "searches": 74015,
         "users": 27244
       },
       {
         "route": "FORTALEZA - CE → SOBRAL - CE",
         "origin": "FORTALEZA - CE",
         "destination": "SOBRAL - CE",
-        "searches": 94984,
-        "users": 13989
+        "searches": 94996,
+        "users": 13990
       },
       {
         "route": "SOBRAL - CE → FORTALEZA - CE",
         "origin": "SOBRAL - CE",
         "destination": "FORTALEZA - CE",
-        "searches": 89190,
+        "searches": 89198,
         "users": 13539
       },
       {
         "route": "FORTALEZA - CE → NATAL - RN",
         "origin": "FORTALEZA - CE",
         "destination": "NATAL - RN",
-        "searches": 89821,
-        "users": 13032
+        "searches": 89825,
+        "users": 13035
       },
       {
         "route": "BELO HORIZONTE - MG → RIO DE JANEIRO - RJ",
         "origin": "BELO HORIZONTE - MG",
         "destination": "RIO DE JANEIRO - RJ",
-        "searches": 130821,
+        "searches": 130823,
         "users": 12938
       },
       {
         "route": "RIO DE JANEIRO - RJ → BELO HORIZONTE - MG",
         "origin": "RIO DE JANEIRO - RJ",
         "destination": "BELO HORIZONTE - MG",
-        "searches": 123412,
-        "users": 11912
+        "searches": 123418,
+        "users": 11913
       },
       {
         "route": "TERESINA - PI → FORTALEZA - CE",
         "origin": "TERESINA - PI",
         "destination": "FORTALEZA - CE",
-        "searches": 77937,
+        "searches": 77948,
         "users": 11369
       },
       {
         "route": "NATAL - RN → FORTALEZA - CE",
         "origin": "NATAL - RN",
         "destination": "FORTALEZA - CE",
-        "searches": 87738,
-        "users": 11239
+        "searches": 87753,
+        "users": 11241
       },
       {
         "route": "FORTALEZA - CE → RECIFE - PE",
         "origin": "FORTALEZA - CE",
         "destination": "RECIFE - PE",
-        "searches": 67666,
+        "searches": 67670,
         "users": 10290
       },
       {
         "route": "TERESINA - PI → PARNAIBA - PI",
         "origin": "TERESINA - PI",
         "destination": "PARNAIBA - PI",
-        "searches": 65817,
-        "users": 10221
+        "searches": 65826,
+        "users": 10223
       },
       {
         "route": "FORTALEZA - CE → JUAZEIRO DO NORTE - CE",
         "origin": "FORTALEZA - CE",
         "destination": "JUAZEIRO DO NORTE - CE",
-        "searches": 65333,
-        "users": 9532
+        "searches": 65338,
+        "users": 9534
       },
       {
         "route": "Fortaleza - CE → Natal - RN",
