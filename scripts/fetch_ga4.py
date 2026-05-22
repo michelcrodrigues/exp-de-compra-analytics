@@ -20,8 +20,9 @@ from google.analytics.data_v1beta.types import (
 
 PROPERTY_ID   = os.environ["GA4_PROPERTY_ID"]
 client        = BetaAnalyticsDataClient()
-DATE_RANGE    = DateRange(start_date="30daysAgo", end_date="today")
+DATE_RANGE    = DateRange(start_date="90daysAgo", end_date="today")
 DATE_RANGE_7D = DateRange(start_date="7daysAgo",  end_date="today")
+DATE_RANGE_30D = DateRange(start_date="30daysAgo", end_date="today")
 
 def report(dimensions, metrics, date_range=None, order_bys=None, limit=20):
     req = RunReportRequest(
@@ -93,7 +94,7 @@ totals.update({
 # ── 2. Sessões por dia ───────────────────────────────────────────────────────
 print("2/14 Sessões por dia...")
 r = report(["date"], ["sessions","totalUsers","ecommercePurchases","newUsers"],
-           order_bys=[OrderBy(dimension=OrderBy.DimensionOrderBy(dimension_name="date"))], limit=30)
+           order_bys=[OrderBy(dimension=OrderBy.DimensionOrderBy(dimension_name="date"))], limit=91)
 daily = []
 for row in r.rows:
     daily.append({
@@ -131,7 +132,7 @@ top_paths = [p["path"] for p in pages[:10]]
 r = report(["yearWeek","pagePath"],
            ["screenPageViews","totalUsers"],
            order_bys=[OrderBy(dimension=OrderBy.DimensionOrderBy(dimension_name="yearWeek"))],
-           limit=200)
+           limit=1000)
 
 pages_weekly_raw = {}
 for row in r.rows:
@@ -170,7 +171,7 @@ print("7/14 Canais por dia...")
 r = report(["date","sessionDefaultChannelGroup"],
            ["sessions","totalUsers","ecommercePurchases","bounceRate","averageSessionDuration","newUsers"],
            order_bys=[OrderBy(dimension=OrderBy.DimensionOrderBy(dimension_name="date"))],
-           limit=300)
+           limit=910)
 
 channels_daily_raw = {}
 channels_agg = {}
@@ -320,7 +321,7 @@ for step in FUNNEL_EVENTS:
                           match_type=Filter.StringFilter.MatchType.EXACT))
         ),
         order_bys=[OrderBy(dimension=OrderBy.DimensionOrderBy(dimension_name="date"))],
-        limit=31,
+        limit=91,
     )
     resp_daily = client.run_report(req_daily)
     for row in resp_daily.rows:
@@ -384,7 +385,7 @@ routes = {
 print("12/14 Montando JSON...")
 data = {
     "updated_at":         datetime.utcnow().strftime("%Y-%m-%dT%H:%M:%SZ"),
-    "period":             "últimos 30 dias",
+    "period":             "últimos 90 dias",
     "totals":             totals,
     "daily":              daily,
     "pages":              pages,
