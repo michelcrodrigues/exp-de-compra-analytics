@@ -75,12 +75,12 @@ for row in r.rows:
 # ── 3. Páginas mais acessadas ───────────────────────────────────────────────
 print("3/11 Páginas...")
 r = report(["pagePath","pageTitle"],
-           ["screenPageViews","totalUsers","averageSessionDuration","bounceRate","exits"],
+           ["screenPageViews","totalUsers","averageSessionDuration","bounceRate"],
            order_bys=[OrderBy(metric=OrderBy.MetricOrderBy(metric_name="screenPageViews"), desc=True)], limit=10)
 pages = [{"path": dim(row,0), "title": dim(row,1),
           "pageviews": intf(met(row,0)), "users": intf(met(row,1)),
           "avg_duration": rnd(met(row,2)), "bounce_rate": round(float(met(row,3))*100,2),
-          "exits": intf(met(row,4))} for row in r.rows]
+          "exits": 0} for row in r.rows]
 
 # ── 4. Páginas de entrada ───────────────────────────────────────────────────
 print("4/11 Páginas de entrada...")
