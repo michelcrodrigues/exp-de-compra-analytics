@@ -75,11 +75,11 @@ for row in r.rows:
 # ── 3. Páginas mais acessadas ───────────────────────────────────────────────
 print("3/11 Páginas...")
 r = report(["pagePath","pageTitle"],
-           ["screenPageViews","totalUsers","averageSessionDuration","bounceRate"],
+           ["screenPageViews","totalUsers","averageSessionDuration"],
            order_bys=[OrderBy(metric=OrderBy.MetricOrderBy(metric_name="screenPageViews"), desc=True)], limit=10)
 pages = [{"path": dim(row,0), "title": dim(row,1),
           "pageviews": intf(met(row,0)), "users": intf(met(row,1)),
-          "avg_duration": rnd(met(row,2)), "bounce_rate": round(float(met(row,3))*100,2),
+          "avg_duration": rnd(met(row,2)), "bounce_rate": 0,
           "exits": 0} for row in r.rows]
 
 # ── 4. Páginas de entrada ───────────────────────────────────────────────────
@@ -132,11 +132,11 @@ new_vs_returning = [{"type": dim(row,0), "sessions": intf(met(row,0)),
 # ── 9. Funil por eventos ────────────────────────────────────────────────────
 print("9/11 Funil de eventos...")
 FUNNEL_EVENTS = [
-    {"name": "Busca",           "event": "search"},
-    {"name": "Selecionou item", "event": "select_item"},
+    {"name": "Busca",                 "event": "search"},
+    {"name": "Selecionou item",       "event": "select_item"},
     {"name": "Adicionou ao carrinho", "event": "add_to_cart"},
-    {"name": "Iniciou checkout","event": "begin_checkout"},
-    {"name": "Compra",          "event": "purchase"},
+    {"name": "Iniciou checkout",      "event": "begin_checkout"},
+    {"name": "Compra",                "event": "purchase"},
 ]
 funnel = []
 for step in FUNNEL_EVENTS:
@@ -162,10 +162,9 @@ for i in range(1, len(funnel)):
     curr = funnel[i]["users"]
     funnel[i]["drop_rate"] = round((1 - curr/prev)*100, 1) if prev > 0 else 0
 
-# ── 10. Rotas — Top origens/destinos ────────────────────────────────────────
+# ── 10. Rotas ────────────────────────────────────────────────────────────────
 print("10/11 Rotas...")
 
-# Top rotas (origin_city → destination_city) por evento purchase
 r = report(["customEvent:origin_city","customEvent:destination_city"],
            ["eventCount","totalUsers"],
            order_bys=[OrderBy(metric=OrderBy.MetricOrderBy(metric_name="eventCount"), desc=True)],
@@ -177,7 +176,6 @@ for row in r.rows:
         top_routes.append({"origin": o, "destination": d,
                            "purchases": intf(met(row,0)), "users": intf(met(row,1))})
 
-# Top cidades de origem
 r = report(["customEvent:origin_city"],
            ["eventCount","totalUsers","conversions"],
            order_bys=[OrderBy(metric=OrderBy.MetricOrderBy(metric_name="eventCount"), desc=True)],
@@ -186,7 +184,6 @@ top_origins = [{"city": dim(row,0), "searches": intf(met(row,0)),
                 "users": intf(met(row,1)), "conversions": intf(met(row,2))}
                for row in r.rows if dim(row,0) != "(not set)"]
 
-# Top cidades de destino
 r = report(["customEvent:destination_city"],
            ["eventCount","totalUsers","conversions"],
            order_bys=[OrderBy(metric=OrderBy.MetricOrderBy(metric_name="eventCount"), desc=True)],
@@ -195,7 +192,6 @@ top_destinations = [{"city": dim(row,0), "searches": intf(met(row,0)),
                      "users": intf(met(row,1)), "conversions": intf(met(row,2))}
                     for row in r.rows if dim(row,0) != "(not set)"]
 
-# Conversão por rota (search → purchase)
 r = report(["customEvent:origin_city","customEvent:destination_city"],
            ["eventCount","totalUsers"],
            order_bys=[OrderBy(metric=OrderBy.MetricOrderBy(metric_name="totalUsers"), desc=True)],
@@ -204,11 +200,9 @@ route_conversion = []
 for row in r.rows:
     o, d = dim(row,0), dim(row,1)
     if o and d and o != "(not set)" and d != "(not set)":
-        searches = intf(met(row,0))
-        users    = intf(met(row,1))
         route_conversion.append({
             "route": f"{o} → {d}", "origin": o, "destination": d,
-            "searches": searches, "users": users,
+            "searches": intf(met(row,0)), "users": intf(met(row,1)),
         })
 
 routes = {
