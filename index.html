@@ -509,10 +509,26 @@ function buildF(d,f){
   // 4. Channels — real data filtered by date; device+source scaling applied
   const chObj=filterDailyObj(d.channels_daily,f);
   let channels=aggFromDaily(chObj,'channel',['sessions','users','conversions']);
+  // Compute weighted bounce_rate and avg_duration from daily breakdown (real filtered data)
+  const chBounceMap={}, chDurMap={}, chSessMap={}, chNewMap={};
+  chObj.dates.forEach(date=>{
+    const day=chObj.data[date]||{};
+    Object.entries(day).forEach(([ch,v])=>{
+      chBounceMap[ch]=(chBounceMap[ch]||0)+(v.bounce_rate||0)*(v.sessions||0);
+      chDurMap[ch]   =(chDurMap[ch]   ||0)+(v.avg_duration||0)*(v.sessions||0);
+      chSessMap[ch]  =(chSessMap[ch]  ||0)+(v.sessions||0);
+      chNewMap[ch]   =(chNewMap[ch]   ||0)+(v.new_users||0);
+    });
+  });
   channels=channels.map(ch=>{
+    const s=Math.max(chSessMap[ch.channel]||ch.sessions,1);
     const orig=d.channels.find(c=>c.channel===ch.channel)||{};
-    return{...ch,conversion_rate:Math.round(ch.conversions/Math.max(ch.sessions,1)*10000)/100,
-      bounce_rate:orig.bounce_rate||0,avg_duration:orig.avg_duration||0,new_users:orig.new_users||0};
+    return{...ch,
+      conversion_rate:Math.round(ch.conversions/Math.max(ch.sessions,1)*10000)/100,
+      bounce_rate:    chSessMap[ch.channel]>0?Math.round(chBounceMap[ch.channel]/s*100)/100:(orig.bounce_rate||0),
+      avg_duration:   chSessMap[ch.channel]>0?Math.round(chDurMap[ch.channel]/s*100)/100:(orig.avg_duration||0),
+      new_users:      chNewMap[ch.channel]||orig.new_users||0,
+    };
   }).sort((a,b)=>b.sessions-a.sessions);
 
   // Device ratio for channels (no device breakdown in channels, use ratio)
@@ -619,16 +635,45 @@ function buildF(d,f){
     }));
   }
 
-  // 10. Totals from scaled daily
+  // 10. Totals — sessions/users/conversions from scaled daily
+  //     bounce_rate and avg_duration from weighted average of filtered channels
+  let wBounce=0, wDur=0, wSess=0;
+  channels.forEach(ch=>{
+    wBounce+=( ch.bounce_rate||0)*ch.sessions;
+    wDur   +=(ch.avg_duration||0)*ch.sessions;
+    wSess  +=ch.sessions;
+  });
+  const filtBounce = wSess>0 ? Math.round(wBounce/wSess*100)/100 : d.totals.bounce_rate;
+  const filtDur    = wSess>0 ? Math.round(wDur/wSess*100)/100    : d.totals.avg_session_duration;
+
+  // Sessions and users come from scaled daily (has date dimension)
+  // Conversions come from channels aggregate (has real device/source breakdown)
+  // This ensures conv rate = real filtered conversions / real filtered sessions
+  const filtSessions    = scaledDaily.reduce((a,r)=>a+r.sessions,0);
+  const filtUsers       = scaledDaily.reduce((a,r)=>a+r.users,0);
+  const filtNewUsers    = scaledDaily.reduce((a,r)=>a+r.new_users,0);
+  // Conversions: sum from filtered channels (real data per channel per period)
+  const filtConversions = channels.reduce((a,c)=>a+c.conversions,0);
+
   const totals={
     ...d.totals,
-    sessions:   scaledDaily.reduce((a,r)=>a+r.sessions,0),
-    total_users:scaledDaily.reduce((a,r)=>a+r.users,0),
-    conversions:scaledDaily.reduce((a,r)=>a+r.conversions,0),
-    new_users:  scaledDaily.reduce((a,r)=>a+r.new_users,0),
+    sessions:             filtSessions,
+    total_users:          filtUsers,
+    conversions:          filtConversions,
+    new_users:            filtNewUsers,
+    bounce_rate:          filtBounce,
+    avg_session_duration: filtDur,
   };
 
-  return{...d,totals,daily:scaledDaily,channels,devices,new_vs_returning:nvr,sources,funnel,_dLabel:`${daily.length}d`};
+  // Landing pages and pages — scale counts if filters active
+  let landing_pages=[...(d.landing_pages||[])];
+  let pages=[...(d.pages||[])];
+  if(totalScale!==1){
+    landing_pages=landing_pages.map(p=>({...p,sessions:Math.round(p.sessions*totalScale),users:Math.round(p.users*totalScale),conversions:Math.round(p.conversions*totalScale)}));
+    pages=pages.map(p=>({...p,pageviews:Math.round(p.pageviews*totalScale),users:Math.round(p.users*totalScale)}));
+  }
+
+  return{...d,totals,daily:scaledDaily,channels,devices,new_vs_returning:nvr,sources,funnel,landing_pages,pages,_dLabel:`${daily.length}d`};
 }
 
 function buildFunnelAgg(fnlObj,meta){
