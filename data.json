@@ -1,0 +1,30 @@
+{
+  "updated_at": "2024-01-01T00:00:00Z",
+  "period": "últimos 30 dias",
+  "totals": {
+    "sessions": 0,
+    "total_users": 0,
+    "new_users": 0,
+    "bounce_rate": 0,
+    "avg_session_duration": 0,
+    "conversions": 0,
+    "pageviews": 0,
+    "sessions_7d": 0,
+    "users_7d": 0,
+    "conversions_7d": 0
+  },
+  "daily": [],
+  "pages": [],
+  "sources": [],
+  "channels": [],
+  "funnel": [],
+  "devices": [],
+  "insights": [
+    {
+      "title": "Configure o pipeline",
+      "body": "Siga o passo a passo do README.md para conectar o GA4 e gerar os primeiros dados.",
+      "type": "info",
+      "generated_at": "2024-01-01"
+    }
+  ]
+}

@@ -1,0 +1,541 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Analytics Dashboard</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Syne:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+  <style>
+    :root {
+      --bg:        #080c14;
+      --surface:   #0e1420;
+      --border:    #1c2436;
+      --accent:    #3b82f6;
+      --accent2:   #8b5cf6;
+      --green:     #10b981;
+      --red:       #ef4444;
+      --yellow:    #f59e0b;
+      --text:      #e2e8f0;
+      --muted:     #64748b;
+      --card-bg:   #0e1420;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Syne', sans-serif;
+      min-height: 100vh;
+      padding: 0 0 60px;
+    }
+
+    /* ── Header ── */
+    header {
+      background: linear-gradient(135deg, #0e1420 0%, #0d1526 100%);
+      border-bottom: 1px solid var(--border);
+      padding: 28px 40px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      backdrop-filter: blur(12px);
+    }
+    .logo { font-size: 20px; font-weight: 800; letter-spacing: -.02em; }
+    .logo span { color: var(--accent); }
+    .header-meta { text-align: right; }
+    .header-meta .period { font-size: 12px; color: var(--muted); font-family: 'DM Mono', monospace; }
+    .header-meta .updated { font-size: 11px; color: var(--muted); margin-top: 2px; font-family: 'DM Mono', monospace; }
+    .live-dot {
+      display: inline-block; width: 7px; height: 7px;
+      background: var(--green); border-radius: 50%;
+      margin-right: 5px; animation: pulse 2s infinite;
+    }
+    @keyframes pulse { 0%,100%{opacity:1}50%{opacity:.3} }
+
+    /* ── Layout ── */
+    .container { max-width: 1400px; margin: 0 auto; padding: 32px 40px; }
+
+    /* ── Nav tabs ── */
+    .nav { display: flex; gap: 4px; margin-bottom: 32px; border-bottom: 1px solid var(--border); padding-bottom: 0; }
+    .nav-btn {
+      padding: 10px 20px; font-size: 13px; font-weight: 600; font-family: 'Syne', sans-serif;
+      border: none; background: none; color: var(--muted); cursor: pointer;
+      border-bottom: 2px solid transparent; margin-bottom: -1px;
+      transition: color .2s, border-color .2s;
+      letter-spacing: .02em;
+    }
+    .nav-btn:hover { color: var(--text); }
+    .nav-btn.active { color: var(--accent); border-bottom-color: var(--accent); }
+
+    /* ── Sections ── */
+    .section { display: none; }
+    .section.active { display: block; }
+
+    /* ── KPI Cards ── */
+    .kpi-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 16px;
+      margin-bottom: 32px;
+    }
+    .kpi {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 20px 22px;
+      position: relative;
+      overflow: hidden;
+      transition: border-color .2s, transform .2s;
+    }
+    .kpi:hover { border-color: var(--accent); transform: translateY(-2px); }
+    .kpi::before {
+      content: ''; position: absolute; top: 0; left: 0; right: 0;
+      height: 2px; background: linear-gradient(90deg, var(--accent), var(--accent2));
+      opacity: 0; transition: opacity .2s;
+    }
+    .kpi:hover::before { opacity: 1; }
+    .kpi-label { font-size: 11px; font-weight: 600; color: var(--muted); text-transform: uppercase; letter-spacing: .08em; margin-bottom: 10px; }
+    .kpi-value { font-size: 32px; font-weight: 800; line-height: 1; letter-spacing: -.03em; }
+    .kpi-sub { font-size: 12px; color: var(--muted); margin-top: 6px; font-family: 'DM Mono', monospace; }
+    .kpi-change { font-size: 11px; font-weight: 600; margin-top: 4px; font-family: 'DM Mono', monospace; }
+    .kpi-change.up { color: var(--green); }
+    .kpi-change.down { color: var(--red); }
+
+    /* ── Chart cards ── */
+    .chart-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-bottom: 24px; }
+    .chart-grid.full { grid-template-columns: 1fr; }
+    .chart-card {
+      background: var(--card-bg); border: 1px solid var(--border);
+      border-radius: 16px; padding: 24px;
+    }
+    .chart-title { font-size: 13px; font-weight: 700; letter-spacing: .04em; text-transform: uppercase; color: var(--muted); margin-bottom: 20px; }
+    .chart-wrap { position: relative; height: 260px; }
+    .chart-wrap.tall { height: 320px; }
+
+    /* ── Table ── */
+    .table-card {
+      background: var(--card-bg); border: 1px solid var(--border);
+      border-radius: 16px; padding: 24px; margin-bottom: 20px; overflow-x: auto;
+    }
+    table { width: 100%; border-collapse: collapse; font-size: 13px; }
+    th {
+      text-align: left; padding: 8px 12px;
+      font-size: 11px; font-weight: 700; color: var(--muted);
+      text-transform: uppercase; letter-spacing: .07em;
+      border-bottom: 1px solid var(--border);
+    }
+    td { padding: 10px 12px; border-bottom: 1px solid rgba(28,36,54,.6); }
+    tr:last-child td { border-bottom: none; }
+    tr:hover td { background: rgba(59,130,246,.04); }
+    .badge-channel {
+      display: inline-block; padding: 2px 8px; border-radius: 20px;
+      font-size: 10px; font-weight: 700; letter-spacing: .04em;
+    }
+
+    /* ── Funil ── */
+    .funnel-wrap { padding: 8px 0; }
+    .funnel-step {
+      display: flex; align-items: center; gap: 16px;
+      margin-bottom: 12px; position: relative;
+    }
+    .funnel-label { width: 160px; font-size: 13px; color: var(--text); flex-shrink: 0; }
+    .funnel-bar-wrap { flex: 1; background: var(--border); border-radius: 6px; height: 32px; overflow: hidden; }
+    .funnel-bar {
+      height: 100%; border-radius: 6px;
+      background: linear-gradient(90deg, var(--accent), var(--accent2));
+      display: flex; align-items: center; padding: 0 12px;
+      font-size: 12px; font-weight: 700; font-family: 'DM Mono', monospace;
+      transition: width .8s cubic-bezier(.4,0,.2,1);
+    }
+    .funnel-drop { width: 80px; text-align: right; font-size: 12px; font-family: 'DM Mono', monospace; flex-shrink: 0; }
+    .funnel-drop.bad { color: var(--red); }
+    .funnel-drop.ok  { color: var(--yellow); }
+    .funnel-drop.good{ color: var(--green); }
+
+    /* ── Insights ── */
+    .insights-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 20px; }
+    .insights-header h2 { font-size: 16px; font-weight: 700; }
+    .insights-badge {
+      font-size: 11px; font-weight: 700; padding: 4px 10px; border-radius: 20px;
+      background: rgba(59,130,246,.15); color: var(--accent); border: 1px solid rgba(59,130,246,.3);
+    }
+    .insight-card {
+      background: var(--card-bg); border: 1px solid var(--border);
+      border-radius: 14px; padding: 20px 22px; margin-bottom: 14px;
+      border-left: 3px solid var(--accent);
+      transition: border-color .2s;
+    }
+    .insight-card.warning { border-left-color: var(--yellow); }
+    .insight-card.positive { border-left-color: var(--green); }
+    .insight-card.info { border-left-color: var(--muted); }
+    .insight-title { font-size: 14px; font-weight: 700; margin-bottom: 6px; }
+    .insight-body { font-size: 13px; color: #94a3b8; line-height: 1.65; }
+    .insight-meta { font-size: 11px; color: var(--muted); margin-top: 8px; font-family: 'DM Mono', monospace; }
+    .prompt-box {
+      background: rgba(59,130,246,.06); border: 1px dashed rgba(59,130,246,.3);
+      border-radius: 14px; padding: 24px; text-align: center; margin-top: 20px;
+    }
+    .prompt-box h3 { font-size: 14px; font-weight: 700; margin-bottom: 8px; }
+    .prompt-box p { font-size: 13px; color: var(--muted); line-height: 1.6; margin-bottom: 14px; }
+    .copy-btn {
+      background: var(--accent); color: #fff; border: none; border-radius: 8px;
+      padding: 10px 20px; font-size: 13px; font-weight: 700; cursor: pointer;
+      font-family: 'Syne', sans-serif; transition: opacity .2s;
+    }
+    .copy-btn:hover { opacity: .85; }
+    .copy-btn.copied { background: var(--green); }
+
+    /* ── Loading ── */
+    #loading {
+      position: fixed; inset: 0; background: var(--bg);
+      display: flex; align-items: center; justify-content: center;
+      z-index: 999; flex-direction: column; gap: 16px;
+    }
+    .spinner {
+      width: 40px; height: 40px; border: 3px solid var(--border);
+      border-top-color: var(--accent); border-radius: 50%;
+      animation: spin .8s linear infinite;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+    #loading p { font-size: 13px; color: var(--muted); font-family: 'DM Mono', monospace; }
+
+    @media (max-width: 768px) {
+      header { padding: 16px 20px; }
+      .container { padding: 20px; }
+      .chart-grid { grid-template-columns: 1fr; }
+      .kpi-value { font-size: 26px; }
+    }
+  </style>
+</head>
+<body>
+
+<div id="loading">
+  <div class="spinner"></div>
+  <p>Carregando dados...</p>
+</div>
+
+<header>
+  <div class="logo">Analytics<span>.</span></div>
+  <div class="header-meta">
+    <div class="period" id="period-label">—</div>
+    <div class="updated"><span class="live-dot"></span><span id="updated-label">—</span></div>
+  </div>
+</header>
+
+<div class="container">
+  <nav class="nav">
+    <button class="nav-btn active" onclick="showSection('overview', this)">Visão Geral</button>
+    <button class="nav-btn" onclick="showSection('acquisition', this)">Aquisição</button>
+    <button class="nav-btn" onclick="showSection('pages', this)">Páginas</button>
+    <button class="nav-btn" onclick="showSection('funnel', this)">Funil</button>
+    <button class="nav-btn" onclick="showSection('insights', this)">Insights IA</button>
+  </nav>
+
+  <!-- ══ OVERVIEW ══ -->
+  <div id="section-overview" class="section active">
+    <div class="kpi-grid" id="kpi-grid"></div>
+    <div class="chart-grid full">
+      <div class="chart-card">
+        <div class="chart-title">Sessões e Usuários — Últimos 30 dias</div>
+        <div class="chart-wrap tall"><canvas id="chart-daily"></canvas></div>
+      </div>
+    </div>
+    <div class="chart-grid">
+      <div class="chart-card">
+        <div class="chart-title">Conversões por dia</div>
+        <div class="chart-wrap"><canvas id="chart-conversions"></canvas></div>
+      </div>
+      <div class="chart-card">
+        <div class="chart-title">Dispositivos</div>
+        <div class="chart-wrap"><canvas id="chart-devices"></canvas></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══ ACQUISITION ══ -->
+  <div id="section-acquisition" class="section">
+    <div class="chart-grid">
+      <div class="chart-card">
+        <div class="chart-title">Sessões por Canal</div>
+        <div class="chart-wrap"><canvas id="chart-channels"></canvas></div>
+      </div>
+      <div class="chart-card">
+        <div class="chart-title">Conversões por Canal</div>
+        <div class="chart-wrap"><canvas id="chart-channel-conv"></canvas></div>
+      </div>
+    </div>
+    <div class="table-card">
+      <div class="chart-title" style="margin-bottom:16px;">Origens de Tráfego — Top 15</div>
+      <table id="table-sources"></table>
+    </div>
+  </div>
+
+  <!-- ══ PAGES ══ -->
+  <div id="section-pages" class="section">
+    <div class="table-card">
+      <div class="chart-title" style="margin-bottom:16px;">Páginas mais acessadas — Top 10</div>
+      <table id="table-pages"></table>
+    </div>
+  </div>
+
+  <!-- ══ FUNNEL ══ -->
+  <div id="section-funnel" class="section">
+    <div class="chart-card" style="margin-bottom:20px;">
+      <div class="chart-title">Funil de Abandono — Usuários por etapa</div>
+      <div class="funnel-wrap" id="funnel-wrap"></div>
+    </div>
+    <div class="chart-card">
+      <div class="chart-title">Taxa de abandono entre etapas</div>
+      <div class="chart-wrap"><canvas id="chart-funnel-drop"></canvas></div>
+    </div>
+  </div>
+
+  <!-- ══ INSIGHTS ══ -->
+  <div id="section-insights" class="section">
+    <div class="insights-header">
+      <h2>Insights gerados via Claude.ai</h2>
+      <span class="insights-badge">Atualização manual</span>
+    </div>
+    <div id="insights-list"></div>
+    <div class="prompt-box">
+      <h3>Como gerar novos insights</h3>
+      <p>
+        Copie o prompt abaixo, acesse o <strong>Claude.ai</strong> no seu plano Team,<br/>
+        cole o prompt junto com o conteúdo do <code>data.json</code> e cole o resultado em <code>insights</code> no JSON.
+      </p>
+      <button class="copy-btn" id="copy-btn" onclick="copyPrompt()">Copiar prompt para Claude.ai</button>
+    </div>
+  </div>
+</div>
+
+<script>
+const PROMPT_TEMPLATE = `Você é um analista de growth sênior. Analise os dados de GA4 abaixo e gere entre 4 e 6 insights acionáveis para o time de marketing e produto.
+
+Para cada insight, retorne um objeto JSON com:
+- "title": título curto e direto
+- "body": análise em 2-3 frases com o insight e a recomendação
+- "type": "positive" | "warning" | "info"
+- "generated_at": data de hoje no formato YYYY-MM-DD
+
+Retorne APENAS um array JSON válido, sem texto adicional.
+
+DADOS:
+[COLE O CONTEÚDO DO data.json AQUI]`;
+
+let DATA = null;
+
+// ── Helpers ─────────────────────────────────────────────────────────────────
+const fmt  = n => n == null ? '—' : Number(n).toLocaleString('pt-BR');
+const fmtP = n => n == null ? '—' : `${n}%`;
+const fmtS = s => {
+  const m = Math.floor(s / 60), ss = Math.round(s % 60);
+  return `${m}m ${ss}s`;
+};
+const CHANNEL_COLORS = {
+  'Organic Search': '#3b82f6', 'Direct': '#8b5cf6', 'Referral': '#10b981',
+  'Paid Search':   '#f59e0b', 'Social': '#ec4899', 'Email': '#06b6d4',
+  'Display':       '#f97316', 'Organic Social': '#a78bfa',
+};
+const colorFor = (label, i) =>
+  CHANNEL_COLORS[label] || ['#3b82f6','#8b5cf6','#10b981','#f59e0b','#ec4899','#06b6d4','#f97316'][i % 7];
+
+const chartDefaults = () => ({
+  responsive: true, maintainAspectRatio: false,
+  plugins: { legend: { labels: { color: '#94a3b8', font: { family: 'Syne', size: 12 }, boxWidth: 12 } } },
+  scales: {
+    x: { ticks: { color: '#475569', font: { family: 'DM Mono', size: 11 } }, grid: { color: '#1c2436' } },
+    y: { ticks: { color: '#475569', font: { family: 'DM Mono', size: 11 } }, grid: { color: '#1c2436' } },
+  }
+});
+
+// ── Sections ─────────────────────────────────────────────────────────────────
+function showSection(id, btn) {
+  document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+  document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById('section-' + id).classList.add('active');
+  btn.classList.add('active');
+}
+
+// ── Copy prompt ──────────────────────────────────────────────────────────────
+function copyPrompt() {
+  navigator.clipboard.writeText(PROMPT_TEMPLATE).then(() => {
+    const btn = document.getElementById('copy-btn');
+    btn.textContent = '✓ Copiado!';
+    btn.classList.add('copied');
+    setTimeout(() => { btn.textContent = 'Copiar prompt para Claude.ai'; btn.classList.remove('copied'); }, 2000);
+  });
+}
+
+// ── Render ───────────────────────────────────────────────────────────────────
+function render(d) {
+  const t = d.totals;
+
+  // Header
+  document.getElementById('period-label').textContent = d.period;
+  document.getElementById('updated-label').textContent =
+    'Atualizado ' + new Date(d.updated_at).toLocaleString('pt-BR', { timeZone: 'America/Sao_Paulo', day:'2-digit', month:'2-digit', year:'numeric', hour:'2-digit', minute:'2-digit' });
+
+  // ── KPIs ──
+  const kpis = [
+    { label: 'Sessões (30d)', value: fmt(t.sessions), sub: `${fmt(t.sessions_7d)} nos últimos 7d` },
+    { label: 'Usuários',      value: fmt(t.total_users), sub: `${fmt(t.new_users)} novos usuários` },
+    { label: 'Conversões',    value: fmt(t.conversions), sub: `${fmt(t.conversions_7d)} nos últimos 7d` },
+    { label: 'Taxa de Rejeição', value: fmtP(t.bounce_rate), sub: 'Média dos 30 dias' },
+    { label: 'Duração Média', value: fmtS(t.avg_session_duration), sub: 'Por sessão' },
+    { label: 'Pageviews',     value: fmt(t.pageviews), sub: `${t.sessions > 0 ? (t.pageviews / t.sessions).toFixed(1) : '—'} por sessão` },
+  ];
+  document.getElementById('kpi-grid').innerHTML = kpis.map(k => `
+    <div class="kpi">
+      <div class="kpi-label">${k.label}</div>
+      <div class="kpi-value">${k.value}</div>
+      <div class="kpi-sub">${k.sub}</div>
+    </div>`).join('');
+
+  // ── Daily chart ──
+  const labels = d.daily.map(r => r.date.slice(5));
+  new Chart(document.getElementById('chart-daily'), {
+    type: 'line', data: {
+      labels,
+      datasets: [
+        { label: 'Sessões', data: d.daily.map(r => r.sessions), borderColor: '#3b82f6', backgroundColor: 'rgba(59,130,246,.08)', fill: true, tension: .4, pointRadius: 3 },
+        { label: 'Usuários', data: d.daily.map(r => r.users), borderColor: '#8b5cf6', backgroundColor: 'rgba(139,92,246,.04)', fill: true, tension: .4, pointRadius: 3 },
+      ]
+    },
+    options: chartDefaults()
+  });
+
+  // ── Conversions chart ──
+  new Chart(document.getElementById('chart-conversions'), {
+    type: 'bar', data: {
+      labels,
+      datasets: [{ label: 'Conversões', data: d.daily.map(r => r.conversions), backgroundColor: 'rgba(16,185,129,.7)', borderRadius: 4 }]
+    },
+    options: chartDefaults()
+  });
+
+  // ── Devices doughnut ──
+  new Chart(document.getElementById('chart-devices'), {
+    type: 'doughnut', data: {
+      labels: d.devices.map(r => r.device),
+      datasets: [{ data: d.devices.map(r => r.sessions), backgroundColor: ['#3b82f6','#8b5cf6','#10b981','#f59e0b'], borderWidth: 0 }]
+    },
+    options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { position: 'right', labels: { color: '#94a3b8', font: { family: 'Syne', size: 12 }, boxWidth: 10 } } } }
+  });
+
+  // ── Channels bar ──
+  new Chart(document.getElementById('chart-channels'), {
+    type: 'bar',
+    data: {
+      labels: d.channels.map(r => r.channel),
+      datasets: [{ label: 'Sessões', data: d.channels.map(r => r.sessions), backgroundColor: d.channels.map((r, i) => colorFor(r.channel, i)), borderRadius: 6 }]
+    },
+    options: { ...chartDefaults(), indexAxis: 'y' }
+  });
+
+  // ── Channel conversions ──
+  new Chart(document.getElementById('chart-channel-conv'), {
+    type: 'bar',
+    data: {
+      labels: d.channels.map(r => r.channel),
+      datasets: [{ label: 'Conversões', data: d.channels.map(r => r.conversions), backgroundColor: d.channels.map((r, i) => colorFor(r.channel, i)), borderRadius: 6 }]
+    },
+    options: { ...chartDefaults(), indexAxis: 'y' }
+  });
+
+  // ── Sources table ──
+  document.getElementById('table-sources').innerHTML = `
+    <thead><tr>
+      <th>Origem</th><th>Mídia</th><th>Sessões</th><th>Usuários</th>
+      <th>Conversões</th><th>Rejeição</th><th>Duração</th>
+    </tr></thead>
+    <tbody>${d.sources.map(r => `<tr>
+      <td>${r.source}</td>
+      <td><span class="badge-channel" style="background:rgba(59,130,246,.15);color:#93c5fd">${r.medium}</span></td>
+      <td>${fmt(r.sessions)}</td><td>${fmt(r.users)}</td>
+      <td>${fmt(r.conversions)}</td><td>${fmtP(r.bounce_rate)}</td>
+      <td>${fmtS(r.avg_duration)}</td>
+    </tr>`).join('')}</tbody>`;
+
+  // ── Pages table ──
+  document.getElementById('table-pages').innerHTML = `
+    <thead><tr>
+      <th>#</th><th>Título</th><th>Path</th><th>Pageviews</th>
+      <th>Usuários</th><th>Duração</th><th>Rejeição</th>
+    </tr></thead>
+    <tbody>${d.pages.map((r, i) => `<tr>
+      <td style="color:var(--muted);font-family:'DM Mono',monospace">${String(i+1).padStart(2,'0')}</td>
+      <td style="max-width:200px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${r.title}</td>
+      <td style="font-family:'DM Mono',monospace;font-size:12px;color:#64748b">${r.path}</td>
+      <td>${fmt(r.pageviews)}</td><td>${fmt(r.users)}</td>
+      <td>${fmtS(r.avg_duration)}</td><td>${fmtP(r.bounce_rate)}</td>
+    </tr>`).join('')}</tbody>`;
+
+  // ── Funnel ──
+  const maxUsers = d.funnel.length > 0 ? d.funnel[0].users : 1;
+  document.getElementById('funnel-wrap').innerHTML = d.funnel.map((step, i) => {
+    const pct = maxUsers > 0 ? Math.round(step.users / maxUsers * 100) : 0;
+    const dropClass = step.drop_rate > 60 ? 'bad' : step.drop_rate > 30 ? 'ok' : 'good';
+    return `<div class="funnel-step">
+      <div class="funnel-label">${step.step}</div>
+      <div class="funnel-bar-wrap">
+        <div class="funnel-bar" style="width:${pct}%">${fmt(step.users)}</div>
+      </div>
+      <div class="funnel-drop ${i === 0 ? '' : dropClass}">
+        ${i === 0 ? '—' : `▼ ${step.drop_rate}%`}
+      </div>
+    </div>`;
+  }).join('');
+
+  // ── Funnel drop chart ──
+  const funnelDropLabels = d.funnel.slice(1).map(s => s.step);
+  const funnelDropData   = d.funnel.slice(1).map(s => s.drop_rate);
+  new Chart(document.getElementById('chart-funnel-drop'), {
+    type: 'bar',
+    data: {
+      labels: funnelDropLabels,
+      datasets: [{
+        label: '% abandono',
+        data: funnelDropData,
+        backgroundColor: funnelDropData.map(v => v > 60 ? 'rgba(239,68,68,.7)' : v > 30 ? 'rgba(245,158,11,.7)' : 'rgba(16,185,129,.7)'),
+        borderRadius: 6
+      }]
+    },
+    options: chartDefaults()
+  });
+
+  // ── Insights ──
+  const list = document.getElementById('insights-list');
+  if (!d.insights || d.insights.length === 0) {
+    list.innerHTML = '<div class="insight-card info"><div class="insight-title">Nenhum insight disponível</div><div class="insight-body">Use o prompt abaixo para gerar insights no Claude.ai e cole o resultado no campo <code>insights</code> do data.json.</div></div>';
+  } else {
+    list.innerHTML = d.insights.map(ins => `
+      <div class="insight-card ${ins.type || 'info'}">
+        <div class="insight-title">${ins.title}</div>
+        <div class="insight-body">${ins.body}</div>
+        <div class="insight-meta">Gerado em ${ins.generated_at}</div>
+      </div>`).join('');
+  }
+}
+
+// ── Boot ─────────────────────────────────────────────────────────────────────
+fetch('data.json?t=' + Date.now())
+  .then(r => r.json())
+  .then(d => {
+    DATA = d;
+    render(d);
+    document.getElementById('loading').style.display = 'none';
+  })
+  .catch(err => {
+    document.getElementById('loading').innerHTML = `
+      <p style="color:#ef4444;font-family:'DM Mono',monospace">Erro ao carregar data.json</p>
+      <p style="color:#64748b;font-size:12px;margin-top:8px">${err.message}</p>`;
+  });
+</script>
+</body>
+</html>
