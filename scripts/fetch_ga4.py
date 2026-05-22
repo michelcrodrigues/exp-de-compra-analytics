@@ -157,14 +157,35 @@ pages_weekly = {
 print("6/14 Origens...")
 r = report(["sessionSource","sessionMedium"],
            ["sessions","totalUsers","ecommercePurchases","bounceRate","averageSessionDuration"],
-           order_bys=[OrderBy(metric=OrderBy.MetricOrderBy(metric_name="sessions"), desc=True)], limit=15)
-sources = [{"source": dim(row,0), "medium": dim(row,1),
+           order_bys=[OrderBy(metric=OrderBy.MetricOrderBy(metric_name="sessions"), desc=True)], limit=50)
+sources_all = [{"source": dim(row,0), "medium": dim(row,1),
+            "source_medium": f"{dim(row,0)} / {dim(row,1)}",
             "sessions":        intf(met(row,0)),
             "users":           intf(met(row,1)),
             "conversions":     intf(met(row,2)),
             "conversion_rate": round(intf(met(row,2))/max(intf(met(row,0)),1)*100, 2),
             "bounce_rate":     round(float(met(row,3))*100, 2),
             "avg_duration":    rnd(met(row,4))} for row in r.rows]
+
+# Top 5 + Outros grouping
+TOP5_SOURCES = [r["source_medium"] for r in sources_all[:5]]
+others = [r for r in sources_all[5:]]
+others_agg = None
+if others:
+    others_sess  = sum(r["sessions"]    for r in others)
+    others_users = sum(r["users"]       for r in others)
+    others_conv  = sum(r["conversions"] for r in others)
+    others_agg = {
+        "source": "outros", "medium": "—",
+        "source_medium": "outros / —",
+        "sessions":        others_sess,
+        "users":           others_users,
+        "conversions":     others_conv,
+        "conversion_rate": round(others_conv/max(others_sess,1)*100, 2),
+        "bounce_rate":     round(sum(r["bounce_rate"]*r["sessions"] for r in others)/max(others_sess,1), 2),
+        "avg_duration":    round(sum(r["avg_duration"]*r["sessions"] for r in others)/max(others_sess,1), 2),
+    }
+sources = sources_all[:5] + ([others_agg] if others_agg else [])
 
 # ── 7. Canais com breakdown diário ───────────────────────────────────────────
 print("7/14 Canais por dia...")
@@ -206,6 +227,36 @@ channels_daily = {
     "dates":    sorted(channels_daily_raw.keys()),
     "channels": list(channels_agg.keys()),
     "data":     channels_daily_raw,
+}
+
+# ── 7b. Source/medium daily breakdown (top5 + outros) ────────────────────────
+print("7b/14 Origens por dia...")
+r = report(["date","sessionSource","sessionMedium"],
+           ["sessions","totalUsers","ecommercePurchases"],
+           order_bys=[OrderBy(dimension=OrderBy.DimensionOrderBy(dimension_name="date"))],
+           limit=2000)
+
+sources_daily_raw = {}
+for row in r.rows:
+    date = fmt_date(dim(row,0))
+    sm   = f"{dim(row,1)} / {dim(row,2)}"
+    sess = intf(met(row,0))
+    users= intf(met(row,1))
+    conv = intf(met(row,2))
+    # Map to top5 or "outros / —"
+    key = sm if sm in TOP5_SOURCES else "outros / —"
+    if date not in sources_daily_raw:
+        sources_daily_raw[date] = {}
+    if key not in sources_daily_raw[date]:
+        sources_daily_raw[date][key] = {"sessions":0,"users":0,"conversions":0}
+    sources_daily_raw[date][key]["sessions"]   += sess
+    sources_daily_raw[date][key]["users"]      += users
+    sources_daily_raw[date][key]["conversions"]+= conv
+
+sources_daily = {
+    "dates":   sorted(sources_daily_raw.keys()),
+    "sources": TOP5_SOURCES + ["outros / —"],
+    "data":    sources_daily_raw,
 }
 
 # ── 8. Dispositivos com breakdown diário ──────────────────────────────────────
@@ -274,6 +325,35 @@ nvr_daily = {
     "dates": sorted(nvr_daily_raw.keys()),
     "types": list(nvr_agg.keys()),
     "data":  nvr_daily_raw,
+}
+
+# ── 9b. NVR por dispositivo (breakdown diário) ───────────────────────────────
+print("9b/14 Novos vs recorrentes por dispositivo...")
+r = report(["date","deviceCategory","newVsReturning"],
+           ["sessions","totalUsers"],
+           order_bys=[OrderBy(dimension=OrderBy.DimensionOrderBy(dimension_name="date"))],
+           limit=600)
+
+nvr_device_raw = {}  # date -> device -> type -> {sessions, users}
+for row in r.rows:
+    date   = fmt_date(dim(row,0))
+    device = dim(row,1)
+    ntype  = dim(row,2)
+    sess   = intf(met(row,0))
+    users  = intf(met(row,1))
+    if date not in nvr_device_raw:
+        nvr_device_raw[date] = {}
+    if device not in nvr_device_raw[date]:
+        nvr_device_raw[date][device] = {}
+    if ntype not in nvr_device_raw[date][device]:
+        nvr_device_raw[date][device][ntype] = {"sessions":0,"users":0}
+    nvr_device_raw[date][device][ntype]["sessions"] += sess
+    nvr_device_raw[date][device][ntype]["users"]    += users
+
+nvr_by_device = {
+    "dates":   sorted(nvr_device_raw.keys()),
+    "devices": list(devices_agg.keys()),
+    "data":    nvr_device_raw,
 }
 
 # ── 10. Funil com breakdown por data ──────────────────────────────────────────
@@ -392,12 +472,15 @@ data = {
     "pages_weekly":       pages_weekly,
     "landing_pages":      landing_pages,
     "sources":            sources,
+    "sources_daily":      sources_daily,
+    "top5_sources":       TOP5_SOURCES,
     "channels":           channels,
     "channels_daily":     channels_daily,
     "devices":            devices,
     "devices_daily":      devices_daily,
     "new_vs_returning":   new_vs_returning,
     "nvr_daily":          nvr_daily,
+    "nvr_by_device":      nvr_by_device,
     "funnel":             funnel,
     "funnel_daily":       funnel_daily,
     "routes":             routes,
