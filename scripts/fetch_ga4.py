@@ -262,9 +262,9 @@ sources_daily = {
 # ── 8. Dispositivos com breakdown diário ──────────────────────────────────────
 print("8/14 Dispositivos por dia...")
 r = report(["date","deviceCategory"],
-           ["sessions","totalUsers","ecommercePurchases","bounceRate"],
+           ["sessions","totalUsers","ecommercePurchases","bounceRate","averageSessionDuration"],
            order_bys=[OrderBy(dimension=OrderBy.DimensionOrderBy(dimension_name="date"))],
-           limit=200)
+           limit=300)
 
 devices_daily_raw = {}
 devices_agg = {}
@@ -275,10 +275,11 @@ for row in r.rows:
     users  = intf(met(row,1))
     conv   = intf(met(row,2))
     bounce = round(float(met(row,3))*100, 2)
+    dur    = rnd(met(row,4))
 
     if date not in devices_daily_raw:
         devices_daily_raw[date] = {}
-    devices_daily_raw[date][device] = {"sessions":sess,"users":users,"conversions":conv,"bounce_rate":bounce}
+    devices_daily_raw[date][device] = {"sessions":sess,"users":users,"conversions":conv,"bounce_rate":bounce,"avg_duration":dur}
 
     if device not in devices_agg:
         devices_agg[device] = {"device":device,"sessions":0,"users":0,"conversions":0,"bounce_rate":bounce}
