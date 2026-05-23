@@ -489,17 +489,11 @@ function aggWeightedFromDailyObj(obj, filterKey){
 
 // ── Main filter builder ───────────────────────────────────────────────────────
 function buildF(d,f){
-  const devFilter = f.dev;  // 'mobile' | 'desktop' | 'tablet' | 'all'
-  const srcFilter = f.src;  // 'google / cpc' | 'outros / —' | 'all'
+  const devFilter = f.dev;
+  const srcFilter = f.src;
 
-  // 1. Filter daily series by date — fonte de verdade para a janela de datas
+  // 1. daily[] é a fonte de verdade para a janela de datas — sempre completo
   const daily = filterDates(d.daily, f);
-
-  // 2. Derivar o conjunto de datas do daily filtrado.
-  // Todos os *_daily objects são filtrados por INTERSEÇÃO com esse conjunto,
-  // garantindo que usam exatamente a mesma janela temporal que o daily[].
-  // Isso evita o bug de .slice(-N) em arrays com gaps (dias sem dados para
-  // aquela dimensão deslocam a janela e geram métricas de períodos errados).
   const dateSet = new Set(daily.map(r => r.date));
 
   const chDailyFiltered  = filterDailyObj(d.channels_daily,       f, dateSet);
@@ -508,9 +502,8 @@ function buildF(d,f){
   const nvrDailyFiltered = filterDailyObj(d.nvr_daily,            f, dateSet);
   const dsDailyFiltered  = filterDailyObj(d.device_source_daily,  f, dateSet);
 
-  // ── 3. Compute base metrics from devices_daily (real data, best for device filter) ──
-  // We always compute device breakdown — used to get accurate metrics when devFilter active
-  const devAggAll = {}; // device → {sessions, users, conversions, bounce_rate, avg_duration}
+  // ── 3. devMetrics: agrega devices_daily pelo período (sempre completo) ──────
+  const devAggAll = {};
   devDailyFiltered.dates.forEach(date=>{
     const day=devDailyFiltered.data[date]||{};
     Object.entries(day).forEach(([dev,v])=>{
@@ -523,7 +516,7 @@ function buildF(d,f){
       devAggAll[dev].wDur       +=(v.avg_duration||0)*s;
     });
   });
-  const devMetrics={}; // device → {sessions,users,conversions,bounce_rate,avg_duration,conversion_rate}
+  const devMetrics={};
   Object.entries(devAggAll).forEach(([dev,a])=>{
     const s=Math.max(a.sessions,1);
     devMetrics[dev]={
@@ -535,9 +528,13 @@ function buildF(d,f){
       conversion_rate:Math.round(a.conversions/s*10000)/100,
     };
   });
+  // Total de sessões de devices no período (para calcular devRatio)
+  const totalDevSess = Object.values(devMetrics).reduce((a,r)=>a+r.sessions,0);
 
-  // ── 4. Compute source metrics from sources_daily (real data, for source filter) ──
-  const srcAggAll = {}; // source_medium → {sessions, users, conversions, wBounce, wDur}
+  // ── 4. srcMetrics: agrega sources_daily quando disponível; fallback d.sources ──
+  // sources_daily pode não cobrir o período selecionado (pipeline incompleto).
+  // Nesse caso, usa d.sources (90d fixo) para obter ratios e bounce/duration.
+  const srcAggAll = {};
   srcDailyFiltered.dates.forEach(date=>{
     const day=srcDailyFiltered.data[date]||{};
     Object.entries(day).forEach(([sm,v])=>{
@@ -546,28 +543,54 @@ function buildF(d,f){
       srcAggAll[sm].sessions   +=s;
       srcAggAll[sm].users      +=(v.users||0);
       srcAggAll[sm].conversions+=(v.conversions||0);
-      // sources_daily v5 has wBounce/wDur; v4 may not — check both field names
       srcAggAll[sm].wBounce    +=(v.wBounce||((v.bounce_rate||0)*s));
       srcAggAll[sm].wDur       +=(v.wDur   ||((v.avg_duration||0)*s));
     });
   });
-  const srcMetrics={}; // source_medium → {sessions,conversions,bounce_rate,avg_duration,conversion_rate}
-  const totalSrcSessions = Object.values(srcAggAll).reduce((a,r)=>a+r.sessions,0);
-  Object.entries(srcAggAll).forEach(([sm,a])=>{
-    const s=Math.max(a.sessions,1);
-    srcMetrics[sm]={
-      sessions:       a.sessions,
-      users:          a.users,
-      conversions:    a.conversions,
-      ratio:          totalSrcSessions>0 ? a.sessions/totalSrcSessions : 0,
-      bounce_rate:    a.sessions>0&&a.wBounce>0 ? Math.round(a.wBounce/s*100)/100 : null,
-      avg_duration:   a.sessions>0&&a.wDur>0    ? Math.round(a.wDur/s*100)/100    : null,
-      conversion_rate:Math.round(a.conversions/s*10000)/100,
-    };
-  });
+  const hasSrcDailyData = Object.keys(srcAggAll).length > 0;
 
-  // ── 5. Aggregate channels from channels_daily (filtered by date) ──────────────
-  // Then apply device/source scaling where needed
+  const srcMetrics={};
+  if(hasSrcDailyData){
+    // Dados reais de sources_daily disponíveis para o período
+    const totalSrcSess = Object.values(srcAggAll).reduce((a,r)=>a+r.sessions,0);
+    Object.entries(srcAggAll).forEach(([sm,a])=>{
+      const s=Math.max(a.sessions,1);
+      srcMetrics[sm]={
+        sessions:       a.sessions,
+        users:          a.users,
+        conversions:    a.conversions,
+        ratio:          totalSrcSess>0 ? a.sessions/totalSrcSess : 0,
+        bounce_rate:    a.sessions>0&&a.wBounce>0 ? Math.round(a.wBounce/s*100)/100 : null,
+        avg_duration:   a.sessions>0&&a.wDur>0    ? Math.round(a.wDur/s*100)/100    : null,
+        conversion_rate:Math.round(a.conversions/s*10000)/100,
+      };
+    });
+  } else {
+    // Fallback: d.sources (tabela 90d fixo) — sempre presente no JSON
+    // Usa as proporções do período longo como estimativa para o período selecionado
+    const totalSrcSess = d.sources.reduce((a,r)=>a+r.sessions,0);
+    d.sources.forEach(r=>{
+      const sm = r.source_medium || `${r.source} / ${r.medium}`;
+      srcMetrics[sm]={
+        sessions:       r.sessions,
+        users:          r.users,
+        conversions:    r.conversions,
+        ratio:          totalSrcSess>0 ? r.sessions/totalSrcSess : 0,
+        bounce_rate:    r.bounce_rate  || null,
+        avg_duration:   r.avg_duration || null,
+        conversion_rate:r.conversion_rate || 0,
+      };
+    });
+  }
+
+  // ── 5. srcRatio e devRatio ────────────────────────────────────────────────
+  const devRatio = (devFilter!=='all'&&devMetrics[devFilter]&&totalDevSess>0)
+    ? devMetrics[devFilter].sessions/totalDevSess : 1;
+
+  const srcEntry = srcFilter!=='all' ? srcMetrics[srcFilter] : null;
+  const srcRatio = srcEntry ? srcEntry.ratio : 1;
+
+  // ── 6. Aggregate channels_daily (pode estar vazio para períodos recentes) ──
   const chAgg={};
   chDailyFiltered.dates.forEach(date=>{
     const day=chDailyFiltered.data[date]||{};
@@ -582,45 +605,50 @@ function buildF(d,f){
       chAgg[ch].wDur       +=(v.avg_duration||0)*s;
     });
   });
+  const hasChData = Object.keys(chAgg).length > 0;
 
-  // Compute scaling ratios
-  // devRatio: proportion of total sessions belonging to selected device
-  const totalDevSess = Object.values(devMetrics).reduce((a,r)=>a+r.sessions,0);
-  const devRatio = (devFilter!=='all'&&devMetrics[devFilter]&&totalDevSess>0)
-    ? devMetrics[devFilter].sessions/totalDevSess : 1;
-
-  // srcRatio: proportion of total sessions belonging to selected source
-  const srcRatio = (srcFilter!=='all'&&srcMetrics[srcFilter])
-    ? srcMetrics[srcFilter].ratio : 1;
-
-  // Combined ratio for channels (no channel×device or channel×source breakdown)
+  // combinedRatio: escala canais, funil, páginas, daily charts
   const combinedRatio = devRatio * srcRatio;
 
-  let channels = Object.values(chAgg).map(ch=>{
-    const orig=d.channels.find(c=>c.channel===ch.channel)||{};
-    const s=Math.max(ch.sessions,1);
-    const hasBounce = ch.wBounce>0;
-    const hasDur    = ch.wDur>0;
-    const scaledSess = Math.round(ch.sessions*combinedRatio);
-    const scaledConv = Math.round(ch.conversions*combinedRatio);
-    return{
-      channel:         ch.channel,
-      sessions:        scaledSess,
-      users:           Math.round(ch.users*combinedRatio),
-      conversions:     scaledConv,
-      new_users:       Math.round((ch.new_users||orig.new_users||0)*combinedRatio),
-      conversion_rate: scaledSess>0 ? Math.round(scaledConv/scaledSess*10000)/100 : 0,
-      // Bounce/duration: scaled channels inherit from device or source real data
-      bounce_rate:  hasBounce ? Math.round(ch.wBounce/s*100)/100 : (orig.bounce_rate||0),
-      avg_duration: hasDur    ? Math.round(ch.wDur/s*100)/100    : (orig.avg_duration||0),
-    };
-  }).sort((a,b)=>b.sessions-a.sessions);
+  // Montar channels[] — usa chAgg se disponível, senão d.channels escalado
+  let channels;
+  if(hasChData){
+    channels = Object.values(chAgg).map(ch=>{
+      const orig=d.channels.find(c=>c.channel===ch.channel)||{};
+      const s=Math.max(ch.sessions,1);
+      const scaledSess = Math.round(ch.sessions*combinedRatio);
+      const scaledConv = Math.round(ch.conversions*combinedRatio);
+      return{
+        channel:         ch.channel,
+        sessions:        scaledSess,
+        users:           Math.round(ch.users*combinedRatio),
+        conversions:     scaledConv,
+        new_users:       Math.round((ch.new_users||orig.new_users||0)*combinedRatio),
+        conversion_rate: scaledSess>0 ? Math.round(scaledConv/scaledSess*10000)/100 : 0,
+        bounce_rate:  ch.wBounce>0 ? Math.round(ch.wBounce/s*100)/100 : (orig.bounce_rate||0),
+        avg_duration: ch.wDur>0    ? Math.round(ch.wDur/s*100)/100    : (orig.avg_duration||0),
+      };
+    }).sort((a,b)=>b.sessions-a.sessions);
+  } else {
+    // channels_daily não cobre o período — escalar d.channels pelo ratio combinado
+    channels = d.channels.map(ch=>{
+      const scaledSess = Math.round(ch.sessions*combinedRatio);
+      const scaledConv = Math.round(ch.conversions*combinedRatio);
+      return{
+        ...ch,
+        sessions:        scaledSess,
+        users:           Math.round(ch.users*combinedRatio),
+        conversions:     scaledConv,
+        new_users:       Math.round((ch.new_users||0)*combinedRatio),
+        conversion_rate: scaledSess>0 ? Math.round(scaledConv/scaledSess*10000)/100 : 0,
+      };
+    }).sort((a,b)=>b.sessions-a.sessions);
+  }
 
-  // ── 6. Devices list (for doughnut chart) ──────────────────────────────────
+  // ── 7. Devices list ────────────────────────────────────────────────────────
   let devices = Object.entries(devMetrics).map(([dev,m])=>({device:dev,...m}))
     .sort((a,b)=>b.sessions-a.sessions);
   if(devFilter!=='all') devices=devices.filter(r=>r.device===devFilter);
-  // Apply source ratio to device display counts
   if(srcFilter!=='all'){
     devices=devices.map(r=>({...r,
       sessions:   Math.round(r.sessions*srcRatio),
@@ -629,7 +657,7 @@ function buildF(d,f){
     }));
   }
 
-  // ── 7. NVR — use real nvr_by_device when device filter active ─────────────
+  // ── 8. NVR ─────────────────────────────────────────────────────────────────
   let nvr;
   if(devFilter!=='all'&&d.nvr_by_device){
     const nbrObj=filterDailyObj(d.nvr_by_device,f,dateSet);
@@ -650,7 +678,7 @@ function buildF(d,f){
     if(srcFilter!=='all') nvr=nvr.map(r=>({...r,users:Math.round(r.users*srcRatio),sessions:Math.round(r.sessions*srcRatio)}));
   }
 
-  // ── 8. Sources table ───────────────────────────────────────────────────────
+  // ── 9. Sources table ───────────────────────────────────────────────────────
   let sources=[...d.sources];
   if(srcFilter!=='all') sources=sources.filter(r=>(r.source_medium||`${r.source} / ${r.medium}`)===srcFilter);
   if(devFilter!=='all') sources=sources.map(r=>({...r,
@@ -659,12 +687,12 @@ function buildF(d,f){
     conversions:Math.round(r.conversions*devRatio),
   }));
 
-  // ── 9. Funnel — filtered by date + device/source scaling ──────────────────
+  // ── 10. Funnel ─────────────────────────────────────────────────────────────
   const fnlObj=filterDailyObj(d.funnel_daily,f,dateSet);
   let funnel=buildFunnelAgg(fnlObj,d.funnel);
   if(combinedRatio!==1) funnel=scaleFunnel(funnel,combinedRatio);
 
-  // ── 10. Daily series scaling (for line/bar charts) ────────────────────────
+  // ── 11. Daily series scaling ───────────────────────────────────────────────
   let scaledDaily=[...daily];
   if(combinedRatio!==1){
     scaledDaily=daily.map(r=>({...r,
@@ -675,26 +703,25 @@ function buildF(d,f){
     }));
   }
 
-  // ── 11. KPI totals — computed from REAL data sources ─────────────────────
+  // ── 12. KPI totals ─────────────────────────────────────────────────────────
+  // Hierarquia de fontes (da mais para a menos precisa):
   //
-  // SESSIONS, USERS, CONVERSIONS:
-  //   • device filter active → use devices_daily real aggregated data
-  //   • source filter active → use sources_daily real aggregated data
-  //   • both active → use device real × source ratio (best approximation without cross-breakdown)
-  //   • neither → sum from channels_daily (most granular)
+  // sessions/conversions:
+  //   dev+src  → device_source_daily real | fallback: devMetrics[dev] × srcRatio
+  //   dev only → devMetrics[dev] (devices_daily, sempre completo)
+  //   src only → srcMetrics[src].sessions (sources_daily ou d.sources fallback)
+  //   nenhum   → daily[] agregado (sempre completo)
   //
-  // BOUNCE_RATE, AVG_DURATION:
-  //   • device filter active → weighted avg from devices_daily (real)
-  //   • source filter active → weighted avg from sources_daily (real, v5) or d.sources fallback
-  //   • channels real data if available (wBounce > 0 in channels)
-  //   • fallback → d.totals
+  // bounce/duration:
+  //   dev  → devMetrics[dev].bounce_rate (devices_daily ponderado)
+  //   src  → srcEntry.bounce_rate (sources_daily ou d.sources)
+  //   else → weighted avg de channels | d.totals
 
   let filtSessions, filtUsers, filtConversions, filtNewUsers;
   let filtBounce, filtDur;
 
   if(devFilter!=='all' && srcFilter!=='all'){
-    // Cross-filter: usar device_source_daily real se disponível (fetch v5+)
-    // Agrega sessions/users/conversions do cruzamento device×source no período filtrado
+    // Tenta device_source_daily real primeiro
     let dsSess=0, dsUsers=0, dsConv=0;
     if(dsDailyFiltered){
       dsDailyFiltered.dates.forEach(date=>{
@@ -705,69 +732,83 @@ function buildF(d,f){
       });
     }
     if(dsSess>0){
-      // Dados reais disponíveis — conversão precisa
       filtSessions    = dsSess;
       filtUsers       = dsUsers;
       filtConversions = dsConv;
     } else {
-      // Fallback: device real × source ratio (quando device_source_daily não existe no JSON)
+      // Fallback: device real × srcRatio
       const dm = devMetrics[devFilter]||{sessions:0,users:0,conversions:0};
       filtSessions    = Math.round(dm.sessions    * srcRatio);
       filtUsers       = Math.round(dm.users       * srcRatio);
       filtConversions = Math.round(dm.conversions * srcRatio);
     }
     filtNewUsers = scaledDaily.reduce((a,r)=>a+(r.new_users||0),0);
-    // Bounce/duração: device real é melhor estimativa para combinação
     const dm2 = devMetrics[devFilter]||{};
-    const smB = srcMetrics[srcFilter]&&srcMetrics[srcFilter].bounce_rate!=null;
     const dvB = dm2.bounce_rate != null;
+    const smB = srcEntry && srcEntry.bounce_rate != null;
     if(dvB && smB){
-      filtBounce = Math.round(((dm2.bounce_rate + srcMetrics[srcFilter].bounce_rate)/2)*100)/100;
-      filtDur    = dm2.avg_duration!=null && srcMetrics[srcFilter].avg_duration!=null
-        ? Math.round(((dm2.avg_duration+srcMetrics[srcFilter].avg_duration)/2)*100)/100
-        : (dm2.avg_duration ?? srcMetrics[srcFilter].avg_duration ?? d.totals.avg_session_duration);
+      filtBounce = Math.round(((dm2.bounce_rate + srcEntry.bounce_rate)/2)*100)/100;
+      filtDur    = dm2.avg_duration!=null && srcEntry.avg_duration!=null
+        ? Math.round(((dm2.avg_duration+srcEntry.avg_duration)/2)*100)/100
+        : (dm2.avg_duration ?? srcEntry.avg_duration ?? d.totals.avg_session_duration);
     } else if(dvB){
       filtBounce = dm2.bounce_rate;
       filtDur    = dm2.avg_duration ?? d.totals.avg_session_duration;
     } else if(smB){
-      filtBounce = srcMetrics[srcFilter].bounce_rate;
-      filtDur    = srcMetrics[srcFilter].avg_duration ?? d.totals.avg_session_duration;
+      filtBounce = srcEntry.bounce_rate;
+      filtDur    = srcEntry.avg_duration ?? d.totals.avg_session_duration;
     } else {
       filtBounce = d.totals.bounce_rate;
       filtDur    = d.totals.avg_session_duration;
     }
 
   } else if(devFilter!=='all'){
-    // Device-only filter: use real devices_daily data
     const dm = devMetrics[devFilter]||{sessions:0,users:0,conversions:0};
     filtSessions    = dm.sessions;
     filtUsers       = dm.users;
     filtConversions = dm.conversions;
     filtNewUsers    = scaledDaily.reduce((a,r)=>a+(r.new_users||0),0);
-    filtBounce   = dm.bounce_rate   ?? d.totals.bounce_rate;
-    filtDur      = dm.avg_duration  ?? d.totals.avg_session_duration;
+    filtBounce = dm.bounce_rate  ?? d.totals.bounce_rate;
+    filtDur    = dm.avg_duration ?? d.totals.avg_session_duration;
 
   } else if(srcFilter!=='all'){
-    // Source-only filter: use real sources_daily data
-    const sm = srcMetrics[srcFilter]||{sessions:0,users:0,conversions:0};
-    filtSessions    = sm.sessions;
-    filtUsers       = sm.users;
-    filtConversions = sm.conversions;
-    filtNewUsers    = scaledDaily.reduce((a,r)=>a+(r.new_users||0),0);
-    filtBounce   = sm.bounce_rate   ?? d.totals.bounce_rate;
-    filtDur      = sm.avg_duration  ?? d.totals.avg_session_duration;
+    // Usa srcEntry (real se sources_daily cobre o período, senão d.sources 90d)
+    // Para sessions/conversions: se srcDailyData disponível usa real; senão escala daily
+    if(hasSrcDailyData && srcEntry){
+      filtSessions    = srcEntry.sessions;
+      filtUsers       = srcEntry.users;
+      filtConversions = srcEntry.conversions;
+    } else {
+      // sources_daily vazio para o período: escalar daily[] pelo srcRatio
+      filtSessions    = Math.round(daily.reduce((a,r)=>a+r.sessions,0)    * srcRatio);
+      filtUsers       = Math.round(daily.reduce((a,r)=>a+r.users,0)       * srcRatio);
+      filtConversions = Math.round(daily.reduce((a,r)=>a+r.conversions,0) * srcRatio);
+    }
+    filtNewUsers = scaledDaily.reduce((a,r)=>a+(r.new_users||0),0);
+    filtBounce = srcEntry?.bounce_rate  ?? d.totals.bounce_rate;
+    filtDur    = srcEntry?.avg_duration ?? d.totals.avg_session_duration;
 
   } else {
-    // No device/source filter: use channels_daily aggregated (most accurate for period filter)
-    const wB=channels.reduce((a,c)=>a+(c.bounce_rate||0)*c.sessions,0);
-    const wD=channels.reduce((a,c)=>a+(c.avg_duration||0)*c.sessions,0);
-    const wS=channels.reduce((a,c)=>a+c.sessions,0);
-    filtSessions    = channels.reduce((a,c)=>a+c.sessions,0);
-    filtUsers       = channels.reduce((a,c)=>a+c.users,0);
-    filtConversions = channels.reduce((a,c)=>a+c.conversions,0);
+    // Sem filtros: usar daily[] agregado (sempre disponível e completo)
+    // Tenta channels_daily para bounce/duration; fallback devices_daily ou d.totals
+    filtSessions    = daily.reduce((a,r)=>a+r.sessions,0);
+    filtUsers       = daily.reduce((a,r)=>a+r.users,0);
+    filtConversions = daily.reduce((a,r)=>a+r.conversions,0);
     filtNewUsers    = daily.reduce((a,r)=>a+(r.new_users||0),0);
-    filtBounce   = wS>0&&wB>0 ? Math.round(wB/wS*100)/100 : d.totals.bounce_rate;
-    filtDur      = wS>0&&wD>0 ? Math.round(wD/wS*100)/100 : d.totals.avg_session_duration;
+    if(hasChData){
+      const wB=channels.reduce((a,c)=>a+(c.bounce_rate||0)*c.sessions,0);
+      const wD=channels.reduce((a,c)=>a+(c.avg_duration||0)*c.sessions,0);
+      const wS=channels.reduce((a,c)=>a+c.sessions,0);
+      filtBounce = wS>0&&wB>0 ? Math.round(wB/wS*100)/100 : d.totals.bounce_rate;
+      filtDur    = wS>0&&wD>0 ? Math.round(wD/wS*100)/100 : d.totals.avg_session_duration;
+    } else {
+      // channels_daily vazio: usar média ponderada de devices_daily
+      const wB=Object.values(devAggAll).reduce((a,v)=>a+v.wBounce,0);
+      const wD=Object.values(devAggAll).reduce((a,v)=>a+v.wDur,0);
+      const wS=totalDevSess;
+      filtBounce = wS>0&&wB>0 ? Math.round(wB/wS*100)/100 : d.totals.bounce_rate;
+      filtDur    = wS>0&&wD>0 ? Math.round(wD/wS*100)/100 : d.totals.avg_session_duration;
+    }
   }
 
   const totals={
@@ -1030,13 +1071,6 @@ fetch('data.json?t='+Date.now())
   .then(r=>r.json())
   .then(d=>{
     RAW=d;
-console.log('daily dates (primeiras 3):', d.daily.slice(0,3).map(r=>r.date));
-console.log('daily dates (últimas 3):', d.daily.slice(-3).map(r=>r.date));
-console.log('devices_daily dates (primeiras 3):', d.devices_daily.dates.slice(0,3));
-console.log('devices_daily dates (últimas 3):', d.devices_daily.dates.slice(-3));
-console.log('devices_daily.data exemplo (última data):', JSON.stringify(d.devices_daily.data[d.devices_daily.dates[d.devices_daily.dates.length-1]]));
-console.log('total dates daily:', d.daily.length);
-console.log('total dates devices_daily:', d.devices_daily.dates.length);
     document.getElementById('per').textContent=(d.period||'').toUpperCase();
     document.getElementById('upd').textContent=new Date(d.updated_at).toLocaleString('pt-BR',{timeZone:'America/Sao_Paulo',day:'2-digit',month:'2-digit',year:'numeric',hour:'2-digit',minute:'2-digit'});
     populateF(d);
