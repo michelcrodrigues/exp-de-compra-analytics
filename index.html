@@ -1030,6 +1030,13 @@ fetch('data.json?t='+Date.now())
   .then(r=>r.json())
   .then(d=>{
     RAW=d;
+console.log('daily dates (primeiras 3):', d.daily.slice(0,3).map(r=>r.date));
+console.log('daily dates (últimas 3):', d.daily.slice(-3).map(r=>r.date));
+console.log('devices_daily dates (primeiras 3):', d.devices_daily.dates.slice(0,3));
+console.log('devices_daily dates (últimas 3):', d.devices_daily.dates.slice(-3));
+console.log('devices_daily.data exemplo (última data):', JSON.stringify(d.devices_daily.data[d.devices_daily.dates[d.devices_daily.dates.length-1]]));
+console.log('total dates daily:', d.daily.length);
+console.log('total dates devices_daily:', d.devices_daily.dates.length);
     document.getElementById('per').textContent=(d.period||'').toUpperCase();
     document.getElementById('upd').textContent=new Date(d.updated_at).toLocaleString('pt-BR',{timeZone:'America/Sao_Paulo',day:'2-digit',month:'2-digit',year:'numeric',hour:'2-digit',minute:'2-digit'});
     populateF(d);
