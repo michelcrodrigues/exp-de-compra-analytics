@@ -281,6 +281,42 @@ sources_daily = {
     "data":    sources_daily_raw,
 }
 
+# ── 7c. Dispositivo × Origem daily breakdown (para filtro combinado real) ─────
+# Necessário para calcular conversão real quando ambos os filtros estão ativos.
+# 90d × 3 devices × ~6 sources = ~1620 rows — dentro do limit.
+print("7c/14 Dispositivo × Origem por dia...")
+r = report(["date","deviceCategory","sessionSource","sessionMedium"],
+           ["sessions","totalUsers","ecommercePurchases"],
+           order_bys=[OrderBy(dimension=OrderBy.DimensionOrderBy(dimension_name="date"))],
+           limit=3000)
+
+device_source_daily_raw = {}  # date -> device -> source_medium -> {sessions, users, conversions}
+for row in r.rows:
+    date   = fmt_date(dim(row,0))
+    device = dim(row,1)
+    sm     = f"{dim(row,2)} / {dim(row,3)}"
+    sess   = intf(met(row,0))
+    users  = intf(met(row,1))
+    conv   = intf(met(row,2))
+    key    = sm if sm in TOP5_SOURCES else "outros / —"
+
+    if date not in device_source_daily_raw:
+        device_source_daily_raw[date] = {}
+    if device not in device_source_daily_raw[date]:
+        device_source_daily_raw[date][device] = {}
+    if key not in device_source_daily_raw[date][device]:
+        device_source_daily_raw[date][device][key] = {"sessions":0,"users":0,"conversions":0}
+    device_source_daily_raw[date][device][key]["sessions"]   += sess
+    device_source_daily_raw[date][device][key]["users"]      += users
+    device_source_daily_raw[date][device][key]["conversions"]+= conv
+
+device_source_daily = {
+    "dates":   sorted(device_source_daily_raw.keys()),
+    "devices": list(devices_agg.keys()) if 'devices_agg' in dir() else [],
+    "sources": TOP5_SOURCES + ["outros / —"],
+    "data":    device_source_daily_raw,
+}
+
 # ── 8. Dispositivos com breakdown diário ──────────────────────────────────────
 # v5: bounce_rate e avg_duration já coletados — confirmado explicitamente
 print("8/14 Dispositivos por dia...")
@@ -526,6 +562,7 @@ data = {
     "nvr_by_device":      nvr_by_device,
     "funnel":             funnel,
     "funnel_daily":       funnel_daily,
+    "device_source_daily": device_source_daily,
     "routes":             routes,
     "insights":           [],
 }
