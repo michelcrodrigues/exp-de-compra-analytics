@@ -422,11 +422,28 @@ function filterDates(daily,f){
   return daily.slice(-parseInt(f.period));
 }
 
-function filterDailyObj(obj,f){
+// Filtra um *_daily object pela mesma janela de datas que o daily[] filtrado.
+// NUNCA usa .slice(-N) direto no obj.dates porque esses arrays podem ter gaps
+// (dias sem dados para aquela dimensão), o que deslocaria a janela vs o daily.
+// Recebe dateSet: Set das datas do daily já filtrado — fonte de verdade.
+function filterDailyObj(obj, f, dateSet){
   if(!obj) return obj;
+  if(dateSet){
+    // Caminho preferencial: intersecta com o conjunto de datas do daily filtrado
+    const dates = obj.dates.filter(d => dateSet.has(d));
+    return{...obj, dates};
+  }
+  // Fallback sem dateSet: filtra por faixa explícita de datas (custom) ou all
   let dates=[...obj.dates];
   if(f.period==='custom'&&f.df&&f.dt) dates=dates.filter(d=>d>=f.df&&d<=f.dt);
-  else if(f.period!=='all') dates=dates.slice(-parseInt(f.period));
+  // period !== 'all' sem dateSet: não pode usar slice(-N) com segurança aqui,
+  // mas mantemos como último recurso para compatibilidade
+  else if(f.period!=='all'){
+    const n=parseInt(f.period);
+    const allDates=[...obj.dates].sort();
+    const cutoff=allDates.length>n?allDates[allDates.length-n]:allDates[0];
+    dates=allDates.filter(d=>d>=cutoff);
+  }
   return{...obj,dates};
 }
 
@@ -475,14 +492,21 @@ function buildF(d,f){
   const devFilter = f.dev;  // 'mobile' | 'desktop' | 'tablet' | 'all'
   const srcFilter = f.src;  // 'google / cpc' | 'outros / —' | 'all'
 
-  // 1. Filter daily series by date
+  // 1. Filter daily series by date — fonte de verdade para a janela de datas
   const daily = filterDates(d.daily, f);
 
-  // 2. Filter all daily objects by date
-  const chDailyFiltered  = filterDailyObj(d.channels_daily,  f);
-  const devDailyFiltered = filterDailyObj(d.devices_daily,   f);
-  const srcDailyFiltered = filterDailyObj(d.sources_daily,   f);
-  const nvrDailyFiltered = filterDailyObj(d.nvr_daily,       f);
+  // 2. Derivar o conjunto de datas do daily filtrado.
+  // Todos os *_daily objects são filtrados por INTERSEÇÃO com esse conjunto,
+  // garantindo que usam exatamente a mesma janela temporal que o daily[].
+  // Isso evita o bug de .slice(-N) em arrays com gaps (dias sem dados para
+  // aquela dimensão deslocam a janela e geram métricas de períodos errados).
+  const dateSet = new Set(daily.map(r => r.date));
+
+  const chDailyFiltered  = filterDailyObj(d.channels_daily,       f, dateSet);
+  const devDailyFiltered = filterDailyObj(d.devices_daily,        f, dateSet);
+  const srcDailyFiltered = filterDailyObj(d.sources_daily,        f, dateSet);
+  const nvrDailyFiltered = filterDailyObj(d.nvr_daily,            f, dateSet);
+  const dsDailyFiltered  = filterDailyObj(d.device_source_daily,  f, dateSet);
 
   // ── 3. Compute base metrics from devices_daily (real data, best for device filter) ──
   // We always compute device breakdown — used to get accurate metrics when devFilter active
@@ -608,7 +632,7 @@ function buildF(d,f){
   // ── 7. NVR — use real nvr_by_device when device filter active ─────────────
   let nvr;
   if(devFilter!=='all'&&d.nvr_by_device){
-    const nbrObj=filterDailyObj(d.nvr_by_device,f);
+    const nbrObj=filterDailyObj(d.nvr_by_device,f,dateSet);
     const nvrAgg={};
     nbrObj.dates.forEach(date=>{
       const day=nbrObj.data[date]||{};
@@ -636,7 +660,7 @@ function buildF(d,f){
   }));
 
   // ── 9. Funnel — filtered by date + device/source scaling ──────────────────
-  const fnlObj=filterDailyObj(d.funnel_daily,f);
+  const fnlObj=filterDailyObj(d.funnel_daily,f,dateSet);
   let funnel=buildFunnelAgg(fnlObj,d.funnel);
   if(combinedRatio!==1) funnel=scaleFunnel(funnel,combinedRatio);
 
@@ -669,24 +693,42 @@ function buildF(d,f){
   let filtBounce, filtDur;
 
   if(devFilter!=='all' && srcFilter!=='all'){
-    // Cross-filter: device real data × source ratio
-    const dm = devMetrics[devFilter]||{sessions:0,users:0,conversions:0};
-    filtSessions    = Math.round(dm.sessions    * srcRatio);
-    filtUsers       = Math.round(dm.users       * srcRatio);
-    filtConversions = Math.round(dm.conversions * srcRatio);
-    filtNewUsers    = scaledDaily.reduce((a,r)=>a+(r.new_users||0),0);
-    // Bounce: device real, then apply source correction if source has data
+    // Cross-filter: usar device_source_daily real se disponível (fetch v5+)
+    // Agrega sessions/users/conversions do cruzamento device×source no período filtrado
+    let dsSess=0, dsUsers=0, dsConv=0;
+    if(dsDailyFiltered){
+      dsDailyFiltered.dates.forEach(date=>{
+        const v=((dsDailyFiltered.data[date]||{})[devFilter]||{})[srcFilter]||{};
+        dsSess  +=(v.sessions||0);
+        dsUsers +=(v.users||0);
+        dsConv  +=(v.conversions||0);
+      });
+    }
+    if(dsSess>0){
+      // Dados reais disponíveis — conversão precisa
+      filtSessions    = dsSess;
+      filtUsers       = dsUsers;
+      filtConversions = dsConv;
+    } else {
+      // Fallback: device real × source ratio (quando device_source_daily não existe no JSON)
+      const dm = devMetrics[devFilter]||{sessions:0,users:0,conversions:0};
+      filtSessions    = Math.round(dm.sessions    * srcRatio);
+      filtUsers       = Math.round(dm.users       * srcRatio);
+      filtConversions = Math.round(dm.conversions * srcRatio);
+    }
+    filtNewUsers = scaledDaily.reduce((a,r)=>a+(r.new_users||0),0);
+    // Bounce/duração: device real é melhor estimativa para combinação
+    const dm2 = devMetrics[devFilter]||{};
     const smB = srcMetrics[srcFilter]&&srcMetrics[srcFilter].bounce_rate!=null;
-    const dvB = dm.bounce_rate != null;
+    const dvB = dm2.bounce_rate != null;
     if(dvB && smB){
-      // Average the two weighted values (best estimate without cross-breakdown)
-      filtBounce = Math.round(((dm.bounce_rate + srcMetrics[srcFilter].bounce_rate)/2)*100)/100;
-      filtDur    = dm.avg_duration!=null && srcMetrics[srcFilter].avg_duration!=null
-        ? Math.round(((dm.avg_duration+srcMetrics[srcFilter].avg_duration)/2)*100)/100
-        : (dm.avg_duration ?? srcMetrics[srcFilter].avg_duration ?? d.totals.avg_session_duration);
+      filtBounce = Math.round(((dm2.bounce_rate + srcMetrics[srcFilter].bounce_rate)/2)*100)/100;
+      filtDur    = dm2.avg_duration!=null && srcMetrics[srcFilter].avg_duration!=null
+        ? Math.round(((dm2.avg_duration+srcMetrics[srcFilter].avg_duration)/2)*100)/100
+        : (dm2.avg_duration ?? srcMetrics[srcFilter].avg_duration ?? d.totals.avg_session_duration);
     } else if(dvB){
-      filtBounce = dm.bounce_rate;
-      filtDur    = dm.avg_duration ?? d.totals.avg_session_duration;
+      filtBounce = dm2.bounce_rate;
+      filtDur    = dm2.avg_duration ?? d.totals.avg_session_duration;
     } else if(smB){
       filtBounce = srcMetrics[srcFilter].bounce_rate;
       filtDur    = srcMetrics[srcFilter].avg_duration ?? d.totals.avg_session_duration;
@@ -791,7 +833,9 @@ function renderFunnelWeekly(){
     let baseFunnel=buildFunnelAgg(subObj,RAW.funnel);
     const devFilter=f.dev,srcFilter=f.src;
     if(devFilter!=='all'||srcFilter!=='all'){
-      const devDailyFiltered=filterDailyObj(RAW.devices_daily,f);
+      // Usar dateSet derivado do daily filtrado, não slice de índice
+      const weekDateSet=new Set(allFiltered);
+      const devDailyFiltered=filterDailyObj(RAW.devices_daily,f,weekDateSet);
       const devAggAll={};
       devDailyFiltered.dates.forEach(date=>{
         const day=devDailyFiltered.data[date]||{};
@@ -803,7 +847,7 @@ function renderFunnelWeekly(){
       const totalDevSess=Object.values(devAggAll).reduce((a,r)=>a+r.sessions,0);
       const devRatio=(devFilter!=='all'&&devAggAll[devFilter]&&totalDevSess>0)?devAggAll[devFilter].sessions/totalDevSess:1;
 
-      const srcDailyFiltered=filterDailyObj(RAW.sources_daily,f);
+      const srcDailyFiltered=filterDailyObj(RAW.sources_daily,f,weekDateSet);
       let totalSrcSess=0,filtSrcSess=0;
       srcDailyFiltered.dates.forEach(date=>{
         const day=srcDailyFiltered.data[date]||{};
