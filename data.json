@@ -1,18 +1,18 @@
 {
-  "updated_at": "2026-05-23T00:46:28Z",
+  "updated_at": "2026-05-23T00:58:31Z",
   "period": "últimos 90 dias",
   "totals": {
     "sessions": 4660798,
-    "total_users": 2145928,
-    "new_users": 1845648,
+    "total_users": 2146114,
+    "new_users": 1846056,
     "bounce_rate": 22.92,
-    "avg_session_duration": 340.48,
-    "conversions": 502538,
-    "pageviews": 24483437,
-    "sessions_7d": 403315,
-    "users_7d": 254937,
-    "conversions_7d": 72570,
-    "new_users_7d": 165403
+    "avg_session_duration": 340.68,
+    "conversions": 449199,
+    "pageviews": 24490079,
+    "sessions_7d": 403759,
+    "users_7d": 255226,
+    "conversions_7d": 37752,
+    "new_users_7d": 165811
   },
   "daily": [
     {
@@ -33,35 +33,35 @@
       "date": "2026-02-23",
       "sessions": 48270,
       "users": 37609,
-      "conversions": 3553,
+      "conversions": 3547,
       "new_users": 20139
     },
     {
       "date": "2026-02-24",
       "sessions": 46606,
       "users": 36068,
-      "conversions": 3873,
+      "conversions": 3868,
       "new_users": 19683
     },
     {
       "date": "2026-02-25",
       "sessions": 50721,
       "users": 40336,
-      "conversions": 4074,
+      "conversions": 4072,
       "new_users": 22383
     },
     {
       "date": "2026-02-26",
       "sessions": 46818,
       "users": 36682,
-      "conversions": 4344,
+      "conversions": 4340,
       "new_users": 19091
     },
     {
       "date": "2026-02-27",
       "sessions": 54236,
       "users": 41537,
-      "conversions": 4687,
+      "conversions": 4682,
       "new_users": 22914
     },
     {
@@ -75,56 +75,56 @@
       "date": "2026-03-01",
       "sessions": 41759,
       "users": 32611,
-      "conversions": 3939,
+      "conversions": 3938,
       "new_users": 17553
     },
     {
       "date": "2026-03-02",
       "sessions": 58219,
       "users": 45528,
-      "conversions": 4894,
+      "conversions": 4893,
       "new_users": 25035
     },
     {
       "date": "2026-03-03",
       "sessions": 53089,
       "users": 41393,
-      "conversions": 4588,
+      "conversions": 4584,
       "new_users": 22333
     },
     {
       "date": "2026-03-04",
       "sessions": 51102,
       "users": 39078,
-      "conversions": 4964,
+      "conversions": 4959,
       "new_users": 20114
     },
     {
       "date": "2026-03-05",
       "sessions": 52505,
       "users": 39979,
-      "conversions": 5172,
+      "conversions": 5167,
       "new_users": 20675
     },
     {
       "date": "2026-03-06",
       "sessions": 50214,
       "users": 38376,
-      "conversions": 5190,
+      "conversions": 5189,
       "new_users": 19427
     },
     {
       "date": "2026-03-07",
       "sessions": 46212,
       "users": 36663,
-      "conversions": 4301,
+      "conversions": 4300,
       "new_users": 20284
     },
     {
       "date": "2026-03-08",
       "sessions": 46700,
       "users": 37372,
-      "conversions": 4011,
+      "conversions": 4010,
       "new_users": 20302
     },
     {
@@ -138,364 +138,364 @@
       "date": "2026-03-10",
       "sessions": 52963,
       "users": 40539,
-      "conversions": 4887,
+      "conversions": 4879,
       "new_users": 21158
     },
     {
       "date": "2026-03-11",
       "sessions": 53828,
       "users": 40654,
-      "conversions": 4974,
+      "conversions": 4968,
       "new_users": 22060
     },
     {
       "date": "2026-03-12",
       "sessions": 55322,
       "users": 41851,
-      "conversions": 4975,
+      "conversions": 4968,
       "new_users": 21281
     },
     {
       "date": "2026-03-13",
       "sessions": 51287,
       "users": 39635,
-      "conversions": 4985,
+      "conversions": 4979,
       "new_users": 20570
     },
     {
       "date": "2026-03-14",
       "sessions": 40424,
       "users": 30868,
-      "conversions": 3959,
+      "conversions": 3958,
       "new_users": 15460
     },
     {
       "date": "2026-03-15",
       "sessions": 48197,
       "users": 38135,
-      "conversions": 4204,
+      "conversions": 4202,
       "new_users": 21411
     },
     {
       "date": "2026-03-16",
       "sessions": 54422,
       "users": 41803,
-      "conversions": 4926,
+      "conversions": 4924,
       "new_users": 21769
     },
     {
       "date": "2026-03-17",
       "sessions": 51160,
       "users": 38983,
-      "conversions": 4822,
+      "conversions": 4815,
       "new_users": 20702
     },
     {
       "date": "2026-03-18",
       "sessions": 52906,
       "users": 39514,
-      "conversions": 4993,
+      "conversions": 4991,
       "new_users": 20280
     },
     {
       "date": "2026-03-19",
       "sessions": 47056,
       "users": 36815,
-      "conversions": 4731,
+      "conversions": 4724,
       "new_users": 18226
     },
     {
       "date": "2026-03-20",
       "sessions": 50269,
       "users": 37854,
-      "conversions": 4892,
+      "conversions": 4885,
       "new_users": 18490
     },
     {
       "date": "2026-03-21",
       "sessions": 40645,
       "users": 30931,
-      "conversions": 4049,
+      "conversions": 4047,
       "new_users": 15509
     },
     {
       "date": "2026-03-22",
       "sessions": 42617,
       "users": 33744,
-      "conversions": 4035,
+      "conversions": 4033,
       "new_users": 16834
     },
     {
       "date": "2026-03-23",
       "sessions": 51449,
       "users": 40119,
-      "conversions": 5158,
+      "conversions": 5156,
       "new_users": 20622
     },
     {
       "date": "2026-03-24",
       "sessions": 49150,
       "users": 37502,
-      "conversions": 4946,
+      "conversions": 4940,
       "new_users": 19189
     },
     {
       "date": "2026-03-25",
       "sessions": 48094,
       "users": 36981,
-      "conversions": 4929,
+      "conversions": 4927,
       "new_users": 19020
     },
     {
       "date": "2026-03-26",
       "sessions": 54716,
       "users": 41089,
-      "conversions": 5203,
+      "conversions": 5195,
       "new_users": 21372
     },
     {
       "date": "2026-03-27",
       "sessions": 53090,
       "users": 40420,
-      "conversions": 5197,
+      "conversions": 5192,
       "new_users": 20502
     },
     {
       "date": "2026-03-28",
       "sessions": 40319,
       "users": 31732,
-      "conversions": 4365,
+      "conversions": 4360,
       "new_users": 16244
     },
     {
       "date": "2026-03-29",
       "sessions": 45300,
       "users": 34025,
-      "conversions": 4352,
+      "conversions": 4345,
       "new_users": 17543
     },
     {
       "date": "2026-03-30",
       "sessions": 65182,
       "users": 49864,
-      "conversions": 6010,
+      "conversions": 6003,
       "new_users": 25823
     },
     {
       "date": "2026-03-31",
       "sessions": 61626,
       "users": 45524,
-      "conversions": 5596,
+      "conversions": 5588,
       "new_users": 22479
     },
     {
       "date": "2026-04-01",
       "sessions": 60839,
       "users": 45401,
-      "conversions": 5437,
+      "conversions": 5432,
       "new_users": 22700
     },
     {
       "date": "2026-04-02",
       "sessions": 53146,
       "users": 39404,
-      "conversions": 4942,
+      "conversions": 4928,
       "new_users": 20682
     },
     {
       "date": "2026-04-03",
       "sessions": 40730,
       "users": 30495,
-      "conversions": 3625,
+      "conversions": 3616,
       "new_users": 15750
     },
     {
       "date": "2026-04-04",
       "sessions": 39101,
       "users": 30329,
-      "conversions": 3913,
+      "conversions": 3906,
       "new_users": 15097
     },
     {
       "date": "2026-04-05",
       "sessions": 42171,
       "users": 33007,
-      "conversions": 3980,
+      "conversions": 3974,
       "new_users": 16842
     },
     {
       "date": "2026-04-06",
       "sessions": 51958,
       "users": 40943,
-      "conversions": 5110,
+      "conversions": 5097,
       "new_users": 21081
     },
     {
       "date": "2026-04-07",
       "sessions": 47866,
       "users": 37216,
-      "conversions": 4944,
+      "conversions": 4933,
       "new_users": 19452
     },
     {
       "date": "2026-04-08",
       "sessions": 48481,
       "users": 36246,
-      "conversions": 5138,
+      "conversions": 5122,
       "new_users": 18832
     },
     {
       "date": "2026-04-09",
       "sessions": 48336,
       "users": 37296,
-      "conversions": 5314,
+      "conversions": 5291,
       "new_users": 19374
     },
     {
       "date": "2026-04-10",
       "sessions": 47962,
       "users": 36862,
-      "conversions": 4995,
+      "conversions": 4976,
       "new_users": 18948
     },
     {
       "date": "2026-04-11",
       "sessions": 39544,
       "users": 30715,
-      "conversions": 4229,
+      "conversions": 4222,
       "new_users": 15484
     },
     {
       "date": "2026-04-12",
       "sessions": 40675,
       "users": 32292,
-      "conversions": 4191,
+      "conversions": 4181,
       "new_users": 16804
     },
     {
       "date": "2026-04-13",
       "sessions": 54225,
       "users": 41735,
-      "conversions": 5346,
+      "conversions": 5324,
       "new_users": 21615
     },
     {
       "date": "2026-04-14",
       "sessions": 53322,
       "users": 40375,
-      "conversions": 5431,
+      "conversions": 5404,
       "new_users": 20688
     },
     {
       "date": "2026-04-15",
       "sessions": 52518,
       "users": 39759,
-      "conversions": 5745,
+      "conversions": 5716,
       "new_users": 20455
     },
     {
       "date": "2026-04-16",
       "sessions": 55521,
       "users": 42337,
-      "conversions": 5903,
+      "conversions": 5875,
       "new_users": 21337
     },
     {
       "date": "2026-04-17",
       "sessions": 58739,
       "users": 43660,
-      "conversions": 5876,
+      "conversions": 5840,
       "new_users": 22597
     },
     {
       "date": "2026-04-18",
       "sessions": 42377,
       "users": 31969,
-      "conversions": 4265,
+      "conversions": 4227,
       "new_users": 15807
     },
     {
       "date": "2026-04-19",
       "sessions": 43495,
       "users": 33175,
-      "conversions": 4456,
+      "conversions": 4423,
       "new_users": 16981
     },
     {
       "date": "2026-04-20",
       "sessions": 55110,
       "users": 42984,
-      "conversions": 6072,
+      "conversions": 6035,
       "new_users": 22775
     },
     {
       "date": "2026-04-21",
       "sessions": 50268,
       "users": 39150,
-      "conversions": 5220,
+      "conversions": 5173,
       "new_users": 20314
     },
     {
       "date": "2026-04-22",
       "sessions": 58006,
       "users": 43926,
-      "conversions": 5628,
+      "conversions": 5570,
       "new_users": 23499
     },
     {
       "date": "2026-04-23",
       "sessions": 53857,
       "users": 42161,
-      "conversions": 5732,
+      "conversions": 5702,
       "new_users": 21712
     },
     {
       "date": "2026-04-24",
       "sessions": 55835,
       "users": 42735,
-      "conversions": 5818,
+      "conversions": 5813,
       "new_users": 21808
     },
     {
       "date": "2026-04-25",
       "sessions": 45513,
       "users": 33863,
-      "conversions": 4803,
+      "conversions": 4802,
       "new_users": 17310
     },
     {
       "date": "2026-04-26",
       "sessions": 48981,
       "users": 37756,
-      "conversions": 4896,
+      "conversions": 4891,
       "new_users": 19484
     },
     {
       "date": "2026-04-27",
       "sessions": 61652,
       "users": 46181,
-      "conversions": 6283,
+      "conversions": 6282,
       "new_users": 23648
     },
     {
       "date": "2026-04-28",
       "sessions": 60347,
       "users": 45983,
-      "conversions": 6180,
+      "conversions": 6165,
       "new_users": 23489
     },
     {
       "date": "2026-04-29",
       "sessions": 64271,
       "users": 48290,
-      "conversions": 6373,
+      "conversions": 6365,
       "new_users": 24756
     },
     {
       "date": "2026-04-30",
       "sessions": 63983,
       "users": 46688,
-      "conversions": 6245,
+      "conversions": 6244,
       "new_users": 23558
     },
     {
@@ -509,155 +509,155 @@
       "date": "2026-05-02",
       "sessions": 47635,
       "users": 35806,
-      "conversions": 5010,
+      "conversions": 5009,
       "new_users": 18031
     },
     {
       "date": "2026-05-03",
       "sessions": 49686,
       "users": 37743,
-      "conversions": 4763,
+      "conversions": 4762,
       "new_users": 19305
     },
     {
       "date": "2026-05-04",
       "sessions": 64190,
       "users": 48993,
-      "conversions": 6487,
+      "conversions": 6353,
       "new_users": 25108
     },
     {
       "date": "2026-05-05",
       "sessions": 59058,
       "users": 46095,
-      "conversions": 6478,
+      "conversions": 6201,
       "new_users": 23419
     },
     {
       "date": "2026-05-06",
       "sessions": 58791,
       "users": 44939,
-      "conversions": 6498,
+      "conversions": 6247,
       "new_users": 22425
     },
     {
       "date": "2026-05-07",
       "sessions": 60442,
       "users": 46551,
-      "conversions": 6546,
+      "conversions": 6212,
       "new_users": 24019
     },
     {
       "date": "2026-05-08",
       "sessions": 58375,
       "users": 43375,
-      "conversions": 6375,
+      "conversions": 5911,
       "new_users": 21640
     },
     {
       "date": "2026-05-09",
       "sessions": 46355,
       "users": 34075,
-      "conversions": 5139,
+      "conversions": 4748,
       "new_users": 16726
     },
     {
       "date": "2026-05-10",
       "sessions": 44067,
       "users": 33719,
-      "conversions": 4764,
+      "conversions": 4415,
       "new_users": 16840
     },
     {
       "date": "2026-05-11",
       "sessions": 58909,
       "users": 46003,
-      "conversions": 6303,
+      "conversions": 5751,
       "new_users": 24270
     },
     {
       "date": "2026-05-12",
       "sessions": 56441,
       "users": 42988,
-      "conversions": 10659,
+      "conversions": 5480,
       "new_users": 22586
     },
     {
       "date": "2026-05-13",
       "sessions": 56413,
       "users": 43075,
-      "conversions": 9900,
+      "conversions": 5105,
       "new_users": 22840
     },
     {
       "date": "2026-05-14",
       "sessions": 54936,
       "users": 42599,
-      "conversions": 10561,
+      "conversions": 5479,
       "new_users": 22289
     },
     {
       "date": "2026-05-15",
       "sessions": 53359,
       "users": 40185,
-      "conversions": 10415,
+      "conversions": 5422,
       "new_users": 20957
     },
     {
       "date": "2026-05-16",
       "sessions": 43488,
       "users": 33101,
-      "conversions": 8547,
+      "conversions": 4433,
       "new_users": 17094
     },
     {
       "date": "2026-05-17",
       "sessions": 46913,
       "users": 35235,
-      "conversions": 8434,
+      "conversions": 4411,
       "new_users": 18365
     },
     {
       "date": "2026-05-18",
       "sessions": 60699,
       "users": 46716,
-      "conversions": 9551,
+      "conversions": 4477,
       "new_users": 24743
     },
     {
       "date": "2026-05-19",
       "sessions": 56009,
       "users": 44448,
-      "conversions": 8798,
+      "conversions": 4034,
       "new_users": 23925
     },
     {
       "date": "2026-05-20",
       "sessions": 55059,
       "users": 42584,
-      "conversions": 10717,
+      "conversions": 5624,
       "new_users": 22362
     },
     {
       "date": "2026-05-21",
       "sessions": 53882,
       "users": 41850,
-      "conversions": 10520,
+      "conversions": 5499,
       "new_users": 22145
     },
     {
       "date": "2026-05-22",
-      "sessions": 42631,
-      "users": 35096,
-      "conversions": 5588,
-      "new_users": 15812
+      "sessions": 43479,
+      "users": 35738,
+      "conversions": 3852,
+      "new_users": 16220
     }
   ],
   "pages": [
     {
       "path": "/",
       "title": "Viaje Guanabara: Compre sua passagem de ônibus",
-      "pageviews": 3444717,
+      "pageviews": 3444718,
       "users": 1106354,
       "avg_duration": 106.52,
       "bounce_rate": 0,
@@ -666,9 +666,9 @@
     {
       "path": "/",
       "title": "Passagem de Ônibus: Compre Online | Viaje Guanabara",
-      "pageviews": 1950402,
-      "users": 526618,
-      "avg_duration": 117.1,
+      "pageviews": 1952230,
+      "users": 526808,
+      "avg_duration": 117.2,
       "bounce_rate": 0,
       "exits": 0
     },
@@ -764,16 +764,16 @@
     "data": {
       "202608": {
         "/": {
-          "pageviews": 45558,
-          "users": 24684
+          "pageviews": 45639,
+          "users": 24685
         },
         "/onibus/checkout": {
-          "pageviews": 6164,
-          "users": 4088
+          "pageviews": 6166,
+          "users": 4090
         },
         "/onibus/conclusion": {
-          "pageviews": 5988,
-          "users": 3668
+          "pageviews": 5989,
+          "users": 3669
         }
       }
     }
@@ -783,7 +783,7 @@
       "path": "/",
       "sessions": 2966669,
       "users": 1720060,
-      "conversions": 268838,
+      "conversions": 239094,
       "bounce_rate": 18.84
     },
     {
@@ -797,7 +797,7 @@
       "path": "/onibus/conclusion",
       "sessions": 59045,
       "users": 39236,
-      "conversions": 4652,
+      "conversions": 4516,
       "bounce_rate": 66.83
     },
     {
@@ -818,21 +818,21 @@
       "path": "/onibus/checkout",
       "sessions": 28617,
       "users": 21277,
-      "conversions": 5443,
+      "conversions": 5340,
       "bounce_rate": 11.68
     },
     {
       "path": "/vem-pro-rio/",
-      "sessions": 21062,
+      "sessions": 21071,
       "users": 13179,
-      "conversions": 24,
-      "bounce_rate": 79.89
+      "conversions": 23,
+      "bounce_rate": 79.9
     },
     {
       "path": "",
-      "sessions": 20037,
-      "users": 16947,
-      "conversions": 487,
+      "sessions": 20374,
+      "users": 17254,
+      "conversions": 325,
       "bounce_rate": 99.54
     },
     {
@@ -846,7 +846,7 @@
       "path": "/checkout/pagamento/sucesso/2",
       "sessions": 17102,
       "users": 13116,
-      "conversions": 362,
+      "conversions": 310,
       "bounce_rate": 40.95
     }
   ],
@@ -857,10 +857,10 @@
       "source_medium": "google / cpc",
       "sessions": 2649838,
       "users": 1444961,
-      "conversions": 259348,
-      "conversion_rate": 9.79,
+      "conversions": 229383,
+      "conversion_rate": 8.66,
       "bounce_rate": 16.46,
-      "avg_duration": 379.37
+      "avg_duration": 379.47
     },
     {
       "source": "google",
@@ -868,30 +868,30 @@
       "source_medium": "google / organic",
       "sessions": 905552,
       "users": 493975,
-      "conversions": 70736,
-      "conversion_rate": 7.81,
+      "conversions": 65135,
+      "conversion_rate": 7.19,
       "bounce_rate": 22.5,
-      "avg_duration": 301.66
+      "avg_duration": 301.8
     },
     {
       "source": "(direct)",
       "medium": "(none)",
       "source_medium": "(direct) / (none)",
-      "sessions": 561502,
-      "users": 327444,
-      "conversions": 121886,
-      "conversion_rate": 21.71,
-      "bounce_rate": 34.04,
-      "avg_duration": 297.26
+      "sessions": 561706,
+      "users": 327479,
+      "conversions": 108572,
+      "conversion_rate": 19.33,
+      "bounce_rate": 34.07,
+      "avg_duration": 297.27
     },
     {
       "source": "pushnews",
       "medium": "pushnotification",
       "source_medium": "pushnews / pushnotification",
       "sessions": 174291,
-      "users": 81238,
-      "conversions": 3735,
-      "conversion_rate": 2.14,
+      "users": 81240,
+      "conversions": 3325,
+      "conversion_rate": 1.91,
       "bounce_rate": 77.14,
       "avg_duration": 98.06
     },
@@ -899,23 +899,23 @@
       "source": "(not set)",
       "medium": "(not set)",
       "source_medium": "(not set) / (not set)",
-      "sessions": 43675,
-      "users": 39150,
-      "conversions": 4350,
-      "conversion_rate": 9.96,
-      "bounce_rate": 93.64,
-      "avg_duration": 473.73
+      "sessions": 44153,
+      "users": 39590,
+      "conversions": 3420,
+      "conversion_rate": 7.75,
+      "bounce_rate": 93.71,
+      "avg_duration": 475.96
     },
     {
       "source": "outros",
       "medium": "—",
       "source_medium": "outros / —",
-      "sessions": 279753,
-      "users": 182810,
-      "conversions": 42073,
-      "conversion_rate": 15.04,
-      "bounce_rate": 26.36,
-      "avg_duration": 362.6
+      "sessions": 280101,
+      "users": 183064,
+      "conversions": 38999,
+      "conversion_rate": 13.92,
+      "bounce_rate": 26.4,
+      "avg_duration": 362.7
     }
   ],
   "sources_daily": {
@@ -1056,21 +1056,21 @@
         "google / organic": {
           "sessions": 15368,
           "users": 12781,
-          "conversions": 534,
+          "conversions": 531,
           "wBounce": 266020.07999999996,
           "wDur": 4489914.880000001
         },
         "(direct) / (none)": {
           "sessions": 5099,
           "users": 4137,
-          "conversions": 987,
+          "conversions": 985,
           "wBounce": 134103.7,
           "wDur": 1695111.56
         },
         "outros / —": {
           "sessions": 2835,
           "users": 2437,
-          "conversions": 232,
+          "conversions": 231,
           "wBounce": 91204.87,
           "wDur": 642685.1599999999
         },
@@ -1093,7 +1093,7 @@
         "google / cpc": {
           "sessions": 26931,
           "users": 22456,
-          "conversions": 2118,
+          "conversions": 2115,
           "wBounce": 459173.55000000005,
           "wDur": 9921111.09
         },
@@ -1107,7 +1107,7 @@
         "(direct) / (none)": {
           "sessions": 4815,
           "users": 3835,
-          "conversions": 951,
+          "conversions": 950,
           "wBounce": 127790.09999999999,
           "wDur": 1732822.2
         },
@@ -1121,7 +1121,7 @@
         "outros / —": {
           "sessions": 2116,
           "users": 1866,
-          "conversions": 220,
+          "conversions": 219,
           "wBounce": 56002.05999999999,
           "wDur": 596058.6399999995
         },
@@ -1144,7 +1144,7 @@
         "google / organic": {
           "sessions": 7133,
           "users": 5698,
-          "conversions": 440,
+          "conversions": 439,
           "wBounce": 155285.41,
           "wDur": 1880330.1300000001
         },
@@ -1165,7 +1165,7 @@
         "outros / —": {
           "sessions": 2393,
           "users": 2064,
-          "conversions": 265,
+          "conversions": 264,
           "wBounce": 57595.899999999994,
           "wDur": 666458.0499999996
         },
@@ -1195,14 +1195,14 @@
         "(direct) / (none)": {
           "sessions": 5240,
           "users": 3892,
-          "conversions": 1122,
+          "conversions": 1121,
           "wBounce": 135611.19999999998,
           "wDur": 1774683.2
         },
         "outros / —": {
           "sessions": 2898,
           "users": 2468,
-          "conversions": 262,
+          "conversions": 259,
           "wBounce": 91398.31000000001,
           "wDur": 665026.2000000003
         },
@@ -1232,7 +1232,7 @@
         "google / organic": {
           "sessions": 7659,
           "users": 6177,
-          "conversions": 516,
+          "conversions": 514,
           "wBounce": 160685.82,
           "wDur": 1871706.42
         },
@@ -1253,7 +1253,7 @@
         "outros / —": {
           "sessions": 2291,
           "users": 2013,
-          "conversions": 253,
+          "conversions": 250,
           "wBounce": 63300.85,
           "wDur": 592079.99
         },
@@ -1327,7 +1327,7 @@
         "(direct) / (none)": {
           "sessions": 4477,
           "users": 3632,
-          "conversions": 867,
+          "conversions": 866,
           "wBounce": 134086.15,
           "wDur": 1341935.98
         },
@@ -1378,7 +1378,7 @@
         "outros / —": {
           "sessions": 5253,
           "users": 4419,
-          "conversions": 310,
+          "conversions": 309,
           "wBounce": 131103.28999999998,
           "wDur": 1256331.1499999997
         },
@@ -1415,7 +1415,7 @@
         "(direct) / (none)": {
           "sessions": 5519,
           "users": 4204,
-          "conversions": 1146,
+          "conversions": 1144,
           "wBounce": 164521.38999999998,
           "wDur": 1729157.89
         },
@@ -1429,7 +1429,7 @@
         "outros / —": {
           "sessions": 2956,
           "users": 2530,
-          "conversions": 259,
+          "conversions": 257,
           "wBounce": 91598.09000000004,
           "wDur": 765402.2600000005
         },
@@ -1452,7 +1452,7 @@
         "google / organic": {
           "sessions": 8055,
           "users": 6376,
-          "conversions": 567,
+          "conversions": 562,
           "wBounce": 194608.8,
           "wDur": 2153262.6
         },
@@ -1496,14 +1496,14 @@
         "google / organic": {
           "sessions": 8244,
           "users": 6269,
-          "conversions": 543,
+          "conversions": 540,
           "wBounce": 199587.24000000002,
           "wDur": 2015493.1199999999
         },
         "(direct) / (none)": {
           "sessions": 5526,
           "users": 4401,
-          "conversions": 1271,
+          "conversions": 1270,
           "wBounce": 159590.88,
           "wDur": 1885194.9
         },
@@ -1517,7 +1517,7 @@
         "outros / —": {
           "sessions": 3506,
           "users": 2972,
-          "conversions": 295,
+          "conversions": 294,
           "wBounce": 111495.41,
           "wDur": 925597.8200000003
         },
@@ -1547,7 +1547,7 @@
         "(direct) / (none)": {
           "sessions": 5592,
           "users": 4372,
-          "conversions": 1221,
+          "conversions": 1220,
           "wBounce": 171115.2,
           "wDur": 1801127.2799999998
         },
@@ -1591,7 +1591,7 @@
         "(direct) / (none)": {
           "sessions": 4555,
           "users": 3750,
-          "conversions": 1005,
+          "conversions": 1004,
           "wBounce": 150907.15000000002,
           "wDur": 1324685.0999999999
         },
@@ -1628,7 +1628,7 @@
         "google / organic": {
           "sessions": 6577,
           "users": 5406,
-          "conversions": 441,
+          "conversions": 440,
           "wBounce": 156072.21,
           "wDur": 1644052.69
         },
@@ -1716,7 +1716,7 @@
         "google / organic": {
           "sessions": 7064,
           "users": 5813,
-          "conversions": 448,
+          "conversions": 446,
           "wBounce": 166004.0,
           "wDur": 2050961.7599999998
         },
@@ -1730,7 +1730,7 @@
         "outros / —": {
           "sessions": 4957,
           "users": 4095,
-          "conversions": 568,
+          "conversions": 562,
           "wBounce": 155507.59999999998,
           "wDur": 1537738.249999999
         },
@@ -1753,14 +1753,14 @@
         "google / cpc": {
           "sessions": 34051,
           "users": 27844,
-          "conversions": 2697,
+          "conversions": 2696,
           "wBounce": 586698.73,
           "wDur": 12527022.389999999
         },
         "google / organic": {
           "sessions": 7318,
           "users": 5964,
-          "conversions": 499,
+          "conversions": 496,
           "wBounce": 177681.04,
           "wDur": 1957565.0
         },
@@ -1774,7 +1774,7 @@
         "outros / —": {
           "sessions": 5471,
           "users": 4447,
-          "conversions": 605,
+          "conversions": 603,
           "wBounce": 176287.06,
           "wDur": 1825099.4500000002
         },
@@ -1804,7 +1804,7 @@
         "google / organic": {
           "sessions": 8585,
           "users": 6815,
-          "conversions": 572,
+          "conversions": 566,
           "wBounce": 191187.94999999998,
           "wDur": 2316662.25
         },
@@ -1818,7 +1818,7 @@
         "outros / —": {
           "sessions": 6140,
           "users": 5015,
-          "conversions": 491,
+          "conversions": 490,
           "wBounce": 249682.96,
           "wDur": 1527001.0400000005
         },
@@ -1848,21 +1848,21 @@
         "google / organic": {
           "sessions": 9239,
           "users": 7156,
-          "conversions": 622,
+          "conversions": 620,
           "wBounce": 208339.45,
           "wDur": 2499981.01
         },
         "(direct) / (none)": {
           "sessions": 5792,
           "users": 4541,
-          "conversions": 1204,
+          "conversions": 1202,
           "wBounce": 188877.12,
           "wDur": 1830909.12
         },
         "outros / —": {
           "sessions": 4196,
           "users": 3346,
-          "conversions": 484,
+          "conversions": 482,
           "wBounce": 133902.05999999997,
           "wDur": 1271217.0200000003
         },
@@ -1892,7 +1892,7 @@
         "google / organic": {
           "sessions": 7477,
           "users": 6023,
-          "conversions": 536,
+          "conversions": 535,
           "wBounce": 151334.47999999998,
           "wDur": 2017668.4500000002
         },
@@ -1936,7 +1936,7 @@
         "google / organic": {
           "sessions": 8845,
           "users": 7077,
-          "conversions": 569,
+          "conversions": 567,
           "wBounce": 199543.19999999998,
           "wDur": 2291031.9
         },
@@ -1980,7 +1980,7 @@
         "google / organic": {
           "sessions": 10064,
           "users": 8029,
-          "conversions": 627,
+          "conversions": 625,
           "wBounce": 219093.28,
           "wDur": 2863308.64
         },
@@ -2024,14 +2024,14 @@
         "google / organic": {
           "sessions": 9380,
           "users": 7368,
-          "conversions": 651,
+          "conversions": 648,
           "wBounce": 195197.8,
           "wDur": 2900202.2
         },
         "(direct) / (none)": {
           "sessions": 5939,
           "users": 4637,
-          "conversions": 1215,
+          "conversions": 1211,
           "wBounce": 172112.22,
           "wDur": 1961948.6500000001
         },
@@ -2068,7 +2068,7 @@
         "google / organic": {
           "sessions": 9842,
           "users": 7632,
-          "conversions": 699,
+          "conversions": 698,
           "wBounce": 217212.94,
           "wDur": 2808513.12
         },
@@ -2089,7 +2089,7 @@
         "outros / —": {
           "sessions": 3068,
           "users": 2514,
-          "conversions": 426,
+          "conversions": 425,
           "wBounce": 76797.33,
           "wDur": 1123237.06
         },
@@ -2105,14 +2105,14 @@
         "google / cpc": {
           "sessions": 27353,
           "users": 22995,
-          "conversions": 2543,
+          "conversions": 2540,
           "wBounce": 422877.38,
           "wDur": 10928070.559999999
         },
         "google / organic": {
           "sessions": 9403,
           "users": 7332,
-          "conversions": 657,
+          "conversions": 656,
           "wBounce": 227740.66,
           "wDur": 2604913.09
         },
@@ -2133,7 +2133,7 @@
         "outros / —": {
           "sessions": 2908,
           "users": 2335,
-          "conversions": 379,
+          "conversions": 378,
           "wBounce": 71102.79,
           "wDur": 1039079.8200000001
         },
@@ -2159,9 +2159,9 @@
       "channel": "Paid Search",
       "sessions": 1931357,
       "users": 1593752,
-      "conversions": 170225,
+      "conversions": 169989,
       "new_users": 827429,
-      "conversion_rate": 8.81,
+      "conversion_rate": 8.8,
       "bounce_rate": 14.39,
       "avg_duration": 382.69
     },
@@ -2169,9 +2169,9 @@
       "channel": "Organic Search",
       "sessions": 785708,
       "users": 613595,
-      "conversions": 59609,
+      "conversions": 59230,
       "new_users": 206015,
-      "conversion_rate": 7.59,
+      "conversion_rate": 7.54,
       "bounce_rate": 22.54,
       "avg_duration": 315.24
     },
@@ -2179,9 +2179,9 @@
       "channel": "Direct",
       "sessions": 437538,
       "users": 355847,
-      "conversions": 86230,
+      "conversions": 86082,
       "new_users": 235422,
-      "conversion_rate": 19.71,
+      "conversion_rate": 19.67,
       "bounce_rate": 33.74,
       "avg_duration": 299.19
     },
@@ -2189,9 +2189,9 @@
       "channel": "Cross-network",
       "sessions": 212186,
       "users": 192957,
-      "conversions": 11105,
+      "conversions": 11078,
       "new_users": 115472,
-      "conversion_rate": 5.23,
+      "conversion_rate": 5.22,
       "bounce_rate": 32.11,
       "avg_duration": 256.7
     },
@@ -2199,7 +2199,7 @@
       "channel": "Mobile Push Notifications",
       "sessions": 160112,
       "users": 133183,
-      "conversions": 3208,
+      "conversions": 3203,
       "new_users": 15025,
       "conversion_rate": 2.0,
       "bounce_rate": 71.13,
@@ -2209,9 +2209,9 @@
       "channel": "Unassigned",
       "sessions": 73105,
       "users": 63280,
-      "conversions": 10217,
+      "conversions": 10203,
       "new_users": 24260,
-      "conversion_rate": 13.98,
+      "conversion_rate": 13.96,
       "bounce_rate": 38.41,
       "avg_duration": 402.18
     },
@@ -2219,9 +2219,9 @@
       "channel": "Organic Social",
       "sessions": 57689,
       "users": 49600,
-      "conversions": 14547,
+      "conversions": 14539,
       "new_users": 27445,
-      "conversion_rate": 25.22,
+      "conversion_rate": 25.2,
       "bounce_rate": 22.44,
       "avg_duration": 284.74
     },
@@ -2229,9 +2229,9 @@
       "channel": "Referral",
       "sessions": 13818,
       "users": 10878,
-      "conversions": 993,
+      "conversions": 967,
       "new_users": 5257,
-      "conversion_rate": 7.19,
+      "conversion_rate": 7.0,
       "bounce_rate": 35.35,
       "avg_duration": 338.15
     },
@@ -2600,14 +2600,14 @@
         "Organic Search": {
           "sessions": 15635,
           "users": 13058,
-          "conversions": 560,
+          "conversions": 556,
           "bounce_rate": 17.42,
           "avg_duration": 295.61
         },
         "Direct": {
           "sessions": 5099,
           "users": 4137,
-          "conversions": 987,
+          "conversions": 985,
           "bounce_rate": 26.3,
           "avg_duration": 332.44
         },
@@ -2707,14 +2707,14 @@
         "Direct": {
           "sessions": 4815,
           "users": 3835,
-          "conversions": 951,
+          "conversions": 950,
           "bounce_rate": 26.54,
           "avg_duration": 359.88
         },
         "Cross-network": {
           "sessions": 3610,
           "users": 3288,
-          "conversions": 153,
+          "conversions": 150,
           "bounce_rate": 35.04,
           "avg_duration": 249.34
         },
@@ -2749,7 +2749,7 @@
         "Referral": {
           "sessions": 178,
           "users": 131,
-          "conversions": 15,
+          "conversions": 14,
           "bounce_rate": 26.97,
           "avg_duration": 451.0
         },
@@ -2800,7 +2800,7 @@
         "Organic Search": {
           "sessions": 7356,
           "users": 5850,
-          "conversions": 453,
+          "conversions": 452,
           "bounce_rate": 21.7,
           "avg_duration": 267.81
         },
@@ -2856,7 +2856,7 @@
         "Unassigned": {
           "sessions": 204,
           "users": 184,
-          "conversions": 26,
+          "conversions": 25,
           "bounce_rate": 75.49,
           "avg_duration": 375.3
         },
@@ -2900,7 +2900,7 @@
         "Direct": {
           "sessions": 5240,
           "users": 3892,
-          "conversions": 1122,
+          "conversions": 1121,
           "bounce_rate": 25.88,
           "avg_duration": 338.68
         },
@@ -2935,14 +2935,14 @@
         "Referral": {
           "sessions": 193,
           "users": 130,
-          "conversions": 18,
+          "conversions": 16,
           "bounce_rate": 34.72,
           "avg_duration": 460.42
         },
         "Unassigned": {
           "sessions": 163,
           "users": 156,
-          "conversions": 19,
+          "conversions": 18,
           "bounce_rate": 73.01,
           "avg_duration": 398.41
         },
@@ -2986,7 +2986,7 @@
         "Organic Search": {
           "sessions": 7853,
           "users": 6339,
-          "conversions": 536,
+          "conversions": 534,
           "bounce_rate": 20.83,
           "avg_duration": 251.07
         },
@@ -3035,7 +3035,7 @@
         "Referral": {
           "sessions": 152,
           "users": 108,
-          "conversions": 9,
+          "conversions": 6,
           "bounce_rate": 31.58,
           "avg_duration": 255.22
         },
@@ -3172,7 +3172,7 @@
         "Direct": {
           "sessions": 4477,
           "users": 3632,
-          "conversions": 867,
+          "conversions": 866,
           "bounce_rate": 29.95,
           "avg_duration": 299.74
         },
@@ -3307,7 +3307,7 @@
         "Referral": {
           "sessions": 232,
           "users": 165,
-          "conversions": 15,
+          "conversions": 14,
           "bounce_rate": 25.43,
           "avg_duration": 342.02
         },
@@ -3365,7 +3365,7 @@
         "Direct": {
           "sessions": 5519,
           "users": 4204,
-          "conversions": 1146,
+          "conversions": 1144,
           "bounce_rate": 29.81,
           "avg_duration": 313.31
         },
@@ -3393,7 +3393,7 @@
         "Referral": {
           "sessions": 237,
           "users": 186,
-          "conversions": 15,
+          "conversions": 13,
           "bounce_rate": 43.46,
           "avg_duration": 231.87
         },
@@ -3451,7 +3451,7 @@
         "Organic Search": {
           "sessions": 8295,
           "users": 6551,
-          "conversions": 597,
+          "conversions": 592,
           "bounce_rate": 24.2,
           "avg_duration": 273.33
         },
@@ -3544,14 +3544,14 @@
         "Organic Search": {
           "sessions": 8438,
           "users": 6446,
-          "conversions": 562,
+          "conversions": 559,
           "bounce_rate": 24.34,
           "avg_duration": 263.06
         },
         "Direct": {
           "sessions": 5526,
           "users": 4401,
-          "conversions": 1271,
+          "conversions": 1270,
           "bounce_rate": 28.88,
           "avg_duration": 341.15
         },
@@ -3586,7 +3586,7 @@
         "Referral": {
           "sessions": 176,
           "users": 129,
-          "conversions": 14,
+          "conversions": 13,
           "bounce_rate": 24.43,
           "avg_duration": 438.38
         },
@@ -3644,7 +3644,7 @@
         "Direct": {
           "sessions": 5592,
           "users": 4372,
-          "conversions": 1221,
+          "conversions": 1220,
           "bounce_rate": 30.6,
           "avg_duration": 322.09
         },
@@ -3744,7 +3744,7 @@
         "Direct": {
           "sessions": 4555,
           "users": 3750,
-          "conversions": 1005,
+          "conversions": 1004,
           "bounce_rate": 33.13,
           "avg_duration": 290.82
         },
@@ -3823,7 +3823,7 @@
         "Organic Search": {
           "sessions": 6678,
           "users": 5490,
-          "conversions": 456,
+          "conversions": 455,
           "bounce_rate": 23.72,
           "avg_duration": 253.78
         },
@@ -4023,7 +4023,7 @@
         "Organic Search": {
           "sessions": 7382,
           "users": 6034,
-          "conversions": 484,
+          "conversions": 481,
           "bounce_rate": 23.37,
           "avg_duration": 292.86
         },
@@ -4044,7 +4044,7 @@
         "Unassigned": {
           "sessions": 3749,
           "users": 2941,
-          "conversions": 364,
+          "conversions": 361,
           "bounce_rate": 33.45,
           "avg_duration": 320.99
         },
@@ -4065,7 +4065,7 @@
         "Referral": {
           "sessions": 342,
           "users": 294,
-          "conversions": 20,
+          "conversions": 18,
           "bounce_rate": 40.06,
           "avg_duration": 233.3
         },
@@ -4109,14 +4109,14 @@
         "Paid Search": {
           "sessions": 29191,
           "users": 23766,
-          "conversions": 2506,
+          "conversions": 2505,
           "bounce_rate": 14.29,
           "avg_duration": 391.24
         },
         "Organic Search": {
           "sessions": 7623,
           "users": 6148,
-          "conversions": 533,
+          "conversions": 530,
           "bounce_rate": 24.22,
           "avg_duration": 273.55
         },
@@ -4137,7 +4137,7 @@
         "Unassigned": {
           "sessions": 3300,
           "users": 2485,
-          "conversions": 362,
+          "conversions": 361,
           "bounce_rate": 33.67,
           "avg_duration": 364.29
         },
@@ -4151,7 +4151,7 @@
         "Organic Social": {
           "sessions": 724,
           "users": 618,
-          "conversions": 175,
+          "conversions": 174,
           "bounce_rate": 21.55,
           "avg_duration": 298.3
         },
@@ -4209,7 +4209,7 @@
         "Organic Search": {
           "sessions": 8864,
           "users": 7020,
-          "conversions": 608,
+          "conversions": 602,
           "bounce_rate": 22.56,
           "avg_duration": 278.31
         },
@@ -4244,7 +4244,7 @@
         "Organic Social": {
           "sessions": 814,
           "users": 694,
-          "conversions": 217,
+          "conversions": 216,
           "bounce_rate": 20.27,
           "avg_duration": 306.73
         },
@@ -4302,14 +4302,14 @@
         "Organic Search": {
           "sessions": 9441,
           "users": 7323,
-          "conversions": 648,
+          "conversions": 646,
           "bounce_rate": 22.65,
           "avg_duration": 276.35
         },
         "Direct": {
           "sessions": 5792,
           "users": 4541,
-          "conversions": 1204,
+          "conversions": 1202,
           "bounce_rate": 32.61,
           "avg_duration": 316.11
         },
@@ -4344,7 +4344,7 @@
         "Referral": {
           "sessions": 196,
           "users": 155,
-          "conversions": 20,
+          "conversions": 18,
           "bounce_rate": 35.2,
           "avg_duration": 363.85
         },
@@ -4395,7 +4395,7 @@
         "Organic Search": {
           "sessions": 7634,
           "users": 6138,
-          "conversions": 557,
+          "conversions": 556,
           "bounce_rate": 20.28,
           "avg_duration": 276.26
         },
@@ -4488,7 +4488,7 @@
         "Organic Search": {
           "sessions": 8972,
           "users": 7213,
-          "conversions": 591,
+          "conversions": 589,
           "bounce_rate": 22.43,
           "avg_duration": 264.78
         },
@@ -4581,7 +4581,7 @@
         "Organic Search": {
           "sessions": 10363,
           "users": 8264,
-          "conversions": 653,
+          "conversions": 651,
           "bounce_rate": 21.77,
           "avg_duration": 289.62
         },
@@ -4674,14 +4674,14 @@
         "Organic Search": {
           "sessions": 9620,
           "users": 7600,
-          "conversions": 675,
+          "conversions": 672,
           "bounce_rate": 20.52,
           "avg_duration": 316.66
         },
         "Direct": {
           "sessions": 5939,
           "users": 4637,
-          "conversions": 1215,
+          "conversions": 1211,
           "bounce_rate": 28.98,
           "avg_duration": 330.35
         },
@@ -4767,7 +4767,7 @@
         "Organic Search": {
           "sessions": 10083,
           "users": 7861,
-          "conversions": 728,
+          "conversions": 727,
           "bounce_rate": 21.87,
           "avg_duration": 293.19
         },
@@ -4809,7 +4809,7 @@
         "Referral": {
           "sessions": 192,
           "users": 160,
-          "conversions": 16,
+          "conversions": 15,
           "bounce_rate": 30.21,
           "avg_duration": 298.18
         },
@@ -4853,14 +4853,14 @@
         "Paid Search": {
           "sessions": 27085,
           "users": 22822,
-          "conversions": 2440,
+          "conversions": 2438,
           "bounce_rate": 15.36,
           "avg_duration": 399.68
         },
         "Organic Search": {
           "sessions": 9670,
           "users": 7543,
-          "conversions": 689,
+          "conversions": 688,
           "bounce_rate": 24.17,
           "avg_duration": 283.55
         },
@@ -4881,7 +4881,7 @@
         "Unassigned": {
           "sessions": 1164,
           "users": 858,
-          "conversions": 128,
+          "conversions": 127,
           "bounce_rate": 29.73,
           "avg_duration": 417.95
         },
@@ -4895,14 +4895,14 @@
         "Cross-network": {
           "sessions": 545,
           "users": 477,
-          "conversions": 119,
+          "conversions": 118,
           "bounce_rate": 18.17,
           "avg_duration": 377.12
         },
         "Referral": {
           "sessions": 216,
           "users": 168,
-          "conversions": 16,
+          "conversions": 14,
           "bounce_rate": 25.93,
           "avg_duration": 286.57
         },
@@ -4939,21 +4939,21 @@
         "Paid Search": {
           "sessions": 28145,
           "users": 23114,
-          "conversions": 2467,
+          "conversions": 2466,
           "bounce_rate": 14.4,
           "avg_duration": 384.12
         },
         "Organic Search": {
           "sessions": 10123,
           "users": 7792,
-          "conversions": 673,
+          "conversions": 670,
           "bounce_rate": 21.13,
           "avg_duration": 285.43
         },
         "Direct": {
           "sessions": 5445,
           "users": 4333,
-          "conversions": 1164,
+          "conversions": 1163,
           "bounce_rate": 30.67,
           "avg_duration": 303.72
         },
@@ -4988,7 +4988,7 @@
         "Referral": {
           "sessions": 191,
           "users": 152,
-          "conversions": 13,
+          "conversions": 11,
           "bounce_rate": 41.88,
           "avg_duration": 359.02
         },
@@ -5032,14 +5032,14 @@
         "Paid Search": {
           "sessions": 22910,
           "users": 18911,
-          "conversions": 2073,
+          "conversions": 2072,
           "bounce_rate": 14.97,
           "avg_duration": 373.52
         },
         "Organic Search": {
           "sessions": 8678,
           "users": 6798,
-          "conversions": 618,
+          "conversions": 617,
           "bounce_rate": 22.11,
           "avg_duration": 285.79
         },
@@ -5132,7 +5132,7 @@
         "Organic Search": {
           "sessions": 8853,
           "users": 7001,
-          "conversions": 623,
+          "conversions": 621,
           "bounce_rate": 21.13,
           "avg_duration": 284.95
         },
@@ -5225,14 +5225,14 @@
         "Organic Search": {
           "sessions": 10843,
           "users": 8464,
-          "conversions": 739,
+          "conversions": 738,
           "bounce_rate": 23.45,
           "avg_duration": 287.93
         },
         "Direct": {
           "sessions": 6123,
           "users": 4833,
-          "conversions": 1383,
+          "conversions": 1382,
           "bounce_rate": 29.5,
           "avg_duration": 320.87
         },
@@ -5318,14 +5318,14 @@
         "Organic Search": {
           "sessions": 10470,
           "users": 8203,
-          "conversions": 739,
+          "conversions": 734,
           "bounce_rate": 20.88,
           "avg_duration": 302.57
         },
         "Direct": {
           "sessions": 6009,
           "users": 4706,
-          "conversions": 1287,
+          "conversions": 1286,
           "bounce_rate": 29.09,
           "avg_duration": 317.42
         },
@@ -5411,7 +5411,7 @@
         "Organic Search": {
           "sessions": 10208,
           "users": 7998,
-          "conversions": 734,
+          "conversions": 732,
           "bounce_rate": 20.62,
           "avg_duration": 307.69
         },
@@ -5497,21 +5497,21 @@
         "Paid Search": {
           "sessions": 29245,
           "users": 23670,
-          "conversions": 2602,
+          "conversions": 2601,
           "bounce_rate": 15.39,
           "avg_duration": 385.71
         },
         "Organic Search": {
           "sessions": 10637,
           "users": 8285,
-          "conversions": 763,
+          "conversions": 757,
           "bounce_rate": 22.67,
           "avg_duration": 300.02
         },
         "Direct": {
           "sessions": 7962,
           "users": 6787,
-          "conversions": 1381,
+          "conversions": 1380,
           "bounce_rate": 36.82,
           "avg_duration": 262.8
         },
@@ -5597,14 +5597,14 @@
         "Organic Search": {
           "sessions": 10703,
           "users": 8212,
-          "conversions": 825,
+          "conversions": 823,
           "bounce_rate": 20.68,
           "avg_duration": 313.63
         },
         "Direct": {
           "sessions": 7349,
           "users": 6090,
-          "conversions": 1337,
+          "conversions": 1334,
           "bounce_rate": 37.49,
           "avg_duration": 263.62
         },
@@ -5690,14 +5690,14 @@
         "Organic Search": {
           "sessions": 9095,
           "users": 7071,
-          "conversions": 686,
+          "conversions": 682,
           "bounce_rate": 22.31,
           "avg_duration": 279.29
         },
         "Direct": {
           "sessions": 5054,
           "users": 4109,
-          "conversions": 1108,
+          "conversions": 1107,
           "bounce_rate": 30.21,
           "avg_duration": 318.01
         },
@@ -5783,14 +5783,14 @@
         "Organic Search": {
           "sessions": 9816,
           "users": 7758,
-          "conversions": 733,
+          "conversions": 729,
           "bounce_rate": 21.26,
           "avg_duration": 282.52
         },
         "Direct": {
           "sessions": 5289,
           "users": 4324,
-          "conversions": 964,
+          "conversions": 961,
           "bounce_rate": 30.5,
           "avg_duration": 274.5
         },
@@ -5869,21 +5869,21 @@
         "Paid Search": {
           "sessions": 35599,
           "users": 29132,
-          "conversions": 2898,
+          "conversions": 2897,
           "bounce_rate": 13.03,
           "avg_duration": 414.11
         },
         "Organic Search": {
           "sessions": 13115,
           "users": 10107,
-          "conversions": 1005,
+          "conversions": 1000,
           "bounce_rate": 20.27,
           "avg_duration": 339.81
         },
         "Direct": {
           "sessions": 9232,
           "users": 7725,
-          "conversions": 1552,
+          "conversions": 1551,
           "bounce_rate": 36.62,
           "avg_duration": 268.16
         },
@@ -5962,21 +5962,21 @@
         "Paid Search": {
           "sessions": 35531,
           "users": 28229,
-          "conversions": 2785,
+          "conversions": 2784,
           "bounce_rate": 13.95,
           "avg_duration": 404.96
         },
         "Organic Search": {
           "sessions": 12851,
           "users": 9982,
-          "conversions": 876,
+          "conversions": 871,
           "bounce_rate": 20.84,
           "avg_duration": 334.19
         },
         "Direct": {
           "sessions": 7016,
           "users": 5487,
-          "conversions": 1415,
+          "conversions": 1413,
           "bounce_rate": 28.85,
           "avg_duration": 351.58
         },
@@ -6055,21 +6055,21 @@
         "Paid Search": {
           "sessions": 35945,
           "users": 28266,
-          "conversions": 2700,
+          "conversions": 2699,
           "bounce_rate": 15.39,
           "avg_duration": 392.19
         },
         "Organic Search": {
           "sessions": 13919,
           "users": 10616,
-          "conversions": 955,
+          "conversions": 953,
           "bounce_rate": 20.88,
           "avg_duration": 323.12
         },
         "Direct": {
           "sessions": 6889,
           "users": 5378,
-          "conversions": 1278,
+          "conversions": 1277,
           "bounce_rate": 30.05,
           "avg_duration": 318.14
         },
@@ -6104,7 +6104,7 @@
         "Referral": {
           "sessions": 228,
           "users": 170,
-          "conversions": 23,
+          "conversions": 22,
           "bounce_rate": 26.75,
           "avg_duration": 379.36
         },
@@ -6148,21 +6148,21 @@
         "Paid Search": {
           "sessions": 28007,
           "users": 22135,
-          "conversions": 2102,
+          "conversions": 2098,
           "bounce_rate": 14.07,
           "avg_duration": 362.3
         },
         "Organic Search": {
           "sessions": 14635,
           "users": 11247,
-          "conversions": 1135,
+          "conversions": 1126,
           "bounce_rate": 17.42,
           "avg_duration": 367.2
         },
         "Direct": {
           "sessions": 6526,
           "users": 5289,
-          "conversions": 1215,
+          "conversions": 1214,
           "bounce_rate": 30.03,
           "avg_duration": 327.85
         },
@@ -6248,7 +6248,7 @@
         "Organic Search": {
           "sessions": 11492,
           "users": 9091,
-          "conversions": 831,
+          "conversions": 822,
           "bounce_rate": 19.21,
           "avg_duration": 337.13
         },
@@ -6334,14 +6334,14 @@
         "Organic Search": {
           "sessions": 11416,
           "users": 8778,
-          "conversions": 925,
+          "conversions": 921,
           "bounce_rate": 18.82,
           "avg_duration": 360.67
         },
         "Direct": {
           "sessions": 4882,
           "users": 3968,
-          "conversions": 892,
+          "conversions": 890,
           "bounce_rate": 33.61,
           "avg_duration": 312.79
         },
@@ -6355,7 +6355,7 @@
         "Unassigned": {
           "sessions": 1050,
           "users": 845,
-          "conversions": 146,
+          "conversions": 145,
           "bounce_rate": 27.81,
           "avg_duration": 416.33
         },
@@ -6413,14 +6413,14 @@
         "Organic Search": {
           "sessions": 12239,
           "users": 9690,
-          "conversions": 960,
+          "conversions": 955,
           "bounce_rate": 17.75,
           "avg_duration": 329.03
         },
         "Direct": {
           "sessions": 5153,
           "users": 4312,
-          "conversions": 854,
+          "conversions": 853,
           "bounce_rate": 33.92,
           "avg_duration": 284.61
         },
@@ -6499,21 +6499,21 @@
         "Paid Search": {
           "sessions": 25617,
           "users": 21154,
-          "conversions": 2046,
+          "conversions": 2045,
           "bounce_rate": 15.17,
           "avg_duration": 372.1
         },
         "Organic Search": {
           "sessions": 15790,
           "users": 12359,
-          "conversions": 1208,
+          "conversions": 1197,
           "bounce_rate": 20.7,
           "avg_duration": 360.29
         },
         "Direct": {
           "sessions": 7074,
           "users": 5806,
-          "conversions": 1423,
+          "conversions": 1422,
           "bounce_rate": 33.11,
           "avg_duration": 302.89
         },
@@ -6585,21 +6585,21 @@
         "Paid Search": {
           "sessions": 23488,
           "users": 19859,
-          "conversions": 2011,
+          "conversions": 2010,
           "bounce_rate": 14.69,
           "avg_duration": 378.45
         },
         "Organic Search": {
           "sessions": 13781,
           "users": 10361,
-          "conversions": 1175,
+          "conversions": 1169,
           "bounce_rate": 21.16,
           "avg_duration": 360.18
         },
         "Direct": {
           "sessions": 6736,
           "users": 5593,
-          "conversions": 1328,
+          "conversions": 1325,
           "bounce_rate": 33.86,
           "avg_duration": 287.06
         },
@@ -6613,7 +6613,7 @@
         "Unassigned": {
           "sessions": 958,
           "users": 804,
-          "conversions": 139,
+          "conversions": 138,
           "bounce_rate": 36.33,
           "avg_duration": 422.96
         },
@@ -6678,21 +6678,21 @@
         "Paid Search": {
           "sessions": 23918,
           "users": 19200,
-          "conversions": 2067,
+          "conversions": 2066,
           "bounce_rate": 13.83,
           "avg_duration": 363.87
         },
         "Organic Search": {
           "sessions": 13673,
           "users": 10608,
-          "conversions": 1249,
+          "conversions": 1239,
           "bounce_rate": 19.94,
           "avg_duration": 372.51
         },
         "Direct": {
           "sessions": 6246,
           "users": 5113,
-          "conversions": 1420,
+          "conversions": 1416,
           "bounce_rate": 33.17,
           "avg_duration": 307.39
         },
@@ -6706,7 +6706,7 @@
         "Unassigned": {
           "sessions": 946,
           "users": 794,
-          "conversions": 109,
+          "conversions": 108,
           "bounce_rate": 35.94,
           "avg_duration": 431.13
         },
@@ -6764,21 +6764,21 @@
         "Paid Search": {
           "sessions": 22274,
           "users": 18567,
-          "conversions": 1998,
+          "conversions": 1996,
           "bounce_rate": 12.75,
           "avg_duration": 370.39
         },
         "Organic Search": {
           "sessions": 14753,
           "users": 11680,
-          "conversions": 1497,
+          "conversions": 1480,
           "bounce_rate": 18.19,
           "avg_duration": 386.99
         },
         "Direct": {
           "sessions": 6362,
           "users": 5251,
-          "conversions": 1363,
+          "conversions": 1361,
           "bounce_rate": 34.99,
           "avg_duration": 295.45
         },
@@ -6813,7 +6813,7 @@
         "Referral": {
           "sessions": 180,
           "users": 139,
-          "conversions": 17,
+          "conversions": 15,
           "bounce_rate": 29.44,
           "avg_duration": 316.76
         },
@@ -6850,14 +6850,14 @@
         "Paid Search": {
           "sessions": 21751,
           "users": 18074,
-          "conversions": 1827,
+          "conversions": 1826,
           "bounce_rate": 13.9,
           "avg_duration": 363.16
         },
         "Organic Search": {
           "sessions": 14679,
           "users": 11567,
-          "conversions": 1422,
+          "conversions": 1404,
           "bounce_rate": 20.19,
           "avg_duration": 389.58
         },
@@ -6950,7 +6950,7 @@
         "Organic Search": {
           "sessions": 11093,
           "users": 8775,
-          "conversions": 1080,
+          "conversions": 1073,
           "bounce_rate": 19.45,
           "avg_duration": 347.78
         },
@@ -7029,21 +7029,21 @@
         "Paid Search": {
           "sessions": 18827,
           "users": 16269,
-          "conversions": 1740,
+          "conversions": 1739,
           "bounce_rate": 12.48,
           "avg_duration": 358.89
         },
         "Organic Search": {
           "sessions": 11360,
           "users": 9012,
-          "conversions": 1074,
+          "conversions": 1066,
           "bounce_rate": 20.2,
           "avg_duration": 338.59
         },
         "Direct": {
           "sessions": 4968,
           "users": 4135,
-          "conversions": 863,
+          "conversions": 862,
           "bounce_rate": 36.53,
           "avg_duration": 249.63
         },
@@ -7108,21 +7108,21 @@
         "Paid Search": {
           "sessions": 23409,
           "users": 19730,
-          "conversions": 1943,
+          "conversions": 1941,
           "bounce_rate": 14.8,
           "avg_duration": 362.11
         },
         "Organic Search": {
           "sessions": 16899,
           "users": 12610,
-          "conversions": 1516,
+          "conversions": 1497,
           "bounce_rate": 21.7,
           "avg_duration": 386.02
         },
         "Direct": {
           "sessions": 7484,
           "users": 6152,
-          "conversions": 1377,
+          "conversions": 1376,
           "bounce_rate": 37.21,
           "avg_duration": 270.23
         },
@@ -7208,14 +7208,14 @@
         "Organic Search": {
           "sessions": 18772,
           "users": 14385,
-          "conversions": 1717,
+          "conversions": 1694,
           "bounce_rate": 19.78,
           "avg_duration": 403.08
         },
         "Direct": {
           "sessions": 6800,
           "users": 5523,
-          "conversions": 1396,
+          "conversions": 1394,
           "bounce_rate": 35.07,
           "avg_duration": 324.48
         },
@@ -7229,7 +7229,7 @@
         "Mobile Push Notifications": {
           "sessions": 1979,
           "users": 1638,
-          "conversions": 49,
+          "conversions": 48,
           "bounce_rate": 74.38,
           "avg_duration": 108.33
         },
@@ -7250,7 +7250,7 @@
         "Referral": {
           "sessions": 270,
           "users": 186,
-          "conversions": 30,
+          "conversions": 29,
           "bounce_rate": 33.7,
           "avg_duration": 452.89
         },
@@ -7280,7 +7280,7 @@
         "Organic Search": {
           "sessions": 20209,
           "users": 15462,
-          "conversions": 2086,
+          "conversions": 2062,
           "bounce_rate": 19.61,
           "avg_duration": 410.51
         },
@@ -7294,7 +7294,7 @@
         "Direct": {
           "sessions": 7188,
           "users": 5898,
-          "conversions": 1473,
+          "conversions": 1468,
           "bounce_rate": 35.07,
           "avg_duration": 305.77
         },
@@ -7366,21 +7366,21 @@
         "Organic Search": {
           "sessions": 22035,
           "users": 16622,
-          "conversions": 2161,
+          "conversions": 2143,
           "bounce_rate": 18.65,
           "avg_duration": 412.84
         },
         "Paid Search": {
           "sessions": 19921,
           "users": 16361,
-          "conversions": 1698,
+          "conversions": 1696,
           "bounce_rate": 14.56,
           "avg_duration": 369.02
         },
         "Direct": {
           "sessions": 7507,
           "users": 6056,
-          "conversions": 1501,
+          "conversions": 1494,
           "bounce_rate": 34.45,
           "avg_duration": 346.46
         },
@@ -7408,7 +7408,7 @@
         "Organic Social": {
           "sessions": 751,
           "users": 635,
-          "conversions": 185,
+          "conversions": 184,
           "bounce_rate": 24.37,
           "avg_duration": 298.07
         },
@@ -7452,21 +7452,21 @@
         "Organic Search": {
           "sessions": 24537,
           "users": 17617,
-          "conversions": 2024,
+          "conversions": 2007,
           "bounce_rate": 20.27,
           "avg_duration": 369.54
         },
         "Paid Search": {
           "sessions": 18933,
           "users": 16213,
-          "conversions": 1822,
+          "conversions": 1814,
           "bounce_rate": 12.41,
           "avg_duration": 412.27
         },
         "Direct": {
           "sessions": 8898,
           "users": 7395,
-          "conversions": 1456,
+          "conversions": 1449,
           "bounce_rate": 40.65,
           "avg_duration": 249.35
         },
@@ -7480,21 +7480,21 @@
         "Cross-network": {
           "sessions": 2019,
           "users": 1854,
-          "conversions": 137,
+          "conversions": 135,
           "bounce_rate": 27.04,
           "avg_duration": 276.66
         },
         "Unassigned": {
           "sessions": 902,
           "users": 785,
-          "conversions": 144,
+          "conversions": 143,
           "bounce_rate": 57.32,
           "avg_duration": 372.47
         },
         "Organic Social": {
           "sessions": 742,
           "users": 634,
-          "conversions": 226,
+          "conversions": 225,
           "bounce_rate": 24.26,
           "avg_duration": 314.22
         },
@@ -7545,21 +7545,21 @@
         "Paid Search": {
           "sessions": 22057,
           "users": 18011,
-          "conversions": 2176,
+          "conversions": 2154,
           "bounce_rate": 13.25,
           "avg_duration": 383.39
         },
         "Organic Search": {
           "sessions": 8885,
           "users": 7034,
-          "conversions": 689,
+          "conversions": 683,
           "bounce_rate": 27.86,
           "avg_duration": 283.31
         },
         "Direct": {
           "sessions": 5402,
           "users": 4380,
-          "conversions": 889,
+          "conversions": 884,
           "bounce_rate": 42.65,
           "avg_duration": 264.05
         },
@@ -7573,28 +7573,28 @@
         "Mobile Push Notifications": {
           "sessions": 1801,
           "users": 1514,
-          "conversions": 31,
+          "conversions": 29,
           "bounce_rate": 74.63,
           "avg_duration": 99.47
         },
         "Unassigned": {
           "sessions": 811,
           "users": 703,
-          "conversions": 73,
+          "conversions": 72,
           "bounce_rate": 50.18,
           "avg_duration": 341.2
         },
         "Organic Social": {
           "sessions": 782,
           "users": 656,
-          "conversions": 210,
+          "conversions": 209,
           "bounce_rate": 23.15,
           "avg_duration": 287.56
         },
         "Referral": {
           "sessions": 120,
           "users": 98,
-          "conversions": 9,
+          "conversions": 8,
           "bounce_rate": 34.17,
           "avg_duration": 323.89
         },
@@ -7617,35 +7617,35 @@
         "Paid Search": {
           "sessions": 21615,
           "users": 18528,
-          "conversions": 2342,
+          "conversions": 2330,
           "bounce_rate": 12.17,
           "avg_duration": 401.9
         },
         "Organic Search": {
           "sessions": 9226,
           "users": 7210,
-          "conversions": 684,
+          "conversions": 672,
           "bounce_rate": 28.79,
           "avg_duration": 295.63
         },
         "Direct": {
           "sessions": 5590,
           "users": 4721,
-          "conversions": 892,
+          "conversions": 886,
           "bounce_rate": 41.06,
           "avg_duration": 254.96
         },
         "Cross-network": {
           "sessions": 3397,
           "users": 3116,
-          "conversions": 206,
+          "conversions": 204,
           "bounce_rate": 31.35,
           "avg_duration": 260.47
         },
         "Mobile Push Notifications": {
           "sessions": 1149,
           "users": 966,
-          "conversions": 30,
+          "conversions": 29,
           "bounce_rate": 72.85,
           "avg_duration": 99.65
         },
@@ -7703,28 +7703,28 @@
         "Paid Search": {
           "sessions": 29677,
           "users": 24707,
-          "conversions": 3068,
+          "conversions": 3047,
           "bounce_rate": 14.16,
           "avg_duration": 413.93
         },
         "Organic Search": {
           "sessions": 10628,
           "users": 8236,
-          "conversions": 868,
+          "conversions": 860,
           "bounce_rate": 28.15,
           "avg_duration": 285.72
         },
         "Direct": {
           "sessions": 8096,
           "users": 6825,
-          "conversions": 1407,
+          "conversions": 1402,
           "bounce_rate": 39.62,
           "avg_duration": 239.59
         },
         "Cross-network": {
           "sessions": 2977,
           "users": 2756,
-          "conversions": 190,
+          "conversions": 187,
           "bounce_rate": 24.72,
           "avg_duration": 295.1
         },
@@ -7796,28 +7796,28 @@
         "Paid Search": {
           "sessions": 27013,
           "users": 22678,
-          "conversions": 2642,
+          "conversions": 2617,
           "bounce_rate": 13.32,
           "avg_duration": 399.84
         },
         "Organic Search": {
           "sessions": 10016,
           "users": 7934,
-          "conversions": 691,
+          "conversions": 682,
           "bounce_rate": 29.01,
           "avg_duration": 262.98
         },
         "Direct": {
           "sessions": 6368,
           "users": 5340,
-          "conversions": 1234,
+          "conversions": 1222,
           "bounce_rate": 38.88,
           "avg_duration": 306.4
         },
         "Cross-network": {
           "sessions": 3048,
           "users": 2789,
-          "conversions": 187,
+          "conversions": 186,
           "bounce_rate": 27.53,
           "avg_duration": 304.88
         },
@@ -7889,28 +7889,28 @@
         "Paid Search": {
           "sessions": 29929,
           "users": 24249,
-          "conversions": 2629,
+          "conversions": 2597,
           "bounce_rate": 15.05,
           "avg_duration": 394.67
         },
         "Organic Search": {
           "sessions": 10506,
           "users": 8395,
-          "conversions": 828,
+          "conversions": 813,
           "bounce_rate": 26.18,
           "avg_duration": 299.79
         },
         "Direct": {
           "sessions": 8303,
           "users": 7167,
-          "conversions": 1420,
+          "conversions": 1412,
           "bounce_rate": 40.64,
           "avg_duration": 231.96
         },
         "Cross-network": {
           "sessions": 3377,
           "users": 3038,
-          "conversions": 251,
+          "conversions": 249,
           "bounce_rate": 24.22,
           "avg_duration": 316.89
         },
@@ -7938,7 +7938,7 @@
         "Referral": {
           "sessions": 197,
           "users": 152,
-          "conversions": 16,
+          "conversions": 15,
           "bounce_rate": 36.04,
           "avg_duration": 319.55
         },
@@ -7975,28 +7975,28 @@
         "Paid Search": {
           "sessions": 28733,
           "users": 23708,
-          "conversions": 2758,
+          "conversions": 2747,
           "bounce_rate": 14.01,
           "avg_duration": 401.74
         },
         "Organic Search": {
           "sessions": 10192,
           "users": 8068,
-          "conversions": 850,
+          "conversions": 841,
           "bounce_rate": 27.41,
           "avg_duration": 317.74
         },
         "Direct": {
           "sessions": 6808,
           "users": 5650,
-          "conversions": 1405,
+          "conversions": 1398,
           "bounce_rate": 37.24,
           "avg_duration": 285.74
         },
         "Cross-network": {
           "sessions": 3759,
           "users": 3413,
-          "conversions": 246,
+          "conversions": 244,
           "bounce_rate": 27.11,
           "avg_duration": 301.27
         },
@@ -8010,7 +8010,7 @@
         "Unassigned": {
           "sessions": 945,
           "users": 827,
-          "conversions": 199,
+          "conversions": 198,
           "bounce_rate": 55.66,
           "avg_duration": 365.1
         },
@@ -8068,14 +8068,14 @@
         "Organic Search": {
           "sessions": 10093,
           "users": 7795,
-          "conversions": 797,
+          "conversions": 794,
           "bounce_rate": 27.95,
           "avg_duration": 305.58
         },
         "Direct": {
           "sessions": 7278,
           "users": 5881,
-          "conversions": 1440,
+          "conversions": 1439,
           "bounce_rate": 37.8,
           "avg_duration": 254.91
         },
@@ -8096,7 +8096,7 @@
         "Unassigned": {
           "sessions": 980,
           "users": 842,
-          "conversions": 238,
+          "conversions": 237,
           "bounce_rate": 51.53,
           "avg_duration": 426.25
         },
@@ -8140,7 +8140,7 @@
         "Paid Search": {
           "sessions": 23854,
           "users": 19483,
-          "conversions": 2323,
+          "conversions": 2322,
           "bounce_rate": 14.35,
           "avg_duration": 383.76
         },
@@ -8226,14 +8226,14 @@
         "Paid Search": {
           "sessions": 25849,
           "users": 20864,
-          "conversions": 2437,
+          "conversions": 2436,
           "bounce_rate": 14.01,
           "avg_duration": 371.33
         },
         "Organic Search": {
           "sessions": 9109,
           "users": 7110,
-          "conversions": 679,
+          "conversions": 675,
           "bounce_rate": 28.76,
           "avg_duration": 313.42
         },
@@ -8312,7 +8312,7 @@
         "Organic Search": {
           "sessions": 10977,
           "users": 8397,
-          "conversions": 826,
+          "conversions": 825,
           "bounce_rate": 29.43,
           "avg_duration": 296.32
         },
@@ -8391,14 +8391,14 @@
         "Paid Search": {
           "sessions": 30498,
           "users": 25193,
-          "conversions": 3004,
+          "conversions": 2996,
           "bounce_rate": 15.76,
           "avg_duration": 419.28
         },
         "Organic Search": {
           "sessions": 10725,
           "users": 8161,
-          "conversions": 927,
+          "conversions": 922,
           "bounce_rate": 27.74,
           "avg_duration": 307.13
         },
@@ -8412,7 +8412,7 @@
         "Cross-network": {
           "sessions": 5524,
           "users": 5060,
-          "conversions": 274,
+          "conversions": 273,
           "bounce_rate": 30.59,
           "avg_duration": 292.08
         },
@@ -8440,7 +8440,7 @@
         "Referral": {
           "sessions": 189,
           "users": 147,
-          "conversions": 17,
+          "conversions": 16,
           "bounce_rate": 27.51,
           "avg_duration": 351.99
         },
@@ -8470,21 +8470,21 @@
         "Paid Search": {
           "sessions": 32949,
           "users": 26322,
-          "conversions": 3095,
+          "conversions": 3090,
           "bounce_rate": 15.62,
           "avg_duration": 406.22
         },
         "Organic Search": {
           "sessions": 10738,
           "users": 8257,
-          "conversions": 861,
+          "conversions": 860,
           "bounce_rate": 26.62,
           "avg_duration": 322.67
         },
         "Direct": {
           "sessions": 8540,
           "users": 7040,
-          "conversions": 1530,
+          "conversions": 1528,
           "bounce_rate": 39.1,
           "avg_duration": 267.39
         },
@@ -8577,7 +8577,7 @@
         "Cross-network": {
           "sessions": 5278,
           "users": 4846,
-          "conversions": 300,
+          "conversions": 299,
           "bounce_rate": 27.66,
           "avg_duration": 292.76
         },
@@ -8742,7 +8742,7 @@
         "Direct": {
           "sessions": 5510,
           "users": 4422,
-          "conversions": 1139,
+          "conversions": 1138,
           "bounce_rate": 40.02,
           "avg_duration": 278.12
         },
@@ -8793,7 +8793,7 @@
         "Paid Search": {
           "sessions": 26384,
           "users": 22114,
-          "conversions": 2466,
+          "conversions": 2465,
           "bounce_rate": 13.7,
           "avg_duration": 381.04
         },
@@ -8865,42 +8865,42 @@
         "Paid Search": {
           "sessions": 30568,
           "users": 25352,
-          "conversions": 3127,
+          "conversions": 3062,
           "bounce_rate": 15.68,
           "avg_duration": 413.94
         },
         "Organic Search": {
           "sessions": 10649,
           "users": 8264,
-          "conversions": 883,
+          "conversions": 864,
           "bounce_rate": 27.36,
           "avg_duration": 303.05
         },
         "Cross-network": {
           "sessions": 8870,
           "users": 8102,
-          "conversions": 410,
+          "conversions": 401,
           "bounce_rate": 35.07,
           "avg_duration": 266.92
         },
         "Direct": {
           "sessions": 7643,
           "users": 6148,
-          "conversions": 1558,
+          "conversions": 1525,
           "bounce_rate": 36.07,
           "avg_duration": 299.19
         },
         "Mobile Push Notifications": {
           "sessions": 3347,
           "users": 2694,
-          "conversions": 59,
+          "conversions": 58,
           "bounce_rate": 80.52,
           "avg_duration": 84.78
         },
         "Organic Social": {
           "sessions": 916,
           "users": 781,
-          "conversions": 247,
+          "conversions": 244,
           "bounce_rate": 24.02,
           "avg_duration": 295.01
         }
@@ -8910,27 +8910,27 @@
   "devices": [
     {
       "device": "mobile",
-      "sessions": 3610166,
-      "users": 2755706,
-      "conversions": 350086,
+      "sessions": 3610857,
+      "users": 2756278,
+      "conversions": 313459,
       "bounce_rate": 22.6,
-      "avg_duration": 294.95
+      "avg_duration": 295.08
     },
     {
       "device": "desktop",
-      "sessions": 1021922,
-      "users": 799493,
-      "conversions": 149719,
+      "sessions": 1022038,
+      "users": 799585,
+      "conversions": 133307,
       "bounce_rate": 25.95,
-      "avg_duration": 502.33
+      "avg_duration": 502.53
     },
     {
       "device": "tablet",
-      "sessions": 25012,
-      "users": 21335,
-      "conversions": 2732,
+      "sessions": 25019,
+      "users": 21340,
+      "conversions": 2432,
       "bounce_rate": 17.34,
-      "avg_duration": 349.34
+      "avg_duration": 349.7
     },
     {
       "device": "smart tv",
@@ -9099,7 +9099,7 @@
         "desktop": {
           "sessions": 12287,
           "users": 9461,
-          "conversions": 1128,
+          "conversions": 1122,
           "bounce_rate": 22.27,
           "avg_duration": 462.28
         },
@@ -9129,7 +9129,7 @@
         "desktop": {
           "sessions": 11700,
           "users": 8907,
-          "conversions": 1237,
+          "conversions": 1232,
           "bounce_rate": 23.17,
           "avg_duration": 491.94
         },
@@ -9152,7 +9152,7 @@
         "desktop": {
           "sessions": 12415,
           "users": 9642,
-          "conversions": 1277,
+          "conversions": 1275,
           "bounce_rate": 24.2,
           "avg_duration": 462.04
         },
@@ -9182,7 +9182,7 @@
         "desktop": {
           "sessions": 11840,
           "users": 8710,
-          "conversions": 1390,
+          "conversions": 1386,
           "bounce_rate": 21.12,
           "avg_duration": 467.92
         },
@@ -9198,14 +9198,14 @@
         "mobile": {
           "sessions": 42064,
           "users": 32628,
-          "conversions": 3276,
+          "conversions": 3274,
           "bounce_rate": 23.75,
           "avg_duration": 259.33
         },
         "desktop": {
           "sessions": 11541,
           "users": 9000,
-          "conversions": 1386,
+          "conversions": 1383,
           "bounce_rate": 24.17,
           "avg_duration": 481.06
         },
@@ -9251,7 +9251,7 @@
         "mobile": {
           "sessions": 35944,
           "users": 27892,
-          "conversions": 3080,
+          "conversions": 3079,
           "bounce_rate": 18.43,
           "avg_duration": 281.57
         },
@@ -9288,7 +9288,7 @@
         "desktop": {
           "sessions": 13894,
           "users": 10708,
-          "conversions": 1593,
+          "conversions": 1592,
           "bounce_rate": 22.43,
           "avg_duration": 481.52
         },
@@ -9318,7 +9318,7 @@
         "desktop": {
           "sessions": 13458,
           "users": 10021,
-          "conversions": 1423,
+          "conversions": 1419,
           "bounce_rate": 24.74,
           "avg_duration": 464.18
         },
@@ -9334,14 +9334,14 @@
         "mobile": {
           "sessions": 38134,
           "users": 29445,
-          "conversions": 3318,
+          "conversions": 3314,
           "bounce_rate": 23.02,
           "avg_duration": 280.81
         },
         "desktop": {
           "sessions": 12523,
           "users": 9349,
-          "conversions": 1618,
+          "conversions": 1617,
           "bounce_rate": 23.22,
           "avg_duration": 496.51
         },
@@ -9357,14 +9357,14 @@
         "mobile": {
           "sessions": 38663,
           "users": 30522,
-          "conversions": 3523,
+          "conversions": 3521,
           "bounce_rate": 20.81,
           "avg_duration": 287.15
         },
         "desktop": {
           "sessions": 12809,
           "users": 9413,
-          "conversions": 1620,
+          "conversions": 1617,
           "bounce_rate": 23.05,
           "avg_duration": 489.38
         },
@@ -9380,7 +9380,7 @@
         "mobile": {
           "sessions": 39118,
           "users": 29656,
-          "conversions": 3542,
+          "conversions": 3541,
           "bounce_rate": 22.25,
           "avg_duration": 283.74
         },
@@ -9410,7 +9410,7 @@
         "desktop": {
           "sessions": 6550,
           "users": 5276,
-          "conversions": 933,
+          "conversions": 932,
           "bounce_rate": 23.71,
           "avg_duration": 498.59
         },
@@ -9433,7 +9433,7 @@
         "desktop": {
           "sessions": 6063,
           "users": 4954,
-          "conversions": 840,
+          "conversions": 839,
           "bounce_rate": 25.32,
           "avg_duration": 511.41
         },
@@ -9479,7 +9479,7 @@
         "desktop": {
           "sessions": 13209,
           "users": 10044,
-          "conversions": 1711,
+          "conversions": 1703,
           "bounce_rate": 23.04,
           "avg_duration": 516.43
         },
@@ -9502,14 +9502,14 @@
         "mobile": {
           "sessions": 40179,
           "users": 30633,
-          "conversions": 3287,
+          "conversions": 3284,
           "bounce_rate": 23.02,
           "avg_duration": 277.02
         },
         "desktop": {
           "sessions": 13749,
           "users": 10549,
-          "conversions": 1657,
+          "conversions": 1654,
           "bounce_rate": 23.63,
           "avg_duration": 495.32
         },
@@ -9525,14 +9525,14 @@
         "mobile": {
           "sessions": 40843,
           "users": 31407,
-          "conversions": 3373,
+          "conversions": 3371,
           "bounce_rate": 23.05,
           "avg_duration": 275.29
         },
         "desktop": {
           "sessions": 13957,
           "users": 10375,
-          "conversions": 1583,
+          "conversions": 1578,
           "bounce_rate": 23.85,
           "avg_duration": 488.78
         },
@@ -9555,14 +9555,14 @@
         "desktop": {
           "sessions": 11914,
           "users": 9131,
-          "conversions": 1526,
+          "conversions": 1521,
           "bounce_rate": 22.23,
           "avg_duration": 504.74
         },
         "tablet": {
           "sessions": 270,
           "users": 217,
-          "conversions": 24,
+          "conversions": 23,
           "bounce_rate": 16.67,
           "avg_duration": 310.0
         }
@@ -9571,7 +9571,7 @@
         "mobile": {
           "sessions": 33691,
           "users": 25769,
-          "conversions": 3096,
+          "conversions": 3095,
           "bounce_rate": 21.16,
           "avg_duration": 283.69
         },
@@ -9594,14 +9594,14 @@
         "mobile": {
           "sessions": 40710,
           "users": 32406,
-          "conversions": 3261,
+          "conversions": 3260,
           "bounce_rate": 22.51,
           "avg_duration": 279.6
         },
         "desktop": {
           "sessions": 7180,
           "users": 5602,
-          "conversions": 919,
+          "conversions": 918,
           "bounce_rate": 24.69,
           "avg_duration": 502.21
         },
@@ -9624,7 +9624,7 @@
         "desktop": {
           "sessions": 13736,
           "users": 10606,
-          "conversions": 1629,
+          "conversions": 1627,
           "bounce_rate": 21.22,
           "avg_duration": 530.75
         },
@@ -9640,14 +9640,14 @@
         "mobile": {
           "sessions": 38346,
           "users": 29027,
-          "conversions": 3234,
+          "conversions": 3233,
           "bounce_rate": 22.43,
           "avg_duration": 288.11
         },
         "desktop": {
           "sessions": 12974,
           "users": 9973,
-          "conversions": 1571,
+          "conversions": 1565,
           "bounce_rate": 21.71,
           "avg_duration": 550.08
         },
@@ -9677,7 +9677,7 @@
         "desktop": {
           "sessions": 12898,
           "users": 9699,
-          "conversions": 1485,
+          "conversions": 1483,
           "bounce_rate": 23.29,
           "avg_duration": 486.36
         },
@@ -9693,14 +9693,14 @@
         "mobile": {
           "sessions": 36940,
           "users": 28265,
-          "conversions": 3335,
+          "conversions": 3333,
           "bounce_rate": 21.93,
           "avg_duration": 294.06
         },
         "desktop": {
           "sessions": 10816,
           "users": 8132,
-          "conversions": 1365,
+          "conversions": 1360,
           "bounce_rate": 23.63,
           "avg_duration": 524.94
         },
@@ -9716,14 +9716,14 @@
         "mobile": {
           "sessions": 37762,
           "users": 28972,
-          "conversions": 3309,
+          "conversions": 3307,
           "bounce_rate": 22.98,
           "avg_duration": 282.74
         },
         "desktop": {
           "sessions": 11831,
           "users": 8888,
-          "conversions": 1555,
+          "conversions": 1550,
           "bounce_rate": 22.84,
           "avg_duration": 510.74
         },
@@ -9746,14 +9746,14 @@
         "mobile": {
           "sessions": 34171,
           "users": 26118,
-          "conversions": 3208,
+          "conversions": 3207,
           "bounce_rate": 21.95,
           "avg_duration": 294.97
         },
         "desktop": {
           "sessions": 6046,
           "users": 4831,
-          "conversions": 821,
+          "conversions": 820,
           "bounce_rate": 26.2,
           "avg_duration": 539.33
         },
@@ -9769,14 +9769,14 @@
         "mobile": {
           "sessions": 36615,
           "users": 27499,
-          "conversions": 3162,
+          "conversions": 3161,
           "bounce_rate": 19.78,
           "avg_duration": 286.95
         },
         "desktop": {
           "sessions": 5945,
           "users": 5676,
-          "conversions": 853,
+          "conversions": 852,
           "bounce_rate": 24.63,
           "avg_duration": 538.62
         },
@@ -9792,14 +9792,14 @@
         "mobile": {
           "sessions": 38753,
           "users": 29455,
-          "conversions": 3450,
+          "conversions": 3449,
           "bounce_rate": 21.27,
           "avg_duration": 295.52
         },
         "desktop": {
           "sessions": 13580,
           "users": 10307,
-          "conversions": 1686,
+          "conversions": 1685,
           "bounce_rate": 22.35,
           "avg_duration": 505.43
         },
@@ -9815,14 +9815,14 @@
         "mobile": {
           "sessions": 36622,
           "users": 27683,
-          "conversions": 3309,
+          "conversions": 3306,
           "bounce_rate": 20.43,
           "avg_duration": 293.75
         },
         "desktop": {
           "sessions": 12898,
           "users": 9804,
-          "conversions": 1613,
+          "conversions": 1610,
           "bounce_rate": 21.3,
           "avg_duration": 516.75
         },
@@ -9845,7 +9845,7 @@
         "desktop": {
           "sessions": 12030,
           "users": 9058,
-          "conversions": 1476,
+          "conversions": 1474,
           "bounce_rate": 24.69,
           "avg_duration": 512.81
         },
@@ -9861,14 +9861,14 @@
         "mobile": {
           "sessions": 37865,
           "users": 28454,
-          "conversions": 3521,
+          "conversions": 3520,
           "bounce_rate": 22.05,
           "avg_duration": 296.8
         },
         "desktop": {
           "sessions": 15417,
           "users": 12335,
-          "conversions": 1664,
+          "conversions": 1657,
           "bounce_rate": 30.0,
           "avg_duration": 427.8
         },
@@ -9898,7 +9898,7 @@
         "desktop": {
           "sessions": 13321,
           "users": 10585,
-          "conversions": 1645,
+          "conversions": 1640,
           "bounce_rate": 27.01,
           "avg_duration": 479.37
         },
@@ -9921,14 +9921,14 @@
         "mobile": {
           "sessions": 33837,
           "users": 26581,
-          "conversions": 3321,
+          "conversions": 3320,
           "bounce_rate": 18.71,
           "avg_duration": 304.69
         },
         "desktop": {
           "sessions": 6659,
           "users": 5277,
-          "conversions": 1015,
+          "conversions": 1011,
           "bounce_rate": 23.76,
           "avg_duration": 514.64
         },
@@ -9944,14 +9944,14 @@
         "mobile": {
           "sessions": 37698,
           "users": 28697,
-          "conversions": 3384,
+          "conversions": 3383,
           "bounce_rate": 18.58,
           "avg_duration": 295.24
         },
         "desktop": {
           "sessions": 6863,
           "users": 5433,
-          "conversions": 935,
+          "conversions": 929,
           "bounce_rate": 24.81,
           "avg_duration": 506.1
         },
@@ -9967,14 +9967,14 @@
         "mobile": {
           "sessions": 46649,
           "users": 34960,
-          "conversions": 3985,
+          "conversions": 3984,
           "bounce_rate": 20.45,
           "avg_duration": 301.61
         },
         "desktop": {
           "sessions": 18375,
           "users": 14653,
-          "conversions": 1981,
+          "conversions": 1975,
           "bounce_rate": 26.9,
           "avg_duration": 497.08
         },
@@ -9997,14 +9997,14 @@
         "mobile": {
           "sessions": 45831,
           "users": 33945,
-          "conversions": 3865,
+          "conversions": 3861,
           "bounce_rate": 19.89,
           "avg_duration": 313.57
         },
         "desktop": {
           "sessions": 15656,
           "users": 11732,
-          "conversions": 1693,
+          "conversions": 1689,
           "bounce_rate": 22.47,
           "avg_duration": 518.81
         },
@@ -10020,14 +10020,14 @@
         "mobile": {
           "sessions": 45880,
           "users": 34148,
-          "conversions": 3682,
+          "conversions": 3680,
           "bounce_rate": 19.23,
           "avg_duration": 310.57
         },
         "desktop": {
           "sessions": 14607,
           "users": 11012,
-          "conversions": 1716,
+          "conversions": 1713,
           "bounce_rate": 20.8,
           "avg_duration": 539.43
         },
@@ -10043,14 +10043,14 @@
         "mobile": {
           "sessions": 41864,
           "users": 30454,
-          "conversions": 3464,
+          "conversions": 3461,
           "bounce_rate": 18.5,
           "avg_duration": 301.96
         },
         "desktop": {
           "sessions": 11280,
           "users": 8749,
-          "conversions": 1444,
+          "conversions": 1433,
           "bounce_rate": 23.9,
           "avg_duration": 533.5
         },
@@ -10066,14 +10066,14 @@
         "mobile": {
           "sessions": 34627,
           "users": 26017,
-          "conversions": 2799,
+          "conversions": 2796,
           "bounce_rate": 18.37,
           "avg_duration": 299.81
         },
         "desktop": {
           "sessions": 5650,
           "users": 4525,
-          "conversions": 795,
+          "conversions": 789,
           "bounce_rate": 25.73,
           "avg_duration": 516.85
         },
@@ -10089,14 +10089,14 @@
         "mobile": {
           "sessions": 33593,
           "users": 25651,
-          "conversions": 3075,
+          "conversions": 3072,
           "bounce_rate": 17.91,
           "avg_duration": 318.09
         },
         "desktop": {
           "sessions": 5964,
           "users": 4627,
-          "conversions": 820,
+          "conversions": 816,
           "bounce_rate": 27.65,
           "avg_duration": 509.36
         },
@@ -10112,14 +10112,14 @@
         "mobile": {
           "sessions": 36400,
           "users": 28202,
-          "conversions": 3145,
+          "conversions": 3143,
           "bounce_rate": 18.2,
           "avg_duration": 313.6
         },
         "desktop": {
           "sessions": 5890,
           "users": 4768,
-          "conversions": 807,
+          "conversions": 803,
           "bounce_rate": 26.06,
           "avg_duration": 486.84
         },
@@ -10135,14 +10135,14 @@
         "mobile": {
           "sessions": 37907,
           "users": 29532,
-          "conversions": 3351,
+          "conversions": 3347,
           "bounce_rate": 20.12,
           "avg_duration": 297.76
         },
         "desktop": {
           "sessions": 14428,
           "users": 11164,
-          "conversions": 1733,
+          "conversions": 1724,
           "bounce_rate": 25.53,
           "avg_duration": 494.88
         },
@@ -10158,14 +10158,14 @@
         "mobile": {
           "sessions": 34876,
           "users": 26576,
-          "conversions": 3250,
+          "conversions": 3249,
           "bounce_rate": 21.48,
           "avg_duration": 292.49
         },
         "desktop": {
           "sessions": 13514,
           "users": 10467,
-          "conversions": 1677,
+          "conversions": 1667,
           "bounce_rate": 24.57,
           "avg_duration": 486.89
         },
@@ -10188,14 +10188,14 @@
         "mobile": {
           "sessions": 35369,
           "users": 26100,
-          "conversions": 3342,
+          "conversions": 3340,
           "bounce_rate": 20.24,
           "avg_duration": 286.36
         },
         "desktop": {
           "sessions": 13064,
           "users": 9755,
-          "conversions": 1774,
+          "conversions": 1760,
           "bounce_rate": 25.26,
           "avg_duration": 500.67
         },
@@ -10211,14 +10211,14 @@
         "mobile": {
           "sessions": 36178,
           "users": 27055,
-          "conversions": 3492,
+          "conversions": 3489,
           "bounce_rate": 20.66,
           "avg_duration": 287.34
         },
         "desktop": {
           "sessions": 13144,
           "users": 10176,
-          "conversions": 1800,
+          "conversions": 1780,
           "bounce_rate": 26.41,
           "avg_duration": 503.23
         },
@@ -10234,14 +10234,14 @@
         "mobile": {
           "sessions": 35957,
           "users": 27433,
-          "conversions": 3338,
+          "conversions": 3336,
           "bounce_rate": 19.72,
           "avg_duration": 297.61
         },
         "desktop": {
           "sessions": 11860,
           "users": 9218,
-          "conversions": 1638,
+          "conversions": 1621,
           "bounce_rate": 26.99,
           "avg_duration": 511.13
         },
@@ -10257,14 +10257,14 @@
         "mobile": {
           "sessions": 32124,
           "users": 24893,
-          "conversions": 3265,
+          "conversions": 3262,
           "bounce_rate": 19.37,
           "avg_duration": 294.88
         },
         "desktop": {
           "sessions": 6711,
           "users": 5786,
-          "conversions": 950,
+          "conversions": 946,
           "bounce_rate": 29.82,
           "avg_duration": 511.14
         },
@@ -10280,14 +10280,14 @@
         "mobile": {
           "sessions": 34077,
           "users": 26867,
-          "conversions": 3208,
+          "conversions": 3207,
           "bounce_rate": 20.92,
           "avg_duration": 293.1
         },
         "desktop": {
           "sessions": 6352,
           "users": 5189,
-          "conversions": 949,
+          "conversions": 940,
           "bounce_rate": 29.14,
           "avg_duration": 496.84
         },
@@ -10303,14 +10303,14 @@
         "mobile": {
           "sessions": 39234,
           "users": 30271,
-          "conversions": 3501,
+          "conversions": 3498,
           "bounce_rate": 22.45,
           "avg_duration": 293.82
         },
         "desktop": {
           "sessions": 14421,
           "users": 11435,
-          "conversions": 1821,
+          "conversions": 1802,
           "bounce_rate": 27.33,
           "avg_duration": 480.37
         },
@@ -10333,14 +10333,14 @@
         "mobile": {
           "sessions": 38195,
           "users": 29486,
-          "conversions": 3552,
+          "conversions": 3548,
           "bounce_rate": 22.32,
           "avg_duration": 309.75
         },
         "desktop": {
           "sessions": 13761,
           "users": 10658,
-          "conversions": 1844,
+          "conversions": 1821,
           "bounce_rate": 25.18,
           "avg_duration": 515.99
         },
@@ -10356,14 +10356,14 @@
         "mobile": {
           "sessions": 38520,
           "users": 29165,
-          "conversions": 3701,
+          "conversions": 3697,
           "bounce_rate": 20.1,
           "avg_duration": 300.05
         },
         "desktop": {
           "sessions": 13821,
           "users": 10748,
-          "conversions": 2020,
+          "conversions": 1995,
           "bounce_rate": 27.19,
           "avg_duration": 496.87
         },
@@ -10379,14 +10379,14 @@
         "mobile": {
           "sessions": 41351,
           "users": 31459,
-          "conversions": 3825,
+          "conversions": 3818,
           "bounce_rate": 20.13,
           "avg_duration": 315.97
         },
         "desktop": {
           "sessions": 14159,
           "users": 10829,
-          "conversions": 2037,
+          "conversions": 2016,
           "bounce_rate": 27.06,
           "avg_duration": 521.26
         },
@@ -10402,14 +10402,14 @@
         "mobile": {
           "sessions": 45472,
           "users": 32759,
-          "conversions": 4011,
+          "conversions": 3997,
           "bounce_rate": 21.66,
           "avg_duration": 301.51
         },
         "desktop": {
           "sessions": 13433,
           "users": 10686,
-          "conversions": 1834,
+          "conversions": 1812,
           "bounce_rate": 30.26,
           "avg_duration": 503.45
         },
@@ -10425,14 +10425,14 @@
         "mobile": {
           "sessions": 36317,
           "users": 26997,
-          "conversions": 3406,
+          "conversions": 3383,
           "bounce_rate": 22.95,
           "avg_duration": 301.95
         },
         "desktop": {
           "sessions": 5916,
           "users": 4869,
-          "conversions": 839,
+          "conversions": 824,
           "bounce_rate": 31.66,
           "avg_duration": 476.47
         },
@@ -10448,14 +10448,14 @@
         "mobile": {
           "sessions": 38093,
           "users": 28235,
-          "conversions": 3676,
+          "conversions": 3649,
           "bounce_rate": 22.27,
           "avg_duration": 299.91
         },
         "desktop": {
           "sessions": 5872,
           "users": 4780,
-          "conversions": 755,
+          "conversions": 749,
           "bounce_rate": 33.33,
           "avg_duration": 486.67
         },
@@ -10471,14 +10471,14 @@
         "mobile": {
           "sessions": 41802,
           "users": 31712,
-          "conversions": 4177,
+          "conversions": 4155,
           "bounce_rate": 22.7,
           "avg_duration": 313.93
         },
         "desktop": {
           "sessions": 13090,
           "users": 10880,
-          "conversions": 1858,
+          "conversions": 1843,
           "bounce_rate": 29.77,
           "avg_duration": 453.98
         },
@@ -10494,14 +10494,14 @@
         "mobile": {
           "sessions": 41925,
           "users": 32292,
-          "conversions": 3835,
+          "conversions": 3811,
           "bounce_rate": 23.29,
           "avg_duration": 311.82
         },
         "desktop": {
           "sessions": 8468,
           "users": 6941,
-          "conversions": 1357,
+          "conversions": 1334,
           "bounce_rate": 29.55,
           "avg_duration": 477.67
         },
@@ -10517,14 +10517,14 @@
         "mobile": {
           "sessions": 41435,
           "users": 31178,
-          "conversions": 3638,
+          "conversions": 3620,
           "bounce_rate": 22.9,
           "avg_duration": 286.57
         },
         "desktop": {
           "sessions": 15782,
           "users": 12603,
-          "conversions": 1967,
+          "conversions": 1927,
           "bounce_rate": 28.93,
           "avg_duration": 444.74
         },
@@ -10540,21 +10540,21 @@
         "mobile": {
           "sessions": 40350,
           "users": 31242,
-          "conversions": 3942,
+          "conversions": 3929,
           "bounce_rate": 23.01,
           "avg_duration": 306.42
         },
         "desktop": {
           "sessions": 13690,
           "users": 10765,
-          "conversions": 1755,
+          "conversions": 1739,
           "bounce_rate": 29.63,
           "avg_duration": 465.14
         },
         "tablet": {
           "sessions": 259,
           "users": 235,
-          "conversions": 35,
+          "conversions": 34,
           "bounce_rate": 20.85,
           "avg_duration": 321.56
         }
@@ -10563,14 +10563,14 @@
         "mobile": {
           "sessions": 42862,
           "users": 32275,
-          "conversions": 3936,
+          "conversions": 3934,
           "bounce_rate": 25.61,
           "avg_duration": 295.04
         },
         "desktop": {
           "sessions": 13432,
           "users": 10509,
-          "conversions": 1852,
+          "conversions": 1849,
           "bounce_rate": 28.25,
           "avg_duration": 454.8
         },
@@ -10593,7 +10593,7 @@
         "mobile": {
           "sessions": 38200,
           "users": 28724,
-          "conversions": 3617,
+          "conversions": 3616,
           "bounce_rate": 23.92,
           "avg_duration": 287.08
         },
@@ -10616,7 +10616,7 @@
         "mobile": {
           "sessions": 42255,
           "users": 32437,
-          "conversions": 3750,
+          "conversions": 3745,
           "bounce_rate": 22.65,
           "avg_duration": 298.48
         },
@@ -10653,7 +10653,7 @@
         "desktop": {
           "sessions": 15566,
           "users": 12209,
-          "conversions": 2140,
+          "conversions": 2139,
           "bounce_rate": 25.93,
           "avg_duration": 494.64
         },
@@ -10676,14 +10676,14 @@
         "mobile": {
           "sessions": 45012,
           "users": 33922,
-          "conversions": 4070,
+          "conversions": 4065,
           "bounce_rate": 26.91,
           "avg_duration": 295.27
         },
         "desktop": {
           "sessions": 14866,
           "users": 11947,
-          "conversions": 2083,
+          "conversions": 2073,
           "bounce_rate": 25.52,
           "avg_duration": 508.79
         },
@@ -10706,14 +10706,14 @@
         "mobile": {
           "sessions": 48973,
           "users": 35158,
-          "conversions": 4225,
+          "conversions": 4220,
           "bounce_rate": 26.81,
           "avg_duration": 292.99
         },
         "desktop": {
           "sessions": 16224,
           "users": 12846,
-          "conversions": 2124,
+          "conversions": 2121,
           "bounce_rate": 28.88,
           "avg_duration": 458.79
         },
@@ -10729,7 +10729,7 @@
         "mobile": {
           "sessions": 50072,
           "users": 35953,
-          "conversions": 4331,
+          "conversions": 4330,
           "bounce_rate": 24.47,
           "avg_duration": 295.96
         },
@@ -10775,7 +10775,7 @@
         "mobile": {
           "sessions": 40833,
           "users": 30513,
-          "conversions": 3869,
+          "conversions": 3868,
           "bounce_rate": 22.72,
           "avg_duration": 296.47
         },
@@ -10798,7 +10798,7 @@
         "mobile": {
           "sessions": 42687,
           "users": 32662,
-          "conversions": 3717,
+          "conversions": 3716,
           "bounce_rate": 22.66,
           "avg_duration": 309.25
         },
@@ -10828,21 +10828,21 @@
         "mobile": {
           "sessions": 48706,
           "users": 36938,
-          "conversions": 4341,
+          "conversions": 4259,
           "bounce_rate": 27.5,
           "avg_duration": 287.78
         },
         "desktop": {
           "sessions": 14687,
           "users": 11715,
-          "conversions": 2111,
+          "conversions": 2060,
           "bounce_rate": 25.31,
           "avg_duration": 503.7
         },
         "tablet": {
           "sessions": 340,
           "users": 292,
-          "conversions": 35,
+          "conversions": 34,
           "bounce_rate": 23.53,
           "avg_duration": 394.56
         },
@@ -10858,14 +10858,14 @@
         "mobile": {
           "sessions": 44338,
           "users": 34125,
-          "conversions": 4264,
+          "conversions": 4075,
           "bounce_rate": 24.31,
           "avg_duration": 296.22
         },
         "desktop": {
           "sessions": 14547,
           "users": 11665,
-          "conversions": 2190,
+          "conversions": 2102,
           "bounce_rate": 25.46,
           "avg_duration": 483.13
         },
@@ -10888,21 +10888,21 @@
         "mobile": {
           "sessions": 44777,
           "users": 33480,
-          "conversions": 4295,
+          "conversions": 4130,
           "bounce_rate": 24.85,
           "avg_duration": 282.96
         },
         "desktop": {
           "sessions": 14270,
           "users": 11049,
-          "conversions": 2167,
+          "conversions": 2082,
           "bounce_rate": 26.85,
           "avg_duration": 483.84
         },
         "tablet": {
           "sessions": 306,
           "users": 261,
-          "conversions": 36,
+          "conversions": 35,
           "bounce_rate": 14.71,
           "avg_duration": 301.91
         }
@@ -10911,21 +10911,21 @@
         "mobile": {
           "sessions": 45068,
           "users": 34546,
-          "conversions": 4418,
+          "conversions": 4189,
           "bounce_rate": 24.87,
           "avg_duration": 302.72
         },
         "desktop": {
           "sessions": 14653,
           "users": 11669,
-          "conversions": 2092,
+          "conversions": 1989,
           "bounce_rate": 26.92,
           "avg_duration": 467.4
         },
         "tablet": {
           "sessions": 325,
           "users": 279,
-          "conversions": 36,
+          "conversions": 34,
           "bounce_rate": 16.0,
           "avg_duration": 353.79
         }
@@ -10934,21 +10934,21 @@
         "mobile": {
           "sessions": 44666,
           "users": 33624,
-          "conversions": 4286,
+          "conversions": 3971,
           "bounce_rate": 22.65,
           "avg_duration": 304.81
         },
         "desktop": {
           "sessions": 12799,
           "users": 9737,
-          "conversions": 2065,
+          "conversions": 1917,
           "bounce_rate": 25.83,
           "avg_duration": 526.32
         },
         "tablet": {
           "sessions": 268,
           "users": 232,
-          "conversions": 24,
+          "conversions": 23,
           "bounce_rate": 14.55,
           "avg_duration": 389.01
         }
@@ -10957,21 +10957,21 @@
         "mobile": {
           "sessions": 39598,
           "users": 28949,
-          "conversions": 3837,
+          "conversions": 3548,
           "bounce_rate": 23.44,
           "avg_duration": 277.71
         },
         "desktop": {
           "sessions": 6396,
           "users": 5158,
-          "conversions": 1279,
+          "conversions": 1178,
           "bounce_rate": 30.38,
           "avg_duration": 492.84
         },
         "tablet": {
           "sessions": 218,
           "users": 192,
-          "conversions": 23,
+          "conversions": 22,
           "bounce_rate": 15.14,
           "avg_duration": 332.54
         }
@@ -10980,21 +10980,21 @@
         "mobile": {
           "sessions": 37971,
           "users": 28961,
-          "conversions": 3650,
+          "conversions": 3379,
           "bounce_rate": 23.48,
           "avg_duration": 289.32
         },
         "desktop": {
           "sessions": 5734,
           "users": 4693,
-          "conversions": 1088,
+          "conversions": 1012,
           "bounce_rate": 29.25,
           "avg_duration": 521.72
         },
         "tablet": {
           "sessions": 238,
           "users": 201,
-          "conversions": 26,
+          "conversions": 24,
           "bounce_rate": 14.29,
           "avg_duration": 373.85
         }
@@ -11003,14 +11003,14 @@
         "mobile": {
           "sessions": 44277,
           "users": 34472,
-          "conversions": 4168,
+          "conversions": 3807,
           "bounce_rate": 25.38,
           "avg_duration": 293.08
         },
         "desktop": {
           "sessions": 15197,
           "users": 11706,
-          "conversions": 2114,
+          "conversions": 1923,
           "bounce_rate": 27.64,
           "avg_duration": 477.12
         },
@@ -11026,21 +11026,21 @@
         "mobile": {
           "sessions": 42333,
           "users": 32397,
-          "conversions": 6974,
+          "conversions": 3518,
           "bounce_rate": 24.17,
           "avg_duration": 291.0
         },
         "desktop": {
           "sessions": 13510,
           "users": 10492,
-          "conversions": 3606,
+          "conversions": 1922,
           "bounce_rate": 25.54,
           "avg_duration": 475.93
         },
         "tablet": {
           "sessions": 315,
           "users": 257,
-          "conversions": 79,
+          "conversions": 40,
           "bounce_rate": 16.19,
           "avg_duration": 417.17
         }
@@ -11049,21 +11049,21 @@
         "mobile": {
           "sessions": 41932,
           "users": 32114,
-          "conversions": 6383,
+          "conversions": 3233,
           "bounce_rate": 25.29,
           "avg_duration": 295.06
         },
         "desktop": {
           "sessions": 13708,
           "users": 11004,
-          "conversions": 3447,
+          "conversions": 1838,
           "bounce_rate": 25.12,
           "avg_duration": 483.1
         },
         "tablet": {
           "sessions": 314,
           "users": 255,
-          "conversions": 70,
+          "conversions": 34,
           "bounce_rate": 14.01,
           "avg_duration": 383.99
         }
@@ -11072,21 +11072,21 @@
         "mobile": {
           "sessions": 41111,
           "users": 31774,
-          "conversions": 7021,
+          "conversions": 3605,
           "bounce_rate": 23.71,
           "avg_duration": 295.41
         },
         "desktop": {
           "sessions": 13646,
           "users": 10790,
-          "conversions": 3465,
+          "conversions": 1838,
           "bounce_rate": 26.87,
           "avg_duration": 467.72
         },
         "tablet": {
           "sessions": 285,
           "users": 239,
-          "conversions": 75,
+          "conversions": 36,
           "bounce_rate": 18.25,
           "avg_duration": 361.05
         }
@@ -11095,21 +11095,21 @@
         "mobile": {
           "sessions": 40524,
           "users": 30556,
-          "conversions": 7070,
+          "conversions": 3618,
           "bounce_rate": 22.28,
           "avg_duration": 284.62
         },
         "desktop": {
           "sessions": 12295,
           "users": 9507,
-          "conversions": 3284,
+          "conversions": 1773,
           "bounce_rate": 26.59,
           "avg_duration": 490.01
         },
         "tablet": {
           "sessions": 269,
           "users": 233,
-          "conversions": 61,
+          "conversions": 31,
           "bounce_rate": 21.19,
           "avg_duration": 332.79
         }
@@ -11118,21 +11118,21 @@
         "mobile": {
           "sessions": 36506,
           "users": 28076,
-          "conversions": 6544,
+          "conversions": 3341,
           "bounce_rate": 24.43,
           "avg_duration": 282.83
         },
         "desktop": {
           "sessions": 6353,
           "users": 5133,
-          "conversions": 1952,
+          "conversions": 1067,
           "bounce_rate": 27.73,
           "avg_duration": 492.56
         },
         "tablet": {
           "sessions": 267,
           "users": 225,
-          "conversions": 51,
+          "conversions": 25,
           "bounce_rate": 15.36,
           "avg_duration": 325.53
         }
@@ -11141,21 +11141,21 @@
         "mobile": {
           "sessions": 39725,
           "users": 30027,
-          "conversions": 6538,
+          "conversions": 3364,
           "bounce_rate": 23.53,
           "avg_duration": 280.71
         },
         "desktop": {
           "sessions": 6167,
           "users": 5043,
-          "conversions": 1851,
+          "conversions": 1024,
           "bounce_rate": 28.98,
           "avg_duration": 516.14
         },
         "tablet": {
           "sessions": 259,
           "users": 226,
-          "conversions": 45,
+          "conversions": 23,
           "bounce_rate": 14.67,
           "avg_duration": 288.74
         }
@@ -11164,21 +11164,21 @@
         "mobile": {
           "sessions": 43709,
           "users": 34048,
-          "conversions": 6244,
+          "conversions": 2842,
           "bounce_rate": 27.15,
           "avg_duration": 282.67
         },
         "desktop": {
           "sessions": 15777,
           "users": 12275,
-          "conversions": 3270,
+          "conversions": 1619,
           "bounce_rate": 27.21,
           "avg_duration": 421.02
         },
         "tablet": {
           "sessions": 292,
           "users": 244,
-          "conversions": 37,
+          "conversions": 16,
           "bounce_rate": 17.47,
           "avg_duration": 360.58
         }
@@ -11187,21 +11187,21 @@
         "mobile": {
           "sessions": 41948,
           "users": 32953,
-          "conversions": 5609,
+          "conversions": 2460,
           "bounce_rate": 27.26,
           "avg_duration": 273.3
         },
         "desktop": {
           "sessions": 14458,
           "users": 11421,
-          "conversions": 3156,
+          "conversions": 1559,
           "bounce_rate": 26.57,
           "avg_duration": 449.03
         },
         "tablet": {
           "sessions": 276,
           "users": 242,
-          "conversions": 33,
+          "conversions": 15,
           "bounce_rate": 22.1,
           "avg_duration": 285.99
         }
@@ -11210,21 +11210,21 @@
         "mobile": {
           "sessions": 41559,
           "users": 32156,
-          "conversions": 7005,
+          "conversions": 3619,
           "bounce_rate": 24.72,
           "avg_duration": 281.16
         },
         "desktop": {
           "sessions": 13476,
           "users": 10535,
-          "conversions": 3647,
+          "conversions": 1972,
           "bounce_rate": 25.84,
           "avg_duration": 477.14
         },
         "tablet": {
           "sessions": 266,
           "users": 230,
-          "conversions": 65,
+          "conversions": 33,
           "bounce_rate": 16.54,
           "avg_duration": 316.34
         }
@@ -11233,46 +11233,46 @@
         "mobile": {
           "sessions": 40238,
           "users": 30934,
-          "conversions": 7089,
+          "conversions": 3633,
           "bounce_rate": 22.8,
           "avg_duration": 287.93
         },
         "desktop": {
           "sessions": 13230,
           "users": 10829,
-          "conversions": 3386,
+          "conversions": 1843,
           "bounce_rate": 26.49,
           "avg_duration": 450.04
         },
         "tablet": {
           "sessions": 269,
           "users": 222,
-          "conversions": 45,
+          "conversions": 23,
           "bounce_rate": 21.93,
           "avg_duration": 284.97
         }
       },
       "2026-05-22": {
         "mobile": {
-          "sessions": 32340,
-          "users": 25726,
-          "conversions": 3801,
-          "bounce_rate": 49.18,
-          "avg_duration": 748.34
+          "sessions": 33031,
+          "users": 26298,
+          "conversions": 2564,
+          "bounce_rate": 48.85,
+          "avg_duration": 753.25
         },
         "desktop": {
-          "sessions": 10965,
-          "users": 9220,
-          "conversions": 1770,
-          "bounce_rate": 50.65,
-          "avg_duration": 1408.12
+          "sessions": 11081,
+          "users": 9312,
+          "conversions": 1276,
+          "bounce_rate": 50.52,
+          "avg_duration": 1417.15
         },
         "tablet": {
-          "sessions": 190,
-          "users": 169,
-          "conversions": 17,
-          "bounce_rate": 43.68,
-          "avg_duration": 889.69
+          "sessions": 197,
+          "users": 174,
+          "conversions": 12,
+          "bounce_rate": 43.15,
+          "avg_duration": 916.9
         },
         "smart tv": {
           "sessions": 1,
@@ -11289,14 +11289,14 @@
       "type": "returning",
       "sessions": 1763403,
       "users": 1249373,
-      "conversions": 220257,
+      "conversions": 219799,
       "bounce_rate": 17.9
     },
     {
       "type": "new",
       "sessions": 1333303,
       "users": 1336211,
-      "conversions": 102899,
+      "conversions": 102655,
       "bounce_rate": 17.09
     },
     {
@@ -11421,12 +11421,12 @@
         "returning": {
           "sessions": 24367,
           "users": 17904,
-          "conversions": 2399
+          "conversions": 2397
         },
         "new": {
           "sessions": 20200,
           "users": 20059,
-          "conversions": 1154
+          "conversions": 1150
         },
         "(not set)": {
           "sessions": 2992,
@@ -11438,7 +11438,7 @@
         "returning": {
           "sessions": 23808,
           "users": 17358,
-          "conversions": 2657
+          "conversions": 2652
         },
         "new": {
           "sessions": 20140,
@@ -11455,7 +11455,7 @@
         "returning": {
           "sessions": 25152,
           "users": 18247,
-          "conversions": 2729
+          "conversions": 2727
         },
         "new": {
           "sessions": 22286,
@@ -11472,7 +11472,7 @@
         "returning": {
           "sessions": 25268,
           "users": 18131,
-          "conversions": 3032
+          "conversions": 3028
         },
         "new": {
           "sessions": 19405,
@@ -11489,7 +11489,7 @@
         "returning": {
           "sessions": 27019,
           "users": 19270,
-          "conversions": 3265
+          "conversions": 3260
         },
         "new": {
           "sessions": 22767,
@@ -11528,7 +11528,7 @@
         "new": {
           "sessions": 17348,
           "users": 17580,
-          "conversions": 1278
+          "conversions": 1277
         },
         "(not set)": {
           "sessions": 2640,
@@ -11540,7 +11540,7 @@
         "returning": {
           "sessions": 30118,
           "users": 21649,
-          "conversions": 3367
+          "conversions": 3366
         },
         "new": {
           "sessions": 24944,
@@ -11557,7 +11557,7 @@
         "returning": {
           "sessions": 27614,
           "users": 19770,
-          "conversions": 3130
+          "conversions": 3126
         },
         "new": {
           "sessions": 22795,
@@ -11574,12 +11574,12 @@
         "returning": {
           "sessions": 26428,
           "users": 18834,
-          "conversions": 3382
+          "conversions": 3378
         },
         "new": {
           "sessions": 19774,
           "users": 20365,
-          "conversions": 1582
+          "conversions": 1581
         },
         "(not set)": {
           "sessions": 3951,
@@ -11591,12 +11591,12 @@
         "returning": {
           "sessions": 28355,
           "users": 19983,
-          "conversions": 3489
+          "conversions": 3486
         },
         "new": {
           "sessions": 20281,
           "users": 20951,
-          "conversions": 1683
+          "conversions": 1681
         },
         "(not set)": {
           "sessions": 3589,
@@ -11613,7 +11613,7 @@
         "new": {
           "sessions": 20026,
           "users": 19329,
-          "conversions": 1556
+          "conversions": 1555
         },
         "(not set)": {
           "sessions": 3852,
@@ -11625,7 +11625,7 @@
         "returning": {
           "sessions": 22681,
           "users": 16310,
-          "conversions": 2911
+          "conversions": 2910
         },
         "new": {
           "sessions": 20159,
@@ -11642,7 +11642,7 @@
         "returning": {
           "sessions": 23216,
           "users": 16754,
-          "conversions": 2744
+          "conversions": 2743
         },
         "new": {
           "sessions": 20291,
@@ -11676,7 +11676,7 @@
         "returning": {
           "sessions": 27149,
           "users": 19361,
-          "conversions": 3252
+          "conversions": 3244
         },
         "new": {
           "sessions": 21423,
@@ -11693,7 +11693,7 @@
         "returning": {
           "sessions": 27530,
           "users": 19401,
-          "conversions": 3347
+          "conversions": 3341
         },
         "new": {
           "sessions": 21986,
@@ -11710,12 +11710,12 @@
         "returning": {
           "sessions": 29208,
           "users": 20675,
-          "conversions": 3416
+          "conversions": 3412
         },
         "new": {
           "sessions": 21200,
           "users": 21145,
-          "conversions": 1559
+          "conversions": 1556
         },
         "(not set)": {
           "sessions": 4787,
@@ -11727,12 +11727,12 @@
         "returning": {
           "sessions": 27499,
           "users": 19353,
-          "conversions": 3427
+          "conversions": 3424
         },
         "new": {
           "sessions": 20749,
           "users": 20821,
-          "conversions": 1558
+          "conversions": 1555
         },
         "(not set)": {
           "sessions": 3706,
@@ -11744,7 +11744,7 @@
         "returning": {
           "sessions": 21194,
           "users": 15416,
-          "conversions": 2647
+          "conversions": 2646
         },
         "new": {
           "sessions": 15348,
@@ -11761,12 +11761,12 @@
         "returning": {
           "sessions": 23955,
           "users": 17561,
-          "conversions": 2872
+          "conversions": 2871
         },
         "new": {
           "sessions": 21295,
           "users": 21331,
-          "conversions": 1332
+          "conversions": 1331
         },
         "(not set)": {
           "sessions": 3469,
@@ -11778,7 +11778,7 @@
         "returning": {
           "sessions": 27647,
           "users": 20106,
-          "conversions": 3398
+          "conversions": 3396
         },
         "new": {
           "sessions": 21969,
@@ -11795,12 +11795,12 @@
         "returning": {
           "sessions": 26889,
           "users": 18945,
-          "conversions": 3265
+          "conversions": 3261
         },
         "new": {
           "sessions": 20710,
           "users": 20543,
-          "conversions": 1557
+          "conversions": 1554
         },
         "(not set)": {
           "sessions": 3677,
@@ -11812,7 +11812,7 @@
         "returning": {
           "sessions": 28855,
           "users": 19692,
-          "conversions": 3438
+          "conversions": 3436
         },
         "new": {
           "sessions": 20063,
@@ -11829,12 +11829,12 @@
         "returning": {
           "sessions": 25493,
           "users": 18253,
-          "conversions": 3267
+          "conversions": 3261
         },
         "new": {
           "sessions": 18086,
           "users": 18398,
-          "conversions": 1464
+          "conversions": 1463
         },
         "(not set)": {
           "sessions": 4090,
@@ -11846,12 +11846,12 @@
         "returning": {
           "sessions": 27987,
           "users": 19010,
-          "conversions": 3343
+          "conversions": 3339
         },
         "new": {
           "sessions": 18046,
           "users": 18608,
-          "conversions": 1549
+          "conversions": 1546
         },
         "(not set)": {
           "sessions": 3959,
@@ -11863,7 +11863,7 @@
         "returning": {
           "sessions": 21782,
           "users": 15430,
-          "conversions": 2768
+          "conversions": 2766
         },
         "new": {
           "sessions": 15415,
@@ -11880,12 +11880,12 @@
         "returning": {
           "sessions": 22786,
           "users": 15964,
-          "conversions": 2760
+          "conversions": 2759
         },
         "new": {
           "sessions": 17086,
           "users": 16845,
-          "conversions": 1275
+          "conversions": 1274
         },
         "(not set)": {
           "sessions": 3215,
@@ -11897,12 +11897,12 @@
         "returning": {
           "sessions": 27770,
           "users": 19862,
-          "conversions": 3414
+          "conversions": 3413
         },
         "new": {
           "sessions": 21065,
           "users": 20595,
-          "conversions": 1744
+          "conversions": 1743
         },
         "(not set)": {
           "sessions": 3773,
@@ -11914,12 +11914,12 @@
         "returning": {
           "sessions": 26586,
           "users": 19034,
-          "conversions": 3332
+          "conversions": 3328
         },
         "new": {
           "sessions": 19454,
           "users": 19110,
-          "conversions": 1614
+          "conversions": 1612
         },
         "(not set)": {
           "sessions": 3494,
@@ -11931,7 +11931,7 @@
         "returning": {
           "sessions": 26346,
           "users": 18456,
-          "conversions": 3324
+          "conversions": 3322
         },
         "new": {
           "sessions": 18647,
@@ -11948,12 +11948,12 @@
         "returning": {
           "sessions": 28669,
           "users": 19803,
-          "conversions": 3519
+          "conversions": 3515
         },
         "new": {
           "sessions": 21210,
           "users": 21373,
-          "conversions": 1684
+          "conversions": 1680
         },
         "(not set)": {
           "sessions": 3873,
@@ -11965,12 +11965,12 @@
         "returning": {
           "sessions": 27666,
           "users": 19661,
-          "conversions": 3568
+          "conversions": 3565
         },
         "new": {
           "sessions": 21044,
           "users": 20638,
-          "conversions": 1629
+          "conversions": 1627
         },
         "(not set)": {
           "sessions": 3989,
@@ -11982,12 +11982,12 @@
         "returning": {
           "sessions": 21658,
           "users": 15833,
-          "conversions": 2938
+          "conversions": 2934
         },
         "new": {
           "sessions": 15551,
           "users": 16230,
-          "conversions": 1427
+          "conversions": 1426
         },
         "(not set)": {
           "sessions": 3044,
@@ -11999,12 +11999,12 @@
         "returning": {
           "sessions": 23753,
           "users": 17219,
-          "conversions": 2946
+          "conversions": 2940
         },
         "new": {
           "sessions": 17635,
           "users": 17459,
-          "conversions": 1406
+          "conversions": 1405
         },
         "(not set)": {
           "sessions": 3025,
@@ -12016,12 +12016,12 @@
         "returning": {
           "sessions": 34452,
           "users": 24205,
-          "conversions": 4137
+          "conversions": 4135
         },
         "new": {
           "sessions": 25717,
           "users": 26163,
-          "conversions": 1873
+          "conversions": 1868
         },
         "(not set)": {
           "sessions": 4633,
@@ -12033,12 +12033,12 @@
         "returning": {
           "sessions": 34535,
           "users": 23632,
-          "conversions": 3825
+          "conversions": 3821
         },
         "new": {
           "sessions": 22835,
           "users": 22523,
-          "conversions": 1771
+          "conversions": 1767
         },
         "(not set)": {
           "sessions": 4309,
@@ -12050,12 +12050,12 @@
         "returning": {
           "sessions": 34713,
           "users": 23581,
-          "conversions": 3746
+          "conversions": 3744
         },
         "new": {
           "sessions": 22514,
           "users": 22618,
-          "conversions": 1691
+          "conversions": 1688
         },
         "(not set)": {
           "sessions": 3875,
@@ -12067,12 +12067,12 @@
         "returning": {
           "sessions": 29553,
           "users": 19817,
-          "conversions": 3396
+          "conversions": 3385
         },
         "new": {
           "sessions": 20613,
           "users": 20823,
-          "conversions": 1546
+          "conversions": 1543
         },
         "(not set)": {
           "sessions": 2800,
@@ -12084,12 +12084,12 @@
         "returning": {
           "sessions": 22201,
           "users": 15276,
-          "conversions": 2501
+          "conversions": 2495
         },
         "new": {
           "sessions": 15583,
           "users": 15751,
-          "conversions": 1124
+          "conversions": 1121
         },
         "(not set)": {
           "sessions": 2559,
@@ -12101,12 +12101,12 @@
         "returning": {
           "sessions": 22200,
           "users": 15581,
-          "conversions": 2748
+          "conversions": 2745
         },
         "new": {
           "sessions": 15339,
           "users": 15157,
-          "conversions": 1165
+          "conversions": 1161
         },
         "(not set)": {
           "sessions": 2528,
@@ -12118,12 +12118,12 @@
         "returning": {
           "sessions": 23165,
           "users": 16913,
-          "conversions": 2723
+          "conversions": 2721
         },
         "new": {
           "sessions": 16902,
           "users": 16849,
-          "conversions": 1257
+          "conversions": 1253
         },
         "(not set)": {
           "sessions": 2675,
@@ -12135,12 +12135,12 @@
         "returning": {
           "sessions": 27924,
           "users": 20229,
-          "conversions": 3518
+          "conversions": 3509
         },
         "new": {
           "sessions": 21272,
           "users": 21146,
-          "conversions": 1592
+          "conversions": 1588
         },
         "(not set)": {
           "sessions": 3467,
@@ -12152,12 +12152,12 @@
         "returning": {
           "sessions": 25553,
           "users": 18215,
-          "conversions": 3366
+          "conversions": 3359
         },
         "new": {
           "sessions": 19163,
           "users": 19447,
-          "conversions": 1578
+          "conversions": 1574
         },
         "(not set)": {
           "sessions": 3184,
@@ -12169,12 +12169,12 @@
         "returning": {
           "sessions": 26221,
           "users": 18066,
-          "conversions": 3475
+          "conversions": 3466
         },
         "new": {
           "sessions": 19152,
           "users": 18906,
-          "conversions": 1663
+          "conversions": 1656
         },
         "(not set)": {
           "sessions": 3050,
@@ -12186,12 +12186,12 @@
         "returning": {
           "sessions": 26644,
           "users": 18429,
-          "conversions": 3609
+          "conversions": 3599
         },
         "new": {
           "sessions": 19208,
           "users": 19225,
-          "conversions": 1705
+          "conversions": 1692
         },
         "(not set)": {
           "sessions": 3619,
@@ -12203,12 +12203,12 @@
         "returning": {
           "sessions": 25200,
           "users": 18345,
-          "conversions": 3396
+          "conversions": 3381
         },
         "new": {
           "sessions": 19065,
           "users": 19133,
-          "conversions": 1599
+          "conversions": 1595
         },
         "(not set)": {
           "sessions": 3197,
@@ -12220,7 +12220,7 @@
         "returning": {
           "sessions": 20852,
           "users": 14914,
-          "conversions": 2977
+          "conversions": 2970
         },
         "new": {
           "sessions": 15906,
@@ -12237,12 +12237,12 @@
         "returning": {
           "sessions": 20945,
           "users": 15458,
-          "conversions": 2860
+          "conversions": 2854
         },
         "new": {
           "sessions": 16984,
           "users": 16861,
-          "conversions": 1331
+          "conversions": 1327
         },
         "(not set)": {
           "sessions": 2990,
@@ -12254,12 +12254,12 @@
         "returning": {
           "sessions": 28796,
           "users": 20238,
-          "conversions": 3635
+          "conversions": 3618
         },
         "new": {
           "sessions": 21572,
           "users": 21507,
-          "conversions": 1711
+          "conversions": 1706
         },
         "(not set)": {
           "sessions": 4290,
@@ -12271,12 +12271,12 @@
         "returning": {
           "sessions": 27376,
           "users": 19630,
-          "conversions": 3688
+          "conversions": 3667
         },
         "new": {
           "sessions": 20760,
           "users": 20553,
-          "conversions": 1743
+          "conversions": 1737
         },
         "(not set)": {
           "sessions": 4015,
@@ -12288,12 +12288,12 @@
         "returning": {
           "sessions": 28483,
           "users": 19697,
-          "conversions": 3935
+          "conversions": 3917
         },
         "new": {
           "sessions": 20238,
           "users": 20172,
-          "conversions": 1810
+          "conversions": 1799
         },
         "(not set)": {
           "sessions": 3971,
@@ -12305,12 +12305,12 @@
         "returning": {
           "sessions": 30329,
           "users": 21623,
-          "conversions": 4027
+          "conversions": 4011
         },
         "new": {
           "sessions": 20866,
           "users": 21451,
-          "conversions": 1876
+          "conversions": 1864
         },
         "(not set)": {
           "sessions": 4176,
@@ -12322,12 +12322,12 @@
         "returning": {
           "sessions": 31466,
           "users": 21285,
-          "conversions": 3924
+          "conversions": 3903
         },
         "new": {
           "sessions": 22449,
           "users": 22512,
-          "conversions": 1952
+          "conversions": 1937
         },
         "(not set)": {
           "sessions": 4498,
@@ -12339,12 +12339,12 @@
         "returning": {
           "sessions": 22502,
           "users": 15858,
-          "conversions": 2880
+          "conversions": 2856
         },
         "new": {
           "sessions": 15881,
           "users": 15930,
-          "conversions": 1385
+          "conversions": 1371
         },
         "(not set)": {
           "sessions": 3825,
@@ -12356,12 +12356,12 @@
         "returning": {
           "sessions": 23314,
           "users": 16366,
-          "conversions": 3023
+          "conversions": 3005
         },
         "new": {
           "sessions": 16879,
           "users": 17024,
-          "conversions": 1433
+          "conversions": 1418
         },
         "(not set)": {
           "sessions": 3467,
@@ -12373,12 +12373,12 @@
         "returning": {
           "sessions": 29417,
           "users": 20558,
-          "conversions": 4070
+          "conversions": 4045
         },
         "new": {
           "sessions": 22011,
           "users": 22877,
-          "conversions": 2002
+          "conversions": 1990
         },
         "(not set)": {
           "sessions": 4237,
@@ -12390,12 +12390,12 @@
         "returning": {
           "sessions": 26100,
           "users": 18806,
-          "conversions": 3492
+          "conversions": 3461
         },
         "new": {
           "sessions": 20091,
           "users": 20276,
-          "conversions": 1728
+          "conversions": 1712
         },
         "(not set)": {
           "sessions": 4178,
@@ -12407,12 +12407,12 @@
         "returning": {
           "sessions": 29566,
           "users": 20326,
-          "conversions": 3782
+          "conversions": 3749
         },
         "new": {
           "sessions": 23360,
           "users": 23338,
-          "conversions": 1846
+          "conversions": 1821
         },
         "(not set)": {
           "sessions": 5066,
@@ -12424,12 +12424,12 @@
         "returning": {
           "sessions": 27857,
           "users": 20087,
-          "conversions": 3901
+          "conversions": 3882
         },
         "new": {
           "sessions": 21799,
           "users": 21805,
-          "conversions": 1831
+          "conversions": 1820
         },
         "(not set)": {
           "sessions": 5027,
@@ -12441,12 +12441,12 @@
         "returning": {
           "sessions": 28806,
           "users": 20352,
-          "conversions": 4112
+          "conversions": 4108
         },
         "new": {
           "sessions": 21808,
           "users": 21963,
-          "conversions": 1706
+          "conversions": 1705
         },
         "(not set)": {
           "sessions": 5552,
@@ -12458,7 +12458,7 @@
         "returning": {
           "sessions": 24045,
           "users": 16461,
-          "conversions": 3270
+          "conversions": 3269
         },
         "new": {
           "sessions": 17525,
@@ -12475,12 +12475,12 @@
         "returning": {
           "sessions": 25473,
           "users": 17917,
-          "conversions": 3367
+          "conversions": 3363
         },
         "new": {
           "sessions": 19662,
           "users": 19590,
-          "conversions": 1529
+          "conversions": 1528
         },
         "(not set)": {
           "sessions": 4476,
@@ -12492,7 +12492,7 @@
         "returning": {
           "sessions": 31766,
           "users": 22044,
-          "conversions": 4263
+          "conversions": 4262
         },
         "new": {
           "sessions": 23936,
@@ -12509,12 +12509,12 @@
         "returning": {
           "sessions": 30389,
           "users": 21874,
-          "conversions": 4205
+          "conversions": 4193
         },
         "new": {
           "sessions": 23391,
           "users": 23575,
-          "conversions": 1975
+          "conversions": 1972
         }
       }
     }
@@ -15548,36 +15548,36 @@
     {
       "step": "Busca",
       "event": "search",
-      "event_count": 7916936,
-      "users": 1389787,
+      "event_count": 7918628,
+      "users": 1390099,
       "drop_rate": 0
     },
     {
       "step": "Selecionou item",
       "event": "select_item",
-      "event_count": 259437,
-      "users": 114795,
+      "event_count": 259534,
+      "users": 114812,
       "drop_rate": 91.7
     },
     {
       "step": "Adicionou ao carrinho",
       "event": "add_to_cart",
-      "event_count": 972572,
-      "users": 389967,
+      "event_count": 972735,
+      "users": 390053,
       "drop_rate": -239.7
     },
     {
       "step": "Iniciou checkout",
       "event": "begin_checkout",
-      "event_count": 300246,
-      "users": 139844,
+      "event_count": 300371,
+      "users": 139866,
       "drop_rate": 64.1
     },
     {
       "step": "Compra",
       "event": "purchase",
-      "event_count": 502538,
-      "users": 273388,
+      "event_count": 502618,
+      "users": 273409,
       "drop_rate": -95.5
     }
   ],
@@ -17649,24 +17649,24 @@
       },
       "2026-05-22": {
         "search": {
-          "event_count": 64227,
-          "users": 21255
+          "event_count": 65919,
+          "users": 21674
         },
         "select_item": {
-          "event_count": 4438,
-          "users": 2558
+          "event_count": 4535,
+          "users": 2602
         },
         "add_to_cart": {
-          "event_count": 6831,
-          "users": 4053
+          "event_count": 6994,
+          "users": 4141
         },
         "begin_checkout": {
-          "event_count": 4488,
-          "users": 2759
+          "event_count": 4613,
+          "users": 2827
         },
         "purchase": {
-          "event_count": 5588,
-          "users": 3255
+          "event_count": 5668,
+          "users": 3317
         }
       }
     }
@@ -17943,17 +17943,17 @@
           "google / organic": {
             "sessions": 3375,
             "users": 2699,
-            "conversions": 191
+            "conversions": 188
           },
           "(direct) / (none)": {
             "sessions": 1477,
             "users": 1179,
-            "conversions": 234
+            "conversions": 232
           },
           "outros / —": {
             "sessions": 763,
             "users": 639,
-            "conversions": 43
+            "conversions": 42
           },
           "pushnews / pushnotification": {
             "sessions": 282,
@@ -18038,7 +18038,7 @@
           "google / cpc": {
             "sessions": 6800,
             "users": 5400,
-            "conversions": 797
+            "conversions": 794
           },
           "google / organic": {
             "sessions": 2400,
@@ -18048,7 +18048,7 @@
           "(direct) / (none)": {
             "sessions": 1438,
             "users": 1128,
-            "conversions": 241
+            "conversions": 240
           },
           "pushnews / pushnotification": {
             "sessions": 478,
@@ -18058,7 +18058,7 @@
           "outros / —": {
             "sessions": 407,
             "users": 324,
-            "conversions": 29
+            "conversions": 28
           },
           "(not set) / (not set)": {
             "sessions": 26,
@@ -18146,7 +18146,7 @@
           "google / organic": {
             "sessions": 1280,
             "users": 986,
-            "conversions": 119
+            "conversions": 118
           },
           "pushnews / pushnotification": {
             "sessions": 509,
@@ -18156,7 +18156,7 @@
           "outros / —": {
             "sessions": 642,
             "users": 528,
-            "conversions": 35
+            "conversions": 34
           },
           "(not set) / (not set)": {
             "sessions": 32,
@@ -18246,7 +18246,7 @@
           "(direct) / (none)": {
             "sessions": 1432,
             "users": 1099,
-            "conversions": 263
+            "conversions": 262
           },
           "google / organic": {
             "sessions": 1344,
@@ -18256,7 +18256,7 @@
           "outros / —": {
             "sessions": 705,
             "users": 584,
-            "conversions": 47
+            "conversions": 44
           },
           "pushnews / pushnotification": {
             "sessions": 116,
@@ -18307,7 +18307,7 @@
           "google / organic": {
             "sessions": 6445,
             "users": 5172,
-            "conversions": 394
+            "conversions": 392
           },
           "(direct) / (none)": {
             "sessions": 3832,
@@ -18354,7 +18354,7 @@
           "outros / —": {
             "sessions": 481,
             "users": 383,
-            "conversions": 37
+            "conversions": 34
           },
           "(not set) / (not set)": {
             "sessions": 25,
@@ -18505,7 +18505,7 @@
           "(direct) / (none)": {
             "sessions": 3424,
             "users": 2713,
-            "conversions": 746
+            "conversions": 745
           },
           "outros / —": {
             "sessions": 1770,
@@ -18647,7 +18647,7 @@
           "outros / —": {
             "sessions": 670,
             "users": 531,
-            "conversions": 57
+            "conversions": 56
           },
           "(not set) / (not set)": {
             "sessions": 26,
@@ -18742,7 +18742,7 @@
           "(direct) / (none)": {
             "sessions": 1468,
             "users": 1160,
-            "conversions": 239
+            "conversions": 237
           },
           "pushnews / pushnotification": {
             "sessions": 567,
@@ -18752,7 +18752,7 @@
           "outros / —": {
             "sessions": 714,
             "users": 583,
-            "conversions": 46
+            "conversions": 44
           },
           "(not set) / (not set)": {
             "sessions": 21,
@@ -18803,7 +18803,7 @@
           "google / organic": {
             "sessions": 6588,
             "users": 5185,
-            "conversions": 417
+            "conversions": 413
           },
           "(direct) / (none)": {
             "sessions": 3962,
@@ -18840,7 +18840,7 @@
           "google / organic": {
             "sessions": 1447,
             "users": 1111,
-            "conversions": 147
+            "conversions": 146
           },
           "pushnews / pushnotification": {
             "sessions": 532,
@@ -18901,12 +18901,12 @@
           "google / organic": {
             "sessions": 6748,
             "users": 5184,
-            "conversions": 387
+            "conversions": 386
           },
           "(direct) / (none)": {
             "sessions": 3987,
             "users": 3153,
-            "conversions": 974
+            "conversions": 973
           },
           "(not set) / (not set)": {
             "sessions": 1249,
@@ -18938,7 +18938,7 @@
           "google / organic": {
             "sessions": 1380,
             "users": 1070,
-            "conversions": 153
+            "conversions": 151
           },
           "(not set) / (not set)": {
             "sessions": 369,
@@ -18948,7 +18948,7 @@
           "outros / —": {
             "sessions": 825,
             "users": 691,
-            "conversions": 50
+            "conversions": 49
           },
           "pushnews / pushnotification": {
             "sessions": 117,
@@ -19004,7 +19004,7 @@
           "(direct) / (none)": {
             "sessions": 3989,
             "users": 3151,
-            "conversions": 917
+            "conversions": 916
           },
           "pushnews / pushnotification": {
             "sessions": 1167,
@@ -19124,7 +19124,7 @@
           "(direct) / (none)": {
             "sessions": 1116,
             "users": 983,
-            "conversions": 163
+            "conversions": 162
           },
           "google / organic": {
             "sessions": 713,
@@ -19227,7 +19227,7 @@
           "google / organic": {
             "sessions": 741,
             "users": 613,
-            "conversions": 108
+            "conversions": 107
           },
           "outros / —": {
             "sessions": 491,
@@ -19423,12 +19423,12 @@
           "google / organic": {
             "sessions": 1408,
             "users": 1117,
-            "conversions": 148
+            "conversions": 146
           },
           "outros / —": {
             "sessions": 1129,
             "users": 884,
-            "conversions": 191
+            "conversions": 185
           },
           "pushnews / pushnotification": {
             "sessions": 516,
@@ -19486,12 +19486,12 @@
           "google / cpc": {
             "sessions": 25114,
             "users": 21126,
-            "conversions": 1629
+            "conversions": 1628
           },
           "google / organic": {
             "sessions": 5647,
             "users": 4623,
-            "conversions": 334
+            "conversions": 332
           },
           "(direct) / (none)": {
             "sessions": 3726,
@@ -19523,7 +19523,7 @@
           "google / organic": {
             "sessions": 1648,
             "users": 1298,
-            "conversions": 163
+            "conversions": 162
           },
           "(direct) / (none)": {
             "sessions": 1548,
@@ -19533,7 +19533,7 @@
           "outros / —": {
             "sessions": 1321,
             "users": 1089,
-            "conversions": 191
+            "conversions": 189
           },
           "pushnews / pushnotification": {
             "sessions": 506,
@@ -19589,7 +19589,7 @@
           "google / organic": {
             "sessions": 6958,
             "users": 5466,
-            "conversions": 385
+            "conversions": 383
           },
           "(direct) / (none)": {
             "sessions": 4371,
@@ -19621,7 +19621,7 @@
           "google / organic": {
             "sessions": 1721,
             "users": 1336,
-            "conversions": 185
+            "conversions": 181
           },
           "(direct) / (none)": {
             "sessions": 1565,
@@ -19631,7 +19631,7 @@
           "outros / —": {
             "sessions": 1707,
             "users": 1378,
-            "conversions": 171
+            "conversions": 170
           },
           "pushnews / pushnotification": {
             "sessions": 119,
@@ -19714,17 +19714,17 @@
           "google / organic": {
             "sessions": 1738,
             "users": 1368,
-            "conversions": 174
+            "conversions": 172
           },
           "(direct) / (none)": {
             "sessions": 1526,
             "users": 1282,
-            "conversions": 244
+            "conversions": 243
           },
           "outros / —": {
             "sessions": 1009,
             "users": 755,
-            "conversions": 178
+            "conversions": 176
           },
           "pushnews / pushnotification": {
             "sessions": 86,
@@ -19751,7 +19751,7 @@
           "(direct) / (none)": {
             "sessions": 14,
             "users": 10,
-            "conversions": 3
+            "conversions": 2
           },
           "outros / —": {
             "sessions": 15,
@@ -19780,7 +19780,7 @@
           "google / organic": {
             "sessions": 6561,
             "users": 5247,
-            "conversions": 435
+            "conversions": 434
           },
           "(direct) / (none)": {
             "sessions": 3700,
@@ -19878,7 +19878,7 @@
           "google / organic": {
             "sessions": 7732,
             "users": 6189,
-            "conversions": 452
+            "conversions": 451
           },
           "(direct) / (none)": {
             "sessions": 3665,
@@ -19915,7 +19915,7 @@
           "google / organic": {
             "sessions": 1051,
             "users": 853,
-            "conversions": 113
+            "conversions": 112
           },
           "pushnews / pushnotification": {
             "sessions": 206,
@@ -20008,7 +20008,7 @@
           "google / organic": {
             "sessions": 2157,
             "users": 1679,
-            "conversions": 198
+            "conversions": 196
           },
           "(direct) / (none)": {
             "sessions": 1495,
@@ -20079,7 +20079,7 @@
           "(direct) / (none)": {
             "sessions": 4347,
             "users": 3361,
-            "conversions": 983
+            "conversions": 982
           },
           "pushnews / pushnotification": {
             "sessions": 1595,
@@ -20106,12 +20106,12 @@
           "google / organic": {
             "sessions": 1999,
             "users": 1548,
-            "conversions": 207
+            "conversions": 204
           },
           "(direct) / (none)": {
             "sessions": 1570,
             "users": 1276,
-            "conversions": 230
+            "conversions": 227
           },
           "pushnews / pushnotification": {
             "sessions": 489,
@@ -20211,7 +20211,7 @@
           "google / organic": {
             "sessions": 1980,
             "users": 1551,
-            "conversions": 216
+            "conversions": 215
           },
           "(direct) / (none)": {
             "sessions": 1615,
@@ -20226,7 +20226,7 @@
           "outros / —": {
             "sessions": 665,
             "users": 467,
-            "conversions": 112
+            "conversions": 111
           },
           "(not set) / (not set)": {
             "sessions": 24,
@@ -20280,141 +20280,141 @@
       {
         "origin": "BELO HORIZONTE - MG",
         "destination": "RIO DE JANEIRO - RJ",
-        "purchases": 130905,
-        "users": 12955
+        "purchases": 130918,
+        "users": 12961
       },
       {
         "origin": "RIO DE JANEIRO - RJ",
         "destination": "BELO HORIZONTE - MG",
-        "purchases": 123454,
-        "users": 11921
+        "purchases": 123477,
+        "users": 11923
       },
       {
         "origin": "FORTALEZA - CE",
         "destination": "SOBRAL - CE",
-        "purchases": 95146,
-        "users": 14009
+        "purchases": 95168,
+        "users": 14011
       },
       {
         "origin": "FORTALEZA - CE",
         "destination": "NATAL - RN",
-        "purchases": 89936,
-        "users": 13049
+        "purchases": 89950,
+        "users": 13051
       },
       {
         "origin": "SOBRAL - CE",
         "destination": "FORTALEZA - CE",
-        "purchases": 89253,
+        "purchases": 89268,
         "users": 13549
       },
       {
         "origin": "NATAL - RN",
         "destination": "FORTALEZA - CE",
-        "purchases": 87902,
-        "users": 11253
+        "purchases": 87928,
+        "users": 11255
       },
       {
         "origin": "TERESINA - PI",
         "destination": "FORTALEZA - CE",
-        "purchases": 78106,
-        "users": 11395
+        "purchases": 78146,
+        "users": 11405
       },
       {
         "origin": "RIO DE JANEIRO - RJ - TODOS",
         "destination": "BELO HORIZONTE - MG - TODOS",
-        "purchases": 74071,
-        "users": 27281
+        "purchases": 74116,
+        "users": 27285
       },
       {
         "origin": "JUIZ DE FORA - MG",
         "destination": "RIO DE JANEIRO - RJ",
-        "purchases": 68323,
+        "purchases": 68336,
         "users": 9189
       },
       {
         "origin": "FORTALEZA - CE",
         "destination": "RECIFE - PE",
-        "purchases": 67849,
-        "users": 10301
+        "purchases": 67868,
+        "users": 10305
       },
       {
         "origin": "TERESINA - PI",
         "destination": "PARNAIBA - PI",
-        "purchases": 65901,
-        "users": 10232
+        "purchases": 65907,
+        "users": 10234
       },
       {
         "origin": "FORTALEZA - CE",
         "destination": "JUAZEIRO DO NORTE - CE",
-        "purchases": 65419,
+        "purchases": 65446,
         "users": 9545
       },
       {
         "origin": "RIO DE JANEIRO - RJ",
         "destination": "JUIZ DE FORA - MG",
-        "purchases": 64851,
+        "purchases": 64858,
         "users": 9253
       },
       {
         "origin": "SHOPPING INDEPENDENCIA - MG (term adicional de JUIZ DE FORA)",
         "destination": "RIO DE JANEIRO - RJ",
-        "purchases": 61843,
-        "users": 8876
+        "purchases": 61857,
+        "users": 8880
       },
       {
         "origin": "JUAZEIRO DO NORTE - CE",
         "destination": "FORTALEZA - CE",
-        "purchases": 61669,
+        "purchases": 61676,
         "users": 9133
       },
       {
         "origin": "RECIFE - PE",
         "destination": "FORTALEZA - CE",
-        "purchases": 60723,
-        "users": 8625
+        "purchases": 60735,
+        "users": 8629
       },
       {
         "origin": "PARNAIBA - PI",
         "destination": "TERESINA - PI",
-        "purchases": 59178,
+        "purchases": 59191,
         "users": 8845
       }
     ],
     "top_origins": [
       {
         "city": "FORTALEZA - CE",
-        "searches": 1153925,
-        "users": 154511,
-        "conversions": 45578
+        "searches": 1154205,
+        "users": 154584,
+        "conversions": 45013
       },
       {
         "city": "RIO DE JANEIRO - RJ",
-        "searches": 682982,
-        "users": 83065,
-        "conversions": 31785
+        "searches": 683122,
+        "users": 83078,
+        "conversions": 31409
       },
       {
         "city": "FORTALEZA - CE - TODOS",
-        "searches": 590015,
-        "users": 77675,
+        "searches": 590259,
+        "users": 77749,
         "conversions": 0
       },
       {
         "city": "",
-        "searches": 399274,
-        "users": 53858,
-        "conversions": 2049
+        "searches": 408754,
+        "users": 54445,
+        "conversions": 365
       },
       {
         "city": "TERESINA - PI",
-        "searches": 393050,
-        "users": 51230,
-        "conversions": 12215
+        "searches": 393151,
+        "users": 51241,
+        "conversions": 12069
       },
       {
         "city": "RIO DE JANEIRO - RJ - TODOS",
-        "searches": 377029,
-        "users": 64835,
+        "searches": 377195,
+        "users": 64849,
         "conversions": 0
       },
       {
@@ -20425,9 +20425,9 @@
       },
       {
         "city": "BRASILIA - DF",
-        "searches": 364035,
-        "users": 44616,
-        "conversions": 9027
+        "searches": 364133,
+        "users": 44634,
+        "conversions": 8887
       },
       {
         "city": "Fortaleza - CE - TODOS",
@@ -20436,71 +20436,71 @@
         "conversions": 0
       },
       {
-        "city": "SOBRAL - CE",
-        "searches": 342983,
-        "users": 41137,
-        "conversions": 12162
+        "city": "SAO LUIS - MA",
+        "searches": 343145,
+        "users": 39798,
+        "conversions": 9193
       },
       {
-        "city": "SAO LUIS - MA",
-        "searches": 342951,
-        "users": 39779,
-        "conversions": 9317
+        "city": "SOBRAL - CE",
+        "searches": 343087,
+        "users": 41143,
+        "conversions": 12036
       },
       {
         "city": "BELO HORIZONTE - MG",
-        "searches": 311436,
-        "users": 34402,
-        "conversions": 8252
+        "searches": 311498,
+        "users": 34414,
+        "conversions": 8158
       },
       {
         "city": "JOAO PESSOA - PB",
-        "searches": 295484,
-        "users": 34227,
-        "conversions": 8343
+        "searches": 295595,
+        "users": 34233,
+        "conversions": 8224
       },
       {
         "city": "JUAZEIRO DO NORTE - CE",
-        "searches": 289612,
-        "users": 34571,
-        "conversions": 8118
+        "searches": 289711,
+        "users": 34587,
+        "conversions": 8011
       }
     ],
     "top_destinations": [
       {
         "city": "FORTALEZA - CE",
-        "searches": 1060777,
-        "users": 146382,
-        "conversions": 38463
+        "searches": 1061083,
+        "users": 146434,
+        "conversions": 37954
       },
       {
         "city": "RIO DE JANEIRO - RJ",
-        "searches": 703517,
-        "users": 86532,
-        "conversions": 30217
+        "searches": 703672,
+        "users": 86581,
+        "conversions": 29853
       },
       {
         "city": "FORTALEZA - CE - TODOS",
-        "searches": 475766,
-        "users": 66400,
+        "searches": 476018,
+        "users": 66429,
         "conversions": 0
       },
       {
         "city": "",
-        "searches": 409200,
-        "users": 58967,
-        "conversions": 2031
+        "searches": 419532,
+        "users": 59704,
+        "conversions": 350
       },
       {
         "city": "SOBRAL - CE",
-        "searches": 333172,
-        "users": 39469,
-        "conversions": 12214
+        "searches": 333275,
+        "users": 39472,
+        "conversions": 12066
       },
       {
         "city": "RIO DE JANEIRO - RJ - TODOS",
-        "searches": 326807,
-        "users": 44489,
+        "searches": 326968,
+        "users": 44505,
         "conversions": 0
       },
       {
@@ -20511,27 +20511,27 @@
       },
       {
         "city": "TERESINA - PI",
-        "searches": 311660,
-        "users": 42996,
-        "conversions": 11448
+        "searches": 311756,
+        "users": 43008,
+        "conversions": 11294
       },
       {
         "city": "JOAO PESSOA - PB",
-        "searches": 308972,
-        "users": 37443,
-        "conversions": 7846
+        "searches": 309120,
+        "users": 37448,
+        "conversions": 7735
       },
       {
         "city": "SAO LUIS - MA",
-        "searches": 305177,
-        "users": 37408,
-        "conversions": 7713
+        "searches": 305253,
+        "users": 37421,
+        "conversions": 7615
       },
       {
         "city": "BRASILIA - DF",
-        "searches": 287027,
-        "users": 36836,
-        "conversions": 8725
+        "searches": 287141,
+        "users": 36848,
+        "conversions": 8596
       },
       {
         "city": "Fortaleza - CE",
@@ -20541,15 +20541,15 @@
       },
       {
         "city": "JUAZEIRO DO NORTE - CE",
-        "searches": 284546,
-        "users": 34560,
-        "conversions": 7232
+        "searches": 284643,
+        "users": 34567,
+        "conversions": 7136
       },
       {
         "city": "BELO HORIZONTE - MG",
-        "searches": 259653,
-        "users": 30295,
-        "conversions": 8456
+        "searches": 259741,
+        "users": 30302,
+        "conversions": 8364
       }
     ],
     "route_conversion": [
@@ -20564,77 +20564,77 @@
         "route": "RIO DE JANEIRO - RJ - TODOS → BELO HORIZONTE - MG - TODOS",
         "origin": "RIO DE JANEIRO - RJ - TODOS",
         "destination": "BELO HORIZONTE - MG - TODOS",
-        "searches": 74071,
-        "users": 27281
+        "searches": 74117,
+        "users": 27285
       },
       {
         "route": "FORTALEZA - CE → SOBRAL - CE",
         "origin": "FORTALEZA - CE",
         "destination": "SOBRAL - CE",
-        "searches": 95146,
-        "users": 14009
+        "searches": 95170,
+        "users": 14011
       },
       {
         "route": "SOBRAL - CE → FORTALEZA - CE",
         "origin": "SOBRAL - CE",
         "destination": "FORTALEZA - CE",
-        "searches": 89253,
+        "searches": 89269,
         "users": 13549
       },
       {
         "route": "FORTALEZA - CE → NATAL - RN",
         "origin": "FORTALEZA - CE",
         "destination": "NATAL - RN",
-        "searches": 89936,
-        "users": 13049
+        "searches": 89951,
+        "users": 13051
       },
       {
         "route": "BELO HORIZONTE - MG → RIO DE JANEIRO - RJ",
         "origin": "BELO HORIZONTE - MG",
         "destination": "RIO DE JANEIRO - RJ",
-        "searches": 130905,
-        "users": 12955
+        "searches": 130918,
+        "users": 12961
       },
       {
         "route": "RIO DE JANEIRO - RJ → BELO HORIZONTE - MG",
         "origin": "RIO DE JANEIRO - RJ",
         "destination": "BELO HORIZONTE - MG",
-        "searches": 123454,
-        "users": 11921
+        "searches": 123482,
+        "users": 11923
       },
       {
         "route": "TERESINA - PI → FORTALEZA - CE",
         "origin": "TERESINA - PI",
         "destination": "FORTALEZA - CE",
-        "searches": 78106,
-        "users": 11395
+        "searches": 78147,
+        "users": 11407
       },
       {
         "route": "NATAL - RN → FORTALEZA - CE",
         "origin": "NATAL - RN",
         "destination": "FORTALEZA - CE",
-        "searches": 87902,
-        "users": 11253
+        "searches": 87930,
+        "users": 11255
       },
       {
         "route": "FORTALEZA - CE → RECIFE - PE",
         "origin": "FORTALEZA - CE",
         "destination": "RECIFE - PE",
-        "searches": 67849,
-        "users": 10301
+        "searches": 67871,
+        "users": 10305
       },
       {
         "route": "TERESINA - PI → PARNAIBA - PI",
         "origin": "TERESINA - PI",
         "destination": "PARNAIBA - PI",
-        "searches": 65901,
-        "users": 10232
+        "searches": 65908,
+        "users": 10234
       },
       {
         "route": "FORTALEZA - CE → JUAZEIRO DO NORTE - CE",
         "origin": "FORTALEZA - CE",
         "destination": "JUAZEIRO DO NORTE - CE",
-        "searches": 65419,
+        "searches": 65448,
         "users": 9545
       },
       {
