@@ -1,27 +1,20 @@
 {
-  "updated_at": "2026-05-24T14:53:35Z",
+  "updated_at": "2026-05-25T17:22:24Z",
   "period": "últimos 90 dias",
   "totals": {
-    "sessions": 4622151,
-    "total_users": 2143827,
-    "new_users": 1840665,
-    "bounce_rate": 22.12,
-    "avg_session_duration": 337.82,
-    "conversions": 448836,
-    "pageviews": 24675334,
-    "sessions_7d": 377034,
-    "users_7d": 235958,
-    "conversions_7d": 34707,
-    "new_users_7d": 155380
+    "sessions": 4632203,
+    "total_users": 2154638,
+    "new_users": 1844681,
+    "bounce_rate": 22.15,
+    "avg_session_duration": 339.49,
+    "conversions": 450593,
+    "pageviews": 24901877,
+    "sessions_7d": 390158,
+    "users_7d": 246333,
+    "conversions_7d": 35600,
+    "new_users_7d": 161170
   },
   "daily": [
-    {
-      "date": "2026-02-23",
-      "sessions": 48270,
-      "users": 37609,
-      "conversions": 3547,
-      "new_users": 20139
-    },
     {
       "date": "2026-02-24",
       "sessions": 46606,
@@ -647,55 +640,62 @@
     },
     {
       "date": "2026-05-24",
-      "sessions": 10899,
-      "users": 9905,
-      "conversions": 946,
-      "new_users": 3853
+      "sessions": 47801,
+      "users": 37193,
+      "conversions": 4523,
+      "new_users": 19469
+    },
+    {
+      "date": "2026-05-25",
+      "sessions": 23125,
+      "users": 20368,
+      "conversions": 1727,
+      "new_users": 8539
     }
   ],
   "pages": [
     {
       "path": "/",
       "title": "Viaje Guanabara: Compre sua passagem de ônibus",
-      "pageviews": 3404325,
-      "users": 1087266,
-      "avg_duration": 106.49,
+      "pageviews": 3364188,
+      "users": 1072741,
+      "avg_duration": 106.53,
       "bounce_rate": 0,
       "exits": 0
     },
     {
       "path": "/",
       "title": "Passagem de Ônibus: Compre Online | Viaje Guanabara",
-      "pageviews": 2077925,
-      "users": 556180,
-      "avg_duration": 115.36,
+      "pageviews": 2186243,
+      "users": 579880,
+      "avg_duration": 115.22,
       "bounce_rate": 0,
       "exits": 0
     },
     {
       "path": "/",
       "title": "Compre sua Passagem de ônibus online – Expresso Guanabara",
-      "pageviews": 1539112,
-      "users": 725182,
-      "avg_duration": 80.47,
+      "pageviews": 1517519,
+      "users": 714955,
+      "avg_duration": 80.35,
       "bounce_rate": 0,
       "exits": 0
     },
     {
       "path": "/",
       "title": "(not set)",
-      "pageviews": 475341,
-      "users": 211895,
-      "avg_duration": 33.69,
+      "pageviews": 488353,
+      "users": 217059,
+      "avg_duration": 33.67,
       "bounce_rate": 0,
       "exits": 0
     },
     {
       "path": "/checkout/comprador",
       "title": "Viaje Guanabara: Compre sua passagem de ônibus",
-      "pageviews": 412618,
-      "users": 105512,
-      "avg_duration": 35.8,
+      "pageviews": 411212,
+      "users": 104646,
+      "avg_duration": 35.27,
       "bounce_rate": 0,
       "exits": 0
     },
@@ -711,18 +711,18 @@
     {
       "path": "/onibus/checkout",
       "title": "Cidades atendidas para viagem de ônibus – Expresso Guanabara",
-      "pageviews": 326734,
-      "users": 184379,
-      "avg_duration": 179.31,
+      "pageviews": 321834,
+      "users": 181558,
+      "avg_duration": 179.06,
       "bounce_rate": 0,
       "exits": 0
     },
     {
       "path": "/checkout/pagamento",
       "title": "Viaje Guanabara: Compre sua passagem de ônibus",
-      "pageviews": 310504,
-      "users": 79714,
-      "avg_duration": 151.71,
+      "pageviews": 309477,
+      "users": 78911,
+      "avg_duration": 151.22,
       "bounce_rate": 0,
       "exits": 0
     },
@@ -738,9 +738,9 @@
     {
       "path": "/onibus/conclusion",
       "title": "Cidades atendidas para viagem de ônibus – Expresso Guanabara",
-      "pageviews": 270575,
-      "users": 146435,
-      "avg_duration": 103.54,
+      "pageviews": 266364,
+      "users": 144466,
+      "avg_duration": 103.69,
       "bounce_rate": 0,
       "exits": 0
     }
@@ -764,24 +764,24 @@
     "data": {
       "202609": {
         "/": {
-          "pageviews": 335241,
-          "users": 149847
+          "pageviews": 271744,
+          "users": 126658
         },
         "/onibus/checkout": {
-          "pageviews": 42037,
-          "users": 25144
+          "pageviews": 35790,
+          "users": 21561
         },
         "/onibus/conclusion": {
-          "pageviews": 38309,
-          "users": 21085
+          "pageviews": 32408,
+          "users": 17990
         },
         "/checkout/comprador": {
-          "pageviews": 4008,
-          "users": 2107
+          "pageviews": 2778,
+          "users": 1237
         },
         "/checkout/pagamento": {
-          "pageviews": 3088,
-          "users": 1467
+          "pageviews": 2174,
+          "users": 868
         }
       }
     }
@@ -789,71 +789,71 @@
   "landing_pages": [
     {
       "path": "/",
-      "sessions": 2983600,
-      "users": 1722220,
-      "conversions": 240203,
-      "bounce_rate": 18.59
+      "sessions": 2987391,
+      "users": 1725931,
+      "conversions": 241184,
+      "bounce_rate": 18.35
     },
     {
       "path": "(not set)",
-      "sessions": 1159672,
-      "users": 1071948,
+      "sessions": 1159333,
+      "users": 1074208,
       "conversions": 11,
-      "bounce_rate": 99.41
+      "bounce_rate": 99.42
     },
     {
       "path": "/onibus/conclusion",
-      "sessions": 57463,
-      "users": 37948,
-      "conversions": 4389,
-      "bounce_rate": 66.72
+      "sessions": 56504,
+      "users": 37298,
+      "conversions": 4330,
+      "bounce_rate": 66.73
     },
     {
       "path": "/sampaio",
-      "sessions": 43251,
-      "users": 35679,
-      "conversions": 2577,
-      "bounce_rate": 16.94
+      "sessions": 42242,
+      "users": 35083,
+      "conversions": 2531,
+      "bounce_rate": 16.92
     },
     {
       "path": "/realexpresso",
-      "sessions": 37419,
-      "users": 31297,
-      "conversions": 1594,
+      "sessions": 37004,
+      "users": 30857,
+      "conversions": 1572,
       "bounce_rate": 15.61
     },
     {
       "path": "/onibus/checkout",
-      "sessions": 27640,
-      "users": 20611,
-      "conversions": 5179,
-      "bounce_rate": 11.88
+      "sessions": 27118,
+      "users": 20316,
+      "conversions": 5106,
+      "bounce_rate": 11.58
     },
     {
       "path": "/vem-pro-rio/",
-      "sessions": 21072,
+      "sessions": 21109,
       "users": 13187,
       "conversions": 23,
-      "bounce_rate": 79.86
-    },
-    {
-      "path": "/util",
-      "sessions": 17329,
-      "users": 13265,
-      "conversions": 1428,
-      "bounce_rate": 13.22
+      "bounce_rate": 79.89
     },
     {
       "path": "/checkout/pagamento/sucesso/2",
-      "sessions": 17102,
-      "users": 13116,
+      "sessions": 17091,
+      "users": 13110,
       "conversions": 310,
-      "bounce_rate": 40.95
+      "bounce_rate": 40.91
+    },
+    {
+      "path": "/util",
+      "sessions": 16917,
+      "users": 12874,
+      "conversions": 1392,
+      "bounce_rate": 13.37
     },
     {
       "path": "/checkout/pagamento/pix",
       "sessions": 15432,
-      "users": 10702,
+      "users": 10698,
       "conversions": 492,
       "bounce_rate": 71.59
     }
@@ -863,72 +863,71 @@
       "source": "google",
       "medium": "cpc",
       "source_medium": "google / cpc",
-      "sessions": 2668128,
-      "users": 1443021,
-      "conversions": 229796,
-      "conversion_rate": 8.61,
-      "bounce_rate": 16.39,
-      "avg_duration": 374.74
+      "sessions": 2687946,
+      "users": 1448716,
+      "conversions": 230612,
+      "conversion_rate": 8.58,
+      "bounce_rate": 16.32,
+      "avg_duration": 373.83
     },
     {
       "source": "google",
       "medium": "organic",
       "source_medium": "google / organic",
-      "sessions": 899001,
-      "users": 491259,
-      "conversions": 65119,
-      "conversion_rate": 7.24,
-      "bounce_rate": 22.23,
-      "avg_duration": 301.31
+      "sessions": 895069,
+      "users": 486531,
+      "conversions": 65145,
+      "conversion_rate": 7.28,
+      "bounce_rate": 22.33,
+      "avg_duration": 301.12
     },
     {
       "source": "(direct)",
       "medium": "(none)",
       "source_medium": "(direct) / (none)",
-      "sessions": 563344,
-      "users": 327191,
-      "conversions": 108885,
-      "conversion_rate": 19.33,
-      "bounce_rate": 34.2,
-      "avg_duration": 291.06
+      "sessions": 567553,
+      "users": 329482,
+      "conversions": 109144,
+      "conversion_rate": 19.23,
+      "bounce_rate": 34.62,
+      "avg_duration": 291.05
     },
     {
       "source": "pushnews",
       "medium": "pushnotification",
       "source_medium": "pushnews / pushnotification",
-      "sessions": 176002,
-      "users": 81053,
+      "sessions": 177656,
+      "users": 81577,
       "conversions": 3372,
-      "conversion_rate": 1.92,
-      "bounce_rate": 77.46,
-      "avg_duration": 96.51
+      "conversion_rate": 1.9,
+      "bounce_rate": 77.65,
+      "avg_duration": 96.43
     },
     {
-      "source": "whatsapp",
-      "medium": "bot",
-      "source_medium": "whatsapp / bot",
-      "sessions": 34561,
-      "users": 15155,
-      "conversions": 17047,
-      "conversion_rate": 49.32,
-      "bounce_rate": 23.77,
-      "avg_duration": 312.14
+      "source": "(data not available)",
+      "medium": "(data not available)",
+      "source_medium": "(data not available) / (data not available)",
+      "sessions": 36141,
+      "users": 35260,
+      "conversions": 1794,
+      "conversion_rate": 4.96,
+      "bounce_rate": 6.49,
+      "avg_duration": 432.73
     },
     {
       "source": "outros",
       "medium": "—",
       "source_medium": "outros / —",
-      "sessions": 264371,
-      "users": 184035,
-      "conversions": 24249,
-      "conversion_rate": 9.17,
-      "bounce_rate": 32.2,
-      "avg_duration": 365.76
+      "sessions": 273348,
+      "users": 173432,
+      "conversions": 40162,
+      "conversion_rate": 14.69,
+      "bounce_rate": 36.54,
+      "avg_duration": 358.41
     }
   ],
   "sources_daily": {
     "dates": [
-      "2026-02-23",
       "2026-02-24",
       "2026-02-25",
       "2026-02-26",
@@ -953,61 +952,19 @@
       "2026-03-17",
       "2026-03-18",
       "2026-03-19",
-      "2026-03-20"
+      "2026-03-20",
+      "2026-03-21",
+      "2026-03-22"
     ],
     "sources": [
       "google / cpc",
       "google / organic",
       "(direct) / (none)",
       "pushnews / pushnotification",
-      "whatsapp / bot",
+      "(data not available) / (data not available)",
       "outros / —"
     ],
     "data": {
-      "2026-02-23": {
-        "google / cpc": {
-          "sessions": 23512,
-          "users": 19657,
-          "conversions": 1773,
-          "wBounce": 431915.44,
-          "wDur": 8413298.959999999
-        },
-        "google / organic": {
-          "sessions": 15368,
-          "users": 12781,
-          "conversions": 531,
-          "wBounce": 266020.07999999996,
-          "wDur": 4489914.880000001
-        },
-        "(direct) / (none)": {
-          "sessions": 5099,
-          "users": 4137,
-          "conversions": 985,
-          "wBounce": 134103.7,
-          "wDur": 1695111.56
-        },
-        "outros / —": {
-          "sessions": 2592,
-          "users": 2259,
-          "conversions": 75,
-          "wBounce": 92204.43999999999,
-          "wDur": 568992.44
-        },
-        "pushnews / pushnotification": {
-          "sessions": 542,
-          "users": 467,
-          "conversions": 24,
-          "wBounce": 36899.36,
-          "wDur": 66768.98
-        },
-        "whatsapp / bot": {
-          "sessions": 339,
-          "users": 273,
-          "conversions": 159,
-          "wBounce": 8600.43,
-          "wDur": 98093.04000000001
-        }
-      },
       "2026-02-24": {
         "google / cpc": {
           "sessions": 26931,
@@ -1038,18 +995,18 @@
           "wDur": 153739.4
         },
         "outros / —": {
-          "sessions": 1949,
-          "users": 1743,
-          "conversions": 78,
-          "wBounce": 61802.83999999999,
-          "wDur": 556731.4499999998
+          "sessions": 1980,
+          "users": 1729,
+          "conversions": 211,
+          "wBounce": 65601.98999999999,
+          "wDur": 530087.45
         },
-        "whatsapp / bot": {
-          "sessions": 282,
-          "users": 237,
-          "conversions": 149,
-          "wBounce": 5699.22,
-          "wDur": 78359.34
+        "(data not available) / (data not available)": {
+          "sessions": 251,
+          "users": 251,
+          "conversions": 16,
+          "wBounce": 1900.0700000000002,
+          "wDur": 105003.34
         }
       },
       "2026-02-25": {
@@ -1081,19 +1038,19 @@
           "wBounce": 112004.20000000001,
           "wDur": 148348.2
         },
-        "outros / —": {
-          "sessions": 2202,
-          "users": 1928,
-          "conversions": 106,
-          "wBounce": 64797.39,
-          "wDur": 626865.8399999997
+        "(data not available) / (data not available)": {
+          "sessions": 338,
+          "users": 337,
+          "conversions": 23,
+          "wBounce": 1399.32,
+          "wDur": 146786.63999999998
         },
-        "whatsapp / bot": {
-          "sessions": 317,
-          "users": 262,
-          "conversions": 179,
-          "wBounce": 5398.51,
-          "wDur": 95439.19
+        "outros / —": {
+          "sessions": 2181,
+          "users": 1853,
+          "conversions": 262,
+          "wBounce": 68796.58,
+          "wDur": 575518.3899999998
         }
       },
       "2026-02-26": {
@@ -1119,11 +1076,11 @@
           "wDur": 1774683.2
         },
         "outros / —": {
-          "sessions": 2665,
-          "users": 2285,
-          "conversions": 88,
-          "wBounce": 94298.66000000002,
-          "wDur": 608488.6500000003
+          "sessions": 2755,
+          "users": 2325,
+          "conversions": 256,
+          "wBounce": 100098.91000000002,
+          "wDur": 610009.1000000003
         },
         "pushnews / pushnotification": {
           "sessions": 392,
@@ -1132,12 +1089,12 @@
           "wBounce": 27800.64,
           "wDur": 43860.88
         },
-        "whatsapp / bot": {
-          "sessions": 335,
-          "users": 285,
-          "conversions": 180,
-          "wBounce": 7299.65,
-          "wDur": 101896.95000000001
+        "(data not available) / (data not available)": {
+          "sessions": 245,
+          "users": 245,
+          "conversions": 12,
+          "wBounce": 1499.4,
+          "wDur": 100376.5
         }
       },
       "2026-02-27": {
@@ -1169,19 +1126,19 @@
           "wBounce": 105705.59999999999,
           "wDur": 144464.32
         },
-        "outros / —": {
-          "sessions": 2051,
-          "users": 1829,
-          "conversions": 79,
-          "wBounce": 67101.95,
-          "wDur": 511197.2499999999
+        "(data not available) / (data not available)": {
+          "sessions": 374,
+          "users": 373,
+          "conversions": 12,
+          "wBounce": 2401.08,
+          "wDur": 129534.90000000001
         },
-        "whatsapp / bot": {
-          "sessions": 346,
-          "users": 289,
-          "conversions": 182,
-          "wBounce": 6798.9,
-          "wDur": 121757.4
+        "outros / —": {
+          "sessions": 2023,
+          "users": 1745,
+          "conversions": 249,
+          "wBounce": 71499.77000000002,
+          "wDur": 503419.74999999977
         }
       },
       "2026-02-28": {
@@ -1207,11 +1164,11 @@
           "wDur": 1371053.86
         },
         "outros / —": {
-          "sessions": 2341,
-          "users": 2065,
-          "conversions": 81,
-          "wBounce": 89202.96,
-          "wDur": 466421.52
+          "sessions": 2432,
+          "users": 2103,
+          "conversions": 254,
+          "wBounce": 95203.40000000001,
+          "wDur": 458290.41000000003
         },
         "pushnews / pushnotification": {
           "sessions": 357,
@@ -1220,12 +1177,12 @@
           "wBounce": 26899.949999999997,
           "wDur": 41337.03
         },
-        "whatsapp / bot": {
-          "sessions": 327,
-          "users": 274,
-          "conversions": 184,
-          "wBounce": 6500.759999999999,
-          "wDur": 94918.29
+        "(data not available) / (data not available)": {
+          "sessions": 236,
+          "users": 236,
+          "conversions": 11,
+          "wBounce": 500.32000000000005,
+          "wDur": 103049.4
         }
       },
       "2026-03-01": {
@@ -1250,19 +1207,19 @@
           "wBounce": 134086.15,
           "wDur": 1341935.98
         },
-        "whatsapp / bot": {
-          "sessions": 338,
-          "users": 293,
-          "conversions": 179,
-          "wBounce": 6499.74,
-          "wDur": 121585.36000000002
-        },
         "outros / —": {
-          "sessions": 1790,
-          "users": 1590,
-          "conversions": 78,
-          "wBounce": 64199.68,
-          "wDur": 477536.6300000002
+          "sessions": 1861,
+          "users": 1617,
+          "conversions": 242,
+          "wBounce": 69698.17000000001,
+          "wDur": 470358.57000000024
+        },
+        "(data not available) / (data not available)": {
+          "sessions": 267,
+          "users": 266,
+          "conversions": 15,
+          "wBounce": 1001.25,
+          "wDur": 128763.42
         },
         "pushnews / pushnotification": {
           "sessions": 263,
@@ -1295,11 +1252,11 @@
           "wDur": 1795067.4
         },
         "outros / —": {
-          "sessions": 5004,
-          "users": 4238,
-          "conversions": 133,
-          "wBounce": 136403.78999999998,
-          "wDur": 1169993.5999999994
+          "sessions": 5050,
+          "users": 4216,
+          "conversions": 312,
+          "wBounce": 142002.65,
+          "wDur": 1167632.9999999995
         },
         "pushnews / pushnotification": {
           "sessions": 1772,
@@ -1308,12 +1265,12 @@
           "wBounce": 126308.16,
           "wDur": 198623.48
         },
-        "whatsapp / bot": {
-          "sessions": 374,
-          "users": 306,
-          "conversions": 191,
-          "wBounce": 7199.5,
-          "wDur": 130413.8
+        "(data not available) / (data not available)": {
+          "sessions": 328,
+          "users": 328,
+          "conversions": 12,
+          "wBounce": 1600.6399999999999,
+          "wDur": 132774.4
         }
       },
       "2026-03-03": {
@@ -1346,18 +1303,18 @@
           "wDur": 172601.19999999998
         },
         "outros / —": {
-          "sessions": 2772,
-          "users": 2415,
-          "conversions": 122,
-          "wBounce": 98199.03000000004,
-          "wDur": 706093.6000000004
+          "sessions": 2801,
+          "users": 2373,
+          "conversions": 269,
+          "wBounce": 103998.27000000003,
+          "wDur": 696411.6800000004
         },
-        "whatsapp / bot": {
-          "sessions": 326,
-          "users": 255,
-          "conversions": 155,
-          "wBounce": 7599.0599999999995,
-          "wDur": 109278.45999999999
+        "(data not available) / (data not available)": {
+          "sessions": 297,
+          "users": 297,
+          "conversions": 8,
+          "wBounce": 1799.82,
+          "wDur": 118960.38
         }
       },
       "2026-03-04": {
@@ -1390,18 +1347,18 @@
           "wDur": 167324.03
         },
         "outros / —": {
-          "sessions": 2448,
-          "users": 2149,
-          "conversions": 133,
-          "wBounce": 78498.0,
-          "wDur": 717299.4999999999
+          "sessions": 2528,
+          "users": 2154,
+          "conversions": 317,
+          "wBounce": 85197.76,
+          "wDur": 686921.3799999999
         },
-        "whatsapp / bot": {
-          "sessions": 372,
-          "users": 296,
-          "conversions": 194,
-          "wBounce": 8098.44,
-          "wDur": 114021.72
+        "(data not available) / (data not available)": {
+          "sessions": 292,
+          "users": 291,
+          "conversions": 10,
+          "wBounce": 1398.68,
+          "wDur": 144399.84
         }
       },
       "2026-03-05": {
@@ -1427,11 +1384,11 @@
           "wDur": 1885194.9
         },
         "outros / —": {
-          "sessions": 4726,
-          "users": 3879,
-          "conversions": 250,
-          "wBounce": 145900.13,
-          "wDur": 1338154.7800000005
+          "sessions": 4836,
+          "users": 3911,
+          "conversions": 425,
+          "wBounce": 154498.65,
+          "wDur": 1343505.1000000003
         },
         "pushnews / pushnotification": {
           "sessions": 507,
@@ -1440,12 +1397,12 @@
           "wBounce": 36498.93,
           "wDur": 58294.86
         },
-        "whatsapp / bot": {
-          "sessions": 404,
-          "users": 323,
-          "conversions": 191,
-          "wBounce": 9898.0,
-          "wDur": 125490.48
+        "(data not available) / (data not available)": {
+          "sessions": 294,
+          "users": 291,
+          "conversions": 16,
+          "wBounce": 1299.48,
+          "wDur": 120140.15999999999
         }
       },
       "2026-03-06": {
@@ -1478,18 +1435,18 @@
           "wDur": 196205.4
         },
         "outros / —": {
-          "sessions": 2511,
-          "users": 2204,
-          "conversions": 137,
-          "wBounce": 86800.23999999999,
-          "wDur": 666260.8700000003
+          "sessions": 2615,
+          "users": 2233,
+          "conversions": 303,
+          "wBounce": 93901.35999999999,
+          "wDur": 662315.6300000002
         },
-        "whatsapp / bot": {
-          "sessions": 364,
-          "users": 289,
-          "conversions": 180,
-          "wBounce": 8200.92,
-          "wDur": 109141.76
+        "(data not available) / (data not available)": {
+          "sessions": 260,
+          "users": 260,
+          "conversions": 14,
+          "wBounce": 1099.8000000000002,
+          "wDur": 113087.0
         }
       },
       "2026-03-07": {
@@ -1515,11 +1472,11 @@
           "wDur": 1324685.0999999999
         },
         "outros / —": {
-          "sessions": 3955,
-          "users": 3381,
-          "conversions": 282,
-          "wBounce": 133901.28999999998,
-          "wDur": 1163753.019999999
+          "sessions": 3956,
+          "users": 3320,
+          "conversions": 430,
+          "wBounce": 139899.72,
+          "wDur": 1052309.5899999999
         },
         "pushnews / pushnotification": {
           "sessions": 389,
@@ -1528,12 +1485,12 @@
           "wBounce": 27700.69,
           "wDur": 44314.88
         },
-        "whatsapp / bot": {
-          "sessions": 351,
-          "users": 288,
-          "conversions": 164,
-          "wBounce": 8399.43,
-          "wDur": 86019.56999999999
+        "(data not available) / (data not available)": {
+          "sessions": 350,
+          "users": 349,
+          "conversions": 16,
+          "wBounce": 2401.0,
+          "wDur": 197462.99999999997
         }
       },
       "2026-03-08": {
@@ -1559,11 +1516,11 @@
           "wDur": 1237362.4000000001
         },
         "outros / —": {
-          "sessions": 3911,
-          "users": 3267,
-          "conversions": 301,
-          "wBounce": 127608.62000000004,
-          "wDur": 1228404.8099999994
+          "sessions": 3940,
+          "users": 3232,
+          "conversions": 452,
+          "wBounce": 135107.09000000003,
+          "wDur": 1211086.7499999993
         },
         "pushnews / pushnotification": {
           "sessions": 1535,
@@ -1572,12 +1529,12 @@
           "wBounce": 116905.59999999999,
           "wDur": 139408.69999999998
         },
-        "whatsapp / bot": {
-          "sessions": 350,
-          "users": 288,
-          "conversions": 171,
-          "wBounce": 8599.5,
-          "wDur": 112000.0
+        "(data not available) / (data not available)": {
+          "sessions": 321,
+          "users": 323,
+          "conversions": 20,
+          "wBounce": 1101.03,
+          "wDur": 129318.06
         }
       },
       "2026-03-09": {
@@ -1603,11 +1560,11 @@
           "wDur": 1930247.04
         },
         "outros / —": {
-          "sessions": 4548,
-          "users": 3718,
-          "conversions": 354,
-          "wBounce": 144588.60000000003,
-          "wDur": 1516522.9900000005
+          "sessions": 4603,
+          "users": 3693,
+          "conversions": 517,
+          "wBounce": 152590.54000000004,
+          "wDur": 1498274.6100000003
         },
         "pushnews / pushnotification": {
           "sessions": 2020,
@@ -1616,12 +1573,12 @@
           "wBounce": 144793.6,
           "wDur": 250843.6
         },
-        "whatsapp / bot": {
-          "sessions": 384,
-          "users": 304,
-          "conversions": 181,
-          "wBounce": 9100.8,
-          "wDur": 124162.56
+        "(data not available) / (data not available)": {
+          "sessions": 329,
+          "users": 329,
+          "conversions": 18,
+          "wBounce": 1098.86,
+          "wDur": 142410.94
         }
       },
       "2026-03-10": {
@@ -1647,11 +1604,11 @@
           "wDur": 1676876.4300000002
         },
         "outros / —": {
-          "sessions": 5504,
-          "users": 4533,
-          "conversions": 465,
-          "wBounce": 176811.90999999997,
-          "wDur": 1718104.819999999
+          "sessions": 5546,
+          "users": 4501,
+          "conversions": 607,
+          "wBounce": 185309.37999999998,
+          "wDur": 1661622.229999999
         },
         "pushnews / pushnotification": {
           "sessions": 1911,
@@ -1660,12 +1617,12 @@
           "wBounce": 141796.2,
           "wDur": 184182.18
         },
-        "whatsapp / bot": {
-          "sessions": 347,
-          "users": 273,
-          "conversions": 167,
-          "wBounce": 9198.970000000001,
-          "wDur": 90265.11
+        "(data not available) / (data not available)": {
+          "sessions": 305,
+          "users": 305,
+          "conversions": 25,
+          "wBounce": 701.5,
+          "wDur": 146747.69999999998
         }
       },
       "2026-03-11": {
@@ -1691,11 +1648,11 @@
           "wDur": 1504580.48
         },
         "outros / —": {
-          "sessions": 5238,
-          "users": 4279,
-          "conversions": 459,
-          "wBounce": 178188.22000000003,
-          "wDur": 1757588.3100000003
+          "sessions": 5225,
+          "users": 4202,
+          "conversions": 598,
+          "wBounce": 186187.66,
+          "wDur": 1691754.5500000003
         },
         "pushnews / pushnotification": {
           "sessions": 1849,
@@ -1704,12 +1661,12 @@
           "wBounce": 137399.19,
           "wDur": 205331.44999999998
         },
-        "whatsapp / bot": {
-          "sessions": 344,
-          "users": 279,
-          "conversions": 162,
-          "wBounce": 8999.04,
-          "wDur": 106354.48000000001
+        "(data not available) / (data not available)": {
+          "sessions": 357,
+          "users": 356,
+          "conversions": 23,
+          "wBounce": 999.5999999999999,
+          "wDur": 172188.24
         }
       },
       "2026-03-12": {
@@ -1735,11 +1692,11 @@
           "wDur": 1730536.16
         },
         "outros / —": {
-          "sessions": 5855,
-          "users": 4812,
-          "conversions": 298,
-          "wBounce": 252383.22,
-          "wDur": 1440243.8600000006
+          "sessions": 5936,
+          "users": 4815,
+          "conversions": 493,
+          "wBounce": 260281.9,
+          "wDur": 1419407.6200000006
         },
         "pushnews / pushnotification": {
           "sessions": 656,
@@ -1748,12 +1705,12 @@
           "wBounce": 47599.36,
           "wDur": 113868.48000000001
         },
-        "whatsapp / bot": {
-          "sessions": 403,
-          "users": 321,
-          "conversions": 208,
-          "wBounce": 9099.74,
-          "wDur": 128774.62000000001
+        "(data not available) / (data not available)": {
+          "sessions": 322,
+          "users": 318,
+          "conversions": 13,
+          "wBounce": 1201.06,
+          "wDur": 149610.86
         }
       },
       "2026-03-13": {
@@ -1779,11 +1736,11 @@
           "wDur": 1830909.12
         },
         "outros / —": {
-          "sessions": 3941,
-          "users": 3168,
-          "conversions": 318,
-          "wBounce": 137600.57999999996,
-          "wDur": 1207363.98
+          "sessions": 4040,
+          "users": 3187,
+          "conversions": 475,
+          "wBounce": 144003.25999999998,
+          "wDur": 1195407.5800000003
         },
         "pushnews / pushnotification": {
           "sessions": 457,
@@ -1792,12 +1749,12 @@
           "wBounce": 31601.550000000003,
           "wDur": 73787.22
         },
-        "whatsapp / bot": {
-          "sessions": 367,
-          "users": 287,
-          "conversions": 173,
-          "wBounce": 7501.4800000000005,
-          "wDur": 101203.92
+        "(data not available) / (data not available)": {
+          "sessions": 268,
+          "users": 268,
+          "conversions": 16,
+          "wBounce": 1098.8,
+          "wDur": 113160.32
         }
       },
       "2026-03-14": {
@@ -1830,18 +1787,18 @@
           "wDur": 144229.02
         },
         "outros / —": {
-          "sessions": 2932,
-          "users": 2413,
-          "conversions": 179,
-          "wBounce": 97901.98000000004,
-          "wDur": 944290.22
+          "sessions": 3033,
+          "users": 2466,
+          "conversions": 302,
+          "wBounce": 104701.30000000005,
+          "wDur": 947174.78
         },
-        "whatsapp / bot": {
-          "sessions": 303,
-          "users": 255,
-          "conversions": 137,
-          "wBounce": 7199.280000000001,
-          "wDur": 90475.8
+        "(data not available) / (data not available)": {
+          "sessions": 202,
+          "users": 202,
+          "conversions": 14,
+          "wBounce": 399.96,
+          "wDur": 87591.24
         }
       },
       "2026-03-15": {
@@ -1874,18 +1831,18 @@
           "wDur": 106229.12999999999
         },
         "outros / —": {
-          "sessions": 2555,
-          "users": 2155,
-          "conversions": 205,
-          "wBounce": 74301.15999999999,
-          "wDur": 857979.93
+          "sessions": 2560,
+          "users": 2095,
+          "conversions": 369,
+          "wBounce": 80999.88999999998,
+          "wDur": 810853.97
         },
-        "whatsapp / bot": {
-          "sessions": 332,
-          "users": 267,
-          "conversions": 174,
-          "wBounce": 7499.88,
-          "wDur": 95838.44
+        "(data not available) / (data not available)": {
+          "sessions": 327,
+          "users": 327,
+          "conversions": 10,
+          "wBounce": 801.1500000000001,
+          "wDur": 142964.4
         }
       },
       "2026-03-16": {
@@ -1918,18 +1875,18 @@
           "wDur": 218108.96000000002
         },
         "outros / —": {
-          "sessions": 3096,
-          "users": 2577,
-          "conversions": 293,
-          "wBounce": 92299.53,
-          "wDur": 1123744.9500000004
+          "sessions": 3179,
+          "users": 2582,
+          "conversions": 452,
+          "wBounce": 100999.22,
+          "wDur": 1098385.4500000002
         },
-        "whatsapp / bot": {
-          "sessions": 391,
-          "users": 312,
-          "conversions": 174,
-          "wBounce": 9599.050000000001,
-          "wDur": 118199.3
+        "(data not available) / (data not available)": {
+          "sessions": 308,
+          "users": 307,
+          "conversions": 15,
+          "wBounce": 899.36,
+          "wDur": 143558.80000000002
         }
       },
       "2026-03-17": {
@@ -1962,18 +1919,18 @@
           "wDur": 214199.88
         },
         "outros / —": {
-          "sessions": 3330,
-          "users": 2804,
-          "conversions": 246,
-          "wBounce": 102697.44000000003,
-          "wDur": 1272393.4300000002
+          "sessions": 3382,
+          "users": 2799,
+          "conversions": 390,
+          "wBounce": 109596.51000000004,
+          "wDur": 1237764.62
         },
-        "whatsapp / bot": {
-          "sessions": 337,
-          "users": 280,
-          "conversions": 154,
-          "wBounce": 7198.32,
-          "wDur": 110424.79000000001
+        "(data not available) / (data not available)": {
+          "sessions": 285,
+          "users": 285,
+          "conversions": 10,
+          "wBounce": 299.25,
+          "wDur": 145053.6
         }
       },
       "2026-03-18": {
@@ -2006,18 +1963,18 @@
           "wDur": 327879.75
         },
         "outros / —": {
-          "sessions": 2777,
-          "users": 2306,
-          "conversions": 227,
-          "wBounce": 77298.78,
-          "wDur": 1029806.11
+          "sessions": 2925,
+          "users": 2370,
+          "conversions": 419,
+          "wBounce": 87796.41,
+          "wDur": 1029234.5299999999
         },
-        "whatsapp / bot": {
-          "sessions": 405,
-          "users": 321,
-          "conversions": 205,
-          "wBounce": 10898.55,
-          "wDur": 128696.84999999999
+        "(data not available) / (data not available)": {
+          "sessions": 257,
+          "users": 257,
+          "conversions": 13,
+          "wBounce": 400.92,
+          "wDur": 129268.43000000001
         }
       },
       "2026-03-19": {
@@ -2050,18 +2007,18 @@
           "wDur": 280333.19999999995
         },
         "outros / —": {
-          "sessions": 2715,
-          "users": 2203,
-          "conversions": 213,
-          "wBounce": 73303.09000000001,
-          "wDur": 986234.6400000005
+          "sessions": 2868,
+          "users": 2283,
+          "conversions": 389,
+          "wBounce": 83102.12000000001,
+          "wDur": 1015698.7700000004
         },
-        "whatsapp / bot": {
-          "sessions": 392,
-          "users": 320,
-          "conversions": 193,
-          "wBounce": 10599.68,
-          "wDur": 131347.44
+        "(data not available) / (data not available)": {
+          "sessions": 239,
+          "users": 240,
+          "conversions": 17,
+          "wBounce": 800.65,
+          "wDur": 101883.31
         }
       },
       "2026-03-20": {
@@ -2094,18 +2051,71 @@
           "wDur": 286502.7
         },
         "outros / —": {
-          "sessions": 2693,
-          "users": 2214,
-          "conversions": 268,
-          "wBounce": 71200.58,
-          "wDur": 1088813.96
+          "sessions": 2843,
+          "users": 2274,
+          "conversions": 449,
+          "wBounce": 79998.46,
+          "wDur": 1111704.8099999998
         },
-        "whatsapp / bot": {
-          "sessions": 374,
-          "users": 283,
-          "conversions": 184,
-          "wBounce": 9398.619999999999,
-          "wDur": 129591.0
+        "(data not available) / (data not available)": {
+          "sessions": 229,
+          "users": 228,
+          "conversions": 4,
+          "wBounce": 700.74,
+          "wDur": 109347.5
+        }
+      },
+      "2026-03-21": {
+        "google / cpc": {
+          "sessions": 23175,
+          "users": 19110,
+          "conversions": 2143,
+          "wBounce": 350406.0,
+          "wDur": 8650995.75
+        },
+        "google / organic": {
+          "sessions": 8504,
+          "users": 6674,
+          "conversions": 586,
+          "wBounce": 187088.0,
+          "wDur": 2352971.76
+        },
+        "(direct) / (none)": {
+          "sessions": 4768,
+          "users": 3868,
+          "conversions": 955,
+          "wBounce": 149476.80000000002,
+          "wDur": 1382481.5999999999
+        },
+        "pushnews / pushnotification": {
+          "sessions": 2203,
+          "users": 1853,
+          "conversions": 32,
+          "wBounce": 176702.62999999998,
+          "wDur": 225080.51
+        },
+        "outros / —": {
+          "sessions": 2117,
+          "users": 1759,
+          "conversions": 324,
+          "wBounce": 61599.32,
+          "wDur": 749925.6600000003
+        },
+        "(data not available) / (data not available)": {
+          "sessions": 209,
+          "users": 209,
+          "conversions": 7,
+          "wBounce": 800.47,
+          "wDur": 80517.25
+        }
+      },
+      "2026-03-22": {
+        "google / cpc": {
+          "sessions": 25121,
+          "users": 20492,
+          "conversions": 2201,
+          "wBounce": 360486.35,
+          "wDur": 8899114.25
         }
       }
     }
@@ -2115,153 +2125,152 @@
     "google / organic",
     "(direct) / (none)",
     "pushnews / pushnotification",
-    "whatsapp / bot"
+    "(data not available) / (data not available)"
   ],
   "channels": [
     {
       "channel": "Paid Search",
-      "sessions": 1945164,
-      "users": 1603356,
-      "conversions": 172096,
-      "new_users": 831582,
-      "conversion_rate": 8.85,
-      "bounce_rate": 14.42,
-      "avg_duration": 384.08
+      "sessions": 1955191,
+      "users": 1611323,
+      "conversions": 173491,
+      "new_users": 835372,
+      "conversion_rate": 8.87,
+      "bounce_rate": 14.4,
+      "avg_duration": 384.7
     },
     {
       "channel": "Organic Search",
-      "sessions": 792138,
-      "users": 618563,
-      "conversions": 60019,
-      "new_users": 206781,
-      "conversion_rate": 7.58,
-      "bounce_rate": 22.51,
-      "avg_duration": 316.37
+      "sessions": 786644,
+      "users": 613284,
+      "conversions": 60230,
+      "new_users": 202292,
+      "conversion_rate": 7.66,
+      "bounce_rate": 22.61,
+      "avg_duration": 316.5
     },
     {
       "channel": "Direct",
-      "sessions": 443130,
-      "users": 360660,
-      "conversions": 87513,
-      "new_users": 238745,
+      "sessions": 446049,
+      "users": 363158,
+      "conversions": 88098,
+      "new_users": 240645,
       "conversion_rate": 19.75,
-      "bounce_rate": 33.81,
-      "avg_duration": 298.61
+      "bounce_rate": 33.95,
+      "avg_duration": 297.52
     },
     {
       "channel": "Cross-network",
-      "sessions": 218200,
-      "users": 198310,
-      "conversions": 11428,
-      "new_users": 118973,
-      "conversion_rate": 5.24,
-      "bounce_rate": 32.18,
-      "avg_duration": 258.37
+      "sessions": 221298,
+      "users": 201012,
+      "conversions": 11615,
+      "new_users": 120676,
+      "conversion_rate": 5.25,
+      "bounce_rate": 32.19,
+      "avg_duration": 259.02
     },
     {
       "channel": "Mobile Push Notifications",
-      "sessions": 164855,
-      "users": 137056,
-      "conversions": 3266,
-      "new_users": 15444,
-      "conversion_rate": 1.98,
-      "bounce_rate": 71.39,
-      "avg_duration": 105.27
+      "sessions": 166615,
+      "users": 138445,
+      "conversions": 3272,
+      "new_users": 15665,
+      "conversion_rate": 1.96,
+      "bounce_rate": 71.72,
+      "avg_duration": 104.94
     },
     {
       "channel": "Unassigned",
-      "sessions": 75112,
-      "users": 64908,
-      "conversions": 10709,
-      "new_users": 25272,
-      "conversion_rate": 14.26,
-      "bounce_rate": 38.35,
-      "avg_duration": 403.43
+      "sessions": 76002,
+      "users": 65686,
+      "conversions": 10900,
+      "new_users": 25888,
+      "conversion_rate": 14.34,
+      "bounce_rate": 38.41,
+      "avg_duration": 402.44
     },
     {
       "channel": "Organic Social",
-      "sessions": 58227,
-      "users": 50035,
-      "conversions": 14699,
-      "new_users": 27665,
-      "conversion_rate": 25.24,
-      "bounce_rate": 22.43,
-      "avg_duration": 285.36
+      "sessions": 58415,
+      "users": 50145,
+      "conversions": 14777,
+      "new_users": 27669,
+      "conversion_rate": 25.3,
+      "bounce_rate": 22.39,
+      "avg_duration": 286.2
     },
     {
       "channel": "Referral",
-      "sessions": 14269,
-      "users": 11225,
-      "conversions": 1010,
-      "new_users": 5435,
-      "conversion_rate": 7.08,
-      "bounce_rate": 35.7,
-      "avg_duration": 334.4
+      "sessions": 14359,
+      "users": 11311,
+      "conversions": 1021,
+      "new_users": 5504,
+      "conversion_rate": 7.11,
+      "bounce_rate": 35.76,
+      "avg_duration": 333.56
     },
     {
       "channel": "Email",
-      "sessions": 4998,
-      "users": 4469,
-      "conversions": 192,
-      "new_users": 2755,
-      "conversion_rate": 3.84,
-      "bounce_rate": 37.68,
-      "avg_duration": 225.01
+      "sessions": 5258,
+      "users": 4726,
+      "conversions": 194,
+      "new_users": 3004,
+      "conversion_rate": 3.69,
+      "bounce_rate": 38.27,
+      "avg_duration": 218.31
     },
     {
       "channel": "Paid Social",
-      "sessions": 4136,
-      "users": 3775,
+      "sessions": 3885,
+      "users": 3540,
       "conversions": 95,
-      "new_users": 2522,
-      "conversion_rate": 2.3,
-      "bounce_rate": 42.46,
-      "avg_duration": 141.99
+      "new_users": 2358,
+      "conversion_rate": 2.45,
+      "bounce_rate": 42.57,
+      "avg_duration": 143.95
     },
     {
       "channel": "Organic Video",
-      "sessions": 1815,
-      "users": 1571,
-      "conversions": 83,
-      "new_users": 405,
-      "conversion_rate": 4.57,
-      "bounce_rate": 65.01,
-      "avg_duration": 174.32
+      "sessions": 1782,
+      "users": 1534,
+      "conversions": 84,
+      "new_users": 392,
+      "conversion_rate": 4.71,
+      "bounce_rate": 64.93,
+      "avg_duration": 175.49
     },
     {
       "channel": "Display",
-      "sessions": 716,
-      "users": 649,
+      "sessions": 715,
+      "users": 648,
       "conversions": 30,
       "new_users": 367,
-      "conversion_rate": 4.19,
-      "bounce_rate": 61.73,
-      "avg_duration": 112.2
+      "conversion_rate": 4.2,
+      "bounce_rate": 61.68,
+      "avg_duration": 112.34
     },
     {
       "channel": "Paid Video",
-      "sessions": 660,
-      "users": 587,
-      "conversions": 33,
-      "new_users": 72,
-      "conversion_rate": 5.0,
-      "bounce_rate": 48.79,
-      "avg_duration": 107.01
+      "sessions": 611,
+      "users": 541,
+      "conversions": 30,
+      "new_users": 65,
+      "conversion_rate": 4.91,
+      "bounce_rate": 46.64,
+      "avg_duration": 110.96
     },
     {
       "channel": "Organic Shopping",
       "sessions": 10,
       "users": 9,
       "conversions": 0,
-      "new_users": 6,
+      "new_users": 7,
       "conversion_rate": 0.0,
-      "bounce_rate": 40.0,
-      "avg_duration": 196.41
+      "bounce_rate": 50.0,
+      "avg_duration": 195.98
     }
   ],
   "channels_daily": {
     "dates": [
-      "2026-02-23",
       "2026-02-24",
       "2026-02-25",
       "2026-02-26",
@@ -2333,7 +2342,8 @@
       "2026-05-03",
       "2026-05-04",
       "2026-05-05",
-      "2026-05-06"
+      "2026-05-06",
+      "2026-05-07"
     ],
     "channels": [
       "Paid Search",
@@ -2343,115 +2353,15 @@
       "Mobile Push Notifications",
       "Organic Social",
       "Paid Social",
-      "Referral",
       "Unassigned",
-      "Paid Video",
+      "Referral",
       "Organic Video",
+      "Paid Video",
       "Email",
       "Display",
       "Organic Shopping"
     ],
     "data": {
-      "2026-02-23": {
-        "Paid Search": {
-          "sessions": 20677,
-          "users": 16951,
-          "conversions": 1667,
-          "bounce_rate": 15.92,
-          "avg_duration": 374.57
-        },
-        "Organic Search": {
-          "sessions": 15635,
-          "users": 13058,
-          "conversions": 556,
-          "bounce_rate": 17.42,
-          "avg_duration": 295.61
-        },
-        "Direct": {
-          "sessions": 5099,
-          "users": 4137,
-          "conversions": 985,
-          "bounce_rate": 26.3,
-          "avg_duration": 332.44
-        },
-        "Cross-network": {
-          "sessions": 3235,
-          "users": 2977,
-          "conversions": 112,
-          "bounce_rate": 35.24,
-          "avg_duration": 228.97
-        },
-        "Mobile Push Notifications": {
-          "sessions": 1520,
-          "users": 1284,
-          "conversions": 31,
-          "bounce_rate": 51.71,
-          "avg_duration": 100.55
-        },
-        "Organic Social": {
-          "sessions": 755,
-          "users": 656,
-          "conversions": 166,
-          "bounce_rate": 23.31,
-          "avg_duration": 252.7
-        },
-        "Paid Social": {
-          "sessions": 256,
-          "users": 239,
-          "conversions": 1,
-          "bounce_rate": 40.62,
-          "avg_duration": 113.92
-        },
-        "Referral": {
-          "sessions": 201,
-          "users": 141,
-          "conversions": 12,
-          "bounce_rate": 35.82,
-          "avg_duration": 426.98
-        },
-        "Unassigned": {
-          "sessions": 190,
-          "users": 175,
-          "conversions": 12,
-          "bounce_rate": 68.95,
-          "avg_duration": 318.59
-        },
-        "Paid Video": {
-          "sessions": 50,
-          "users": 47,
-          "conversions": 3,
-          "bounce_rate": 76.0,
-          "avg_duration": 56.58
-        },
-        "Organic Video": {
-          "sessions": 45,
-          "users": 45,
-          "conversions": 0,
-          "bounce_rate": 62.22,
-          "avg_duration": 88.75
-        },
-        "Email": {
-          "sessions": 34,
-          "users": 25,
-          "conversions": 2,
-          "bounce_rate": 47.06,
-          "avg_duration": 107.41
-        },
-        "Display": {
-          "sessions": 1,
-          "users": 1,
-          "conversions": 0,
-          "bounce_rate": 100.0,
-          "avg_duration": 8.08
-        },
-        "Organic Shopping": {
-          "sessions": 1,
-          "users": 1,
-          "conversions": 0,
-          "bounce_rate": 0.0,
-          "avg_duration": 4.36
-        }
-      },
       "2026-02-24": {
         "Paid Search": {
           "sessions": 23931,
@@ -8866,6 +8776,106 @@
           "conversions": 0,
           "bounce_rate": 15.38,
           "avg_duration": 35.66
+        },
+        "Paid Social": {
+          "sessions": 3,
+          "users": 3,
+          "conversions": 0,
+          "bounce_rate": 33.33,
+          "avg_duration": 325.35
+        },
+        "Paid Video": {
+          "sessions": 1,
+          "users": 1,
+          "conversions": 0,
+          "bounce_rate": 100.0,
+          "avg_duration": 0.0
+        }
+      },
+      "2026-05-07": {
+        "Paid Search": {
+          "sessions": 30704,
+          "users": 24918,
+          "conversions": 3062,
+          "bounce_rate": 14.1,
+          "avg_duration": 416.89
+        },
+        "Organic Search": {
+          "sessions": 10141,
+          "users": 7779,
+          "conversions": 767,
+          "bounce_rate": 22.24,
+          "avg_duration": 294.65
+        },
+        "Direct": {
+          "sessions": 8018,
+          "users": 6635,
+          "conversions": 1570,
+          "bounce_rate": 36.88,
+          "avg_duration": 259.59
+        },
+        "Cross-network": {
+          "sessions": 6333,
+          "users": 5679,
+          "conversions": 299,
+          "bounce_rate": 34.2,
+          "avg_duration": 266.12
+        },
+        "Mobile Push Notifications": {
+          "sessions": 3280,
+          "users": 2673,
+          "conversions": 37,
+          "bounce_rate": 79.18,
+          "avg_duration": 86.26
+        },
+        "Unassigned": {
+          "sessions": 1080,
+          "users": 953,
+          "conversions": 203,
+          "bounce_rate": 48.24,
+          "avg_duration": 318.47
+        },
+        "Organic Social": {
+          "sessions": 943,
+          "users": 766,
+          "conversions": 244,
+          "bounce_rate": 20.78,
+          "avg_duration": 311.32
+        },
+        "Email": {
+          "sessions": 294,
+          "users": 282,
+          "conversions": 4,
+          "bounce_rate": 49.32,
+          "avg_duration": 91.63
+        },
+        "Referral": {
+          "sessions": 291,
+          "users": 227,
+          "conversions": 23,
+          "bounce_rate": 38.83,
+          "avg_duration": 356.79
+        },
+        "Organic Video": {
+          "sessions": 12,
+          "users": 8,
+          "conversions": 1,
+          "bounce_rate": 41.67,
+          "avg_duration": 26.91
+        },
+        "Paid Social": {
+          "sessions": 2,
+          "users": 1,
+          "conversions": 1,
+          "bounce_rate": 50.0,
+          "avg_duration": 79.79
+        },
+        "Organic Shopping": {
+          "sessions": 1,
+          "users": 1,
+          "conversions": 0,
+          "bounce_rate": 100.0,
+          "avg_duration": 0.0
         }
       }
     }
@@ -8873,40 +8883,39 @@
   "devices": [
     {
       "device": "mobile",
-      "sessions": 3598240,
-      "users": 2746310,
-      "conversions": 313037,
-      "bounce_rate": 22.48,
-      "avg_duration": 291.93
+      "sessions": 3610894,
+      "users": 2755820,
+      "conversions": 314478,
+      "bounce_rate": 22.58,
+      "avg_duration": 292.81
     },
     {
       "device": "desktop",
-      "sessions": 1020065,
-      "users": 797564,
-      "conversions": 133370,
-      "bounce_rate": 25.77,
-      "avg_duration": 492.5
+      "sessions": 1019301,
+      "users": 797878,
+      "conversions": 133666,
+      "bounce_rate": 25.98,
+      "avg_duration": 496.98
     },
     {
       "device": "tablet",
-      "sessions": 24850,
-      "users": 21195,
-      "conversions": 2428,
-      "bounce_rate": 17.3,
-      "avg_duration": 347.84
+      "sessions": 24883,
+      "users": 21218,
+      "conversions": 2449,
+      "bounce_rate": 17.35,
+      "avg_duration": 349.24
     },
     {
       "device": "smart tv",
-      "sessions": 24,
-      "users": 24,
-      "conversions": 1,
-      "bounce_rate": 29.17,
-      "avg_duration": 238.1
+      "sessions": 23,
+      "users": 23,
+      "conversions": 0,
+      "bounce_rate": 30.43,
+      "avg_duration": 226.7
     }
   ],
   "devices_daily": {
     "dates": [
-      "2026-02-23",
       "2026-02-24",
       "2026-02-25",
       "2026-02-26",
@@ -8996,7 +9005,8 @@
       "2026-05-21",
       "2026-05-22",
       "2026-05-23",
-      "2026-05-24"
+      "2026-05-24",
+      "2026-05-25"
     ],
     "devices": [
       "mobile",
@@ -9005,36 +9015,6 @@
       "smart tv"
     ],
     "data": {
-      "2026-02-23": {
-        "mobile": {
-          "sessions": 35475,
-          "users": 28077,
-          "conversions": 2414,
-          "bounce_rate": 19.53,
-          "avg_duration": 269.63
-        },
-        "desktop": {
-          "sessions": 12287,
-          "users": 9461,
-          "conversions": 1122,
-          "bounce_rate": 22.27,
-          "avg_duration": 462.28
-        },
-        "tablet": {
-          "sessions": 271,
-          "users": 238,
-          "conversions": 10,
-          "bounce_rate": 14.39,
-          "avg_duration": 319.38
-        },
-        "smart tv": {
-          "sessions": 2,
-          "users": 2,
-          "conversions": 1,
-          "bounce_rate": 0.0,
-          "avg_duration": 272.11
-        }
-      },
       "2026-02-24": {
         "mobile": {
           "sessions": 35093,
@@ -11224,25 +11204,55 @@
       },
       "2026-05-24": {
         "mobile": {
-          "sessions": 9527,
-          "users": 8588,
-          "conversions": 773,
-          "bounce_rate": 47.39,
-          "avg_duration": 719.45
+          "sessions": 40850,
+          "users": 31779,
+          "conversions": 3495,
+          "bounce_rate": 23.21,
+          "avg_duration": 271.52
         },
         "desktop": {
-          "sessions": 1390,
-          "users": 1282,
-          "conversions": 169,
-          "bounce_rate": 52.52,
-          "avg_duration": 1340.45
+          "sessions": 6327,
+          "users": 5213,
+          "conversions": 999,
+          "bounce_rate": 30.36,
+          "avg_duration": 503.98
         },
         "tablet": {
-          "sessions": 62,
-          "users": 57,
-          "conversions": 4,
-          "bounce_rate": 53.23,
-          "avg_duration": 953.65
+          "sessions": 254,
+          "users": 218,
+          "conversions": 29,
+          "bounce_rate": 15.35,
+          "avg_duration": 343.67
+        },
+        "smart tv": {
+          "sessions": 1,
+          "users": 1,
+          "conversions": 0,
+          "bounce_rate": 0.0,
+          "avg_duration": 43.92
+        }
+      },
+      "2026-05-25": {
+        "mobile": {
+          "sessions": 16806,
+          "users": 14396,
+          "conversions": 1133,
+          "bounce_rate": 49.89,
+          "avg_duration": 726.72
+        },
+        "desktop": {
+          "sessions": 6586,
+          "users": 5844,
+          "conversions": 588,
+          "bounce_rate": 52.92,
+          "avg_duration": 1297.46
+        },
+        "tablet": {
+          "sessions": 112,
+          "users": 100,
+          "conversions": 6,
+          "bounce_rate": 43.75,
+          "avg_duration": 933.34
         }
       }
     }
@@ -11250,29 +11260,28 @@
   "new_vs_returning": [
     {
       "type": "returning",
-      "sessions": 1789808,
-      "users": 1265034,
-      "conversions": 223684,
-      "bounce_rate": 16.64
+      "sessions": 1791742,
+      "users": 1265252,
+      "conversions": 224455,
+      "bounce_rate": 17.2
     },
     {
       "type": "new",
-      "sessions": 1348539,
-      "users": 1351846,
-      "conversions": 104206,
-      "bounce_rate": 15.01
+      "sessions": 1347687,
+      "users": 1350842,
+      "conversions": 104599,
+      "bounce_rate": 15.98
     },
     {
       "type": "(not set)",
-      "sessions": 251065,
-      "users": 228302,
+      "sessions": 253525,
+      "users": 230394,
       "conversions": 0,
-      "bounce_rate": 84.46
+      "bounce_rate": 89.17
     }
   ],
   "nvr_daily": {
     "dates": [
-      "2026-02-23",
       "2026-02-24",
       "2026-02-25",
       "2026-02-26",
@@ -11338,7 +11347,8 @@
       "2026-04-27",
       "2026-04-28",
       "2026-04-29",
-      "2026-04-30"
+      "2026-04-30",
+      "2026-05-01"
     ],
     "types": [
       "returning",
@@ -11346,23 +11356,6 @@
       "(not set)"
     ],
     "data": {
-      "2026-02-23": {
-        "returning": {
-          "sessions": 24367,
-          "users": 17904,
-          "conversions": 2397
-        },
-        "new": {
-          "sessions": 20200,
-          "users": 20059,
-          "conversions": 1150
-        },
-        "(not set)": {
-          "sessions": 2992,
-          "users": 2814,
-          "conversions": 0
-        }
-      },
       "2026-02-24": {
         "returning": {
           "sessions": 23808,
@@ -12478,13 +12471,29 @@
           "sessions": 23579,
           "users": 23429,
           "conversions": 1983
+        },
+        "(not set)": {
+          "sessions": 5452,
+          "users": 4906,
+          "conversions": 0
+        }
+      },
+      "2026-05-01": {
+        "returning": {
+          "sessions": 26301,
+          "users": 18122,
+          "conversions": 3168
+        },
+        "new": {
+          "sessions": 19348,
+          "users": 19055,
+          "conversions": 1543
         }
       }
     }
   },
   "nvr_by_device": {
     "dates": [
-      "2026-02-23",
       "2026-02-24",
       "2026-02-25",
       "2026-02-26",
@@ -12548,7 +12557,8 @@
       "2026-04-25",
       "2026-04-26",
       "2026-04-27",
-      "2026-04-28"
+      "2026-04-28",
+      "2026-04-29"
     ],
     "devices": [
       "mobile",
@@ -12557,60 +12567,6 @@
       "smart tv"
     ],
     "data": {
-      "2026-02-23": {
-        "mobile": {
-          "returning": {
-            "sessions": 18042,
-            "users": 12972
-          },
-          "new": {
-            "sessions": 15403,
-            "users": 15210
-          },
-          "(not set)": {
-            "sessions": 2407,
-            "users": 2220
-          }
-        },
-        "desktop": {
-          "returning": {
-            "sessions": 6663,
-            "users": 4879
-          },
-          "new": {
-            "sessions": 4890,
-            "users": 4805
-          },
-          "(not set)": {
-            "sessions": 643,
-            "users": 577
-          }
-        },
-        "tablet": {
-          "new": {
-            "sessions": 128,
-            "users": 128
-          },
-          "returning": {
-            "sessions": 126,
-            "users": 103
-          },
-          "(not set)": {
-            "sessions": 17,
-            "users": 17
-          }
-        },
-        "smart tv": {
-          "new": {
-            "sessions": 1,
-            "users": 1
-          },
-          "returning": {
-            "sessions": 1,
-            "users": 1
-          }
-        }
-      },
       "2026-02-24": {
         "mobile": {
           "returning": {
@@ -15505,6 +15461,62 @@
             "sessions": 949,
             "users": 827
           }
+        },
+        "tablet": {
+          "returning": {
+            "sessions": 160,
+            "users": 126
+          },
+          "new": {
+            "sessions": 115,
+            "users": 115
+          },
+          "(not set)": {
+            "sessions": 30,
+            "users": 28
+          }
+        },
+        "smart tv": {
+          "new": {
+            "sessions": 1,
+            "users": 1
+          }
+        }
+      },
+      "2026-04-29": {
+        "mobile": {
+          "returning": {
+            "sessions": 25430,
+            "users": 16881
+          },
+          "new": {
+            "sessions": 17367,
+            "users": 17507
+          },
+          "(not set)": {
+            "sessions": 4937,
+            "users": 4312
+          }
+        },
+        "desktop": {
+          "returning": {
+            "sessions": 7834,
+            "users": 5615
+          },
+          "new": {
+            "sessions": 7533,
+            "users": 7406
+          },
+          "(not set)": {
+            "sessions": 941,
+            "users": 800
+          }
+        },
+        "tablet": {
+          "new": {
+            "sessions": 150,
+            "users": 150
+          }
         }
       }
     }
@@ -15513,42 +15525,41 @@
     {
       "step": "Busca",
       "event": "search",
-      "event_count": 7893357,
-      "users": 1386732,
+      "event_count": 7929162,
+      "users": 1387864,
       "drop_rate": 0
     },
     {
       "step": "Selecionou item",
       "event": "select_item",
-      "event_count": 267688,
-      "users": 117940,
-      "drop_rate": 91.5
+      "event_count": 274290,
+      "users": 120962,
+      "drop_rate": 91.3
     },
     {
       "step": "Adicionou ao carrinho",
       "event": "add_to_cart",
-      "event_count": 970557,
-      "users": 388794,
-      "drop_rate": -229.7
+      "event_count": 973156,
+      "users": 389005,
+      "drop_rate": -221.6
     },
     {
       "step": "Iniciou checkout",
       "event": "begin_checkout",
-      "event_count": 308981,
-      "users": 144073,
-      "drop_rate": 62.9
+      "event_count": 315271,
+      "users": 146521,
+      "drop_rate": 62.3
     },
     {
       "step": "Compra",
       "event": "purchase",
-      "event_count": 502743,
-      "users": 272326,
-      "drop_rate": -89.0
+      "event_count": 504665,
+      "users": 273023,
+      "drop_rate": -86.3
     }
   ],
   "funnel_daily": {
     "dates": [
-      "2026-02-23",
       "2026-02-24",
       "2026-02-25",
       "2026-02-26",
@@ -15638,7 +15649,8 @@
       "2026-05-21",
       "2026-05-22",
       "2026-05-23",
-      "2026-05-24"
+      "2026-05-24",
+      "2026-05-25"
     ],
     "events": [
       "search",
@@ -15648,28 +15660,6 @@
       "purchase"
     ],
     "data": {
-      "2026-02-23": {
-        "search": {
-          "event_count": 67987,
-          "users": 20198
-        },
-        "select_item": {
-          "event_count": 588,
-          "users": 345
-        },
-        "add_to_cart": {
-          "event_count": 8037,
-          "users": 4447
-        },
-        "begin_checkout": {
-          "event_count": 440,
-          "users": 297
-        },
-        "purchase": {
-          "event_count": 3553,
-          "users": 3127
-        }
-      },
       "2026-02-24": {
         "search": {
           "event_count": 73064,
@@ -17630,31 +17620,52 @@
       },
       "2026-05-24": {
         "search": {
-          "event_count": 16410,
-          "users": 5890
+          "event_count": 84558,
+          "users": 23941
         },
         "select_item": {
-          "event_count": 1122,
-          "users": 686
+          "event_count": 5808,
+          "users": 3242
         },
         "add_to_cart": {
-          "event_count": 1642,
-          "users": 1109
+          "event_count": 8668,
+          "users": 5027
         },
         "begin_checkout": {
-          "event_count": 1175,
-          "users": 767
+          "event_count": 5781,
+          "users": 3415
         },
         "purchase": {
-          "event_count": 972,
-          "users": 833
+          "event_count": 4657,
+          "users": 3739
+        }
+      },
+      "2026-05-25": {
+        "search": {
+          "event_count": 35644,
+          "users": 12127
+        },
+        "select_item": {
+          "event_count": 2504,
+          "users": 1441
+        },
+        "add_to_cart": {
+          "event_count": 3608,
+          "users": 2185
+        },
+        "begin_checkout": {
+          "event_count": 2124,
+          "users": 1382
+        },
+        "purchase": {
+          "event_count": 1790,
+          "users": 1479
         }
       }
     }
   },
   "device_source_daily": {
     "dates": [
-      "2026-02-23",
       "2026-02-24",
       "2026-02-25",
       "2026-02-26",
@@ -17679,7 +17690,8 @@
       "2026-03-17",
       "2026-03-18",
       "2026-03-19",
-      "2026-03-20"
+      "2026-03-20",
+      "2026-03-21"
     ],
     "devices": [],
     "sources": [
@@ -17687,110 +17699,10 @@
       "google / organic",
       "(direct) / (none)",
       "pushnews / pushnotification",
-      "whatsapp / bot",
+      "(data not available) / (data not available)",
       "outros / —"
     ],
     "data": {
-      "2026-02-23": {
-        "mobile": {
-          "google / cpc": {
-            "sessions": 17610,
-            "users": 14769,
-            "conversions": 1117
-          },
-          "google / organic": {
-            "sessions": 11790,
-            "users": 10135,
-            "conversions": 341
-          },
-          "(direct) / (none)": {
-            "sessions": 3628,
-            "users": 2949,
-            "conversions": 750
-          },
-          "outros / —": {
-            "sessions": 1814,
-            "users": 1608,
-            "conversions": 35
-          },
-          "whatsapp / bot": {
-            "sessions": 332,
-            "users": 267,
-            "conversions": 155
-          },
-          "pushnews / pushnotification": {
-            "sessions": 262,
-            "users": 223,
-            "conversions": 16
-          }
-        },
-        "desktop": {
-          "google / cpc": {
-            "sessions": 6132,
-            "users": 4857,
-            "conversions": 651
-          },
-          "google / organic": {
-            "sessions": 3375,
-            "users": 2699,
-            "conversions": 188
-          },
-          "(direct) / (none)": {
-            "sessions": 1477,
-            "users": 1179,
-            "conversions": 232
-          },
-          "outros / —": {
-            "sessions": 770,
-            "users": 647,
-            "conversions": 39
-          },
-          "pushnews / pushnotification": {
-            "sessions": 282,
-            "users": 246,
-            "conversions": 8
-          },
-          "whatsapp / bot": {
-            "sessions": 8,
-            "users": 7,
-            "conversions": 4
-          }
-        },
-        "tablet": {
-          "google / cpc": {
-            "sessions": 137,
-            "users": 123,
-            "conversions": 5
-          },
-          "google / organic": {
-            "sessions": 112,
-            "users": 103,
-            "conversions": 2
-          },
-          "(direct) / (none)": {
-            "sessions": 13,
-            "users": 12,
-            "conversions": 3
-          },
-          "outros / —": {
-            "sessions": 9,
-            "users": 9,
-            "conversions": 0
-          }
-        },
-        "smart tv": {
-          "outros / —": {
-            "sessions": 1,
-            "users": 1,
-            "conversions": 1
-          },
-          "google / cpc": {
-            "sessions": 1,
-            "users": 1,
-            "conversions": 0
-          }
-        }
-      },
       "2026-02-24": {
         "mobile": {
           "google / cpc": {
@@ -17814,14 +17726,14 @@
             "conversions": 12
           },
           "outros / —": {
-            "sessions": 1516,
-            "users": 1393,
-            "conversions": 49
+            "sessions": 1570,
+            "users": 1404,
+            "conversions": 182
           },
-          "whatsapp / bot": {
-            "sessions": 274,
-            "users": 231,
-            "conversions": 146
+          "(data not available) / (data not available)": {
+            "sessions": 220,
+            "users": 220,
+            "conversions": 13
           }
         },
         "desktop": {
@@ -17846,14 +17758,14 @@
             "conversions": 10
           },
           "outros / —": {
-            "sessions": 427,
-            "users": 345,
-            "conversions": 29
+            "sessions": 400,
+            "users": 316,
+            "conversions": 27
           },
-          "whatsapp / bot": {
-            "sessions": 6,
-            "users": 4,
-            "conversions": 1
+          "(data not available) / (data not available)": {
+            "sessions": 33,
+            "users": 33,
+            "conversions": 3
           }
         },
         "tablet": {
@@ -17878,14 +17790,14 @@
             "conversions": 0
           },
           "outros / —": {
-            "sessions": 11,
-            "users": 11,
-            "conversions": 0
-          },
-          "whatsapp / bot": {
-            "sessions": 2,
-            "users": 2,
+            "sessions": 12,
+            "users": 12,
             "conversions": 2
+          },
+          "(data not available) / (data not available)": {
+            "sessions": 1,
+            "users": 1,
+            "conversions": 0
           }
         }
       },
@@ -17912,14 +17824,14 @@
             "conversions": 15
           },
           "outros / —": {
-            "sessions": 1540,
-            "users": 1375,
-            "conversions": 67
+            "sessions": 1548,
+            "users": 1334,
+            "conversions": 227
           },
-          "whatsapp / bot": {
-            "sessions": 302,
-            "users": 251,
-            "conversions": 176
+          "(data not available) / (data not available)": {
+            "sessions": 294,
+            "users": 292,
+            "conversions": 16
           }
         },
         "desktop": {
@@ -17944,14 +17856,14 @@
             "conversions": 12
           },
           "outros / —": {
-            "sessions": 659,
-            "users": 549,
-            "conversions": 39
+            "sessions": 628,
+            "users": 514,
+            "conversions": 35
           },
-          "whatsapp / bot": {
-            "sessions": 15,
-            "users": 11,
-            "conversions": 3
+          "(data not available) / (data not available)": {
+            "sessions": 46,
+            "users": 46,
+            "conversions": 7
           }
         },
         "tablet": {
@@ -17971,13 +17883,18 @@
             "conversions": 5
           },
           "outros / —": {
-            "sessions": 9,
-            "users": 9,
+            "sessions": 7,
+            "users": 7,
             "conversions": 0
           },
           "pushnews / pushnotification": {
             "sessions": 4,
             "users": 4,
+            "conversions": 0
+          },
+          "(data not available) / (data not available)": {
+            "sessions": 2,
+            "users": 2,
             "conversions": 0
           }
         },
@@ -18007,19 +17924,19 @@
             "conversions": 857
           },
           "outros / —": {
-            "sessions": 1935,
-            "users": 1675,
-            "conversions": 45
-          },
-          "whatsapp / bot": {
-            "sessions": 323,
-            "users": 274,
-            "conversions": 175
+            "sessions": 2052,
+            "users": 1743,
+            "conversions": 212
           },
           "pushnews / pushnotification": {
             "sessions": 274,
             "users": 234,
             "conversions": 11
+          },
+          "(data not available) / (data not available)": {
+            "sessions": 206,
+            "users": 206,
+            "conversions": 8
           }
         },
         "desktop": {
@@ -18039,8 +17956,8 @@
             "conversions": 117
           },
           "outros / —": {
-            "sessions": 714,
-            "users": 594,
+            "sessions": 685,
+            "users": 564,
             "conversions": 42
           },
           "pushnews / pushnotification": {
@@ -18048,9 +17965,9 @@
             "users": 96,
             "conversions": 13
           },
-          "whatsapp / bot": {
-            "sessions": 10,
-            "users": 9,
+          "(data not available) / (data not available)": {
+            "sessions": 39,
+            "users": 39,
             "conversions": 4
           }
         },
@@ -18071,19 +17988,19 @@
             "conversions": 2
           },
           "outros / —": {
-            "sessions": 17,
-            "users": 17,
-            "conversions": 1
+            "sessions": 18,
+            "users": 18,
+            "conversions": 2
           },
           "pushnews / pushnotification": {
             "sessions": 2,
             "users": 2,
             "conversions": 0
           },
-          "whatsapp / bot": {
-            "sessions": 2,
-            "users": 2,
-            "conversions": 1
+          "(data not available) / (data not available)": {
+            "sessions": 1,
+            "users": 1,
+            "conversions": 0
           }
         }
       },
@@ -18109,15 +18026,15 @@
             "users": 813,
             "conversions": 13
           },
-          "whatsapp / bot": {
-            "sessions": 334,
-            "users": 280,
-            "conversions": 176
-          },
           "outros / —": {
-            "sessions": 1552,
-            "users": 1427,
-            "conversions": 47
+            "sessions": 1555,
+            "users": 1376,
+            "conversions": 214
+          },
+          "(data not available) / (data not available)": {
+            "sessions": 331,
+            "users": 331,
+            "conversions": 9
           }
         },
         "desktop": {
@@ -18142,14 +18059,14 @@
             "conversions": 14
           },
           "outros / —": {
-            "sessions": 494,
-            "users": 398,
-            "conversions": 31
+            "sessions": 464,
+            "users": 365,
+            "conversions": 34
           },
-          "whatsapp / bot": {
-            "sessions": 12,
-            "users": 9,
-            "conversions": 6
+          "(data not available) / (data not available)": {
+            "sessions": 42,
+            "users": 42,
+            "conversions": 3
           }
         },
         "tablet": {
@@ -18173,9 +18090,14 @@
             "users": 5,
             "conversions": 0
           },
+          "(data not available) / (data not available)": {
+            "sessions": 2,
+            "users": 2,
+            "conversions": 0
+          },
           "outros / —": {
-            "sessions": 9,
-            "users": 9,
+            "sessions": 7,
+            "users": 7,
             "conversions": 1
           }
         },
@@ -18205,19 +18127,19 @@
             "conversions": 787
           },
           "outros / —": {
-            "sessions": 1947,
-            "users": 1730,
-            "conversions": 56
-          },
-          "whatsapp / bot": {
-            "sessions": 321,
-            "users": 268,
-            "conversions": 181
+            "sessions": 2050,
+            "users": 1780,
+            "conversions": 226
           },
           "pushnews / pushnotification": {
             "sessions": 294,
             "users": 251,
             "conversions": 6
+          },
+          "(data not available) / (data not available)": {
+            "sessions": 218,
+            "users": 218,
+            "conversions": 11
           }
         },
         "desktop": {
@@ -18237,19 +18159,19 @@
             "conversions": 69
           },
           "outros / —": {
-            "sessions": 379,
-            "users": 322,
-            "conversions": 25
+            "sessions": 368,
+            "users": 311,
+            "conversions": 28
           },
           "pushnews / pushnotification": {
             "sessions": 63,
             "users": 55,
             "conversions": 5
           },
-          "whatsapp / bot": {
-            "sessions": 6,
-            "users": 6,
-            "conversions": 3
+          "(data not available) / (data not available)": {
+            "sessions": 17,
+            "users": 17,
+            "conversions": 0
           }
         },
         "tablet": {
@@ -18269,8 +18191,13 @@
             "conversions": 3
           },
           "outros / —": {
-            "sessions": 18,
-            "users": 16,
+            "sessions": 15,
+            "users": 13,
+            "conversions": 0
+          },
+          "(data not available) / (data not available)": {
+            "sessions": 3,
+            "users": 3,
             "conversions": 0
           },
           "pushnews / pushnotification": {
@@ -18297,15 +18224,15 @@
             "users": 2713,
             "conversions": 745
           },
-          "whatsapp / bot": {
-            "sessions": 330,
-            "users": 287,
-            "conversions": 173
-          },
           "outros / —": {
-            "sessions": 1513,
-            "users": 1356,
-            "conversions": 55
+            "sessions": 1597,
+            "users": 1398,
+            "conversions": 215
+          },
+          "(data not available) / (data not available)": {
+            "sessions": 246,
+            "users": 245,
+            "conversions": 13
           },
           "pushnews / pushnotification": {
             "sessions": 200,
@@ -18335,14 +18262,14 @@
             "conversions": 6
           },
           "outros / —": {
-            "sessions": 271,
-            "users": 229,
-            "conversions": 23
+            "sessions": 257,
+            "users": 215,
+            "conversions": 26
           },
-          "whatsapp / bot": {
-            "sessions": 5,
-            "users": 5,
-            "conversions": 5
+          "(data not available) / (data not available)": {
+            "sessions": 19,
+            "users": 19,
+            "conversions": 2
           }
         },
         "tablet": {
@@ -18361,14 +18288,14 @@
             "users": 13,
             "conversions": 3
           },
-          "outros / —": {
-            "sessions": 9,
-            "users": 8,
+          "(data not available) / (data not available)": {
+            "sessions": 3,
+            "users": 3,
             "conversions": 0
           },
-          "whatsapp / bot": {
-            "sessions": 3,
-            "users": 1,
+          "outros / —": {
+            "sessions": 9,
+            "users": 6,
             "conversions": 1
           }
         },
@@ -18398,19 +18325,19 @@
             "conversions": 917
           },
           "outros / —": {
-            "sessions": 4323,
-            "users": 3700,
-            "conversions": 75
+            "sessions": 4392,
+            "users": 3702,
+            "conversions": 250
           },
           "pushnews / pushnotification": {
             "sessions": 1162,
             "users": 950,
             "conversions": 23
           },
-          "whatsapp / bot": {
-            "sessions": 363,
-            "users": 296,
-            "conversions": 184
+          "(data not available) / (data not available)": {
+            "sessions": 294,
+            "users": 294,
+            "conversions": 9
           }
         },
         "desktop": {
@@ -18435,14 +18362,14 @@
             "conversions": 11
           },
           "outros / —": {
-            "sessions": 683,
-            "users": 545,
-            "conversions": 58
+            "sessions": 659,
+            "users": 520,
+            "conversions": 62
           },
-          "whatsapp / bot": {
-            "sessions": 13,
-            "users": 12,
-            "conversions": 7
+          "(data not available) / (data not available)": {
+            "sessions": 37,
+            "users": 37,
+            "conversions": 3
           }
         },
         "tablet": {
@@ -18466,9 +18393,14 @@
             "users": 2,
             "conversions": 0
           },
+          "(data not available) / (data not available)": {
+            "sessions": 1,
+            "users": 1,
+            "conversions": 0
+          },
           "outros / —": {
-            "sessions": 6,
-            "users": 6,
+            "sessions": 5,
+            "users": 5,
             "conversions": 0
           }
         },
@@ -18508,14 +18440,14 @@
             "conversions": 20
           },
           "outros / —": {
-            "sessions": 2032,
-            "users": 1805,
-            "conversions": 72
+            "sessions": 2103,
+            "users": 1806,
+            "conversions": 222
           },
-          "whatsapp / bot": {
-            "sessions": 322,
-            "users": 252,
-            "conversions": 155
+          "(data not available) / (data not available)": {
+            "sessions": 251,
+            "users": 251,
+            "conversions": 5
           }
         },
         "desktop": {
@@ -18540,14 +18472,14 @@
             "conversions": 11
           },
           "outros / —": {
-            "sessions": 730,
-            "users": 600,
-            "conversions": 49
+            "sessions": 689,
+            "users": 558,
+            "conversions": 46
           },
-          "whatsapp / bot": {
-            "sessions": 5,
-            "users": 4,
-            "conversions": 0
+          "(data not available) / (data not available)": {
+            "sessions": 46,
+            "users": 46,
+            "conversions": 3
           }
         },
         "tablet": {
@@ -18572,9 +18504,14 @@
             "conversions": 0
           },
           "outros / —": {
-            "sessions": 12,
-            "users": 12,
+            "sessions": 11,
+            "users": 11,
             "conversions": 1
+          },
+          "(data not available) / (data not available)": {
+            "sessions": 1,
+            "users": 1,
+            "conversions": 0
           }
         }
       },
@@ -18601,14 +18538,14 @@
             "conversions": 17
           },
           "outros / —": {
-            "sessions": 1870,
-            "users": 1674,
-            "conversions": 79
+            "sessions": 1986,
+            "users": 1715,
+            "conversions": 264
           },
-          "whatsapp / bot": {
-            "sessions": 364,
-            "users": 289,
-            "conversions": 191
+          "(data not available) / (data not available)": {
+            "sessions": 248,
+            "users": 248,
+            "conversions": 6
           }
         },
         "desktop": {
@@ -18633,14 +18570,14 @@
             "conversions": 15
           },
           "outros / —": {
-            "sessions": 571,
-            "users": 468,
-            "conversions": 54
+            "sessions": 537,
+            "users": 434,
+            "conversions": 53
           },
-          "whatsapp / bot": {
-            "sessions": 9,
-            "users": 8,
-            "conversions": 3
+          "(data not available) / (data not available)": {
+            "sessions": 43,
+            "users": 42,
+            "conversions": 4
           }
         },
         "tablet": {
@@ -18665,13 +18602,13 @@
             "conversions": 0
           },
           "outros / —": {
-            "sessions": 11,
-            "users": 11,
+            "sessions": 10,
+            "users": 10,
             "conversions": 0
           },
-          "whatsapp / bot": {
-            "sessions": 1,
-            "users": 1,
+          "(data not available) / (data not available)": {
+            "sessions": 2,
+            "users": 2,
             "conversions": 0
           }
         }
@@ -18694,19 +18631,19 @@
             "conversions": 973
           },
           "outros / —": {
-            "sessions": 3539,
-            "users": 2912,
-            "conversions": 170
+            "sessions": 3668,
+            "users": 2967,
+            "conversions": 338
           },
           "pushnews / pushnotification": {
             "sessions": 389,
             "users": 328,
             "conversions": 24
           },
-          "whatsapp / bot": {
-            "sessions": 384,
-            "users": 308,
-            "conversions": 180
+          "(data not available) / (data not available)": {
+            "sessions": 255,
+            "users": 253,
+            "conversions": 12
           }
         },
         "desktop": {
@@ -18726,19 +18663,19 @@
             "conversions": 151
           },
           "outros / —": {
-            "sessions": 1176,
-            "users": 959,
-            "conversions": 78
+            "sessions": 1158,
+            "users": 938,
+            "conversions": 84
           },
           "pushnews / pushnotification": {
             "sessions": 117,
             "users": 100,
             "conversions": 13
           },
-          "whatsapp / bot": {
-            "sessions": 18,
-            "users": 14,
-            "conversions": 10
+          "(data not available) / (data not available)": {
+            "sessions": 36,
+            "users": 35,
+            "conversions": 4
           }
         },
         "tablet": {
@@ -18758,19 +18695,19 @@
             "conversions": 5
           },
           "outros / —": {
-            "sessions": 17,
-            "users": 15,
-            "conversions": 2
+            "sessions": 15,
+            "users": 12,
+            "conversions": 3
+          },
+          "(data not available) / (data not available)": {
+            "sessions": 4,
+            "users": 4,
+            "conversions": 0
           },
           "pushnews / pushnotification": {
             "sessions": 2,
             "users": 2,
             "conversions": 0
-          },
-          "whatsapp / bot": {
-            "sessions": 2,
-            "users": 1,
-            "conversions": 1
           }
         }
       },
@@ -18797,14 +18734,14 @@
             "conversions": 26
           },
           "outros / —": {
-            "sessions": 1933,
-            "users": 1723,
-            "conversions": 92
+            "sessions": 2061,
+            "users": 1780,
+            "conversions": 256
           },
-          "whatsapp / bot": {
-            "sessions": 351,
-            "users": 280,
-            "conversions": 174
+          "(data not available) / (data not available)": {
+            "sessions": 223,
+            "users": 223,
+            "conversions": 10
           }
         },
         "desktop": {
@@ -18829,14 +18766,14 @@
             "conversions": 19
           },
           "outros / —": {
-            "sessions": 573,
-            "users": 477,
-            "conversions": 44
+            "sessions": 549,
+            "users": 450,
+            "conversions": 46
           },
-          "whatsapp / bot": {
-            "sessions": 12,
-            "users": 9,
-            "conversions": 6
+          "(data not available) / (data not available)": {
+            "sessions": 36,
+            "users": 36,
+            "conversions": 4
           }
         },
         "tablet": {
@@ -18861,9 +18798,14 @@
             "conversions": 0
           },
           "outros / —": {
-            "sessions": 9,
-            "users": 8,
+            "sessions": 7,
+            "users": 6,
             "conversions": 1
+          },
+          "(data not available) / (data not available)": {
+            "sessions": 2,
+            "users": 2,
+            "conversions": 0
           }
         }
       },
@@ -18885,14 +18827,14 @@
             "conversions": 841
           },
           "outros / —": {
-            "sessions": 3386,
-            "users": 2898,
-            "conversions": 186
+            "sessions": 3406,
+            "users": 2860,
+            "conversions": 337
           },
-          "whatsapp / bot": {
-            "sessions": 341,
-            "users": 283,
-            "conversions": 163
+          "(data not available) / (data not available)": {
+            "sessions": 321,
+            "users": 321,
+            "conversions": 12
           },
           "pushnews / pushnotification": {
             "sessions": 306,
@@ -18917,19 +18859,19 @@
             "conversions": 69
           },
           "outros / —": {
-            "sessions": 569,
-            "users": 481,
-            "conversions": 96
+            "sessions": 551,
+            "users": 459,
+            "conversions": 93
           },
           "pushnews / pushnotification": {
             "sessions": 83,
             "users": 79,
             "conversions": 3
           },
-          "whatsapp / bot": {
-            "sessions": 11,
-            "users": 6,
-            "conversions": 1
+          "(data not available) / (data not available)": {
+            "sessions": 29,
+            "users": 28,
+            "conversions": 4
           }
         },
         "tablet": {
@@ -18949,8 +18891,13 @@
             "conversions": 1
           },
           "outros / —": {
-            "sessions": 12,
-            "users": 12,
+            "sessions": 10,
+            "users": 10,
+            "conversions": 0
+          },
+          "(data not available) / (data not available)": {
+            "sessions": 2,
+            "users": 2,
             "conversions": 0
           },
           "pushnews / pushnotification": {
@@ -18978,19 +18925,19 @@
             "conversions": 701
           },
           "outros / —": {
-            "sessions": 3389,
-            "users": 2848,
-            "conversions": 194
+            "sessions": 3438,
+            "users": 2833,
+            "conversions": 346
           },
           "pushnews / pushnotification": {
             "sessions": 1324,
             "users": 1104,
             "conversions": 17
           },
-          "whatsapp / bot": {
-            "sessions": 346,
-            "users": 284,
-            "conversions": 167
+          "(data not available) / (data not available)": {
+            "sessions": 297,
+            "users": 299,
+            "conversions": 15
           }
         },
         "desktop": {
@@ -19010,19 +18957,19 @@
             "conversions": 107
           },
           "outros / —": {
-            "sessions": 515,
-            "users": 412,
-            "conversions": 107
+            "sessions": 492,
+            "users": 389,
+            "conversions": 105
           },
           "pushnews / pushnotification": {
             "sessions": 208,
             "users": 190,
             "conversions": 6
           },
-          "whatsapp / bot": {
-            "sessions": 3,
-            "users": 3,
-            "conversions": 3
+          "(data not available) / (data not available)": {
+            "sessions": 26,
+            "users": 26,
+            "conversions": 5
           }
         },
         "tablet": {
@@ -19044,17 +18991,17 @@
           "outros / —": {
             "sessions": 15,
             "users": 14,
-            "conversions": 0
+            "conversions": 1
           },
           "pushnews / pushnotification": {
             "sessions": 5,
             "users": 5,
             "conversions": 0
           },
-          "whatsapp / bot": {
+          "(data not available) / (data not available)": {
             "sessions": 1,
             "users": 1,
-            "conversions": 1
+            "conversions": 0
           }
         }
       },
@@ -19076,19 +19023,19 @@
             "conversions": 915
           },
           "outros / —": {
-            "sessions": 3566,
-            "users": 2963,
-            "conversions": 234
+            "sessions": 3650,
+            "users": 2972,
+            "conversions": 391
           },
           "pushnews / pushnotification": {
             "sessions": 1426,
             "users": 1191,
             "conversions": 16
           },
-          "whatsapp / bot": {
-            "sessions": 367,
-            "users": 292,
-            "conversions": 173
+          "(data not available) / (data not available)": {
+            "sessions": 283,
+            "users": 283,
+            "conversions": 16
           }
         },
         "desktop": {
@@ -19113,14 +19060,14 @@
             "conversions": 16
           },
           "outros / —": {
-            "sessions": 961,
-            "users": 732,
-            "conversions": 119
+            "sessions": 934,
+            "users": 701,
+            "conversions": 125
           },
-          "whatsapp / bot": {
-            "sessions": 19,
-            "users": 15,
-            "conversions": 8
+          "(data not available) / (data not available)": {
+            "sessions": 46,
+            "users": 46,
+            "conversions": 2
           }
         },
         "tablet": {
@@ -19140,13 +19087,18 @@
             "conversions": 1
           },
           "outros / —": {
-            "sessions": 34,
-            "users": 33,
+            "sessions": 31,
+            "users": 30,
             "conversions": 1
           },
           "pushnews / pushnotification": {
             "sessions": 8,
             "users": 8,
+            "conversions": 0
+          },
+          "(data not available) / (data not available)": {
+            "sessions": 3,
+            "users": 3,
             "conversions": 0
           }
         }
@@ -19169,19 +19121,19 @@
             "conversions": 899
           },
           "outros / —": {
-            "sessions": 4141,
-            "users": 3469,
-            "conversions": 270
+            "sessions": 4215,
+            "users": 3472,
+            "conversions": 407
           },
           "pushnews / pushnotification": {
             "sessions": 1381,
             "users": 1152,
             "conversions": 19
           },
-          "whatsapp / bot": {
-            "sessions": 329,
-            "users": 257,
-            "conversions": 156
+          "(data not available) / (data not available)": {
+            "sessions": 255,
+            "users": 254,
+            "conversions": 19
           }
         },
         "desktop": {
@@ -19201,19 +19153,19 @@
             "conversions": 146
           },
           "outros / —": {
-            "sessions": 1354,
-            "users": 1057,
-            "conversions": 195
+            "sessions": 1315,
+            "users": 1016,
+            "conversions": 200
           },
           "pushnews / pushnotification": {
             "sessions": 516,
             "users": 436,
             "conversions": 9
           },
-          "whatsapp / bot": {
-            "sessions": 18,
-            "users": 16,
-            "conversions": 11
+          "(data not available) / (data not available)": {
+            "sessions": 57,
+            "users": 57,
+            "conversions": 6
           }
         },
         "tablet": {
@@ -19269,19 +19221,19 @@
             "conversions": 879
           },
           "outros / —": {
-            "sessions": 3869,
-            "users": 3174,
-            "conversions": 273
+            "sessions": 3906,
+            "users": 3149,
+            "conversions": 414
           },
           "pushnews / pushnotification": {
             "sessions": 1337,
             "users": 1067,
             "conversions": 17
           },
-          "whatsapp / bot": {
-            "sessions": 322,
-            "users": 260,
-            "conversions": 155
+          "(data not available) / (data not available)": {
+            "sessions": 285,
+            "users": 285,
+            "conversions": 14
           }
         },
         "desktop": {
@@ -19301,19 +19253,19 @@
             "conversions": 232
           },
           "outros / —": {
-            "sessions": 1322,
-            "users": 1093,
-            "conversions": 186
+            "sessions": 1268,
+            "users": 1037,
+            "conversions": 184
           },
           "pushnews / pushnotification": {
             "sessions": 506,
             "users": 445,
             "conversions": 24
           },
-          "whatsapp / bot": {
-            "sessions": 21,
-            "users": 18,
-            "conversions": 7
+          "(data not available) / (data not available)": {
+            "sessions": 75,
+            "users": 74,
+            "conversions": 9
           }
         },
         "tablet": {
@@ -19333,8 +19285,8 @@
             "conversions": 3
           },
           "outros / —": {
-            "sessions": 24,
-            "users": 21,
+            "sessions": 25,
+            "users": 22,
             "conversions": 0
           },
           "pushnews / pushnotification": {
@@ -19342,9 +19294,9 @@
             "users": 5,
             "conversions": 0
           },
-          "whatsapp / bot": {
-            "sessions": 2,
-            "users": 2,
+          "(data not available) / (data not available)": {
+            "sessions": 1,
+            "users": 1,
             "conversions": 0
           }
         }
@@ -19367,19 +19319,19 @@
             "conversions": 952
           },
           "outros / —": {
-            "sessions": 4131,
-            "users": 3408,
-            "conversions": 132
+            "sessions": 4241,
+            "users": 3450,
+            "conversions": 323
           },
           "pushnews / pushnotification": {
             "sessions": 532,
             "users": 437,
             "conversions": 18
           },
-          "whatsapp / bot": {
-            "sessions": 378,
-            "users": 306,
-            "conversions": 198
+          "(data not available) / (data not available)": {
+            "sessions": 268,
+            "users": 264,
+            "conversions": 7
           }
         },
         "desktop": {
@@ -19399,19 +19351,19 @@
             "conversions": 240
           },
           "outros / —": {
-            "sessions": 1713,
-            "users": 1394,
-            "conversions": 166
+            "sessions": 1685,
+            "users": 1357,
+            "conversions": 169
           },
           "pushnews / pushnotification": {
             "sessions": 119,
             "users": 102,
             "conversions": 14
           },
-          "whatsapp / bot": {
-            "sessions": 26,
-            "users": 16,
-            "conversions": 9
+          "(data not available) / (data not available)": {
+            "sessions": 54,
+            "users": 53,
+            "conversions": 6
           }
         },
         "tablet": {
@@ -19431,19 +19383,19 @@
             "conversions": 1
           },
           "outros / —": {
-            "sessions": 15,
-            "users": 15,
-            "conversions": 0
+            "sessions": 13,
+            "users": 13,
+            "conversions": 1
           },
           "pushnews / pushnotification": {
             "sessions": 5,
             "users": 5,
             "conversions": 0
           },
-          "whatsapp / bot": {
-            "sessions": 1,
-            "users": 1,
-            "conversions": 1
+          "(data not available) / (data not available)": {
+            "sessions": 3,
+            "users": 3,
+            "conversions": 0
           }
         }
       },
@@ -19465,19 +19417,19 @@
             "conversions": 957
           },
           "outros / —": {
-            "sessions": 2917,
-            "users": 2396,
-            "conversions": 144
+            "sessions": 3033,
+            "users": 2437,
+            "conversions": 299
           },
           "pushnews / pushnotification": {
             "sessions": 369,
             "users": 293,
             "conversions": 11
           },
-          "whatsapp / bot": {
-            "sessions": 352,
-            "users": 277,
-            "conversions": 165
+          "(data not available) / (data not available)": {
+            "sessions": 236,
+            "users": 236,
+            "conversions": 10
           }
         },
         "desktop": {
@@ -19497,8 +19449,8 @@
             "conversions": 243
           },
           "outros / —": {
-            "sessions": 1018,
-            "users": 767,
+            "sessions": 996,
+            "users": 741,
             "conversions": 173
           },
           "pushnews / pushnotification": {
@@ -19506,9 +19458,9 @@
             "users": 73,
             "conversions": 13
           },
-          "whatsapp / bot": {
-            "sessions": 13,
-            "users": 9,
+          "(data not available) / (data not available)": {
+            "sessions": 35,
+            "users": 35,
             "conversions": 6
           }
         },
@@ -19529,19 +19481,19 @@
             "conversions": 2
           },
           "outros / —": {
-            "sessions": 14,
+            "sessions": 15,
             "users": 14,
-            "conversions": 1
+            "conversions": 3
           },
           "pushnews / pushnotification": {
             "sessions": 3,
             "users": 3,
             "conversions": 0
           },
-          "whatsapp / bot": {
-            "sessions": 2,
+          "(data not available) / (data not available)": {
+            "sessions": 1,
             "users": 1,
-            "conversions": 2
+            "conversions": 0
           }
         }
       },
@@ -19568,14 +19520,14 @@
             "conversions": 12
           },
           "outros / —": {
-            "sessions": 2400,
-            "users": 2006,
-            "conversions": 110
+            "sessions": 2503,
+            "users": 2069,
+            "conversions": 229
           },
-          "whatsapp / bot": {
-            "sessions": 283,
-            "users": 243,
-            "conversions": 133
+          "(data not available) / (data not available)": {
+            "sessions": 180,
+            "users": 180,
+            "conversions": 14
           }
         },
         "desktop": {
@@ -19600,14 +19552,14 @@
             "conversions": 11
           },
           "outros / —": {
-            "sessions": 524,
-            "users": 400,
-            "conversions": 68
+            "sessions": 519,
+            "users": 390,
+            "conversions": 71
           },
-          "whatsapp / bot": {
-            "sessions": 17,
-            "users": 12,
-            "conversions": 3
+          "(data not available) / (data not available)": {
+            "sessions": 22,
+            "users": 22,
+            "conversions": 0
           }
         },
         "tablet": {
@@ -19626,20 +19578,20 @@
             "users": 8,
             "conversions": 2
           },
-          "whatsapp / bot": {
-            "sessions": 6,
-            "users": 2,
-            "conversions": 1
+          "outros / —": {
+            "sessions": 17,
+            "users": 12,
+            "conversions": 2
           },
           "pushnews / pushnotification": {
             "sessions": 5,
             "users": 3,
             "conversions": 0
           },
-          "outros / —": {
-            "sessions": 14,
-            "users": 13,
-            "conversions": 1
+          "(data not available) / (data not available)": {
+            "sessions": 3,
+            "users": 3,
+            "conversions": 0
           }
         }
       },
@@ -19666,14 +19618,14 @@
             "conversions": 9
           },
           "outros / —": {
-            "sessions": 2130,
-            "users": 1832,
-            "conversions": 102
+            "sessions": 2153,
+            "users": 1792,
+            "conversions": 262
           },
-          "whatsapp / bot": {
-            "sessions": 323,
-            "users": 260,
-            "conversions": 169
+          "(data not available) / (data not available)": {
+            "sessions": 300,
+            "users": 300,
+            "conversions": 9
           }
         },
         "desktop": {
@@ -19698,14 +19650,14 @@
             "conversions": 5
           },
           "outros / —": {
-            "sessions": 411,
-            "users": 310,
-            "conversions": 102
+            "sessions": 395,
+            "users": 293,
+            "conversions": 104
           },
-          "whatsapp / bot": {
-            "sessions": 9,
-            "users": 8,
-            "conversions": 3
+          "(data not available) / (data not available)": {
+            "sessions": 25,
+            "users": 25,
+            "conversions": 1
           }
         },
         "tablet": {
@@ -19729,15 +19681,15 @@
             "users": 8,
             "conversions": 0
           },
-          "outros / —": {
-            "sessions": 23,
-            "users": 22,
-            "conversions": 1
+          "(data not available) / (data not available)": {
+            "sessions": 6,
+            "users": 6,
+            "conversions": 0
           },
-          "whatsapp / bot": {
-            "sessions": 2,
-            "users": 1,
-            "conversions": 2
+          "outros / —": {
+            "sessions": 19,
+            "users": 17,
+            "conversions": 3
           }
         }
       },
@@ -19764,14 +19716,14 @@
             "conversions": 19
           },
           "outros / —": {
-            "sessions": 2306,
-            "users": 2006,
-            "conversions": 118
+            "sessions": 2408,
+            "users": 2035,
+            "conversions": 276
           },
-          "whatsapp / bot": {
-            "sessions": 366,
-            "users": 292,
-            "conversions": 165
+          "(data not available) / (data not available)": {
+            "sessions": 264,
+            "users": 263,
+            "conversions": 7
           }
         },
         "desktop": {
@@ -19796,13 +19748,13 @@
             "conversions": 18
           },
           "outros / —": {
-            "sessions": 789,
-            "users": 570,
+            "sessions": 761,
+            "users": 538,
             "conversions": 172
           },
-          "whatsapp / bot": {
-            "sessions": 22,
-            "users": 18,
+          "(data not available) / (data not available)": {
+            "sessions": 50,
+            "users": 50,
             "conversions": 8
           }
         },
@@ -19822,15 +19774,15 @@
             "users": 9,
             "conversions": 2
           },
-          "whatsapp / bot": {
-            "sessions": 5,
-            "users": 4,
-            "conversions": 1
-          },
           "outros / —": {
-            "sessions": 14,
-            "users": 14,
-            "conversions": 3
+            "sessions": 17,
+            "users": 16,
+            "conversions": 4
+          },
+          "(data not available) / (data not available)": {
+            "sessions": 2,
+            "users": 2,
+            "conversions": 0
           },
           "pushnews / pushnotification": {
             "sessions": 2,
@@ -19862,14 +19814,14 @@
             "conversions": 17
           },
           "outros / —": {
-            "sessions": 2364,
-            "users": 2055,
-            "conversions": 106
+            "sessions": 2439,
+            "users": 2074,
+            "conversions": 246
           },
-          "whatsapp / bot": {
-            "sessions": 325,
-            "users": 269,
-            "conversions": 148
+          "(data not available) / (data not available)": {
+            "sessions": 250,
+            "users": 250,
+            "conversions": 8
           }
         },
         "desktop": {
@@ -19894,14 +19846,14 @@
             "conversions": 8
           },
           "outros / —": {
-            "sessions": 962,
-            "users": 747,
-            "conversions": 140
+            "sessions": 939,
+            "users": 722,
+            "conversions": 144
           },
-          "whatsapp / bot": {
-            "sessions": 16,
-            "users": 14,
-            "conversions": 6
+          "(data not available) / (data not available)": {
+            "sessions": 39,
+            "users": 39,
+            "conversions": 2
           }
         },
         "tablet": {
@@ -19926,8 +19878,13 @@
             "conversions": 0
           },
           "outros / —": {
-            "sessions": 10,
-            "users": 10,
+            "sessions": 9,
+            "users": 9,
+            "conversions": 0
+          },
+          "(data not available) / (data not available)": {
+            "sessions": 1,
+            "users": 1,
             "conversions": 0
           }
         },
@@ -19962,14 +19919,14 @@
             "conversions": 27
           },
           "outros / —": {
-            "sessions": 2095,
-            "users": 1818,
-            "conversions": 122
+            "sessions": 2251,
+            "users": 1897,
+            "conversions": 309
           },
-          "whatsapp / bot": {
-            "sessions": 385,
-            "users": 308,
-            "conversions": 196
+          "(data not available) / (data not available)": {
+            "sessions": 229,
+            "users": 229,
+            "conversions": 9
           }
         },
         "desktop": {
@@ -19994,14 +19951,14 @@
             "conversions": 19
           },
           "outros / —": {
-            "sessions": 671,
-            "users": 480,
-            "conversions": 104
+            "sessions": 657,
+            "users": 459,
+            "conversions": 108
           },
-          "whatsapp / bot": {
-            "sessions": 18,
-            "users": 11,
-            "conversions": 8
+          "(data not available) / (data not available)": {
+            "sessions": 32,
+            "users": 32,
+            "conversions": 4
           }
         },
         "tablet": {
@@ -20026,14 +19983,14 @@
             "conversions": 0
           },
           "outros / —": {
-            "sessions": 17,
-            "users": 15,
-            "conversions": 1
+            "sessions": 18,
+            "users": 16,
+            "conversions": 2
           },
-          "whatsapp / bot": {
-            "sessions": 2,
-            "users": 2,
-            "conversions": 1
+          "(data not available) / (data not available)": {
+            "sessions": 1,
+            "users": 1,
+            "conversions": 0
           }
         }
       },
@@ -20060,14 +20017,14 @@
             "conversions": 22
           },
           "outros / —": {
-            "sessions": 2027,
-            "users": 1704,
-            "conversions": 111
+            "sessions": 2199,
+            "users": 1807,
+            "conversions": 286
           },
-          "whatsapp / bot": {
-            "sessions": 377,
-            "users": 308,
-            "conversions": 187
+          "(data not available) / (data not available)": {
+            "sessions": 205,
+            "users": 205,
+            "conversions": 12
           }
         },
         "desktop": {
@@ -20092,13 +20049,13 @@
             "conversions": 17
           },
           "outros / —": {
-            "sessions": 687,
-            "users": 498,
+            "sessions": 664,
+            "users": 472,
             "conversions": 102
           },
-          "whatsapp / bot": {
-            "sessions": 14,
-            "users": 11,
+          "(data not available) / (data not available)": {
+            "sessions": 37,
+            "users": 37,
             "conversions": 5
           }
         },
@@ -20126,12 +20083,12 @@
           "outros / —": {
             "sessions": 8,
             "users": 7,
-            "conversions": 0
+            "conversions": 1
           },
-          "whatsapp / bot": {
+          "(data not available) / (data not available)": {
             "sessions": 1,
             "users": 1,
-            "conversions": 1
+            "conversions": 0
           }
         }
       },
@@ -20158,14 +20115,14 @@
             "conversions": 25
           },
           "outros / —": {
-            "sessions": 1971,
-            "users": 1681,
-            "conversions": 116
+            "sessions": 2168,
+            "users": 1786,
+            "conversions": 292
           },
-          "whatsapp / bot": {
-            "sessions": 357,
-            "users": 268,
-            "conversions": 178
+          "(data not available) / (data not available)": {
+            "sessions": 196,
+            "users": 196,
+            "conversions": 4
           }
         },
         "desktop": {
@@ -20190,14 +20147,14 @@
             "conversions": 27
           },
           "outros / —": {
-            "sessions": 645,
-            "users": 466,
-            "conversions": 147
+            "sessions": 666,
+            "users": 482,
+            "conversions": 157
           },
-          "whatsapp / bot": {
-            "sessions": 16,
-            "users": 14,
-            "conversions": 6
+          "(data not available) / (data not available)": {
+            "sessions": 31,
+            "users": 30,
+            "conversions": 0
           }
         },
         "tablet": {
@@ -20217,8 +20174,113 @@
             "conversions": 3
           },
           "outros / —": {
-            "sessions": 10,
-            "users": 8,
+            "sessions": 18,
+            "users": 14,
+            "conversions": 0
+          },
+          "(data not available) / (data not available)": {
+            "sessions": 4,
+            "users": 4,
+            "conversions": 0
+          },
+          "pushnews / pushnotification": {
+            "sessions": 3,
+            "users": 3,
+            "conversions": 0
+          }
+        },
+        "smart tv": {
+          "google / cpc": {
+            "sessions": 1,
+            "users": 1,
+            "conversions": 0
+          }
+        }
+      },
+      "2026-03-21": {
+        "mobile": {
+          "google / cpc": {
+            "sessions": 19792,
+            "users": 16414,
+            "conversions": 1669
+          },
+          "google / organic": {
+            "sessions": 7315,
+            "users": 5820,
+            "conversions": 444
+          },
+          "(direct) / (none)": {
+            "sessions": 3652,
+            "users": 2908,
+            "conversions": 809
+          },
+          "pushnews / pushnotification": {
+            "sessions": 1899,
+            "users": 1595,
+            "conversions": 13
+          },
+          "outros / —": {
+            "sessions": 1706,
+            "users": 1453,
+            "conversions": 262
+          },
+          "(data not available) / (data not available)": {
+            "sessions": 199,
+            "users": 199,
+            "conversions": 6
+          }
+        },
+        "desktop": {
+          "google / cpc": {
+            "sessions": 3257,
+            "users": 2636,
+            "conversions": 465
+          },
+          "(direct) / (none)": {
+            "sessions": 1105,
+            "users": 949,
+            "conversions": 145
+          },
+          "google / organic": {
+            "sessions": 1079,
+            "users": 848,
+            "conversions": 132
+          },
+          "pushnews / pushnotification": {
+            "sessions": 297,
+            "users": 252,
+            "conversions": 19
+          },
+          "outros / —": {
+            "sessions": 348,
+            "users": 247,
+            "conversions": 55
+          },
+          "(data not available) / (data not available)": {
+            "sessions": 15,
+            "users": 15,
+            "conversions": 1
+          }
+        },
+        "tablet": {
+          "google / cpc": {
+            "sessions": 123,
+            "users": 118,
+            "conversions": 9
+          },
+          "google / organic": {
+            "sessions": 83,
+            "users": 69,
+            "conversions": 10
+          },
+          "(direct) / (none)": {
+            "sessions": 17,
+            "users": 15,
+            "conversions": 1
+          },
+          "pushnews / pushnotification": {
+            "sessions": 6,
+            "users": 6,
             "conversions": 0
           }
         }
@@ -20230,282 +20292,282 @@
       {
         "origin": "(other)",
         "destination": "(other)",
-        "purchases": 165723,
-        "users": 105225
+        "purchases": 171613,
+        "users": 109626
       },
       {
         "origin": "BELO HORIZONTE - MG",
         "destination": "RIO DE JANEIRO - RJ",
-        "purchases": 129337,
-        "users": 12837
+        "purchases": 128939,
+        "users": 12881
       },
       {
         "origin": "RIO DE JANEIRO - RJ",
         "destination": "BELO HORIZONTE - MG",
-        "purchases": 121633,
-        "users": 11863
+        "purchases": 121505,
+        "users": 11878
       },
       {
         "origin": "FORTALEZA - CE",
         "destination": "SOBRAL - CE",
-        "purchases": 95493,
-        "users": 14005
+        "purchases": 96221,
+        "users": 14093
       },
       {
         "origin": "FORTALEZA - CE",
         "destination": "NATAL - RN",
-        "purchases": 90883,
-        "users": 13039
+        "purchases": 92037,
+        "users": 13101
       },
       {
         "origin": "SOBRAL - CE",
         "destination": "FORTALEZA - CE",
-        "purchases": 89925,
-        "users": 13525
+        "purchases": 91011,
+        "users": 13557
       },
       {
         "origin": "NATAL - RN",
         "destination": "FORTALEZA - CE",
-        "purchases": 88347,
-        "users": 11253
+        "purchases": 89085,
+        "users": 11307
       },
       {
         "origin": "TERESINA - PI",
         "destination": "FORTALEZA - CE",
-        "purchases": 79513,
-        "users": 11467
+        "purchases": 80624,
+        "users": 11564
       },
       {
         "origin": "RIO DE JANEIRO - RJ - TODOS",
         "destination": "BELO HORIZONTE - MG - TODOS",
-        "purchases": 75196,
-        "users": 27454
-      },
-      {
-        "origin": "JUIZ DE FORA - MG",
-        "destination": "RIO DE JANEIRO - RJ",
-        "purchases": 68520,
-        "users": 9143
+        "purchases": 76148,
+        "users": 27505
       },
       {
         "origin": "FORTALEZA - CE",
         "destination": "RECIFE - PE",
-        "purchases": 68454,
-        "users": 10256
+        "purchases": 68977,
+        "users": 10254
+      },
+      {
+        "origin": "JUIZ DE FORA - MG",
+        "destination": "RIO DE JANEIRO - RJ",
+        "purchases": 68913,
+        "users": 9164
       },
       {
         "origin": "TERESINA - PI",
         "destination": "PARNAIBA - PI",
-        "purchases": 66440,
-        "users": 10230
+        "purchases": 66937,
+        "users": 10294
       },
       {
         "origin": "FORTALEZA - CE",
         "destination": "JUAZEIRO DO NORTE - CE",
-        "purchases": 65887,
-        "users": 9541
+        "purchases": 66622,
+        "users": 9623
       },
       {
         "origin": "RIO DE JANEIRO - RJ",
         "destination": "JUIZ DE FORA - MG",
-        "purchases": 65084,
-        "users": 9199
+        "purchases": 65362,
+        "users": 9208
       },
       {
         "origin": "JUAZEIRO DO NORTE - CE",
         "destination": "FORTALEZA - CE",
-        "purchases": 62282,
-        "users": 9150
+        "purchases": 62939,
+        "users": 9204
       },
       {
         "origin": "SHOPPING INDEPENDENCIA - MG (term adicional de JUIZ DE FORA)",
         "destination": "RIO DE JANEIRO - RJ",
-        "purchases": 61765,
-        "users": 8821
+        "purchases": 62052,
+        "users": 8835
       },
       {
         "origin": "RECIFE - PE",
         "destination": "FORTALEZA - CE",
-        "purchases": 61115,
-        "users": 8586
+        "purchases": 61937,
+        "users": 8634
       },
       {
         "origin": "PARNAIBA - PI",
         "destination": "TERESINA - PI",
-        "purchases": 59523,
-        "users": 8840
+        "purchases": 60013,
+        "users": 8878
       }
     ],
     "top_origins": [
       {
         "city": "FORTALEZA - CE",
-        "searches": 1165720,
-        "users": 155211,
-        "conversions": 45200
+        "searches": 1180075,
+        "users": 156569,
+        "conversions": 45459
       },
       {
         "city": "RIO DE JANEIRO - RJ",
-        "searches": 684990,
-        "users": 83007,
-        "conversions": 31317
+        "searches": 689637,
+        "users": 83120,
+        "conversions": 31383
       },
       {
         "city": "FORTALEZA - CE - TODOS",
-        "searches": 608314,
-        "users": 79862,
+        "searches": 623683,
+        "users": 81658,
         "conversions": 0
       },
       {
         "city": "TERESINA - PI",
-        "searches": 398995,
-        "users": 51716,
-        "conversions": 12124
+        "searches": 404382,
+        "users": 52248,
+        "conversions": 12197
       },
       {
         "city": "RIO DE JANEIRO - RJ - TODOS",
-        "searches": 388360,
-        "users": 66111,
+        "searches": 397392,
+        "users": 67230,
         "conversions": 0
       },
       {
         "city": "BRASILIA - DF",
-        "searches": 368678,
-        "users": 44835,
-        "conversions": 8895
+        "searches": 373819,
+        "users": 45356,
+        "conversions": 8958
       },
       {
         "city": "Fortaleza - CE",
-        "searches": 363992,
-        "users": 85747,
+        "searches": 358686,
+        "users": 84661,
         "conversions": 0
       },
       {
         "city": "SAO LUIS - MA",
-        "searches": 350017,
-        "users": 40257,
-        "conversions": 9221
+        "searches": 355769,
+        "users": 40803,
+        "conversions": 9280
       },
       {
         "city": "SOBRAL - CE",
-        "searches": 348750,
-        "users": 41376,
-        "conversions": 12100
+        "searches": 353610,
+        "users": 41795,
+        "conversions": 12195
       },
       {
         "city": "Fortaleza - CE - TODOS",
-        "searches": 335563,
-        "users": 88867,
+        "searches": 330704,
+        "users": 87739,
         "conversions": 0
       },
       {
         "city": "BELO HORIZONTE - MG",
-        "searches": 311029,
-        "users": 34254,
-        "conversions": 8166
+        "searches": 312218,
+        "users": 34282,
+        "conversions": 8197
       },
       {
         "city": "JOAO PESSOA - PB",
-        "searches": 302409,
-        "users": 34517,
-        "conversions": 8308
+        "searches": 307924,
+        "users": 34978,
+        "conversions": 8417
       },
       {
         "city": "JUAZEIRO DO NORTE - CE",
-        "searches": 294523,
-        "users": 34873,
-        "conversions": 8053
+        "searches": 300029,
+        "users": 35328,
+        "conversions": 8097
       },
       {
         "city": "FORTALEZA (TA MESSEJANA) - CE",
-        "searches": 241546,
-        "users": 38327,
-        "conversions": 7539
+        "searches": 244394,
+        "users": 38637,
+        "conversions": 7582
       }
     ],
     "top_destinations": [
       {
         "city": "FORTALEZA - CE",
-        "searches": 1072291,
-        "users": 146625,
-        "conversions": 38026
+        "searches": 1085433,
+        "users": 147586,
+        "conversions": 38287
       },
       {
         "city": "RIO DE JANEIRO - RJ",
-        "searches": 705555,
-        "users": 86542,
-        "conversions": 29778
+        "searches": 709921,
+        "users": 87178,
+        "conversions": 29903
       },
       {
         "city": "FORTALEZA - CE - TODOS",
-        "searches": 491455,
-        "users": 68465,
+        "searches": 505066,
+        "users": 70371,
         "conversions": 0
       },
       {
         "city": "SOBRAL - CE",
-        "searches": 338523,
-        "users": 39810,
-        "conversions": 12139
+        "searches": 343378,
+        "users": 40224,
+        "conversions": 12218
       },
       {
         "city": "RIO DE JANEIRO - RJ - TODOS",
-        "searches": 335739,
-        "users": 45665,
+        "searches": 343209,
+        "users": 46817,
         "conversions": 0
-      },
-      {
-        "city": "TERESINA - PI",
-        "searches": 315608,
-        "users": 43258,
-        "conversions": 11305
       },
       {
         "city": "JOAO PESSOA - PB",
-        "searches": 314851,
-        "users": 37848,
-        "conversions": 7823
+        "searches": 320725,
+        "users": 38242,
+        "conversions": 7887
       },
       {
-        "city": "Fortaleza - CE - TODOS",
-        "searches": 311600,
-        "users": 82320,
-        "conversions": 0
+        "city": "TERESINA - PI",
+        "searches": 319762,
+        "users": 43726,
+        "conversions": 11384
       },
       {
         "city": "SAO LUIS - MA",
-        "searches": 311199,
-        "users": 37868,
-        "conversions": 7650
+        "searches": 315986,
+        "users": 38399,
+        "conversions": 7677
       },
       {
-        "city": "BRASILIA - DF",
-        "searches": 291702,
-        "users": 36994,
-        "conversions": 8622
+        "city": "Fortaleza - CE - TODOS",
+        "searches": 307241,
+        "users": 80853,
+        "conversions": 0
       },
       {
         "city": "JUAZEIRO DO NORTE - CE",
-        "searches": 289629,
-        "users": 34892,
-        "conversions": 7170
+        "searches": 295338,
+        "users": 35431,
+        "conversions": 7200
+      },
+      {
+        "city": "BRASILIA - DF",
+        "searches": 295253,
+        "users": 37307,
+        "conversions": 8691
       },
       {
         "city": "Fortaleza - CE",
-        "searches": 276947,
-        "users": 70782,
+        "searches": 273133,
+        "users": 69663,
         "conversions": 0
       },
       {
         "city": "BELO HORIZONTE - MG",
-        "searches": 258638,
-        "users": 30118,
-        "conversions": 8291
+        "searches": 259701,
+        "users": 30285,
+        "conversions": 8326
       },
       {
         "city": "PARNAIBA - PI",
-        "searches": 243010,
-        "users": 28101,
-        "conversions": 6509
+        "searches": 246694,
+        "users": 28395,
+        "conversions": 6552
       }
     ],
     "route_conversion": [
@@ -20513,92 +20575,92 @@
         "route": "(other) → (other)",
         "origin": "(other)",
         "destination": "(other)",
-        "searches": 165723,
-        "users": 105225
+        "searches": 171613,
+        "users": 109626
       },
       {
         "route": "RIO DE JANEIRO - RJ - TODOS → BELO HORIZONTE - MG - TODOS",
         "origin": "RIO DE JANEIRO - RJ - TODOS",
         "destination": "BELO HORIZONTE - MG - TODOS",
-        "searches": 75196,
-        "users": 27454
+        "searches": 76148,
+        "users": 27505
       },
       {
         "route": "FORTALEZA - CE → SOBRAL - CE",
         "origin": "FORTALEZA - CE",
         "destination": "SOBRAL - CE",
-        "searches": 95493,
-        "users": 14005
+        "searches": 96221,
+        "users": 14093
       },
       {
         "route": "SOBRAL - CE → FORTALEZA - CE",
         "origin": "SOBRAL - CE",
         "destination": "FORTALEZA - CE",
-        "searches": 89925,
-        "users": 13525
+        "searches": 91011,
+        "users": 13557
       },
       {
         "route": "FORTALEZA - CE → NATAL - RN",
         "origin": "FORTALEZA - CE",
         "destination": "NATAL - RN",
-        "searches": 90883,
-        "users": 13039
+        "searches": 92037,
+        "users": 13101
       },
       {
         "route": "BELO HORIZONTE - MG → RIO DE JANEIRO - RJ",
         "origin": "BELO HORIZONTE - MG",
         "destination": "RIO DE JANEIRO - RJ",
-        "searches": 129337,
-        "users": 12837
+        "searches": 128939,
+        "users": 12881
       },
       {
         "route": "RIO DE JANEIRO - RJ → BELO HORIZONTE - MG",
         "origin": "RIO DE JANEIRO - RJ",
         "destination": "BELO HORIZONTE - MG",
-        "searches": 121633,
-        "users": 11863
+        "searches": 121505,
+        "users": 11878
       },
       {
         "route": "TERESINA - PI → FORTALEZA - CE",
         "origin": "TERESINA - PI",
         "destination": "FORTALEZA - CE",
-        "searches": 79513,
-        "users": 11467
+        "searches": 80624,
+        "users": 11564
       },
       {
         "route": "NATAL - RN → FORTALEZA - CE",
         "origin": "NATAL - RN",
         "destination": "FORTALEZA - CE",
-        "searches": 88347,
-        "users": 11253
-      },
-      {
-        "route": "FORTALEZA - CE → RECIFE - PE",
-        "origin": "FORTALEZA - CE",
-        "destination": "RECIFE - PE",
-        "searches": 68454,
-        "users": 10256
+        "searches": 89085,
+        "users": 11307
       },
       {
         "route": "TERESINA - PI → PARNAIBA - PI",
         "origin": "TERESINA - PI",
         "destination": "PARNAIBA - PI",
-        "searches": 66440,
-        "users": 10230
+        "searches": 66937,
+        "users": 10294
+      },
+      {
+        "route": "FORTALEZA - CE → RECIFE - PE",
+        "origin": "FORTALEZA - CE",
+        "destination": "RECIFE - PE",
+        "searches": 68977,
+        "users": 10254
       },
       {
         "route": "FORTALEZA - CE → JUAZEIRO DO NORTE - CE",
         "origin": "FORTALEZA - CE",
         "destination": "JUAZEIRO DO NORTE - CE",
-        "searches": 65887,
-        "users": 9541
+        "searches": 66622,
+        "users": 9623
       },
       {
         "route": "RIO DE JANEIRO - RJ → JUIZ DE FORA - MG",
         "origin": "RIO DE JANEIRO - RJ",
         "destination": "JUIZ DE FORA - MG",
-        "searches": 65084,
-        "users": 9199
+        "searches": 65362,
+        "users": 9208
       }
     ]
   },
