@@ -11,6 +11,7 @@ Secrets necessários:
 
 import os
 import json
+import sys
 import datetime
 from google.oauth2 import service_account
 from googleapiclient.discovery import build
@@ -31,7 +32,7 @@ def get_credentials():
 def read_sheet(sheets, spreadsheet_id):
     result = sheets.spreadsheets().values().get(
         spreadsheetId=spreadsheet_id,
-        range=f"{SHEET_TAB_NAME}!A1:ZZ",
+        range=f"{SHEET_TAB_NAME}",  # sem limites — lê a aba inteira
     ).execute()
     rows = result.get("values", [])
     if not rows:
@@ -131,8 +132,27 @@ def build_data_json(records):
         "insights": [],  # preenchido pelo Claude Cowork semanalmente
     }
 
+def load_existing_insights():
+    """Lê os insights já gravados no data.json para não apagá-los."""
+    if not os.path.exists(OUTPUT_PATH):
+        return []
+    try:
+        with open(OUTPUT_PATH, "r", encoding="utf-8") as f:
+            existing = json.load(f)
+        insights = existing.get("insights", [])
+        if insights:
+            print(f"  Preservando {len(insights)} insight(s) existentes.")
+        return insights
+    except Exception:
+        return []
+
+
 def main():
-    spreadsheet_id = os.environ["SPREADSHEET_ID"]
+    spreadsheet_id = os.environ.get("SPREADSHEET_ID", "").strip()
+    if not spreadsheet_id:
+        print("ERRO: variável SPREADSHEET_ID não definida ou vazia.")
+        sys.exit(1)
+
     print("Autenticando...")
     creds  = get_credentials()
     sheets = build("sheets", "v4", credentials=creds)
@@ -141,14 +161,25 @@ def main():
     headers, records = read_sheet(sheets, spreadsheet_id)
     print(f"  {len(records)} linhas lidas, {len(headers)} colunas")
 
+    # Preservar insights gerados pelo Claude Cowork
+    existing_insights = load_existing_insights()
+
     print("Gerando data.json...")
     data = build_data_json(records)
+    data["insights"] = existing_insights  # restaurar insights preservados
+
+    # Validar que o JSON é serializável antes de gravar
+    try:
+        payload = json.dumps(data, ensure_ascii=False, separators=(",", ":"))
+    except Exception as e:
+        print(f"ERRO: falha ao serializar data.json — {e}")
+        sys.exit(1)
 
     with open(OUTPUT_PATH, "w", encoding="utf-8") as f:
-        json.dump(data, f, ensure_ascii=False, separators=(",", ":"))
+        f.write(payload)
 
     size_kb = os.path.getsize(OUTPUT_PATH) / 1024
-    print(f"  data.json gerado: {size_kb:.1f} KB, {data['total_dias']} dias")
+    print(f"  data.json gerado: {size_kb:.1f} KB, {data['total_dias']} dias, {len(existing_insights)} insights")
     print("Concluído.")
 
 if __name__ == "__main__":
