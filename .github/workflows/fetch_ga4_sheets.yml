@@ -1,4 +1,4 @@
-name: Coleta GA4 → Google Sheets
+name: Coleta GA4 → Google Sheets → data.json
 
 on:
   schedule:
@@ -16,9 +16,12 @@ on:
           - "true"
 
 jobs:
-  fetch-and-update:
+  fetch-and-export:
     runs-on: ubuntu-latest
     timeout-minutes: 30
+
+    permissions:
+      contents: write  # necessário para commitar o data.json
 
     steps:
       - name: Checkout do repositório
@@ -35,9 +38,23 @@ jobs:
             google-auth \
             google-api-python-client
 
-      - name: Executar coleta
+      - name: Passo 1 — Coletar GA4 → Google Sheets
         env:
           GA4_CREDENTIALS_JSON: ${{ secrets.GA4_CREDENTIALS_JSON }}
           SPREADSHEET_ID:       ${{ secrets.SPREADSHEET_ID }}
           FORCE_HISTORICAL:     ${{ github.event.inputs.force_historical || 'false' }}
         run: python scripts/fetch_ga4.py
+
+      - name: Passo 2 — Exportar Sheets → data.json
+        env:
+          GA4_CREDENTIALS_JSON: ${{ secrets.GA4_CREDENTIALS_JSON }}
+          SPREADSHEET_ID:       ${{ secrets.SPREADSHEET_ID }}
+        run: python scripts/export_data.py
+
+      - name: Passo 3 — Commitar data.json no repositório
+        run: |
+          git config user.name  "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add data.json
+          git diff --cached --quiet || git commit -m "chore: atualiza data.json [$(date -u '+%Y-%m-%d %H:%M')] UTC"
+          git push
