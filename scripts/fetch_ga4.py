@@ -373,7 +373,11 @@ def metrics_to_row(date_str, m):
 # ──────────────────────────────────────────────
 
 def main():
-    spreadsheet_id   = os.environ["SPREADSHEET_ID"]
+    spreadsheet_id   = os.environ.get("SPREADSHEET_ID", "").strip()
+    if not spreadsheet_id:
+        print("ERRO: variável SPREADSHEET_ID não definida ou vazia.")
+        sys.exit(1)
+
     force_historical = os.environ.get("FORCE_HISTORICAL", "").lower() == "true"
     yesterday        = datetime.date.today() - datetime.timedelta(days=1)
 
@@ -408,7 +412,8 @@ def main():
             current += datetime.timedelta(days=1)
 
         total_days = len(dates_to_collect)
-        est_min    = round(total_days * (PAUSE_BETWEEN_DAYS + 0.5) / 60, 1)
+        # 6 chamadas à GA4 por dia × ~0.4s cada + pausa entre dias
+        est_min    = round(total_days * (6 * 0.4 + PAUSE_BETWEEN_DAYS) / 60, 1)
         print(f"  {total_days} dias para coletar — estimativa: ~{est_min} min")
 
     else:
