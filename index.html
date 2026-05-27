@@ -1,1083 +1,1189 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <meta charset="UTF-8"/>
-  <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
-  <title>Analytics Dashboard</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com"/>
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
-  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@300;400;500;600&display=swap" rel="stylesheet"/>
-  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
-  <style>
-    :root{--bg:#f5f4f0;--surface:#fff;--s2:#f0efe9;--border:#dddbd4;--text:#1a1917;--muted:#7a7870;
-      --blue:#1d4ed8;--indigo:#4f46e5;--teal:#0d9488;--green:#16a34a;--amber:#d97706;
-      --red:#dc2626;--purple:#7c3aed;--cyan:#0891b2;--pink:#db2777;--orange:#ea580c;}
-    *{box-sizing:border-box;margin:0;padding:0}
-    body{background:var(--bg);color:var(--text);font-family:'IBM Plex Sans',sans-serif;font-size:13px;min-height:100vh}
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Analytics — Exp. de Compra | Grupo Guanabara</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+<style>
+:root {
+  --brand-primary:#19398A;
+  --brand-primary-800:#205CAE;
+  --brand-primary-100:#BADAF6;
+  --brand-secondary-a:#A43C3E;
+  --brand-secondary-b:#C3940F;
+  --brand-secondary-b-100:#FFEFC0;
+  --brand-secondary-c:#6589D4;
+  --brand-secondary-c-100:#E0EAFF;
+  --neutral-900:#0E0E0E;
+  --neutral-800:#3E3E3E;
+  --neutral-700:#515151;
+  --neutral-500:#8B8B8B;
+  --neutral-300:#D1D1D1;
+  --neutral-200:#E3E3E3;
+  --neutral-100:#EEEEEE;
+  --positive-700:#278A22;
+  --positive-100:#C6E5C3;
+  --negative-700:#E1393E;
+  --negative-100:#FAD1D7;
+  --warning-700:#F29A1B;
+  --warning-100:#FCE9B4;
+  --compare-color:#6589D4;
+  --shadow-01:0 1px 8px 0 rgba(19,19,19,.10),0 6px 10px -4px rgba(19,19,19,.08);
+  --shadow-02:0 1px 12px 0 rgba(19,19,19,.10);
+  --radius-sm:8px;
+  --radius-md:16px;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Nunito Sans',sans-serif;background:var(--neutral-100);color:var(--neutral-800);min-height:100vh}
 
-    #loading{position:fixed;inset:0;background:var(--bg);display:flex;align-items:center;justify-content:center;z-index:999;flex-direction:column;gap:12px}
-    .spinner{width:28px;height:28px;border:2px solid var(--border);border-top-color:var(--text);border-radius:50%;animation:spin .7s linear infinite}
-    @keyframes spin{to{transform:rotate(360deg)}}
-    #loading p{font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--muted)}
+/* ── Header ─────────────────────────────────────────── */
+.header{background:var(--brand-primary);color:#fff;padding:0 32px;display:flex;align-items:center;justify-content:space-between;height:60px;position:sticky;top:0;z-index:200;box-shadow:var(--shadow-02)}
+.header-brand{display:flex;align-items:center;gap:12px}
+.header-logo{width:32px;height:32px;background:#fff;border-radius:6px;display:flex;align-items:center;justify-content:center}
+.header-title{font-size:15px;font-weight:700;letter-spacing:.3px}
+.header-sub{font-size:11px;opacity:.7;font-weight:400}
+.header-updated{font-size:11px;opacity:.6}
 
-    header{background:var(--text);color:#f5f4f0;padding:0 40px;height:52px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:50}
-    .logo{font-family:'IBM Plex Mono',monospace;font-size:13px;font-weight:600;letter-spacing:.04em}
-    .logo em{color:#a09e98;font-style:normal}
-    .live{display:flex;align-items:center;gap:5px;font-family:'IBM Plex Mono',monospace;font-size:10px;color:#6ee7b7}
-    .live-dot{width:5px;height:5px;background:#6ee7b7;border-radius:50%;animation:pulse 2s infinite}
-    @keyframes pulse{0%,100%{opacity:1}50%{opacity:.3}}
-    .hm{font-family:'IBM Plex Mono',monospace;font-size:10px;color:#a09e98}
+/* ── Barra de filtros ────────────────────────────────── */
+.filters-bar{background:#fff;border-bottom:1px solid var(--neutral-200);padding:10px 32px;display:flex;align-items:center;gap:12px;flex-wrap:wrap;position:sticky;top:60px;z-index:150;box-shadow:var(--shadow-01)}
+.filter-group{display:flex;align-items:center;gap:6px}
+.filter-label{font-size:11px;font-weight:700;color:var(--neutral-700);white-space:nowrap;text-transform:uppercase;letter-spacing:.5px}
+.filter-btn{border:1px solid var(--neutral-300);background:#fff;color:var(--neutral-700);font-family:inherit;font-size:12px;font-weight:600;padding:5px 11px;border-radius:9999px;cursor:pointer;transition:all .15s;white-space:nowrap}
+.filter-btn:hover{border-color:var(--brand-primary);color:var(--brand-primary)}
+.filter-btn.active{background:var(--brand-primary);color:#fff;border-color:var(--brand-primary)}
+.filter-btn.compare-active{background:var(--compare-color);color:#fff;border-color:var(--compare-color)}
+.filter-divider{width:1px;height:24px;background:var(--neutral-200);flex-shrink:0}
 
-    .fbar{background:var(--surface);border-bottom:1px solid var(--border);padding:9px 40px;display:flex;align-items:center;gap:10px;flex-wrap:wrap;position:sticky;top:52px;z-index:40}
-    .fg{display:flex;align-items:center;gap:6px}
-    .fl{font-size:10px;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:.06em;white-space:nowrap}
-    .fsel{font-family:'IBM Plex Sans',sans-serif;font-size:12px;background:var(--s2);border:1px solid var(--border);border-radius:6px;padding:5px 9px;color:var(--text);cursor:pointer;outline:none}
-    .fsel:focus{border-color:var(--blue)}
-    .finput{font-family:'IBM Plex Mono',monospace;font-size:11px;background:var(--s2);border:1px solid var(--border);border-radius:6px;padding:5px 9px;color:var(--text);outline:none;width:130px}
-    .finput:focus{border-color:var(--blue)}
-    .fdiv{width:1px;height:22px;background:var(--border)}
-    .freset{font-size:11px;color:var(--muted);background:none;border:none;cursor:pointer;font-family:'IBM Plex Sans',sans-serif;padding:4px 8px;border-radius:4px}
-    .freset:hover{background:var(--s2);color:var(--text)}
-    .fapply{font-family:'IBM Plex Sans',sans-serif;font-size:11px;font-weight:600;background:var(--blue);color:#fff;border:none;border-radius:5px;padding:5px 12px;cursor:pointer}
-    .fapply:hover{opacity:.85}
-    .fstatus{font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--blue);margin-left:auto}
-    #crange{display:none;align-items:center;gap:6px}
-    #crange.on{display:flex}
+/* ── Date picker customizado ─────────────────────────── */
+.date-range-btn{border:1px solid var(--neutral-300);background:#fff;color:var(--neutral-700);font-family:inherit;font-size:12px;font-weight:600;padding:5px 11px;border-radius:9999px;cursor:pointer;transition:all .15s;display:flex;align-items:center;gap:6px}
+.date-range-btn:hover{border-color:var(--brand-primary);color:var(--brand-primary)}
+.date-range-btn.active{background:var(--brand-primary);color:#fff;border-color:var(--brand-primary)}
+.date-range-btn.compare-mode{background:var(--compare-color);color:#fff;border-color:var(--compare-color)}
+.date-range-btn svg{width:13px;height:13px;opacity:.8}
 
-    .nav-wrap{background:var(--surface);border-bottom:1px solid var(--border);padding:0 40px}
-    .nav{display:flex}
-    .nbtn{padding:13px 18px;font-size:12px;font-weight:500;font-family:'IBM Plex Sans',sans-serif;border:none;background:none;color:var(--muted);cursor:pointer;border-bottom:2px solid transparent;transition:color .15s,border-color .15s}
-    .nbtn:hover{color:var(--text)}.nbtn.on{color:var(--text);border-bottom-color:var(--text)}
+/* ── Dropdown do date range ──────────────────────────── */
+.dr-dropdown{position:absolute;top:calc(100% + 8px);left:0;background:#fff;border-radius:var(--radius-md);box-shadow:0 8px 32px rgba(19,19,19,.18);z-index:500;padding:16px;min-width:340px;display:none}
+.dr-dropdown.open{display:block}
+.dr-dropdown.compare-dropdown{border-top:3px solid var(--compare-color)}
+.dr-dropdown.primary-dropdown{border-top:3px solid var(--brand-primary)}
+.dr-wrapper{position:relative}
+.dr-presets{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:12px}
+.dr-preset{font-family:inherit;font-size:11px;font-weight:700;padding:4px 10px;border-radius:9999px;border:1px solid var(--neutral-300);background:#fff;color:var(--neutral-700);cursor:pointer;transition:all .15s}
+.dr-preset:hover{border-color:var(--brand-primary);color:var(--brand-primary)}
+.dr-preset.active{background:var(--brand-primary);color:#fff;border-color:var(--brand-primary)}
+.dr-preset.compare-preset.active{background:var(--compare-color);border-color:var(--compare-color)}
+.dr-sep{height:1px;background:var(--neutral-200);margin:10px 0}
+.dr-inputs{display:flex;align-items:center;gap:8px}
+.dr-input-group{display:flex;flex-direction:column;gap:4px;flex:1}
+.dr-input-label{font-size:10px;font-weight:700;color:var(--neutral-500);text-transform:uppercase;letter-spacing:.5px}
+.dr-input{font-family:inherit;font-size:12px;font-weight:600;border:1px solid var(--neutral-300);border-radius:var(--radius-sm);padding:7px 10px;color:var(--neutral-800);width:100%;outline:none;transition:border .15s}
+.dr-input:focus{border-color:var(--brand-primary)}
+.dr-arrow{font-size:16px;color:var(--neutral-400);margin-top:12px}
+.dr-actions{display:flex;gap:8px;margin-top:12px}
+.dr-btn{font-family:inherit;font-size:12px;font-weight:700;padding:7px 16px;border-radius:9999px;border:none;cursor:pointer;transition:all .15s}
+.dr-btn-apply{background:var(--brand-primary);color:#fff}
+.dr-btn-apply.compare-apply{background:var(--compare-color)}
+.dr-btn-cancel{background:var(--neutral-100);color:var(--neutral-700)}
+.dr-btn-clear{background:var(--negative-100);color:var(--negative-700)}
 
-    .container{max-width:1360px;margin:0 auto;padding:22px 40px}
-    .sec{display:none}.sec.on{display:block}
+/* ── Banner de comparação ────────────────────────────── */
+.compare-banner{background:var(--brand-secondary-c-100);border:1px solid var(--compare-color);border-radius:var(--radius-sm);padding:8px 16px;display:flex;align-items:center;gap:12px;flex-wrap:wrap;font-size:12px;margin:0 32px 0 32px}
+.compare-banner.hidden{display:none}
+.compare-period-label{font-weight:700;color:var(--brand-primary)}
+.compare-vs{color:var(--neutral-500);font-weight:400}
+.compare-clear{font-family:inherit;font-size:11px;font-weight:700;color:var(--negative-700);background:none;border:none;cursor:pointer;padding:2px 8px;border-radius:9999px}
+.compare-clear:hover{background:var(--negative-100)}
 
-    .wsrow{display:flex;align-items:center;gap:8px;margin-bottom:14px}
-    .wslabel{font-size:10px;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:.06em}
-    .wssel{font-family:'IBM Plex Mono',monospace;font-size:11px;background:var(--s2);border:1px solid var(--border);border-radius:6px;padding:4px 9px;color:var(--text);cursor:pointer;outline:none}
-    .wssel:focus{border-color:var(--blue)}
-    .ws-note{font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--muted);margin-left:4px}
+/* ── Layout ──────────────────────────────────────────── */
+.main{padding:20px 32px;max-width:1400px;margin:0 auto}
+.section-title{font-size:12px;font-weight:700;color:var(--brand-secondary-a);text-transform:uppercase;letter-spacing:1px;margin-bottom:12px;margin-top:28px}
+.section-title:first-child{margin-top:0}
 
-    .kgrid{display:grid;grid-template-columns:repeat(7,1fr);gap:1px;background:var(--border);border:1px solid var(--border);border-radius:10px;overflow:visible;margin-bottom:22px;position:relative;z-index:10}
-    .kpi{background:var(--surface);padding:16px 14px;transition:background .15s;border-top:3px solid transparent;border-right:1px solid var(--border);position:relative;min-width:0;overflow:hidden;display:flex;flex-direction:column}
-    .kpi:first-child{border-radius:10px 0 0 10px}.kpi:last-child{border-radius:0 10px 10px 0;border-right:none}
-    .kpi:hover{background:#fafaf8}
-    .kpi.cb{border-top-color:var(--blue)}.kpi.ct{border-top-color:var(--teal)}.kpi.cg{border-top-color:var(--green)}
-    .kpi.ci{border-top-color:var(--indigo)}.kpi.ca{border-top-color:var(--amber)}.kpi.cp{border-top-color:var(--purple)}.kpi.cc{border-top-color:var(--cyan)}
-    .kl{font-size:10px;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:.07em;margin-bottom:7px;display:flex;align-items:center;gap:5px}
-    .kv{font-family:'IBM Plex Mono',monospace;font-size:clamp(13px,1.2vw,19px);font-weight:600;line-height:1.1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:100%}.ks{font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--muted);margin-top:4px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;flex-shrink:0}
+/* ── KPIs ────────────────────────────────────────────── */
+.kpi-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(185px,1fr));gap:12px}
+.kpi-card{background:#fff;border-radius:var(--radius-md);padding:20px;box-shadow:var(--shadow-01);position:relative;overflow:hidden}
+.kpi-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:var(--brand-primary)}
+.kpi-label{font-size:11px;font-weight:700;color:var(--neutral-500);text-transform:uppercase;letter-spacing:.8px;margin-bottom:8px}
+.kpi-value{font-size:26px;font-weight:900;color:var(--brand-primary);line-height:1}
+.kpi-compare-row{display:flex;align-items:center;gap:8px;margin-top:8px;flex-wrap:wrap}
+.kpi-compare-val{font-size:12px;color:var(--neutral-500)}
+.kpi-delta{display:inline-flex;align-items:center;gap:3px;font-size:11px;font-weight:700;padding:2px 7px;border-radius:9999px}
+.kpi-delta.up{background:var(--positive-100);color:var(--positive-700)}
+.kpi-delta.down{background:var(--negative-100);color:var(--negative-700)}
+.kpi-delta.neutral{background:var(--neutral-200);color:var(--neutral-700)}
+.kpi-sub{font-size:11px;color:var(--neutral-500);margin-top:6px}
 
-    .ii{display:inline-flex;align-items:center;justify-content:center;width:13px;height:13px;border-radius:50%;background:var(--border);color:var(--muted);font-size:9px;font-weight:700;cursor:default;position:relative;font-style:normal;font-family:'IBM Plex Mono',monospace;flex-shrink:0}
-    .ii .tip{position:absolute;top:calc(100% + 7px);left:50%;transform:translateX(-50%);background:#1a1917;color:#f5f4f0;font-family:'IBM Plex Sans',sans-serif;font-size:11px;font-weight:400;line-height:1.55;padding:9px 12px;border-radius:7px;width:240px;opacity:0;pointer-events:none;transition:opacity .18s;z-index:300;white-space:normal;text-align:left;letter-spacing:0;text-transform:none;box-shadow:0 4px 16px rgba(0,0,0,.18)}
-    .ii .tip::before{content:'';position:absolute;bottom:100%;left:50%;transform:translateX(-50%);border:5px solid transparent;border-bottom-color:#1a1917}
-    .ii:hover .tip{opacity:1}
-    .ii.up .tip{top:auto;bottom:calc(100% + 7px)}
-    .ii.up .tip::before{display:none}
-    .ii.up .tip::after{content:'';position:absolute;top:100%;left:50%;transform:translateX(-50%);border:5px solid transparent;border-top-color:#1a1917}
+/* ── Gráficos ────────────────────────────────────────── */
+.charts-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.chart-card{background:#fff;border-radius:var(--radius-md);padding:20px;box-shadow:var(--shadow-01)}
+.chart-card.full{grid-column:1/-1}
+.chart-title{font-size:13px;font-weight:700;color:var(--neutral-800);margin-bottom:4px}
+.chart-legend{display:flex;align-items:center;gap:12px;margin-bottom:12px;flex-wrap:wrap}
+.chart-legend-item{display:flex;align-items:center;gap:5px;font-size:11px;color:var(--neutral-500)}
+.chart-legend-dot{width:10px;height:10px;border-radius:50%;flex-shrink:0}
+.chart-wrap{position:relative;height:200px}
 
-    .g2{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:12px}
-    .g3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;margin-bottom:12px}
-    .g1{display:grid;grid-template-columns:1fr;gap:12px;margin-bottom:12px}
-    .card{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:16px}
-    .ch{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px}
-    .ct{font-size:10px;font-weight:600;letter-spacing:.07em;text-transform:uppercase;color:var(--muted);display:flex;align-items:center;gap:6px}
-    .ctag{font-family:'IBM Plex Mono',monospace;font-size:10px;background:var(--s2);color:var(--muted);padding:2px 7px;border-radius:4px}
-    .cw{position:relative}
-    .h180{height:180px}.h220{height:220px}.h260{height:260px}
+/* ── Funil ───────────────────────────────────────────── */
+.funil-wrap{background:#fff;border-radius:var(--radius-md);padding:24px;box-shadow:var(--shadow-01)}
+.funil-steps{display:flex;flex-direction:column;gap:8px}
+.funil-step{display:flex;align-items:center;gap:12px}
+.funil-bar-wrap{flex:1;background:var(--neutral-100);border-radius:4px;height:36px;overflow:hidden;position:relative}
+.funil-bar{height:100%;background:var(--brand-primary);border-radius:4px;transition:width .6s cubic-bezier(.4,0,.2,1);display:flex;align-items:center;padding:0 12px;min-width:50px}
+.funil-bar-val{font-size:12px;font-weight:700;color:#fff;white-space:nowrap}
+.funil-step-label{font-size:12px;font-weight:700;color:var(--neutral-700);width:130px;text-align:right;white-space:nowrap}
+.funil-step-pct{font-size:11px;color:var(--neutral-500);width:50px;text-align:left}
+.funil-connector{width:2px;height:8px;background:var(--neutral-300);margin-left:145px}
 
-    .tw{overflow-x:auto}
-    table{width:100%;border-collapse:collapse}
-    thead{border-bottom:1px solid var(--border)}
-    th{text-align:left;padding:7px 9px;font-size:10px;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:.06em;white-space:nowrap}
-    td{padding:7px 9px;border-bottom:1px solid var(--s2);font-size:12px}
-    tr:last-child td{border-bottom:none}
-    tbody tr:hover td{background:#fafaf8}
-    .mono{font-family:'IBM Plex Mono',monospace;font-size:11px}
-    .nr{text-align:right;font-family:'IBM Plex Mono',monospace;font-size:11px}
-    th.nr{text-align:right}
-    .ri{font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--muted);width:26px}
-    .tag{display:inline-block;padding:2px 6px;border-radius:4px;font-family:'IBM Plex Mono',monospace;font-size:10px;font-weight:500}
-    .tg{background:var(--s2);color:var(--muted)}.tgr{background:#dcfce7;color:#15803d}.tga{background:#fef3c7;color:#b45309}.trd{background:#fee2e2;color:#b91c1c}
+/* ── Tabelas ─────────────────────────────────────────── */
+.table-card{background:#fff;border-radius:var(--radius-md);padding:20px;box-shadow:var(--shadow-01);overflow-x:auto}
+.dash-table{width:100%;border-collapse:collapse;font-size:13px}
+.dash-table th{font-size:11px;font-weight:700;color:var(--neutral-500);text-transform:uppercase;letter-spacing:.7px;padding:8px 12px;border-bottom:2px solid var(--neutral-200);text-align:left;white-space:nowrap}
+.dash-table td{padding:10px 12px;border-bottom:1px solid var(--neutral-100);color:var(--neutral-800)}
+.dash-table tr:last-child td{border-bottom:none}
+.dash-table tr:hover td{background:var(--neutral-100)}
+.dash-table .num{text-align:right;font-weight:700;font-variant-numeric:tabular-nums}
+.dash-table .bar-cell{width:100px}
+.mini-bar-wrap{background:var(--neutral-200);border-radius:2px;height:6px;overflow:hidden}
+.mini-bar{height:100%;background:var(--brand-primary);border-radius:2px}
 
-    .fr{display:flex;align-items:center;gap:10px;margin-bottom:7px}
-    .flab{width:155px;flex-shrink:0}.fn{font-size:12px;font-weight:500}.fe{font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--muted)}
-    .ftr{flex:1;background:var(--s2);border-radius:4px;height:26px;overflow:hidden}
-    .ff{height:100%;border-radius:4px;display:flex;align-items:center;padding:0 9px;font-family:'IBM Plex Mono',monospace;font-size:11px;font-weight:600;color:#fff;transition:width .7s cubic-bezier(.4,0,.2,1);white-space:nowrap;min-width:3%}
-    .fp{width:44px;text-align:right;font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--muted);flex-shrink:0}
-    .fd{width:68px;text-align:right;font-family:'IBM Plex Mono',monospace;font-size:11px;flex-shrink:0}
-    .dhi{color:var(--red)}.dmd{color:var(--amber)}.dlo{color:var(--green)}
+/* ── Rotas ───────────────────────────────────────────── */
+.rotas-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}
 
-    .ins{border:1px solid var(--border);border-radius:10px;padding:15px 17px;margin-bottom:10px}
-    .ins-t{display:flex;align-items:center;gap:7px;margin-bottom:6px}
-    .idot{width:6px;height:6px;border-radius:50%;flex-shrink:0}
-    .dp{background:var(--green)}.dw{background:var(--amber)}.di{background:var(--muted)}
-    .ins-title{font-size:13px;font-weight:600;margin-bottom:4px}
-    .ins-body{font-size:12px;color:var(--muted);line-height:1.65}
-    .ins-meta{font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--border);margin-top:7px}
-    .pbox{border:1px dashed var(--border);border-radius:10px;padding:22px;text-align:center;margin-top:14px;background:#fafaf8}
-    .pbox h3{font-size:12px;font-weight:600;margin-bottom:5px}
-    .pbox p{font-size:12px;color:var(--muted);margin-bottom:13px;line-height:1.6}
-    .cbtn{background:var(--text);color:var(--bg);border:none;border-radius:6px;padding:8px 18px;font-size:12px;font-weight:600;cursor:pointer;font-family:'IBM Plex Sans',sans-serif}
-    .cbtn:hover{opacity:.8}.cbtn.done{background:var(--green);color:#fff}
+/* ── Insights ────────────────────────────────────────── */
+.insights-wrap{display:flex;flex-direction:column;gap:12px}
+.insight-card{background:#fff;border-radius:var(--radius-md);padding:20px;box-shadow:var(--shadow-01);border-left:4px solid var(--brand-secondary-b)}
+.insight-tag{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.8px;color:var(--brand-secondary-b);margin-bottom:6px}
+.insight-text{font-size:14px;color:var(--neutral-800);line-height:1.6}
+.insight-empty{background:#fff;border-radius:var(--radius-md);padding:32px;box-shadow:var(--shadow-01);text-align:center;color:var(--neutral-500);font-size:13px}
 
-    @media(max-width:1024px){header,.fbar,.nav-wrap{padding-left:16px;padding-right:16px}.container{padding:16px}.kgrid{grid-template-columns:repeat(4,1fr)}.g2,.g3{grid-template-columns:1fr}}
-    @media(max-width:600px){.kgrid{grid-template-columns:repeat(2,1fr)}}
-  </style>
+/* ── Tabs ────────────────────────────────────────────── */
+.tabs{display:flex;gap:4px;background:#fff;padding:4px;border-radius:9999px;box-shadow:var(--shadow-01);width:fit-content;margin-bottom:20px;flex-wrap:wrap}
+.tab{font-family:inherit;font-size:12px;font-weight:700;padding:7px 18px;border-radius:9999px;border:none;cursor:pointer;background:transparent;color:var(--neutral-500);transition:all .15s}
+.tab.active{background:var(--brand-primary);color:#fff}
+.tab-content{display:none}
+.tab-content.active{display:block}
+
+/* ── Estado / loading ────────────────────────────────── */
+.state-wrap{display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:300px;gap:12px;color:var(--neutral-500)}
+.spinner{width:32px;height:32px;border:3px solid var(--neutral-200);border-top-color:var(--brand-primary);border-radius:50%;animation:spin .8s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+
+/* ── Overlay para fechar dropdowns ──────────────────── */
+.overlay{position:fixed;inset:0;z-index:400;display:none}
+.overlay.open{display:block}
+
+@media(max-width:900px){
+  .header,.filters-bar,.compare-banner{padding-left:16px;padding-right:16px}
+  .main{padding:16px}
+  .charts-grid,.rotas-grid{grid-template-columns:1fr}
+  .kpi-grid{grid-template-columns:repeat(2,1fr)}
+  .filters-bar{gap:8px}
+}
+</style>
 </head>
 <body>
-<div id="loading"><div class="spinner"></div><p>carregando dados...</p></div>
 
-<header>
-  <div class="logo">ANALYTICS <em>/</em> EXP DE COMPRA</div>
-  <div style="display:flex;align-items:center;gap:20px">
-    <div class="live"><div class="live-dot"></div><span id="upd">—</span></div>
-    <div class="hm" id="per">—</div>
+<!-- Overlay para fechar dropdowns ao clicar fora -->
+<div class="overlay" id="overlay"></div>
+
+<header class="header">
+  <div class="header-brand">
+    <div class="header-logo">
+      <svg viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <rect x="2" y="10" width="3" height="8" rx="1" fill="#19398A"/>
+        <rect x="7" y="6" width="3" height="12" rx="1" fill="#A43C3E"/>
+        <rect x="12" y="2" width="3" height="16" rx="1" fill="#C3940F"/>
+        <rect x="17" y="8" width="3" height="10" rx="1" fill="#6589D4"/>
+      </svg>
+    </div>
+    <div>
+      <div class="header-title">Analytics — Experiência de Compra</div>
+      <div class="header-sub">Grupo Guanabara · GA4</div>
+    </div>
   </div>
+  <div class="header-updated" id="headerUpdated">carregando...</div>
 </header>
 
-<div class="fbar">
-  <div class="fg">
-    <span class="fl">Período</span>
-    <select class="fsel" id="fp" onchange="onPC()">
-      <option value="30">Últimos 30 dias</option>
-      <option value="7">Últimos 7 dias</option>
-      <option value="14">Últimos 14 dias</option>
-      <option value="60">Últimos 60 dias</option>
-      <option value="90">Últimos 90 dias</option>
-      <option value="all">Todo o período</option>
-      <option value="custom">Personalizado…</option>
-    </select>
+<!-- ── Barra de filtros ──────────────────────────────── -->
+<div class="filters-bar" id="filtersBar">
+
+  <!-- Período principal -->
+  <div class="filter-group">
+    <span class="filter-label">Período</span>
+    <button class="filter-btn" data-period="7">7d</button>
+    <button class="filter-btn active" data-period="30">30d</button>
+    <button class="filter-btn" data-period="60">60d</button>
+    <button class="filter-btn" data-period="90">90d</button>
+    <button class="filter-btn" data-period="0">Tudo</button>
+    <!-- Botão intervalo customizado -->
+    <div class="dr-wrapper" id="primaryWrapper">
+      <button class="date-range-btn" id="btnPrimaryCustom" title="Intervalo customizado">
+        <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8">
+          <rect x="1" y="2" width="14" height="13" rx="2"/>
+          <path d="M5 1v2M11 1v2M1 6h14"/>
+        </svg>
+        <span id="btnPrimaryLabel">Customizado</span>
+      </button>
+      <!-- Dropdown principal -->
+      <div class="dr-dropdown primary-dropdown" id="dropPrimary">
+        <div class="dr-presets" id="primaryPresets">
+          <button class="dr-preset" data-days="7">Últimos 7d</button>
+          <button class="dr-preset" data-days="14">Últimos 14d</button>
+          <button class="dr-preset" data-days="30">Últimos 30d</button>
+          <button class="dr-preset" data-days="60">Últimos 60d</button>
+          <button class="dr-preset" data-days="90">Últimos 90d</button>
+          <button class="dr-preset" data-special="mtd">Mês atual</button>
+          <button class="dr-preset" data-special="lastmonth">Mês anterior</button>
+          <button class="dr-preset" data-special="all">Todo o período</button>
+        </div>
+        <div class="dr-sep"></div>
+        <div class="dr-inputs">
+          <div class="dr-input-group">
+            <label class="dr-input-label">De</label>
+            <input type="date" class="dr-input" id="primaryStart">
+          </div>
+          <div class="dr-arrow">→</div>
+          <div class="dr-input-group">
+            <label class="dr-input-label">Até</label>
+            <input type="date" class="dr-input" id="primaryEnd">
+          </div>
+        </div>
+        <div class="dr-actions">
+          <button class="dr-btn dr-btn-apply" id="btnApplyPrimary">Aplicar</button>
+          <button class="dr-btn dr-btn-cancel" id="btnCancelPrimary">Cancelar</button>
+        </div>
+      </div>
+    </div>
   </div>
-  <div id="crange" class="fg">
-    <span class="fl">De</span><input class="finput" type="date" id="fdf"/>
-    <span class="fl">Até</span><input class="finput" type="date" id="fdt"/>
-    <button class="fapply" onclick="applyF()">Aplicar</button>
+
+  <div class="filter-divider"></div>
+
+  <!-- Comparar com -->
+  <div class="filter-group">
+    <span class="filter-label">Comparar</span>
+    <div class="dr-wrapper" id="compareWrapper">
+      <button class="date-range-btn" id="btnCompare" title="Selecionar período de comparação">
+        <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8">
+          <path d="M2 8h12M8 2l4 6-4 6"/>
+        </svg>
+        <span id="btnCompareLabel">Adicionar comparação</span>
+      </button>
+      <!-- Dropdown de comparação -->
+      <div class="dr-dropdown compare-dropdown" id="dropCompare">
+        <div class="dr-presets" id="comparePresets">
+          <button class="dr-preset compare-preset" data-compare="prev-period">Período anterior</button>
+          <button class="dr-preset compare-preset" data-compare="prev-month">Mês anterior</button>
+          <button class="dr-preset compare-preset" data-compare="prev-year">Mesmo período ano anterior</button>
+          <button class="dr-preset compare-preset" data-days="7">Últimos 7d</button>
+          <button class="dr-preset compare-preset" data-days="30">Últimos 30d</button>
+          <button class="dr-preset compare-preset" data-days="90">Últimos 90d</button>
+        </div>
+        <div class="dr-sep"></div>
+        <div class="dr-inputs">
+          <div class="dr-input-group">
+            <label class="dr-input-label">De</label>
+            <input type="date" class="dr-input" id="compareStart">
+          </div>
+          <div class="dr-arrow">→</div>
+          <div class="dr-input-group">
+            <label class="dr-input-label">Até</label>
+            <input type="date" class="dr-input" id="compareEnd">
+          </div>
+        </div>
+        <div class="dr-actions">
+          <button class="dr-btn dr-btn-apply compare-apply" id="btnApplyCompare">Aplicar comparação</button>
+          <button class="dr-btn dr-btn-cancel" id="btnCancelCompare">Cancelar</button>
+          <button class="dr-btn dr-btn-clear" id="btnClearCompare">Remover</button>
+        </div>
+      </div>
+    </div>
   </div>
-  <div class="fdiv"></div>
-  <div class="fg">
-    <span class="fl">Origem</span>
-    <select class="fsel" id="fsrc" onchange="applyF()"><option value="all">Todas</option></select>
+
+  <div class="filter-divider"></div>
+
+  <!-- Dispositivo -->
+  <div class="filter-group">
+    <span class="filter-label">Dispositivo</span>
+    <button class="filter-btn active" data-device="all">Todos</button>
+    <button class="filter-btn" data-device="mobile">Mobile</button>
+    <button class="filter-btn" data-device="desktop">Desktop</button>
+    <button class="filter-btn" data-device="tablet">Tablet</button>
   </div>
-  <div class="fdiv"></div>
-  <div class="fg">
-    <span class="fl">Dispositivo</span>
-    <select class="fsel" id="fdev" onchange="applyF()"><option value="all">Todos</option></select>
-  </div>
-  <button class="freset" onclick="resetF()">↺ Limpar</button>
-  <span class="fstatus" id="fst"></span>
 </div>
 
-<div class="nav-wrap">
-  <nav class="nav">
-    <button class="nbtn on"  onclick="showS('overview',this)">Visão Geral</button>
-    <button class="nbtn" onclick="showS('acquisition',this)">Aquisição</button>
-    <button class="nbtn" onclick="showS('pages',this)">Páginas</button>
-    <button class="nbtn" onclick="showS('funnel',this)">Funil</button>
-    <button class="nbtn" onclick="showS('routes',this)">Rotas</button>
-    <button class="nbtn" onclick="showS('insights',this)">Insights IA</button>
-  </nav>
+<!-- ── Banner de comparação ──────────────────────────── -->
+<div class="compare-banner hidden" id="compareBanner">
+  <span>🔵 Comparando:</span>
+  <span class="compare-period-label" id="comparePrimaryLabel">—</span>
+  <span class="compare-vs">vs</span>
+  <span class="compare-period-label" id="compareSecondaryLabel" style="color:var(--compare-color)">—</span>
+  <button class="compare-clear" id="btnBannerClear">✕ Remover comparação</button>
 </div>
 
-<div class="container">
-
-  <!-- OVERVIEW -->
-  <div id="sec-overview" class="sec on">
-    <div class="kgrid" id="kgrid"></div>
-    <div class="g1"><div class="card">
-      <div class="ch"><div class="ct">Sessões e Usuários — diário <span id="dtag" class="ctag">30d</span></div></div>
-      <div class="cw h260"><canvas id="ch-daily"></canvas></div>
-    </div></div>
-    <div class="g2">
-      <div class="card"><div class="ch"><div class="ct">Compras por dia</div><div class="ctag">purchase</div></div><div class="cw h180"><canvas id="ch-conv-daily"></canvas></div></div>
-      <div class="card"><div class="ch"><div class="ct">Usuários novos por dia</div></div><div class="cw h180"><canvas id="ch-new-users"></canvas></div></div>
-    </div>
-    <div class="g2">
-      <div class="card"><div class="ch"><div class="ct">Dispositivos <span class="ptag ctag">filtrado</span></div></div><div class="cw h180"><canvas id="ch-devices"></canvas></div></div>
-      <div class="card"><div class="ch"><div class="ct">Novos vs Recorrentes <span class="ptag ctag">filtrado</span></div></div><div class="cw h180"><canvas id="ch-new-returning"></canvas></div></div>
-    </div>
+<main class="main">
+  <div id="appState" class="state-wrap">
+    <div class="spinner"></div>
+    <span>Carregando dados...</span>
   </div>
+  <div id="appContent" style="display:none">
 
-  <!-- ACQUISITION -->
-  <div id="sec-acquisition" class="sec">
-    <div class="g2">
-      <div class="card"><div class="ch"><div class="ct">Sessões por Canal <span class="ptag ctag">filtrado</span></div></div><div class="cw h220"><canvas id="ch-channels"></canvas></div></div>
-      <div class="card"><div class="ch"><div class="ct">Taxa de Conversão por Canal <span class="ptag ctag">filtrado</span></div><div class="ctag">%</div></div><div class="cw h220"><canvas id="ch-conv-rate"></canvas></div></div>
+    <div class="tabs">
+      <button class="tab active" data-tab="visao-geral">Visão Geral</button>
+      <button class="tab" data-tab="aquisicao">Aquisição</button>
+      <button class="tab" data-tab="funil">Funil</button>
+      <button class="tab" data-tab="rotas">Rotas</button>
+      <button class="tab" data-tab="insights">Insights IA</button>
     </div>
-    <div class="g2">
-      <div class="card">
-        <div class="ch">
-          <div class="ct">Taxa de Rejeição por Canal <span class="ptag ctag">filtrado</span>
-            <span class="ii up">i<span class="tip">Taxa de Rejeição: % de sessões sem nenhuma interação engajada. No GA4, é uma sessão com menos de 10s sem evento de engajamento. Abaixo de 40% é considerado bom.</span></span>
-          </div><div class="ctag">%</div>
-        </div>
-        <div class="cw h180"><canvas id="ch-bounce-channel"></canvas></div>
-      </div>
-      <div class="card"><div class="ch"><div class="ct">Duração Média por Canal <span class="ptag ctag">filtrado</span></div><div class="ctag">seg</div></div><div class="cw h180"><canvas id="ch-duration-channel"></canvas></div></div>
-    </div>
-    <div class="card"><div class="ch"><div class="ct">Origens de Tráfego — Top 15 <span class="ptag ctag">filtrado</span></div></div><div class="tw"><table id="tbl-sources"></table></div></div>
-  </div>
 
-  <!-- PAGES -->
-  <div id="sec-pages" class="sec">
-    <div class="g2">
-      <div class="card"><div class="ch"><div class="ct">Top Páginas de Entrada <span class="ctag">30d</span></div></div><div class="cw h220"><canvas id="ch-landing"></canvas></div></div>
-      <div class="card">
-        <div class="ch">
-          <div class="ct">Rejeição por Página de Entrada <span class="ctag">30d</span>
-            <span class="ii up">i<span class="tip">Taxa de Rejeição: % de sessões iniciadas nessa página sem interação engajada. Alta rejeição pode indicar desalinhamento entre anúncio/link e o conteúdo da página.</span></span>
-          </div><div class="ctag">%</div>
+    <!-- VISÃO GERAL -->
+    <div class="tab-content active" id="tab-visao-geral">
+      <div class="section-title">KPIs do período</div>
+      <div class="kpi-grid" id="kpiGrid"></div>
+      <div class="section-title">Tendência diária</div>
+      <div class="charts-grid">
+        <div class="chart-card">
+          <div class="chart-title">Sessões por dia</div>
+          <div class="chart-legend" id="legendSessoes"></div>
+          <div class="chart-wrap"><canvas id="chartSessoes"></canvas></div>
         </div>
-        <div class="cw h220"><canvas id="ch-landing-bounce"></canvas></div>
-      </div>
-    </div>
-    <div class="card" style="margin-bottom:12px">
-      <div class="ch">
-        <div class="ct">Pageviews por Semana — Top 10 páginas</div>
-        <div class="wsrow" style="margin-bottom:0">
-          <span class="wslabel">Semana</span>
-          <select class="wssel" id="wk-pages" onchange="renderPagesWeekly()"><option value="all">Todas</option></select>
-          <span class="ws-note">yearWeek</span>
+        <div class="chart-card">
+          <div class="chart-title">Compras por dia</div>
+          <div class="chart-legend" id="legendCompras"></div>
+          <div class="chart-wrap"><canvas id="chartCompras"></canvas></div>
+        </div>
+        <div class="chart-card">
+          <div class="chart-title">Taxa de conversão % por dia</div>
+          <div class="chart-legend" id="legendCR"></div>
+          <div class="chart-wrap"><canvas id="chartCR"></canvas></div>
+        </div>
+        <div class="chart-card">
+          <div class="chart-title">Taxa de rejeição % por dia</div>
+          <div class="chart-legend" id="legendBounce"></div>
+          <div class="chart-wrap"><canvas id="chartBounce"></canvas></div>
         </div>
       </div>
-      <div class="cw h220"><canvas id="ch-pages-weekly"></canvas></div>
     </div>
-    <div class="card"><div class="ch"><div class="ct">Páginas mais acessadas — Top 10 <span class="ctag">30d</span></div></div><div class="tw"><table id="tbl-pages"></table></div></div>
-  </div>
 
-  <!-- FUNNEL -->
-  <div id="sec-funnel" class="sec">
-    <div class="card" style="margin-bottom:12px">
-      <div class="ch">
-        <div class="ct">Funil de Eventos <span class="ptag ctag">filtrado</span></div>
-        <div class="wsrow" style="margin-bottom:0">
-          <span class="wslabel">Semana</span>
-          <select class="wssel" id="wk-funnel" onchange="renderFunnelWeekly()"><option value="all">Agregado (período)</option></select>
+    <!-- AQUISIÇÃO -->
+    <div class="tab-content" id="tab-aquisicao">
+      <div class="section-title">Sessões por canal</div>
+      <div class="charts-grid">
+        <div class="chart-card">
+          <div class="chart-title">Distribuição de canais</div>
+          <div class="chart-wrap"><canvas id="chartCanais"></canvas></div>
+        </div>
+        <div class="chart-card">
+          <div class="chart-title">Sessões por dispositivo</div>
+          <div class="chart-wrap"><canvas id="chartDevices"></canvas></div>
         </div>
       </div>
-      <div id="funnel-wrap"></div>
+      <div class="section-title">Detalhamento por canal</div>
+      <div class="table-card">
+        <table class="dash-table">
+          <thead><tr><th>Canal</th><th class="num">Sessões</th><th class="num">Part. %</th><th class="bar-cell"></th></tr></thead>
+          <tbody id="tabelaCanais"></tbody>
+        </table>
+      </div>
+      <div class="section-title" style="margin-top:20px">CR por dispositivo</div>
+      <div class="table-card">
+        <table class="dash-table">
+          <thead><tr><th>Dispositivo</th><th class="num">Sessões</th><th class="num">Compras</th><th class="num">CR %</th></tr></thead>
+          <tbody id="tabelaDevices"></tbody>
+        </table>
+      </div>
     </div>
-    <div class="g2">
-      <div class="card"><div class="ch"><div class="ct">Volume de eventos <span class="ptag ctag">filtrado</span></div></div><div class="cw h220"><canvas id="ch-funnel-vol"></canvas></div></div>
-      <div class="card"><div class="ch"><div class="ct">Taxa de abandono entre etapas <span class="ptag ctag">filtrado</span></div><div class="ctag">%</div></div><div class="cw h220"><canvas id="ch-funnel-drop"></canvas></div></div>
-    </div>
-  </div>
 
-  <!-- ROUTES -->
-  <div id="sec-routes" class="sec">
-    <div class="g2">
-      <div class="card"><div class="ch"><div class="ct">Top Origens <span class="ctag">30d</span></div></div><div class="cw h220"><canvas id="ch-origins"></canvas></div></div>
-      <div class="card"><div class="ch"><div class="ct">Top Destinos <span class="ctag">30d</span></div></div><div class="cw h220"><canvas id="ch-destinations"></canvas></div></div>
+    <!-- FUNIL -->
+    <div class="tab-content" id="tab-funil">
+      <div class="section-title">Funil de conversão</div>
+      <div class="funil-wrap"><div class="funil-steps" id="funilSteps"></div></div>
     </div>
-    <div class="g2">
-      <div class="card"><div class="ch"><div class="ct">Top Rotas <span class="ctag">30d</span></div></div><div class="tw"><table id="tbl-routes"></table></div></div>
-      <div class="card"><div class="ch"><div class="ct">Rotas por Usuários <span class="ctag">30d</span></div></div><div class="tw"><table id="tbl-route-conv"></table></div></div>
-    </div>
-  </div>
 
-  <!-- INSIGHTS -->
-  <div id="sec-insights" class="sec">
-    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:14px">
-      <span style="font-size:10px;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:.07em">Insights gerados via Claude.ai</span>
-      <span class="tag tg">atualização manual</span>
+    <!-- ROTAS -->
+    <div class="tab-content" id="tab-rotas">
+      <div class="section-title">Top origens e destinos (acumulado do período)</div>
+      <div class="rotas-grid">
+        <div class="table-card">
+          <div class="chart-title" style="margin-bottom:12px">🛫 Top origens</div>
+          <table class="dash-table">
+            <thead><tr><th>#</th><th>Cidade</th><th class="num">Sessões</th><th class="bar-cell"></th></tr></thead>
+            <tbody id="tabelaOrigens"></tbody>
+          </table>
+        </div>
+        <div class="table-card">
+          <div class="chart-title" style="margin-bottom:12px">🛬 Top destinos</div>
+          <table class="dash-table">
+            <thead><tr><th>#</th><th>Cidade</th><th class="num">Sessões</th><th class="bar-cell"></th></tr></thead>
+            <tbody id="tabelaDestinos"></tbody>
+          </table>
+        </div>
+      </div>
     </div>
-    <div id="insights-list"></div>
-    <div class="pbox">
-      <h3>Gerar novos insights</h3>
-      <p>Copie o prompt, abra o Claude.ai (plano Team), cole junto com o conteúdo do <code>data.json</code> e cole o resultado no campo <code>insights</code>.</p>
-      <button class="cbtn" id="cpbtn" onclick="copyP()">Copiar prompt</button>
+
+    <!-- INSIGHTS -->
+    <div class="tab-content" id="tab-insights">
+      <div class="section-title">Análise semanal — Claude AI</div>
+      <div class="insights-wrap" id="insightsWrap"></div>
     </div>
+
   </div>
-</div>
+</main>
 
 <script>
-const PROMPT=`Você é um analista de growth sênior especializado em e-commerce de viagens. Analise os dados de GA4 abaixo e gere entre 5 e 7 insights acionáveis para o time de marketing e produto, com foco em rotas, funil de conversão e aquisição.\n\nPara cada insight, retorne um objeto JSON com:\n- "title": título curto e direto\n- "body": análise em 2-3 frases com o insight e a recomendação concreta\n- "type": "positive" | "warning" | "info"\n- "generated_at": data de hoje no formato YYYY-MM-DD\n\nRetorne APENAS um array JSON válido, sem texto adicional.\n\nDADOS:\n[COLE O CONTEÚDO DO data.json AQUI]`;
+// ═══════════════════════════════════════════════════════
+// ESTADO GLOBAL
+// ═══════════════════════════════════════════════════════
+let ALL_DATA  = [];
+let INSIGHTS  = [];
+let DEVICE    = "all";
+let CHARTS    = {};
 
-const C={blue:'#1d4ed8',indigo:'#4f46e5',teal:'#0d9488',green:'#16a34a',amber:'#d97706',red:'#dc2626',purple:'#7c3aed',cyan:'#0891b2',pink:'#db2777',orange:'#ea580c'};
-const PAL=Object.values(C);
-const CHC={'Organic Search':C.blue,'Direct':C.indigo,'Referral':C.teal,'Paid Search':C.amber,'Social':C.pink,'Email':C.cyan,'Display':C.orange,'Organic Social':C.purple,'Organic Video':C.green,'Unassigned':'#9ca3af'};
-const cch=(ch,i)=>CHC[ch]||PAL[i%PAL.length];
-const FCOL=[C.blue,C.indigo,C.teal,C.amber,C.green];
+// Período principal
+let P = { start: null, end: null };   // datas ISO string
+// Período de comparação
+let C = { start: null, end: null, active: false };
 
-const fmt=n=>{if(n==null)return'—';const v=Number(n);if(v>=1e6)return(v/1e6).toFixed(1).replace('.',',')+' M';if(v>=1e3)return(v/1e3).toFixed(1).replace('.',',')+' K';return v.toLocaleString('pt-BR')};
-const fmtF=n=>n==null?'—':Number(n).toLocaleString('pt-BR');
-const fmtP=n=>n==null?'—':`${n}%`;
-const fmtS=s=>{const m=Math.floor(s/60),ss=Math.round(s%60);return`${m}m${String(ss).padStart(2,'0')}s`};
-const MONO={family:"'IBM Plex Mono',monospace",size:10};
-const SANS={family:"'IBM Plex Sans',sans-serif",size:11};
-const TT={backgroundColor:'#1a1917',titleColor:'#f5f4f0',bodyColor:'#d1d0cb',titleFont:MONO,bodyFont:MONO,padding:10,cornerRadius:6,displayColors:true};
-function bO(ex={}){return{responsive:true,maintainAspectRatio:false,plugins:{legend:{labels:{color:'#7a7870',font:SANS,boxWidth:8,padding:10}},tooltip:TT},scales:{x:{ticks:{color:'#a09e98',font:MONO,maxRotation:40},grid:{color:'#eeede9'},border:{color:'#dddbd4'}},y:{ticks:{color:'#a09e98',font:MONO},grid:{color:'#eeede9'},border:{color:'#dddbd4'}}},...ex}}
-function bOH(ex={}){return bO({indexAxis:'y',...ex})}
-function dO(){return{responsive:true,maintainAspectRatio:false,cutout:'55%',plugins:{
-  legend:{position:'right',labels:{color:'#7a7870',font:SANS,boxWidth:8,padding:10,
-    generateLabels(chart){const ds=chart.data.datasets[0];const tot=ds.data.reduce((a,b)=>a+b,0);
-      return chart.data.labels.map((l,i)=>({text:`${l}  ${tot>0?Math.round(ds.data[i]/tot*100):0}%`,fillStyle:ds.backgroundColor[i],strokeStyle:'transparent',index:i}))}}},
-  tooltip:{...TT,callbacks:{label:ctx=>{const tot=ctx.dataset.data.reduce((a,b)=>a+b,0);const pct=tot>0?Math.round(ctx.parsed/tot*100):0;return` ${ctx.label}: ${fmtF(ctx.parsed)} (${pct}%)`}}}
-}}}
-
-let RAW=null, CHARTS={};
-function kill(){Object.values(CHARTS).forEach(c=>{try{c.destroy()}catch(e){}});CHARTS={}}
-function mk(id,type,data,opts){const el=document.getElementById(id);if(!el)return;if(CHARTS[id])try{CHARTS[id].destroy()}catch(e){}; CHARTS[id]=new Chart(el,{type,data,options:opts})}
-
-function showS(id,btn){
-  document.querySelectorAll('.sec').forEach(s=>s.classList.remove('on'));
-  document.querySelectorAll('.nbtn').forEach(b=>b.classList.remove('on'));
-  document.getElementById('sec-'+id).classList.add('on');
-  btn.classList.add('on');
-}
-
-// ── Date / week helpers ───────────────────────────────────────────────────────
-function dateToWeek(dateStr){
-  const d=new Date(dateStr+'T12:00:00');
-  const jan1=new Date(d.getFullYear(),0,1);
-  const week=Math.ceil(((d-jan1)/86400000+jan1.getDay()+1)/7);
-  return `${d.getFullYear()}${String(week).padStart(2,'0')}`;
-}
-function weekLabel(yw){
-  const y=yw.slice(0,4),w=parseInt(yw.slice(4));
-  return `Sem ${w}/${y}`;
-}
-
-// ── Filter helpers ────────────────────────────────────────────────────────────
-function onPC(){
-  const v=document.getElementById('fp').value;
-  document.getElementById('crange').classList.toggle('on',v==='custom');
-  if(v!=='custom') applyF();
-}
-function resetF(){
-  document.getElementById('fp').value='30';
-  document.getElementById('fsrc').value='all';
-  document.getElementById('fdev').value='all';
-  document.getElementById('crange').classList.remove('on');
-  applyF();
-}
-function getF(){
-  return{period:document.getElementById('fp').value,
-    df:document.getElementById('fdf').value,dt:document.getElementById('fdt').value,
-    src:document.getElementById('fsrc').value,dev:document.getElementById('fdev').value};
-}
-
-function populateF(d){
-  const ss=document.getElementById('fsrc');
-  const srcKeys=d.top5_sources||[...new Set(d.sources.map(r=>r.source_medium||r.source))];
-  [...srcKeys,'outros / —'].forEach(sm=>{
-    const o=document.createElement('option');o.value=sm;o.textContent=sm;ss.appendChild(o);
-  });
-  const ds=document.getElementById('fdev');
-  d.devices.forEach(r=>{
-    const o=document.createElement('option');o.value=r.device;
-    o.textContent=r.device.charAt(0).toUpperCase()+r.device.slice(1);ds.appendChild(o);
-  });
-  if(d.daily&&d.daily.length){
-    document.getElementById('fdf').value=d.daily[0].date;
-    document.getElementById('fdt').value=d.daily[d.daily.length-1].date;
+// ═══════════════════════════════════════════════════════
+// CARGA DE DADOS
+// ═══════════════════════════════════════════════════════
+async function loadData() {
+  try {
+    const res = await fetch("data.json?v=" + Date.now());
+    if (!res.ok) throw new Error("HTTP " + res.status);
+    const json = await res.json();
+    ALL_DATA = (json.daily || []).sort((a, b) => a.data < b.data ? -1 : 1);
+    INSIGHTS = json.insights || [];
+    document.getElementById("headerUpdated").textContent =
+      "Atualizado em " + fmtDatetime(json.gerado_em);
+    // Período padrão: últimos 30 dias
+    applyPreset(30);
+    hideState();
+  } catch(e) {
+    showError("Não foi possível carregar os dados. " + e.message);
   }
-  repopulateWeekSels(d.daily);
 }
 
-function repopulateWeekSels(filteredDaily){
-  const filteredDates=filteredDaily.map(r=>r.date);
-  const weeksSet=new Set(filteredDates.map(d=>dateToWeek(d)));
-  const weeks=[...weeksSet].sort();
-
-  const pwWeeks=new Set(RAW&&RAW.pages_weekly?RAW.pages_weekly.weeks:[]);
-  const pageWeeks=weeks.filter(w=>pwWeeks.size===0||pwWeeks.has(w));
-
-  const wkp=document.getElementById('wk-pages');
-  const prevPage=wkp.value;
-  while(wkp.options.length>1) wkp.remove(1);
-  pageWeeks.forEach(w=>{const o=document.createElement('option');o.value=w;o.textContent=weekLabel(w);wkp.appendChild(o)});
-  if([...wkp.options].some(o=>o.value===prevPage)) wkp.value=prevPage;
-
-  const wkf=document.getElementById('wk-funnel');
-  const prevFunnel=wkf.value;
-  while(wkf.options.length>1) wkf.remove(1);
-  weeks.forEach(w=>{const o=document.createElement('option');o.value=w;o.textContent=weekLabel(w);wkf.appendChild(o)});
-  if([...wkf.options].some(o=>o.value===prevFunnel)) wkf.value=prevFunnel;
-  else wkf.value='all';
-
-  const ftag=document.getElementById('fnl-tag');
-  if(ftag) ftag.textContent=`${filteredDaily.length}d`;
+// ═══════════════════════════════════════════════════════
+// GERENCIAMENTO DE PERÍODO
+// ═══════════════════════════════════════════════════════
+function applyPreset(days) {
+  const last = ALL_DATA[ALL_DATA.length - 1]?.data;
+  if (!last) return;
+  const end   = last;
+  const start = offsetDate(end, -days + 1);
+  setPrimary(start, end);
 }
 
-function applyF(){
-  if(!RAW) return;
-  const f=getF();
-  const active=[];
-  if(f.period==='custom'&&f.df&&f.dt) active.push(`${f.df} → ${f.dt}`);
-  else if(f.period!=='30') active.push(f.period==='all'?'Todo período':`Últimos ${f.period}d`);
-  if(f.src!=='all') active.push(`Origem: ${f.src}`);
-  if(f.dev!=='all') active.push(`Dispositivo: ${f.dev}`);
-  document.getElementById('fst').textContent=active.length?'● '+active.join(' · '):'';
-
-  const fd=buildF(RAW,f);
-  repopulateWeekSels(fd.daily);
-  kill();
-  render(fd);
-}
-
-// ── Filter date range ─────────────────────────────────────────────────────────
-function filterDates(daily,f){
-  if(f.period==='custom'&&f.df&&f.dt) return daily.filter(r=>r.date>=f.df&&r.date<=f.dt);
-  if(f.period==='all') return daily;
-  return daily.slice(-parseInt(f.period));
-}
-
-// Filtra um *_daily object pela mesma janela de datas que o daily[] filtrado.
-// NUNCA usa .slice(-N) direto no obj.dates porque esses arrays podem ter gaps
-// (dias sem dados para aquela dimensão), o que deslocaria a janela vs o daily.
-// Recebe dateSet: Set das datas do daily já filtrado — fonte de verdade.
-function filterDailyObj(obj, f, dateSet){
-  if(!obj) return obj;
-  if(dateSet){
-    // Caminho preferencial: intersecta com o conjunto de datas do daily filtrado
-    const dates = obj.dates.filter(d => dateSet.has(d));
-    return{...obj, dates};
+function applySpecial(key) {
+  const today = todayISO();
+  if (key === "all") {
+    const first = ALL_DATA[0]?.data || today;
+    const last  = ALL_DATA[ALL_DATA.length - 1]?.data || today;
+    setPrimary(first, last);
+  } else if (key === "mtd") {
+    const start = today.slice(0, 7) + "-01";
+    setPrimary(start, today);
+  } else if (key === "lastmonth") {
+    const d = new Date(today);
+    d.setDate(1); d.setDate(0); // último dia do mês anterior
+    const end   = isoDate(d);
+    const start = end.slice(0, 7) + "-01";
+    setPrimary(start, end);
   }
-  // Fallback sem dateSet: filtra por faixa explícita de datas (custom) ou all
-  let dates=[...obj.dates];
-  if(f.period==='custom'&&f.df&&f.dt) dates=dates.filter(d=>d>=f.df&&d<=f.dt);
-  // period !== 'all' sem dateSet: não pode usar slice(-N) com segurança aqui,
-  // mas mantemos como último recurso para compatibilidade
-  else if(f.period!=='all'){
-    const n=parseInt(f.period);
-    const allDates=[...obj.dates].sort();
-    const cutoff=allDates.length>n?allDates[allDates.length-n]:allDates[0];
-    dates=allDates.filter(d=>d>=cutoff);
-  }
-  return{...obj,dates};
 }
 
-function aggFromDaily(obj,keyField,metrics){
-  const agg={};
-  obj.dates.forEach(date=>{
-    const day=obj.data[date]||{};
-    Object.entries(day).forEach(([key,vals])=>{
-      if(!agg[key]) agg[key]={[keyField]:key};
-      metrics.forEach(m=>{ agg[key][m]=(agg[key][m]||0)+(vals[m]||0); });
-    });
-  });
-  return Object.values(agg);
+function setPrimary(start, end) {
+  P.start = start;
+  P.end   = end;
+  updatePrimaryBtn();
+  // Auto-limpar comparação ao mudar período principal
+  C.active = false;
+  updateCompareBanner();
+  render();
 }
 
-// ── Weighted aggregate from dailyObj for a specific key (or all keys) ─────────
-// Returns {sessions, users, conversions, bounce_rate (weighted avg), avg_duration (weighted avg)}
-function aggWeightedFromDailyObj(obj, filterKey){
-  // obj.data[date][key] = {sessions, users, conversions, bounce_rate, avg_duration, ...}
-  let totSess=0, totUsers=0, totConv=0, wBounce=0, wDur=0;
-  obj.dates.forEach(date=>{
-    const day=obj.data[date]||{};
-    const entries=filterKey?([[filterKey, day[filterKey]||{}]]):Object.entries(day);
-    entries.forEach(([,v])=>{
-      if(!v) return;
-      const s=v.sessions||0;
-      totSess  +=s;
-      totUsers +=(v.users||0);
-      totConv  +=(v.conversions||0);
-      wBounce  +=(v.bounce_rate||0)*s;
-      wDur     +=(v.avg_duration||0)*s;
-    });
-  });
-  return{
-    sessions:    totSess,
-    users:       totUsers,
-    conversions: totConv,
-    bounce_rate: totSess>0&&wBounce>0 ? Math.round(wBounce/totSess*100)/100 : null,
-    avg_duration:totSess>0&&wDur>0    ? Math.round(wDur/totSess*100)/100    : null,
-    conversion_rate: totSess>0 ? Math.round(totConv/totSess*10000)/100 : 0,
-  };
+function setCompare(start, end) {
+  C.start  = start;
+  C.end    = end;
+  C.active = true;
+  updateCompareBanner();
+  render();
 }
 
-// ── Main filter builder ───────────────────────────────────────────────────────
-function buildF(d,f){
-  const devFilter = f.dev;
-  const srcFilter = f.src;
+function clearCompare() {
+  C.active = false;
+  C.start  = null;
+  C.end    = null;
+  updateCompareBanner();
+  render();
+}
 
-  // 1. daily[] é a fonte de verdade para a janela de datas — sempre completo
-  const daily = filterDates(d.daily, f);
-  const dateSet = new Set(daily.map(r => r.date));
-
-  const chDailyFiltered  = filterDailyObj(d.channels_daily,       f, dateSet);
-  const devDailyFiltered = filterDailyObj(d.devices_daily,        f, dateSet);
-  const srcDailyFiltered = filterDailyObj(d.sources_daily,        f, dateSet);
-  const nvrDailyFiltered = filterDailyObj(d.nvr_daily,            f, dateSet);
-  const dsDailyFiltered  = filterDailyObj(d.device_source_daily,  f, dateSet);
-
-  // ── 3. devMetrics: agrega devices_daily pelo período (sempre completo) ──────
-  const devAggAll = {};
-  devDailyFiltered.dates.forEach(date=>{
-    const day=devDailyFiltered.data[date]||{};
-    Object.entries(day).forEach(([dev,v])=>{
-      if(!devAggAll[dev]) devAggAll[dev]={sessions:0,users:0,conversions:0,wBounce:0,wDur:0};
-      const s=v.sessions||0;
-      devAggAll[dev].sessions   +=s;
-      devAggAll[dev].users      +=(v.users||0);
-      devAggAll[dev].conversions+=(v.conversions||0);
-      devAggAll[dev].wBounce    +=(v.bounce_rate||0)*s;
-      devAggAll[dev].wDur       +=(v.avg_duration||0)*s;
-    });
-  });
-  const devMetrics={};
-  Object.entries(devAggAll).forEach(([dev,a])=>{
-    const s=Math.max(a.sessions,1);
-    devMetrics[dev]={
-      sessions:       a.sessions,
-      users:          a.users,
-      conversions:    a.conversions,
-      bounce_rate:    a.sessions>0&&a.wBounce>0 ? Math.round(a.wBounce/s*100)/100 : null,
-      avg_duration:   a.sessions>0&&a.wDur>0    ? Math.round(a.wDur/s*100)/100    : null,
-      conversion_rate:Math.round(a.conversions/s*10000)/100,
-    };
-  });
-  // Total de sessões de devices no período (para calcular devRatio)
-  const totalDevSess = Object.values(devMetrics).reduce((a,r)=>a+r.sessions,0);
-
-  // ── 4. srcMetrics: agrega sources_daily quando disponível; fallback d.sources ──
-  // sources_daily pode não cobrir o período selecionado (pipeline incompleto).
-  // Nesse caso, usa d.sources (90d fixo) para obter ratios e bounce/duration.
-  const srcAggAll = {};
-  srcDailyFiltered.dates.forEach(date=>{
-    const day=srcDailyFiltered.data[date]||{};
-    Object.entries(day).forEach(([sm,v])=>{
-      if(!srcAggAll[sm]) srcAggAll[sm]={sessions:0,users:0,conversions:0,wBounce:0,wDur:0};
-      const s=v.sessions||0;
-      srcAggAll[sm].sessions   +=s;
-      srcAggAll[sm].users      +=(v.users||0);
-      srcAggAll[sm].conversions+=(v.conversions||0);
-      srcAggAll[sm].wBounce    +=(v.wBounce||((v.bounce_rate||0)*s));
-      srcAggAll[sm].wDur       +=(v.wDur   ||((v.avg_duration||0)*s));
-    });
-  });
-  const hasSrcDailyData = Object.keys(srcAggAll).length > 0;
-
-  const srcMetrics={};
-  if(hasSrcDailyData){
-    // Dados reais de sources_daily disponíveis para o período
-    const totalSrcSess = Object.values(srcAggAll).reduce((a,r)=>a+r.sessions,0);
-    Object.entries(srcAggAll).forEach(([sm,a])=>{
-      const s=Math.max(a.sessions,1);
-      srcMetrics[sm]={
-        sessions:       a.sessions,
-        users:          a.users,
-        conversions:    a.conversions,
-        ratio:          totalSrcSess>0 ? a.sessions/totalSrcSess : 0,
-        bounce_rate:    a.sessions>0&&a.wBounce>0 ? Math.round(a.wBounce/s*100)/100 : null,
-        avg_duration:   a.sessions>0&&a.wDur>0    ? Math.round(a.wDur/s*100)/100    : null,
-        conversion_rate:Math.round(a.conversions/s*10000)/100,
-      };
-    });
-  } else {
-    // Fallback: d.sources (tabela 90d fixo) — sempre presente no JSON
-    // Usa as proporções do período longo como estimativa para o período selecionado
-    const totalSrcSess = d.sources.reduce((a,r)=>a+r.sessions,0);
-    d.sources.forEach(r=>{
-      const sm = r.source_medium || `${r.source} / ${r.medium}`;
-      srcMetrics[sm]={
-        sessions:       r.sessions,
-        users:          r.users,
-        conversions:    r.conversions,
-        ratio:          totalSrcSess>0 ? r.sessions/totalSrcSess : 0,
-        bounce_rate:    r.bounce_rate  || null,
-        avg_duration:   r.avg_duration || null,
-        conversion_rate:r.conversion_rate || 0,
-      };
-    });
+function applyComparePreset(key) {
+  if (!P.start || !P.end) return;
+  const days = dateDiff(P.start, P.end) + 1;
+  if (key === "prev-period") {
+    const end   = offsetDate(P.start, -1);
+    const start = offsetDate(end, -days + 1);
+    setCompare(start, end);
+  } else if (key === "prev-month") {
+    const d = new Date(P.start);
+    d.setDate(1); d.setDate(0);
+    const end   = isoDate(d);
+    const start = end.slice(0, 7) + "-01";
+    setCompare(start, end);
+  } else if (key === "prev-year") {
+    const start = offsetYears(P.start, -1);
+    const end   = offsetYears(P.end, -1);
+    setCompare(start, end);
   }
+}
 
-  // ── 5. srcRatio e devRatio ────────────────────────────────────────────────
-  const devRatio = (devFilter!=='all'&&devMetrics[devFilter]&&totalDevSess>0)
-    ? devMetrics[devFilter].sessions/totalDevSess : 1;
+// ═══════════════════════════════════════════════════════
+// FILTRO DE DADOS
+// ═══════════════════════════════════════════════════════
+function getRange(start, end) {
+  return ALL_DATA.filter(d => d.data >= start && d.data <= end);
+}
 
-  const srcEntry = srcFilter!=='all' ? srcMetrics[srcFilter] : null;
-  const srcRatio = srcEntry ? srcEntry.ratio : 1;
+function applyDevice(data) {
+  if (DEVICE === "all") return data;
+  return data.map(d => ({
+    ...d,
+    sessoes:  d["sessoes_"  + DEVICE] || 0,
+    compras:  d["compras_"  + DEVICE] || 0,
+    taxa_conversao_pct: d["sessoes_" + DEVICE] > 0
+      ? round4(d["compras_" + DEVICE] / d["sessoes_" + DEVICE] * 100) : 0,
+  }));
+}
 
-  // ── 6. Aggregate channels_daily (pode estar vazio para períodos recentes) ──
-  const chAgg={};
-  chDailyFiltered.dates.forEach(date=>{
-    const day=chDailyFiltered.data[date]||{};
-    Object.entries(day).forEach(([ch,v])=>{
-      if(!chAgg[ch]) chAgg[ch]={channel:ch,sessions:0,users:0,conversions:0,new_users:0,wBounce:0,wDur:0};
-      const s=v.sessions||0;
-      chAgg[ch].sessions   +=s;
-      chAgg[ch].users      +=(v.users||0);
-      chAgg[ch].conversions+=(v.conversions||0);
-      chAgg[ch].new_users  +=(v.new_users||0);
-      chAgg[ch].wBounce    +=(v.bounce_rate||0)*s;
-      chAgg[ch].wDur       +=(v.avg_duration||0)*s;
-    });
-  });
-  const hasChData = Object.keys(chAgg).length > 0;
+function getPrimary() {
+  if (!P.start || !P.end) return [];
+  return applyDevice(getRange(P.start, P.end));
+}
 
-  // combinedRatio: escala canais, funil, páginas, daily charts
-  const combinedRatio = devRatio * srcRatio;
+function getCompare() {
+  if (!C.active || !C.start || !C.end) return [];
+  return applyDevice(getRange(C.start, C.end));
+}
 
-  // Montar channels[] — usa chAgg se disponível, senão d.channels escalado
-  let channels;
-  if(hasChData){
-    channels = Object.values(chAgg).map(ch=>{
-      const orig=d.channels.find(c=>c.channel===ch.channel)||{};
-      const s=Math.max(ch.sessions,1);
-      const scaledSess = Math.round(ch.sessions*combinedRatio);
-      const scaledConv = Math.round(ch.conversions*combinedRatio);
-      return{
-        channel:         ch.channel,
-        sessions:        scaledSess,
-        users:           Math.round(ch.users*combinedRatio),
-        conversions:     scaledConv,
-        new_users:       Math.round((ch.new_users||orig.new_users||0)*combinedRatio),
-        conversion_rate: scaledSess>0 ? Math.round(scaledConv/scaledSess*10000)/100 : 0,
-        bounce_rate:  ch.wBounce>0 ? Math.round(ch.wBounce/s*100)/100 : (orig.bounce_rate||0),
-        avg_duration: ch.wDur>0    ? Math.round(ch.wDur/s*100)/100    : (orig.avg_duration||0),
-      };
-    }).sort((a,b)=>b.sessions-a.sessions);
-  } else {
-    // channels_daily não cobre o período — escalar d.channels pelo ratio combinado
-    channels = d.channels.map(ch=>{
-      const scaledSess = Math.round(ch.sessions*combinedRatio);
-      const scaledConv = Math.round(ch.conversions*combinedRatio);
-      return{
-        ...ch,
-        sessions:        scaledSess,
-        users:           Math.round(ch.users*combinedRatio),
-        conversions:     scaledConv,
-        new_users:       Math.round((ch.new_users||0)*combinedRatio),
-        conversion_rate: scaledSess>0 ? Math.round(scaledConv/scaledSess*10000)/100 : 0,
-      };
-    }).sort((a,b)=>b.sessions-a.sessions);
+// ═══════════════════════════════════════════════════════
+// RENDER PRINCIPAL
+// ═══════════════════════════════════════════════════════
+function render() {
+  const primary = getPrimary();
+  const compare = getCompare();
+  renderKPIs(primary, compare);
+  renderChartsVisaoGeral(primary, compare);
+  renderAquisicao(primary);
+  renderFunil(primary);
+  renderRotas(primary);
+  renderInsights();
+}
+
+// ═══════════════════════════════════════════════════════
+// KPIs
+// ═══════════════════════════════════════════════════════
+function renderKPIs(primary, compare) {
+  const tp = aggregate(primary);
+  const tc = compare.length ? aggregate(compare) : null;
+  const crP  = tp.sessoes > 0 ? round4(tp.compras / tp.sessoes * 100) : 0;
+  const brP  = wavg(primary, "taxa_rejeicao_pct", "sessoes");
+  const durP = wavg(primary, "duracao_media_seg", "sessoes");
+
+  const crC  = tc && tc.sessoes > 0 ? round4(tc.compras / tc.sessoes * 100) : null;
+  const brC  = tc ? wavg(compare, "taxa_rejeicao_pct", "sessoes") : null;
+  const durC = tc ? wavg(compare, "duracao_media_seg", "sessoes") : null;
+
+  const defs = [
+    { label: "Sessões",        val: fmtNum(tp.sessoes),        cval: tc ? fmtNum(tc.sessoes) : null,        raw: tp.sessoes,        crawl: tc?.sessoes },
+    { label: "Usuários",       val: fmtNum(tp.usuarios),       cval: tc ? fmtNum(tc.usuarios) : null,       raw: tp.usuarios,       crawl: tc?.usuarios },
+    { label: "Novos usuários", val: fmtNum(tp.novos_usuarios), cval: tc ? fmtNum(tc.novos_usuarios) : null, raw: tp.novos_usuarios, crawl: tc?.novos_usuarios },
+    { label: "Pageviews",      val: fmtNum(tp.pageviews),      cval: tc ? fmtNum(tc.pageviews) : null,      raw: tp.pageviews,      crawl: tc?.pageviews },
+    { label: "Compras",        val: fmtNum(tp.compras),        cval: tc ? fmtNum(tc.compras) : null,        raw: tp.compras,        crawl: tc?.compras },
+    { label: "Conversão",      val: crP.toFixed(2) + "%",      cval: crC !== null ? crC.toFixed(2) + "%" : null, raw: crP, crawl: crC },
+    { label: "Rejeição",       val: brP.toFixed(2) + "%",      cval: brC !== null ? brC.toFixed(2) + "%" : null, raw: brP, crawl: brC, invert: true },
+    { label: "Duração média",  val: fmtDur(durP),              cval: durC !== null ? fmtDur(durC) : null,   raw: durP, crawl: durC },
+  ];
+
+  document.getElementById("kpiGrid").innerHTML = defs.map(d => kpiCard(d)).join("");
+}
+
+function kpiCard(d) {
+  let deltaHtml = "";
+  if (d.crawl != null && d.raw != null && d.crawl !== 0) {
+    const pct   = ((d.raw - d.crawl) / Math.abs(d.crawl)) * 100;
+    const isUp  = d.invert ? pct < 0 : pct > 0;
+    const cls   = Math.abs(pct) < 0.1 ? "neutral" : (isUp ? "up" : "down");
+    const arrow = pct > 0.1 ? "▲" : (pct < -0.1 ? "▼" : "—");
+    deltaHtml = `<span class="kpi-delta ${cls}">${arrow} ${Math.abs(pct).toFixed(1)}%</span>`;
   }
+  const compareRow = d.cval != null
+    ? `<div class="kpi-compare-row">
+        <span class="kpi-compare-val" style="color:var(--compare-color)">vs ${d.cval}</span>
+        ${deltaHtml}
+       </div>`
+    : "";
 
-  // ── 7. Devices list ────────────────────────────────────────────────────────
-  let devices = Object.entries(devMetrics).map(([dev,m])=>({device:dev,...m}))
-    .sort((a,b)=>b.sessions-a.sessions);
-  if(devFilter!=='all') devices=devices.filter(r=>r.device===devFilter);
-  if(srcFilter!=='all'){
-    devices=devices.map(r=>({...r,
-      sessions:   Math.round(r.sessions*srcRatio),
-      users:      Math.round(r.users*srcRatio),
-      conversions:Math.round(r.conversions*srcRatio),
-    }));
-  }
+  return `<div class="kpi-card">
+    <div class="kpi-label">${d.label}</div>
+    <div class="kpi-value">${d.val}</div>
+    ${compareRow}
+  </div>`;
+}
 
-  // ── 8. NVR ─────────────────────────────────────────────────────────────────
-  let nvr;
-  if(devFilter!=='all'&&d.nvr_by_device){
-    const nbrObj=filterDailyObj(d.nvr_by_device,f,dateSet);
-    const nvrAgg={};
-    nbrObj.dates.forEach(date=>{
-      const day=nbrObj.data[date]||{};
-      const devData=day[devFilter]||{};
-      Object.entries(devData).forEach(([ntype,vals])=>{
-        if(!nvrAgg[ntype]) nvrAgg[ntype]={type:ntype,sessions:0,users:0,conversions:0};
-        nvrAgg[ntype].sessions+=(vals.sessions||0);
-        nvrAgg[ntype].users+=(vals.users||0);
-      });
-    });
-    nvr=Object.values(nvrAgg);
-    if(srcFilter!=='all') nvr=nvr.map(r=>({...r,users:Math.round(r.users*srcRatio),sessions:Math.round(r.sessions*srcRatio)}));
-  } else {
-    nvr=aggFromDaily(nvrDailyFiltered,'type',['sessions','users','conversions']);
-    if(srcFilter!=='all') nvr=nvr.map(r=>({...r,users:Math.round(r.users*srcRatio),sessions:Math.round(r.sessions*srcRatio)}));
-  }
+// ═══════════════════════════════════════════════════════
+// GRÁFICOS — VISÃO GERAL
+// ═══════════════════════════════════════════════════════
+function renderChartsVisaoGeral(primary, compare) {
+  const hasCompare = compare.length > 0;
 
-  // ── 9. Sources table ───────────────────────────────────────────────────────
-  let sources=[...d.sources];
-  if(srcFilter!=='all') sources=sources.filter(r=>(r.source_medium||`${r.source} / ${r.medium}`)===srcFilter);
-  if(devFilter!=='all') sources=sources.map(r=>({...r,
-    sessions:   Math.round(r.sessions*devRatio),
-    users:      Math.round(r.users*devRatio),
-    conversions:Math.round(r.conversions*devRatio),
+  mkLineCompare("chartSessoes", "legendSessoes",
+    primary, compare, "sessoes", "Sessões", "#19398A", hasCompare);
+  mkLineCompare("chartCompras", "legendCompras",
+    primary, compare, "compras", "Compras", "#A43C3E", hasCompare);
+  mkLineCompare("chartCR", "legendCR",
+    primary, compare, "taxa_conversao_pct", "CR %", "#278A22", hasCompare);
+  mkLineCompare("chartBounce", "legendBounce",
+    primary, compare, "taxa_rejeicao_pct", "Rejeição %", "#C3940F", hasCompare);
+}
+
+// ═══════════════════════════════════════════════════════
+// AQUISIÇÃO
+// ═══════════════════════════════════════════════════════
+function renderAquisicao(data) {
+  const canais = [
+    { label: "Orgânico",  key: "sessoes_organico" },
+    { label: "Direto",    key: "sessoes_direto" },
+    { label: "Pago",      key: "sessoes_pago" },
+    { label: "Social",    key: "sessoes_social" },
+    { label: "E-mail",    key: "sessoes_email" },
+    { label: "Referral",  key: "sessoes_referral" },
+    { label: "Outros",    key: "sessoes_outros_canais" },
+  ];
+  const totals = canais.map(c => ({
+    ...c, total: data.reduce((s, d) => s + (d[c.key] || 0), 0),
+  })).sort((a, b) => b.total - a.total);
+
+  const totalSess = totals.reduce((s, c) => s + c.total, 0);
+  const maxC = totals[0]?.total || 1;
+
+  document.getElementById("tabelaCanais").innerHTML = totals.map(c => {
+    const pct  = totalSess > 0 ? (c.total / totalSess * 100).toFixed(1) : "0.0";
+    const barW = (c.total / maxC * 100).toFixed(1);
+    return `<tr>
+      <td>${c.label}</td>
+      <td class="num">${fmtNum(c.total)}</td>
+      <td class="num">${pct}%</td>
+      <td class="bar-cell"><div class="mini-bar-wrap"><div class="mini-bar" style="width:${barW}%"></div></div></td>
+    </tr>`;
+  }).join("");
+
+  mkDonut("chartCanais",
+    totals.filter(c => c.total > 0).map(c => c.label),
+    totals.filter(c => c.total > 0).map(c => c.total),
+    ["#19398A","#A43C3E","#C3940F","#6589D4","#278A22","#8B8B8B","#D1D1D1"]
+  );
+
+  const devs = [
+    { label: "Mobile",  ks: "sessoes_mobile",  kc: "compras_mobile" },
+    { label: "Desktop", ks: "sessoes_desktop", kc: "compras_desktop" },
+    { label: "Tablet",  ks: "sessoes_tablet",  kc: "compras_tablet" },
+  ];
+  const devT = devs.map(d => ({
+    ...d,
+    sess: data.reduce((s, r) => s + (r[d.ks] || 0), 0),
+    comp: data.reduce((s, r) => s + (r[d.kc] || 0), 0),
   }));
 
-  // ── 10. Funnel ─────────────────────────────────────────────────────────────
-  const fnlObj=filterDailyObj(d.funnel_daily,f,dateSet);
-  let funnel=buildFunnelAgg(fnlObj,d.funnel);
-  if(combinedRatio!==1) funnel=scaleFunnel(funnel,combinedRatio);
+  document.getElementById("tabelaDevices").innerHTML = devT.map(d => {
+    const cr = d.sess > 0 ? (d.comp / d.sess * 100).toFixed(2) : "0.00";
+    return `<tr>
+      <td>${d.label}</td>
+      <td class="num">${fmtNum(d.sess)}</td>
+      <td class="num">${fmtNum(d.comp)}</td>
+      <td class="num">${cr}%</td>
+    </tr>`;
+  }).join("");
 
-  // ── 11. Daily series scaling ───────────────────────────────────────────────
-  let scaledDaily=[...daily];
-  if(combinedRatio!==1){
-    scaledDaily=daily.map(r=>({...r,
-      sessions:   Math.round(r.sessions*combinedRatio),
-      users:      Math.round(r.users*combinedRatio),
-      conversions:Math.round(r.conversions*combinedRatio),
-      new_users:  Math.round(r.new_users*combinedRatio),
-    }));
-  }
-
-  // ── 12. KPI totals ─────────────────────────────────────────────────────────
-  // Hierarquia de fontes (da mais para a menos precisa):
-  //
-  // sessions/conversions:
-  //   dev+src  → device_source_daily real | fallback: devMetrics[dev] × srcRatio
-  //   dev only → devMetrics[dev] (devices_daily, sempre completo)
-  //   src only → srcMetrics[src].sessions (sources_daily ou d.sources fallback)
-  //   nenhum   → daily[] agregado (sempre completo)
-  //
-  // bounce/duration:
-  //   dev  → devMetrics[dev].bounce_rate (devices_daily ponderado)
-  //   src  → srcEntry.bounce_rate (sources_daily ou d.sources)
-  //   else → weighted avg de channels | d.totals
-
-  let filtSessions, filtUsers, filtConversions, filtNewUsers;
-  let filtBounce, filtDur;
-
-  if(devFilter!=='all' && srcFilter!=='all'){
-    // Tenta device_source_daily real primeiro
-    let dsSess=0, dsUsers=0, dsConv=0;
-    if(dsDailyFiltered){
-      dsDailyFiltered.dates.forEach(date=>{
-        const v=((dsDailyFiltered.data[date]||{})[devFilter]||{})[srcFilter]||{};
-        dsSess  +=(v.sessions||0);
-        dsUsers +=(v.users||0);
-        dsConv  +=(v.conversions||0);
-      });
-    }
-    if(dsSess>0){
-      filtSessions    = dsSess;
-      filtUsers       = dsUsers;
-      filtConversions = dsConv;
-    } else {
-      // Fallback: device real × srcRatio
-      const dm = devMetrics[devFilter]||{sessions:0,users:0,conversions:0};
-      filtSessions    = Math.round(dm.sessions    * srcRatio);
-      filtUsers       = Math.round(dm.users       * srcRatio);
-      filtConversions = Math.round(dm.conversions * srcRatio);
-    }
-    filtNewUsers = scaledDaily.reduce((a,r)=>a+(r.new_users||0),0);
-    const dm2 = devMetrics[devFilter]||{};
-    const dvB = dm2.bounce_rate != null;
-    const smB = srcEntry && srcEntry.bounce_rate != null;
-    if(dvB && smB){
-      filtBounce = Math.round(((dm2.bounce_rate + srcEntry.bounce_rate)/2)*100)/100;
-      filtDur    = dm2.avg_duration!=null && srcEntry.avg_duration!=null
-        ? Math.round(((dm2.avg_duration+srcEntry.avg_duration)/2)*100)/100
-        : (dm2.avg_duration ?? srcEntry.avg_duration ?? d.totals.avg_session_duration);
-    } else if(dvB){
-      filtBounce = dm2.bounce_rate;
-      filtDur    = dm2.avg_duration ?? d.totals.avg_session_duration;
-    } else if(smB){
-      filtBounce = srcEntry.bounce_rate;
-      filtDur    = srcEntry.avg_duration ?? d.totals.avg_session_duration;
-    } else {
-      filtBounce = d.totals.bounce_rate;
-      filtDur    = d.totals.avg_session_duration;
-    }
-
-  } else if(devFilter!=='all'){
-    const dm = devMetrics[devFilter]||{sessions:0,users:0,conversions:0};
-    filtSessions    = dm.sessions;
-    filtUsers       = dm.users;
-    filtConversions = dm.conversions;
-    filtNewUsers    = scaledDaily.reduce((a,r)=>a+(r.new_users||0),0);
-    filtBounce = dm.bounce_rate  ?? d.totals.bounce_rate;
-    filtDur    = dm.avg_duration ?? d.totals.avg_session_duration;
-
-  } else if(srcFilter!=='all'){
-    // Usa srcEntry (real se sources_daily cobre o período, senão d.sources 90d)
-    // Para sessions/conversions: se srcDailyData disponível usa real; senão escala daily
-    if(hasSrcDailyData && srcEntry){
-      filtSessions    = srcEntry.sessions;
-      filtUsers       = srcEntry.users;
-      filtConversions = srcEntry.conversions;
-    } else {
-      // sources_daily vazio para o período: escalar daily[] pelo srcRatio
-      filtSessions    = Math.round(daily.reduce((a,r)=>a+r.sessions,0)    * srcRatio);
-      filtUsers       = Math.round(daily.reduce((a,r)=>a+r.users,0)       * srcRatio);
-      filtConversions = Math.round(daily.reduce((a,r)=>a+r.conversions,0) * srcRatio);
-    }
-    filtNewUsers = scaledDaily.reduce((a,r)=>a+(r.new_users||0),0);
-    filtBounce = srcEntry?.bounce_rate  ?? d.totals.bounce_rate;
-    filtDur    = srcEntry?.avg_duration ?? d.totals.avg_session_duration;
-
-  } else {
-    // Sem filtros: usar daily[] agregado (sempre disponível e completo)
-    // Tenta channels_daily para bounce/duration; fallback devices_daily ou d.totals
-    filtSessions    = daily.reduce((a,r)=>a+r.sessions,0);
-    filtUsers       = daily.reduce((a,r)=>a+r.users,0);
-    filtConversions = daily.reduce((a,r)=>a+r.conversions,0);
-    filtNewUsers    = daily.reduce((a,r)=>a+(r.new_users||0),0);
-    if(hasChData){
-      const wB=channels.reduce((a,c)=>a+(c.bounce_rate||0)*c.sessions,0);
-      const wD=channels.reduce((a,c)=>a+(c.avg_duration||0)*c.sessions,0);
-      const wS=channels.reduce((a,c)=>a+c.sessions,0);
-      filtBounce = wS>0&&wB>0 ? Math.round(wB/wS*100)/100 : d.totals.bounce_rate;
-      filtDur    = wS>0&&wD>0 ? Math.round(wD/wS*100)/100 : d.totals.avg_session_duration;
-    } else {
-      // channels_daily vazio: usar média ponderada de devices_daily
-      const wB=Object.values(devAggAll).reduce((a,v)=>a+v.wBounce,0);
-      const wD=Object.values(devAggAll).reduce((a,v)=>a+v.wDur,0);
-      const wS=totalDevSess;
-      filtBounce = wS>0&&wB>0 ? Math.round(wB/wS*100)/100 : d.totals.bounce_rate;
-      filtDur    = wS>0&&wD>0 ? Math.round(wD/wS*100)/100 : d.totals.avg_session_duration;
-    }
-  }
-
-  const totals={
-    ...d.totals,
-    sessions:             filtSessions,
-    total_users:          filtUsers,
-    conversions:          filtConversions,
-    new_users:            filtNewUsers,
-    bounce_rate:          filtBounce,
-    avg_session_duration: filtDur,
-  };
-
-  // Landing pages and pages — scale by combined ratio
-  let landing_pages=[...(d.landing_pages||[])];
-  let pages=[...(d.pages||[])];
-  if(combinedRatio!==1){
-    landing_pages=landing_pages.map(p=>({...p,sessions:Math.round(p.sessions*combinedRatio),users:Math.round(p.users*combinedRatio),conversions:Math.round(p.conversions*combinedRatio)}));
-    pages=pages.map(p=>({...p,pageviews:Math.round(p.pageviews*combinedRatio),users:Math.round(p.users*combinedRatio)}));
-  }
-
-  return{...d,totals,daily:scaledDaily,channels,devices,new_vs_returning:nvr,sources,funnel,landing_pages,pages,_dLabel:`${daily.length}d`};
+  mkDonut("chartDevices",
+    devT.map(d => d.label), devT.map(d => d.sess),
+    ["#19398A","#A43C3E","#C3940F"]
+  );
 }
 
-function buildFunnelAgg(fnlObj,meta){
-  if(!fnlObj||!fnlObj.dates||!fnlObj.dates.length) return meta;
-  const agg={};
-  fnlObj.events.forEach(ev=>{agg[ev]={event_count:0,users:0}});
-  fnlObj.dates.forEach(date=>{
-    const day=fnlObj.data[date]||{};
-    Object.entries(day).forEach(([ev,vals])=>{
-      if(agg[ev]){agg[ev].event_count+=(vals.event_count||0);agg[ev].users+=(vals.users||0);}
-    });
-  });
-  const result=meta.map(s=>({...s,...(agg[s.event]||{}),drop_rate:0}));
-  for(let i=1;i<result.length;i++){
-    const prev=result[i-1].users,curr=result[i].users;
-    result[i].drop_rate=prev>0?Math.round((1-curr/prev)*1000)/10:0;
-  }
-  return result;
-}
-
-function scaleFunnel(funnel,ratio){
-  const scaled=funnel.map(s=>({...s,event_count:Math.round(s.event_count*ratio),users:Math.round(s.users*ratio),drop_rate:0}));
-  for(let i=1;i<scaled.length;i++){
-    const prev=scaled[i-1].users,curr=scaled[i].users;
-    scaled[i].drop_rate=prev>0?Math.round((1-curr/prev)*1000)/10:0;
-  }
-  return scaled;
-}
-
-// ── Funnel weekly selector ────────────────────────────────────────────────────
-function renderFunnelWeekly(){
-  if(!RAW) return;
-  const wk=document.getElementById('wk-funnel').value;
-  const f=getF();
-  let funnel;
-  if(wk==='all'){
-    funnel=buildF(RAW,f).funnel;
-  } else {
-    const allFiltered=filterDates(RAW.daily,f).map(r=>r.date);
-    const weekDates=allFiltered.filter(d=>dateToWeek(d)===wk);
-    const subObj={...RAW.funnel_daily,dates:weekDates};
-    let baseFunnel=buildFunnelAgg(subObj,RAW.funnel);
-    const devFilter=f.dev,srcFilter=f.src;
-    if(devFilter!=='all'||srcFilter!=='all'){
-      // Usar dateSet derivado do daily filtrado, não slice de índice
-      const weekDateSet=new Set(allFiltered);
-      const devDailyFiltered=filterDailyObj(RAW.devices_daily,f,weekDateSet);
-      const devAggAll={};
-      devDailyFiltered.dates.forEach(date=>{
-        const day=devDailyFiltered.data[date]||{};
-        Object.entries(day).forEach(([dev,v])=>{
-          if(!devAggAll[dev]) devAggAll[dev]={sessions:0};
-          devAggAll[dev].sessions+=(v.sessions||0);
-        });
-      });
-      const totalDevSess=Object.values(devAggAll).reduce((a,r)=>a+r.sessions,0);
-      const devRatio=(devFilter!=='all'&&devAggAll[devFilter]&&totalDevSess>0)?devAggAll[devFilter].sessions/totalDevSess:1;
-
-      const srcDailyFiltered=filterDailyObj(RAW.sources_daily,f,weekDateSet);
-      let totalSrcSess=0,filtSrcSess=0;
-      srcDailyFiltered.dates.forEach(date=>{
-        const day=srcDailyFiltered.data[date]||{};
-        Object.entries(day).forEach(([sm,v])=>{totalSrcSess+=(v.sessions||0);if(sm===srcFilter)filtSrcSess+=(v.sessions||0);});
-      });
-      const srcRatio=(srcFilter!=='all'&&totalSrcSess>0)?filtSrcSess/totalSrcSess:1;
-      baseFunnel=scaleFunnel(baseFunnel,devRatio*srcRatio);
-    }
-    funnel=baseFunnel;
-  }
-  renderFunnelCharts(funnel);
-}
-
-// ── Pages weekly selector ─────────────────────────────────────────────────────
-function renderPagesWeekly(){
-  if(!RAW||!RAW.pages_weekly) return;
-  const wk=document.getElementById('wk-pages').value;
-  const pw=RAW.pages_weekly;
-  const f=getF();
-  const filteredDates=filterDates(RAW.daily,f).map(r=>r.date);
-  const availWeeks=new Set(filteredDates.map(d=>dateToWeek(d)));
-  const weeksToUse=wk==='all'?[...availWeeks].filter(w=>pw.weeks.includes(w)).sort():[wk];
-
-  if(wk==='all'){
-    const labels=weeksToUse.map(w=>weekLabel(w));
-    const datasets=pw.paths.slice(0,5).map((path,i)=>({
-      label:path.length>25?path.slice(0,25)+'…':path,
-      data:weeksToUse.map(w=>(pw.data[w]&&pw.data[w][path])?pw.data[w][path].pageviews:0),
-      borderColor:PAL[i%PAL.length],backgroundColor:'transparent',tension:.3,pointRadius:3,borderWidth:2,
-    }));
-    mk('ch-pages-weekly','line',{labels,datasets},bO());
-  } else {
-    const weekData=pw.data[wk]||{};
-    const labels=pw.paths.map(p=>p.length>25?p.slice(0,25)+'…':p);
-    mk('ch-pages-weekly','bar',{
-      labels,datasets:[{label:'Pageviews',data:pw.paths.map(p=>weekData[p]?weekData[p].pageviews:0),backgroundColor:C.blue+'cc',borderRadius:3}]
-    },bOH());
-  }
-}
-
-// ── Funnel charts ─────────────────────────────────────────────────────────────
-function renderFunnelCharts(funnel){
-  const maxU=funnel.length>0?funnel[0].users:1;
-  document.getElementById('funnel-wrap').innerHTML=funnel.map((s,i)=>{
-    const pct=maxU>0?Math.round(s.users/maxU*100):0;
-    const dc=s.drop_rate>60?'dhi':s.drop_rate>30?'dmd':'dlo';
-    return`<div class="fr">
-      <div class="flab"><div class="fn">${s.step}</div><div class="fe">${s.event}</div></div>
-      <div class="ftr"><div class="ff" style="width:${Math.max(pct,3)}%;background:${FCOL[i]||C.blue}">${fmt(s.users)}</div></div>
-      <div class="fp">${pct}%</div>
-      <div class="fd ${i===0?'':dc}">${i===0?'—':`▾ ${s.drop_rate}%`}</div>
-    </div>`;
-  }).join('');
-  mk('ch-funnel-vol','bar',{labels:funnel.map(s=>s.step),datasets:[{label:'Eventos',data:funnel.map(s=>s.event_count),backgroundColor:FCOL,borderRadius:4}]},bO());
-  mk('ch-funnel-drop','bar',{labels:funnel.slice(1).map(s=>s.step),datasets:[{label:'% abandono',
-    data:funnel.slice(1).map(s=>s.drop_rate),
-    backgroundColor:funnel.slice(1).map(s=>s.drop_rate>60?C.red+'cc':s.drop_rate>30?C.amber+'cc':C.green+'cc'),borderRadius:4}]},bO());
-}
-
-// ── Main render ───────────────────────────────────────────────────────────────
-function render(d){
-  const t=d.totals;
-  const convRate=t.sessions>0?((t.conversions/t.sessions)*100).toFixed(2):'0.00';
-  const dLabel=d._dLabel||'30d';
-
-  document.querySelectorAll('.ptag').forEach(el=>el.textContent=dLabel);
-
-  const BTIP='Taxa de Rejeição: % de sessões sem nenhuma interação engajada. No GA4, é uma sessão com menos de 10s sem evento de engajamento. Abaixo de 40% é considerado bom.';
-  const kpis=[
-    {l:'Sessões',      v:fmt(t.sessions),   s:`${fmt(t.sessions_7d||0)} / 7d`,   c:'cb'},
-    {l:'Usuários',     v:fmt(t.total_users),s:`${fmt(t.new_users)} novos`,         c:'ct'},
-    {l:'Compras',      v:fmt(t.conversions),s:`${fmt(t.conversions_7d||0)} / 7d`, c:'cg'},
-    {l:'Taxa Conv.',   v:`${convRate}%`,    s:'sessões → compra',                  c:'ci'},
-    {l:'Rejeição',     v:`${t.bounce_rate}%`,s:'média do período',                 c:'ca',tip:BTIP},
-    {l:'Duração Média',v:fmtS(t.avg_session_duration),s:'por sessão',              c:'cp'},
-    {l:'Pageviews',    v:fmt(t.pageviews),  s:`${t.sessions>0?(t.pageviews/t.sessions).toFixed(1):'—'} / sessão`,c:'cc'},
+// ═══════════════════════════════════════════════════════
+// FUNIL
+// ═══════════════════════════════════════════════════════
+function renderFunil(data) {
+  const steps = [
+    { label: "Busca",           key: "funil_search" },
+    { label: "Seleciona item",  key: "funil_select_item" },
+    { label: "Add ao carrinho", key: "funil_add_to_cart" },
+    { label: "Inicia checkout", key: "funil_begin_checkout" },
+    { label: "Compra",          key: "funil_purchase" },
   ];
-  document.getElementById('kgrid').innerHTML=kpis.map(k=>`
-    <div class="kpi ${k.c}">
-      <div class="kl">${k.l}${k.tip?`<span class="ii">i<span class="tip">${k.tip}</span></span>`:''}</div>
-      <div class="kv">${k.v}</div><div class="ks">${k.s}</div>
-    </div>`).join('');
-
-  const dl=d.daily.map(r=>r.date.slice(5));
-  mk('ch-daily','line',{labels:dl,datasets:[
-    {label:'Sessões', data:d.daily.map(r=>r.sessions),borderColor:C.blue,  backgroundColor:C.blue+'18',fill:true,tension:.35,pointRadius:0,borderWidth:2},
-    {label:'Usuários',data:d.daily.map(r=>r.users),   borderColor:C.indigo,backgroundColor:C.indigo+'10',fill:true,tension:.35,pointRadius:0,borderWidth:1.5},
-  ]},bO());
-  mk('ch-conv-daily','bar',{labels:dl,datasets:[{label:'Compras',data:d.daily.map(r=>r.conversions),backgroundColor:C.green+'cc',borderRadius:3}]},bO());
-  mk('ch-new-users', 'bar',{labels:dl,datasets:[{label:'Novos usuários',data:d.daily.map(r=>r.new_users||0),backgroundColor:C.cyan+'cc',borderRadius:3}]},bO());
-
-  const devBg=[C.blue,C.teal,C.purple,C.amber,C.green].slice(0,d.devices.length);
-  mk('ch-devices','doughnut',{
-    labels:d.devices.map(r=>r.device.charAt(0).toUpperCase()+r.device.slice(1)),
-    datasets:[{data:d.devices.map(r=>r.sessions),backgroundColor:devBg,borderWidth:2,borderColor:'#fff'}]
-  },dO());
-
-  const nvr={};
-  d.new_vs_returning.forEach(r=>{const k=r.type==='new'?'Novos':'Recorrentes';nvr[k]=(nvr[k]||0)+r.users});
-  mk('ch-new-returning','doughnut',{
-    labels:Object.keys(nvr),datasets:[{data:Object.values(nvr),backgroundColor:[C.blue,C.amber],borderWidth:2,borderColor:'#fff'}]
-  },dO());
-
-  const chC=d.channels.map((r,i)=>cch(r.channel,i));
-  mk('ch-channels',        'bar',{labels:d.channels.map(r=>r.channel),datasets:[{label:'Sessões',    data:d.channels.map(r=>r.sessions),          backgroundColor:chC,borderRadius:4}]},bOH());
-  mk('ch-conv-rate',       'bar',{labels:d.channels.map(r=>r.channel),datasets:[{label:'Conv %',     data:d.channels.map(r=>r.conversion_rate||0), backgroundColor:chC,borderRadius:4}]},bOH());
-  mk('ch-bounce-channel',  'bar',{labels:d.channels.map(r=>r.channel),datasets:[{label:'Rejeição %', data:d.channels.map(r=>r.bounce_rate||0),backgroundColor:d.channels.map(r=>r.bounce_rate>50?C.red+'cc':r.bounce_rate>30?C.amber+'cc':C.green+'cc'),borderRadius:3}]},bOH());
-  mk('ch-duration-channel','bar',{labels:d.channels.map(r=>r.channel),datasets:[{label:'Duração (s)',data:d.channels.map(r=>r.avg_duration||0),backgroundColor:C.teal+'cc',borderRadius:3}]},bOH());
-
-  document.getElementById('tbl-sources').innerHTML=`
-    <thead><tr><th>#</th><th>Origem</th><th>Mídia</th><th class="nr">Sessões</th><th class="nr">Usuários</th><th class="nr">Compras</th><th class="nr">Conv%</th><th class="nr">Rejeição</th><th class="nr">Duração</th></tr></thead>
-    <tbody>${d.sources.map((r,i)=>`<tr>
-      <td class="ri">${String(i+1).padStart(2,'0')}</td><td>${r.source}</td>
-      <td><span class="tag tg">${r.medium}</span></td>
-      <td class="nr">${fmtF(r.sessions)}</td><td class="nr">${fmtF(r.users)}</td>
-      <td class="nr">${fmtF(r.conversions)}</td>
-      <td class="nr"><span class="tag ${r.conversion_rate>3?'tgr':r.conversion_rate>1?'tga':'trd'}">${fmtP(r.conversion_rate)}</span></td>
-      <td class="nr">${fmtP(r.bounce_rate)}</td><td class="nr">${fmtS(r.avg_duration)}</td>
-    </tr>`).join('')}</tbody>`;
-
-  const lp=(d.landing_pages||[]).slice(0,8);
-  const lpL=lp.map(r=>r.path.length>28?r.path.slice(0,28)+'…':r.path);
-  mk('ch-landing',       'bar',{labels:lpL,datasets:[{label:'Sessões',   data:lp.map(r=>r.sessions),         backgroundColor:C.blue+'cc',borderRadius:3}]},bOH());
-  mk('ch-landing-bounce','bar',{labels:lpL,datasets:[{label:'Rejeição %',data:lp.map(r=>r.bounce_rate||0),backgroundColor:lp.map(r=>r.bounce_rate>50?C.red+'cc':r.bounce_rate>30?C.amber+'cc':C.green+'cc'),borderRadius:3}]},bOH());
-
-  renderPagesWeekly();
-
-  document.getElementById('tbl-pages').innerHTML=`
-    <thead><tr><th>#</th><th>Título</th><th>Path</th><th class="nr">Pageviews</th><th class="nr">Usuários</th><th class="nr">Duração</th></tr></thead>
-    <tbody>${d.pages.map((r,i)=>`<tr>
-      <td class="ri">${String(i+1).padStart(2,'0')}</td>
-      <td style="max-width:200px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${r.title}</td>
-      <td class="mono" style="color:var(--muted);max-width:180px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${r.path}</td>
-      <td class="nr">${fmtF(r.pageviews)}</td><td class="nr">${fmtF(r.users)}</td><td class="nr">${fmtS(r.avg_duration)}</td>
-    </tr>`).join('')}</tbody>`;
-
-  renderFunnelCharts(d.funnel);
-
-  const rt=d.routes||{};
-  const ori=(rt.top_origins||[]).slice(0,10),dst=(rt.top_destinations||[]).slice(0,10);
-  mk('ch-origins',     'bar',{labels:ori.map(r=>r.city),datasets:[{label:'Buscas',data:ori.map(r=>r.searches),backgroundColor:C.blue+'cc',  borderRadius:3}]},bOH());
-  mk('ch-destinations','bar',{labels:dst.map(r=>r.city),datasets:[{label:'Buscas',data:dst.map(r=>r.searches),backgroundColor:C.indigo+'cc',borderRadius:3}]},bOH());
-
-  document.getElementById('tbl-routes').innerHTML=`
-    <thead><tr><th>#</th><th>Origem</th><th>Destino</th><th class="nr">Eventos</th><th class="nr">Usuários</th></tr></thead>
-    <tbody>${(rt.top_routes||[]).slice(0,15).map((r,i)=>`<tr>
-      <td class="ri">${String(i+1).padStart(2,'0')}</td><td>${r.origin}</td><td>${r.destination}</td>
-      <td class="nr">${fmtF(r.purchases)}</td><td class="nr">${fmtF(r.users)}</td>
-    </tr>`).join('')}</tbody>`;
-
-  document.getElementById('tbl-route-conv').innerHTML=`
-    <thead><tr><th>#</th><th>Rota</th><th class="nr">Buscas</th><th class="nr">Usuários</th></tr></thead>
-    <tbody>${(rt.route_conversion||[]).slice(0,15).map((r,i)=>`<tr>
-      <td class="ri">${String(i+1).padStart(2,'0')}</td>
-      <td><strong>${r.route}</strong></td>
-      <td class="nr">${fmtF(r.searches)}</td><td class="nr">${fmtF(r.users)}</td>
-    </tr>`).join('')}</tbody>`;
-
-  const list=document.getElementById('insights-list');
-  if(!d.insights||d.insights.length===0){
-    list.innerHTML=`<div class="ins"><div class="ins-t"><div class="idot di"></div><span style="font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:.06em;font-weight:600">Info</span></div><div class="ins-title">Nenhum insight disponível</div><div class="ins-body">Use o prompt abaixo para gerar insights no Claude.ai e cole o resultado no campo <code>insights</code> do data.json.</div></div>`;
-  } else {
-    list.innerHTML=d.insights.map(ins=>`<div class="ins">
-      <div class="ins-t"><div class="idot d${(ins.type||'i')[0]}"></div><span style="font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:.06em;font-weight:600">${ins.type||'info'}</span></div>
-      <div class="ins-title">${ins.title}</div><div class="ins-body">${ins.body}</div>
-      <div class="ins-meta">${ins.generated_at}</div>
-    </div>`).join('');
-  }
-}
-
-function copyP(){
-  navigator.clipboard.writeText(PROMPT).then(()=>{
-    const b=document.getElementById('cpbtn');
-    b.textContent='✓ Copiado';b.classList.add('done');
-    setTimeout(()=>{b.textContent='Copiar prompt';b.classList.remove('done')},2000);
+  const totals = steps.map(s => ({
+    ...s, total: data.reduce((sum, d) => sum + (d[s.key] || 0), 0),
+  }));
+  const max = totals[0]?.total || 1;
+  const el  = document.getElementById("funilSteps");
+  el.innerHTML = "";
+  totals.forEach((s, i) => {
+    const pct  = max > 0 ? (s.total / max * 100) : 0;
+    const conv = i > 0 && totals[i-1].total > 0
+      ? (s.total / totals[i-1].total * 100).toFixed(1) + "%" : "—";
+    if (i > 0) {
+      const c = document.createElement("div");
+      c.className = "funil-connector";
+      el.appendChild(c);
+    }
+    const div = document.createElement("div");
+    div.className = "funil-step";
+    div.innerHTML = `
+      <div class="funil-step-label">${s.label}</div>
+      <div class="funil-bar-wrap">
+        <div class="funil-bar" style="width:${pct}%">
+          <span class="funil-bar-val">${fmtNum(s.total)}</span>
+        </div>
+      </div>
+      <div class="funil-step-pct">${i === 0 ? "100%" : conv}</div>`;
+    el.appendChild(div);
   });
 }
 
-fetch('data.json?t='+Date.now())
-  .then(r=>r.json())
-  .then(d=>{
-    RAW=d;
-    document.getElementById('per').textContent=(d.period||'').toUpperCase();
-    document.getElementById('upd').textContent=new Date(d.updated_at).toLocaleString('pt-BR',{timeZone:'America/Sao_Paulo',day:'2-digit',month:'2-digit',year:'numeric',hour:'2-digit',minute:'2-digit'});
-    populateF(d);
-    render(buildF(d,getF()));
-    document.getElementById('loading').style.display='none';
-  })
-  .catch(e=>{document.getElementById('loading').innerHTML=`<p style="color:#dc2626;font-family:'IBM Plex Mono',monospace;font-size:11px">Erro ao carregar data.json: ${e.message}</p>`});
+// ═══════════════════════════════════════════════════════
+// ROTAS
+// ═══════════════════════════════════════════════════════
+function renderRotas(data) {
+  const oMap = {}, dMap = {};
+  data.forEach(d => {
+    for (let i = 1; i <= 5; i++) {
+      const oc = d[`top_origem_${i}`];
+      const os = d[`top_origem_${i}_sessoes`] || 0;
+      if (oc) oMap[oc] = (oMap[oc] || 0) + os;
+      const dc = d[`top_destino_${i}`];
+      const ds = d[`top_destino_${i}_sessoes`] || 0;
+      if (dc) dMap[dc] = (dMap[dc] || 0) + ds;
+    }
+  });
+  const origens  = Object.entries(oMap).sort((a,b)=>b[1]-a[1]).slice(0,10);
+  const destinos = Object.entries(dMap).sort((a,b)=>b[1]-a[1]).slice(0,10);
+  const maxO = origens[0]?.[1] || 1;
+  const maxD = destinos[0]?.[1] || 1;
+
+  const rowsO = origens.map(([c, s], i) =>
+    `<tr><td style="color:var(--neutral-500);font-weight:700">${i+1}</td><td>${c}</td><td class="num">${fmtNum(s)}</td>
+    <td class="bar-cell"><div class="mini-bar-wrap"><div class="mini-bar" style="width:${(s/maxO*100).toFixed(1)}%"></div></div></td></tr>`
+  ).join("") || `<tr><td colspan="4" style="color:var(--neutral-500);padding:16px;text-align:center">Sem dados disponíveis.</td></tr>`;
+
+  const rowsD = destinos.map(([c, s], i) =>
+    `<tr><td style="color:var(--neutral-500);font-weight:700">${i+1}</td><td>${c}</td><td class="num">${fmtNum(s)}</td>
+    <td class="bar-cell"><div class="mini-bar-wrap"><div class="mini-bar" style="width:${(s/maxD*100).toFixed(1)}%"></div></div></td></tr>`
+  ).join("") || `<tr><td colspan="4" style="color:var(--neutral-500);padding:16px;text-align:center">Sem dados disponíveis.</td></tr>`;
+
+  document.getElementById("tabelaOrigens").innerHTML = rowsO;
+  document.getElementById("tabelaDestinos").innerHTML = rowsD;
+}
+
+// ═══════════════════════════════════════════════════════
+// INSIGHTS
+// ═══════════════════════════════════════════════════════
+function renderInsights() {
+  const wrap = document.getElementById("insightsWrap");
+  if (!INSIGHTS.length) {
+    wrap.innerHTML = `<div class="insight-empty">
+      Nenhum insight gerado ainda. O Claude Cowork gera a análise toda segunda-feira.
+    </div>`;
+    return;
+  }
+  wrap.innerHTML = INSIGHTS.map(ins => `
+    <div class="insight-card">
+      <div class="insight-tag">${ins.tag || "Análise"}</div>
+      <div class="insight-text">${ins.texto}</div>
+    </div>`).join("");
+}
+
+// ═══════════════════════════════════════════════════════
+// CHART.JS
+// ═══════════════════════════════════════════════════════
+const CHART_BASE = {
+  responsive: true,
+  maintainAspectRatio: false,
+  plugins: { legend: { display: false } },
+  scales: {
+    x: { ticks: { maxTicksLimit: 8, font: { size: 10 } }, grid: { display: false } },
+    y: { ticks: { font: { size: 10 } }, grid: { color: "#EEEEEE" } },
+  },
+};
+
+function mkLineCompare(canvasId, legendId, primary, compare, metric, label, color, hasCompare) {
+  const ctx = document.getElementById(canvasId);
+  if (!ctx) return;
+  if (CHARTS[canvasId]) CHARTS[canvasId].destroy();
+
+  const priLabels = primary.map(d => fmtDateShort(d.data));
+  const priVals   = primary.map(d => d[metric] || 0);
+  const datasets  = [{
+    label,
+    data: priVals,
+    borderColor: color,
+    backgroundColor: color + "15",
+    borderWidth: 2.5,
+    pointRadius: primary.length > 60 ? 0 : 2,
+    fill: true,
+    tension: 0.3,
+    order: 1,
+  }];
+
+  // Série de comparação — mesma quantidade de pontos, indexada pela posição
+  if (hasCompare && compare.length) {
+    const cmpVals = compare.map(d => d[metric] || 0);
+    // Alinhar pelo índice (posição relativa no intervalo)
+    const aligned = alignSeries(priVals, cmpVals);
+    datasets.push({
+      label: "Comparação",
+      data: aligned,
+      borderColor: "#6589D4",
+      backgroundColor: "transparent",
+      borderWidth: 1.5,
+      borderDash: [5, 4],
+      pointRadius: 0,
+      fill: false,
+      tension: 0.3,
+      order: 2,
+    });
+  }
+
+  // Legend
+  const legEl = document.getElementById(legendId);
+  if (legEl) {
+    legEl.innerHTML = `
+      <div class="chart-legend-item">
+        <div class="chart-legend-dot" style="background:${color}"></div>
+        <span>${P.start ? fmtDateShort(P.start) + " – " + fmtDateShort(P.end) : label}</span>
+      </div>
+      ${hasCompare && compare.length ? `<div class="chart-legend-item">
+        <div class="chart-legend-dot" style="background:#6589D4;border:2px dashed #6589D4;background:transparent;width:18px;height:3px;border-radius:0"></div>
+        <span style="color:var(--compare-color)">${C.start ? fmtDateShort(C.start) + " – " + fmtDateShort(C.end) : "Comparação"}</span>
+      </div>` : ""}`;
+  }
+
+  CHARTS[canvasId] = new Chart(ctx, {
+    type: "line",
+    data: { labels: priLabels, datasets },
+    options: {
+      ...CHART_BASE,
+      plugins: {
+        ...CHART_BASE.plugins,
+        tooltip: {
+          callbacks: {
+            afterBody: (items) => {
+              if (!hasCompare || !compare.length) return "";
+              const idx = items[0]?.dataIndex;
+              if (idx == null) return "";
+              const cmpVals = compare.map(d => d[metric] || 0);
+              const aligned = alignSeries(priVals, cmpVals);
+              const cv = aligned[idx];
+              if (cv == null) return "";
+              const pv  = priVals[idx];
+              const pct = cv !== 0 ? ((pv - cv) / Math.abs(cv) * 100).toFixed(1) : "—";
+              const cDate = compare[idx]?.data || "";
+              return `Comparação (${fmtDateShort(cDate)}): ${cv}\nVariação: ${pct}%`;
+            }
+          }
+        }
+      }
+    },
+  });
+}
+
+function alignSeries(base, compare) {
+  // Alinha compare ao tamanho de base por interpolação de índice
+  const out = [];
+  for (let i = 0; i < base.length; i++) {
+    const pos = i / Math.max(base.length - 1, 1) * Math.max(compare.length - 1, 0);
+    const lo  = Math.floor(pos);
+    const hi  = Math.ceil(pos);
+    if (lo >= compare.length) { out.push(null); continue; }
+    if (lo === hi) { out.push(compare[lo]); continue; }
+    const t = pos - lo;
+    out.push(+(compare[lo] * (1 - t) + compare[hi] * t).toFixed(2));
+  }
+  return out;
+}
+
+function mkDonut(id, labels, values, colors) {
+  const ctx = document.getElementById(id);
+  if (!ctx) return;
+  if (CHARTS[id]) CHARTS[id].destroy();
+  CHARTS[id] = new Chart(ctx, {
+    type: "doughnut",
+    data: {
+      labels,
+      datasets: [{ data: values, backgroundColor: colors, borderWidth: 2, borderColor: "#fff" }],
+    },
+    options: {
+      responsive: true,
+      maintainAspectRatio: false,
+      cutout: "60%",
+      plugins: {
+        legend: {
+          display: true, position: "right",
+          labels: { font: { size: 11, family: "'Nunito Sans'" }, boxWidth: 12, padding: 10 },
+        },
+      },
+    },
+  });
+}
+
+// ═══════════════════════════════════════════════════════
+// UI — DROPDOWNS
+// ═══════════════════════════════════════════════════════
+function openDropdown(id) {
+  document.querySelectorAll(".dr-dropdown").forEach(d => d.classList.remove("open"));
+  document.getElementById(id).classList.add("open");
+  document.getElementById("overlay").classList.add("open");
+}
+function closeAllDropdowns() {
+  document.querySelectorAll(".dr-dropdown").forEach(d => d.classList.remove("open"));
+  document.getElementById("overlay").classList.remove("open");
+}
+
+document.getElementById("btnPrimaryCustom").addEventListener("click", (e) => {
+  e.stopPropagation();
+  const isOpen = document.getElementById("dropPrimary").classList.contains("open");
+  closeAllDropdowns();
+  if (!isOpen) {
+    if (P.start) document.getElementById("primaryStart").value = P.start;
+    if (P.end)   document.getElementById("primaryEnd").value   = P.end;
+    openDropdown("dropPrimary");
+  }
+});
+
+document.getElementById("btnCompare").addEventListener("click", (e) => {
+  e.stopPropagation();
+  const isOpen = document.getElementById("dropCompare").classList.contains("open");
+  closeAllDropdowns();
+  if (!isOpen) {
+    if (C.start) document.getElementById("compareStart").value = C.start;
+    if (C.end)   document.getElementById("compareEnd").value   = C.end;
+    openDropdown("dropCompare");
+  }
+});
+
+document.getElementById("overlay").addEventListener("click", closeAllDropdowns);
+
+// Presets período principal
+document.querySelectorAll("#primaryPresets .dr-preset").forEach(btn => {
+  btn.addEventListener("click", () => {
+    document.querySelectorAll("#primaryPresets .dr-preset").forEach(b => b.classList.remove("active"));
+    btn.classList.add("active");
+    if (btn.dataset.days) applySpecial_days(parseInt(btn.dataset.days));
+    else if (btn.dataset.special) applySpecial(btn.dataset.special);
+    closeAllDropdowns();
+  });
+});
+
+function applySpecial_days(days) {
+  const last = ALL_DATA[ALL_DATA.length - 1]?.data;
+  if (!last) return;
+  setPrimary(offsetDate(last, -days + 1), last);
+}
+
+// Presets período de comparação
+document.querySelectorAll("#comparePresets .dr-preset").forEach(btn => {
+  btn.addEventListener("click", () => {
+    document.querySelectorAll("#comparePresets .dr-preset").forEach(b => b.classList.remove("active"));
+    btn.classList.add("active");
+    if (btn.dataset.compare) applyComparePreset(btn.dataset.compare);
+    else if (btn.dataset.days) {
+      const days = parseInt(btn.dataset.days);
+      const last = ALL_DATA[ALL_DATA.length - 1]?.data;
+      if (last) setCompare(offsetDate(last, -days + 1), last);
+    }
+    closeAllDropdowns();
+  });
+});
+
+// Aplicar período customizado principal
+document.getElementById("btnApplyPrimary").addEventListener("click", () => {
+  const s = document.getElementById("primaryStart").value;
+  const e = document.getElementById("primaryEnd").value;
+  if (s && e && s <= e) { setPrimary(s, e); closeAllDropdowns(); }
+  else alert("Selecione um intervalo válido.");
+});
+document.getElementById("btnCancelPrimary").addEventListener("click", closeAllDropdowns);
+
+// Aplicar/remover comparação customizada
+document.getElementById("btnApplyCompare").addEventListener("click", () => {
+  const s = document.getElementById("compareStart").value;
+  const e = document.getElementById("compareEnd").value;
+  if (s && e && s <= e) { setCompare(s, e); closeAllDropdowns(); }
+  else alert("Selecione um intervalo válido.");
+});
+document.getElementById("btnCancelCompare").addEventListener("click", closeAllDropdowns);
+document.getElementById("btnClearCompare").addEventListener("click", () => {
+  clearCompare(); closeAllDropdowns();
+});
+document.getElementById("btnBannerClear").addEventListener("click", clearCompare);
+
+// ── Filtros rápidos de período (pills) ─────────────────
+document.querySelectorAll("[data-period]").forEach(btn => {
+  btn.addEventListener("click", () => {
+    document.querySelectorAll("[data-period]").forEach(b => b.classList.remove("active"));
+    // Desmarcar custom
+    document.getElementById("btnPrimaryCustom").classList.remove("active");
+    btn.classList.add("active");
+    const days = parseInt(btn.dataset.period);
+    if (days === 0) applySpecial("all");
+    else applySpecial_days(days);
+  });
+});
+
+// ── Dispositivo ───────────────────────────────────────
+document.querySelectorAll("[data-device]").forEach(btn => {
+  btn.addEventListener("click", () => {
+    document.querySelectorAll("[data-device]").forEach(b => b.classList.remove("active"));
+    btn.classList.add("active");
+    DEVICE = btn.dataset.device;
+    render();
+  });
+});
+
+// ── Tabs ──────────────────────────────────────────────
+document.querySelectorAll("[data-tab]").forEach(btn => {
+  btn.addEventListener("click", () => {
+    document.querySelectorAll(".tab").forEach(b => b.classList.remove("active"));
+    document.querySelectorAll(".tab-content").forEach(c => c.classList.remove("active"));
+    btn.classList.add("active");
+    document.getElementById("tab-" + btn.dataset.tab).classList.add("active");
+  });
+});
+
+// ═══════════════════════════════════════════════════════
+// BANNER DE COMPARAÇÃO
+// ═══════════════════════════════════════════════════════
+function updatePrimaryBtn() {
+  const btn = document.getElementById("btnPrimaryCustom");
+  const lbl = document.getElementById("btnPrimaryLabel");
+  if (P.start && P.end) {
+    lbl.textContent = fmtDateShort(P.start) + " – " + fmtDateShort(P.end);
+    btn.classList.add("active");
+    // Desmarcar pills de atalho
+    document.querySelectorAll("[data-period]").forEach(b => b.classList.remove("active"));
+  } else {
+    lbl.textContent = "Customizado";
+    btn.classList.remove("active");
+  }
+}
+
+function updateCompareBanner() {
+  const banner = document.getElementById("compareBanner");
+  const btn    = document.getElementById("btnCompare");
+  const lbl    = document.getElementById("btnCompareLabel");
+  if (C.active && C.start && C.end) {
+    banner.classList.remove("hidden");
+    document.getElementById("comparePrimaryLabel").textContent =
+      fmtDateFull(P.start) + " – " + fmtDateFull(P.end);
+    document.getElementById("compareSecondaryLabel").textContent =
+      fmtDateFull(C.start) + " – " + fmtDateFull(C.end);
+    btn.classList.add("compare-mode");
+    lbl.textContent = fmtDateShort(C.start) + " – " + fmtDateShort(C.end);
+  } else {
+    banner.classList.add("hidden");
+    btn.classList.remove("compare-mode");
+    lbl.textContent = "Adicionar comparação";
+  }
+}
+
+// ═══════════════════════════════════════════════════════
+// UTILITÁRIOS
+// ═══════════════════════════════════════════════════════
+function aggregate(data) {
+  return data.reduce((acc, d) => {
+    acc.sessoes        += d.sessoes        || 0;
+    acc.usuarios       += d.usuarios       || 0;
+    acc.novos_usuarios += d.novos_usuarios || 0;
+    acc.pageviews      += d.pageviews      || 0;
+    acc.compras        += d.compras        || 0;
+    return acc;
+  }, { sessoes:0, usuarios:0, novos_usuarios:0, pageviews:0, compras:0 });
+}
+
+function wavg(data, metric, weight) {
+  const w = data.reduce((s, d) => s + (d[weight] || 0), 0);
+  if (!w) return 0;
+  return data.reduce((s, d) => s + (d[metric] || 0) * (d[weight] || 0), 0) / w;
+}
+
+function round4(v) { return Math.round(v * 10000) / 10000; }
+
+function fmtNum(n) {
+  if (n == null) return "—";
+  return Number(n).toLocaleString("pt-BR");
+}
+
+function fmtDur(sec) {
+  const m = Math.floor(sec / 60);
+  const s = Math.round(sec % 60);
+  return m > 0 ? `${m}m ${s}s` : `${s}s`;
+}
+
+function fmtDateShort(iso) {
+  if (!iso) return "";
+  const [, m, d] = iso.split("-");
+  return `${d}/${m}`;
+}
+
+function fmtDateFull(iso) {
+  if (!iso) return "";
+  const [y, m, d] = iso.split("-");
+  return `${d}/${m}/${y}`;
+}
+
+function fmtDatetime(iso) {
+  if (!iso) return "";
+  return new Date(iso).toLocaleString("pt-BR",
+    { timeZone: "America/Sao_Paulo", dateStyle: "short", timeStyle: "short" });
+}
+
+function todayISO() { return new Date().toISOString().slice(0, 10); }
+
+function isoDate(d) {
+  return d.toISOString().slice(0, 10);
+}
+
+function offsetDate(iso, days) {
+  const d = new Date(iso + "T12:00:00Z");
+  d.setUTCDate(d.getUTCDate() + days);
+  return isoDate(d);
+}
+
+function offsetYears(iso, years) {
+  const d = new Date(iso + "T12:00:00Z");
+  d.setUTCFullYear(d.getUTCFullYear() + years);
+  return isoDate(d);
+}
+
+function dateDiff(a, b) {
+  return Math.round((new Date(b) - new Date(a)) / 86400000);
+}
+
+function hideState() {
+  document.getElementById("appState").style.display   = "none";
+  document.getElementById("appContent").style.display = "block";
+}
+
+function showError(msg) {
+  document.getElementById("appState").innerHTML =
+    `<span style="color:var(--negative-700);font-size:14px">⚠ ${msg}</span>`;
+}
+
+// ── Init ──────────────────────────────────────────────
+loadData();
 </script>
 </body>
 </html>
