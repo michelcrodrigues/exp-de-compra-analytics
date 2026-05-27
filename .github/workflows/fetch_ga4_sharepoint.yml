@@ -1,4 +1,4 @@
-name: Coleta GA4 → SharePoint
+name: Coleta GA4 → Google Sheets
 
 on:
   schedule:
@@ -9,7 +9,6 @@ on:
 jobs:
   fetch-and-update:
     runs-on: ubuntu-latest
-    # Timeout generoso para o modo histórico (147 dias × ~0.3s × 4 requests = ~3min)
     timeout-minutes: 20
 
     steps:
@@ -25,16 +24,10 @@ jobs:
         run: |
           pip install \
             google-auth \
-            google-api-python-client \
-            requests \
-            openpyxl
+            google-api-python-client
 
       - name: Executar coleta
         env:
           GA4_CREDENTIALS_JSON: ${{ secrets.GA4_CREDENTIALS_JSON }}
-          AZURE_TENANT_ID:      ${{ secrets.AZURE_TENANT_ID }}
-          AZURE_CLIENT_ID:      ${{ secrets.AZURE_CLIENT_ID }}
-          AZURE_CLIENT_SECRET:  ${{ secrets.AZURE_CLIENT_SECRET }}
-          SHAREPOINT_SITE_ID:   ${{ secrets.SHAREPOINT_SITE_ID }}
-          SHAREPOINT_FILE_ID:   ${{ secrets.SHAREPOINT_FILE_ID }}
+          SPREADSHEET_ID:       ${{ secrets.SPREADSHEET_ID }}
         run: python scripts/fetch_ga4.py
