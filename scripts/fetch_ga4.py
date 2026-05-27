@@ -1,574 +1,415 @@
 """
-Script de coleta de dados do Google Analytics 4 — v5
-Gera o arquivo data.json com todas as métricas do dashboard.
+fetch_ga4.py — Coleta métricas diárias do GA4 e grava no SharePoint (OneDrive/Excel).
 
-Novidades v5 (vs v4):
-- channels_daily garante bounceRate e averageSessionDuration por canal por dia
-- devices_daily garante bounceRate e averageSessionDuration por dispositivo por dia
-  (já estava no v4, mas confirmado explicitamente)
-- Sem mudança estrutural no JSON — apenas garante que os campos existem
+Modos de operação:
+  HISTÓRICO — primeira execução: coleta de 01/01/2025 até ontem, dia a dia
+  DIÁRIO    — execuções seguintes: coleta só o dia anterior
+
+Secrets necessários no GitHub Actions:
+  GA4_CREDENTIALS_JSON   → conteúdo do JSON da service account do GA4
+  AZURE_TENANT_ID        → tenant ID do Azure AD
+  AZURE_CLIENT_ID        → client ID do App Registration
+  AZURE_CLIENT_SECRET    → client secret do App Registration
+  SHAREPOINT_SITE_ID     → ID do site SharePoint
+  SHAREPOINT_FILE_ID     → ID do arquivo Excel no SharePoint
 """
 
-import json
 import os
-from datetime import datetime, timedelta
-from google.analytics.data_v1beta import BetaAnalyticsDataClient
-from google.analytics.data_v1beta.types import (
-    RunReportRequest, DateRange, Metric, Dimension, OrderBy,
-    Filter, FilterExpression,
-)
+import json
+import datetime
+import io
+import sys
+import time
 
-PROPERTY_ID    = os.environ["GA4_PROPERTY_ID"]
-client         = BetaAnalyticsDataClient()
-DATE_RANGE     = DateRange(start_date="90daysAgo", end_date="today")
-DATE_RANGE_7D  = DateRange(start_date="7daysAgo",  end_date="today")
-DATE_RANGE_30D = DateRange(start_date="30daysAgo", end_date="today")
+import requests
+from google.oauth2 import service_account
+from googleapiclient.discovery import build
+import openpyxl
 
-def report(dimensions, metrics, date_range=None, order_bys=None, limit=20):
-    req = RunReportRequest(
-        property=f"properties/{PROPERTY_ID}",
-        dimensions=[Dimension(name=d) for d in dimensions],
-        metrics=[Metric(name=m) for m in metrics],
-        date_ranges=[date_range or DATE_RANGE],
-        order_bys=order_bys or [],
-        limit=limit,
-    )
-    return client.run_report(req)
+# ──────────────────────────────────────────────
+# Configurações
+# ──────────────────────────────────────────────
 
-def report_nodim(metrics, date_range=None):
-    req = RunReportRequest(
-        property=f"properties/{PROPERTY_ID}",
-        metrics=[Metric(name=m) for m in metrics],
-        date_ranges=[date_range or DATE_RANGE],
-    )
-    return client.run_report(req)
+GA4_PROPERTY_ID  = "326912205"
+HISTORY_START    = datetime.date(2025, 1, 1)
+SHEET_NAME       = "analytics"
 
-def report_filtered(dimensions, metrics, filter_field, filter_value, date_range=None, limit=50):
-    req = RunReportRequest(
-        property=f"properties/{PROPERTY_ID}",
-        dimensions=[Dimension(name=d) for d in dimensions],
-        metrics=[Metric(name=m) for m in metrics],
-        date_ranges=[date_range or DATE_RANGE],
-        dimension_filter=FilterExpression(
-            filter=Filter(
-                field_name=filter_field,
-                string_filter=Filter.StringFilter(
-                    value=filter_value,
-                    match_type=Filter.StringFilter.MatchType.EXACT
-                )
-            )
-        ),
-        limit=limit,
-    )
-    return client.run_report(req)
-
-def fmt_date(raw): return f"{raw[:4]}-{raw[4:6]}-{raw[6:]}"
-def dim(row, i):   return row.dimension_values[i].value
-def met(row, i):   return row.metric_values[i].value
-def intf(v):       return int(float(v))
-def rnd(v):        return round(float(v), 2)
-
-# ── 1. Totais ────────────────────────────────────────────────────────────────
-print("1/14 Totais gerais...")
-r = report_nodim(["sessions","totalUsers","newUsers","bounceRate",
-                  "averageSessionDuration","transactions","screenPageViews"])
-mv = r.rows[0].metric_values
-totals = {
-    "sessions":             intf(mv[0].value),
-    "total_users":          intf(mv[1].value),
-    "new_users":            intf(mv[2].value),
-    "bounce_rate":          round(float(mv[3].value)*100, 2),
-    "avg_session_duration": rnd(mv[4].value),
-    "conversions":          intf(mv[5].value),
-    "pageviews":            intf(mv[6].value),
-}
-r7 = report_nodim(["sessions","totalUsers","transactions","newUsers"], DATE_RANGE_7D)
-mv7 = r7.rows[0].metric_values
-totals.update({
-    "sessions_7d":    intf(mv7[0].value),
-    "users_7d":       intf(mv7[1].value),
-    "conversions_7d": intf(mv7[2].value),
-    "new_users_7d":   intf(mv7[3].value),
-})
-
-# ── 2. Sessões por dia ───────────────────────────────────────────────────────
-print("2/14 Sessões por dia...")
-r = report(["date"], ["sessions","totalUsers","transactions","newUsers"],
-           order_bys=[OrderBy(dimension=OrderBy.DimensionOrderBy(dimension_name="date"))], limit=91)
-daily = []
-for row in r.rows:
-    daily.append({
-        "date":        fmt_date(dim(row,0)),
-        "sessions":    intf(met(row,0)),
-        "users":       intf(met(row,1)),
-        "conversions": intf(met(row,2)),
-        "new_users":   intf(met(row,3)),
-    })
-
-# ── 3. Páginas mais acessadas ────────────────────────────────────────────────
-print("3/14 Páginas...")
-r = report(["pagePath","pageTitle"],
-           ["screenPageViews","totalUsers","averageSessionDuration"],
-           order_bys=[OrderBy(metric=OrderBy.MetricOrderBy(metric_name="screenPageViews"), desc=True)], limit=10)
-pages = [{"path": dim(row,0), "title": dim(row,1),
-          "pageviews": intf(met(row,0)), "users": intf(met(row,1)),
-          "avg_duration": rnd(met(row,2)), "bounce_rate": 0, "exits": 0} for row in r.rows]
-
-# ── 4. Páginas de entrada ────────────────────────────────────────────────────
-print("4/14 Páginas de entrada...")
-r = report(["landingPagePlusQueryString"],
-           ["sessions","totalUsers","transactions","bounceRate"],
-           order_bys=[OrderBy(metric=OrderBy.MetricOrderBy(metric_name="sessions"), desc=True)], limit=10)
-landing_pages = [{"path": dim(row,0), "sessions": intf(met(row,0)),
-                  "users": intf(met(row,1)), "conversions": intf(met(row,2)),
-                  "bounce_rate": round(float(met(row,3))*100, 2)} for row in r.rows]
-
-# ── 5. Páginas top 10 com breakdown semanal ───────────────────────────────────
-print("5/14 Páginas por semana...")
-top_paths = [p["path"] for p in pages[:10]]
-
-r = report(["yearWeek","pagePath"],
-           ["screenPageViews","totalUsers"],
-           order_bys=[OrderBy(dimension=OrderBy.DimensionOrderBy(dimension_name="yearWeek"))],
-           limit=1000)
-
-pages_weekly_raw = {}
-for row in r.rows:
-    week = dim(row,0)
-    path = dim(row,1)
-    if path not in top_paths:
-        continue
-    if week not in pages_weekly_raw:
-        pages_weekly_raw[week] = {}
-    pages_weekly_raw[week][path] = {
-        "pageviews": intf(met(row,0)),
-        "users":     intf(met(row,1)),
-    }
-
-pages_weekly = {
-    "weeks":  sorted(pages_weekly_raw.keys()),
-    "paths":  top_paths,
-    "data":   pages_weekly_raw,
-}
-
-# ── 6. Origens ───────────────────────────────────────────────────────────────
-print("6/14 Origens...")
-r = report(["sessionSource","sessionMedium"],
-           ["sessions","totalUsers","transactions","bounceRate","averageSessionDuration"],
-           order_bys=[OrderBy(metric=OrderBy.MetricOrderBy(metric_name="sessions"), desc=True)], limit=50)
-sources_all = [{"source": dim(row,0), "medium": dim(row,1),
-            "source_medium": f"{dim(row,0)} / {dim(row,1)}",
-            "sessions":        intf(met(row,0)),
-            "users":           intf(met(row,1)),
-            "conversions":     intf(met(row,2)),
-            "conversion_rate": round(intf(met(row,2))/max(intf(met(row,0)),1)*100, 2),
-            "bounce_rate":     round(float(met(row,3))*100, 2),
-            "avg_duration":    rnd(met(row,4))} for row in r.rows]
-
-TOP5_SOURCES = [r["source_medium"] for r in sources_all[:5]]
-others = [r for r in sources_all[5:]]
-others_agg = None
-if others:
-    others_sess  = sum(r["sessions"]    for r in others)
-    others_users = sum(r["users"]       for r in others)
-    others_conv  = sum(r["conversions"] for r in others)
-    others_agg = {
-        "source": "outros", "medium": "—",
-        "source_medium": "outros / —",
-        "sessions":        others_sess,
-        "users":           others_users,
-        "conversions":     others_conv,
-        "conversion_rate": round(others_conv/max(others_sess,1)*100, 2),
-        "bounce_rate":     round(sum(r["bounce_rate"]*r["sessions"] for r in others)/max(others_sess,1), 2),
-        "avg_duration":    round(sum(r["avg_duration"]*r["sessions"] for r in others)/max(others_sess,1), 2),
-    }
-sources = sources_all[:5] + ([others_agg] if others_agg else [])
-
-# ── 7. Canais com breakdown diário ───────────────────────────────────────────
-# v5: garante bounce_rate e avg_duration por canal por dia (essencial para filtros)
-print("7/14 Canais por dia...")
-r = report(["date","sessionDefaultChannelGroup"],
-           ["sessions","totalUsers","transactions","bounceRate","averageSessionDuration","newUsers"],
-           order_bys=[OrderBy(dimension=OrderBy.DimensionOrderBy(dimension_name="date"))],
-           limit=910)
-
-channels_daily_raw = {}
-channels_agg = {}
-for row in r.rows:
-    date    = fmt_date(dim(row,0))
-    channel = dim(row,1)
-    sess    = intf(met(row,0))
-    users   = intf(met(row,1))
-    conv    = intf(met(row,2))
-    bounce  = round(float(met(row,3))*100, 2)
-    dur     = rnd(met(row,4))
-    new_u   = intf(met(row,5))
-
-    if date not in channels_daily_raw:
-        channels_daily_raw[date] = {}
-    # v5: inclui bounce_rate e avg_duration no breakdown diário
-    channels_daily_raw[date][channel] = {
-        "sessions":    sess,
-        "users":       users,
-        "conversions": conv,
-        "bounce_rate": bounce,
-        "avg_duration": dur,
-    }
-
-    if channel not in channels_agg:
-        channels_agg[channel] = {"channel":channel,"sessions":0,"users":0,"conversions":0,
-                                  "wBounce":0.0,"wDur":0.0,"new_users":0}
-    channels_agg[channel]["sessions"]   += sess
-    channels_agg[channel]["users"]      += users
-    channels_agg[channel]["conversions"]+= conv
-    channels_agg[channel]["new_users"]  += new_u
-    channels_agg[channel]["wBounce"]    += bounce * sess
-    channels_agg[channel]["wDur"]       += dur * sess
-
-channels = []
-for ch in channels_agg.values():
-    s = max(ch["sessions"], 1)
-    channels.append({
-        "channel":         ch["channel"],
-        "sessions":        ch["sessions"],
-        "users":           ch["users"],
-        "conversions":     ch["conversions"],
-        "new_users":       ch["new_users"],
-        "conversion_rate": round(ch["conversions"]/s*100, 2),
-        "bounce_rate":     round(ch["wBounce"]/s, 2),
-        "avg_duration":    round(ch["wDur"]/s, 2),
-    })
-channels.sort(key=lambda x: x["sessions"], reverse=True)
-
-channels_daily = {
-    "dates":    sorted(channels_daily_raw.keys()),
-    "channels": list(channels_agg.keys()),
-    "data":     channels_daily_raw,
-}
-
-# ── 7b. Source/medium daily breakdown ────────────────────────────────────────
-print("7b/14 Origens por dia...")
-r = report(["date","sessionSource","sessionMedium"],
-           ["sessions","totalUsers","transactions","bounceRate","averageSessionDuration"],
-           order_bys=[OrderBy(dimension=OrderBy.DimensionOrderBy(dimension_name="date"))],
-           limit=2000)
-
-sources_daily_raw = {}
-for row in r.rows:
-    date   = fmt_date(dim(row,0))
-    sm     = f"{dim(row,1)} / {dim(row,2)}"
-    sess   = intf(met(row,0))
-    users  = intf(met(row,1))
-    conv   = intf(met(row,2))
-    bounce = round(float(met(row,3))*100, 2)
-    dur    = rnd(met(row,4))
-    key    = sm if sm in TOP5_SOURCES else "outros / —"
-
-    if date not in sources_daily_raw:
-        sources_daily_raw[date] = {}
-    if key not in sources_daily_raw[date]:
-        sources_daily_raw[date][key] = {"sessions":0,"users":0,"conversions":0,"wBounce":0.0,"wDur":0.0}
-    sources_daily_raw[date][key]["sessions"]   += sess
-    sources_daily_raw[date][key]["users"]      += users
-    sources_daily_raw[date][key]["conversions"]+= conv
-    # v5: acumula bounce e dur ponderados para média ponderada posterior
-    sources_daily_raw[date][key]["wBounce"]    += bounce * sess
-    sources_daily_raw[date][key]["wDur"]       += dur * sess
-
-sources_daily = {
-    "dates":   sorted(sources_daily_raw.keys()),
-    "sources": TOP5_SOURCES + ["outros / —"],
-    "data":    sources_daily_raw,
-}
-
-# ── 7c. Dispositivo × Origem daily breakdown (para filtro combinado real) ─────
-# Necessário para calcular conversão real quando ambos os filtros estão ativos.
-# 90d × 3 devices × ~6 sources = ~1620 rows — dentro do limit.
-print("7c/14 Dispositivo × Origem por dia...")
-r = report(["date","deviceCategory","sessionSource","sessionMedium"],
-           ["sessions","totalUsers","transactions"],
-           order_bys=[OrderBy(dimension=OrderBy.DimensionOrderBy(dimension_name="date"))],
-           limit=3000)
-
-device_source_daily_raw = {}  # date -> device -> source_medium -> {sessions, users, conversions}
-for row in r.rows:
-    date   = fmt_date(dim(row,0))
-    device = dim(row,1)
-    sm     = f"{dim(row,2)} / {dim(row,3)}"
-    sess   = intf(met(row,0))
-    users  = intf(met(row,1))
-    conv   = intf(met(row,2))
-    key    = sm if sm in TOP5_SOURCES else "outros / —"
-
-    if date not in device_source_daily_raw:
-        device_source_daily_raw[date] = {}
-    if device not in device_source_daily_raw[date]:
-        device_source_daily_raw[date][device] = {}
-    if key not in device_source_daily_raw[date][device]:
-        device_source_daily_raw[date][device][key] = {"sessions":0,"users":0,"conversions":0}
-    device_source_daily_raw[date][device][key]["sessions"]   += sess
-    device_source_daily_raw[date][device][key]["users"]      += users
-    device_source_daily_raw[date][device][key]["conversions"]+= conv
-
-device_source_daily = {
-    "dates":   sorted(device_source_daily_raw.keys()),
-    "devices": list(devices_agg.keys()) if 'devices_agg' in dir() else [],
-    "sources": TOP5_SOURCES + ["outros / —"],
-    "data":    device_source_daily_raw,
-}
-
-# ── 8. Dispositivos com breakdown diário ──────────────────────────────────────
-# v5: bounce_rate e avg_duration já coletados — confirmado explicitamente
-print("8/14 Dispositivos por dia...")
-r = report(["date","deviceCategory"],
-           ["sessions","totalUsers","transactions","bounceRate","averageSessionDuration"],
-           order_bys=[OrderBy(dimension=OrderBy.DimensionOrderBy(dimension_name="date"))],
-           limit=300)
-
-devices_daily_raw = {}
-devices_agg = {}
-for row in r.rows:
-    date   = fmt_date(dim(row,0))
-    device = dim(row,1)
-    sess   = intf(met(row,0))
-    users  = intf(met(row,1))
-    conv   = intf(met(row,2))
-    bounce = round(float(met(row,3))*100, 2)
-    dur    = rnd(met(row,4))
-
-    if date not in devices_daily_raw:
-        devices_daily_raw[date] = {}
-    devices_daily_raw[date][device] = {
-        "sessions":    sess,
-        "users":       users,
-        "conversions": conv,
-        "bounce_rate": bounce,
-        "avg_duration": dur,
-    }
-
-    if device not in devices_agg:
-        devices_agg[device] = {"device":device,"sessions":0,"users":0,"conversions":0,
-                                "wBounce":0.0,"wDur":0.0}
-    devices_agg[device]["sessions"]   += sess
-    devices_agg[device]["users"]      += users
-    devices_agg[device]["conversions"]+= conv
-    devices_agg[device]["wBounce"]    += bounce * sess
-    devices_agg[device]["wDur"]       += dur * sess
-
-devices = []
-for dv in devices_agg.values():
-    s = max(dv["sessions"], 1)
-    devices.append({
-        "device":      dv["device"],
-        "sessions":    dv["sessions"],
-        "users":       dv["users"],
-        "conversions": dv["conversions"],
-        "bounce_rate": round(dv["wBounce"]/s, 2),
-        "avg_duration": round(dv["wDur"]/s, 2),
-    })
-devices.sort(key=lambda x: x["sessions"], reverse=True)
-
-devices_daily = {
-    "dates":   sorted(devices_daily_raw.keys()),
-    "devices": list(devices_agg.keys()),
-    "data":    devices_daily_raw,
-}
-
-# ── 9. Novos vs Recorrentes com breakdown diário ──────────────────────────────
-print("9/14 Novos vs recorrentes por dia...")
-r = report(["date","newVsReturning"],
-           ["sessions","totalUsers","transactions","bounceRate"],
-           order_bys=[OrderBy(dimension=OrderBy.DimensionOrderBy(dimension_name="date"))],
-           limit=200)
-
-nvr_daily_raw = {}
-nvr_agg = {}
-for row in r.rows:
-    date  = fmt_date(dim(row,0))
-    ntype = dim(row,1)
-    sess  = intf(met(row,0))
-    users = intf(met(row,1))
-    conv  = intf(met(row,2))
-    bounce= round(float(met(row,3))*100, 2)
-
-    if date not in nvr_daily_raw:
-        nvr_daily_raw[date] = {}
-    nvr_daily_raw[date][ntype] = {"sessions":sess,"users":users,"conversions":conv}
-
-    if ntype not in nvr_agg:
-        nvr_agg[ntype] = {"type":ntype,"sessions":0,"users":0,"conversions":0,"bounce_rate":bounce}
-    nvr_agg[ntype]["sessions"]   += sess
-    nvr_agg[ntype]["users"]      += users
-    nvr_agg[ntype]["conversions"]+= conv
-
-new_vs_returning = list(nvr_agg.values())
-nvr_daily = {
-    "dates": sorted(nvr_daily_raw.keys()),
-    "types": list(nvr_agg.keys()),
-    "data":  nvr_daily_raw,
-}
-
-# ── 9b. NVR por dispositivo ───────────────────────────────────────────────────
-print("9b/14 Novos vs recorrentes por dispositivo...")
-r = report(["date","deviceCategory","newVsReturning"],
-           ["sessions","totalUsers"],
-           order_bys=[OrderBy(dimension=OrderBy.DimensionOrderBy(dimension_name="date"))],
-           limit=600)
-
-nvr_device_raw = {}
-for row in r.rows:
-    date   = fmt_date(dim(row,0))
-    device = dim(row,1)
-    ntype  = dim(row,2)
-    sess   = intf(met(row,0))
-    users  = intf(met(row,1))
-    if date not in nvr_device_raw:
-        nvr_device_raw[date] = {}
-    if device not in nvr_device_raw[date]:
-        nvr_device_raw[date][device] = {}
-    if ntype not in nvr_device_raw[date][device]:
-        nvr_device_raw[date][device][ntype] = {"sessions":0,"users":0}
-    nvr_device_raw[date][device][ntype]["sessions"] += sess
-    nvr_device_raw[date][device][ntype]["users"]    += users
-
-nvr_by_device = {
-    "dates":   sorted(nvr_device_raw.keys()),
-    "devices": list(devices_agg.keys()),
-    "data":    nvr_device_raw,
-}
-
-# ── 10. Funil com breakdown por data ──────────────────────────────────────────
-print("10/14 Funil de eventos...")
-FUNNEL_EVENTS = [
-    {"name": "Busca",                 "event": "search"},
-    {"name": "Selecionou item",       "event": "select_item"},
-    {"name": "Adicionou ao carrinho", "event": "add_to_cart"},
-    {"name": "Iniciou checkout",      "event": "begin_checkout"},
-    {"name": "Compra",                "event": "purchase"},
+# Colunas da planilha — ordem fixa, não alterar sem migrar o arquivo
+COLUMNS = [
+    "data",
+    # Volume
+    "sessoes",
+    "usuarios",
+    "novos_usuarios",
+    "pageviews",
+    # Conversão
+    "compras",
+    "taxa_conversao_pct",
+    # Engajamento
+    "taxa_rejeicao_pct",
+    "duracao_media_seg",
+    # Dispositivo
+    "sessoes_mobile",
+    "sessoes_desktop",
+    "sessoes_tablet",
+    # Canal
+    "sessoes_organico",
+    "sessoes_direto",
+    "sessoes_pago",
+    "sessoes_social",
+    "sessoes_email",
+    "sessoes_referral",
+    "sessoes_outros_canais",
+    # Funil
+    "funil_search",
+    "funil_select_item",
+    "funil_add_to_cart",
+    "funil_begin_checkout",
+    "funil_purchase",
+    # Rotas — top 5 origens e destinos do dia
+    "top_origem_1", "top_origem_1_sessoes",
+    "top_origem_2", "top_origem_2_sessoes",
+    "top_origem_3", "top_origem_3_sessoes",
+    "top_origem_4", "top_origem_4_sessoes",
+    "top_origem_5", "top_origem_5_sessoes",
+    "top_destino_1", "top_destino_1_sessoes",
+    "top_destino_2", "top_destino_2_sessoes",
+    "top_destino_3", "top_destino_3_sessoes",
+    "top_destino_4", "top_destino_4_sessoes",
+    "top_destino_5", "top_destino_5_sessoes",
 ]
 
-funnel = []
-funnel_daily_raw = {}
+# ──────────────────────────────────────────────
+# Autenticação GA4
+# ──────────────────────────────────────────────
 
-for step in FUNNEL_EVENTS:
-    print(f"   funil: {step['event']}...")
-    req_agg = RunReportRequest(
-        property=f"properties/{PROPERTY_ID}",
-        dimensions=[Dimension(name="eventName")],
-        metrics=[Metric(name="eventCount"), Metric(name="totalUsers")],
-        date_ranges=[DATE_RANGE],
-        dimension_filter=FilterExpression(
-            filter=Filter(field_name="eventName",
-                          string_filter=Filter.StringFilter(value=step["event"],
-                          match_type=Filter.StringFilter.MatchType.EXACT))
-        ),
+def get_ga4_service():
+    creds_info = json.loads(os.environ["GA4_CREDENTIALS_JSON"])
+    creds = service_account.Credentials.from_service_account_info(
+        creds_info,
+        scopes=["https://www.googleapis.com/auth/analytics.readonly"],
     )
-    resp_agg = client.run_report(req_agg)
-    count = intf(resp_agg.rows[0].metric_values[0].value) if resp_agg.rows else 0
-    users = intf(resp_agg.rows[0].metric_values[1].value) if resp_agg.rows else 0
-    funnel.append({"step": step["name"], "event": step["event"],
-                   "event_count": count, "users": users, "drop_rate": 0})
+    return build("analyticsdata", "v1beta", credentials=creds)
 
-    req_daily = RunReportRequest(
-        property=f"properties/{PROPERTY_ID}",
-        dimensions=[Dimension(name="date"), Dimension(name="eventName")],
-        metrics=[Metric(name="eventCount"), Metric(name="totalUsers")],
-        date_ranges=[DATE_RANGE],
-        dimension_filter=FilterExpression(
-            filter=Filter(field_name="eventName",
-                          string_filter=Filter.StringFilter(value=step["event"],
-                          match_type=Filter.StringFilter.MatchType.EXACT))
-        ),
-        order_bys=[OrderBy(dimension=OrderBy.DimensionOrderBy(dimension_name="date"))],
-        limit=91,
+
+# ──────────────────────────────────────────────
+# Autenticação Microsoft Graph
+# ──────────────────────────────────────────────
+
+def get_graph_token():
+    url = (
+        f"https://login.microsoftonline.com/"
+        f"{os.environ['AZURE_TENANT_ID']}/oauth2/v2.0/token"
     )
-    resp_daily = client.run_report(req_daily)
-    for row in resp_daily.rows:
-        date = fmt_date(dim(row,0))
-        if date not in funnel_daily_raw:
-            funnel_daily_raw[date] = {}
-        funnel_daily_raw[date][step["event"]] = {
-            "event_count": intf(met(row,0)),
-            "users":       intf(met(row,1)),
-        }
+    resp = requests.post(url, data={
+        "grant_type":    "client_credentials",
+        "client_id":     os.environ["AZURE_CLIENT_ID"],
+        "client_secret": os.environ["AZURE_CLIENT_SECRET"],
+        "scope":         "https://graph.microsoft.com/.default",
+    })
+    resp.raise_for_status()
+    return resp.json()["access_token"]
 
-for i in range(1, len(funnel)):
-    prev = funnel[i-1]["users"]
-    curr = funnel[i]["users"]
-    funnel[i]["drop_rate"] = round((1 - curr/prev)*100, 1) if prev > 0 else 0
 
-funnel_daily = {
-    "dates":  sorted(funnel_daily_raw.keys()),
-    "events": [s["event"] for s in FUNNEL_EVENTS],
-    "data":   funnel_daily_raw,
-}
+# ──────────────────────────────────────────────
+# Download / upload do Excel no SharePoint
+# ──────────────────────────────────────────────
 
-# ── 11. Rotas (30d fixo) ──────────────────────────────────────────────────────
-print("11/14 Rotas...")
-r = report(["customEvent:originCity","customEvent:destinationCity"],
-           ["eventCount","totalUsers"],
-           order_bys=[OrderBy(metric=OrderBy.MetricOrderBy(metric_name="eventCount"), desc=True)], limit=20)
-top_routes = []
-for row in r.rows:
-    o, d = dim(row,0), dim(row,1)
-    if o and d and o != "(not set)" and d != "(not set)":
-        top_routes.append({"origin":o,"destination":d,"purchases":intf(met(row,0)),"users":intf(met(row,1))})
+GRAPH_BASE = "https://graph.microsoft.com/v1.0"
 
-r = report(["customEvent:originCity"],["eventCount","totalUsers","transactions"],
-           order_bys=[OrderBy(metric=OrderBy.MetricOrderBy(metric_name="eventCount"), desc=True)], limit=15)
-top_origins = [{"city":dim(row,0),"searches":intf(met(row,0)),"users":intf(met(row,1)),"conversions":intf(met(row,2))}
-               for row in r.rows if dim(row,0) != "(not set)"]
 
-r = report(["customEvent:destinationCity"],["eventCount","totalUsers","transactions"],
-           order_bys=[OrderBy(metric=OrderBy.MetricOrderBy(metric_name="eventCount"), desc=True)], limit=15)
-top_destinations = [{"city":dim(row,0),"searches":intf(met(row,0)),"users":intf(met(row,1)),"conversions":intf(met(row,2))}
-                    for row in r.rows if dim(row,0) != "(not set)"]
+def download_excel(token):
+    site_id = os.environ["SHAREPOINT_SITE_ID"]
+    file_id = os.environ["SHAREPOINT_FILE_ID"]
+    url = f"{GRAPH_BASE}/sites/{site_id}/drive/items/{file_id}/content"
+    resp = requests.get(url, headers={"Authorization": f"Bearer {token}"})
+    resp.raise_for_status()
+    return io.BytesIO(resp.content)
 
-r = report(["customEvent:originCity","customEvent:destinationCity"],["eventCount","totalUsers"],
-           order_bys=[OrderBy(metric=OrderBy.MetricOrderBy(metric_name="totalUsers"), desc=True)], limit=15)
-route_conversion = []
-for row in r.rows:
-    o, d = dim(row,0), dim(row,1)
-    if o and d and o != "(not set)" and d != "(not set)":
-        route_conversion.append({"route":f"{o} → {d}","origin":o,"destination":d,
-                                  "searches":intf(met(row,0)),"users":intf(met(row,1))})
 
-routes = {
-    "top_routes":       top_routes,
-    "top_origins":      top_origins,
-    "top_destinations": top_destinations,
-    "route_conversion": route_conversion,
-}
+def upload_excel(token, excel_bytes: bytes):
+    site_id = os.environ["SHAREPOINT_SITE_ID"]
+    file_id = os.environ["SHAREPOINT_FILE_ID"]
+    url = f"{GRAPH_BASE}/sites/{site_id}/drive/items/{file_id}/content"
+    resp = requests.put(
+        url,
+        headers={
+            "Authorization": f"Bearer {token}",
+            "Content-Type": "application/octet-stream",
+        },
+        data=excel_bytes,
+    )
+    resp.raise_for_status()
+    print(f"  Upload OK — status {resp.status_code}")
 
-# ── 12. Saída ─────────────────────────────────────────────────────────────────
-print("12/14 Montando JSON...")
-data = {
-    "updated_at":         datetime.utcnow().strftime("%Y-%m-%dT%H:%M:%SZ"),
-    "period":             "últimos 90 dias",
-    "totals":             totals,
-    "daily":              daily,
-    "pages":              pages,
-    "pages_weekly":       pages_weekly,
-    "landing_pages":      landing_pages,
-    "sources":            sources,
-    "sources_daily":      sources_daily,
-    "top5_sources":       TOP5_SOURCES,
-    "channels":           channels,
-    "channels_daily":     channels_daily,
-    "devices":            devices,
-    "devices_daily":      devices_daily,
-    "new_vs_returning":   new_vs_returning,
-    "nvr_daily":          nvr_daily,
-    "nvr_by_device":      nvr_by_device,
-    "funnel":             funnel,
-    "funnel_daily":       funnel_daily,
-    "device_source_daily": device_source_daily,
-    "routes":             routes,
-    "insights":           [],
-}
 
-print("13/14 Salvando data.json...")
-with open("data.json", "w", encoding="utf-8") as f:
-    json.dump(data, f, ensure_ascii=False, indent=2)
+# ──────────────────────────────────────────────
+# Coleta GA4
+# ──────────────────────────────────────────────
 
-print(f"14/14 ✅ data.json gerado — {datetime.utcnow().strftime('%Y-%m-%d %H:%M')} UTC")
+def run_report(service, date_str, dimensions, metrics, limit=10):
+    body = {
+        "dateRanges": [{"startDate": date_str, "endDate": date_str}],
+        "dimensions": [{"name": d} for d in dimensions],
+        "metrics":    [{"name": m} for m in metrics],
+        "limit":      limit,
+    }
+    resp = (
+        service.properties()
+        .runReport(property=f"properties/{GA4_PROPERTY_ID}", body=body)
+        .execute()
+    )
+    return resp.get("rows", [])
+
+
+def safe_float(value, default=0.0):
+    try:
+        return float(value)
+    except (TypeError, ValueError):
+        return default
+
+
+def collect_metrics(service, date_str):
+    metrics = {}
+
+    # ── Métricas gerais ──────────────────────────────────────────────────────
+    rows = run_report(
+        service, date_str, [],
+        ["sessions", "totalUsers", "newUsers", "transactions",
+         "sessionConversionRate", "bounceRate",
+         "averageSessionDuration", "screenPageViews"],
+    )
+    if rows:
+        v = rows[0]["metricValues"]
+        metrics["sessoes"]            = int(safe_float(v[0]["value"]))
+        metrics["usuarios"]           = int(safe_float(v[1]["value"]))
+        metrics["novos_usuarios"]     = int(safe_float(v[2]["value"]))
+        metrics["compras"]            = int(safe_float(v[3]["value"]))
+        metrics["taxa_conversao_pct"] = round(safe_float(v[4]["value"]) * 100, 4)
+        metrics["taxa_rejeicao_pct"]  = round(safe_float(v[5]["value"]) * 100, 4)
+        metrics["duracao_media_seg"]  = round(safe_float(v[6]["value"]), 2)
+        metrics["pageviews"]          = int(safe_float(v[7]["value"]))
+    else:
+        for k in ["sessoes", "usuarios", "novos_usuarios", "compras",
+                  "taxa_conversao_pct", "taxa_rejeicao_pct",
+                  "duracao_media_seg", "pageviews"]:
+            metrics[k] = 0
+
+    # ── Dispositivos ─────────────────────────────────────────────────────────
+    device_map = {"mobile": "sessoes_mobile", "desktop": "sessoes_desktop", "tablet": "sessoes_tablet"}
+    for k in device_map.values():
+        metrics[k] = 0
+    rows = run_report(service, date_str, ["deviceCategory"], ["sessions"])
+    for row in rows:
+        dev = row["dimensionValues"][0]["value"].lower()
+        key = device_map.get(dev)
+        if key:
+            metrics[key] = int(safe_float(row["metricValues"][0]["value"]))
+
+    # ── Canais ───────────────────────────────────────────────────────────────
+    channel_map = {
+        "organic search": "sessoes_organico",
+        "direct":         "sessoes_direto",
+        "paid search":    "sessoes_pago",
+        "organic social": "sessoes_social",
+        "email":          "sessoes_email",
+        "referral":       "sessoes_referral",
+    }
+    for k in channel_map.values():
+        metrics[k] = 0
+    metrics["sessoes_outros_canais"] = 0
+
+    rows = run_report(service, date_str, ["sessionDefaultChannelGroup"], ["sessions"], limit=20)
+    for row in rows:
+        channel = row["dimensionValues"][0]["value"].lower()
+        key = channel_map.get(channel)
+        val = int(safe_float(row["metricValues"][0]["value"]))
+        if key:
+            metrics[key] = val
+        else:
+            metrics["sessoes_outros_canais"] += val
+
+    # ── Funil ────────────────────────────────────────────────────────────────
+    funil_map = {
+        "search":         "funil_search",
+        "select_item":    "funil_select_item",
+        "add_to_cart":    "funil_add_to_cart",
+        "begin_checkout": "funil_begin_checkout",
+        "purchase":       "funil_purchase",
+    }
+    for k in funil_map.values():
+        metrics[k] = 0
+    rows = run_report(service, date_str, ["eventName"], ["eventCount"], limit=50)
+    for row in rows:
+        event = row["dimensionValues"][0]["value"]
+        key = funil_map.get(event)
+        if key:
+            metrics[key] = int(safe_float(row["metricValues"][0]["value"]))
+
+    # ── Rotas — top 5 origens ────────────────────────────────────────────────
+    for i in range(1, 6):
+        metrics[f"top_origem_{i}"]         = ""
+        metrics[f"top_origem_{i}_sessoes"] = 0
+
+    rows = run_report(
+        service, date_str,
+        ["customEvent:originCity"], ["sessions"],
+        limit=5,
+    )
+    for i, row in enumerate(rows[:5], 1):
+        city = row["dimensionValues"][0]["value"]
+        sessions = int(safe_float(row["metricValues"][0]["value"]))
+        if city and city != "(not set)":
+            metrics[f"top_origem_{i}"]         = city
+            metrics[f"top_origem_{i}_sessoes"] = sessions
+
+    # ── Rotas — top 5 destinos ───────────────────────────────────────────────
+    for i in range(1, 6):
+        metrics[f"top_destino_{i}"]         = ""
+        metrics[f"top_destino_{i}_sessoes"] = 0
+
+    rows = run_report(
+        service, date_str,
+        ["customEvent:destinationCity"], ["sessions"],
+        limit=5,
+    )
+    for i, row in enumerate(rows[:5], 1):
+        city = row["dimensionValues"][0]["value"]
+        sessions = int(safe_float(row["metricValues"][0]["value"]))
+        if city and city != "(not set)":
+            metrics[f"top_destino_{i}"]         = city
+            metrics[f"top_destino_{i}_sessoes"] = sessions
+
+    return metrics
+
+
+# ──────────────────────────────────────────────
+# Manipulação do Excel
+# ──────────────────────────────────────────────
+
+def ensure_sheet(wb):
+    if SHEET_NAME not in wb.sheetnames:
+        ws = wb.create_sheet(SHEET_NAME)
+        ws.append(COLUMNS)
+        # Remove a aba padrão "Sheet" se existir e estiver vazia
+        if "Sheet" in wb.sheetnames and wb["Sheet"].max_row <= 1:
+            del wb["Sheet"]
+    else:
+        ws = wb[SHEET_NAME]
+        if ws.max_row == 0 or ws.cell(1, 1).value != "data":
+            ws.insert_rows(1)
+            for i, col in enumerate(COLUMNS, 1):
+                ws.cell(1, i).value = col
+    return ws
+
+
+def get_existing_dates(ws):
+    dates = set()
+    for row in ws.iter_rows(min_row=2, max_col=1, values_only=True):
+        if row[0]:
+            dates.add(str(row[0]))
+    return dates
+
+
+def append_row(ws, date_str, metrics):
+    row = [date_str] + [metrics.get(col, 0) for col in COLUMNS[1:]]
+    ws.append(row)
+
+
+def workbook_to_bytes(wb):
+    output = io.BytesIO()
+    wb.save(output)
+    return output.getvalue()
+
+
+# ──────────────────────────────────────────────
+# Main
+# ──────────────────────────────────────────────
+
+def main():
+    today     = datetime.date.today()
+    yesterday = today - datetime.timedelta(days=1)
+
+    # ── Autenticar e baixar planilha ─────────────────────────────────────────
+    print("Autenticando no Microsoft Graph...")
+    token = get_graph_token()
+
+    print("Baixando planilha do SharePoint...")
+    excel_bytes = download_excel(token)
+    wb = openpyxl.load_workbook(excel_bytes)
+    ws = ensure_sheet(wb)
+
+    existing_dates = get_existing_dates(ws)
+    print(f"Datas já na planilha: {len(existing_dates)}")
+
+    # ── Determinar modo de operação ──────────────────────────────────────────
+    # Modo histórico: planilha vazia ou com menos de 5 linhas de dados
+    historical_mode = len(existing_dates) < 5
+
+    if historical_mode:
+        print(f"MODO HISTÓRICO — coletando de {HISTORY_START} até {yesterday}")
+        dates_to_collect = []
+        current = HISTORY_START
+        while current <= yesterday:
+            date_str = current.strftime("%Y-%m-%d")
+            if date_str not in existing_dates:
+                dates_to_collect.append(date_str)
+            current += datetime.timedelta(days=1)
+    else:
+        print(f"MODO DIÁRIO — coletando {yesterday}")
+        date_str = yesterday.strftime("%Y-%m-%d")
+        if date_str in existing_dates:
+            print(f"Data {date_str} já existe. Nada a fazer.")
+            sys.exit(0)
+        dates_to_collect = [date_str]
+
+    if not dates_to_collect:
+        print("Nenhuma data nova para coletar.")
+        sys.exit(0)
+
+    # ── Coletar GA4 ──────────────────────────────────────────────────────────
+    print("Autenticando no GA4...")
+    ga4_service = get_ga4_service()
+
+    rows_added = 0
+    total = len(dates_to_collect)
+
+    for i, date_str in enumerate(dates_to_collect, 1):
+        print(f"  [{i}/{total}] {date_str}...", end=" ")
+        try:
+            metrics = collect_metrics(ga4_service, date_str)
+            append_row(ws, date_str, metrics)
+            rows_added += 1
+            print(
+                f"sessoes={metrics['sessoes']} "
+                f"compras={metrics['compras']} "
+                f"CR={metrics['taxa_conversao_pct']}%"
+            )
+        except Exception as e:
+            print(f"ERRO: {e}")
+
+        # No modo histórico, fazer upload a cada 30 dias coletados
+        # para evitar perda de dados em caso de timeout
+        if historical_mode and rows_added > 0 and rows_added % 30 == 0:
+            print(f"  Salvando checkpoint ({rows_added} linhas)...")
+            token = get_graph_token()  # renovar token
+            upload_excel(token, workbook_to_bytes(wb))
+
+        # Pequena pausa para não sobrecarregar a API do GA4
+        if historical_mode:
+            time.sleep(0.3)
+
+    # ── Upload final ─────────────────────────────────────────────────────────
+    if rows_added > 0:
+        print(f"\nTotal de linhas adicionadas: {rows_added}")
+        token = get_graph_token()
+        print("Enviando planilha atualizada ao SharePoint...")
+        upload_excel(token, workbook_to_bytes(wb))
+    else:
+        print("Nenhuma linha nova adicionada.")
+
+    print("Concluído.")
+
+
+if __name__ == "__main__":
+    main()
