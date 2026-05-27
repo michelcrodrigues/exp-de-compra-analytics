@@ -7,12 +7,10 @@ Modos de operação:
 
 Secrets necessários no GitHub Actions:
   GA4_CREDENTIALS_JSON   → conteúdo do JSON da service account (já existe)
-  SPREADSHEET_ID         → ID da planilha do Google Sheets (da URL)
+  SPREADSHEET_ID         → ID da planilha do Google Sheets
 
-A service account já precisa ter acesso de Editor à planilha.
-Como compartilhar: abrir a planilha → Compartilhar → colar o e-mail da
-service account (ga4-dashboard-github@analytics-dashboard-497114.iam.gserviceaccount.com)
-→ permissão Editor.
+A service account precisa ter acesso de Editor à planilha.
+E-mail: ga4-dashboard-github@analytics-dashboard-497114.iam.gserviceaccount.com
 """
 
 import os
@@ -37,25 +35,35 @@ SCOPES = [
     "https://www.googleapis.com/auth/spreadsheets",
 ]
 
-# Colunas da planilha — ordem fixa
+# Colunas da planilha — ordem fixa, não alterar sem migrar o arquivo
 COLUMNS = [
     "data",
-    # Volume
+
+    # ── Volume geral ─────────────────────────────────────────────
     "sessoes",
     "usuarios",
     "novos_usuarios",
     "pageviews",
-    # Conversão
+
+    # ── Conversão geral ──────────────────────────────────────────
+    # taxa_conversao_pct = compras / sessoes * 100 (calculado pelo script)
     "compras",
     "taxa_conversao_pct",
-    # Engajamento
+
+    # ── Engajamento ──────────────────────────────────────────────
     "taxa_rejeicao_pct",
     "duracao_media_seg",
-    # Dispositivo
+
+    # ── Por dispositivo (sessões + compras) ──────────────────────
+    # CR por device = compras_X / sessoes_X * 100 (calcular na planilha)
     "sessoes_mobile",
     "sessoes_desktop",
     "sessoes_tablet",
-    # Canal
+    "compras_mobile",
+    "compras_desktop",
+    "compras_tablet",
+
+    # ── Por canal (sessões) ──────────────────────────────────────
     "sessoes_organico",
     "sessoes_direto",
     "sessoes_pago",
@@ -63,18 +71,22 @@ COLUMNS = [
     "sessoes_email",
     "sessoes_referral",
     "sessoes_outros_canais",
-    # Funil
+
+    # ── Funil de eventos ─────────────────────────────────────────
     "funil_search",
     "funil_select_item",
     "funil_add_to_cart",
     "funil_begin_checkout",
     "funil_purchase",
-    # Rotas — top 5 origens e destinos
+
+    # ── Top 5 origens (cidade + sessões) ─────────────────────────
     "top_origem_1", "top_origem_1_sessoes",
     "top_origem_2", "top_origem_2_sessoes",
     "top_origem_3", "top_origem_3_sessoes",
     "top_origem_4", "top_origem_4_sessoes",
     "top_origem_5", "top_origem_5_sessoes",
+
+    # ── Top 5 destinos (cidade + sessões) ────────────────────────
     "top_destino_1", "top_destino_1_sessoes",
     "top_destino_2", "top_destino_2_sessoes",
     "top_destino_3", "top_destino_3_sessoes",
@@ -83,7 +95,7 @@ COLUMNS = [
 ]
 
 # ──────────────────────────────────────────────
-# Autenticação (única service account para tudo)
+# Autenticação
 # ──────────────────────────────────────────────
 
 def get_credentials():
@@ -101,11 +113,7 @@ def get_sheets_service(creds):
 
 
 def ensure_tab_and_header(sheets, spreadsheet_id):
-    """
-    Garante que a aba 'analytics' existe e tem o cabeçalho correto.
-    Cria a aba se não existir.
-    """
-    meta = sheets.spreadsheets().get(spreadsheetId=spreadsheet_id).execute()
+    meta     = sheets.spreadsheets().get(spreadsheetId=spreadsheet_id).execute()
     tab_names = [s["properties"]["title"] for s in meta["sheets"]]
 
     if SHEET_TAB_NAME not in tab_names:
@@ -114,42 +122,32 @@ def ensure_tab_and_header(sheets, spreadsheet_id):
             spreadsheetId=spreadsheet_id,
             body={"requests": [{"addSheet": {"properties": {"title": SHEET_TAB_NAME}}}]},
         ).execute()
-        # Escrever cabeçalho
+
+    # Verificar se cabeçalho existe
+    result = sheets.spreadsheets().values().get(
+        spreadsheetId=spreadsheet_id,
+        range=f"{SHEET_TAB_NAME}!A1:A1",
+    ).execute()
+
+    if not result.get("values"):
         sheets.spreadsheets().values().update(
             spreadsheetId=spreadsheet_id,
             range=f"{SHEET_TAB_NAME}!A1",
             valueInputOption="RAW",
             body={"values": [COLUMNS]},
         ).execute()
-        print("  Cabeçalho criado.")
-    else:
-        # Verificar se cabeçalho existe
-        result = sheets.spreadsheets().values().get(
-            spreadsheetId=spreadsheet_id,
-            range=f"{SHEET_TAB_NAME}!A1:A1",
-        ).execute()
-        if not result.get("values"):
-            sheets.spreadsheets().values().update(
-                spreadsheetId=spreadsheet_id,
-                range=f"{SHEET_TAB_NAME}!A1",
-                valueInputOption="RAW",
-                body={"values": [COLUMNS]},
-            ).execute()
-            print("  Cabeçalho criado.")
+        print(f"  Cabeçalho criado ({len(COLUMNS)} colunas).")
 
 
 def get_existing_dates(sheets, spreadsheet_id):
-    """Retorna set com todas as datas já gravadas na coluna A."""
     result = sheets.spreadsheets().values().get(
         spreadsheetId=spreadsheet_id,
         range=f"{SHEET_TAB_NAME}!A2:A",
     ).execute()
-    rows = result.get("values", [])
-    return {row[0] for row in rows if row}
+    return {row[0] for row in result.get("values", []) if row}
 
 
 def append_rows(sheets, spreadsheet_id, rows):
-    """Adiciona múltiplas linhas de uma vez no final da aba."""
     sheets.spreadsheets().values().append(
         spreadsheetId=spreadsheet_id,
         range=f"{SHEET_TAB_NAME}!A1",
@@ -158,9 +156,8 @@ def append_rows(sheets, spreadsheet_id, rows):
         body={"values": rows},
     ).execute()
 
-
 # ──────────────────────────────────────────────
-# Coleta GA4
+# GA4
 # ──────────────────────────────────────────────
 
 def get_ga4_service(creds):
@@ -182,11 +179,25 @@ def run_report(service, date_str, dimensions, metrics, limit=10):
     return resp.get("rows", [])
 
 
-def safe_float(value, default=0.0):
+def safe_int(value):
     try:
-        return float(value)
+        return int(float(value))
     except (TypeError, ValueError):
-        return default
+        return 0
+
+
+def safe_float(value, decimals=4):
+    try:
+        return round(float(value), decimals)
+    except (TypeError, ValueError):
+        return 0.0
+
+
+def calc_cr(compras, sessoes):
+    """Taxa de conversão real: compras / sessoes * 100."""
+    if sessoes > 0:
+        return round(compras / sessoes * 100, 4)
+    return 0.0
 
 
 def collect_metrics(service, date_str):
@@ -196,39 +207,42 @@ def collect_metrics(service, date_str):
     rows = run_report(
         service, date_str, [],
         ["sessions", "totalUsers", "newUsers", "transactions",
-         "sessionConversionRate", "bounceRate",
-         "averageSessionDuration", "screenPageViews"],
+         "bounceRate", "averageSessionDuration", "screenPageViews"],
     )
     if rows:
         v = rows[0]["metricValues"]
-        m["sessoes"]            = int(safe_float(v[0]["value"]))
-        m["usuarios"]           = int(safe_float(v[1]["value"]))
-        m["novos_usuarios"]     = int(safe_float(v[2]["value"]))
-        m["compras"]            = int(safe_float(v[3]["value"]))
-        m["taxa_conversao_pct"] = round(safe_float(v[4]["value"]) * 100, 4)
-        m["taxa_rejeicao_pct"]  = round(safe_float(v[5]["value"]) * 100, 4)
-        m["duracao_media_seg"]  = round(safe_float(v[6]["value"]), 2)
-        m["pageviews"]          = int(safe_float(v[7]["value"]))
+        m["sessoes"]           = safe_int(v[0]["value"])
+        m["usuarios"]          = safe_int(v[1]["value"])
+        m["novos_usuarios"]    = safe_int(v[2]["value"])
+        m["compras"]           = safe_int(v[3]["value"])
+        m["taxa_rejeicao_pct"] = safe_float(v[4]["value"])
+        m["duracao_media_seg"] = safe_float(v[5]["value"], 2)
+        m["pageviews"]         = safe_int(v[6]["value"])
     else:
         for k in ["sessoes", "usuarios", "novos_usuarios", "compras",
-                  "taxa_conversao_pct", "taxa_rejeicao_pct",
-                  "duracao_media_seg", "pageviews"]:
+                  "taxa_rejeicao_pct", "duracao_media_seg", "pageviews"]:
             m[k] = 0
 
-    # ── Dispositivos ─────────────────────────────────────────────────────────
-    device_map = {
-        "mobile":  "sessoes_mobile",
-        "desktop": "sessoes_desktop",
-        "tablet":  "sessoes_tablet",
-    }
-    for k in device_map.values():
-        m[k] = 0
-    for row in run_report(service, date_str, ["deviceCategory"], ["sessions"]):
-        dev = row["dimensionValues"][0]["value"].lower()
-        if dev in device_map:
-            m[device_map[dev]] = int(safe_float(row["metricValues"][0]["value"]))
+    # CR calculado manualmente — não usar sessionConversionRate do GA4
+    m["taxa_conversao_pct"] = calc_cr(m["compras"], m["sessoes"])
 
-    # ── Canais ───────────────────────────────────────────────────────────────
+    # ── Sessões + compras por dispositivo ────────────────────────────────────
+    for dev in ["mobile", "desktop", "tablet"]:
+        m[f"sessoes_{dev}"] = 0
+        m[f"compras_{dev}"] = 0
+
+    rows = run_report(
+        service, date_str,
+        ["deviceCategory"],
+        ["sessions", "transactions"],
+    )
+    for row in rows:
+        dev = row["dimensionValues"][0]["value"].lower()
+        if dev in ("mobile", "desktop", "tablet"):
+            m[f"sessoes_{dev}"] = safe_int(row["metricValues"][0]["value"])
+            m[f"compras_{dev}"] = safe_int(row["metricValues"][1]["value"])
+
+    # ── Sessões por canal ────────────────────────────────────────────────────
     channel_map = {
         "organic search": "sessoes_organico",
         "direct":         "sessoes_direto",
@@ -240,15 +254,22 @@ def collect_metrics(service, date_str):
     for k in channel_map.values():
         m[k] = 0
     m["sessoes_outros_canais"] = 0
-    for row in run_report(service, date_str, ["sessionDefaultChannelGroup"], ["sessions"], limit=20):
+
+    rows = run_report(
+        service, date_str,
+        ["sessionDefaultChannelGroup"],
+        ["sessions"],
+        limit=20,
+    )
+    for row in rows:
         channel = row["dimensionValues"][0]["value"].lower()
-        val = int(safe_float(row["metricValues"][0]["value"]))
+        val     = safe_int(row["metricValues"][0]["value"])
         if channel in channel_map:
             m[channel_map[channel]] = val
         else:
             m["sessoes_outros_canais"] += val
 
-    # ── Funil ────────────────────────────────────────────────────────────────
+    # ── Funil de eventos ─────────────────────────────────────────────────────
     funil_map = {
         "search":         "funil_search",
         "select_item":    "funil_select_item",
@@ -258,40 +279,56 @@ def collect_metrics(service, date_str):
     }
     for k in funil_map.values():
         m[k] = 0
-    for row in run_report(service, date_str, ["eventName"], ["eventCount"], limit=50):
+
+    rows = run_report(
+        service, date_str,
+        ["eventName"],
+        ["eventCount"],
+        limit=50,
+    )
+    for row in rows:
         event = row["dimensionValues"][0]["value"]
         if event in funil_map:
-            m[funil_map[event]] = int(safe_float(row["metricValues"][0]["value"]))
+            m[funil_map[event]] = safe_int(row["metricValues"][0]["value"])
 
     # ── Top 5 origens ────────────────────────────────────────────────────────
     for i in range(1, 6):
         m[f"top_origem_{i}"]         = ""
         m[f"top_origem_{i}_sessoes"] = 0
-    for i, row in enumerate(
-        run_report(service, date_str, ["customEvent:originCity"], ["sessions"], limit=5), 1
-    ):
+
+    rows = run_report(
+        service, date_str,
+        ["customEvent:originCity"],
+        ["sessions"],
+        limit=5,
+    )
+    for i, row in enumerate(rows, 1):
         city = row["dimensionValues"][0]["value"]
         if city and city != "(not set)":
             m[f"top_origem_{i}"]         = city
-            m[f"top_origem_{i}_sessoes"] = int(safe_float(row["metricValues"][0]["value"]))
+            m[f"top_origem_{i}_sessoes"] = safe_int(row["metricValues"][0]["value"])
 
     # ── Top 5 destinos ───────────────────────────────────────────────────────
     for i in range(1, 6):
         m[f"top_destino_{i}"]         = ""
         m[f"top_destino_{i}_sessoes"] = 0
-    for i, row in enumerate(
-        run_report(service, date_str, ["customEvent:destinationCity"], ["sessions"], limit=5), 1
-    ):
+
+    rows = run_report(
+        service, date_str,
+        ["customEvent:destinationCity"],
+        ["sessions"],
+        limit=5,
+    )
+    for i, row in enumerate(rows, 1):
         city = row["dimensionValues"][0]["value"]
         if city and city != "(not set)":
             m[f"top_destino_{i}"]         = city
-            m[f"top_destino_{i}_sessoes"] = int(safe_float(row["metricValues"][0]["value"]))
+            m[f"top_destino_{i}_sessoes"] = safe_int(row["metricValues"][0]["value"])
 
     return m
 
 
 def metrics_to_row(date_str, m):
-    """Converte o dict de métricas para uma lista na ordem das COLUMNS."""
     return [date_str] + [m.get(col, 0) for col in COLUMNS[1:]]
 
 
@@ -301,23 +338,20 @@ def metrics_to_row(date_str, m):
 
 def main():
     spreadsheet_id = os.environ["SPREADSHEET_ID"]
-    today          = datetime.date.today()
-    yesterday      = today - datetime.timedelta(days=1)
+    yesterday      = datetime.date.today() - datetime.timedelta(days=1)
 
-    # ── Autenticar (uma vez, mesma service account) ──────────────────────────
     print("Autenticando...")
-    creds        = get_credentials()
-    sheets       = get_sheets_service(creds)
-    ga4_service  = get_ga4_service(creds)
+    creds       = get_credentials()
+    sheets      = get_sheets_service(creds)
+    ga4_service = get_ga4_service(creds)
 
-    # ── Garantir aba e cabeçalho ─────────────────────────────────────────────
     print("Verificando planilha...")
     ensure_tab_and_header(sheets, spreadsheet_id)
 
     existing_dates = get_existing_dates(sheets, spreadsheet_id)
     print(f"Datas já na planilha: {len(existing_dates)}")
 
-    # ── Determinar modo ──────────────────────────────────────────────────────
+    # ── Modo de operação ─────────────────────────────────────────────────────
     historical_mode = len(existing_dates) < 5
 
     if historical_mode:
@@ -341,9 +375,9 @@ def main():
         print("Nenhuma data nova para coletar.")
         sys.exit(0)
 
-    # ── Coletar e acumular linhas ────────────────────────────────────────────
-    total      = len(dates_to_collect)
-    batch      = []   # acumula linhas para envio em lote
+    # ── Coleta ───────────────────────────────────────────────────────────────
+    total = len(dates_to_collect)
+    batch = []
     rows_added = 0
 
     for i, date_str in enumerate(dates_to_collect, 1):
@@ -360,20 +394,19 @@ def main():
         except Exception as e:
             print(f"ERRO: {e}")
 
-        # Gravar no Sheets a cada 30 linhas (checkpoint anti-timeout)
+        # Checkpoint a cada 30 linhas no modo histórico
         if historical_mode and len(batch) >= 30:
-            print(f"  Gravando checkpoint ({rows_added} linhas)...")
+            print(f"  Gravando checkpoint ({rows_added} linhas acumuladas)...")
             append_rows(sheets, spreadsheet_id, batch)
             batch = []
-            time.sleep(1)  # respeitar quota da Sheets API
+            time.sleep(1)
 
-        # Pausa entre chamadas GA4 no modo histórico
         if historical_mode:
             time.sleep(0.3)
 
-    # ── Gravar o que sobrou ──────────────────────────────────────────────────
+    # ── Gravar restante ──────────────────────────────────────────────────────
     if batch:
-        print(f"\nGravando {len(batch)} linha(s) no Google Sheets...")
+        print(f"\nGravando {len(batch)} linha(s) finais no Google Sheets...")
         append_rows(sheets, spreadsheet_id, batch)
 
     print(f"Total de linhas adicionadas: {rows_added}")
