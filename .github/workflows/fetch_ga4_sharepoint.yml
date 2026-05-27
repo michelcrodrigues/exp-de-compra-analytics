@@ -5,11 +5,20 @@ on:
     # 08:00 BRT = 11:00 UTC
     - cron: "0 11 * * *"
   workflow_dispatch:
+    inputs:
+      force_historical:
+        description: "Forçar modo histórico (recoleta tudo desde jan/2025)"
+        required: false
+        default: "false"
+        type: choice
+        options:
+          - "false"
+          - "true"
 
 jobs:
   fetch-and-update:
     runs-on: ubuntu-latest
-    timeout-minutes: 20
+    timeout-minutes: 30
 
     steps:
       - name: Checkout do repositório
@@ -30,4 +39,5 @@ jobs:
         env:
           GA4_CREDENTIALS_JSON: ${{ secrets.GA4_CREDENTIALS_JSON }}
           SPREADSHEET_ID:       ${{ secrets.SPREADSHEET_ID }}
+          FORCE_HISTORICAL:     ${{ github.event.inputs.force_historical || 'false' }}
         run: python scripts/fetch_ga4.py
