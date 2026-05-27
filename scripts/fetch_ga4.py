@@ -1,40 +1,43 @@
 """
-fetch_ga4.py — Coleta métricas diárias do GA4 e grava no SharePoint (OneDrive/Excel).
+fetch_ga4.py — Coleta métricas diárias do GA4 e grava no Google Sheets.
 
 Modos de operação:
   HISTÓRICO — primeira execução: coleta de 01/01/2025 até ontem, dia a dia
   DIÁRIO    — execuções seguintes: coleta só o dia anterior
 
 Secrets necessários no GitHub Actions:
-  GA4_CREDENTIALS_JSON   → conteúdo do JSON da service account do GA4
-  AZURE_TENANT_ID        → tenant ID do Azure AD
-  AZURE_CLIENT_ID        → client ID do App Registration
-  AZURE_CLIENT_SECRET    → client secret do App Registration
-  SHAREPOINT_SITE_ID     → ID do site SharePoint
-  SHAREPOINT_FILE_ID     → ID do arquivo Excel no SharePoint
+  GA4_CREDENTIALS_JSON   → conteúdo do JSON da service account (já existe)
+  SPREADSHEET_ID         → ID da planilha do Google Sheets (da URL)
+
+A service account já precisa ter acesso de Editor à planilha.
+Como compartilhar: abrir a planilha → Compartilhar → colar o e-mail da
+service account (ga4-dashboard-github@analytics-dashboard-497114.iam.gserviceaccount.com)
+→ permissão Editor.
 """
 
 import os
 import json
 import datetime
-import io
 import sys
 import time
 
-import requests
 from google.oauth2 import service_account
 from googleapiclient.discovery import build
-import openpyxl
 
 # ──────────────────────────────────────────────
 # Configurações
 # ──────────────────────────────────────────────
 
-GA4_PROPERTY_ID  = "326912205"
-HISTORY_START    = datetime.date(2025, 1, 1)
-SHEET_NAME       = "analytics"
+GA4_PROPERTY_ID = "326912205"
+HISTORY_START   = datetime.date(2025, 1, 1)
+SHEET_TAB_NAME  = "analytics"
 
-# Colunas da planilha — ordem fixa, não alterar sem migrar o arquivo
+SCOPES = [
+    "https://www.googleapis.com/auth/analytics.readonly",
+    "https://www.googleapis.com/auth/spreadsheets",
+]
+
+# Colunas da planilha — ordem fixa
 COLUMNS = [
     "data",
     # Volume
@@ -66,7 +69,7 @@ COLUMNS = [
     "funil_add_to_cart",
     "funil_begin_checkout",
     "funil_purchase",
-    # Rotas — top 5 origens e destinos do dia
+    # Rotas — top 5 origens e destinos
     "top_origem_1", "top_origem_1_sessoes",
     "top_origem_2", "top_origem_2_sessoes",
     "top_origem_3", "top_origem_3_sessoes",
@@ -80,72 +83,89 @@ COLUMNS = [
 ]
 
 # ──────────────────────────────────────────────
-# Autenticação GA4
+# Autenticação (única service account para tudo)
 # ──────────────────────────────────────────────
 
-def get_ga4_service():
+def get_credentials():
     creds_info = json.loads(os.environ["GA4_CREDENTIALS_JSON"])
-    creds = service_account.Credentials.from_service_account_info(
-        creds_info,
-        scopes=["https://www.googleapis.com/auth/analytics.readonly"],
+    return service_account.Credentials.from_service_account_info(
+        creds_info, scopes=SCOPES
     )
-    return build("analyticsdata", "v1beta", credentials=creds)
-
 
 # ──────────────────────────────────────────────
-# Autenticação Microsoft Graph
+# Google Sheets
 # ──────────────────────────────────────────────
 
-def get_graph_token():
-    url = (
-        f"https://login.microsoftonline.com/"
-        f"{os.environ['AZURE_TENANT_ID']}/oauth2/v2.0/token"
-    )
-    resp = requests.post(url, data={
-        "grant_type":    "client_credentials",
-        "client_id":     os.environ["AZURE_CLIENT_ID"],
-        "client_secret": os.environ["AZURE_CLIENT_SECRET"],
-        "scope":         "https://graph.microsoft.com/.default",
-    })
-    resp.raise_for_status()
-    return resp.json()["access_token"]
+def get_sheets_service(creds):
+    return build("sheets", "v4", credentials=creds)
 
 
-# ──────────────────────────────────────────────
-# Download / upload do Excel no SharePoint
-# ──────────────────────────────────────────────
+def ensure_tab_and_header(sheets, spreadsheet_id):
+    """
+    Garante que a aba 'analytics' existe e tem o cabeçalho correto.
+    Cria a aba se não existir.
+    """
+    meta = sheets.spreadsheets().get(spreadsheetId=spreadsheet_id).execute()
+    tab_names = [s["properties"]["title"] for s in meta["sheets"]]
 
-GRAPH_BASE = "https://graph.microsoft.com/v1.0"
+    if SHEET_TAB_NAME not in tab_names:
+        print(f"  Aba '{SHEET_TAB_NAME}' não encontrada — criando...")
+        sheets.spreadsheets().batchUpdate(
+            spreadsheetId=spreadsheet_id,
+            body={"requests": [{"addSheet": {"properties": {"title": SHEET_TAB_NAME}}}]},
+        ).execute()
+        # Escrever cabeçalho
+        sheets.spreadsheets().values().update(
+            spreadsheetId=spreadsheet_id,
+            range=f"{SHEET_TAB_NAME}!A1",
+            valueInputOption="RAW",
+            body={"values": [COLUMNS]},
+        ).execute()
+        print("  Cabeçalho criado.")
+    else:
+        # Verificar se cabeçalho existe
+        result = sheets.spreadsheets().values().get(
+            spreadsheetId=spreadsheet_id,
+            range=f"{SHEET_TAB_NAME}!A1:A1",
+        ).execute()
+        if not result.get("values"):
+            sheets.spreadsheets().values().update(
+                spreadsheetId=spreadsheet_id,
+                range=f"{SHEET_TAB_NAME}!A1",
+                valueInputOption="RAW",
+                body={"values": [COLUMNS]},
+            ).execute()
+            print("  Cabeçalho criado.")
 
 
-def download_excel(token):
-    site_id = os.environ["SHAREPOINT_SITE_ID"]
-    file_id = os.environ["SHAREPOINT_FILE_ID"]
-    url = f"{GRAPH_BASE}/sites/{site_id}/drive/items/{file_id}/content"
-    resp = requests.get(url, headers={"Authorization": f"Bearer {token}"})
-    resp.raise_for_status()
-    return io.BytesIO(resp.content)
+def get_existing_dates(sheets, spreadsheet_id):
+    """Retorna set com todas as datas já gravadas na coluna A."""
+    result = sheets.spreadsheets().values().get(
+        spreadsheetId=spreadsheet_id,
+        range=f"{SHEET_TAB_NAME}!A2:A",
+    ).execute()
+    rows = result.get("values", [])
+    return {row[0] for row in rows if row}
 
 
-def upload_excel(token, excel_bytes: bytes):
-    site_id = os.environ["SHAREPOINT_SITE_ID"]
-    file_id = os.environ["SHAREPOINT_FILE_ID"]
-    url = f"{GRAPH_BASE}/sites/{site_id}/drive/items/{file_id}/content"
-    resp = requests.put(
-        url,
-        headers={
-            "Authorization": f"Bearer {token}",
-            "Content-Type": "application/octet-stream",
-        },
-        data=excel_bytes,
-    )
-    resp.raise_for_status()
-    print(f"  Upload OK — status {resp.status_code}")
+def append_rows(sheets, spreadsheet_id, rows):
+    """Adiciona múltiplas linhas de uma vez no final da aba."""
+    sheets.spreadsheets().values().append(
+        spreadsheetId=spreadsheet_id,
+        range=f"{SHEET_TAB_NAME}!A1",
+        valueInputOption="RAW",
+        insertDataOption="INSERT_ROWS",
+        body={"values": rows},
+    ).execute()
 
 
 # ──────────────────────────────────────────────
 # Coleta GA4
 # ──────────────────────────────────────────────
+
+def get_ga4_service(creds):
+    return build("analyticsdata", "v1beta", credentials=creds)
+
 
 def run_report(service, date_str, dimensions, metrics, limit=10):
     body = {
@@ -170,7 +190,7 @@ def safe_float(value, default=0.0):
 
 
 def collect_metrics(service, date_str):
-    metrics = {}
+    m = {}
 
     # ── Métricas gerais ──────────────────────────────────────────────────────
     rows = run_report(
@@ -181,30 +201,32 @@ def collect_metrics(service, date_str):
     )
     if rows:
         v = rows[0]["metricValues"]
-        metrics["sessoes"]            = int(safe_float(v[0]["value"]))
-        metrics["usuarios"]           = int(safe_float(v[1]["value"]))
-        metrics["novos_usuarios"]     = int(safe_float(v[2]["value"]))
-        metrics["compras"]            = int(safe_float(v[3]["value"]))
-        metrics["taxa_conversao_pct"] = round(safe_float(v[4]["value"]) * 100, 4)
-        metrics["taxa_rejeicao_pct"]  = round(safe_float(v[5]["value"]) * 100, 4)
-        metrics["duracao_media_seg"]  = round(safe_float(v[6]["value"]), 2)
-        metrics["pageviews"]          = int(safe_float(v[7]["value"]))
+        m["sessoes"]            = int(safe_float(v[0]["value"]))
+        m["usuarios"]           = int(safe_float(v[1]["value"]))
+        m["novos_usuarios"]     = int(safe_float(v[2]["value"]))
+        m["compras"]            = int(safe_float(v[3]["value"]))
+        m["taxa_conversao_pct"] = round(safe_float(v[4]["value"]) * 100, 4)
+        m["taxa_rejeicao_pct"]  = round(safe_float(v[5]["value"]) * 100, 4)
+        m["duracao_media_seg"]  = round(safe_float(v[6]["value"]), 2)
+        m["pageviews"]          = int(safe_float(v[7]["value"]))
     else:
         for k in ["sessoes", "usuarios", "novos_usuarios", "compras",
                   "taxa_conversao_pct", "taxa_rejeicao_pct",
                   "duracao_media_seg", "pageviews"]:
-            metrics[k] = 0
+            m[k] = 0
 
     # ── Dispositivos ─────────────────────────────────────────────────────────
-    device_map = {"mobile": "sessoes_mobile", "desktop": "sessoes_desktop", "tablet": "sessoes_tablet"}
+    device_map = {
+        "mobile":  "sessoes_mobile",
+        "desktop": "sessoes_desktop",
+        "tablet":  "sessoes_tablet",
+    }
     for k in device_map.values():
-        metrics[k] = 0
-    rows = run_report(service, date_str, ["deviceCategory"], ["sessions"])
-    for row in rows:
+        m[k] = 0
+    for row in run_report(service, date_str, ["deviceCategory"], ["sessions"]):
         dev = row["dimensionValues"][0]["value"].lower()
-        key = device_map.get(dev)
-        if key:
-            metrics[key] = int(safe_float(row["metricValues"][0]["value"]))
+        if dev in device_map:
+            m[device_map[dev]] = int(safe_float(row["metricValues"][0]["value"]))
 
     # ── Canais ───────────────────────────────────────────────────────────────
     channel_map = {
@@ -216,18 +238,15 @@ def collect_metrics(service, date_str):
         "referral":       "sessoes_referral",
     }
     for k in channel_map.values():
-        metrics[k] = 0
-    metrics["sessoes_outros_canais"] = 0
-
-    rows = run_report(service, date_str, ["sessionDefaultChannelGroup"], ["sessions"], limit=20)
-    for row in rows:
+        m[k] = 0
+    m["sessoes_outros_canais"] = 0
+    for row in run_report(service, date_str, ["sessionDefaultChannelGroup"], ["sessions"], limit=20):
         channel = row["dimensionValues"][0]["value"].lower()
-        key = channel_map.get(channel)
         val = int(safe_float(row["metricValues"][0]["value"]))
-        if key:
-            metrics[key] = val
+        if channel in channel_map:
+            m[channel_map[channel]] = val
         else:
-            metrics["sessoes_outros_canais"] += val
+            m["sessoes_outros_canais"] += val
 
     # ── Funil ────────────────────────────────────────────────────────────────
     funil_map = {
@@ -238,88 +257,42 @@ def collect_metrics(service, date_str):
         "purchase":       "funil_purchase",
     }
     for k in funil_map.values():
-        metrics[k] = 0
-    rows = run_report(service, date_str, ["eventName"], ["eventCount"], limit=50)
-    for row in rows:
+        m[k] = 0
+    for row in run_report(service, date_str, ["eventName"], ["eventCount"], limit=50):
         event = row["dimensionValues"][0]["value"]
-        key = funil_map.get(event)
-        if key:
-            metrics[key] = int(safe_float(row["metricValues"][0]["value"]))
+        if event in funil_map:
+            m[funil_map[event]] = int(safe_float(row["metricValues"][0]["value"]))
 
-    # ── Rotas — top 5 origens ────────────────────────────────────────────────
+    # ── Top 5 origens ────────────────────────────────────────────────────────
     for i in range(1, 6):
-        metrics[f"top_origem_{i}"]         = ""
-        metrics[f"top_origem_{i}_sessoes"] = 0
-
-    rows = run_report(
-        service, date_str,
-        ["customEvent:originCity"], ["sessions"],
-        limit=5,
-    )
-    for i, row in enumerate(rows[:5], 1):
+        m[f"top_origem_{i}"]         = ""
+        m[f"top_origem_{i}_sessoes"] = 0
+    for i, row in enumerate(
+        run_report(service, date_str, ["customEvent:originCity"], ["sessions"], limit=5), 1
+    ):
         city = row["dimensionValues"][0]["value"]
-        sessions = int(safe_float(row["metricValues"][0]["value"]))
         if city and city != "(not set)":
-            metrics[f"top_origem_{i}"]         = city
-            metrics[f"top_origem_{i}_sessoes"] = sessions
+            m[f"top_origem_{i}"]         = city
+            m[f"top_origem_{i}_sessoes"] = int(safe_float(row["metricValues"][0]["value"]))
 
-    # ── Rotas — top 5 destinos ───────────────────────────────────────────────
+    # ── Top 5 destinos ───────────────────────────────────────────────────────
     for i in range(1, 6):
-        metrics[f"top_destino_{i}"]         = ""
-        metrics[f"top_destino_{i}_sessoes"] = 0
-
-    rows = run_report(
-        service, date_str,
-        ["customEvent:destinationCity"], ["sessions"],
-        limit=5,
-    )
-    for i, row in enumerate(rows[:5], 1):
+        m[f"top_destino_{i}"]         = ""
+        m[f"top_destino_{i}_sessoes"] = 0
+    for i, row in enumerate(
+        run_report(service, date_str, ["customEvent:destinationCity"], ["sessions"], limit=5), 1
+    ):
         city = row["dimensionValues"][0]["value"]
-        sessions = int(safe_float(row["metricValues"][0]["value"]))
         if city and city != "(not set)":
-            metrics[f"top_destino_{i}"]         = city
-            metrics[f"top_destino_{i}_sessoes"] = sessions
+            m[f"top_destino_{i}"]         = city
+            m[f"top_destino_{i}_sessoes"] = int(safe_float(row["metricValues"][0]["value"]))
 
-    return metrics
-
-
-# ──────────────────────────────────────────────
-# Manipulação do Excel
-# ──────────────────────────────────────────────
-
-def ensure_sheet(wb):
-    if SHEET_NAME not in wb.sheetnames:
-        ws = wb.create_sheet(SHEET_NAME)
-        ws.append(COLUMNS)
-        # Remove a aba padrão "Sheet" se existir e estiver vazia
-        if "Sheet" in wb.sheetnames and wb["Sheet"].max_row <= 1:
-            del wb["Sheet"]
-    else:
-        ws = wb[SHEET_NAME]
-        if ws.max_row == 0 or ws.cell(1, 1).value != "data":
-            ws.insert_rows(1)
-            for i, col in enumerate(COLUMNS, 1):
-                ws.cell(1, i).value = col
-    return ws
+    return m
 
 
-def get_existing_dates(ws):
-    dates = set()
-    for row in ws.iter_rows(min_row=2, max_col=1, values_only=True):
-        if row[0]:
-            dates.add(str(row[0]))
-    return dates
-
-
-def append_row(ws, date_str, metrics):
-    row = [date_str] + [metrics.get(col, 0) for col in COLUMNS[1:]]
-    ws.append(row)
-
-
-def workbook_to_bytes(wb):
-    output = io.BytesIO()
-    wb.save(output)
-    return output.getvalue()
+def metrics_to_row(date_str, m):
+    """Converte o dict de métricas para uma lista na ordem das COLUMNS."""
+    return [date_str] + [m.get(col, 0) for col in COLUMNS[1:]]
 
 
 # ──────────────────────────────────────────────
@@ -327,23 +300,24 @@ def workbook_to_bytes(wb):
 # ──────────────────────────────────────────────
 
 def main():
-    today     = datetime.date.today()
-    yesterday = today - datetime.timedelta(days=1)
+    spreadsheet_id = os.environ["SPREADSHEET_ID"]
+    today          = datetime.date.today()
+    yesterday      = today - datetime.timedelta(days=1)
 
-    # ── Autenticar e baixar planilha ─────────────────────────────────────────
-    print("Autenticando no Microsoft Graph...")
-    token = get_graph_token()
+    # ── Autenticar (uma vez, mesma service account) ──────────────────────────
+    print("Autenticando...")
+    creds        = get_credentials()
+    sheets       = get_sheets_service(creds)
+    ga4_service  = get_ga4_service(creds)
 
-    print("Baixando planilha do SharePoint...")
-    excel_bytes = download_excel(token)
-    wb = openpyxl.load_workbook(excel_bytes)
-    ws = ensure_sheet(wb)
+    # ── Garantir aba e cabeçalho ─────────────────────────────────────────────
+    print("Verificando planilha...")
+    ensure_tab_and_header(sheets, spreadsheet_id)
 
-    existing_dates = get_existing_dates(ws)
+    existing_dates = get_existing_dates(sheets, spreadsheet_id)
     print(f"Datas já na planilha: {len(existing_dates)}")
 
-    # ── Determinar modo de operação ──────────────────────────────────────────
-    # Modo histórico: planilha vazia ou com menos de 5 linhas de dados
+    # ── Determinar modo ──────────────────────────────────────────────────────
     historical_mode = len(existing_dates) < 5
 
     if historical_mode:
@@ -356,58 +330,53 @@ def main():
                 dates_to_collect.append(date_str)
             current += datetime.timedelta(days=1)
     else:
-        print(f"MODO DIÁRIO — coletando {yesterday}")
         date_str = yesterday.strftime("%Y-%m-%d")
         if date_str in existing_dates:
-            print(f"Data {date_str} já existe. Nada a fazer.")
+            print(f"MODO DIÁRIO — {date_str} já existe. Nada a fazer.")
             sys.exit(0)
+        print(f"MODO DIÁRIO — coletando {date_str}")
         dates_to_collect = [date_str]
 
     if not dates_to_collect:
         print("Nenhuma data nova para coletar.")
         sys.exit(0)
 
-    # ── Coletar GA4 ──────────────────────────────────────────────────────────
-    print("Autenticando no GA4...")
-    ga4_service = get_ga4_service()
-
+    # ── Coletar e acumular linhas ────────────────────────────────────────────
+    total      = len(dates_to_collect)
+    batch      = []   # acumula linhas para envio em lote
     rows_added = 0
-    total = len(dates_to_collect)
 
     for i, date_str in enumerate(dates_to_collect, 1):
-        print(f"  [{i}/{total}] {date_str}...", end=" ")
+        print(f"  [{i}/{total}] {date_str}...", end=" ", flush=True)
         try:
-            metrics = collect_metrics(ga4_service, date_str)
-            append_row(ws, date_str, metrics)
+            m = collect_metrics(ga4_service, date_str)
+            batch.append(metrics_to_row(date_str, m))
             rows_added += 1
             print(
-                f"sessoes={metrics['sessoes']} "
-                f"compras={metrics['compras']} "
-                f"CR={metrics['taxa_conversao_pct']}%"
+                f"sessoes={m['sessoes']} "
+                f"compras={m['compras']} "
+                f"CR={m['taxa_conversao_pct']}%"
             )
         except Exception as e:
             print(f"ERRO: {e}")
 
-        # No modo histórico, fazer upload a cada 30 dias coletados
-        # para evitar perda de dados em caso de timeout
-        if historical_mode and rows_added > 0 and rows_added % 30 == 0:
-            print(f"  Salvando checkpoint ({rows_added} linhas)...")
-            token = get_graph_token()  # renovar token
-            upload_excel(token, workbook_to_bytes(wb))
+        # Gravar no Sheets a cada 30 linhas (checkpoint anti-timeout)
+        if historical_mode and len(batch) >= 30:
+            print(f"  Gravando checkpoint ({rows_added} linhas)...")
+            append_rows(sheets, spreadsheet_id, batch)
+            batch = []
+            time.sleep(1)  # respeitar quota da Sheets API
 
-        # Pequena pausa para não sobrecarregar a API do GA4
+        # Pausa entre chamadas GA4 no modo histórico
         if historical_mode:
             time.sleep(0.3)
 
-    # ── Upload final ─────────────────────────────────────────────────────────
-    if rows_added > 0:
-        print(f"\nTotal de linhas adicionadas: {rows_added}")
-        token = get_graph_token()
-        print("Enviando planilha atualizada ao SharePoint...")
-        upload_excel(token, workbook_to_bytes(wb))
-    else:
-        print("Nenhuma linha nova adicionada.")
+    # ── Gravar o que sobrou ──────────────────────────────────────────────────
+    if batch:
+        print(f"\nGravando {len(batch)} linha(s) no Google Sheets...")
+        append_rows(sheets, spreadsheet_id, batch)
 
+    print(f"Total de linhas adicionadas: {rows_added}")
     print("Concluído.")
 
 
