@@ -2,12 +2,16 @@
 fetch_ga4.py — Coleta métricas diárias do GA4 e grava no Google Sheets.
 
 Modos de operação:
-  HISTÓRICO — primeira execução: coleta de 01/01/2025 até ontem, dia a dia
-  DIÁRIO    — execuções seguintes: coleta só o dia anterior
+  HISTÓRICO — ativado por FORCE_HISTORICAL=true ou planilha vazia (0 linhas de dados)
+              coleta de 01/01/2025 até ontem, dia a dia
+  DIÁRIO    — padrão; coleta só o dia anterior
 
 Secrets necessários no GitHub Actions:
   GA4_CREDENTIALS_JSON   → conteúdo do JSON da service account (já existe)
   SPREADSHEET_ID         → ID da planilha do Google Sheets
+
+Variável opcional:
+  FORCE_HISTORICAL=true  → força modo histórico independente do conteúdo da planilha
 
 A service account precisa ter acesso de Editor à planilha.
 E-mail: ga4-dashboard-github@analytics-dashboard-497114.iam.gserviceaccount.com
@@ -21,19 +25,29 @@ import time
 
 from google.oauth2 import service_account
 from googleapiclient.discovery import build
+from googleapiclient.errors import HttpError
 
 # ──────────────────────────────────────────────
 # Configurações
 # ──────────────────────────────────────────────
 
-GA4_PROPERTY_ID = "326912205"
-HISTORY_START   = datetime.date(2025, 1, 1)
-SHEET_TAB_NAME  = "analytics"
+GA4_PROPERTY_ID    = "326912205"
+HISTORY_START      = datetime.date(2025, 1, 1)
+SHEET_TAB_NAME     = "analytics"
+CHECKPOINT_EVERY   = 30    # gravar no Sheets a cada N linhas
+PAUSE_BETWEEN_DAYS = 0.15  # segundos entre chamadas GA4 no modo histórico
+MAX_RETRIES        = 3     # tentativas em caso de erro transitório da API
 
 SCOPES = [
     "https://www.googleapis.com/auth/analytics.readonly",
     "https://www.googleapis.com/auth/spreadsheets",
 ]
+
+# Colunas de texto — usam "" como default, não 0
+TEXT_COLUMNS = {
+    "top_origem_1", "top_origem_2", "top_origem_3", "top_origem_4", "top_origem_5",
+    "top_destino_1", "top_destino_2", "top_destino_3", "top_destino_4", "top_destino_5",
+}
 
 # Colunas da planilha — ordem fixa, não alterar sem migrar o arquivo
 COLUMNS = [
@@ -51,6 +65,7 @@ COLUMNS = [
     "taxa_conversao_pct",
 
     # ── Engajamento ──────────────────────────────────────────────
+    # taxa_rejeicao_pct: gravado como percentual (ex: 62.5, não 0.625)
     "taxa_rejeicao_pct",
     "duracao_media_seg",
 
@@ -113,7 +128,7 @@ def get_sheets_service(creds):
 
 
 def ensure_tab_and_header(sheets, spreadsheet_id):
-    meta     = sheets.spreadsheets().get(spreadsheetId=spreadsheet_id).execute()
+    meta      = sheets.spreadsheets().get(spreadsheetId=spreadsheet_id).execute()
     tab_names = [s["properties"]["title"] for s in meta["sheets"]]
 
     if SHEET_TAB_NAME not in tab_names:
@@ -123,7 +138,6 @@ def ensure_tab_and_header(sheets, spreadsheet_id):
             body={"requests": [{"addSheet": {"properties": {"title": SHEET_TAB_NAME}}}]},
         ).execute()
 
-    # Verificar se cabeçalho existe
     result = sheets.spreadsheets().values().get(
         spreadsheetId=spreadsheet_id,
         range=f"{SHEET_TAB_NAME}!A1:A1",
@@ -157,7 +171,7 @@ def append_rows(sheets, spreadsheet_id, rows):
     ).execute()
 
 # ──────────────────────────────────────────────
-# GA4
+# GA4 — helpers
 # ──────────────────────────────────────────────
 
 def get_ga4_service(creds):
@@ -165,18 +179,32 @@ def get_ga4_service(creds):
 
 
 def run_report(service, date_str, dimensions, metrics, limit=10):
+    """
+    Executa um RunReport com retry automático em erros transitórios (429, 500, 503).
+    Aguarda backoff exponencial entre tentativas.
+    """
     body = {
         "dateRanges": [{"startDate": date_str, "endDate": date_str}],
         "dimensions": [{"name": d} for d in dimensions],
         "metrics":    [{"name": m} for m in metrics],
         "limit":      limit,
     }
-    resp = (
-        service.properties()
-        .runReport(property=f"properties/{GA4_PROPERTY_ID}", body=body)
-        .execute()
-    )
-    return resp.get("rows", [])
+    for attempt in range(1, MAX_RETRIES + 1):
+        try:
+            resp = (
+                service.properties()
+                .runReport(property=f"properties/{GA4_PROPERTY_ID}", body=body)
+                .execute()
+            )
+            return resp.get("rows", [])
+        except HttpError as e:
+            if e.resp.status in (429, 500, 503) and attempt < MAX_RETRIES:
+                wait = 2 ** attempt  # 2s, 4s, 8s
+                print(f"    API error {e.resp.status} — aguardando {wait}s (tentativa {attempt}/{MAX_RETRIES})")
+                time.sleep(wait)
+            else:
+                raise
+    return []
 
 
 def safe_int(value):
@@ -199,11 +227,14 @@ def calc_cr(compras, sessoes):
         return round(compras / sessoes * 100, 4)
     return 0.0
 
+# ──────────────────────────────────────────────
+# GA4 — coleta de métricas por dia
+# ──────────────────────────────────────────────
 
 def collect_metrics(service, date_str):
     m = {}
 
-    # ── Métricas gerais ──────────────────────────────────────────────────────
+    # ── Report 1: métricas gerais (sem dimensão) ─────────────────────────────
     rows = run_report(
         service, date_str, [],
         ["sessions", "totalUsers", "newUsers", "transactions",
@@ -215,7 +246,8 @@ def collect_metrics(service, date_str):
         m["usuarios"]          = safe_int(v[1]["value"])
         m["novos_usuarios"]    = safe_int(v[2]["value"])
         m["compras"]           = safe_int(v[3]["value"])
-        m["taxa_rejeicao_pct"] = safe_float(v[4]["value"])
+        # bounceRate vem como decimal (0–1) — converter para percentual
+        m["taxa_rejeicao_pct"] = round(safe_float(v[4]["value"]) * 100, 2)
         m["duracao_media_seg"] = safe_float(v[5]["value"], 2)
         m["pageviews"]         = safe_int(v[6]["value"])
     else:
@@ -226,7 +258,7 @@ def collect_metrics(service, date_str):
     # CR calculado manualmente — não usar sessionConversionRate do GA4
     m["taxa_conversao_pct"] = calc_cr(m["compras"], m["sessoes"])
 
-    # ── Sessões + compras por dispositivo ────────────────────────────────────
+    # ── Report 2: sessões + compras por dispositivo ──────────────────────────
     for dev in ["mobile", "desktop", "tablet"]:
         m[f"sessoes_{dev}"] = 0
         m[f"compras_{dev}"] = 0
@@ -242,7 +274,7 @@ def collect_metrics(service, date_str):
             m[f"sessoes_{dev}"] = safe_int(row["metricValues"][0]["value"])
             m[f"compras_{dev}"] = safe_int(row["metricValues"][1]["value"])
 
-    # ── Sessões por canal ────────────────────────────────────────────────────
+    # ── Report 3: sessões por canal ──────────────────────────────────────────
     channel_map = {
         "organic search": "sessoes_organico",
         "direct":         "sessoes_direto",
@@ -269,7 +301,7 @@ def collect_metrics(service, date_str):
         else:
             m["sessoes_outros_canais"] += val
 
-    # ── Funil de eventos ─────────────────────────────────────────────────────
+    # ── Report 4: funil de eventos ───────────────────────────────────────────
     funil_map = {
         "search":         "funil_search",
         "select_item":    "funil_select_item",
@@ -291,7 +323,7 @@ def collect_metrics(service, date_str):
         if event in funil_map:
             m[funil_map[event]] = safe_int(row["metricValues"][0]["value"])
 
-    # ── Top 5 origens ────────────────────────────────────────────────────────
+    # ── Report 5: top 5 origens ──────────────────────────────────────────────
     for i in range(1, 6):
         m[f"top_origem_{i}"]         = ""
         m[f"top_origem_{i}_sessoes"] = 0
@@ -308,7 +340,7 @@ def collect_metrics(service, date_str):
             m[f"top_origem_{i}"]         = city
             m[f"top_origem_{i}_sessoes"] = safe_int(row["metricValues"][0]["value"])
 
-    # ── Top 5 destinos ───────────────────────────────────────────────────────
+    # ── Report 6: top 5 destinos ─────────────────────────────────────────────
     for i in range(1, 6):
         m[f"top_destino_{i}"]         = ""
         m[f"top_destino_{i}_sessoes"] = 0
@@ -329,16 +361,21 @@ def collect_metrics(service, date_str):
 
 
 def metrics_to_row(date_str, m):
-    return [date_str] + [m.get(col, 0) for col in COLUMNS[1:]]
-
+    """Converte dict de métricas para lista na ordem de COLUMNS."""
+    row = [date_str]
+    for col in COLUMNS[1:]:
+        default = "" if col in TEXT_COLUMNS else 0
+        row.append(m.get(col, default))
+    return row
 
 # ──────────────────────────────────────────────
 # Main
 # ──────────────────────────────────────────────
 
 def main():
-    spreadsheet_id = os.environ["SPREADSHEET_ID"]
-    yesterday      = datetime.date.today() - datetime.timedelta(days=1)
+    spreadsheet_id   = os.environ["SPREADSHEET_ID"]
+    force_historical = os.environ.get("FORCE_HISTORICAL", "").lower() == "true"
+    yesterday        = datetime.date.today() - datetime.timedelta(days=1)
 
     print("Autenticando...")
     creds       = get_credentials()
@@ -352,10 +389,16 @@ def main():
     print(f"Datas já na planilha: {len(existing_dates)}")
 
     # ── Modo de operação ─────────────────────────────────────────────────────
-    historical_mode = len(existing_dates) < 5
+    # Histórico: forçado via env var OU planilha completamente vazia
+    historical_mode = force_historical or len(existing_dates) == 0
 
     if historical_mode:
-        print(f"MODO HISTÓRICO — coletando de {HISTORY_START} até {yesterday}")
+        if force_historical:
+            print("MODO HISTÓRICO — forçado via FORCE_HISTORICAL=true")
+        else:
+            print("MODO HISTÓRICO — planilha vazia detectada")
+        print(f"  Coletando de {HISTORY_START} até {yesterday}")
+
         dates_to_collect = []
         current = HISTORY_START
         while current <= yesterday:
@@ -363,6 +406,11 @@ def main():
             if date_str not in existing_dates:
                 dates_to_collect.append(date_str)
             current += datetime.timedelta(days=1)
+
+        total_days = len(dates_to_collect)
+        est_min    = round(total_days * (PAUSE_BETWEEN_DAYS + 0.5) / 60, 1)
+        print(f"  {total_days} dias para coletar — estimativa: ~{est_min} min")
+
     else:
         date_str = yesterday.strftime("%Y-%m-%d")
         if date_str in existing_dates:
@@ -375,10 +423,11 @@ def main():
         print("Nenhuma data nova para coletar.")
         sys.exit(0)
 
-    # ── Coleta ───────────────────────────────────────────────────────────────
-    total = len(dates_to_collect)
-    batch = []
+    # ── Coleta e gravação ────────────────────────────────────────────────────
+    total      = len(dates_to_collect)
+    batch      = []
     rows_added = 0
+    errors     = []
 
     for i, date_str in enumerate(dates_to_collect, 1):
         print(f"  [{i}/{total}] {date_str}...", end=" ", flush=True)
@@ -387,30 +436,43 @@ def main():
             batch.append(metrics_to_row(date_str, m))
             rows_added += 1
             print(
-                f"sessoes={m['sessoes']} "
-                f"compras={m['compras']} "
-                f"CR={m['taxa_conversao_pct']}%"
+                f"sessoes={m['sessoes']:,} "
+                f"compras={m['compras']:,} "
+                f"CR={m['taxa_conversao_pct']}% "
+                f"bounce={m['taxa_rejeicao_pct']}%"
             )
         except Exception as e:
+            errors.append((date_str, str(e)))
             print(f"ERRO: {e}")
 
-        # Checkpoint a cada 30 linhas no modo histórico
-        if historical_mode and len(batch) >= 30:
+        # Checkpoint a cada CHECKPOINT_EVERY linhas (anti-timeout)
+        if historical_mode and len(batch) >= CHECKPOINT_EVERY:
             print(f"  Gravando checkpoint ({rows_added} linhas acumuladas)...")
             append_rows(sheets, spreadsheet_id, batch)
             batch = []
             time.sleep(1)
 
         if historical_mode:
-            time.sleep(0.3)
+            time.sleep(PAUSE_BETWEEN_DAYS)
 
     # ── Gravar restante ──────────────────────────────────────────────────────
     if batch:
         print(f"\nGravando {len(batch)} linha(s) finais no Google Sheets...")
         append_rows(sheets, spreadsheet_id, batch)
 
-    print(f"Total de linhas adicionadas: {rows_added}")
+    # ── Relatório final ──────────────────────────────────────────────────────
+    print(f"\n{'='*50}")
+    print(f"Linhas adicionadas : {rows_added}")
+    print(f"Erros              : {len(errors)}")
+    if errors:
+        print("Datas com erro:")
+        for date_str, err in errors:
+            print(f"  {date_str}: {err}")
     print("Concluído.")
+
+    # Sair com erro se houver falhas, para o GitHub Actions reportar
+    if errors:
+        sys.exit(1)
 
 
 if __name__ == "__main__":
