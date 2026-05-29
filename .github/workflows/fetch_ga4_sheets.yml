@@ -3,8 +3,6 @@ name: Coleta GA4 → Google Sheets → data.json
 on:
   schedule:
     # 08:00 BRT (UTC-3) = 11:00 UTC
-    # No horário de verão (out–fev) BRT = UTC-2, então roda às 09h BRT
-    # Aceitável — dados do GA4 do dia anterior estão completos a qualquer hora
     - cron: "0 11 * * *"
   workflow_dispatch:
     inputs:
@@ -23,7 +21,7 @@ jobs:
     timeout-minutes: 30
 
     permissions:
-      contents: write  # necessário para commitar o data.json
+      contents: write
 
     steps:
       - name: Checkout do repositório
@@ -57,10 +55,12 @@ jobs:
         run: |
           git config user.name  "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          # Pull antes do push para evitar conflito caso o Claude Cowork
-          # tenha feito commit (ex: atualização de insights) entre o início
-          # deste workflow e este passo
+          # Salva o data.json gerado, sincroniza com origin e restaura.
+          # Necessário porque o export_data.py gera o arquivo antes do pull,
+          # o que causa erro "unstaged changes" no git pull --rebase.
+          git stash push --include-untracked -- data.json
           git pull --rebase origin main
+          git stash pop
           git add data.json
           git diff --cached --quiet || git commit -m "chore: atualiza data.json [$(date -u '+%Y-%m-%d %H:%M')] UTC"
           git push
