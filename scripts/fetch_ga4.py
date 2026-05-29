@@ -443,6 +443,24 @@ def main():
             print("MODO HISTÓRICO — planilha vazia detectada")
         print(f"  Coletando de {HISTORY_START} até {yesterday}")
 
+        force_reprocess = os.environ.get("FORCE_REPROCESS", "").lower() == "true"
+        if force_reprocess:
+            print("  FORCE_REPROCESS=true — reprocessando todas as datas (apaga planilha)")
+            # Limpar a aba antes de reprocessar para gravar dados frescos com novas colunas
+            sheets.spreadsheets().values().clear(
+                spreadsheetId=spreadsheet_id,
+                range=f"{SHEET_TAB_NAME}",
+            ).execute()
+            # Recriar cabeçalho
+            sheets.spreadsheets().values().update(
+                spreadsheetId=spreadsheet_id,
+                range=f"{SHEET_TAB_NAME}!A1",
+                valueInputOption="RAW",
+                body={"values": [COLUMNS]},
+            ).execute()
+            print("  Aba limpa e cabeçalho recriado.")
+            existing_dates = set()  # ignorar datas existentes
+
         dates_to_collect = []
         current = HISTORY_START
         while current <= yesterday:
