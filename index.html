@@ -120,7 +120,7 @@ body{font-family:'Nunito Sans',sans-serif;background:var(--neutral-100);color:va
 .funil-bar.pri{background:var(--brand-primary)}
 .funil-bar.cmp{background:var(--compare);opacity:.8}
 .funil-bar-val{font-size:11px;font-weight:700;color:#fff;white-space:nowrap}
-.funil-row-pct{font-size:11px;color:var(--neutral-500);width:50px;flex-shrink:0}
+.funil-row-pct{font-size:11px;color:var(--neutral-500);width:auto;min-width:60px;flex-shrink:0;display:flex;align-items:center;gap:4px;flex-wrap:wrap}
 .funil-conn{width:2px;height:6px;background:var(--neutral-300);margin-left:145px}
 .funil-cmp-row{display:flex;align-items:center;gap:12px;margin-top:2px}
 
@@ -437,17 +437,27 @@ function getRange(s,e){return ALL.filter(d=>d.data>=s&&d.data<=e);}
 // applyDevice: remapeia sessoes/compras/bounce/dur conforme dispositivo selecionado.
 // usuarios e pageviews NÃO têm breakdown por device no GA4 — mostramos 0 quando device != all.
 function applyDevice(data){
-  if(DEV==="all") return data;
+  // Sempre recalcular CR a partir de compras/sessoes — não depender do campo pré-calculado
+  if(DEV==="all"){
+    return data.map(d=>({
+      ...d,
+      taxa_conversao_pct: (parseFloat(d.sessoes)||0)>0
+        ? r4((parseFloat(d.compras)||0)/(parseFloat(d.sessoes))*100) : 0,
+      taxa_rejeicao_pct: parseFloat(d.taxa_rejeicao_pct)||0,
+      duracao_media_seg: parseFloat(d.duracao_media_seg)||0,
+    }));
+  }
   return data.map(d=>({
     ...d,
-    sessoes: d["sessoes_"+DEV]||0,
-    compras: d["compras_"+DEV]||0,
-    usuarios: 0,           // não disponível por device
-    novos_usuarios: 0,     // não disponível por device
-    pageviews: 0,          // não disponível por device
-    taxa_conversao_pct: (d["sessoes_"+DEV]||0)>0
-      ? r4((d["compras_"+DEV]||0)/(d["sessoes_"+DEV])*100) : 0,
-    // bounce e duração: sem breakdown por device no GA4 — mantemos do geral
+    sessoes: parseFloat(d["sessoes_"+DEV])||0,
+    compras: parseFloat(d["compras_"+DEV])||0,
+    usuarios: 0,
+    novos_usuarios: 0,
+    pageviews: 0,
+    taxa_conversao_pct: (parseFloat(d["sessoes_"+DEV])||0)>0
+      ? r4((parseFloat(d["compras_"+DEV])||0)/(parseFloat(d["sessoes_"+DEV]))*100) : 0,
+    taxa_rejeicao_pct: parseFloat(d.taxa_rejeicao_pct)||0,
+    duracao_media_seg: parseFloat(d.duracao_media_seg)||0,
   }));
 }
 
@@ -619,8 +629,37 @@ function renderAcquisicao(pri,cmp){
     ["#19398A","#A43C3E","#C3940F"]
   );
 
-  document.getElementById("tbDevs").innerHTML=devT.map(d=>{
+  // Calcular comparativos de device
+  const cmpAllDev=C.active&&C.start&&C.end?getRange(C.start,C.end):[];
+  const cmpDevT=DEVS.map(d=>({
+    ...d,
+    s:cmpAllDev.reduce((x,r)=>x+(parseFloat(r[d.ks])||0),0),
+    c:cmpAllDev.reduce((x,r)=>x+(parseFloat(r[d.kc])||0),0),
+  }));
+  const hasCmpDev=cmpAllDev.length>0;
+
+  // Cabeçalho dinâmico
+  const thDevEl=document.querySelector("#tab-aq .tc:last-child thead tr");
+  if(thDevEl){
+    thDevEl.innerHTML=hasCmpDev
+      ?`<th>Dispositivo</th><th class="num">Sessões</th><th class="num">Compras</th><th class="num">CR%</th><th class="num" style="color:var(--compare)">Sess. cmp</th><th class="num" style="color:var(--compare)">Comp. cmp</th><th class="num" style="color:var(--compare)">CR% cmp</th><th class="num">Lift sess.</th><th class="num">Lift CR</th>`
+      :`<th>Dispositivo</th><th class="num">Sessões</th><th class="num">Compras</th><th class="num">CR%</th>`;
+  }
+
+  document.getElementById("tbDevs").innerHTML=devT.map((d,i)=>{
     const cr=d.s>0?(d.c/d.s*100).toFixed(2):"0.00";
+    const cd=cmpDevT[i];
+    const cs=cd?.s||0, cc=cd?.c||0;
+    const ccr=cs>0?(cc/cs*100).toFixed(2):"0.00";
+    const liftS=cs>0?((d.s-cs)/cs*100):null;
+    const liftCR=parseFloat(ccr)>0?((parseFloat(cr)-parseFloat(ccr))/parseFloat(ccr)*100):null;
+    function liftBadge(v){
+      if(v==null) return'<span class="lift-nt">—</span>';
+      return`<span class="${v>0.1?'lift-pos':v<-0.1?'lift-neg':'lift-nt'}">${v>0?'+':''}${v.toFixed(1)}%</span>`;
+    }
+    if(hasCmpDev){
+      return`<tr><td>${d.l}</td><td class="num">${fmtN(d.s)}</td><td class="num">${fmtN(d.c)}</td><td class="num">${cr}%</td><td class="num cmp-cell">${fmtN(cs)}</td><td class="num cmp-cell">${fmtN(cc)}</td><td class="num cmp-cell">${ccr}%</td><td class="num">${liftBadge(liftS)}</td><td class="num">${liftBadge(liftCR)}</td></tr>`;
+    }
     return`<tr><td>${d.l}</td><td class="num">${fmtN(d.s)}</td><td class="num">${fmtN(d.c)}</td><td class="num">${cr}%</td></tr>`;
   }).join("");
 }
@@ -710,37 +749,45 @@ function renderRotas(pri,cmp){
   document.getElementById("thOri").innerHTML=thead;
   document.getElementById("thDes").innerHTML=thead;
 
+  function liftBadge(v){
+    if(v==null) return'<span class="lift-nt">—</span>';
+    return`<span class="${v>0.1?'lift-pos':v<-0.1?'lift-neg':'lift-nt'}">${v>0?'+':''}${v.toFixed(1)}%</span>`;
+  }
+
+  const rotasThead=hasCmp
+    ?`<tr><th>#</th><th>Cidade</th><th class="num">Sess.</th><th class="num">Comp.</th><th class="num">CR%</th><th class="num" style="color:var(--compare)">Sess.cmp</th><th class="num" style="color:var(--compare)">Comp.cmp</th><th class="num" style="color:var(--compare)">CR%cmp</th><th class="num">Lift sess.</th><th class="num">Lift CR</th><th class="bc"></th></tr>`
+    :`<tr><th>#</th><th>Cidade</th><th class="num">Sessões</th><th class="num">Compras</th><th class="num">CR%</th><th class="bc"></th></tr>`;
+  document.getElementById("thOri").innerHTML=rotasThead;
+  document.getElementById("thDes").innerHTML=rotasThead;
+
   function rows(list,maxV,cmpMap){
     return list.map(([cidade,{s,c}],i)=>{
       const cr=s>0?(c/s*100).toFixed(2):"0.00";
       const barW=(s/maxV*100).toFixed(1);
-      const cv=cmpMap[cidade]?.s||0;
-      const lift=hasCmp&&cv>0?((s-cv)/cv*100):null;
-      const lH=lift!=null?`<span class="${lift>0.1?"lift-pos":lift<-0.1?"lift-neg":"lift-nt"}">${lift>0?"+":""}${lift.toFixed(1)}%</span>`:`<span class="lift-nt">—</span>`;
+      const co=cmpMap[cidade]||{s:0,c:0};
+      const cs=co.s||0, cc=co.c||0;
+      const ccr=cs>0?(cc/cs*100).toFixed(2):"0.00";
+      const lS=cs>0?((s-cs)/cs*100):null;
+      const lCR=parseFloat(ccr)>0?((parseFloat(cr)-parseFloat(ccr))/parseFloat(ccr)*100):null;
       if(hasCmp){
         return`<tr>
           <td style="color:var(--neutral-500);font-weight:700">${i+1}</td>
           <td>${cidade}</td>
-          <td class="num">${fmtN(s)}</td>
-          <td class="num">${fmtN(c)}</td>
-          <td class="num">${cr}%</td>
-          <td class="num cmp-cell">${fmtN(cv)}</td>
-          <td class="num">${lH}</td>
+          <td class="num">${fmtN(s)}</td><td class="num">${fmtN(c)}</td><td class="num">${cr}%</td>
+          <td class="num cmp-cell">${fmtN(cs)}</td><td class="num cmp-cell">${fmtN(cc)}</td><td class="num cmp-cell">${ccr}%</td>
+          <td class="num">${liftBadge(lS)}</td><td class="num">${liftBadge(lCR)}</td>
           <td class="bc"><div class="mbar-w"><div class="mbar" style="width:${barW}%"></div></div></td>
         </tr>`;
       }
       return`<tr>
         <td style="color:var(--neutral-500);font-weight:700">${i+1}</td>
         <td>${cidade}</td>
-        <td class="num">${fmtN(s)}</td>
-        <td class="num">${fmtN(c)}</td>
-        <td class="num">${cr}%</td>
+        <td class="num">${fmtN(s)}</td><td class="num">${fmtN(c)}</td><td class="num">${cr}%</td>
         <td class="bc"><div class="mbar-w"><div class="mbar" style="width:${barW}%"></div></div></td>
       </tr>`;
-    }).join("")||`<tr><td colspan="8" style="color:var(--neutral-500);padding:16px;text-align:center">Sem dados.</td></tr>`;
+    }).join("")||`<tr><td colspan="11" style="color:var(--neutral-500);padding:16px;text-align:center">Sem dados.</td></tr>`;
   }
-
-  document.getElementById("tbOri").innerHTML=rows(origens,maxO,cmpOM);
+    document.getElementById("tbOri").innerHTML=rows(origens,maxO,cmpOM);
   document.getElementById("tbDes").innerHTML=rows(destinos,maxD,cmpDM);
 }
 
