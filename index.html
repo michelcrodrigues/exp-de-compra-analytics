@@ -887,17 +887,38 @@ function setPresetSp(key){
   if(key==="all"){const f=ALL[0]?.data||today,l=ALL[ALL.length-1]?.data||today;setPrimary(f,l);}
   else if(key==="mtd"){setPrimary(today.slice(0,7)+"-01",today);}
   else if(key==="lm"){
-    const d=new Date(today);d.setDate(1);d.setDate(0);
-    const e=isoD(d),s=e.slice(0,7)+"-01";
+    const d=new Date(today+"T12:00:00Z");
+    const y=d.getUTCFullYear(), m=d.getUTCMonth();
+    const pm=m===0?11:m-1;
+    const py=m===0?y-1:y;
+    const lastDay=new Date(Date.UTC(py,pm+1,0));
+    const s=`${String(py).padStart(4,'0')}-${String(pm+1).padStart(2,'0')}-01`;
+    const e=isoD(lastDay);
     setPrimary(s,e);
   }
 }
 function applyCmpPreset(key){
   if(!P.start||!P.end) return;
   const days=dateDiff(P.start,P.end)+1;
-  if(key==="pp"){const e=offDate(P.start,-1);setCompare(offDate(e,-days+1),e);}
-  else if(key==="pm"){const d=new Date(P.start);d.setDate(1);d.setDate(0);const e=isoD(d);setCompare(e.slice(0,7)+"-01",e);}
-  else if(key==="py"){setCompare(offYears(P.start,-1),offYears(P.end,-1));}
+  if(key==="pp"){
+    const e=offDate(P.start,-1);
+    setCompare(offDate(e,-days+1),e);
+  }
+  else if(key==="pm"){
+    // Usar T12:00:00Z para evitar problema de fuso (UTC-3 vira dia anterior)
+    const d=new Date(P.start+"T12:00:00Z");
+    const y=d.getUTCFullYear(), m=d.getUTCMonth(); // mês do P.start (0-indexed)
+    // Mês anterior: se m=0 (jan), volta para dez do ano anterior
+    const pm=m===0?11:m-1;
+    const py=m===0?y-1:y;
+    const lastDay=new Date(Date.UTC(py,pm+1,0)); // dia 0 do próximo mês = último dia do mês
+    const s=`${String(py).padStart(4,'0')}-${String(pm+1).padStart(2,'0')}-01`;
+    const e=isoD(lastDay);
+    setCompare(s,e);
+  }
+  else if(key==="py"){
+    setCompare(offYears(P.start,-1),offYears(P.end,-1));
+  }
 }
 
 function updatePriBtn(){
