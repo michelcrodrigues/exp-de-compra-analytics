@@ -8,191 +8,220 @@
 <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@300;400;500;700;900&display=swap" rel="stylesheet">
 <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
 <style>
-:root {
-  --brand-primary:#19398A;
-  --brand-primary-800:#205CAE;
-  --brand-primary-100:#BADAF6;
-  --brand-secondary-a:#A43C3E;
-  --brand-secondary-b:#C3940F;
-  --brand-secondary-b-100:#FFEFC0;
-  --brand-secondary-c:#6589D4;
-  --brand-secondary-c-100:#E0EAFF;
-  --neutral-900:#0E0E0E;
-  --neutral-800:#3E3E3E;
-  --neutral-700:#515151;
-  --neutral-500:#8B8B8B;
-  --neutral-300:#D1D1D1;
-  --neutral-200:#E3E3E3;
-  --neutral-100:#EEEEEE;
-  --positive-700:#278A22;
-  --positive-100:#C6E5C3;
-  --negative-700:#E1393E;
-  --negative-100:#FAD1D7;
-  --warning-700:#F29A1B;
-  --warning-100:#FCE9B4;
-  --compare-color:#6589D4;
+:root{
+  --brand-primary:#19398A;--brand-primary-100:#BADAF6;
+  --brand-secondary-a:#A43C3E;--brand-secondary-b:#C3940F;--brand-secondary-b-100:#FFEFC0;
+  --brand-secondary-c:#6589D4;--brand-secondary-c-100:#E0EAFF;
+  --neutral-900:#0E0E0E;--neutral-800:#3E3E3E;--neutral-700:#515151;
+  --neutral-500:#8B8B8B;--neutral-300:#D1D1D1;--neutral-200:#E3E3E3;--neutral-100:#EEEEEE;
+  --positive-700:#278A22;--positive-100:#C6E5C3;
+  --negative-700:#E1393E;--negative-100:#FAD1D7;
+  --compare:#6589D4;--compare-100:#E0EAFF;
   --shadow-01:0 1px 8px 0 rgba(19,19,19,.10),0 6px 10px -4px rgba(19,19,19,.08);
   --shadow-02:0 1px 12px 0 rgba(19,19,19,.10);
-  --radius-sm:8px;
-  --radius-md:16px;
+  --r-sm:8px;--r-md:16px;
 }
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 body{font-family:'Nunito Sans',sans-serif;background:var(--neutral-100);color:var(--neutral-800);min-height:100vh}
 
-/* ── Header ─────────────────────────────────────────── */
+/* Header */
 .header{background:var(--brand-primary);color:#fff;padding:0 32px;display:flex;align-items:center;justify-content:space-between;height:60px;position:sticky;top:0;z-index:200;box-shadow:var(--shadow-02)}
 .header-brand{display:flex;align-items:center;gap:12px}
 .header-logo{width:32px;height:32px;background:#fff;border-radius:6px;display:flex;align-items:center;justify-content:center}
-.header-title{font-size:15px;font-weight:700;letter-spacing:.3px}
+.header-title{font-size:15px;font-weight:700}
 .header-sub{font-size:11px;opacity:.7;font-weight:400}
 .header-updated{font-size:11px;opacity:.6}
 
-/* ── Barra de filtros ────────────────────────────────── */
-.filters-bar{background:#fff;border-bottom:1px solid var(--neutral-200);padding:10px 32px;display:flex;align-items:center;gap:12px;flex-wrap:wrap;position:sticky;top:60px;z-index:150;box-shadow:var(--shadow-01)}
-.filter-group{display:flex;align-items:center;gap:6px}
-.filter-label{font-size:11px;font-weight:700;color:var(--neutral-700);white-space:nowrap;text-transform:uppercase;letter-spacing:.5px}
-.filter-btn{border:1px solid var(--neutral-300);background:#fff;color:var(--neutral-700);font-family:inherit;font-size:12px;font-weight:600;padding:5px 11px;border-radius:9999px;cursor:pointer;transition:all .15s;white-space:nowrap}
-.filter-btn:hover{border-color:var(--brand-primary);color:var(--brand-primary)}
-.filter-btn.active{background:var(--brand-primary);color:#fff;border-color:var(--brand-primary)}
-.filter-btn.compare-active{background:var(--compare-color);color:#fff;border-color:var(--compare-color)}
-.filter-divider{width:1px;height:24px;background:var(--neutral-200);flex-shrink:0}
+/* Filtros */
+.filters-bar{background:#fff;border-bottom:1px solid var(--neutral-200);padding:10px 32px;display:flex;align-items:center;gap:10px;flex-wrap:wrap;position:sticky;top:60px;z-index:150;box-shadow:var(--shadow-01)}
+.fg{display:flex;align-items:center;gap:6px}
+.flabel{font-size:11px;font-weight:700;color:var(--neutral-700);text-transform:uppercase;letter-spacing:.5px;white-space:nowrap}
+.fbtn{border:1px solid var(--neutral-300);background:#fff;color:var(--neutral-700);font-family:inherit;font-size:12px;font-weight:600;padding:5px 11px;border-radius:9999px;cursor:pointer;transition:all .15s;white-space:nowrap}
+.fbtn:hover{border-color:var(--brand-primary);color:var(--brand-primary)}
+.fbtn.active{background:var(--brand-primary);color:#fff;border-color:var(--brand-primary)}
+.fbtn.cactive{background:var(--compare);color:#fff;border-color:var(--compare)}
+.fdiv{width:1px;height:24px;background:var(--neutral-200);flex-shrink:0}
 
-/* ── Date picker customizado ─────────────────────────── */
-.date-range-btn{border:1px solid var(--neutral-300);background:#fff;color:var(--neutral-700);font-family:inherit;font-size:12px;font-weight:600;padding:5px 11px;border-radius:9999px;cursor:pointer;transition:all .15s;display:flex;align-items:center;gap:6px}
-.date-range-btn:hover{border-color:var(--brand-primary);color:var(--brand-primary)}
-.date-range-btn.active{background:var(--brand-primary);color:#fff;border-color:var(--brand-primary)}
-.date-range-btn.compare-mode{background:var(--compare-color);color:#fff;border-color:var(--compare-color)}
-.date-range-btn svg{width:13px;height:13px;opacity:.8}
+/* Date-range button */
+.dr-btn-trigger{border:1px solid var(--neutral-300);background:#fff;color:var(--neutral-700);font-family:inherit;font-size:12px;font-weight:600;padding:5px 11px;border-radius:9999px;cursor:pointer;transition:all .15s;display:flex;align-items:center;gap:6px;white-space:nowrap}
+.dr-btn-trigger:hover{border-color:var(--brand-primary);color:var(--brand-primary)}
+.dr-btn-trigger.active{background:var(--brand-primary);color:#fff;border-color:var(--brand-primary)}
+.dr-btn-trigger.cactive{background:var(--compare);color:#fff;border-color:var(--compare)}
+.dr-btn-trigger svg{width:13px;height:13px;flex-shrink:0}
 
-/* ── Dropdown do date range ──────────────────────────── */
-.dr-dropdown{position:absolute;top:calc(100% + 8px);left:0;background:#fff;border-radius:var(--radius-md);box-shadow:0 8px 32px rgba(19,19,19,.18);z-index:500;padding:16px;min-width:340px;display:none}
-.dr-dropdown.open{display:block}
-.dr-dropdown.compare-dropdown{border-top:3px solid var(--compare-color)}
-.dr-dropdown.primary-dropdown{border-top:3px solid var(--brand-primary)}
-.dr-wrapper{position:relative}
+/* Dropdown */
+.drw{position:relative}
+.dr-drop{position:absolute;top:calc(100% + 8px);left:0;background:#fff;border-radius:var(--r-md);box-shadow:0 8px 32px rgba(19,19,19,.18);z-index:600;padding:16px;min-width:340px;display:none}
+.dr-drop.open{display:block}
+.dr-drop.pri{border-top:3px solid var(--brand-primary)}
+.dr-drop.cmp{border-top:3px solid var(--compare)}
 .dr-presets{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:12px}
 .dr-preset{font-family:inherit;font-size:11px;font-weight:700;padding:4px 10px;border-radius:9999px;border:1px solid var(--neutral-300);background:#fff;color:var(--neutral-700);cursor:pointer;transition:all .15s}
 .dr-preset:hover{border-color:var(--brand-primary);color:var(--brand-primary)}
 .dr-preset.active{background:var(--brand-primary);color:#fff;border-color:var(--brand-primary)}
-.dr-preset.compare-preset.active{background:var(--compare-color);border-color:var(--compare-color)}
+.dr-preset.cp.active{background:var(--compare);border-color:var(--compare)}
 .dr-sep{height:1px;background:var(--neutral-200);margin:10px 0}
-.dr-inputs{display:flex;align-items:center;gap:8px}
-.dr-input-group{display:flex;flex-direction:column;gap:4px;flex:1}
-.dr-input-label{font-size:10px;font-weight:700;color:var(--neutral-500);text-transform:uppercase;letter-spacing:.5px}
-.dr-input{font-family:inherit;font-size:12px;font-weight:600;border:1px solid var(--neutral-300);border-radius:var(--radius-sm);padding:7px 10px;color:var(--neutral-800);width:100%;outline:none;transition:border .15s}
+.dr-inputs{display:flex;align-items:flex-end;gap:8px}
+.dr-ig{display:flex;flex-direction:column;gap:4px;flex:1}
+.dr-ilabel{font-size:10px;font-weight:700;color:var(--neutral-500);text-transform:uppercase;letter-spacing:.5px}
+.dr-input{font-family:inherit;font-size:12px;font-weight:600;border:1px solid var(--neutral-300);border-radius:var(--r-sm);padding:7px 10px;color:var(--neutral-800);width:100%;outline:none;transition:border .15s}
 .dr-input:focus{border-color:var(--brand-primary)}
-.dr-arrow{font-size:16px;color:var(--neutral-400);margin-top:12px}
+.dr-arr{font-size:16px;color:var(--neutral-300);padding-bottom:2px}
 .dr-actions{display:flex;gap:8px;margin-top:12px}
-.dr-btn{font-family:inherit;font-size:12px;font-weight:700;padding:7px 16px;border-radius:9999px;border:none;cursor:pointer;transition:all .15s}
-.dr-btn-apply{background:var(--brand-primary);color:#fff}
-.dr-btn-apply.compare-apply{background:var(--compare-color)}
-.dr-btn-cancel{background:var(--neutral-100);color:var(--neutral-700)}
-.dr-btn-clear{background:var(--negative-100);color:var(--negative-700)}
+.dr-ab{font-family:inherit;font-size:12px;font-weight:700;padding:7px 16px;border-radius:9999px;border:none;cursor:pointer}
+.dr-apply{background:var(--brand-primary);color:#fff}
+.dr-capply{background:var(--compare);color:#fff}
+.dr-cancel{background:var(--neutral-100);color:var(--neutral-700)}
+.dr-clear{background:var(--negative-100);color:var(--negative-700)}
 
-/* ── Banner de comparação ────────────────────────────── */
-.compare-banner{background:var(--brand-secondary-c-100);border:1px solid var(--compare-color);border-radius:var(--radius-sm);padding:8px 16px;display:flex;align-items:center;gap:12px;flex-wrap:wrap;font-size:12px;margin:0 32px 0 32px}
-.compare-banner.hidden{display:none}
-.compare-period-label{font-weight:700;color:var(--brand-primary)}
-.compare-vs{color:var(--neutral-500);font-weight:400}
-.compare-clear{font-family:inherit;font-size:11px;font-weight:700;color:var(--negative-700);background:none;border:none;cursor:pointer;padding:2px 8px;border-radius:9999px}
-.compare-clear:hover{background:var(--negative-100)}
+/* Banner comparação */
+.cmp-banner{background:var(--compare-100);border:1px solid var(--compare);border-radius:var(--r-sm);padding:8px 16px;display:flex;align-items:center;gap:10px;flex-wrap:wrap;font-size:12px;margin:8px 32px}
+.cmp-banner.hidden{display:none}
+.cmp-lbl{font-weight:700}
+.cmp-vs{color:var(--neutral-500)}
+.cmp-x{font-family:inherit;font-size:11px;font-weight:700;color:var(--negative-700);background:none;border:none;cursor:pointer;padding:2px 8px;border-radius:9999px;margin-left:auto}
+.cmp-x:hover{background:var(--negative-100)}
 
-/* ── Layout ──────────────────────────────────────────── */
+/* Layout */
 .main{padding:20px 32px;max-width:1400px;margin:0 auto}
-.section-title{font-size:12px;font-weight:700;color:var(--brand-secondary-a);text-transform:uppercase;letter-spacing:1px;margin-bottom:12px;margin-top:28px}
-.section-title:first-child{margin-top:0}
+.sec{font-size:12px;font-weight:700;color:var(--brand-secondary-a);text-transform:uppercase;letter-spacing:1px;margin-bottom:12px;margin-top:28px}
+.sec:first-child{margin-top:0}
 
-/* ── KPIs ────────────────────────────────────────────── */
-.kpi-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(185px,1fr));gap:12px}
-.kpi-card{background:#fff;border-radius:var(--radius-md);padding:20px;box-shadow:var(--shadow-01);position:relative;overflow:hidden}
-.kpi-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:var(--brand-primary)}
-.kpi-label{font-size:11px;font-weight:700;color:var(--neutral-500);text-transform:uppercase;letter-spacing:.8px;margin-bottom:8px}
-.kpi-value{font-size:26px;font-weight:900;color:var(--brand-primary);line-height:1}
-.kpi-compare-row{display:flex;align-items:center;gap:8px;margin-top:8px;flex-wrap:wrap}
-.kpi-compare-val{font-size:12px;color:var(--neutral-500)}
-.kpi-delta{display:inline-flex;align-items:center;gap:3px;font-size:11px;font-weight:700;padding:2px 7px;border-radius:9999px}
-.kpi-delta.up{background:var(--positive-100);color:var(--positive-700)}
-.kpi-delta.down{background:var(--negative-100);color:var(--negative-700)}
-.kpi-delta.neutral{background:var(--neutral-200);color:var(--neutral-700)}
-.kpi-sub{font-size:11px;color:var(--neutral-500);margin-top:6px}
+/* KPIs */
+.kpi-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:12px}
+.kpi{background:#fff;border-radius:var(--r-md);padding:20px;box-shadow:var(--shadow-01);position:relative;overflow:hidden}
+.kpi::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:var(--brand-primary)}
+.kpi-lbl{font-size:11px;font-weight:700;color:var(--neutral-500);text-transform:uppercase;letter-spacing:.8px;margin-bottom:8px}
+.kpi-val{font-size:26px;font-weight:900;color:var(--brand-primary);line-height:1}
+.kpi-cmp{display:flex;align-items:center;gap:8px;margin-top:8px;flex-wrap:wrap}
+.kpi-cval{font-size:12px;color:var(--compare)}
+.delta{display:inline-flex;align-items:center;gap:3px;font-size:11px;font-weight:700;padding:2px 7px;border-radius:9999px}
+.delta.up{background:var(--positive-100);color:var(--positive-700)}
+.delta.dn{background:var(--negative-100);color:var(--negative-700)}
+.delta.nt{background:var(--neutral-200);color:var(--neutral-700)}
 
-/* ── Gráficos ────────────────────────────────────────── */
+/* Gráficos */
 .charts-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}
-.chart-card{background:#fff;border-radius:var(--radius-md);padding:20px;box-shadow:var(--shadow-01)}
-.chart-card.full{grid-column:1/-1}
-.chart-title{font-size:13px;font-weight:700;color:var(--neutral-800);margin-bottom:4px}
-.chart-legend{display:flex;align-items:center;gap:12px;margin-bottom:12px;flex-wrap:wrap}
-.chart-legend-item{display:flex;align-items:center;gap:5px;font-size:11px;color:var(--neutral-500)}
-.chart-legend-dot{width:10px;height:10px;border-radius:50%;flex-shrink:0}
-.chart-wrap{position:relative;height:200px}
+.cc{background:#fff;border-radius:var(--r-md);padding:20px;box-shadow:var(--shadow-01)}
+.cc-title{font-size:13px;font-weight:700;color:var(--neutral-800);margin-bottom:4px}
+.cc-legend{display:flex;align-items:center;gap:12px;margin-bottom:12px;flex-wrap:wrap}
+.cc-li{display:flex;align-items:center;gap:5px;font-size:11px;color:var(--neutral-500)}
+.cc-dot{width:10px;height:10px;border-radius:50%;flex-shrink:0}
+.cc-wrap{position:relative;height:200px}
 
-/* ── Funil ───────────────────────────────────────────── */
-.funil-wrap{background:#fff;border-radius:var(--radius-md);padding:24px;box-shadow:var(--shadow-01)}
-.funil-steps{display:flex;flex-direction:column;gap:8px}
-.funil-step{display:flex;align-items:center;gap:12px}
-.funil-bar-wrap{flex:1;background:var(--neutral-100);border-radius:4px;height:36px;overflow:hidden;position:relative}
-.funil-bar{height:100%;background:var(--brand-primary);border-radius:4px;transition:width .6s cubic-bezier(.4,0,.2,1);display:flex;align-items:center;padding:0 12px;min-width:50px}
-.funil-bar-val{font-size:12px;font-weight:700;color:#fff;white-space:nowrap}
-.funil-step-label{font-size:12px;font-weight:700;color:var(--neutral-700);width:130px;text-align:right;white-space:nowrap}
-.funil-step-pct{font-size:11px;color:var(--neutral-500);width:50px;text-align:left}
-.funil-connector{width:2px;height:8px;background:var(--neutral-300);margin-left:145px}
+/* Funil */
+.funil-wrap{background:#fff;border-radius:var(--r-md);padding:24px;box-shadow:var(--shadow-01)}
+.funil-steps{display:flex;flex-direction:column;gap:6px}
+.funil-row{display:flex;align-items:center;gap:12px}
+.funil-row-lbl{font-size:12px;font-weight:700;color:var(--neutral-700);width:130px;text-align:right;flex-shrink:0}
+.funil-bars{flex:1;display:flex;flex-direction:column;gap:3px}
+.funil-bar-wrap{background:var(--neutral-100);border-radius:4px;height:28px;overflow:hidden;position:relative}
+.funil-bar{height:100%;border-radius:4px;transition:width .6s cubic-bezier(.4,0,.2,1);display:flex;align-items:center;padding:0 10px;min-width:50px}
+.funil-bar.pri{background:var(--brand-primary)}
+.funil-bar.cmp{background:var(--compare);opacity:.8}
+.funil-bar-val{font-size:11px;font-weight:700;color:#fff;white-space:nowrap}
+.funil-row-pct{font-size:11px;color:var(--neutral-500);width:50px;flex-shrink:0}
+.funil-conn{width:2px;height:6px;background:var(--neutral-300);margin-left:145px}
+.funil-cmp-row{display:flex;align-items:center;gap:12px;margin-top:2px}
 
-/* ── Tabelas ─────────────────────────────────────────── */
-.table-card{background:#fff;border-radius:var(--radius-md);padding:20px;box-shadow:var(--shadow-01);overflow-x:auto}
-.dash-table{width:100%;border-collapse:collapse;font-size:13px}
-.dash-table th{font-size:11px;font-weight:700;color:var(--neutral-500);text-transform:uppercase;letter-spacing:.7px;padding:8px 12px;border-bottom:2px solid var(--neutral-200);text-align:left;white-space:nowrap}
-.dash-table td{padding:10px 12px;border-bottom:1px solid var(--neutral-100);color:var(--neutral-800)}
-.dash-table tr:last-child td{border-bottom:none}
-.dash-table tr:hover td{background:var(--neutral-100)}
-.dash-table .num{text-align:right;font-weight:700;font-variant-numeric:tabular-nums}
-.dash-table .bar-cell{width:100px}
-.mini-bar-wrap{background:var(--neutral-200);border-radius:2px;height:6px;overflow:hidden}
-.mini-bar{height:100%;background:var(--brand-primary);border-radius:2px}
+/* Tabelas */
+.tc{background:#fff;border-radius:var(--r-md);padding:20px;box-shadow:var(--shadow-01);overflow-x:auto}
+table{width:100%;border-collapse:collapse;font-size:13px}
+th{font-size:11px;font-weight:700;color:var(--neutral-500);text-transform:uppercase;letter-spacing:.7px;padding:8px 12px;border-bottom:2px solid var(--neutral-200);text-align:left;white-space:nowrap}
+td{padding:9px 12px;border-bottom:1px solid var(--neutral-100);color:var(--neutral-800)}
+tr:last-child td{border-bottom:none}
+tr:hover td{background:var(--neutral-100)}
+.num{text-align:right;font-weight:700;font-variant-numeric:tabular-nums}
+.bc{width:80px}
+.mbar-w{background:var(--neutral-200);border-radius:2px;height:6px;overflow:hidden}
+.mbar{height:100%;background:var(--brand-primary);border-radius:2px}
+.cmp-cell{color:var(--compare);font-size:12px}
+.lift-pos{color:var(--positive-700);font-weight:700;font-size:11px}
+.lift-neg{color:var(--negative-700);font-weight:700;font-size:11px}
+.lift-nt{color:var(--neutral-500);font-size:11px}
+tr.cmp-tr td{background:#f5f8ff;font-size:12px;color:var(--compare)}
 
-/* ── Rotas ───────────────────────────────────────────── */
-.rotas-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+/* Rotas */
+.rg{display:grid;grid-template-columns:1fr 1fr;gap:16px}
 
-/* ── Insights ────────────────────────────────────────── */
-.insights-wrap{display:flex;flex-direction:column;gap:12px}
-.insight-card{background:#fff;border-radius:var(--radius-md);padding:20px;box-shadow:var(--shadow-01);border-left:4px solid var(--brand-secondary-b)}
-.insight-tag{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.8px;color:var(--brand-secondary-b);margin-bottom:6px}
-.insight-text{font-size:14px;color:var(--neutral-800);line-height:1.6}
-.insight-empty{background:#fff;border-radius:var(--radius-md);padding:32px;box-shadow:var(--shadow-01);text-align:center;color:var(--neutral-500);font-size:13px}
+/* Insights */
+.insights{display:flex;flex-direction:column;gap:12px}
+.ins-card{background:#fff;border-radius:var(--r-md);padding:20px;box-shadow:var(--shadow-01);border-left:4px solid var(--brand-secondary-b)}
+.ins-tag{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.8px;color:var(--brand-secondary-b);margin-bottom:6px}
+.ins-txt{font-size:14px;line-height:1.6}
+.ins-empty{background:#fff;border-radius:var(--r-md);padding:32px;box-shadow:var(--shadow-01);text-align:center;color:var(--neutral-500);font-size:13px}
 
-/* ── Tabs ────────────────────────────────────────────── */
+/* Tabs */
 .tabs{display:flex;gap:4px;background:#fff;padding:4px;border-radius:9999px;box-shadow:var(--shadow-01);width:fit-content;margin-bottom:20px;flex-wrap:wrap}
 .tab{font-family:inherit;font-size:12px;font-weight:700;padding:7px 18px;border-radius:9999px;border:none;cursor:pointer;background:transparent;color:var(--neutral-500);transition:all .15s}
 .tab.active{background:var(--brand-primary);color:#fff}
-.tab-content{display:none}
-.tab-content.active{display:block}
+.tbc{display:none}
+.tbc.active{display:block}
 
-/* ── Estado / loading ────────────────────────────────── */
+/* Loading */
 .state-wrap{display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:300px;gap:12px;color:var(--neutral-500)}
-.spinner{width:32px;height:32px;border:3px solid var(--neutral-200);border-top-color:var(--brand-primary);border-radius:50%;animation:spin .8s linear infinite}
-@keyframes spin{to{transform:rotate(360deg)}}
-
-/* ── Overlay para fechar dropdowns ──────────────────── */
-.overlay{position:fixed;inset:0;z-index:400;display:none}
+.spin{width:32px;height:32px;border:3px solid var(--neutral-200);border-top-color:var(--brand-primary);border-radius:50%;animation:sp .8s linear infinite}
+@keyframes sp{to{transform:rotate(360deg)}}
+.overlay{position:fixed;inset:0;z-index:500;display:none}
 .overlay.open{display:block}
 
 @media(max-width:900px){
-  .header,.filters-bar,.compare-banner{padding-left:16px;padding-right:16px}
-  .main{padding:16px}
-  .charts-grid,.rotas-grid{grid-template-columns:1fr}
+  .header,.filters-bar,.cmp-banner,.main{padding-left:16px;padding-right:16px}
+  .charts-grid,.rg{grid-template-columns:1fr}
   .kpi-grid{grid-template-columns:repeat(2,1fr)}
-  .filters-bar{gap:8px}
 }
+
+/* ── Tela de senha ───────────────────────────────────── */
+.auth-screen{position:fixed;inset:0;background:var(--brand-primary);display:flex;align-items:center;justify-content:center;z-index:9999;flex-direction:column;gap:0}
+.auth-box{background:#fff;border-radius:var(--r-md);padding:40px 36px;width:340px;box-shadow:0 16px 48px rgba(0,0,0,.25);display:flex;flex-direction:column;gap:20px}
+.auth-logo{display:flex;align-items:center;gap:10px;margin-bottom:4px}
+.auth-logo-icon{width:36px;height:36px;background:var(--brand-primary);border-radius:8px;display:flex;align-items:center;justify-content:center}
+.auth-title{font-size:18px;font-weight:900;color:var(--brand-primary)}
+.auth-sub{font-size:13px;color:var(--neutral-500);margin-top:-12px}
+.auth-field{display:flex;flex-direction:column;gap:6px}
+.auth-label{font-size:11px;font-weight:700;color:var(--neutral-700);text-transform:uppercase;letter-spacing:.5px}
+.auth-input{font-family:inherit;font-size:14px;font-weight:600;border:1.5px solid var(--neutral-300);border-radius:var(--r-sm);padding:10px 14px;color:var(--neutral-800);outline:none;transition:border .15s;width:100%}
+.auth-input:focus{border-color:var(--brand-primary)}
+.auth-btn{font-family:inherit;font-size:14px;font-weight:700;background:var(--brand-primary);color:#fff;border:none;border-radius:9999px;padding:12px;cursor:pointer;transition:background .15s;width:100%}
+.auth-btn:hover{background:var(--brand-primary-800,#205CAE)}
+.auth-error{font-size:12px;color:var(--negative-700);background:var(--negative-100);border-radius:var(--r-sm);padding:8px 12px;display:none;text-align:center}
+.auth-error.show{display:block}
+.auth-screen.hidden{display:none}
 </style>
 </head>
 <body>
 
-<!-- Overlay para fechar dropdowns ao clicar fora -->
+<div class="auth-screen" id="authScreen">
+  <div class="auth-box">
+    <div class="auth-logo">
+      <div class="auth-logo-icon">
+        <svg viewBox="0 0 20 20" fill="none" width="22" height="22">
+          <rect x="2" y="10" width="3" height="8" rx="1" fill="#fff" opacity=".6"/>
+          <rect x="7" y="6" width="3" height="12" rx="1" fill="#fff" opacity=".8"/>
+          <rect x="12" y="2" width="3" height="16" rx="1" fill="#fff"/>
+          <rect x="17" y="8" width="3" height="10" rx="1" fill="#C3940F"/>
+        </svg>
+      </div>
+      <div>
+        <div class="auth-title">Grupo Guanabara</div>
+      </div>
+    </div>
+    <div class="auth-sub">Analytics — Experiência de Compra</div>
+    <div class="auth-field">
+      <label class="auth-label" for="authInput">Senha de acesso</label>
+      <input type="password" class="auth-input" id="authInput" placeholder="••••••••••••" autocomplete="current-password">
+    </div>
+    <div class="auth-error" id="authError">Senha incorreta. Tente novamente.</div>
+    <button class="auth-btn" id="authBtn">Entrar</button>
+  </div>
+</div>
+
 <div class="overlay" id="overlay"></div>
 
 <header class="header">
   <div class="header-brand">
     <div class="header-logo">
-      <svg viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <svg viewBox="0 0 20 20" fill="none">
         <rect x="2" y="10" width="3" height="8" rx="1" fill="#19398A"/>
         <rect x="7" y="6" width="3" height="12" rx="1" fill="#A43C3E"/>
         <rect x="12" y="2" width="3" height="16" rx="1" fill="#C3940F"/>
@@ -207,982 +236,806 @@ body{font-family:'Nunito Sans',sans-serif;background:var(--neutral-100);color:va
   <div class="header-updated" id="headerUpdated">carregando...</div>
 </header>
 
-<!-- ── Barra de filtros ──────────────────────────────── -->
-<div class="filters-bar" id="filtersBar">
-
-  <!-- Período principal -->
-  <div class="filter-group">
-    <span class="filter-label">Período</span>
-    <button class="filter-btn" data-period="7">7d</button>
-    <button class="filter-btn active" data-period="30">30d</button>
-    <button class="filter-btn" data-period="60">60d</button>
-    <button class="filter-btn" data-period="90">90d</button>
-    <button class="filter-btn" data-period="0">Tudo</button>
-    <!-- Botão intervalo customizado -->
-    <div class="dr-wrapper" id="primaryWrapper">
-      <button class="date-range-btn" id="btnPrimaryCustom" title="Intervalo customizado">
-        <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8">
-          <rect x="1" y="2" width="14" height="13" rx="2"/>
-          <path d="M5 1v2M11 1v2M1 6h14"/>
-        </svg>
-        <span id="btnPrimaryLabel">Customizado</span>
+<div class="filters-bar">
+  <!-- Período -->
+  <div class="fg">
+    <span class="flabel">Período</span>
+    <button class="fbtn" data-period="7">7d</button>
+    <button class="fbtn active" data-period="30">30d</button>
+    <button class="fbtn" data-period="60">60d</button>
+    <button class="fbtn" data-period="90">90d</button>
+    <button class="fbtn" data-period="0">Tudo</button>
+    <div class="drw">
+      <button class="dr-btn-trigger" id="btnPri">
+        <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="1" y="2" width="14" height="13" rx="2"/><path d="M5 1v2M11 1v2M1 6h14"/></svg>
+        <span id="lblPri">Customizado</span>
       </button>
-      <!-- Dropdown principal -->
-      <div class="dr-dropdown primary-dropdown" id="dropPrimary">
-        <div class="dr-presets" id="primaryPresets">
-          <button class="dr-preset" data-days="7">Últimos 7d</button>
-          <button class="dr-preset" data-days="14">Últimos 14d</button>
-          <button class="dr-preset" data-days="30">Últimos 30d</button>
-          <button class="dr-preset" data-days="60">Últimos 60d</button>
-          <button class="dr-preset" data-days="90">Últimos 90d</button>
-          <button class="dr-preset" data-special="mtd">Mês atual</button>
-          <button class="dr-preset" data-special="lastmonth">Mês anterior</button>
-          <button class="dr-preset" data-special="all">Todo o período</button>
+      <div class="dr-drop pri" id="dropPri">
+        <div class="dr-presets" id="priPresets">
+          <button class="dr-preset" data-days="7">Últ. 7d</button>
+          <button class="dr-preset" data-days="14">Últ. 14d</button>
+          <button class="dr-preset" data-days="30">Últ. 30d</button>
+          <button class="dr-preset" data-days="60">Últ. 60d</button>
+          <button class="dr-preset" data-days="90">Últ. 90d</button>
+          <button class="dr-preset" data-sp="mtd">Mês atual</button>
+          <button class="dr-preset" data-sp="lm">Mês anterior</button>
+          <button class="dr-preset" data-sp="all">Todo período</button>
         </div>
         <div class="dr-sep"></div>
         <div class="dr-inputs">
-          <div class="dr-input-group">
-            <label class="dr-input-label">De</label>
-            <input type="date" class="dr-input" id="primaryStart">
-          </div>
-          <div class="dr-arrow">→</div>
-          <div class="dr-input-group">
-            <label class="dr-input-label">Até</label>
-            <input type="date" class="dr-input" id="primaryEnd">
-          </div>
+          <div class="dr-ig"><label class="dr-ilabel">De</label><input type="date" class="dr-input" id="priS"></div>
+          <div class="dr-arr">→</div>
+          <div class="dr-ig"><label class="dr-ilabel">Até</label><input type="date" class="dr-input" id="priE"></div>
         </div>
         <div class="dr-actions">
-          <button class="dr-btn dr-btn-apply" id="btnApplyPrimary">Aplicar</button>
-          <button class="dr-btn dr-btn-cancel" id="btnCancelPrimary">Cancelar</button>
+          <button class="dr-ab dr-apply" id="btnApplyPri">Aplicar</button>
+          <button class="dr-ab dr-cancel" id="btnCancelPri">Cancelar</button>
         </div>
       </div>
     </div>
   </div>
 
-  <div class="filter-divider"></div>
+  <div class="fdiv"></div>
 
-  <!-- Comparar com -->
-  <div class="filter-group">
-    <span class="filter-label">Comparar</span>
-    <div class="dr-wrapper" id="compareWrapper">
-      <button class="date-range-btn" id="btnCompare" title="Selecionar período de comparação">
-        <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8">
-          <path d="M2 8h12M8 2l4 6-4 6"/>
-        </svg>
-        <span id="btnCompareLabel">Adicionar comparação</span>
+  <!-- Comparar -->
+  <div class="fg">
+    <span class="flabel">Comparar</span>
+    <div class="drw">
+      <button class="dr-btn-trigger" id="btnCmp">
+        <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M2 8h12M8 2l4 6-4 6"/></svg>
+        <span id="lblCmp">Adicionar comparação</span>
       </button>
-      <!-- Dropdown de comparação -->
-      <div class="dr-dropdown compare-dropdown" id="dropCompare">
-        <div class="dr-presets" id="comparePresets">
-          <button class="dr-preset compare-preset" data-compare="prev-period">Período anterior</button>
-          <button class="dr-preset compare-preset" data-compare="prev-month">Mês anterior</button>
-          <button class="dr-preset compare-preset" data-compare="prev-year">Mesmo período ano anterior</button>
-          <button class="dr-preset compare-preset" data-days="7">Últimos 7d</button>
-          <button class="dr-preset compare-preset" data-days="30">Últimos 30d</button>
-          <button class="dr-preset compare-preset" data-days="90">Últimos 90d</button>
+      <div class="dr-drop cmp" id="dropCmp">
+        <div class="dr-presets" id="cmpPresets">
+          <button class="dr-preset cp" data-cmp="pp">Período anterior</button>
+          <button class="dr-preset cp" data-cmp="pm">Mês anterior</button>
+          <button class="dr-preset cp" data-cmp="py">Mesmo período ano ant.</button>
+          <button class="dr-preset cp" data-days="7">Últ. 7d</button>
+          <button class="dr-preset cp" data-days="30">Últ. 30d</button>
+          <button class="dr-preset cp" data-days="90">Últ. 90d</button>
         </div>
         <div class="dr-sep"></div>
         <div class="dr-inputs">
-          <div class="dr-input-group">
-            <label class="dr-input-label">De</label>
-            <input type="date" class="dr-input" id="compareStart">
-          </div>
-          <div class="dr-arrow">→</div>
-          <div class="dr-input-group">
-            <label class="dr-input-label">Até</label>
-            <input type="date" class="dr-input" id="compareEnd">
-          </div>
+          <div class="dr-ig"><label class="dr-ilabel">De</label><input type="date" class="dr-input" id="cmpS"></div>
+          <div class="dr-arr">→</div>
+          <div class="dr-ig"><label class="dr-ilabel">Até</label><input type="date" class="dr-input" id="cmpE"></div>
         </div>
         <div class="dr-actions">
-          <button class="dr-btn dr-btn-apply compare-apply" id="btnApplyCompare">Aplicar comparação</button>
-          <button class="dr-btn dr-btn-cancel" id="btnCancelCompare">Cancelar</button>
-          <button class="dr-btn dr-btn-clear" id="btnClearCompare">Remover</button>
+          <button class="dr-ab dr-capply" id="btnApplyCmp">Aplicar</button>
+          <button class="dr-ab dr-cancel" id="btnCancelCmp">Cancelar</button>
+          <button class="dr-ab dr-clear" id="btnClearCmp">Remover</button>
         </div>
       </div>
     </div>
   </div>
 
-  <div class="filter-divider"></div>
+  <div class="fdiv"></div>
 
   <!-- Dispositivo -->
-  <div class="filter-group">
-    <span class="filter-label">Dispositivo</span>
-    <button class="filter-btn active" data-device="all">Todos</button>
-    <button class="filter-btn" data-device="mobile">Mobile</button>
-    <button class="filter-btn" data-device="desktop">Desktop</button>
-    <button class="filter-btn" data-device="tablet">Tablet</button>
+  <div class="fg">
+    <span class="flabel">Dispositivo</span>
+    <button class="fbtn active" data-dev="all">Todos</button>
+    <button class="fbtn" data-dev="mobile">Mobile</button>
+    <button class="fbtn" data-dev="desktop">Desktop</button>
+    <button class="fbtn" data-dev="tablet">Tablet</button>
   </div>
 </div>
 
-<!-- ── Banner de comparação ──────────────────────────── -->
-<div class="compare-banner hidden" id="compareBanner">
-  <span>🔵 Comparando:</span>
-  <span class="compare-period-label" id="comparePrimaryLabel">—</span>
-  <span class="compare-vs">vs</span>
-  <span class="compare-period-label" id="compareSecondaryLabel" style="color:var(--compare-color)">—</span>
-  <button class="compare-clear" id="btnBannerClear">✕ Remover comparação</button>
+<!-- Banner comparação -->
+<div class="cmp-banner hidden" id="cmpBanner">
+  <span>🔵</span>
+  <span class="cmp-lbl" id="banPri">—</span>
+  <span class="cmp-vs">vs</span>
+  <span class="cmp-lbl" style="color:var(--compare)" id="banCmp">—</span>
+  <button class="cmp-x" id="btnBanClear">✕ Remover</button>
 </div>
 
 <main class="main">
-  <div id="appState" class="state-wrap">
-    <div class="spinner"></div>
-    <span>Carregando dados...</span>
-  </div>
+  <div id="appState" class="state-wrap"><div class="spin"></div><span>Carregando dados...</span></div>
   <div id="appContent" style="display:none">
 
     <div class="tabs">
-      <button class="tab active" data-tab="visao-geral">Visão Geral</button>
-      <button class="tab" data-tab="aquisicao">Aquisição</button>
-      <button class="tab" data-tab="funil">Funil</button>
-      <button class="tab" data-tab="rotas">Rotas</button>
-      <button class="tab" data-tab="insights">Insights IA</button>
+      <button class="tab active" data-tab="vg">Visão Geral</button>
+      <button class="tab" data-tab="aq">Aquisição</button>
+      <button class="tab" data-tab="fu">Funil</button>
+      <button class="tab" data-tab="ro">Rotas</button>
+      <button class="tab" data-tab="in">Insights IA</button>
     </div>
 
     <!-- VISÃO GERAL -->
-    <div class="tab-content active" id="tab-visao-geral">
-      <div class="section-title">KPIs do período</div>
+    <div class="tbc active" id="tab-vg">
+      <div class="sec">KPIs do período</div>
       <div class="kpi-grid" id="kpiGrid"></div>
-      <div class="section-title">Tendência diária</div>
+      <div class="sec">Tendência diária</div>
       <div class="charts-grid">
-        <div class="chart-card">
-          <div class="chart-title">Sessões por dia</div>
-          <div class="chart-legend" id="legendSessoes"></div>
-          <div class="chart-wrap"><canvas id="chartSessoes"></canvas></div>
-        </div>
-        <div class="chart-card">
-          <div class="chart-title">Compras por dia</div>
-          <div class="chart-legend" id="legendCompras"></div>
-          <div class="chart-wrap"><canvas id="chartCompras"></canvas></div>
-        </div>
-        <div class="chart-card">
-          <div class="chart-title">Taxa de conversão % por dia</div>
-          <div class="chart-legend" id="legendCR"></div>
-          <div class="chart-wrap"><canvas id="chartCR"></canvas></div>
-        </div>
-        <div class="chart-card">
-          <div class="chart-title">Taxa de rejeição % por dia</div>
-          <div class="chart-legend" id="legendBounce"></div>
-          <div class="chart-wrap"><canvas id="chartBounce"></canvas></div>
-        </div>
+        <div class="cc"><div class="cc-title">Sessões por dia</div><div class="cc-legend" id="legSess"></div><div class="cc-wrap"><canvas id="cSess"></canvas></div></div>
+        <div class="cc"><div class="cc-title">Compras por dia</div><div class="cc-legend" id="legComp"></div><div class="cc-wrap"><canvas id="cComp"></canvas></div></div>
+        <div class="cc"><div class="cc-title">Conversão % por dia</div><div class="cc-legend" id="legCR"></div><div class="cc-wrap"><canvas id="cCR"></canvas></div></div>
+        <div class="cc"><div class="cc-title">Rejeição % por dia</div><div class="cc-legend" id="legBnc"></div><div class="cc-wrap"><canvas id="cBnc"></canvas></div></div>
       </div>
     </div>
 
     <!-- AQUISIÇÃO -->
-    <div class="tab-content" id="tab-aquisicao">
-      <div class="section-title">Sessões por canal</div>
+    <div class="tbc" id="tab-aq">
+      <div class="sec">Sessões por canal e dispositivo</div>
       <div class="charts-grid">
-        <div class="chart-card">
-          <div class="chart-title">Distribuição de canais</div>
-          <div class="chart-wrap"><canvas id="chartCanais"></canvas></div>
-        </div>
-        <div class="chart-card">
-          <div class="chart-title">Sessões por dispositivo</div>
-          <div class="chart-wrap"><canvas id="chartDevices"></canvas></div>
-        </div>
+        <div class="cc"><div class="cc-title">Canais</div><div class="cc-wrap"><canvas id="cCanais"></canvas></div></div>
+        <div class="cc"><div class="cc-title">Dispositivos</div><div class="cc-wrap"><canvas id="cDevs"></canvas></div></div>
       </div>
-      <div class="section-title">Detalhamento por canal</div>
-      <div class="table-card">
-        <table class="dash-table">
-          <thead><tr><th>Canal</th><th class="num">Sessões</th><th class="num">Part. %</th><th class="bar-cell"></th></tr></thead>
-          <tbody id="tabelaCanais"></tbody>
-        </table>
-      </div>
-      <div class="section-title" style="margin-top:20px">CR por dispositivo</div>
-      <div class="table-card">
-        <table class="dash-table">
-          <thead><tr><th>Dispositivo</th><th class="num">Sessões</th><th class="num">Compras</th><th class="num">CR %</th></tr></thead>
-          <tbody id="tabelaDevices"></tbody>
-        </table>
-      </div>
+      <div class="sec">Detalhamento por canal</div>
+      <div class="tc"><table>
+        <thead id="thCanais"></thead>
+        <tbody id="tbCanais"></tbody>
+      </table></div>
+      <div class="sec" style="margin-top:20px">CR por dispositivo</div>
+      <div class="tc"><table>
+        <thead><tr><th>Dispositivo</th><th class="num">Sessões</th><th class="num">Compras</th><th class="num">CR %</th></tr></thead>
+        <tbody id="tbDevs"></tbody>
+      </table></div>
     </div>
 
     <!-- FUNIL -->
-    <div class="tab-content" id="tab-funil">
-      <div class="section-title">Funil de conversão</div>
+    <div class="tbc" id="tab-fu">
+      <div class="sec">Funil de conversão</div>
       <div class="funil-wrap"><div class="funil-steps" id="funilSteps"></div></div>
     </div>
 
     <!-- ROTAS -->
-    <div class="tab-content" id="tab-rotas">
-      <div class="section-title">Top origens e destinos (acumulado do período)</div>
-      <div class="rotas-grid">
-        <div class="table-card">
-          <div class="chart-title" style="margin-bottom:12px">🛫 Top origens</div>
-          <table class="dash-table">
-            <thead><tr><th>#</th><th>Cidade</th><th class="num">Sessões</th><th class="bar-cell"></th></tr></thead>
-            <tbody id="tabelaOrigens"></tbody>
-          </table>
+    <div class="tbc" id="tab-ro">
+      <div class="sec">Top origens e destinos (acumulado do período)</div>
+      <div class="rg">
+        <div class="tc">
+          <div style="font-size:13px;font-weight:700;margin-bottom:12px">🛫 Top origens</div>
+          <table><thead id="thOri"></thead><tbody id="tbOri"></tbody></table>
         </div>
-        <div class="table-card">
-          <div class="chart-title" style="margin-bottom:12px">🛬 Top destinos</div>
-          <table class="dash-table">
-            <thead><tr><th>#</th><th>Cidade</th><th class="num">Sessões</th><th class="bar-cell"></th></tr></thead>
-            <tbody id="tabelaDestinos"></tbody>
-          </table>
+        <div class="tc">
+          <div style="font-size:13px;font-weight:700;margin-bottom:12px">🛬 Top destinos</div>
+          <table><thead id="thDes"></thead><tbody id="tbDes"></tbody></table>
         </div>
       </div>
     </div>
 
     <!-- INSIGHTS -->
-    <div class="tab-content" id="tab-insights">
-      <div class="section-title">Análise semanal — Claude AI</div>
-      <div class="insights-wrap" id="insightsWrap"></div>
+    <div class="tbc" id="tab-in">
+      <div class="sec">Análise semanal — Claude AI</div>
+      <div class="insights" id="insightsWrap"></div>
     </div>
 
   </div>
 </main>
 
 <script>
-// ═══════════════════════════════════════════════════════
-// ESTADO GLOBAL
-// ═══════════════════════════════════════════════════════
-let ALL_DATA  = [];
-let INSIGHTS  = [];
-let DEVICE    = "all";
-let CHARTS    = {};
+// ════════════════════════════════════════════════════════
+// ESTADO
+// ════════════════════════════════════════════════════════
+let ALL=[], INSIGHTS=[], CHARTS={};
+let DEV="all";
+let P={start:null,end:null};
+let C={start:null,end:null,active:false};
 
-// Período principal
-let P = { start: null, end: null };   // datas ISO string
-// Período de comparação
-let C = { start: null, end: null, active: false };
-
-// ═══════════════════════════════════════════════════════
-// CARGA DE DADOS
-// ═══════════════════════════════════════════════════════
-async function loadData() {
-  try {
-    const res = await fetch("data.json?v=" + Date.now());
-    if (!res.ok) throw new Error("HTTP " + res.status);
-    const json = await res.json();
-    ALL_DATA = (json.daily || []).sort((a, b) => a.data < b.data ? -1 : 1);
-    INSIGHTS = json.insights || [];
-    document.getElementById("headerUpdated").textContent =
-      "Atualizado em " + fmtDatetime(json.gerado_em);
-    // Período padrão: últimos 30 dias
-    applyPreset(30);
-    hideState();
-  } catch(e) {
-    showError("Não foi possível carregar os dados. " + e.message);
+// ════════════════════════════════════════════════════════
+// CARGA
+// ════════════════════════════════════════════════════════
+async function loadData(){
+  try{
+    const res=await fetch("data.json?v="+Date.now());
+    if(!res.ok) throw new Error("HTTP "+res.status);
+    const j=await res.json();
+    ALL=(j.daily||[]).sort((a,b)=>a.data<b.data?-1:1);
+    INSIGHTS=j.insights||[];
+    document.getElementById("headerUpdated").textContent="Atualizado em "+fmtDT(j.gerado_em);
+    setPresetDays(30);
+    document.getElementById("appState").style.display="none";
+    document.getElementById("appContent").style.display="block";
+  }catch(e){
+    document.getElementById("appState").innerHTML=`<span style="color:var(--negative-700)">⚠ ${e.message}</span>`;
   }
 }
 
-// ═══════════════════════════════════════════════════════
-// GERENCIAMENTO DE PERÍODO
-// ═══════════════════════════════════════════════════════
-function applyPreset(days) {
-  const last = ALL_DATA[ALL_DATA.length - 1]?.data;
-  if (!last) return;
-  const end   = last;
-  const start = offsetDate(end, -days + 1);
-  setPrimary(start, end);
-}
+// ════════════════════════════════════════════════════════
+// FILTRO
+// ════════════════════════════════════════════════════════
+function getRange(s,e){return ALL.filter(d=>d.data>=s&&d.data<=e);}
 
-function applySpecial(key) {
-  const today = todayISO();
-  if (key === "all") {
-    const first = ALL_DATA[0]?.data || today;
-    const last  = ALL_DATA[ALL_DATA.length - 1]?.data || today;
-    setPrimary(first, last);
-  } else if (key === "mtd") {
-    const start = today.slice(0, 7) + "-01";
-    setPrimary(start, today);
-  } else if (key === "lastmonth") {
-    const d = new Date(today);
-    d.setDate(1); d.setDate(0); // último dia do mês anterior
-    const end   = isoDate(d);
-    const start = end.slice(0, 7) + "-01";
-    setPrimary(start, end);
-  }
-}
-
-function setPrimary(start, end) {
-  P.start = start;
-  P.end   = end;
-  updatePrimaryBtn();
-  // Auto-limpar comparação ao mudar período principal
-  C.active = false;
-  updateCompareBanner();
-  render();
-}
-
-function setCompare(start, end) {
-  C.start  = start;
-  C.end    = end;
-  C.active = true;
-  updateCompareBanner();
-  render();
-}
-
-function clearCompare() {
-  C.active = false;
-  C.start  = null;
-  C.end    = null;
-  updateCompareBanner();
-  render();
-}
-
-function applyComparePreset(key) {
-  if (!P.start || !P.end) return;
-  const days = dateDiff(P.start, P.end) + 1;
-  if (key === "prev-period") {
-    const end   = offsetDate(P.start, -1);
-    const start = offsetDate(end, -days + 1);
-    setCompare(start, end);
-  } else if (key === "prev-month") {
-    const d = new Date(P.start);
-    d.setDate(1); d.setDate(0);
-    const end   = isoDate(d);
-    const start = end.slice(0, 7) + "-01";
-    setCompare(start, end);
-  } else if (key === "prev-year") {
-    const start = offsetYears(P.start, -1);
-    const end   = offsetYears(P.end, -1);
-    setCompare(start, end);
-  }
-}
-
-// ═══════════════════════════════════════════════════════
-// FILTRO DE DADOS
-// ═══════════════════════════════════════════════════════
-function getRange(start, end) {
-  return ALL_DATA.filter(d => d.data >= start && d.data <= end);
-}
-
-function applyDevice(data) {
-  if (DEVICE === "all") return data;
-  return data.map(d => ({
+// applyDevice: remapeia sessoes/compras/bounce/dur conforme dispositivo selecionado.
+// usuarios e pageviews NÃO têm breakdown por device no GA4 — mostramos 0 quando device != all.
+function applyDevice(data){
+  if(DEV==="all") return data;
+  return data.map(d=>({
     ...d,
-    sessoes:  d["sessoes_"  + DEVICE] || 0,
-    compras:  d["compras_"  + DEVICE] || 0,
-    taxa_conversao_pct: d["sessoes_" + DEVICE] > 0
-      ? round4(d["compras_" + DEVICE] / d["sessoes_" + DEVICE] * 100) : 0,
+    sessoes: d["sessoes_"+DEV]||0,
+    compras: d["compras_"+DEV]||0,
+    usuarios: 0,           // não disponível por device
+    novos_usuarios: 0,     // não disponível por device
+    pageviews: 0,          // não disponível por device
+    taxa_conversao_pct: (d["sessoes_"+DEV]||0)>0
+      ? r4((d["compras_"+DEV]||0)/(d["sessoes_"+DEV])*100) : 0,
+    // bounce e duração: sem breakdown por device no GA4 — mantemos do geral
   }));
 }
 
-function getPrimary() {
-  if (!P.start || !P.end) return [];
-  return applyDevice(getRange(P.start, P.end));
-}
+function getPri(){if(!P.start||!P.end)return[];return applyDevice(getRange(P.start,P.end));}
+function getCmp(){if(!C.active||!C.start||!C.end)return[];return applyDevice(getRange(C.start,C.end));}
 
-function getCompare() {
-  if (!C.active || !C.start || !C.end) return [];
-  return applyDevice(getRange(C.start, C.end));
-}
-
-// ═══════════════════════════════════════════════════════
-// RENDER PRINCIPAL
-// ═══════════════════════════════════════════════════════
-function render() {
-  const primary = getPrimary();
-  const compare = getCompare();
-  renderKPIs(primary, compare);
-  renderChartsVisaoGeral(primary, compare);
-  renderAquisicao(primary);
-  renderFunil(primary);
-  renderRotas(primary);
+// ════════════════════════════════════════════════════════
+// RENDER
+// ════════════════════════════════════════════════════════
+function render(){
+  const pri=getPri(), cmp=getCmp();
+  renderKPIs(pri,cmp);
+  renderCharts(pri,cmp);
+  renderAcquisicao(pri,cmp);
+  renderFunil(pri,cmp);
+  renderRotas(pri,cmp);
   renderInsights();
 }
 
-// ═══════════════════════════════════════════════════════
+// ════════════════════════════════════════════════════════
 // KPIs
-// ═══════════════════════════════════════════════════════
-function renderKPIs(primary, compare) {
-  const tp = aggregate(primary);
-  const tc = compare.length ? aggregate(compare) : null;
-  const crP  = tp.sessoes > 0 ? round4(tp.compras / tp.sessoes * 100) : 0;
-  const brP  = wavg(primary, "taxa_rejeicao_pct", "sessoes");
-  const durP = wavg(primary, "duracao_media_seg", "sessoes");
+// ════════════════════════════════════════════════════════
+function renderKPIs(pri,cmp){
+  const tp=agg(pri), tc=cmp.length?agg(cmp):null;
+  const crP=tp.sessoes>0?r4(tp.compras/tp.sessoes*100):0;
+  const brP=wavg(pri,"taxa_rejeicao_pct","sessoes");
+  const durP=wavg(pri,"duracao_media_seg","sessoes");
+  const crC=tc&&tc.sessoes>0?r4(tc.compras/tc.sessoes*100):null;
+  const brC=tc?wavg(cmp,"taxa_rejeicao_pct","sessoes"):null;
+  const durC=tc?wavg(cmp,"duracao_media_seg","sessoes"):null;
 
-  const crC  = tc && tc.sessoes > 0 ? round4(tc.compras / tc.sessoes * 100) : null;
-  const brC  = tc ? wavg(compare, "taxa_rejeicao_pct", "sessoes") : null;
-  const durC = tc ? wavg(compare, "duracao_media_seg", "sessoes") : null;
-
-  const defs = [
-    { label: "Sessões",        val: fmtNum(tp.sessoes),        cval: tc ? fmtNum(tc.sessoes) : null,        raw: tp.sessoes,        crawl: tc?.sessoes },
-    { label: "Usuários",       val: fmtNum(tp.usuarios),       cval: tc ? fmtNum(tc.usuarios) : null,       raw: tp.usuarios,       crawl: tc?.usuarios },
-    { label: "Novos usuários", val: fmtNum(tp.novos_usuarios), cval: tc ? fmtNum(tc.novos_usuarios) : null, raw: tp.novos_usuarios, crawl: tc?.novos_usuarios },
-    { label: "Pageviews",      val: fmtNum(tp.pageviews),      cval: tc ? fmtNum(tc.pageviews) : null,      raw: tp.pageviews,      crawl: tc?.pageviews },
-    { label: "Compras",        val: fmtNum(tp.compras),        cval: tc ? fmtNum(tc.compras) : null,        raw: tp.compras,        crawl: tc?.compras },
-    { label: "Conversão",      val: crP.toFixed(2) + "%",      cval: crC !== null ? crC.toFixed(2) + "%" : null, raw: crP, crawl: crC },
-    { label: "Rejeição",       val: brP.toFixed(2) + "%",      cval: brC !== null ? brC.toFixed(2) + "%" : null, raw: brP, crawl: brC, invert: true },
-    { label: "Duração média",  val: fmtDur(durP),              cval: durC !== null ? fmtDur(durC) : null,   raw: durP, crawl: durC },
+  // Nota: usuarios/pageviews zerados quando device != all (sem breakdown no GA4)
+  const devNote=DEV!=="all"?" *":"";
+  const defs=[
+    {l:"Sessões",        v:fmtN(tp.sessoes),          cv:tc?fmtN(tc.sessoes):null,          r:tp.sessoes,   cr:tc?.sessoes},
+    {l:"Usuários"+devNote, v:DEV==="all"?fmtN(tp.usuarios):"—", cv:tc&&DEV==="all"?fmtN(tc.usuarios):null, r:tp.usuarios, cr:tc?.usuarios},
+    {l:"Novos usuários"+devNote,v:DEV==="all"?fmtN(tp.novos_usuarios):"—",cv:null,r:0,cr:null},
+    {l:"Pageviews"+devNote, v:DEV==="all"?fmtN(tp.pageviews):"—", cv:tc&&DEV==="all"?fmtN(tc.pageviews):null, r:tp.pageviews, cr:tc?.pageviews},
+    {l:"Compras",        v:fmtN(tp.compras),          cv:tc?fmtN(tc.compras):null,          r:tp.compras,   cr:tc?.compras},
+    {l:"Conversão",      v:crP.toFixed(2)+"%",        cv:crC!=null?crC.toFixed(2)+"%":null, r:crP,          cr:crC},
+    {l:"Rejeição",       v:brP.toFixed(2)+"%",        cv:brC!=null?brC.toFixed(2)+"%":null, r:brP,          cr:brC,inv:true},
+    {l:"Duração média",  v:fmtDur(durP),              cv:durC!=null?fmtDur(durC):null,      r:durP,         cr:durC},
   ];
-
-  document.getElementById("kpiGrid").innerHTML = defs.map(d => kpiCard(d)).join("");
+  document.getElementById("kpiGrid").innerHTML=defs.map(kpiCard).join("");
 }
 
-function kpiCard(d) {
-  let deltaHtml = "";
-  if (d.crawl != null && d.raw != null && d.crawl !== 0) {
-    const pct   = ((d.raw - d.crawl) / Math.abs(d.crawl)) * 100;
-    const isUp  = d.invert ? pct < 0 : pct > 0;
-    const cls   = Math.abs(pct) < 0.1 ? "neutral" : (isUp ? "up" : "down");
-    const arrow = pct > 0.1 ? "▲" : (pct < -0.1 ? "▼" : "—");
-    deltaHtml = `<span class="kpi-delta ${cls}">${arrow} ${Math.abs(pct).toFixed(1)}%</span>`;
+function kpiCard(d){
+  let dh="";
+  if(d.cr!=null&&d.r!=null&&d.cr!==0){
+    const p=((d.r-d.cr)/Math.abs(d.cr))*100;
+    const up=d.inv?p<0:p>0;
+    const cl=Math.abs(p)<0.1?"nt":(up?"up":"dn");
+    const ar=p>0.1?"▲":(p<-0.1?"▼":"—");
+    dh=`<span class="delta ${cl}">${ar} ${Math.abs(p).toFixed(1)}%</span>`;
   }
-  const compareRow = d.cval != null
-    ? `<div class="kpi-compare-row">
-        <span class="kpi-compare-val" style="color:var(--compare-color)">vs ${d.cval}</span>
-        ${deltaHtml}
-       </div>`
-    : "";
-
-  return `<div class="kpi-card">
-    <div class="kpi-label">${d.label}</div>
-    <div class="kpi-value">${d.val}</div>
-    ${compareRow}
-  </div>`;
+  const cr=d.cv!=null?`<div class="kpi-cmp"><span class="kpi-cval">vs ${d.cv}</span>${dh}</div>`:"";
+  return`<div class="kpi"><div class="kpi-lbl">${d.l}</div><div class="kpi-val">${d.v}</div>${cr}</div>`;
 }
 
-// ═══════════════════════════════════════════════════════
+// ════════════════════════════════════════════════════════
 // GRÁFICOS — VISÃO GERAL
-// ═══════════════════════════════════════════════════════
-function renderChartsVisaoGeral(primary, compare) {
-  const hasCompare = compare.length > 0;
-
-  mkLineCompare("chartSessoes", "legendSessoes",
-    primary, compare, "sessoes", "Sessões", "#19398A", hasCompare);
-  mkLineCompare("chartCompras", "legendCompras",
-    primary, compare, "compras", "Compras", "#A43C3E", hasCompare);
-  mkLineCompare("chartCR", "legendCR",
-    primary, compare, "taxa_conversao_pct", "CR %", "#278A22", hasCompare);
-  mkLineCompare("chartBounce", "legendBounce",
-    primary, compare, "taxa_rejeicao_pct", "Rejeição %", "#C3940F", hasCompare);
+// ════════════════════════════════════════════════════════
+function renderCharts(pri,cmp){
+  const hc=cmp.length>0;
+  mkLine("cSess","legSess",pri,cmp,"sessoes","Sessões","#19398A",hc);
+  mkLine("cComp","legComp",pri,cmp,"compras","Compras","#A43C3E",hc);
+  mkLine("cCR","legCR",pri,cmp,"taxa_conversao_pct","CR %","#278A22",hc);
+  mkLine("cBnc","legBnc",pri,cmp,"taxa_rejeicao_pct","Rejeição %","#C3940F",hc);
 }
 
-// ═══════════════════════════════════════════════════════
+// ════════════════════════════════════════════════════════
 // AQUISIÇÃO
-// ═══════════════════════════════════════════════════════
-function renderAquisicao(data) {
-  const canais = [
-    { label: "Orgânico",  key: "sessoes_organico" },
-    { label: "Direto",    key: "sessoes_direto" },
-    { label: "Pago",      key: "sessoes_pago" },
-    { label: "Social",    key: "sessoes_social" },
-    { label: "E-mail",    key: "sessoes_email" },
-    { label: "Referral",  key: "sessoes_referral" },
-    { label: "Outros",    key: "sessoes_outros_canais" },
+// ════════════════════════════════════════════════════════
+function renderAcquisicao(pri,cmp){
+  const hasCmp=cmp.length>0;
+  const CANAIS=[
+    {l:"Orgânico",k:"sessoes_organico"},
+    {l:"Direto",k:"sessoes_direto"},
+    {l:"Pago",k:"sessoes_pago"},
+    {l:"Social",k:"sessoes_social"},
+    {l:"E-mail",k:"sessoes_email"},
+    {l:"Referral",k:"sessoes_referral"},
+    {l:"Outros",k:"sessoes_outros_canais"},
   ];
-  const totals = canais.map(c => ({
-    ...c, total: data.reduce((s, d) => s + (d[c.key] || 0), 0),
-  })).sort((a, b) => b.total - a.total);
 
-  const totalSess = totals.reduce((s, c) => s + c.total, 0);
-  const maxC = totals[0]?.total || 1;
+  // Quando dispositivo está selecionado, canais não têm breakdown por device —
+  // mostramos os totais gerais (sem filtro de device) para não zerar tudo.
+  const priRaw = DEV==="all" ? getPri() : getRange(P.start,P.end);
+  const cmpRaw = (!C.active||!C.start||!C.end) ? [] : (DEV==="all" ? getCmp() : getRange(C.start,C.end));
 
-  document.getElementById("tabelaCanais").innerHTML = totals.map(c => {
-    const pct  = totalSess > 0 ? (c.total / totalSess * 100).toFixed(1) : "0.0";
-    const barW = (c.total / maxC * 100).toFixed(1);
-    return `<tr>
-      <td>${c.label}</td>
-      <td class="num">${fmtNum(c.total)}</td>
-      <td class="num">${pct}%</td>
-      <td class="bar-cell"><div class="mini-bar-wrap"><div class="mini-bar" style="width:${barW}%"></div></div></td>
-    </tr>`;
+  const priC=CANAIS.map(c=>({...c,t:priRaw.reduce((s,d)=>s+(d[c.k]||0),0)})).sort((a,b)=>b.t-a.t);
+  const cmpC=hasCmp?CANAIS.map(c=>({...c,t:cmpRaw.reduce((s,d)=>s+(d[c.k]||0),0)})):[];
+
+  const priTot=priC.reduce((s,c)=>s+c.t,0);
+  const cmpTot=cmpC.reduce((s,c)=>s+c.t,0);
+  const maxC=priC[0]?.t||1;
+
+  // Cabeçalho da tabela
+  document.getElementById("thCanais").innerHTML=hasCmp
+    ?`<tr><th>Canal</th><th class="num">Sessões</th><th class="num">%</th><th class="num" style="color:var(--compare)">Comp.</th><th class="num" style="color:var(--compare)">%</th><th class="num">Lift</th><th class="bc"></th></tr>`
+    :`<tr><th>Canal</th><th class="num">Sessões</th><th class="num">%</th><th class="bc"></th></tr>`;
+
+  document.getElementById("tbCanais").innerHTML=priC.map(c=>{
+    const pct=(priTot>0?(c.t/priTot*100):0).toFixed(1);
+    const barW=(c.t/maxC*100).toFixed(1);
+    const cObj=cmpC.find(x=>x.k===c.k);
+    const cv=cObj?.t||0;
+    const cpct=(cmpTot>0?(cv/cmpTot*100):0).toFixed(1);
+    const lift=cv>0?((c.t-cv)/cv*100):null;
+    const liftHtml=lift!=null
+      ?`<span class="${lift>0.1?"lift-pos":lift<-0.1?"lift-neg":"lift-nt"}">${lift>0?"+":""}${lift.toFixed(1)}%</span>`
+      :`<span class="lift-nt">—</span>`;
+    if(hasCmp){
+      return`<tr>
+        <td>${c.l}</td>
+        <td class="num">${fmtN(c.t)}</td><td class="num">${pct}%</td>
+        <td class="num cmp-cell">${fmtN(cv)}</td><td class="num cmp-cell">${cpct}%</td>
+        <td class="num">${liftHtml}</td>
+        <td class="bc"><div class="mbar-w"><div class="mbar" style="width:${barW}%"></div></div></td>
+      </tr>`;
+    }
+    return`<tr><td>${c.l}</td><td class="num">${fmtN(c.t)}</td><td class="num">${pct}%</td><td class="bc"><div class="mbar-w"><div class="mbar" style="width:${barW}%"></div></div></td></tr>`;
   }).join("");
 
-  mkDonut("chartCanais",
-    totals.filter(c => c.total > 0).map(c => c.label),
-    totals.filter(c => c.total > 0).map(c => c.total),
+  // Donut canais — com % no label
+  const canaisFilt=priC.filter(c=>c.t>0);
+  mkDonut("cCanais",
+    canaisFilt.map(c=>`${c.l} ${priTot>0?(c.t/priTot*100).toFixed(1):"0"}%`),
+    canaisFilt.map(c=>c.t),
     ["#19398A","#A43C3E","#C3940F","#6589D4","#278A22","#8B8B8B","#D1D1D1"]
   );
 
-  const devs = [
-    { label: "Mobile",  ks: "sessoes_mobile",  kc: "compras_mobile" },
-    { label: "Desktop", ks: "sessoes_desktop", kc: "compras_desktop" },
-    { label: "Tablet",  ks: "sessoes_tablet",  kc: "compras_tablet" },
+  // Dispositivos — sempre sem filtro de device (é o gráfico de distribuição de device)
+  const priAll=getRange(P.start,P.end);
+  const DEVS=[
+    {l:"Mobile",ks:"sessoes_mobile",kc:"compras_mobile"},
+    {l:"Desktop",ks:"sessoes_desktop",kc:"compras_desktop"},
+    {l:"Tablet",ks:"sessoes_tablet",kc:"compras_tablet"},
   ];
-  const devT = devs.map(d => ({
+  const devT=DEVS.map(d=>({
     ...d,
-    sess: data.reduce((s, r) => s + (r[d.ks] || 0), 0),
-    comp: data.reduce((s, r) => s + (r[d.kc] || 0), 0),
+    s:priAll.reduce((x,r)=>x+(r[d.ks]||0),0),
+    c:priAll.reduce((x,r)=>x+(r[d.kc]||0),0),
   }));
-
-  document.getElementById("tabelaDevices").innerHTML = devT.map(d => {
-    const cr = d.sess > 0 ? (d.comp / d.sess * 100).toFixed(2) : "0.00";
-    return `<tr>
-      <td>${d.label}</td>
-      <td class="num">${fmtNum(d.sess)}</td>
-      <td class="num">${fmtNum(d.comp)}</td>
-      <td class="num">${cr}%</td>
-    </tr>`;
-  }).join("");
-
-  mkDonut("chartDevices",
-    devT.map(d => d.label), devT.map(d => d.sess),
+  const devTot=devT.reduce((s,d)=>s+d.s,0);
+  mkDonut("cDevs",
+    devT.map(d=>`${d.l} ${devTot>0?(d.s/devTot*100).toFixed(1):"0"}%`),
+    devT.map(d=>d.s),
     ["#19398A","#A43C3E","#C3940F"]
   );
+
+  document.getElementById("tbDevs").innerHTML=devT.map(d=>{
+    const cr=d.s>0?(d.c/d.s*100).toFixed(2):"0.00";
+    return`<tr><td>${d.l}</td><td class="num">${fmtN(d.s)}</td><td class="num">${fmtN(d.c)}</td><td class="num">${cr}%</td></tr>`;
+  }).join("");
 }
 
-// ═══════════════════════════════════════════════════════
+// ════════════════════════════════════════════════════════
 // FUNIL
-// ═══════════════════════════════════════════════════════
-function renderFunil(data) {
-  const steps = [
-    { label: "Busca",           key: "funil_search" },
-    { label: "Seleciona item",  key: "funil_select_item" },
-    { label: "Add ao carrinho", key: "funil_add_to_cart" },
-    { label: "Inicia checkout", key: "funil_begin_checkout" },
-    { label: "Compra",          key: "funil_purchase" },
+// ════════════════════════════════════════════════════════
+function renderFunil(pri,cmp){
+  const hasCmp=cmp.length>0;
+  const STEPS=[
+    {l:"Busca",k:"funil_search"},
+    {l:"Seleciona item",k:"funil_select_item"},
+    {l:"Add ao carrinho",k:"funil_add_to_cart"},
+    {l:"Inicia checkout",k:"funil_begin_checkout"},
+    {l:"Compra",k:"funil_purchase"},
   ];
-  const totals = steps.map(s => ({
-    ...s, total: data.reduce((sum, d) => sum + (d[s.key] || 0), 0),
-  }));
-  const max = totals[0]?.total || 1;
-  const el  = document.getElementById("funilSteps");
-  el.innerHTML = "";
-  totals.forEach((s, i) => {
-    const pct  = max > 0 ? (s.total / max * 100) : 0;
-    const conv = i > 0 && totals[i-1].total > 0
-      ? (s.total / totals[i-1].total * 100).toFixed(1) + "%" : "—";
-    if (i > 0) {
-      const c = document.createElement("div");
-      c.className = "funil-connector";
-      el.appendChild(c);
-    }
-    const div = document.createElement("div");
-    div.className = "funil-step";
-    div.innerHTML = `
-      <div class="funil-step-label">${s.label}</div>
-      <div class="funil-bar-wrap">
-        <div class="funil-bar" style="width:${pct}%">
-          <span class="funil-bar-val">${fmtNum(s.total)}</span>
+  const priT=STEPS.map(s=>({...s,t:pri.reduce((x,d)=>x+(d[s.k]||0),0)}));
+  const cmpT=hasCmp?STEPS.map(s=>({...s,t:cmp.reduce((x,d)=>x+(d[s.k]||0),0)})):[];
+  const maxP=priT[0]?.t||1;
+  const maxC=cmpT[0]?.t||1;
+  const el=document.getElementById("funilSteps");
+  el.innerHTML="";
+
+  priT.forEach((s,i)=>{
+    if(i>0){const c=document.createElement("div");c.className="funil-conn";el.appendChild(c);}
+    const pctP=maxP>0?(s.t/maxP*100):0;
+    const convP=i>0&&priT[i-1].t>0?(s.t/priT[i-1].t*100).toFixed(1)+"%":"—";
+    const cv=cmpT[i]?.t||0;
+    const pctC=maxC>0?(cv/maxC*100):0;
+    const convC=hasCmp&&i>0&&cmpT[i-1].t>0?(cv/cmpT[i-1].t*100).toFixed(1)+"%":"";
+    const lift=hasCmp&&cv>0?((s.t-cv)/cv*100):null;
+    const lH=lift!=null?`<span class="${lift>0.1?"lift-pos":lift<-0.1?"lift-neg":"lift-nt"}" style="margin-left:6px">${lift>0?"+":""}${lift.toFixed(1)}%</span>`:"";
+
+    const row=document.createElement("div");
+    row.className="funil-row";
+    row.innerHTML=`
+      <div class="funil-row-lbl">${s.l}</div>
+      <div class="funil-bars">
+        <div class="funil-bar-wrap">
+          <div class="funil-bar pri" style="width:${pctP}%"><span class="funil-bar-val">${fmtN(s.t)}</span></div>
         </div>
+        ${hasCmp?`<div class="funil-bar-wrap"><div class="funil-bar cmp" style="width:${pctC}%"><span class="funil-bar-val" style="font-size:10px">${fmtN(cv)}</span></div></div>`:""}
       </div>
-      <div class="funil-step-pct">${i === 0 ? "100%" : conv}</div>`;
-    el.appendChild(div);
+      <div class="funil-row-pct">${i===0?"100%":convP}${lH}</div>`;
+    el.appendChild(row);
   });
 }
 
-// ═══════════════════════════════════════════════════════
+// ════════════════════════════════════════════════════════
 // ROTAS
-// ═══════════════════════════════════════════════════════
-function renderRotas(data) {
-  const oMap = {}, dMap = {};
-  data.forEach(d => {
-    for (let i = 1; i <= 5; i++) {
-      const oc = d[`top_origem_${i}`];
-      const os = d[`top_origem_${i}_sessoes`] || 0;
-      if (oc) oMap[oc] = (oMap[oc] || 0) + os;
-      const dc = d[`top_destino_${i}`];
-      const ds = d[`top_destino_${i}_sessoes`] || 0;
-      if (dc) dMap[dc] = (dMap[dc] || 0) + ds;
-    }
-  });
-  const origens  = Object.entries(oMap).sort((a,b)=>b[1]-a[1]).slice(0,10);
-  const destinos = Object.entries(dMap).sort((a,b)=>b[1]-a[1]).slice(0,10);
-  const maxO = origens[0]?.[1] || 1;
-  const maxD = destinos[0]?.[1] || 1;
+// ════════════════════════════════════════════════════════
+function renderRotas(pri,cmp){
+  const hasCmp=cmp.length>0;
 
-  const rowsO = origens.map(([c, s], i) =>
-    `<tr><td style="color:var(--neutral-500);font-weight:700">${i+1}</td><td>${c}</td><td class="num">${fmtNum(s)}</td>
-    <td class="bar-cell"><div class="mini-bar-wrap"><div class="mini-bar" style="width:${(s/maxO*100).toFixed(1)}%"></div></div></td></tr>`
-  ).join("") || `<tr><td colspan="4" style="color:var(--neutral-500);padding:16px;text-align:center">Sem dados disponíveis.</td></tr>`;
+  function buildMap(data){
+    const oM={}, dM={};
+    data.forEach(d=>{
+      for(let i=1;i<=5;i++){
+        const oc=d[`top_origem_${i}`], os=d[`top_origem_${i}_sessoes`]||0;
+        if(oc) oM[oc]=(oM[oc]||{s:0,c:0}), oM[oc].s+=os;
+        const dc=d[`top_destino_${i}`], ds=d[`top_destino_${i}_sessoes`]||0;
+        if(dc) dM[dc]=(dM[dc]||{s:0,c:0}), dM[dc].s+=ds;
+      }
+    });
+    // Compras por rota: usamos compras totais do dia ponderadas pela proporção da rota
+    // (GA4 não fornece compras por rota diretamente)
+    const totSess=data.reduce((x,d)=>x+(d.sessoes||0),0);
+    const totComp=data.reduce((x,d)=>x+(d.compras||0),0);
+    const crGlobal=totSess>0?totComp/totSess:0;
+    Object.keys(oM).forEach(k=>{oM[k].c=Math.round(oM[k].s*crGlobal);});
+    Object.keys(dM).forEach(k=>{dM[k].c=Math.round(dM[k].s*crGlobal);});
+    return{oM,dM};
+  }
 
-  const rowsD = destinos.map(([c, s], i) =>
-    `<tr><td style="color:var(--neutral-500);font-weight:700">${i+1}</td><td>${c}</td><td class="num">${fmtNum(s)}</td>
-    <td class="bar-cell"><div class="mini-bar-wrap"><div class="mini-bar" style="width:${(s/maxD*100).toFixed(1)}%"></div></div></td></tr>`
-  ).join("") || `<tr><td colspan="4" style="color:var(--neutral-500);padding:16px;text-align:center">Sem dados disponíveis.</td></tr>`;
+  const {oM:priOM,dM:priDM}=buildMap(pri);
+  const {oM:cmpOM,dM:cmpDM}=hasCmp?buildMap(cmp):{oM:{},dM:{}};
 
-  document.getElementById("tabelaOrigens").innerHTML = rowsO;
-  document.getElementById("tabelaDestinos").innerHTML = rowsD;
+  const origens=Object.entries(priOM).sort((a,b)=>b[1].s-a[1].s).slice(0,10);
+  const destinos=Object.entries(priDM).sort((a,b)=>b[1].s-a[1].s).slice(0,10);
+  const maxO=origens[0]?.[1].s||1;
+  const maxD=destinos[0]?.[1].s||1;
+
+  const thead=hasCmp
+    ?`<tr><th>#</th><th>Cidade</th><th class="num">Sess.</th><th class="num">Compras</th><th class="num">CR%</th><th class="num" style="color:var(--compare)">Sess. cmp</th><th class="num">Lift</th><th class="bc"></th></tr>`
+    :`<tr><th>#</th><th>Cidade</th><th class="num">Sessões</th><th class="num">Compras</th><th class="num">CR %</th><th class="bc"></th></tr>`;
+
+  document.getElementById("thOri").innerHTML=thead;
+  document.getElementById("thDes").innerHTML=thead;
+
+  function rows(list,maxV,cmpMap){
+    return list.map(([cidade,{s,c}],i)=>{
+      const cr=s>0?(c/s*100).toFixed(2):"0.00";
+      const barW=(s/maxV*100).toFixed(1);
+      const cv=cmpMap[cidade]?.s||0;
+      const lift=hasCmp&&cv>0?((s-cv)/cv*100):null;
+      const lH=lift!=null?`<span class="${lift>0.1?"lift-pos":lift<-0.1?"lift-neg":"lift-nt"}">${lift>0?"+":""}${lift.toFixed(1)}%</span>`:`<span class="lift-nt">—</span>`;
+      if(hasCmp){
+        return`<tr>
+          <td style="color:var(--neutral-500);font-weight:700">${i+1}</td>
+          <td>${cidade}</td>
+          <td class="num">${fmtN(s)}</td>
+          <td class="num">${fmtN(c)}</td>
+          <td class="num">${cr}%</td>
+          <td class="num cmp-cell">${fmtN(cv)}</td>
+          <td class="num">${lH}</td>
+          <td class="bc"><div class="mbar-w"><div class="mbar" style="width:${barW}%"></div></div></td>
+        </tr>`;
+      }
+      return`<tr>
+        <td style="color:var(--neutral-500);font-weight:700">${i+1}</td>
+        <td>${cidade}</td>
+        <td class="num">${fmtN(s)}</td>
+        <td class="num">${fmtN(c)}</td>
+        <td class="num">${cr}%</td>
+        <td class="bc"><div class="mbar-w"><div class="mbar" style="width:${barW}%"></div></div></td>
+      </tr>`;
+    }).join("")||`<tr><td colspan="8" style="color:var(--neutral-500);padding:16px;text-align:center">Sem dados.</td></tr>`;
+  }
+
+  document.getElementById("tbOri").innerHTML=rows(origens,maxO,cmpOM);
+  document.getElementById("tbDes").innerHTML=rows(destinos,maxD,cmpDM);
 }
 
-// ═══════════════════════════════════════════════════════
+// ════════════════════════════════════════════════════════
 // INSIGHTS
-// ═══════════════════════════════════════════════════════
-function renderInsights() {
-  const wrap = document.getElementById("insightsWrap");
-  if (!INSIGHTS.length) {
-    wrap.innerHTML = `<div class="insight-empty">
-      Nenhum insight gerado ainda. O Claude Cowork gera a análise toda segunda-feira.
-    </div>`;
+// ════════════════════════════════════════════════════════
+function renderInsights(){
+  const w=document.getElementById("insightsWrap");
+  if(!INSIGHTS.length){
+    w.innerHTML=`<div class="ins-empty">Nenhum insight gerado ainda. O Claude Cowork gera a análise toda segunda-feira.</div>`;
     return;
   }
-  wrap.innerHTML = INSIGHTS.map(ins => `
-    <div class="insight-card">
-      <div class="insight-tag">${ins.tag || "Análise"}</div>
-      <div class="insight-text">${ins.texto}</div>
-    </div>`).join("");
+  w.innerHTML=INSIGHTS.map(i=>`<div class="ins-card"><div class="ins-tag">${i.tag||"Análise"}</div><div class="ins-txt">${i.texto}</div></div>`).join("");
 }
 
-// ═══════════════════════════════════════════════════════
+// ════════════════════════════════════════════════════════
 // CHART.JS
-// ═══════════════════════════════════════════════════════
-const CHART_BASE = {
-  responsive: true,
-  maintainAspectRatio: false,
-  plugins: { legend: { display: false } },
-  scales: {
-    x: { ticks: { maxTicksLimit: 8, font: { size: 10 } }, grid: { display: false } },
-    y: { ticks: { font: { size: 10 } }, grid: { color: "#EEEEEE" } },
-  },
-};
-
-function mkLineCompare(canvasId, legendId, primary, compare, metric, label, color, hasCompare) {
-  const ctx = document.getElementById(canvasId);
-  if (!ctx) return;
-  if (CHARTS[canvasId]) CHARTS[canvasId].destroy();
-
-  const priLabels = primary.map(d => fmtDateShort(d.data));
-  const priVals   = primary.map(d => d[metric] || 0);
-  const datasets  = [{
-    label,
-    data: priVals,
-    borderColor: color,
-    backgroundColor: color + "15",
-    borderWidth: 2.5,
-    pointRadius: primary.length > 60 ? 0 : 2,
-    fill: true,
-    tension: 0.3,
-    order: 1,
-  }];
-
-  // Série de comparação — mesma quantidade de pontos, indexada pela posição
-  if (hasCompare && compare.length) {
-    const cmpVals = compare.map(d => d[metric] || 0);
-    // Alinhar pelo índice (posição relativa no intervalo)
-    const aligned = alignSeries(priVals, cmpVals);
-    datasets.push({
-      label: "Comparação",
-      data: aligned,
-      borderColor: "#6589D4",
-      backgroundColor: "transparent",
-      borderWidth: 1.5,
-      borderDash: [5, 4],
-      pointRadius: 0,
-      fill: false,
-      tension: 0.3,
-      order: 2,
-    });
+// ════════════════════════════════════════════════════════
+function mkLine(cid,lid,pri,cmp,metric,label,color,hasCmp){
+  const ctx=document.getElementById(cid);
+  if(!ctx) return;
+  if(CHARTS[cid]) CHARTS[cid].destroy();
+  const labels=pri.map(d=>fmtDS(d.data));
+  const vals=pri.map(d=>d[metric]||0);
+  const ds=[{label,data:vals,borderColor:color,backgroundColor:color+"15",borderWidth:2.5,
+    pointRadius:pri.length>60?0:2,fill:true,tension:0.3,order:1}];
+  if(hasCmp&&cmp.length){
+    ds.push({label:"Comparação",data:alignSeries(vals,cmp.map(d=>d[metric]||0)),
+      borderColor:"#6589D4",backgroundColor:"transparent",borderWidth:1.5,
+      borderDash:[5,4],pointRadius:0,fill:false,tension:0.3,order:2});
   }
-
-  // Legend
-  const legEl = document.getElementById(legendId);
-  if (legEl) {
-    legEl.innerHTML = `
-      <div class="chart-legend-item">
-        <div class="chart-legend-dot" style="background:${color}"></div>
-        <span>${P.start ? fmtDateShort(P.start) + " – " + fmtDateShort(P.end) : label}</span>
-      </div>
-      ${hasCompare && compare.length ? `<div class="chart-legend-item">
-        <div class="chart-legend-dot" style="background:#6589D4;border:2px dashed #6589D4;background:transparent;width:18px;height:3px;border-radius:0"></div>
-        <span style="color:var(--compare-color)">${C.start ? fmtDateShort(C.start) + " – " + fmtDateShort(C.end) : "Comparação"}</span>
-      </div>` : ""}`;
-  }
-
-  CHARTS[canvasId] = new Chart(ctx, {
-    type: "line",
-    data: { labels: priLabels, datasets },
-    options: {
-      ...CHART_BASE,
-      plugins: {
-        ...CHART_BASE.plugins,
-        tooltip: {
-          callbacks: {
-            afterBody: (items) => {
-              if (!hasCompare || !compare.length) return "";
-              const idx = items[0]?.dataIndex;
-              if (idx == null) return "";
-              const cmpVals = compare.map(d => d[metric] || 0);
-              const aligned = alignSeries(priVals, cmpVals);
-              const cv = aligned[idx];
-              if (cv == null) return "";
-              const pv  = priVals[idx];
-              const pct = cv !== 0 ? ((pv - cv) / Math.abs(cv) * 100).toFixed(1) : "—";
-              const cDate = compare[idx]?.data || "";
-              return `Comparação (${fmtDateShort(cDate)}): ${cv}\nVariação: ${pct}%`;
-            }
-          }
-        }
-      }
+  const legEl=document.getElementById(lid);
+  if(legEl) legEl.innerHTML=`
+    <div class="cc-li"><div class="cc-dot" style="background:${color}"></div><span>${P.start?fmtDS(P.start)+" – "+fmtDS(P.end):label}</span></div>
+    ${hasCmp&&cmp.length?`<div class="cc-li"><div style="width:18px;height:3px;background:transparent;border-bottom:2px dashed #6589D4"></div><span style="color:var(--compare)">${C.start?fmtDS(C.start)+" – "+fmtDS(C.end):"Comparação"}</span></div>`:""}`;
+  CHARTS[cid]=new Chart(ctx,{type:"line",data:{labels,datasets:ds},options:{
+    responsive:true,maintainAspectRatio:false,
+    plugins:{legend:{display:false},tooltip:{callbacks:{afterBody:(items)=>{
+      if(!hasCmp||!cmp.length) return"";
+      const idx=items[0]?.dataIndex; if(idx==null) return"";
+      const cv=alignSeries(vals,cmp.map(d=>d[metric]||0))[idx];
+      if(cv==null) return"";
+      const pct=cv!==0?((vals[idx]-cv)/Math.abs(cv)*100).toFixed(1):"—";
+      return`Comparação: ${cv}\nVariação: ${pct}%`;
+    }}}},
+    scales:{
+      x:{ticks:{maxTicksLimit:8,font:{size:10}},grid:{display:false}},
+      y:{ticks:{font:{size:10}},grid:{color:"#EEEEEE"}},
     },
-  });
+  }});
 }
 
-function alignSeries(base, compare) {
-  // Alinha compare ao tamanho de base por interpolação de índice
-  const out = [];
-  for (let i = 0; i < base.length; i++) {
-    const pos = i / Math.max(base.length - 1, 1) * Math.max(compare.length - 1, 0);
-    const lo  = Math.floor(pos);
-    const hi  = Math.ceil(pos);
-    if (lo >= compare.length) { out.push(null); continue; }
-    if (lo === hi) { out.push(compare[lo]); continue; }
-    const t = pos - lo;
-    out.push(+(compare[lo] * (1 - t) + compare[hi] * t).toFixed(2));
+function mkDonut(id,labels,values,colors){
+  const ctx=document.getElementById(id);
+  if(!ctx) return;
+  if(CHARTS[id]) CHARTS[id].destroy();
+  CHARTS[id]=new Chart(ctx,{type:"doughnut",
+    data:{labels,datasets:[{data:values,backgroundColor:colors,borderWidth:2,borderColor:"#fff"}]},
+    options:{responsive:true,maintainAspectRatio:false,cutout:"60%",
+      plugins:{legend:{display:true,position:"right",
+        labels:{font:{size:11,family:"'Nunito Sans'"},boxWidth:12,padding:8}}}}});
+}
+
+function alignSeries(base,cmp){
+  const out=[];
+  for(let i=0;i<base.length;i++){
+    const pos=i/Math.max(base.length-1,1)*Math.max(cmp.length-1,0);
+    const lo=Math.floor(pos),hi=Math.ceil(pos);
+    if(lo>=cmp.length){out.push(null);continue;}
+    if(lo===hi){out.push(cmp[lo]);continue;}
+    out.push(+(cmp[lo]*(1-(pos-lo))+cmp[hi]*(pos-lo)).toFixed(2));
   }
   return out;
 }
 
-function mkDonut(id, labels, values, colors) {
-  const ctx = document.getElementById(id);
-  if (!ctx) return;
-  if (CHARTS[id]) CHARTS[id].destroy();
-  CHARTS[id] = new Chart(ctx, {
-    type: "doughnut",
-    data: {
-      labels,
-      datasets: [{ data: values, backgroundColor: colors, borderWidth: 2, borderColor: "#fff" }],
-    },
-    options: {
-      responsive: true,
-      maintainAspectRatio: false,
-      cutout: "60%",
-      plugins: {
-        legend: {
-          display: true, position: "right",
-          labels: { font: { size: 11, family: "'Nunito Sans'" }, boxWidth: 12, padding: 10 },
-        },
-      },
-    },
-  });
+// ════════════════════════════════════════════════════════
+// GESTÃO DE PERÍODO
+// ════════════════════════════════════════════════════════
+function setPrimary(s,e){
+  P.start=s; P.end=e;
+  updatePriBtn();
+  C.active=false; updateCmpBanner();
+  render();
+}
+function setCompare(s,e){C.start=s;C.end=e;C.active=true;updateCmpBanner();render();}
+function clearCompare(){C.active=false;C.start=null;C.end=null;updateCmpBanner();render();}
+
+function setPresetDays(days){
+  const last=ALL[ALL.length-1]?.data; if(!last) return;
+  setPrimary(offDate(last,-days+1),last);
+  // marcar pill ativo
+  document.querySelectorAll("[data-period]").forEach(b=>b.classList.toggle("active",parseInt(b.dataset.period)===days));
+  document.getElementById("btnPri").classList.remove("active");
+}
+function setPresetSp(key){
+  const today=todayISO();
+  if(key==="all"){const f=ALL[0]?.data||today,l=ALL[ALL.length-1]?.data||today;setPrimary(f,l);}
+  else if(key==="mtd"){setPrimary(today.slice(0,7)+"-01",today);}
+  else if(key==="lm"){
+    const d=new Date(today);d.setDate(1);d.setDate(0);
+    const e=isoD(d),s=e.slice(0,7)+"-01";
+    setPrimary(s,e);
+  }
+}
+function applyCmpPreset(key){
+  if(!P.start||!P.end) return;
+  const days=dateDiff(P.start,P.end)+1;
+  if(key==="pp"){const e=offDate(P.start,-1);setCompare(offDate(e,-days+1),e);}
+  else if(key==="pm"){const d=new Date(P.start);d.setDate(1);d.setDate(0);const e=isoD(d);setCompare(e.slice(0,7)+"-01",e);}
+  else if(key==="py"){setCompare(offYears(P.start,-1),offYears(P.end,-1));}
 }
 
-// ═══════════════════════════════════════════════════════
-// UI — DROPDOWNS
-// ═══════════════════════════════════════════════════════
-function openDropdown(id) {
-  document.querySelectorAll(".dr-dropdown").forEach(d => d.classList.remove("open"));
+function updatePriBtn(){
+  const btn=document.getElementById("btnPri"),lbl=document.getElementById("lblPri");
+  if(P.start&&P.end){lbl.textContent=fmtDS(P.start)+" – "+fmtDS(P.end);btn.classList.add("active");
+    document.querySelectorAll("[data-period]").forEach(b=>b.classList.remove("active"));}
+  else{lbl.textContent="Customizado";btn.classList.remove("active");}
+}
+function updateCmpBanner(){
+  const banner=document.getElementById("cmpBanner"),btn=document.getElementById("btnCmp"),lbl=document.getElementById("lblCmp");
+  if(C.active&&C.start&&C.end){
+    banner.classList.remove("hidden");
+    document.getElementById("banPri").textContent=fmtDF(P.start)+" – "+fmtDF(P.end);
+    document.getElementById("banCmp").textContent=fmtDF(C.start)+" – "+fmtDF(C.end);
+    btn.classList.add("cactive"); lbl.textContent=fmtDS(C.start)+" – "+fmtDS(C.end);
+  }else{
+    banner.classList.add("hidden");
+    btn.classList.remove("cactive"); lbl.textContent="Adicionar comparação";
+  }
+}
+
+// ════════════════════════════════════════════════════════
+// DROPDOWN UI
+// ════════════════════════════════════════════════════════
+function openDrop(id){
+  document.querySelectorAll(".dr-drop").forEach(d=>d.classList.remove("open"));
   document.getElementById(id).classList.add("open");
   document.getElementById("overlay").classList.add("open");
 }
-function closeAllDropdowns() {
-  document.querySelectorAll(".dr-dropdown").forEach(d => d.classList.remove("open"));
+function closeDrop(){
+  document.querySelectorAll(".dr-drop").forEach(d=>d.classList.remove("open"));
   document.getElementById("overlay").classList.remove("open");
 }
 
-document.getElementById("btnPrimaryCustom").addEventListener("click", (e) => {
+document.getElementById("btnPri").addEventListener("click",e=>{
   e.stopPropagation();
-  const isOpen = document.getElementById("dropPrimary").classList.contains("open");
-  closeAllDropdowns();
-  if (!isOpen) {
-    if (P.start) document.getElementById("primaryStart").value = P.start;
-    if (P.end)   document.getElementById("primaryEnd").value   = P.end;
-    openDropdown("dropPrimary");
+  const open=document.getElementById("dropPri").classList.contains("open");
+  closeDrop();
+  if(!open){
+    if(P.start) document.getElementById("priS").value=P.start;
+    if(P.end)   document.getElementById("priE").value=P.end;
+    openDrop("dropPri");
   }
 });
-
-document.getElementById("btnCompare").addEventListener("click", (e) => {
+document.getElementById("btnCmp").addEventListener("click",e=>{
   e.stopPropagation();
-  const isOpen = document.getElementById("dropCompare").classList.contains("open");
-  closeAllDropdowns();
-  if (!isOpen) {
-    if (C.start) document.getElementById("compareStart").value = C.start;
-    if (C.end)   document.getElementById("compareEnd").value   = C.end;
-    openDropdown("dropCompare");
+  const open=document.getElementById("dropCmp").classList.contains("open");
+  closeDrop();
+  if(!open){
+    if(C.start) document.getElementById("cmpS").value=C.start;
+    if(C.end)   document.getElementById("cmpE").value=C.end;
+    openDrop("dropCmp");
   }
 });
-
-document.getElementById("overlay").addEventListener("click", closeAllDropdowns);
+document.getElementById("overlay").addEventListener("click",closeDrop);
 
 // Presets período principal
-document.querySelectorAll("#primaryPresets .dr-preset").forEach(btn => {
-  btn.addEventListener("click", () => {
-    document.querySelectorAll("#primaryPresets .dr-preset").forEach(b => b.classList.remove("active"));
+document.querySelectorAll("#priPresets .dr-preset").forEach(btn=>{
+  btn.addEventListener("click",()=>{
+    document.querySelectorAll("#priPresets .dr-preset").forEach(b=>b.classList.remove("active"));
     btn.classList.add("active");
-    if (btn.dataset.days) applySpecial_days(parseInt(btn.dataset.days));
-    else if (btn.dataset.special) applySpecial(btn.dataset.special);
-    closeAllDropdowns();
+    if(btn.dataset.days) setPresetDays(parseInt(btn.dataset.days));
+    else if(btn.dataset.sp) setPresetSp(btn.dataset.sp);
+    closeDrop();
   });
 });
 
-function applySpecial_days(days) {
-  const last = ALL_DATA[ALL_DATA.length - 1]?.data;
-  if (!last) return;
-  setPrimary(offsetDate(last, -days + 1), last);
-}
-
-// Presets período de comparação
-document.querySelectorAll("#comparePresets .dr-preset").forEach(btn => {
-  btn.addEventListener("click", () => {
-    document.querySelectorAll("#comparePresets .dr-preset").forEach(b => b.classList.remove("active"));
+// Presets comparação
+document.querySelectorAll("#cmpPresets .dr-preset").forEach(btn=>{
+  btn.addEventListener("click",()=>{
+    document.querySelectorAll("#cmpPresets .dr-preset").forEach(b=>b.classList.remove("active"));
     btn.classList.add("active");
-    if (btn.dataset.compare) applyComparePreset(btn.dataset.compare);
-    else if (btn.dataset.days) {
-      const days = parseInt(btn.dataset.days);
-      const last = ALL_DATA[ALL_DATA.length - 1]?.data;
-      if (last) setCompare(offsetDate(last, -days + 1), last);
+    if(btn.dataset.cmp){applyCmpPreset(btn.dataset.cmp);closeDrop();}
+    else if(btn.dataset.days){
+      const last=ALL[ALL.length-1]?.data;
+      if(last) setCompare(offDate(last,-parseInt(btn.dataset.days)+1),last);
+      closeDrop();
     }
-    closeAllDropdowns();
   });
 });
 
-// Aplicar período customizado principal
-document.getElementById("btnApplyPrimary").addEventListener("click", () => {
-  const s = document.getElementById("primaryStart").value;
-  const e = document.getElementById("primaryEnd").value;
-  if (s && e && s <= e) { setPrimary(s, e); closeAllDropdowns(); }
-  else alert("Selecione um intervalo válido.");
+document.getElementById("btnApplyPri").addEventListener("click",()=>{
+  const s=document.getElementById("priS").value,e=document.getElementById("priE").value;
+  if(s&&e&&s<=e){setPrimary(s,e);closeDrop();}else alert("Intervalo inválido.");
 });
-document.getElementById("btnCancelPrimary").addEventListener("click", closeAllDropdowns);
+document.getElementById("btnCancelPri").addEventListener("click",closeDrop);
 
-// Aplicar/remover comparação customizada
-document.getElementById("btnApplyCompare").addEventListener("click", () => {
-  const s = document.getElementById("compareStart").value;
-  const e = document.getElementById("compareEnd").value;
-  if (s && e && s <= e) { setCompare(s, e); closeAllDropdowns(); }
-  else alert("Selecione um intervalo válido.");
+document.getElementById("btnApplyCmp").addEventListener("click",()=>{
+  const s=document.getElementById("cmpS").value,e=document.getElementById("cmpE").value;
+  if(s&&e&&s<=e){setCompare(s,e);closeDrop();}else alert("Intervalo inválido.");
 });
-document.getElementById("btnCancelCompare").addEventListener("click", closeAllDropdowns);
-document.getElementById("btnClearCompare").addEventListener("click", () => {
-  clearCompare(); closeAllDropdowns();
-});
-document.getElementById("btnBannerClear").addEventListener("click", clearCompare);
+document.getElementById("btnCancelCmp").addEventListener("click",closeDrop);
+document.getElementById("btnClearCmp").addEventListener("click",()=>{clearCompare();closeDrop();});
+document.getElementById("btnBanClear").addEventListener("click",clearCompare);
 
-// ── Filtros rápidos de período (pills) ─────────────────
-document.querySelectorAll("[data-period]").forEach(btn => {
-  btn.addEventListener("click", () => {
-    document.querySelectorAll("[data-period]").forEach(b => b.classList.remove("active"));
-    // Desmarcar custom
-    document.getElementById("btnPrimaryCustom").classList.remove("active");
-    btn.classList.add("active");
-    const days = parseInt(btn.dataset.period);
-    if (days === 0) applySpecial("all");
-    else applySpecial_days(days);
+// Pills de período rápido
+document.querySelectorAll("[data-period]").forEach(btn=>{
+  btn.addEventListener("click",()=>{
+    const days=parseInt(btn.dataset.period);
+    if(days===0) setPresetSp("all");
+    else setPresetDays(days);
   });
 });
 
-// ── Dispositivo ───────────────────────────────────────
-document.querySelectorAll("[data-device]").forEach(btn => {
-  btn.addEventListener("click", () => {
-    document.querySelectorAll("[data-device]").forEach(b => b.classList.remove("active"));
+// Dispositivo
+document.querySelectorAll("[data-dev]").forEach(btn=>{
+  btn.addEventListener("click",()=>{
+    document.querySelectorAll("[data-dev]").forEach(b=>b.classList.remove("active"));
     btn.classList.add("active");
-    DEVICE = btn.dataset.device;
+    DEV=btn.dataset.dev;
     render();
   });
 });
 
-// ── Tabs ──────────────────────────────────────────────
-document.querySelectorAll("[data-tab]").forEach(btn => {
-  btn.addEventListener("click", () => {
-    document.querySelectorAll(".tab").forEach(b => b.classList.remove("active"));
-    document.querySelectorAll(".tab-content").forEach(c => c.classList.remove("active"));
+// Tabs
+document.querySelectorAll("[data-tab]").forEach(btn=>{
+  btn.addEventListener("click",()=>{
+    document.querySelectorAll(".tab").forEach(b=>b.classList.remove("active"));
+    document.querySelectorAll(".tbc").forEach(c=>c.classList.remove("active"));
     btn.classList.add("active");
-    document.getElementById("tab-" + btn.dataset.tab).classList.add("active");
+    document.getElementById("tab-"+btn.dataset.tab).classList.add("active");
   });
 });
 
-// ═══════════════════════════════════════════════════════
-// BANNER DE COMPARAÇÃO
-// ═══════════════════════════════════════════════════════
-function updatePrimaryBtn() {
-  const btn = document.getElementById("btnPrimaryCustom");
-  const lbl = document.getElementById("btnPrimaryLabel");
-  if (P.start && P.end) {
-    lbl.textContent = fmtDateShort(P.start) + " – " + fmtDateShort(P.end);
-    btn.classList.add("active");
-    // Desmarcar pills de atalho
-    document.querySelectorAll("[data-period]").forEach(b => b.classList.remove("active"));
-  } else {
-    lbl.textContent = "Customizado";
-    btn.classList.remove("active");
+// ════════════════════════════════════════════════════════
+// UTILS
+// ════════════════════════════════════════════════════════
+function agg(data){
+  return data.reduce(function(a,d){return{
+    sessoes:a.sessoes+(d.sessoes||0),
+    usuarios:a.usuarios+(d.usuarios||0),
+    novos_usuarios:a.novos_usuarios+(d.novos_usuarios||0),
+    pageviews:a.pageviews+(d.pageviews||0),
+    compras:a.compras+(d.compras||0),
+  };},{sessoes:0,usuarios:0,novos_usuarios:0,pageviews:0,compras:0});
+}
+function wavg(data,m,w){
+  const tw=data.reduce((s,d)=>s+(d[w]||0),0);
+  if(!tw) return 0;
+  return data.reduce((s,d)=>s+(d[m]||0)*(d[w]||0),0)/tw;
+}
+function r4(v){return Math.round(v*10000)/10000;}
+function fmtN(n){if(n==null)return"—";return Number(n).toLocaleString("pt-BR");}
+function fmtDur(s){const m=Math.floor(s/60),r=Math.round(s%60);return m>0?`${m}m ${r}s`:`${r}s`;}
+function fmtDS(iso){if(!iso)return"";const[,m,d]=iso.split("-");return`${d}/${m}`;}
+function fmtDF(iso){if(!iso)return"";const[y,m,d]=iso.split("-");return`${d}/${m}/${y}`;}
+function fmtDT(iso){if(!iso)return"";return new Date(iso).toLocaleString("pt-BR",{timeZone:"America/Sao_Paulo",dateStyle:"short",timeStyle:"short"});}
+function todayISO(){return new Date().toISOString().slice(0,10);}
+function isoD(d){return d.toISOString().slice(0,10);}
+function offDate(iso,days){const d=new Date(iso+"T12:00:00Z");d.setUTCDate(d.getUTCDate()+days);return isoD(d);}
+function offYears(iso,y){const d=new Date(iso+"T12:00:00Z");d.setUTCFullYear(d.getUTCFullYear()+y);return isoD(d);}
+function dateDiff(a,b){return Math.round((new Date(b)-new Date(a))/86400000);}
+
+
+// ════════════════════════════════════════════════════════
+// AUTENTICAÇÃO
+// ════════════════════════════════════════════════════════
+(function(){
+  const HASH = "6f6231e023dcda666fea36237f7078280f0fee08da395578a2e97bdb49c14819";
+  // hash SHA-256 de "gbexpdecompra#anl26" — a senha nunca fica em texto no código
+  const KEY  = "gbdash_auth";
+
+  function sha256(str){
+    // Implementação simples via SubtleCrypto
+    const buf = new TextEncoder().encode(str);
+    return crypto.subtle.digest("SHA-256", buf).then(h =>
+      Array.from(new Uint8Array(h)).map(b=>b.toString(16).padStart(2,"0")).join("")
+    );
   }
-}
 
-function updateCompareBanner() {
-  const banner = document.getElementById("compareBanner");
-  const btn    = document.getElementById("btnCompare");
-  const lbl    = document.getElementById("btnCompareLabel");
-  if (C.active && C.start && C.end) {
-    banner.classList.remove("hidden");
-    document.getElementById("comparePrimaryLabel").textContent =
-      fmtDateFull(P.start) + " – " + fmtDateFull(P.end);
-    document.getElementById("compareSecondaryLabel").textContent =
-      fmtDateFull(C.start) + " – " + fmtDateFull(C.end);
-    btn.classList.add("compare-mode");
-    lbl.textContent = fmtDateShort(C.start) + " – " + fmtDateShort(C.end);
-  } else {
-    banner.classList.add("hidden");
-    btn.classList.remove("compare-mode");
-    lbl.textContent = "Adicionar comparação";
+  function isAuthed(){
+    return sessionStorage.getItem(KEY) === "1";
   }
-}
 
-// ═══════════════════════════════════════════════════════
-// UTILITÁRIOS
-// ═══════════════════════════════════════════════════════
-function aggregate(data) {
-  return data.reduce((acc, d) => {
-    acc.sessoes        += d.sessoes        || 0;
-    acc.usuarios       += d.usuarios       || 0;
-    acc.novos_usuarios += d.novos_usuarios || 0;
-    acc.pageviews      += d.pageviews      || 0;
-    acc.compras        += d.compras        || 0;
-    return acc;
-  }, { sessoes:0, usuarios:0, novos_usuarios:0, pageviews:0, compras:0 });
-}
+  function showApp(){
+    document.getElementById("authScreen").classList.add("hidden");
+  }
 
-function wavg(data, metric, weight) {
-  const w = data.reduce((s, d) => s + (d[weight] || 0), 0);
-  if (!w) return 0;
-  return data.reduce((s, d) => s + (d[metric] || 0) * (d[weight] || 0), 0) / w;
-}
+  function tryLogin(){
+    const val = document.getElementById("authInput").value;
+    sha256(val).then(h => {
+      if(h === HASH){
+        sessionStorage.setItem(KEY, "1");
+        showApp();
+      } else {
+        const err = document.getElementById("authError");
+        err.classList.add("show");
+        document.getElementById("authInput").value = "";
+        document.getElementById("authInput").focus();
+        setTimeout(() => err.classList.remove("show"), 3000);
+      }
+    });
+  }
 
-function round4(v) { return Math.round(v * 10000) / 10000; }
+  document.getElementById("authBtn").addEventListener("click", tryLogin);
+  document.getElementById("authInput").addEventListener("keydown", e => {
+    if(e.key === "Enter") tryLogin();
+  });
 
-function fmtNum(n) {
-  if (n == null) return "—";
-  return Number(n).toLocaleString("pt-BR");
-}
+  if(isAuthed()) showApp();
+})();
 
-function fmtDur(sec) {
-  const m = Math.floor(sec / 60);
-  const s = Math.round(sec % 60);
-  return m > 0 ? `${m}m ${s}s` : `${s}s`;
-}
-
-function fmtDateShort(iso) {
-  if (!iso) return "";
-  const [, m, d] = iso.split("-");
-  return `${d}/${m}`;
-}
-
-function fmtDateFull(iso) {
-  if (!iso) return "";
-  const [y, m, d] = iso.split("-");
-  return `${d}/${m}/${y}`;
-}
-
-function fmtDatetime(iso) {
-  if (!iso) return "";
-  return new Date(iso).toLocaleString("pt-BR",
-    { timeZone: "America/Sao_Paulo", dateStyle: "short", timeStyle: "short" });
-}
-
-function todayISO() { return new Date().toISOString().slice(0, 10); }
-
-function isoDate(d) {
-  return d.toISOString().slice(0, 10);
-}
-
-function offsetDate(iso, days) {
-  const d = new Date(iso + "T12:00:00Z");
-  d.setUTCDate(d.getUTCDate() + days);
-  return isoDate(d);
-}
-
-function offsetYears(iso, years) {
-  const d = new Date(iso + "T12:00:00Z");
-  d.setUTCFullYear(d.getUTCFullYear() + years);
-  return isoDate(d);
-}
-
-function dateDiff(a, b) {
-  return Math.round((new Date(b) - new Date(a)) / 86400000);
-}
-
-function hideState() {
-  document.getElementById("appState").style.display   = "none";
-  document.getElementById("appContent").style.display = "block";
-}
-
-function showError(msg) {
-  document.getElementById("appState").innerHTML =
-    `<span style="color:var(--negative-700);font-size:14px">⚠ ${msg}</span>`;
-}
-
-// ── Init ──────────────────────────────────────────────
 loadData();
 </script>
 </body>
