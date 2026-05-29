@@ -32,7 +32,9 @@ def get_credentials():
 def read_sheet(sheets, spreadsheet_id):
     result = sheets.spreadsheets().values().get(
         spreadsheetId=spreadsheet_id,
-        range=f"{SHEET_TAB_NAME}",  # sem limites — lê a aba inteira
+        range=f"{SHEET_TAB_NAME}",
+        valueRenderOption="UNFORMATTED_VALUE",  # retorna número bruto (62.5), não string formatada ("62,50%")
+        dateTimeRenderOption="FORMATTED_STRING",
     ).execute()
     rows = result.get("values", [])
     if not rows:
@@ -90,6 +92,18 @@ def build_data_json(records):
             "compras_mobile":     safe_int(r.get("compras_mobile")),
             "compras_desktop":    safe_int(r.get("compras_desktop")),
             "compras_tablet":     safe_int(r.get("compras_tablet")),
+            "usuarios_mobile":           safe_int(r.get("usuarios_mobile")),
+            "usuarios_desktop":          safe_int(r.get("usuarios_desktop")),
+            "usuarios_tablet":           safe_int(r.get("usuarios_tablet")),
+            "novos_usuarios_mobile":     safe_int(r.get("novos_usuarios_mobile")),
+            "novos_usuarios_desktop":    safe_int(r.get("novos_usuarios_desktop")),
+            "novos_usuarios_tablet":     safe_int(r.get("novos_usuarios_tablet")),
+            "taxa_rejeicao_mobile":      safe_float(r.get("taxa_rejeicao_mobile")),
+            "taxa_rejeicao_desktop":     safe_float(r.get("taxa_rejeicao_desktop")),
+            "taxa_rejeicao_tablet":      safe_float(r.get("taxa_rejeicao_tablet")),
+            "duracao_media_mobile":      safe_float(r.get("duracao_media_mobile")),
+            "duracao_media_desktop":     safe_float(r.get("duracao_media_desktop")),
+            "duracao_media_tablet":      safe_float(r.get("duracao_media_tablet")),
             # Canal
             "sessoes_organico":       safe_int(r.get("sessoes_organico")),
             "sessoes_direto":         safe_int(r.get("sessoes_direto")),
@@ -104,6 +118,10 @@ def build_data_json(records):
             "funil_add_to_cart":    safe_int(r.get("funil_add_to_cart")),
             "funil_begin_checkout": safe_int(r.get("funil_begin_checkout")),
             "funil_purchase":       safe_int(r.get("funil_purchase")),
+            # Funil por dispositivo
+            **{f"funil_{e}_{dev}": safe_int(r.get(f"funil_{e}_{dev}"))
+               for e in ["search","select_item","add_to_cart","begin_checkout","purchase"]
+               for dev in ["mobile","desktop","tablet"]},
             # Rotas
             "top_origem_1": r.get("top_origem_1") or "",
             "top_origem_1_sessoes": safe_int(r.get("top_origem_1_sessoes")),
