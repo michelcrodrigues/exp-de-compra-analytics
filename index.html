@@ -162,8 +162,7 @@ tr.cmp-tr td{background:#f5f8ff;font-size:12px;color:var(--compare)}
 .state-wrap{display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:300px;gap:12px;color:var(--neutral-500)}
 .spin{width:32px;height:32px;border:3px solid var(--neutral-200);border-top-color:var(--brand-primary);border-radius:50%;animation:sp .8s linear infinite}
 @keyframes sp{to{transform:rotate(360deg)}}
-.overlay{position:fixed;inset:0;z-index:500;display:none}
-.overlay.open{display:block}
+.overlay{display:none}/* overlay desativado — fechamento via document listener */
 
 @media(max-width:900px){
   .header,.filters-bar,.cmp-banner,.main{padding-left:16px;padding-right:16px}
@@ -215,8 +214,6 @@ tr.cmp-tr td{background:#f5f8ff;font-size:12px;color:var(--compare)}
     <button class="auth-btn" id="authBtn">Entrar</button>
   </div>
 </div>
-
-<div class="overlay" id="overlay"></div>
 
 <header class="header">
   <div class="header-brand">
@@ -879,20 +876,24 @@ function updateCmpBanner(){
 // DROPDOWN UI
 // ════════════════════════════════════════════════════════
 function openDrop(id, triggerEl){
+  // Fechar qualquer dropdown aberto antes de abrir o novo
   document.querySelectorAll(".dr-drop").forEach(d=>d.classList.remove("open"));
   const drop = document.getElementById(id);
-  // Posicionar baseado no botão trigger
+  // Posicionar usando getBoundingClientRect do botão trigger
   if(triggerEl){
     const rect = triggerEl.getBoundingClientRect();
-    drop.style.top  = (rect.bottom + 8) + "px";
-    drop.style.left = rect.left + "px";
+    const dropW = 340;
+    const left  = Math.min(rect.left, window.innerWidth - dropW - 8);
+    drop.style.top  = (rect.bottom + window.scrollY + 8) + "px";
+    drop.style.left = left + "px";
   }
   drop.classList.add("open");
-  document.getElementById("overlay").classList.add("open");
+  // Guardar qual dropdown está aberto para o document listener
+  document._openDrop = id;
 }
 function closeDrop(){
   document.querySelectorAll(".dr-drop").forEach(d=>d.classList.remove("open"));
-  document.getElementById("overlay").classList.remove("open");
+  document._openDrop = null;
 }
 
 document.getElementById("btnPri").addEventListener("click",e=>{
@@ -915,7 +916,17 @@ document.getElementById("btnCmp").addEventListener("click",e=>{
     openDrop("dropCmp", document.getElementById("btnCmp"));
   }
 });
-document.getElementById("overlay").addEventListener("click",closeDrop);
+// Fechar dropdown ao clicar fora — sem overlay que bloqueia inputs
+document.addEventListener("mousedown", function(e){
+  if(!document._openDrop) return;
+  const drop = document.getElementById(document._openDrop);
+  const btnPri = document.getElementById("btnPri");
+  const btnCmp = document.getElementById("btnCmp");
+  // Só fecha se o clique foi FORA do dropdown E fora dos botões trigger
+  if(drop && !drop.contains(e.target) && !btnPri.contains(e.target) && !btnCmp.contains(e.target)){
+    closeDrop();
+  }
+});
 
 // Presets período principal
 document.querySelectorAll("#priPresets .dr-preset").forEach(btn=>{
