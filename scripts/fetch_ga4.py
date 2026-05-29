@@ -69,14 +69,25 @@ COLUMNS = [
     "taxa_rejeicao_pct",
     "duracao_media_seg",
 
-    # ── Por dispositivo (sessões + compras) ──────────────────────
-    # CR por device = compras_X / sessoes_X * 100 (calcular na planilha)
+    # ── Por dispositivo (sessões, compras, usuários, rejeição, duração) ─────
     "sessoes_mobile",
     "sessoes_desktop",
     "sessoes_tablet",
     "compras_mobile",
     "compras_desktop",
     "compras_tablet",
+    "usuarios_mobile",
+    "usuarios_desktop",
+    "usuarios_tablet",
+    "novos_usuarios_mobile",
+    "novos_usuarios_desktop",
+    "novos_usuarios_tablet",
+    "taxa_rejeicao_mobile",
+    "taxa_rejeicao_desktop",
+    "taxa_rejeicao_tablet",
+    "duracao_media_mobile",
+    "duracao_media_desktop",
+    "duracao_media_tablet",
 
     # ── Por canal (sessões) ──────────────────────────────────────
     "sessoes_organico",
@@ -87,12 +98,18 @@ COLUMNS = [
     "sessoes_referral",
     "sessoes_outros_canais",
 
-    # ── Funil de eventos ─────────────────────────────────────────
+    # ── Funil de eventos (total + por dispositivo) ───────────────
     "funil_search",
     "funil_select_item",
     "funil_add_to_cart",
     "funil_begin_checkout",
     "funil_purchase",
+    "funil_search_mobile",    "funil_select_item_mobile",
+    "funil_add_to_cart_mobile", "funil_begin_checkout_mobile", "funil_purchase_mobile",
+    "funil_search_desktop",   "funil_select_item_desktop",
+    "funil_add_to_cart_desktop", "funil_begin_checkout_desktop", "funil_purchase_desktop",
+    "funil_search_tablet",    "funil_select_item_tablet",
+    "funil_add_to_cart_tablet", "funil_begin_checkout_tablet", "funil_purchase_tablet",
 
     # ── Top 5 origens (cidade + sessões) ─────────────────────────
     "top_origem_1", "top_origem_1_sessoes",
@@ -258,21 +275,32 @@ def collect_metrics(service, date_str):
     # CR calculado manualmente — não usar sessionConversionRate do GA4
     m["taxa_conversao_pct"] = calc_cr(m["compras"], m["sessoes"])
 
-    # ── Report 2: sessões + compras por dispositivo ──────────────────────────
+    # ── Report 2: métricas completas por dispositivo ────────────────────────
     for dev in ["mobile", "desktop", "tablet"]:
-        m[f"sessoes_{dev}"] = 0
-        m[f"compras_{dev}"] = 0
+        m[f"sessoes_{dev}"]          = 0
+        m[f"compras_{dev}"]          = 0
+        m[f"usuarios_{dev}"]         = 0
+        m[f"novos_usuarios_{dev}"]   = 0
+        m[f"taxa_rejeicao_{dev}"]    = 0.0
+        m[f"duracao_media_{dev}"]    = 0.0
 
     rows = run_report(
         service, date_str,
         ["deviceCategory"],
-        ["sessions", "transactions"],
+        ["sessions", "transactions", "totalUsers", "newUsers",
+         "bounceRate", "averageSessionDuration"],
     )
     for row in rows:
         dev = row["dimensionValues"][0]["value"].lower()
         if dev in ("mobile", "desktop", "tablet"):
-            m[f"sessoes_{dev}"] = safe_int(row["metricValues"][0]["value"])
-            m[f"compras_{dev}"] = safe_int(row["metricValues"][1]["value"])
+            v = row["metricValues"]
+            m[f"sessoes_{dev}"]        = safe_int(v[0]["value"])
+            m[f"compras_{dev}"]        = safe_int(v[1]["value"])
+            m[f"usuarios_{dev}"]       = safe_int(v[2]["value"])
+            m[f"novos_usuarios_{dev}"] = safe_int(v[3]["value"])
+            # bounceRate vem como decimal (0–1) → converter para percentual
+            m[f"taxa_rejeicao_{dev}"]  = round(safe_float(v[4]["value"]) * 100, 2)
+            m[f"duracao_media_{dev}"]  = round(safe_float(v[5]["value"]), 2)
 
     # ── Report 3: sessões por canal ──────────────────────────────────────────
     channel_map = {
@@ -301,14 +329,9 @@ def collect_metrics(service, date_str):
         else:
             m["sessoes_outros_canais"] += val
 
-    # ── Report 4: funil de eventos ───────────────────────────────────────────
-    funil_map = {
-        "search":         "funil_search",
-        "select_item":    "funil_select_item",
-        "add_to_cart":    "funil_add_to_cart",
-        "begin_checkout": "funil_begin_checkout",
-        "purchase":       "funil_purchase",
-    }
+    # ── Report 4a: funil de eventos total ───────────────────────────────────
+    funil_events = ["search", "select_item", "add_to_cart", "begin_checkout", "purchase"]
+    funil_map = {e: f"funil_{e}" for e in funil_events}
     for k in funil_map.values():
         m[k] = 0
 
@@ -322,6 +345,23 @@ def collect_metrics(service, date_str):
         event = row["dimensionValues"][0]["value"]
         if event in funil_map:
             m[funil_map[event]] = safe_int(row["metricValues"][0]["value"])
+
+    # ── Report 4b: funil por dispositivo ─────────────────────────────────────
+    for dev in ["mobile", "desktop", "tablet"]:
+        for e in funil_events:
+            m[f"funil_{e}_{dev}"] = 0
+
+    rows = run_report(
+        service, date_str,
+        ["eventName", "deviceCategory"],
+        ["eventCount"],
+        limit=100,
+    )
+    for row in rows:
+        event = row["dimensionValues"][0]["value"]
+        dev   = row["dimensionValues"][1]["value"].lower()
+        if event in funil_events and dev in ("mobile", "desktop", "tablet"):
+            m[f"funil_{event}_{dev}"] = safe_int(row["metricValues"][0]["value"])
 
     # ── Report 5: top 5 origens ──────────────────────────────────────────────
     for i in range(1, 6):
