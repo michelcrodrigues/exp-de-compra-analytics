@@ -444,27 +444,33 @@ function getRange(s,e){return ALL.filter(d=>d.data>=s&&d.data<=e);}
 // applyDevice: remapeia sessoes/compras/bounce/dur conforme dispositivo selecionado.
 // usuarios e pageviews NÃO têm breakdown por device no GA4 — mostramos 0 quando device != all.
 function applyDevice(data){
-  // Sempre recalcular CR a partir de compras/sessoes — não depender do campo pré-calculado
   if(DEV==="all"){
     return data.map(d=>({
       ...d,
       taxa_conversao_pct: (parseFloat(d.sessoes)||0)>0
         ? r4((parseFloat(d.compras)||0)/(parseFloat(d.sessoes))*100) : 0,
-      taxa_rejeicao_pct: parseFloat(d.taxa_rejeicao_pct)||0,
-      duracao_media_seg: parseFloat(d.duracao_media_seg)||0,
+      taxa_rejeicao_pct:  parseFloat(d.taxa_rejeicao_pct)||0,
+      duracao_media_seg:  parseFloat(d.duracao_media_seg)||0,
     }));
   }
+  // Usar campos reais coletados por dispositivo
   return data.map(d=>({
     ...d,
-    sessoes: parseFloat(d["sessoes_"+DEV])||0,
-    compras: parseFloat(d["compras_"+DEV])||0,
-    usuarios: 0,
-    novos_usuarios: 0,
-    pageviews: 0,
+    sessoes:          parseFloat(d["sessoes_"+DEV])||0,
+    compras:          parseFloat(d["compras_"+DEV])||0,
+    usuarios:         parseFloat(d["usuarios_"+DEV])||0,
+    novos_usuarios:   parseFloat(d["novos_usuarios_"+DEV])||0,
+    pageviews:        0, // GA4 não fornece pageviews por device
     taxa_conversao_pct: (parseFloat(d["sessoes_"+DEV])||0)>0
       ? r4((parseFloat(d["compras_"+DEV])||0)/(parseFloat(d["sessoes_"+DEV]))*100) : 0,
-    taxa_rejeicao_pct: parseFloat(d.taxa_rejeicao_pct)||0,
-    duracao_media_seg: parseFloat(d.duracao_media_seg)||0,
+    taxa_rejeicao_pct: parseFloat(d["taxa_rejeicao_"+DEV])||0,
+    duracao_media_seg: parseFloat(d["duracao_media_"+DEV])||0,
+    // Funil por dispositivo
+    funil_search:         parseFloat(d["funil_search_"+DEV])||0,
+    funil_select_item:    parseFloat(d["funil_select_item_"+DEV])||0,
+    funil_add_to_cart:    parseFloat(d["funil_add_to_cart_"+DEV])||0,
+    funil_begin_checkout: parseFloat(d["funil_begin_checkout_"+DEV])||0,
+    funil_purchase:       parseFloat(d["funil_purchase_"+DEV])||0,
   }));
 }
 
@@ -496,16 +502,13 @@ function renderKPIs(pri,cmp){
   const brC=tc?wavg(cmp,"taxa_rejeicao_pct","sessoes"):null;
   const durC=tc?wavg(cmp,"duracao_media_seg","sessoes"):null;
 
-  // Para usuários e pageviews, usar dados sem filtro de device (GA4 não tem breakdown)
-  const priAll=getRange(P.start,P.end);
-  const cmpAll=C.active&&C.start&&C.end?getRange(C.start,C.end):[];
-  const tpAll=agg(priAll), tcAll=cmpAll.length?agg(cmpAll):null;
-  const devSuffix=DEV!=="all"?" (total)":"";
+  // Todos os campos agora têm dados reais por dispositivo
+  const pageviewsNote=DEV!=="all"?" *":"";
   const defs=[
-    {l:"Sessões",        v:fmtN(tp.sessoes),          cv:tc?fmtN(tc.sessoes):null,          r:tp.sessoes,   cr:tc?.sessoes},
-    {l:"Usuários"+devSuffix, v:fmtN(tpAll.usuarios), cv:tcAll?fmtN(tcAll.usuarios):null, r:tpAll.usuarios, cr:tcAll?.usuarios},
-    {l:"Novos usuários"+devSuffix,v:fmtN(tpAll.novos_usuarios),cv:tcAll?fmtN(tcAll.novos_usuarios):null,r:tpAll.novos_usuarios,cr:tcAll?.novos_usuarios},
-    {l:"Pageviews"+devSuffix, v:fmtN(tpAll.pageviews), cv:tcAll?fmtN(tcAll.pageviews):null, r:tpAll.pageviews, cr:tcAll?.pageviews},
+    {l:"Sessões",        v:fmtN(tp.sessoes),          cv:tc?fmtN(tc.sessoes):null,          r:tp.sessoes,       cr:tc?.sessoes},
+    {l:"Usuários",       v:fmtN(tp.usuarios),          cv:tc?fmtN(tc.usuarios):null,          r:tp.usuarios,      cr:tc?.usuarios},
+    {l:"Novos usuários", v:fmtN(tp.novos_usuarios),    cv:tc?fmtN(tc.novos_usuarios):null,    r:tp.novos_usuarios,cr:tc?.novos_usuarios},
+    {l:"Pageviews"+pageviewsNote, v:DEV==="all"?fmtN(tp.pageviews):"—", cv:tc&&DEV==="all"?fmtN(tc.pageviews):null, r:tp.pageviews, cr:tc?.pageviews},
     {l:"Compras",        v:fmtN(tp.compras),          cv:tc?fmtN(tc.compras):null,          r:tp.compras,   cr:tc?.compras},
     {l:"Conversão",      v:crP.toFixed(2)+"%",        cv:crC!=null?crC.toFixed(2)+"%":null, r:crP,          cr:crC},
     {l:"Rejeição",       v:brP.toFixed(2)+"%",        cv:brC!=null?brC.toFixed(2)+"%":null, r:brP,          cr:brC,inv:true},
@@ -663,8 +666,8 @@ function renderAcquisicao(pri,cmp){
   const thDevEl=document.querySelector("#tab-aq .tc:last-child thead tr");
   if(thDevEl){
     thDevEl.innerHTML=hasCmpDev
-      ?`<th>Dispositivo</th><th class="num">Sessões</th><th class="num">Compras</th><th class="num">CR%</th><th class="num cmp-th">Sess.cmp</th><th class="num cmp-th">Comp.cmp</th><th class="num cmp-th">CR%cmp</th><th class="num">↕Sess</th><th class="num">↕Comp</th><th class="num">↕CR</th>`
-      :`<th>Dispositivo</th><th class="num">Sessões</th><th class="num">Compras</th><th class="num">CR%</th>`;
+      ?`<th>Dispositivo</th><th class="num">Sess.</th><th class="num">Comp.</th><th class="num">CR%</th><th class="num">Rejeição%</th><th class="num">Duração</th><th class="num cmp-th">Sess.cmp</th><th class="num cmp-th">Comp.cmp</th><th class="num cmp-th">CR%cmp</th><th class="num">↕Sess</th><th class="num">↕Comp</th><th class="num">↕CR</th>`
+      :`<th>Dispositivo</th><th class="num">Sessões</th><th class="num">Compras</th><th class="num">CR%</th><th class="num">Rejeição%</th><th class="num">Duração</th>`;
   }
 
   document.getElementById("tbDevs").innerHTML=devT.map((d,i)=>{
@@ -679,15 +682,26 @@ function renderAcquisicao(pri,cmp){
       return`<span class="${v>0.1?'lift-pos':v<-0.1?'lift-neg':'lift-nt'}">${v>0?'+':''}${v.toFixed(1)}%</span>`;
     }
     const liftC=cc>0?((d.c-cc)/cc*100):null;
+    // Rejeição e duração por dispositivo
+    const devKey=d.l.toLowerCase();
+    const devRej=priAll.reduce((s,r)=>s+(parseFloat(r['taxa_rejeicao_'+devKey])||0)*(parseFloat(r['sessoes_'+devKey])||0),0)/
+      Math.max(priAll.reduce((s,r)=>s+(parseFloat(r['sessoes_'+devKey])||0),0),1);
+    const devDur=priAll.reduce((s,r)=>s+(parseFloat(r['duracao_media_'+devKey])||0)*(parseFloat(r['sessoes_'+devKey])||0),0)/
+      Math.max(priAll.reduce((s,r)=>s+(parseFloat(r['sessoes_'+devKey])||0),0),1);
     if(hasCmpDev){
       return`<tr>
         <td>${d.l}</td>
         <td class="num">${fmtN(d.s)}</td><td class="num">${fmtN(d.c)}</td><td class="num">${cr}%</td>
+        <td class="num">${devRej.toFixed(2)}%</td><td class="num">${fmtDur(devDur)}</td>
         <td class="num cmp-td">${fmtN(cs)}</td><td class="num cmp-td">${fmtN(cc)}</td><td class="num cmp-td">${ccr}%</td>
         <td class="num">${liftBadge(liftS)}</td><td class="num">${liftBadge(liftC)}</td><td class="num">${liftBadge(liftCR)}</td>
       </tr>`;
     }
-    return`<tr><td>${d.l}</td><td class="num">${fmtN(d.s)}</td><td class="num">${fmtN(d.c)}</td><td class="num">${cr}%</td></tr>`;
+    return`<tr>
+      <td>${d.l}</td>
+      <td class="num">${fmtN(d.s)}</td><td class="num">${fmtN(d.c)}</td><td class="num">${cr}%</td>
+      <td class="num">${devRej.toFixed(2)}%</td><td class="num">${fmtDur(devDur)}</td>
+    </tr>`;
   }).join("");
 }
 
