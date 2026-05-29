@@ -47,13 +47,15 @@ def read_sheet(sheets, spreadsheet_id):
 
 def safe_float(v, default=0.0):
     try:
-        return float(v)
+        # Normaliza vírgula decimal — Google Sheets locale pt-BR retorna '62,5'
+        return float(str(v).replace(",", "."))
     except (TypeError, ValueError):
         return default
 
 def safe_int(v, default=0):
     try:
-        return int(float(v))
+        # Normaliza vírgula decimal antes de converter
+        return int(float(str(v).replace(",", ".")))
     except (TypeError, ValueError):
         return default
 
