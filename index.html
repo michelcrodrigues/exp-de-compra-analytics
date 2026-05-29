@@ -741,28 +741,40 @@ function renderFunil(pri,cmp){
 function renderRotas(pri,cmp){
   const hasCmp=cmp.length>0;
 
-  function buildMap(data){
+  function buildMap(data, rawData){
+    // data: já filtrado por device (sessoes/compras ajustados)
+    // rawData: dados brutos do período (sem filtro device) para calcular ratio
     const oM={}, dM={};
-    data.forEach(d=>{
+    data.forEach((d,idx)=>{
+      // Ratio device/total do dia para escalar as sessões de rota
+      const raw = rawData[idx] || d;
+      const totSessDay = parseFloat(raw.sessoes)||1;
+      const devSessDay = parseFloat(d.sessoes)||0;
+      const ratio = DEV==="all" ? 1 : devSessDay/totSessDay;
+
       for(let i=1;i<=5;i++){
-        const oc=d[`top_origem_${i}`], os=d[`top_origem_${i}_sessoes`]||0;
+        const oc=d[`top_origem_${i}`];
+        const os=Math.round((parseFloat(d[`top_origem_${i}_sessoes`])||0)*ratio);
         if(oc) oM[oc]=(oM[oc]||{s:0,c:0}), oM[oc].s+=os;
-        const dc=d[`top_destino_${i}`], ds=d[`top_destino_${i}_sessoes`]||0;
+
+        const dc=d[`top_destino_${i}`];
+        const ds=Math.round((parseFloat(d[`top_destino_${i}_sessoes`])||0)*ratio);
         if(dc) dM[dc]=(dM[dc]||{s:0,c:0}), dM[dc].s+=ds;
       }
     });
-    // Compras por rota: usamos compras totais do dia ponderadas pela proporção da rota
-    // (GA4 não fornece compras por rota diretamente)
-    const totSess=data.reduce((x,d)=>x+(d.sessoes||0),0);
-    const totComp=data.reduce((x,d)=>x+(d.compras||0),0);
+    // Compras estimadas: CR global do período (já filtrado por device)
+    const totSess=data.reduce((x,d)=>x+(parseFloat(d.sessoes)||0),0);
+    const totComp=data.reduce((x,d)=>x+(parseFloat(d.compras)||0),0);
     const crGlobal=totSess>0?totComp/totSess:0;
     Object.keys(oM).forEach(k=>{oM[k].c=Math.round(oM[k].s*crGlobal);});
     Object.keys(dM).forEach(k=>{dM[k].c=Math.round(dM[k].s*crGlobal);});
     return{oM,dM};
   }
 
-  const {oM:priOM,dM:priDM}=buildMap(pri);
-  const {oM:cmpOM,dM:cmpDM}=hasCmp?buildMap(cmp):{oM:{},dM:{}};
+  const priRawForMap = P.start&&P.end ? getRange(P.start,P.end) : pri;
+  const cmpRawForMap = C.active&&C.start&&C.end ? getRange(C.start,C.end) : cmp;
+  const {oM:priOM,dM:priDM}=buildMap(pri, priRawForMap);
+  const {oM:cmpOM,dM:cmpDM}=hasCmp?buildMap(cmp, cmpRawForMap):{oM:{},dM:{}};
 
   const origens=Object.entries(priOM).sort((a,b)=>b[1].s-a[1].s).slice(0,10);
   const destinos=Object.entries(priDM).sort((a,b)=>b[1].s-a[1].s).slice(0,10);
@@ -846,29 +858,80 @@ function mkLine(cid,lid,pri,cmp,metric,label,color,hasCmp){
   const ctx=document.getElementById(cid);
   if(!ctx) return;
   if(CHARTS[cid]) CHARTS[cid].destroy();
+
+  const priLabel=P.start&&P.end?fmtDF(P.start)+" – "+fmtDF(P.end):label;
+  const cmpLabel=C.start&&C.end?fmtDF(C.start)+" – "+fmtDF(C.end):"Comparação";
   const labels=pri.map(d=>fmtDS(d.data));
-  const vals=pri.map(d=>d[metric]||0);
-  const ds=[{label,data:vals,borderColor:color,backgroundColor:color+"15",borderWidth:2.5,
-    pointRadius:pri.length>60?0:2,fill:true,tension:0.3,order:1}];
+  const vals=pri.map(d=>parseFloat(d[metric])||0);
+  const cmpVals=cmp.map(d=>parseFloat(d[metric])||0);
+  const cmpAligned=hasCmp&&cmp.length?alignSeries(vals,cmpVals):[];
+
+  const ds=[{
+    label:priLabel,data:vals,
+    borderColor:color,backgroundColor:color+"15",
+    borderWidth:2.5,pointRadius:pri.length>60?0:3,pointHoverRadius:5,
+    fill:true,tension:0.3,order:1,
+  }];
   if(hasCmp&&cmp.length){
-    ds.push({label:"Comparação",data:alignSeries(vals,cmp.map(d=>d[metric]||0)),
-      borderColor:"#6589D4",backgroundColor:"transparent",borderWidth:1.5,
-      borderDash:[5,4],pointRadius:0,fill:false,tension:0.3,order:2});
+    ds.push({
+      label:cmpLabel,data:cmpAligned,
+      borderColor:"#6589D4",backgroundColor:"transparent",
+      borderWidth:1.5,borderDash:[5,4],
+      pointRadius:0,pointHoverRadius:4,
+      fill:false,tension:0.3,order:2,
+    });
   }
+
   const legEl=document.getElementById(lid);
   if(legEl) legEl.innerHTML=`
-    <div class="cc-li"><div class="cc-dot" style="background:${color}"></div><span>${P.start?fmtDS(P.start)+" – "+fmtDS(P.end):label}</span></div>
-    ${hasCmp&&cmp.length?`<div class="cc-li"><div style="width:18px;height:3px;background:transparent;border-bottom:2px dashed #6589D4"></div><span style="color:var(--compare)">${C.start?fmtDS(C.start)+" – "+fmtDS(C.end):"Comparação"}</span></div>`:""}`;
+    <div class="cc-li">
+      <div class="cc-dot" style="background:${color}"></div>
+      <span style="font-weight:700">${priLabel}</span>
+    </div>
+    ${hasCmp&&cmp.length?`<div class="cc-li">
+      <div style="width:18px;height:0;border-bottom:2.5px dashed #6589D4;flex-shrink:0;margin-top:5px"></div>
+      <span style="font-weight:700;color:var(--compare)">${cmpLabel}</span>
+    </div>`:""}`;
+
   CHARTS[cid]=new Chart(ctx,{type:"line",data:{labels,datasets:ds},options:{
     responsive:true,maintainAspectRatio:false,
-    plugins:{legend:{display:false},tooltip:{callbacks:{afterBody:(items)=>{
-      if(!hasCmp||!cmp.length) return"";
-      const idx=items[0]?.dataIndex; if(idx==null) return"";
-      const cv=alignSeries(vals,cmp.map(d=>d[metric]||0))[idx];
-      if(cv==null) return"";
-      const pct=cv!==0?((vals[idx]-cv)/Math.abs(cv)*100).toFixed(1):"—";
-      return`Comparação: ${cv}\nVariação: ${pct}%`;
-    }}}},
+    interaction:{mode:"index",intersect:false},
+    plugins:{
+      legend:{display:false},
+      tooltip:{
+        callbacks:{
+          title:(items)=>{
+            const idx=items[0]?.dataIndex;
+            const priDate=pri[idx]?.data||"";
+            const out=[priDate?fmtDF(priDate)+" (principal)":""];
+            if(hasCmp&&cmp.length){
+              const pos=idx/Math.max(vals.length-1,1)*Math.max(cmpVals.length-1,0);
+              const ci=Math.round(pos);
+              const cd=cmp[ci]?.data||"";
+              if(cd) out.push(fmtDF(cd)+" (comparação)");
+            }
+            return out;
+          },
+          label:(item)=>{
+            const v=item.parsed.y; if(v==null) return null;
+            const sym=item.datasetIndex===0?"●":"◌";
+            const suf=metric.includes("pct")?"%":"";
+            return`${sym} ${item.dataset.label}: ${fmtN(v)}${suf}`;
+          },
+          afterLabel:(item)=>{
+            if(!hasCmp||!cmp.length||item.datasetIndex!==0) return null;
+            const cv=cmpAligned[item.dataIndex]; if(cv==null) return null;
+            const pv=vals[item.dataIndex];
+            const pct=cv!==0?((pv-cv)/Math.abs(cv)*100):null; if(pct==null) return null;
+            const arrow=pct>0.1?"▲":pct<-0.1?"▼":"—";
+            return`  ${arrow} ${pct>0?"+":""}${pct.toFixed(1)}% vs comparação`;
+          },
+        },
+        backgroundColor:"rgba(14,14,14,0.88)",titleColor:"#fff",bodyColor:"#e0e0e0",
+        borderColor:"rgba(255,255,255,0.1)",borderWidth:1,padding:10,
+        titleFont:{size:11},bodyFont:{size:12,family:"'Nunito Sans'"},
+      },
+    },
     scales:{
       x:{ticks:{maxTicksLimit:8,font:{size:10}},grid:{display:false}},
       y:{ticks:{font:{size:10}},grid:{color:"#EEEEEE"}},
@@ -889,29 +952,80 @@ function mkDonut(id,labels,values,colors,cmpValues,cmpLabel){
     const cmpPct=cmpValues.map(v=>+(v/cmpTot*100).toFixed(1));
     // Labels sem o % (vem do donut) — limpar
     const cleanLabels=labels.map(l=>l.replace(/\s[\d.]+%$/,''));
+    const priLabel_=P.start&&P.end?fmtDF(P.start)+" – "+fmtDF(P.end):"Período";
     CHARTS[id]=new Chart(ctx,{type:'bar',
       data:{
         labels:cleanLabels,
         datasets:[
-          {label:'Período',data:priPct,backgroundColor:colors.map(c=>c+'CC'),
-           borderColor:colors,borderWidth:1.5,borderRadius:3},
-          {label:cmpLabel||'Comparação',data:cmpPct,
-           backgroundColor:colors.map(()=>'#6589D488'),
-           borderColor:colors.map(()=>'#6589D4'),borderWidth:1.5,borderRadius:3,
-           borderDash:[4,3]},
+          {
+            label: priLabel_,
+            data: priPct,
+            backgroundColor: colors.map(c=>c+'DD'),
+            borderColor: colors,
+            borderWidth: 1.5,
+            borderRadius: 4,
+            barPercentage: 0.55,
+            categoryPercentage: 0.85,
+          },
+          {
+            label: cmpLabel||'Comparação',
+            data: cmpPct,
+            backgroundColor: colors.map(c=>c+'55'),
+            borderColor: colors,
+            borderWidth: 1.5,
+            borderRadius: 4,
+            borderDash: [4,3],
+            barPercentage: 0.55,
+            categoryPercentage: 0.85,
+          },
         ]
       },
       options:{
         indexAxis:'y',responsive:true,maintainAspectRatio:false,
         plugins:{
-          legend:{display:true,position:'top',
-            labels:{font:{size:10,family:"'Nunito Sans'"},boxWidth:10,padding:8}},
-          tooltip:{callbacks:{label:ctx=>`${ctx.dataset.label}: ${ctx.parsed.x}%`}},
+          legend:{
+            display:true,position:'top',
+            labels:{
+              font:{size:10,family:"'Nunito Sans'"},
+              boxWidth:12,padding:10,
+              generateLabels:(chart)=>{
+                return chart.data.datasets.map((ds,i)=>({
+                  text: ds.label,
+                  fillStyle: i===0 ? colors[0]+'DD' : colors[0]+'55',
+                  strokeStyle: colors[0],
+                  lineWidth: 1.5,
+                  lineDash: i===1 ? [4,3] : [],
+                  hidden: false,
+                  datasetIndex: i,
+                }));
+              }
+            }
+          },
+          tooltip:{
+            callbacks:{
+              label:(item)=>{
+                const v=item.parsed.x;
+                const sym=item.datasetIndex===0?"●":"◌";
+                return`${sym} ${item.dataset.label}: ${v}%`;
+              },
+              afterBody:(items)=>{
+                if(items.length<2) return null;
+                const priV=items.find(i=>i.datasetIndex===0)?.parsed.x;
+                const cmpV=items.find(i=>i.datasetIndex===1)?.parsed.x;
+                if(priV==null||cmpV==null||cmpV===0) return null;
+                const diff=(priV-cmpV).toFixed(1);
+                const arrow=diff>0?"▲":diff<0?"▼":"—";
+                return`  ${arrow} ${diff>0?"+":""}${diff}pp vs comparação`;
+              }
+            },
+            backgroundColor:"rgba(14,14,14,0.88)",
+            titleColor:"#fff",bodyColor:"#e0e0e0",
+            padding:10,bodyFont:{size:11,family:"'Nunito Sans'"},
+          },
         },
         scales:{
-          x:{ticks:{callback:v=>v+'%',font:{size:10}},grid:{color:'#EEEEEE'},
-             suggestedMax:100},
-          y:{ticks:{font:{size:11}},grid:{display:false}},
+          x:{ticks:{callback:v=>v+'%',font:{size:10}},grid:{color:'#EEEEEE'},suggestedMax:100},
+          y:{ticks:{font:{size:10}},grid:{display:false}},
         },
       }
     });
