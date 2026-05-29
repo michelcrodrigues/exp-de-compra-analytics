@@ -152,11 +152,31 @@ tr.cmp-tr td{background:#f5f8ff;font-size:12px;color:var(--compare)}
 .rg{display:grid;grid-template-columns:1fr 1fr;gap:16px}
 
 /* Insights */
-.insights{display:flex;flex-direction:column;gap:12px}
-.ins-card{background:#fff;border-radius:var(--r-md);padding:20px;box-shadow:var(--shadow-01);border-left:4px solid var(--brand-secondary-b)}
-.ins-tag{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.8px;color:var(--brand-secondary-b);margin-bottom:6px}
-.ins-txt{font-size:14px;line-height:1.6}
+.insights{display:flex;flex-direction:column;gap:0}
+.ins-date-group{margin-bottom:20px}
+.ins-date-header{font-size:11px;font-weight:700;color:var(--neutral-500);text-transform:uppercase;letter-spacing:.8px;padding:8px 0;border-bottom:1px solid var(--neutral-200);margin-bottom:8px}
+.ins-card{background:#fff;border-radius:var(--r-md);box-shadow:var(--shadow-01);overflow:hidden;margin-bottom:8px}
+.ins-card-header{display:flex;align-items:center;gap:10px;padding:14px 16px;cursor:pointer;transition:background .15s;user-select:none}
+.ins-card-header:hover{background:var(--neutral-100)}
+.ins-chevron{font-size:11px;color:var(--neutral-500);transition:transform .2s;flex-shrink:0;margin-left:auto}
+.ins-card.open .ins-chevron{transform:rotate(180deg)}
+.ins-tag{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.8px;color:var(--brand-secondary-b);background:var(--brand-secondary-b-100);padding:3px 8px;border-radius:9999px;white-space:nowrap;flex-shrink:0}
+.ins-prio{font-size:10px;font-weight:700;padding:3px 8px;border-radius:9999px;white-space:nowrap;flex-shrink:0}
+.ins-prio.alta{background:var(--negative-100);color:var(--negative-700)}
+.ins-prio.media{background:#FCE9B4;color:#C3940F}
+.ins-prio.baixa{background:var(--positive-100);color:var(--positive-700)}
+.ins-class{font-size:10px;color:var(--neutral-500);flex-shrink:0;display:none}
+.ins-headline{font-size:13px;font-weight:700;color:var(--neutral-800);flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.ins-body{display:none;padding:0 16px 16px;border-top:1px solid var(--neutral-100)}
+.ins-card.open .ins-body{display:block}
+.ins-section{margin-top:12px}
+.ins-section-lbl{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.7px;color:var(--neutral-500);margin-bottom:4px}
+.ins-section-txt{font-size:13px;color:var(--neutral-800);line-height:1.6}
 .ins-empty{background:#fff;border-radius:var(--r-md);padding:32px;box-shadow:var(--shadow-01);text-align:center;color:var(--neutral-500);font-size:13px}
+.ins-filters{display:flex;align-items:center;gap:8px;margin-bottom:16px;flex-wrap:wrap}
+.ins-filter-btn{font-family:inherit;font-size:11px;font-weight:700;padding:4px 12px;border-radius:9999px;border:1px solid var(--neutral-300);background:#fff;color:var(--neutral-700);cursor:pointer;transition:all .15s}
+.ins-filter-btn:hover{border-color:var(--brand-primary);color:var(--brand-primary)}
+.ins-filter-btn.active{background:var(--brand-primary);color:#fff;border-color:var(--brand-primary)}
 
 /* Tabs */
 .tabs{display:flex;gap:4px;background:#fff;padding:4px;border-radius:9999px;box-shadow:var(--shadow-01);width:fit-content;margin-bottom:20px;flex-wrap:wrap}
@@ -862,7 +882,115 @@ function renderInsights(){
     w.innerHTML=`<div class="ins-empty">Nenhum insight gerado ainda. O Claude Cowork gera a análise toda segunda-feira.</div>`;
     return;
   }
-  w.innerHTML=INSIGHTS.map(i=>`<div class="ins-card"><div class="ins-tag">${i.tag||"Análise"}</div><div class="ins-txt">${i.texto}</div></div>`).join("");
+
+  // Estado dos filtros ativos
+  if(!w._filters) w._filters={prio:"all",class:"all"};
+
+  // Coletar opções únicas
+  const prios=[...new Set(INSIGHTS.map(i=>i.prioridade).filter(Boolean))];
+  const classes=[...new Set(INSIGHTS.map(i=>i.classificacao).filter(Boolean))];
+
+  // Barra de filtros
+  function buildFilters(){
+    const f=w._filters;
+    return`<div class="ins-filters">
+      <span style="font-size:11px;font-weight:700;color:var(--neutral-500)">Prioridade:</span>
+      <button class="ins-filter-btn ${f.prio==='all'?'active':''}" data-pf="all">Todas</button>
+      ${prios.map(p=>`<button class="ins-filter-btn ${f.prio===p?'active':''}" data-pf="${p}">${p}</button>`).join("")}
+      <span style="font-size:11px;font-weight:700;color:var(--neutral-500);margin-left:8px">Tipo:</span>
+      <button class="ins-filter-btn ${f.class==='all'?'active':''}" data-cf="all">Todos</button>
+      ${classes.map(c=>`<button class="ins-filter-btn ${f.class===c?'active':''}" data-cf="${c}">${c}</button>`).join("")}
+    </div>`;
+  }
+
+  function buildList(){
+    const f=w._filters;
+    const filtered=INSIGHTS.filter(i=>{
+      const okP=f.prio==="all"||(i.prioridade||"")=== f.prio;
+      const okC=f.class==="all"||(i.classificacao||"")=== f.class;
+      return okP&&okC;
+    });
+
+    if(!filtered.length) return`<div class="ins-empty">Nenhum insight para os filtros selecionados.</div>`;
+
+    // Agrupar por data
+    const byDate={};
+    filtered.forEach(i=>{
+      const d=i.data||"Sem data";
+      if(!byDate[d]) byDate[d]=[];
+      byDate[d].push(i);
+    });
+
+    return Object.entries(byDate)
+      .sort(([a],[b])=>b.localeCompare(a))
+      .map(([date,items])=>{
+        const dtLabel=date!=="Sem data"?fmtDF(date)+" — insights da semana":"Sem data";
+        const cards=items.map((ins,idx)=>{
+          const id=`ins-${date}-${idx}`;
+          const prioClass=(ins.prioridade||"").toLowerCase().replace(" ","");
+          // Extrair headline do diagnóstico
+          const textoLines=(ins.texto||"").split("\n");
+          const diagLine=textoLines.find(l=>l.startsWith("Diagnóstico:"))||textoLines[0]||"";
+          const headline=diagLine.replace("Diagnóstico:","").trim();
+
+          // Parsear seções do texto
+          const sections=parseSections(ins.texto||"");
+
+          return`<div class="ins-card" id="${id}">
+            <div class="ins-card-header" onclick="toggleIns('${id}')">
+              <span class="ins-tag">${ins.tag||"Análise"}</span>
+              <span class="ins-prio ${prioClass}">${ins.prioridade||""}</span>
+              <span class="ins-headline" title="${headline}">${headline}</span>
+              <span class="ins-chevron">▼</span>
+            </div>
+            <div class="ins-body">
+              ${sections.map(s=>`
+                <div class="ins-section">
+                  <div class="ins-section-lbl">${s.label}</div>
+                  <div class="ins-section-txt">${s.content}</div>
+                </div>`).join("")}
+            </div>
+          </div>`;
+        }).join("");
+        return`<div class="ins-date-group">
+          <div class="ins-date-header">${dtLabel} (${items.length})</div>
+          ${cards}
+        </div>`;
+      }).join("");
+  }
+
+  function parseSections(texto){
+    const labels=["Diagnóstico","Evidência","Classificação","Plano de ação","Impacto","Prioridade","Acompanhamento"];
+    const sections=[];
+    labels.forEach((lbl,i)=>{
+      const regex=new RegExp(lbl+":([\\s\\S]*?)(?="+
+        (labels[i+1]?labels[i+1]+":":" *$")+")", "i");
+      const m=texto.match(regex);
+      if(m&&m[1].trim()) sections.push({label:lbl, content:m[1].trim()});
+    });
+    return sections.length ? sections : [{label:"Detalhes", content:texto}];
+  }
+
+  // Render completo
+  w.innerHTML=buildFilters()+`<div id="insList">${buildList()}</div>`;
+
+  // Event listeners dos filtros
+  w.querySelectorAll("[data-pf]").forEach(btn=>{
+    btn.addEventListener("click",()=>{w._filters.prio=btn.dataset.pf; re_renderInsights();});
+  });
+  w.querySelectorAll("[data-cf]").forEach(btn=>{
+    btn.addEventListener("click",()=>{w._filters.class=btn.dataset.cf; re_renderInsights();});
+  });
+}
+
+function re_renderInsights(){
+  // Re-render preservando filtros
+  renderInsights();
+}
+
+function toggleIns(id){
+  const card=document.getElementById(id);
+  if(card) card.classList.toggle("open");
 }
 
 // ════════════════════════════════════════════════════════
