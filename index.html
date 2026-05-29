@@ -51,7 +51,7 @@ body{font-family:'Nunito Sans',sans-serif;background:var(--neutral-100);color:va
 
 /* Dropdown */
 .drw{position:relative}
-.dr-drop{position:absolute;top:calc(100% + 8px);left:0;background:#fff;border-radius:var(--r-md);box-shadow:0 8px 32px rgba(19,19,19,.18);z-index:600;padding:16px;min-width:340px;display:none}
+.dr-drop{position:fixed;top:auto;left:auto;background:#fff;border-radius:var(--r-md);box-shadow:0 8px 32px rgba(19,19,19,.18);z-index:9000;padding:16px;min-width:340px;display:none}
 .dr-drop.open{display:block}
 .dr-drop.pri{border-top:3px solid var(--brand-primary)}
 .dr-drop.cmp{border-top:3px solid var(--compare)}
@@ -482,13 +482,16 @@ function renderKPIs(pri,cmp){
   const brC=tc?wavg(cmp,"taxa_rejeicao_pct","sessoes"):null;
   const durC=tc?wavg(cmp,"duracao_media_seg","sessoes"):null;
 
-  // Nota: usuarios/pageviews zerados quando device != all (sem breakdown no GA4)
-  const devNote=DEV!=="all"?" *":"";
+  // Para usuários e pageviews, usar dados sem filtro de device (GA4 não tem breakdown)
+  const priAll=getRange(P.start,P.end);
+  const cmpAll=C.active&&C.start&&C.end?getRange(C.start,C.end):[];
+  const tpAll=agg(priAll), tcAll=cmpAll.length?agg(cmpAll):null;
+  const devSuffix=DEV!=="all"?" (total)":"";
   const defs=[
     {l:"Sessões",        v:fmtN(tp.sessoes),          cv:tc?fmtN(tc.sessoes):null,          r:tp.sessoes,   cr:tc?.sessoes},
-    {l:"Usuários"+devNote, v:DEV==="all"?fmtN(tp.usuarios):"—", cv:tc&&DEV==="all"?fmtN(tc.usuarios):null, r:tp.usuarios, cr:tc?.usuarios},
-    {l:"Novos usuários"+devNote,v:DEV==="all"?fmtN(tp.novos_usuarios):"—",cv:null,r:0,cr:null},
-    {l:"Pageviews"+devNote, v:DEV==="all"?fmtN(tp.pageviews):"—", cv:tc&&DEV==="all"?fmtN(tc.pageviews):null, r:tp.pageviews, cr:tc?.pageviews},
+    {l:"Usuários"+devSuffix, v:fmtN(tpAll.usuarios), cv:tcAll?fmtN(tcAll.usuarios):null, r:tpAll.usuarios, cr:tcAll?.usuarios},
+    {l:"Novos usuários"+devSuffix,v:fmtN(tpAll.novos_usuarios),cv:tcAll?fmtN(tcAll.novos_usuarios):null,r:tpAll.novos_usuarios,cr:tcAll?.novos_usuarios},
+    {l:"Pageviews"+devSuffix, v:fmtN(tpAll.pageviews), cv:tcAll?fmtN(tcAll.pageviews):null, r:tpAll.pageviews, cr:tcAll?.pageviews},
     {l:"Compras",        v:fmtN(tp.compras),          cv:tc?fmtN(tc.compras):null,          r:tp.compras,   cr:tc?.compras},
     {l:"Conversão",      v:crP.toFixed(2)+"%",        cv:crC!=null?crC.toFixed(2)+"%":null, r:crP,          cr:crC},
     {l:"Rejeição",       v:brP.toFixed(2)+"%",        cv:brC!=null?brC.toFixed(2)+"%":null, r:brP,          cr:brC,inv:true},
@@ -536,13 +539,30 @@ function renderAcquisicao(pri,cmp){
     {l:"Outros",k:"sessoes_outros_canais"},
   ];
 
-  // Quando dispositivo está selecionado, canais não têm breakdown por device —
-  // mostramos os totais gerais (sem filtro de device) para não zerar tudo.
-  const priRaw = DEV==="all" ? getPri() : getRange(P.start,P.end);
-  const cmpRaw = (!C.active||!C.start||!C.end) ? [] : (DEV==="all" ? getCmp() : getRange(C.start,C.end));
+  // Canais: GA4 não tem breakdown por device, mas escalamos pelo ratio
+  // sessoes_device / sessoes_total para dar uma estimativa proporcional.
+  const priRaw = getRange(P.start,P.end);
+  const cmpRaw = C.active&&C.start&&C.end ? getRange(C.start,C.end) : [];
 
-  const priC=CANAIS.map(c=>({...c,t:priRaw.reduce((s,d)=>s+(d[c.k]||0),0)})).sort((a,b)=>b.t-a.t);
-  const cmpC=hasCmp?CANAIS.map(c=>({...c,t:cmpRaw.reduce((s,d)=>s+(d[c.k]||0),0)})):[];
+  function scaleByDevice(rows){
+    if(DEV==="all") return rows;
+    return rows.map(d=>{
+      const tot=parseFloat(d.sessoes)||1;
+      const dev=parseFloat(d["sessoes_"+DEV])||0;
+      const ratio=dev/tot;
+      const out={...d};
+      ["sessoes_organico","sessoes_direto","sessoes_pago","sessoes_social",
+       "sessoes_email","sessoes_referral","sessoes_outros_canais"].forEach(k=>{
+        out[k]=Math.round((parseFloat(d[k])||0)*ratio);
+      });
+      return out;
+    });
+  }
+  const priScaled=scaleByDevice(priRaw);
+  const cmpScaled=scaleByDevice(cmpRaw);
+
+  const priC=CANAIS.map(c=>({...c,t:priScaled.reduce((s,d)=>s+(d[c.k]||0),0)})).sort((a,b)=>b.t-a.t);
+  const cmpC=hasCmp?CANAIS.map(c=>({...c,t:cmpScaled.reduce((s,d)=>s+(d[c.k]||0),0)})):[];
 
   const priTot=priC.reduce((s,c)=>s+c.t,0);
   const cmpTot=cmpC.reduce((s,c)=>s+c.t,0);
@@ -858,9 +878,16 @@ function updateCmpBanner(){
 // ════════════════════════════════════════════════════════
 // DROPDOWN UI
 // ════════════════════════════════════════════════════════
-function openDrop(id){
+function openDrop(id, triggerEl){
   document.querySelectorAll(".dr-drop").forEach(d=>d.classList.remove("open"));
-  document.getElementById(id).classList.add("open");
+  const drop = document.getElementById(id);
+  // Posicionar baseado no botão trigger
+  if(triggerEl){
+    const rect = triggerEl.getBoundingClientRect();
+    drop.style.top  = (rect.bottom + 8) + "px";
+    drop.style.left = rect.left + "px";
+  }
+  drop.classList.add("open");
   document.getElementById("overlay").classList.add("open");
 }
 function closeDrop(){
@@ -875,7 +902,7 @@ document.getElementById("btnPri").addEventListener("click",e=>{
   if(!open){
     if(P.start) document.getElementById("priS").value=P.start;
     if(P.end)   document.getElementById("priE").value=P.end;
-    openDrop("dropPri");
+    openDrop("dropPri", document.getElementById("btnPri"));
   }
 });
 document.getElementById("btnCmp").addEventListener("click",e=>{
@@ -885,7 +912,7 @@ document.getElementById("btnCmp").addEventListener("click",e=>{
   if(!open){
     if(C.start) document.getElementById("cmpS").value=C.start;
     if(C.end)   document.getElementById("cmpE").value=C.end;
-    openDrop("dropCmp");
+    openDrop("dropCmp", document.getElementById("btnCmp"));
   }
 });
 document.getElementById("overlay").addEventListener("click",closeDrop);
@@ -971,9 +998,10 @@ function agg(data){
   };},{sessoes:0,usuarios:0,novos_usuarios:0,pageviews:0,compras:0});
 }
 function wavg(data,m,w){
-  const tw=data.reduce((s,d)=>s+(d[w]||0),0);
+  // parseFloat garante conversão mesmo se o valor vier como string do JSON
+  const tw=data.reduce((s,d)=>s+parseFloat(d[w]||0),0);
   if(!tw) return 0;
-  return data.reduce((s,d)=>s+(d[m]||0)*(d[w]||0),0)/tw;
+  return data.reduce((s,d)=>s+parseFloat(d[m]||0)*parseFloat(d[w]||0),0)/tw;
 }
 function r4(v){return Math.round(v*10000)/10000;}
 function fmtN(n){if(n==null)return"—";return Number(n).toLocaleString("pt-BR");}
