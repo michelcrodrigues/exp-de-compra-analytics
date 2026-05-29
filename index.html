@@ -107,7 +107,7 @@ body{font-family:'Nunito Sans',sans-serif;background:var(--neutral-100);color:va
 .cc-legend{display:flex;align-items:center;gap:12px;margin-bottom:12px;flex-wrap:wrap}
 .cc-li{display:flex;align-items:center;gap:5px;font-size:11px;color:var(--neutral-500)}
 .cc-dot{width:10px;height:10px;border-radius:50%;flex-shrink:0}
-.cc-wrap{position:relative;height:200px}
+.cc-wrap{position:relative;height:220px}
 
 /* Funil */
 .funil-wrap{background:#fff;border-radius:var(--r-md);padding:24px;box-shadow:var(--shadow-01)}
@@ -609,12 +609,18 @@ function renderAcquisicao(pri,cmp){
     return`<tr><td>${c.l}</td><td class="num">${fmtN(c.t)}</td><td class="num">${pct}%</td><td class="bc"><div class="mbar-w"><div class="mbar" style="width:${barW}%"></div></div></td></tr>`;
   }).join("");
 
-  // Donut canais — com % no label
+  // Donut/barras canais — com comparativo quando disponível
   const canaisFilt=priC.filter(c=>c.t>0);
+  const cmpCanaisFilt=canaisFilt.map(c=>{
+    const found=cmpC.find(x=>x.k===c.k); return found?found.t:0;
+  });
+  const hasCanaisCmp=hasCmp&&cmpC.length>0;
   mkDonut("cCanais",
     canaisFilt.map(c=>`${c.l} ${priTot>0?(c.t/priTot*100).toFixed(1):"0"}%`),
     canaisFilt.map(c=>c.t),
-    ["#19398A","#A43C3E","#C3940F","#6589D4","#278A22","#8B8B8B","#D1D1D1"]
+    ["#19398A","#A43C3E","#C3940F","#6589D4","#278A22","#8B8B8B","#D1D1D1"],
+    hasCanaisCmp?cmpCanaisFilt:null,
+    hasCanaisCmp?(C.start?fmtDS(C.start)+" – "+fmtDS(C.end):"Comparação"):null
   );
 
   // Dispositivos — sempre sem filtro de device (é o gráfico de distribuição de device)
@@ -630,10 +636,18 @@ function renderAcquisicao(pri,cmp){
     c:priAll.reduce((x,r)=>x+(r[d.kc]||0),0),
   }));
   const devTot=devT.reduce((s,d)=>s+d.s,0);
+  // Calcular comparativo de devices para o gráfico
+  const cmpAllDevChart=C.active&&C.start&&C.end?getRange(C.start,C.end):[];
+  const cmpDevChart=DEVS.map(d=>({
+    ...d, s:cmpAllDevChart.reduce((x,r)=>x+(parseFloat(r[d.ks])||0),0)
+  }));
+  const hasDevsCmp=cmpAllDevChart.length>0;
   mkDonut("cDevs",
     devT.map(d=>`${d.l} ${devTot>0?(d.s/devTot*100).toFixed(1):"0"}%`),
     devT.map(d=>d.s),
-    ["#19398A","#A43C3E","#C3940F"]
+    ["#19398A","#A43C3E","#C3940F"],
+    hasDevsCmp?cmpDevChart.map(d=>d.s):null,
+    hasDevsCmp?(C.start?fmtDS(C.start)+" – "+fmtDS(C.end):"Comparação"):null
   );
 
   // Calcular comparativos de device
@@ -862,14 +876,53 @@ function mkLine(cid,lid,pri,cmp,metric,label,color,hasCmp){
   }});
 }
 
-function mkDonut(id,labels,values,colors){
+function mkDonut(id,labels,values,colors,cmpValues,cmpLabel){
   const ctx=document.getElementById(id);
   if(!ctx) return;
   if(CHARTS[id]) CHARTS[id].destroy();
-  CHARTS[id]=new Chart(ctx,{type:"doughnut",
-    data:{labels,datasets:[{data:values,backgroundColor:colors,borderWidth:2,borderColor:"#fff"}]},
-    options:{responsive:true,maintainAspectRatio:false,cutout:"60%",
-      plugins:{legend:{display:true,position:"right",
+
+  // Com comparativo: barras horizontais agrupadas (melhor para comparar shares)
+  if(cmpValues&&cmpValues.length){
+    const priTot=values.reduce((s,v)=>s+v,0)||1;
+    const cmpTot=cmpValues.reduce((s,v)=>s+v,0)||1;
+    const priPct=values.map(v=>+(v/priTot*100).toFixed(1));
+    const cmpPct=cmpValues.map(v=>+(v/cmpTot*100).toFixed(1));
+    // Labels sem o % (vem do donut) — limpar
+    const cleanLabels=labels.map(l=>l.replace(/\s[\d.]+%$/,''));
+    CHARTS[id]=new Chart(ctx,{type:'bar',
+      data:{
+        labels:cleanLabels,
+        datasets:[
+          {label:'Período',data:priPct,backgroundColor:colors.map(c=>c+'CC'),
+           borderColor:colors,borderWidth:1.5,borderRadius:3},
+          {label:cmpLabel||'Comparação',data:cmpPct,
+           backgroundColor:colors.map(()=>'#6589D488'),
+           borderColor:colors.map(()=>'#6589D4'),borderWidth:1.5,borderRadius:3,
+           borderDash:[4,3]},
+        ]
+      },
+      options:{
+        indexAxis:'y',responsive:true,maintainAspectRatio:false,
+        plugins:{
+          legend:{display:true,position:'top',
+            labels:{font:{size:10,family:"'Nunito Sans'"},boxWidth:10,padding:8}},
+          tooltip:{callbacks:{label:ctx=>`${ctx.dataset.label}: ${ctx.parsed.x}%`}},
+        },
+        scales:{
+          x:{ticks:{callback:v=>v+'%',font:{size:10}},grid:{color:'#EEEEEE'},
+             suggestedMax:100},
+          y:{ticks:{font:{size:11}},grid:{display:false}},
+        },
+      }
+    });
+    return;
+  }
+
+  // Sem comparativo: donut padrão
+  CHARTS[id]=new Chart(ctx,{type:'doughnut',
+    data:{labels,datasets:[{data:values,backgroundColor:colors,borderWidth:2,borderColor:'#fff'}]},
+    options:{responsive:true,maintainAspectRatio:false,cutout:'60%',
+      plugins:{legend:{display:true,position:'right',
         labels:{font:{size:11,family:"'Nunito Sans'"},boxWidth:12,padding:8}}}}});
 }
 
