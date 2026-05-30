@@ -213,6 +213,16 @@ tr.cmp-tr td{background:#f5f8ff;font-size:12px;color:var(--compare)}
 .auth-error{font-size:12px;color:var(--negative-700);background:var(--negative-100);border-radius:var(--r-sm);padding:8px 12px;display:none;text-align:center}
 .auth-error.show{display:block}
 .auth-screen.hidden{display:none}
+
+/* ── INSIGHTS NAV ── */
+.ins-layout{display:flex;gap:0;align-items:flex-start}
+.ins-nav{width:190px;flex-shrink:0;border-right:1px solid var(--neutral-200);padding:8px 0;position:sticky;top:12px;max-height:80vh;overflow-y:auto}
+.ins-content{flex:1;min-width:0;padding-left:16px}
+.ins-nav-year{font-size:10px;font-weight:700;color:var(--neutral-400);text-transform:uppercase;letter-spacing:.8px;padding:8px 12px 4px}
+.ins-nav-month{font-size:11px;font-weight:600;color:var(--neutral-500);padding:4px 12px;text-transform:uppercase;letter-spacing:.04em}
+.ins-nav-week{font-size:12px;color:var(--neutral-600);padding:5px 12px 5px 20px;cursor:pointer;border-radius:0 6px 6px 0;transition:background .15s;margin-right:8px}
+.ins-nav-week:hover{background:var(--neutral-100)}
+.ins-nav-week.active{background:#e0eaff;color:#19398A;font-weight:600}
 </style>
 </head>
 <body>
@@ -421,8 +431,13 @@ tr.cmp-tr td{background:#f5f8ff;font-size:12px;color:var(--compare)}
 
     <!-- INSIGHTS -->
     <div class="tbc" id="tab-in">
-      <div class="sec">Análise semanal — Claude AI</div>
-      <div class="insights" id="insightsWrap"></div>
+      <div class="ins-layout">
+        <nav class="ins-nav" id="insNav"></nav>
+        <div class="ins-content">
+          <div class="sec">Análise semanal — Claude AI</div>
+          <div class="insights" id="insightsWrap"></div>
+        </div>
+      </div>
     </div>
 
   </div>
@@ -876,121 +891,99 @@ function renderRotas(pri,cmp){
 // ════════════════════════════════════════════════════════
 // INSIGHTS
 // ════════════════════════════════════════════════════════
-function renderInsights(){
-  const w=document.getElementById("insightsWrap");
-  if(!INSIGHTS.length){
-    w.innerHTML=`<div class="ins-empty">Nenhum insight gerado ainda. O Claude Cowork gera a análise toda segunda-feira.</div>`;
+function renderInsights() {
+  const nav = document.getElementById('insNav');
+  const wrap = document.getElementById('insightsWrap');
+  if (!nav || !wrap) return;
+
+  if (!INSIGHTS || INSIGHTS.length === 0) {
+    wrap.innerHTML = '<div class="ins-empty">Nenhum insight gerado ainda. O Claude Cowork gera a análise toda terça-feira.</div>';
+    nav.innerHTML = '';
     return;
   }
 
-  // Estado dos filtros ativos
-  if(!w._filters) w._filters={prio:"all",class:"all"};
-
-  // Coletar opções únicas
-  const prios=[...new Set(INSIGHTS.map(i=>i.prioridade).filter(Boolean))];
-  const classes=[...new Set(INSIGHTS.map(i=>i.classificacao).filter(Boolean))];
-
-  // Barra de filtros
-  function buildFilters(){
-    const f=w._filters;
-    return`<div class="ins-filters">
-      <span style="font-size:11px;font-weight:700;color:var(--neutral-500)">Prioridade:</span>
-      <button class="ins-filter-btn ${f.prio==='all'?'active':''}" data-pf="all">Todas</button>
-      ${prios.map(p=>`<button class="ins-filter-btn ${f.prio===p?'active':''}" data-pf="${p}">${p}</button>`).join("")}
-      <span style="font-size:11px;font-weight:700;color:var(--neutral-500);margin-left:8px">Tipo:</span>
-      <button class="ins-filter-btn ${f.class==='all'?'active':''}" data-cf="all">Todos</button>
-      ${classes.map(c=>`<button class="ins-filter-btn ${f.class===c?'active':''}" data-cf="${c}">${c}</button>`).join("")}
-    </div>`;
-  }
-
-  function buildList(){
-    const f=w._filters;
-    const filtered=INSIGHTS.filter(i=>{
-      const okP=f.prio==="all"||(i.prioridade||"")=== f.prio;
-      const okC=f.class==="all"||(i.classificacao||"")=== f.class;
-      return okP&&okC;
-    });
-
-    if(!filtered.length) return`<div class="ins-empty">Nenhum insight para os filtros selecionados.</div>`;
-
-    // Agrupar por data
-    const byDate={};
-    filtered.forEach(i=>{
-      const d=i.data||"Sem data";
-      if(!byDate[d]) byDate[d]=[];
-      byDate[d].push(i);
-    });
-
-    return Object.entries(byDate)
-      .sort(([a],[b])=>b.localeCompare(a))
-      .map(([date,items])=>{
-        const dtLabel=date!=="Sem data"?fmtDF(date)+" — insights da semana":"Sem data";
-        const cards=items.map((ins,idx)=>{
-          const id=`ins-${date}-${idx}`;
-          const prioClass=(ins.prioridade||"").toLowerCase().replace(" ","");
-          // Extrair headline do diagnóstico
-          const textoLines=(ins.texto||"").split("\n");
-          const diagLine=textoLines.find(l=>l.startsWith("Diagnóstico:"))||textoLines[0]||"";
-          const headline=diagLine.replace("Diagnóstico:","").trim();
-
-          // Parsear seções do texto
-          const sections=parseSections(ins.texto||"");
-
-          return`<div class="ins-card" id="${id}">
-            <div class="ins-card-header" onclick="toggleIns('${id}')">
-              <span class="ins-tag">${ins.tag||"Análise"}</span>
-              <span class="ins-prio ${prioClass}">${ins.prioridade||""}</span>
-              <span class="ins-headline" title="${headline}">${headline}</span>
-              <span class="ins-chevron">▼</span>
-            </div>
-            <div class="ins-body">
-              ${sections.map(s=>`
-                <div class="ins-section">
-                  <div class="ins-section-lbl">${s.label}</div>
-                  <div class="ins-section-txt">${s.content}</div>
-                </div>`).join("")}
-            </div>
-          </div>`;
-        }).join("");
-        return`<div class="ins-date-group">
-          <div class="ins-date-header">${dtLabel} (${items.length})</div>
-          ${cards}
-        </div>`;
-      }).join("");
-  }
-
-  function parseSections(texto){
-    const labels=["Diagnóstico","Evidência","Classificação","Plano de ação","Impacto","Prioridade","Acompanhamento"];
-    const sections=[];
-    labels.forEach((lbl,i)=>{
-      const regex=new RegExp(lbl+":([\\s\\S]*?)(?="+
-        (labels[i+1]?labels[i+1]+":":" *$")+")", "i");
-      const m=texto.match(regex);
-      if(m&&m[1].trim()) sections.push({label:lbl, content:m[1].trim()});
-    });
-    return sections.length ? sections : [{label:"Detalhes", content:texto}];
-  }
-
-  // Render completo
-  w.innerHTML=buildFilters()+`<div id="insList">${buildList()}</div>`;
-
-  // Event listeners dos filtros
-  w.querySelectorAll("[data-pf]").forEach(btn=>{
-    btn.addEventListener("click",()=>{w._filters.prio=btn.dataset.pf; re_renderInsights();});
+  const monthNames = ['Jan','Fev','Mar','Abr','Mai','Jun','Jul','Ago','Set','Out','Nov','Dez'];
+  const tree = {};
+  INSIGHTS.forEach(w => {
+    const parts = w.semana.split('-');
+    const y = parts[0], m = parts[1];
+    if (!tree[y]) tree[y] = {};
+    if (!tree[y][m]) tree[y][m] = [];
+    tree[y][m].push(w);
   });
-  w.querySelectorAll("[data-cf]").forEach(btn=>{
-    btn.addEventListener("click",()=>{w._filters.class=btn.dataset.cf; re_renderInsights();});
+
+  let navHtml = '';
+  Object.keys(tree).sort((a,b) => b-a).forEach(year => {
+    navHtml += '<div class="ins-nav-year">' + year + '</div>';
+    Object.keys(tree[year]).sort((a,b) => b-a).forEach(month => {
+      navHtml += '<div class="ins-nav-month">' + monthNames[parseInt(month)-1] + '</div>';
+      tree[year][month].forEach(w => {
+        navHtml += '<div class="ins-nav-week" data-semana="' + w.semana + '" onclick="selectWeek(\'' + w.semana + '\')">' + w.label + '</div>';
+      });
+    });
   });
+  nav.innerHTML = navHtml;
+  selectWeek(INSIGHTS[0].semana);
 }
 
-function re_renderInsights(){
-  // Re-render preservando filtros
-  renderInsights();
+function selectWeek(semana) {
+  document.querySelectorAll('.ins-nav-week').forEach(el =>
+    el.classList.toggle('active', el.dataset.semana === semana));
+  const week = INSIGHTS.find(w => w.semana === semana);
+  const wrap = document.getElementById('insightsWrap');
+  if (!wrap) return;
+  if (!week || !week.items || week.items.length === 0) {
+    wrap.innerHTML = '<div class="ins-empty">Nenhum insight para esta semana.</div>';
+    return;
+  }
+  buildList(week.items);
 }
 
-function toggleIns(id){
-  const card=document.getElementById(id);
-  if(card) card.classList.toggle("open");
+function buildList(items) {
+  const wrap = document.getElementById('insightsWrap');
+  const priColor = {Alta:'#E24B4A',Media:'#EF9F27',Baixa:'#19398A'};
+  const clsColor = {'Diagnostico comprovado':'#1D9E75','Hipotese':'#6366f1','Tendencia':'#EF9F27','Resultado fora da curva':'#E24B4A','Correlacao':'#19398A','Explicacao':'#6b6b67'};
+  const priColorMap = (p) => p === 'Alta' ? '#E24B4A' : p === 'Média' ? '#EF9F27' : '#19398A';
+  const clsColorMap = (c) => {
+    const map = {'Diagnóstico comprovado':'#1D9E75','Hipótese':'#6366f1','Tendência':'#EF9F27','Resultado fora da curva':'#E24B4A','Correlação':'#19398A','Explicação':'#6b6b67'};
+    return map[c] || '#6b6b67';
+  };
+  wrap.innerHTML = items.map((ins, i) => {
+    const id = 'ins_' + i;
+    const pc = priColorMap(ins.prioridade);
+    const cc = clsColorMap(ins.classificacao);
+    return '<div class="ins-card" id="' + id + '">' +
+      '<div class="ins-card-header" onclick="toggleIns(\'' + id + '\')">' +
+        '<span class="ins-tag" style="background:' + pc + '20;color:' + pc + '">' + ins.prioridade + '</span>' +
+        '<span class="ins-tag" style="background:' + cc + '20;color:' + cc + '">' + ins.classificacao + '</span>' +
+        '<span style="flex:1;font-size:13px;font-weight:500;margin-left:4px">' + ins.tag + '</span>' +
+        '<span class="ins-chevron">▼</span>' +
+      '</div>' +
+      '<div class="ins-body">' + parseSections(ins.texto) + '</div>' +
+    '</div>';
+  }).join('');
+  const first = document.getElementById('ins_0');
+  if (first) first.classList.add('open');
+}
+
+function parseSections(texto) {
+  if (!texto) return '';
+  return texto.split('\n\n').map(block => {
+    const ci = block.indexOf(':');
+    if (ci > 0 && ci < 30) {
+      const lbl = block.slice(0, ci);
+      const body = block.slice(ci + 1).trim();
+      return '<div class="ins-section"><span class="ins-section-lbl">' + lbl + ':</span> ' + body + '</div>';
+    }
+    return '<div class="ins-section">' + block + '</div>';
+  }).join('');
+}
+
+function re_renderInsights() {}
+
+function toggleIns(id) {
+  const card = document.getElementById(id);
+  if (card) card.classList.toggle('open');
 }
 
 // ════════════════════════════════════════════════════════
