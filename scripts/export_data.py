@@ -1,78 +1,66 @@
 """
-export_data.py — Lê o Google Sheets e gera data.json para o dashboard.
+export_data.py — Lê data/history.ndjson e gera data.json para o dashboard.
 
 Roda no GitHub Actions após o fetch_ga4.py, ou pode rodar separado.
 O data.json é commitado no repositório e servido pelo GitHub Pages.
 
-Secrets necessários:
-  GA4_CREDENTIALS_JSON  → service account com acesso ao Sheets
-  SPREADSHEET_ID        → ID da planilha
+Não depende de nenhuma API externa — lê apenas o arquivo local.
 """
 
 import os
 import json
 import sys
 import datetime
-from google.oauth2 import service_account
-from googleapiclient.discovery import build
 
-SHEET_TAB_NAME = "analytics"
-OUTPUT_PATH    = "data.json"
+HISTORY_FILE = "data/history.ndjson"
+OUTPUT_PATH  = "data.json"
 
-SCOPES = [
-    "https://www.googleapis.com/auth/spreadsheets.readonly",
-]
+def load_history():
+    """Lê o history.ndjson e retorna lista de registros ordenados por data."""
+    if not os.path.exists(HISTORY_FILE):
+        print(f"ERRO: {HISTORY_FILE} não encontrado.")
+        sys.exit(1)
 
-def get_credentials():
-    creds_info = json.loads(os.environ["GA4_CREDENTIALS_JSON"])
-    return service_account.Credentials.from_service_account_info(
-        creds_info, scopes=SCOPES
-    )
-
-def read_sheet(sheets, spreadsheet_id):
-    result = sheets.spreadsheets().values().get(
-        spreadsheetId=spreadsheet_id,
-        range=f"{SHEET_TAB_NAME}",
-        valueRenderOption="UNFORMATTED_VALUE",  # retorna número bruto (62.5), não string formatada ("62,50%")
-        dateTimeRenderOption="FORMATTED_STRING",
-    ).execute()
-    rows = result.get("values", [])
-    if not rows:
-        raise ValueError("Planilha vazia.")
-    headers = rows[0]
     records = []
-    for row in rows[1:]:
-        # preencher colunas faltantes com None
-        padded = row + [None] * (len(headers) - len(row))
-        records.append(dict(zip(headers, padded)))
-    return headers, records
+    errors  = 0
+    with open(HISTORY_FILE, "r", encoding="utf-8") as f:
+        for i, line in enumerate(f, 1):
+            line = line.strip()
+            if not line:
+                continue
+            try:
+                records.append(json.loads(line))
+            except json.JSONDecodeError as e:
+                print(f"  AVISO: linha {i} inválida ignorada — {e}")
+                errors += 1
+
+    if errors:
+        print(f"  {errors} linha(s) corrompida(s) ignorada(s).")
+
+    records.sort(key=lambda r: r.get("data", ""))
+    return records
 
 def safe_float(v, default=0.0):
     try:
-        # Normaliza vírgula decimal — Google Sheets locale pt-BR retorna '62,5'
         return float(str(v).replace(",", "."))
     except (TypeError, ValueError):
         return default
 
 def safe_int(v, default=0):
     try:
-        # Normaliza vírgula decimal antes de converter
         return int(float(str(v).replace(",", ".")))
     except (TypeError, ValueError):
         return default
 
-def build_data_json(records):
+def build_daily(records):
     """
-    Transforma os registros da planilha em data.json estruturado para o dashboard.
-    Mantém todos os dados brutos + agrega totais por período para os filtros.
+    Converte registros brutos do ndjson para o formato esperado pelo dashboard.
+    Como os dados já vêm tipados do fetch_ga4.py, a conversão é principalmente
+    uma garantia de tipos — não há risco de formatação regional.
     """
-    # Ordenar por data
-    records = sorted(records, key=lambda r: r.get("data", ""))
-
-    # ── Dados diários brutos (para gráficos de linha e filtros) ──────────────
     daily = []
     for r in records:
-        daily.append({
+        entry = {
             "data":               r.get("data", ""),
             # Volume
             "sessoes":            safe_int(r.get("sessoes")),
@@ -86,71 +74,68 @@ def build_data_json(records):
             "taxa_rejeicao_pct":  safe_float(r.get("taxa_rejeicao_pct")),
             "duracao_media_seg":  safe_float(r.get("duracao_media_seg")),
             # Dispositivo
-            "sessoes_mobile":     safe_int(r.get("sessoes_mobile")),
-            "sessoes_desktop":    safe_int(r.get("sessoes_desktop")),
-            "sessoes_tablet":     safe_int(r.get("sessoes_tablet")),
-            "compras_mobile":     safe_int(r.get("compras_mobile")),
-            "compras_desktop":    safe_int(r.get("compras_desktop")),
-            "compras_tablet":     safe_int(r.get("compras_tablet")),
-            "usuarios_mobile":           safe_int(r.get("usuarios_mobile")),
-            "usuarios_desktop":          safe_int(r.get("usuarios_desktop")),
-            "usuarios_tablet":           safe_int(r.get("usuarios_tablet")),
-            "novos_usuarios_mobile":     safe_int(r.get("novos_usuarios_mobile")),
-            "novos_usuarios_desktop":    safe_int(r.get("novos_usuarios_desktop")),
-            "novos_usuarios_tablet":     safe_int(r.get("novos_usuarios_tablet")),
-            "taxa_rejeicao_mobile":      safe_float(r.get("taxa_rejeicao_mobile")),
-            "taxa_rejeicao_desktop":     safe_float(r.get("taxa_rejeicao_desktop")),
-            "taxa_rejeicao_tablet":      safe_float(r.get("taxa_rejeicao_tablet")),
-            "duracao_media_mobile":      safe_float(r.get("duracao_media_mobile")),
-            "duracao_media_desktop":     safe_float(r.get("duracao_media_desktop")),
-            "duracao_media_tablet":      safe_float(r.get("duracao_media_tablet")),
+            "sessoes_mobile":          safe_int(r.get("sessoes_mobile")),
+            "sessoes_desktop":         safe_int(r.get("sessoes_desktop")),
+            "sessoes_tablet":          safe_int(r.get("sessoes_tablet")),
+            "compras_mobile":          safe_int(r.get("compras_mobile")),
+            "compras_desktop":         safe_int(r.get("compras_desktop")),
+            "compras_tablet":          safe_int(r.get("compras_tablet")),
+            "usuarios_mobile":         safe_int(r.get("usuarios_mobile")),
+            "usuarios_desktop":        safe_int(r.get("usuarios_desktop")),
+            "usuarios_tablet":         safe_int(r.get("usuarios_tablet")),
+            "novos_usuarios_mobile":   safe_int(r.get("novos_usuarios_mobile")),
+            "novos_usuarios_desktop":  safe_int(r.get("novos_usuarios_desktop")),
+            "novos_usuarios_tablet":   safe_int(r.get("novos_usuarios_tablet")),
+            "taxa_rejeicao_mobile":    safe_float(r.get("taxa_rejeicao_mobile")),
+            "taxa_rejeicao_desktop":   safe_float(r.get("taxa_rejeicao_desktop")),
+            "taxa_rejeicao_tablet":    safe_float(r.get("taxa_rejeicao_tablet")),
+            "duracao_media_mobile":    safe_float(r.get("duracao_media_mobile")),
+            "duracao_media_desktop":   safe_float(r.get("duracao_media_desktop")),
+            "duracao_media_tablet":    safe_float(r.get("duracao_media_tablet")),
             # Canal
-            "sessoes_organico":       safe_int(r.get("sessoes_organico")),
-            "sessoes_direto":         safe_int(r.get("sessoes_direto")),
-            "sessoes_pago":           safe_int(r.get("sessoes_pago")),
-            "sessoes_social":         safe_int(r.get("sessoes_social")),
-            "sessoes_email":          safe_int(r.get("sessoes_email")),
-            "sessoes_referral":       safe_int(r.get("sessoes_referral")),
-            "sessoes_outros_canais":  safe_int(r.get("sessoes_outros_canais")),
-            # Funil
+            "sessoes_organico":      safe_int(r.get("sessoes_organico")),
+            "sessoes_direto":        safe_int(r.get("sessoes_direto")),
+            "sessoes_pago":          safe_int(r.get("sessoes_pago")),
+            "sessoes_social":        safe_int(r.get("sessoes_social")),
+            "sessoes_email":         safe_int(r.get("sessoes_email")),
+            "sessoes_referral":      safe_int(r.get("sessoes_referral")),
+            "sessoes_outros_canais": safe_int(r.get("sessoes_outros_canais")),
+            # Funil total
             "funil_search":         safe_int(r.get("funil_search")),
             "funil_select_item":    safe_int(r.get("funil_select_item")),
             "funil_add_to_cart":    safe_int(r.get("funil_add_to_cart")),
             "funil_begin_checkout": safe_int(r.get("funil_begin_checkout")),
             "funil_purchase":       safe_int(r.get("funil_purchase")),
             # Funil por dispositivo
-            **{f"funil_{e}_{dev}": safe_int(r.get(f"funil_{e}_{dev}"))
-               for e in ["search","select_item","add_to_cart","begin_checkout","purchase"]
-               for dev in ["mobile","desktop","tablet"]},
+            **{
+                f"funil_{e}_{dev}": safe_int(r.get(f"funil_{e}_{dev}"))
+                for e in ["search", "select_item", "add_to_cart", "begin_checkout", "purchase"]
+                for dev in ["mobile", "desktop", "tablet"]
+            },
             # Rotas
-            "top_origem_1": r.get("top_origem_1") or "",
+            "top_origem_1":         r.get("top_origem_1") or "",
             "top_origem_1_sessoes": safe_int(r.get("top_origem_1_sessoes")),
-            "top_origem_2": r.get("top_origem_2") or "",
+            "top_origem_2":         r.get("top_origem_2") or "",
             "top_origem_2_sessoes": safe_int(r.get("top_origem_2_sessoes")),
-            "top_origem_3": r.get("top_origem_3") or "",
+            "top_origem_3":         r.get("top_origem_3") or "",
             "top_origem_3_sessoes": safe_int(r.get("top_origem_3_sessoes")),
-            "top_origem_4": r.get("top_origem_4") or "",
+            "top_origem_4":         r.get("top_origem_4") or "",
             "top_origem_4_sessoes": safe_int(r.get("top_origem_4_sessoes")),
-            "top_origem_5": r.get("top_origem_5") or "",
+            "top_origem_5":         r.get("top_origem_5") or "",
             "top_origem_5_sessoes": safe_int(r.get("top_origem_5_sessoes")),
-            "top_destino_1": r.get("top_destino_1") or "",
+            "top_destino_1":         r.get("top_destino_1") or "",
             "top_destino_1_sessoes": safe_int(r.get("top_destino_1_sessoes")),
-            "top_destino_2": r.get("top_destino_2") or "",
+            "top_destino_2":         r.get("top_destino_2") or "",
             "top_destino_2_sessoes": safe_int(r.get("top_destino_2_sessoes")),
-            "top_destino_3": r.get("top_destino_3") or "",
+            "top_destino_3":         r.get("top_destino_3") or "",
             "top_destino_3_sessoes": safe_int(r.get("top_destino_3_sessoes")),
-            "top_destino_4": r.get("top_destino_4") or "",
+            "top_destino_4":         r.get("top_destino_4") or "",
             "top_destino_4_sessoes": safe_int(r.get("top_destino_4_sessoes")),
-            "top_destino_5": r.get("top_destino_5") or "",
+            "top_destino_5":         r.get("top_destino_5") or "",
             "top_destino_5_sessoes": safe_int(r.get("top_destino_5_sessoes")),
-        })
-
-    return {
-        "gerado_em": datetime.datetime.utcnow().strftime("%Y-%m-%dT%H:%M:%SZ"),
-        "total_dias": len(daily),
-        "daily": daily,
-        "insights": [],  # preenchido pelo Claude Cowork semanalmente
-    }
+        }
+        daily.append(entry)
+    return daily
 
 def load_existing_insights():
     """Lê os insights já gravados no data.json para não apagá-los."""
@@ -166,29 +151,24 @@ def load_existing_insights():
     except Exception:
         return []
 
-
 def main():
-    spreadsheet_id = os.environ.get("SPREADSHEET_ID", "").strip()
-    if not spreadsheet_id:
-        print("ERRO: variável SPREADSHEET_ID não definida ou vazia.")
-        sys.exit(1)
+    print(f"Lendo {HISTORY_FILE}...")
+    records = load_history()
+    print(f"  {len(records)} registros carregados.")
 
-    print("Autenticando...")
-    creds  = get_credentials()
-    sheets = build("sheets", "v4", credentials=creds)
-
-    print("Lendo planilha...")
-    headers, records = read_sheet(sheets, spreadsheet_id)
-    print(f"  {len(records)} linhas lidas, {len(headers)} colunas")
-
-    # Preservar insights gerados pelo Claude Cowork
     existing_insights = load_existing_insights()
 
     print("Gerando data.json...")
-    data = build_data_json(records)
-    data["insights"] = existing_insights  # restaurar insights preservados
+    daily = build_daily(records)
 
-    # Validar que o JSON é serializável antes de gravar
+    data = {
+        "gerado_em":  datetime.datetime.utcnow().strftime("%Y-%m-%dT%H:%M:%SZ"),
+        "total_dias": len(daily),
+        "daily":      daily,
+        "insights":   existing_insights,
+    }
+
+    # Validar serializabilidade antes de gravar
     try:
         payload = json.dumps(data, ensure_ascii=False, separators=(",", ":"))
     except Exception as e:
