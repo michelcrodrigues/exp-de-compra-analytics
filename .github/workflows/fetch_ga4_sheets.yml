@@ -28,7 +28,7 @@ jobs:
     runs-on: ubuntu-latest
     env:
       FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true  # opt-in Node.js 24 (obrigatório a partir de 16/jun/2026)
-    timeout-minutes: 30
+    timeout-minutes: 60
 
     permissions:
       contents: write
