@@ -1,5 +1,5 @@
 {
-  "gerado_em": "2026-05-29T09:00:00Z",
+  "gerado_em": "2026-05-30T12:05:41.875Z",
   "total_dias": 513,
   "daily": [
     {
@@ -38993,46 +38993,53 @@
   ],
   "insights": [
     {
-      "tag": "Queda de CR (-6,5%) com tráfego estável",
-      "classificacao": "Hipótese",
-      "prioridade": "Alta",
-      "data": "2026-05-29",
-      "texto": "Diagnóstico: CR caiu de 9,74% para 9,11% (-6,5%) na semana 18-24/05 enquanto sessões ficaram estáveis (+0,4%). Queda real na conversão — não mudança de mix.\n\nEvidência: Compras 33.873 vs 36.081 (-6,1%). CR desktop: 12,95% vs 14,08% (-8,0%). CR mobile: 8,00% vs 8,55% (-6,4%). Duração média: 316s vs 331s (-4,5%). Taxa de rejeição: 25,17% vs 24,46%.\n\nClassificação: Hipótese — contexto aponta para efeito residual do incidente de migração DNS (S19, semana 10-16/05) ou instabilidade do novo motor de conexão Smart.\n\nPlano de ação: (1) Verificar logs de erro do BFF na semana 18-24/05. (2) Cruzar com dados de suporte CX. (3) Checar Core Web Vitals pós-migração DNS. (4) Confirmar estabilidade do motor Smart ao longo da semana.\n\nImpacto: CR geral, compras, receita — queda de 6,1% em compras tem impacto direto na meta de R$345M.\n\nPrioridade: Alta — queda de 6% com volume estável não é flutuação normal. Requer diagnóstico imediato.\n\nAcompanhamento: Monitorar CR semana a semana. Se não houver recuperação para ~9,7% em 2 semanas, iniciar investigação formal."
-    },
-    {
-      "tag": "Funil invertido — purchase > begin_checkout",
-      "classificacao": "Diagnóstico comprovado",
-      "prioridade": "Alta",
-      "data": "2026-05-29",
-      "texto": "Diagnóstico: O funil apresenta inversões impossíveis: purchase (56.237) maior que begin_checkout (43.811), e add_to_cart (68.256) maior que select_item (40.381). Isso invalida qualquer análise de abandono por etapa.\n\nEvidência: Padrão se repete em todos os devices — mobile: purchase 38.110 vs checkout 27.718; desktop: 17.859 vs 15.799. Consistência confirma problema de instrumentação, não anomalia pontual.\n\nClassificação: Diagnóstico comprovado — inversão estrutural em todos os devices confirma erro de implementação GA4/GTM.\n\nPlano de ação: (1) Auditar GTM Preview + GA4 DebugView — percorrer o funil e verificar se purchase dispara sem begin_checkout. (2) Checar se eventos de app ou totem estão sendo contados junto com web. (3) Verificar deduplicação do evento purchase. (4) Confirmar se begin_checkout cobre todos os entry points.\n\nImpacto: Invalida o diagnóstico de funil — o time está otimizando com dados de abandono incorretos.\n\nPrioridade: Alta — auditoria deve ser prioritária no sprint de Experiência de Compra.\n\nAcompanhamento: Após correção, revalidar o funil por 7 dias antes de usar para decisões."
-    },
-    {
-      "tag": "CR Desktop cai mais que Mobile (-8% vs -6,4%)",
-      "classificacao": "Hipótese",
-      "prioridade": "Média",
-      "data": "2026-05-29",
-      "texto": "Diagnóstico: CR desktop caiu proporcionalmente mais do que mobile (-8,0% vs -6,4%). Contraintuitivo — mudanças de UX raramente afetam mais o desktop.\n\nEvidência: CR Desktop: 14,08% → 12,95% (-1,13pp). CR Mobile: 8,55% → 8,00% (-0,55pp). Queda absoluta em pp foi o dobro no desktop.\n\nClassificação: Hipótese — possíveis causas: (1) SEN-267 (mudança na ordem dos checkboxes, entregue exatamente em 18/05) pode ter impacto diferente no desktop onde o form é mais visível; (2) Problema de performance específico no desktop pós-migração DNS.\n\nPlano de ação: (1) Testar SEN-267 especificamente no fluxo desktop em produção. (2) Checar LCP/FCP por device na semana 18-24/05. (3) Analisar abandono por device após correção da instrumentação.\n\nImpacto: CR desktop — embora mobile seja 77,2% das sessões, CR desktop (12,95%) é 62% maior que mobile, portanto cada sessão desktop vale mais.\n\nPrioridade: Média — queda relevante mas volume mobile domina o impacto total.\n\nAcompanhamento: Monitorar CR desktop separadamente nas próximas 2 semanas."
-    },
-    {
-      "tag": "Canal pago (49,4%) com CR em queda — ROI deteriorando",
-      "classificacao": "Tendência",
-      "prioridade": "Média",
-      "data": "2026-05-29",
-      "texto": "Diagnóstico: Pago responde por 49,4% das sessões (183.631). Com CR caindo -6,5%, o custo por aquisição está subindo. Concentração em pago amplifica o impacto de qualquer queda de conversão.\n\nEvidência: Sessões pago: 183.631 vs 184.884 semana anterior (-0,7% — estável). CR geral: -6,5%. Mesmo investimento, menos compras. Canal orgânico: apenas 15,7% das sessões (58.258).\n\nClassificação: Tendência — combinação pago-dominante + CR em queda deteriora ROI de forma recorrente.\n\nPlano de ação: (1) Monitorar receita/sessão_pago como proxy de ROI semanal. (2) Acompanhar impacto das 5 implementações SEO concluídas hoje (29/05) para diversificar o mix. (3) Verificar landing pages de pago com performance degradada.\n\nImpacto: Eficiência de investimento em mídia, meta R$345M.\n\nPrioridade: Média — o canal pago não é o problema; a dependência + queda de CR é o risco.\n\nAcompanhamento: Acompanhar sessoes_organico nas próximas 4-8 semanas após deploy de SEO."
-    },
-    {
-      "tag": "5 implementações SEO ao ar — linha de base orgânica definida",
-      "classificacao": "Correlação",
-      "prioridade": "Média",
-      "data": "2026-05-29",
-      "texto": "Diagnóstico: Senna concluiu hoje 5 implementações de dados estruturados: globais (SEN-335), home (SEN-336), breadcrumb UI e JSON-LD (SEN-337 e SEN-349) e rotas (SEN-338). A janela de monitoramento começa agora.\n\nEvidência: SEN-335, 336, 337, 338, 349 — completadas em 29/05/2026. Canal orgânico atual: 58.258 sessões/semana (15,7% do total — linha de base definida). Rotas top: Fortaleza-CE (~22k sessões) e Rio de Janeiro-RJ (~11k).\n\nClassificação: Correlação — entregas criam condição para impacto no orgânico em 2-6 semanas.\n\nPlano de ação: (1) Verificar Google Search Console em 7-14 dias para confirmar indexação dos rich results. (2) Documentar linha de base: 58.258 sessões orgânicas/semana. (3) Monitorar sessoes_organico semanalmente.\n\nImpacto: sessoes_organico, diversificação de canais, redução de dependência de pago.\n\nPrioridade: Média — resultado em semanas, não dias. Mas a mensuração começa agora.\n\nAcompanhamento: Comparar sessoes_organico nas semanas 2, 4 e 8 pós-deploy. Base: 58.258 (semana 18-24/05)."
-    },
-    {
-      "tag": "Opt-in unificado ativo — medir impacto no GRW-005",
-      "classificacao": "Correlação",
-      "prioridade": "Baixa",
-      "data": "2026-05-29",
-      "texto": "Diagnóstico: Três entregas de opt-in foram concluídas: SEN-207 (Site, 05/05), SEN-267 (checkout — nova ordem, 18/05) e SEN-208 (App, 26/05). A semana 18-24/05 é a primeira janela completa com opt-in unificado ativo no site — KPI central do GRW-005.\n\nEvidência: SEN-267 entrou exatamente em 18/05, início da janela analisada. GRW-005 status: Iniciado. KPI: base comunicável por compra.\n\nClassificação: Correlação — entregas criaram a condição; impacto não aparece em analytics web mas em Insider/CRM.\n\nPlano de ação: (1) Solicitar ao time de CRM/Insider relatório de novos opt-ins por compra para semanas pós-05/05 e pós-18/05. (2) Comparar com taxa histórica pré-entrega. (3) Verificar no GTM se o evento de consentimento está disparando corretamente.\n\nImpacto: KR Identificação de Base (+300%), base comunicável Insider, KR Recorrência (2,55x).\n\nPrioridade: Baixa — impacto crítico para o KR de identidade mas análise deve ser feita pelo time de Martech em 2 semanas.\n\nAcompanhamento: Solicitar análise de impacto na semana de 09/06."
+      "semana": "2026-05-18",
+      "label": "18/05 – 24/05/2026",
+      "gerado_em": "2026-05-29T09:00:00Z",
+      "items": [
+        {
+          "tag": "Queda de CR (-6,5%) com tráfego estável",
+          "classificacao": "Hipótese",
+          "prioridade": "Alta",
+          "data": "2026-05-29",
+          "texto": "Diagnóstico: CR caiu de 9,74% para 9,11% (-6,5%) na semana 18-24/05 enquanto sessões ficaram estáveis (+0,4%). Queda real na conversão — não mudança de mix.\n\nEvidência: Compras 33.873 vs 36.081 (-6,1%). CR desktop: 12,95% vs 14,08% (-8,0%). CR mobile: 8,00% vs 8,55% (-6,4%). Duração média: 316s vs 331s (-4,5%). Taxa de rejeição: 25,17% vs 24,46%.\n\nClassificação: Hipótese — contexto aponta para efeito residual do incidente de migração DNS (S19, semana 10-16/05) ou instabilidade do novo motor de conexão Smart.\n\nPlano de ação: (1) Verificar logs de erro do BFF na semana 18-24/05. (2) Cruzar com dados de suporte CX. (3) Checar Core Web Vitals pós-migração DNS. (4) Confirmar estabilidade do motor Smart ao longo da semana.\n\nImpacto: CR geral, compras, receita — queda de 6,1% em compras tem impacto direto na meta de R$345M.\n\nPrioridade: Alta — queda de 6% com volume estável não é flutuação normal. Requer diagnóstico imediato.\n\nAcompanhamento: Monitorar CR semana a semana. Se não houver recuperação para ~9,7% em 2 semanas, iniciar investigação formal."
+        },
+        {
+          "tag": "Funil invertido — purchase > begin_checkout",
+          "classificacao": "Diagnóstico comprovado",
+          "prioridade": "Alta",
+          "data": "2026-05-29",
+          "texto": "Diagnóstico: O funil apresenta inversões impossíveis: purchase (56.237) maior que begin_checkout (43.811), e add_to_cart (68.256) maior que select_item (40.381). Isso invalida qualquer análise de abandono por etapa.\n\nEvidência: Padrão se repete em todos os devices — mobile: purchase 38.110 vs checkout 27.718; desktop: 17.859 vs 15.799. Consistência confirma problema de instrumentação, não anomalia pontual.\n\nClassificação: Diagnóstico comprovado — inversão estrutural em todos os devices confirma erro de implementação GA4/GTM.\n\nPlano de ação: (1) Auditar GTM Preview + GA4 DebugView — percorrer o funil e verificar se purchase dispara sem begin_checkout. (2) Checar se eventos de app ou totem estão sendo contados junto com web. (3) Verificar deduplicação do evento purchase. (4) Confirmar se begin_checkout cobre todos os entry points.\n\nImpacto: Invalida o diagnóstico de funil — o time está otimizando com dados de abandono incorretos.\n\nPrioridade: Alta — auditoria deve ser prioritária no sprint de Experiência de Compra.\n\nAcompanhamento: Após correção, revalidar o funil por 7 dias antes de usar para decisões."
+        },
+        {
+          "tag": "CR Desktop cai mais que Mobile (-8% vs -6,4%)",
+          "classificacao": "Hipótese",
+          "prioridade": "Média",
+          "data": "2026-05-29",
+          "texto": "Diagnóstico: CR desktop caiu proporcionalmente mais do que mobile (-8,0% vs -6,4%). Contraintuitivo — mudanças de UX raramente afetam mais o desktop.\n\nEvidência: CR Desktop: 14,08% → 12,95% (-1,13pp). CR Mobile: 8,55% → 8,00% (-0,55pp). Queda absoluta em pp foi o dobro no desktop.\n\nClassificação: Hipótese — possíveis causas: (1) SEN-267 (mudança na ordem dos checkboxes, entregue exatamente em 18/05) pode ter impacto diferente no desktop onde o form é mais visível; (2) Problema de performance específico no desktop pós-migração DNS.\n\nPlano de ação: (1) Testar SEN-267 especificamente no fluxo desktop em produção. (2) Checar LCP/FCP por device na semana 18-24/05. (3) Analisar abandono por device após correção da instrumentação.\n\nImpacto: CR desktop — embora mobile seja 77,2% das sessões, CR desktop (12,95%) é 62% maior que mobile, portanto cada sessão desktop vale mais.\n\nPrioridade: Média — queda relevante mas volume mobile domina o impacto total.\n\nAcompanhamento: Monitorar CR desktop separadamente nas próximas 2 semanas."
+        },
+        {
+          "tag": "Canal pago (49,4%) com CR em queda — ROI deteriorando",
+          "classificacao": "Tendência",
+          "prioridade": "Média",
+          "data": "2026-05-29",
+          "texto": "Diagnóstico: Pago responde por 49,4% das sessões (183.631). Com CR caindo -6,5%, o custo por aquisição está subindo. Concentração em pago amplifica o impacto de qualquer queda de conversão.\n\nEvidência: Sessões pago: 183.631 vs 184.884 semana anterior (-0,7% — estável). CR geral: -6,5%. Mesmo investimento, menos compras. Canal orgânico: apenas 15,7% das sessões (58.258).\n\nClassificação: Tendência — combinação pago-dominante + CR em queda deteriora ROI de forma recorrente.\n\nPlano de ação: (1) Monitorar receita/sessão_pago como proxy de ROI semanal. (2) Acompanhar impacto das 5 implementações SEO concluídas hoje (29/05) para diversificar o mix. (3) Verificar landing pages de pago com performance degradada.\n\nImpacto: Eficiência de investimento em mídia, meta R$345M.\n\nPrioridade: Média — o canal pago não é o problema; a dependência + queda de CR é o risco.\n\nAcompanhamento: Acompanhar sessoes_organico nas próximas 4-8 semanas após deploy de SEO."
+        },
+        {
+          "tag": "5 implementações SEO ao ar — linha de base orgânica definida",
+          "classificacao": "Correlação",
+          "prioridade": "Média",
+          "data": "2026-05-29",
+          "texto": "Diagnóstico: Senna concluiu hoje 5 implementações de dados estruturados: globais (SEN-335), home (SEN-336), breadcrumb UI e JSON-LD (SEN-337 e SEN-349) e rotas (SEN-338). A janela de monitoramento começa agora.\n\nEvidência: SEN-335, 336, 337, 338, 349 — completadas em 29/05/2026. Canal orgânico atual: 58.258 sessões/semana (15,7% do total — linha de base definida). Rotas top: Fortaleza-CE (~22k sessões) e Rio de Janeiro-RJ (~11k).\n\nClassificação: Correlação — entregas criam condição para impacto no orgânico em 2-6 semanas.\n\nPlano de ação: (1) Verificar Google Search Console em 7-14 dias para confirmar indexação dos rich results. (2) Documentar linha de base: 58.258 sessões orgânicas/semana. (3) Monitorar sessoes_organico semanalmente.\n\nImpacto: sessoes_organico, diversificação de canais, redução de dependência de pago.\n\nPrioridade: Média — resultado em semanas, não dias. Mas a mensuração começa agora.\n\nAcompanhamento: Comparar sessoes_organico nas semanas 2, 4 e 8 pós-deploy. Base: 58.258 (semana 18-24/05)."
+        },
+        {
+          "tag": "Opt-in unificado ativo — medir impacto no GRW-005",
+          "classificacao": "Correlação",
+          "prioridade": "Baixa",
+          "data": "2026-05-29",
+          "texto": "Diagnóstico: Três entregas de opt-in foram concluídas: SEN-207 (Site, 05/05), SEN-267 (checkout — nova ordem, 18/05) e SEN-208 (App, 26/05). A semana 18-24/05 é a primeira janela completa com opt-in unificado ativo no site — KPI central do GRW-005.\n\nEvidência: SEN-267 entrou exatamente em 18/05, início da janela analisada. GRW-005 status: Iniciado. KPI: base comunicável por compra.\n\nClassificação: Correlação — entregas criaram a condição; impacto não aparece em analytics web mas em Insider/CRM.\n\nPlano de ação: (1) Solicitar ao time de CRM/Insider relatório de novos opt-ins por compra para semanas pós-05/05 e pós-18/05. (2) Comparar com taxa histórica pré-entrega. (3) Verificar no GTM se o evento de consentimento está disparando corretamente.\n\nImpacto: KR Identificação de Base (+300%), base comunicável Insider, KR Recorrência (2,55x).\n\nPrioridade: Baixa — impacto crítico para o KR de identidade mas análise deve ser feita pelo time de Martech em 2 semanas.\n\nAcompanhamento: Solicitar análise de impacto na semana de 09/06."
+        }
+      ]
     }
   ]
 }
