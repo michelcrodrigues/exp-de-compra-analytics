@@ -7,6 +7,9 @@ Garante que:
   3. Cada registro tem todas as colunas esperadas (sem colunas faltando)
   4. Nenhum campo numérico crítico está zerado de forma suspeita (sanity check)
   5. O último registro é de ontem ou hoje (dados frescos)
+  6. Arrays raiz 'experimentos' e 'resumo_mensal' existem
+  7. Todos os insights têm campos obrigatórios, IDs válidos e únicos
+  8. criterio_confirmacao obrigatório quando tipo_acao=testar e status!=nunca_testada
 
 Interrompe o workflow com sys.exit(1) se qualquer verificação falhar,
 impedindo que um data.json corrompido ou incompleto seja commitado.
@@ -15,15 +18,14 @@ impedindo que um data.json corrompido ou incompleto seja commitado.
 import json
 import sys
 import os
+import re
 import datetime
+from collections import Counter, defaultdict
 
 OUTPUT_PATH = "data.json"
 
-# Colunas numéricas que NUNCA deveriam ser zero num dia normal
-# (se todos esses campos forem 0 no mesmo registro, algo está errado)
 SANITY_NUMERIC = ["sessoes", "usuarios", "compras", "pageviews"]
 
-# Todas as colunas esperadas em cada registro daily
 EXPECTED_COLUMNS = [
     "data",
     "sessoes", "usuarios", "novos_usuarios", "pageviews",
@@ -59,17 +61,23 @@ EXPECTED_COLUMNS = [
 
 EXPECTED_SET = set(EXPECTED_COLUMNS)
 
+INS_ID_PATTERN = re.compile(r'^INS-\d{4}-\d{3}$')
+EXP_ID_PATTERN = re.compile(r'^EXP-\d{4}-\d{3}$')
+REQUIRED_INSIGHT_FIELDS = ['id', 'tipo_acao', 'status', 'revisao', 'experimento_id']
+
+
 def fail(msg):
     print(f"\n[SCHEMA ERROR] {msg}")
     sys.exit(1)
 
+
 def warn(msg):
     print(f"[SCHEMA WARN]  {msg}")
+
 
 def main():
     print(f"Validando {OUTPUT_PATH}...")
 
-    # ── 1. Arquivo existe e é JSON válido ────────────────────────────────────
     if not os.path.exists(OUTPUT_PATH):
         fail(f"{OUTPUT_PATH} não encontrado.")
 
@@ -79,14 +87,12 @@ def main():
     except json.JSONDecodeError as e:
         fail(f"JSON inválido — {e}")
 
-    # ── 2. Estrutura mínima ──────────────────────────────────────────────────
     daily = data.get("daily")
     if not isinstance(daily, list) or len(daily) == 0:
         fail("Campo 'daily' ausente ou vazio.")
 
     print(f"  {len(daily)} registros encontrados.")
 
-    # ── 3. Schema de colunas — verificar todos os registros ──────────────────
     missing_cols_report = {}
     extra_cols_report   = {}
 
@@ -104,8 +110,6 @@ def main():
             extra_cols_report[date] = sorted(extra_cols)
 
     if missing_cols_report:
-        # Agrupa por conjunto de colunas faltando para não poluir o log
-        from collections import defaultdict
         grouped = defaultdict(list)
         for date, cols in missing_cols_report.items():
             grouped[tuple(cols)].append(date)
@@ -119,8 +123,6 @@ def main():
             )
 
     if extra_cols_report:
-        # Colunas extras são apenas aviso — não interrompem o workflow
-        from collections import defaultdict
         grouped = defaultdict(list)
         for date, cols in extra_cols_report.items():
             grouped[tuple(cols)].append(date)
@@ -130,7 +132,6 @@ def main():
                 f"{', '.join(cols)}"
             )
 
-    # ── 4. Sanity check — último registro não pode ter tudo zerado ───────────
     last = daily[-1]
     all_zero = all(last.get(col, 0) == 0 for col in SANITY_NUMERIC)
     if all_zero:
@@ -140,7 +141,6 @@ def main():
             f"Provável falha na coleta GA4."
         )
 
-    # ── 5. Frescor dos dados — último registro deve ser recente ─────────────
     last_date_str = last.get("data", "")
     try:
         last_date = datetime.date.fromisoformat(last_date_str)
@@ -156,8 +156,66 @@ def main():
     except ValueError:
         warn(f"Data do último registro inválida: '{last_date_str}'")
 
+    # ── 6. Arrays raiz do Loop de Aprendizado ────────────────────────────────
+    if 'experimentos' not in data:
+        fail("Chave 'experimentos' ausente no data.json. Execute scripts/migrate_insights.py.")
+    if not isinstance(data['experimentos'], list):
+        fail("Campo 'experimentos' deve ser um array.")
+    if 'resumo_mensal' not in data:
+        fail("Chave 'resumo_mensal' ausente no data.json. Execute scripts/migrate_insights.py.")
+    if not isinstance(data['resumo_mensal'], list):
+        fail("Campo 'resumo_mensal' deve ser um array.")
+
+    # ── 7. Validar insights ──────────────────────────────────────────────────
+    insights = data.get('insights', [])
+    if isinstance(insights, list) and insights:
+        all_insight_ids = []
+        insight_errors = []
+
+        for week in insights:
+            for item in (week.get('items') or []):
+                ins_id = item.get('id', '')
+
+                missing = [f for f in REQUIRED_INSIGHT_FIELDS if f not in item]
+                if missing:
+                    insight_errors.append(
+                        f"Insight '{ins_id or '?'}' sem campos obrigatórios: {', '.join(missing)}"
+                    )
+
+                if ins_id:
+                    if not INS_ID_PATTERN.match(ins_id):
+                        insight_errors.append(
+                            f"ID de insight inválido: '{ins_id}' (esperado INS-YYYY-NNN)"
+                        )
+                    else:
+                        all_insight_ids.append(ins_id)
+
+                if (item.get('tipo_acao') == 'testar'
+                        and item.get('status') not in ('nunca_testada', None)
+                        and item.get('criterio_confirmacao') is None):
+                    insight_errors.append(
+                        f"Insight {ins_id}: tipo_acao='testar' e status='{item.get('status')}' "
+                        f"mas criterio_confirmacao é null — preencha o critério."
+                    )
+
+        for err in insight_errors[:5]:
+            fail(err)
+
+        dupes = [id_ for id_, count in Counter(all_insight_ids).items() if count > 1]
+        if dupes:
+            fail(f"IDs de insight duplicados: {', '.join(dupes)}")
+
+        total_insights = sum(len(w.get('items', [])) for w in insights)
+        print(f"  {total_insights} insights validados (IDs únicos, campos obrigatórios OK).")
+
+    for exp in data.get('experimentos', []):
+        exp_id = exp.get('id', '')
+        if exp_id and not EXP_ID_PATTERN.match(exp_id):
+            fail(f"ID de experimento inválido: '{exp_id}' (esperado EXP-YYYY-NNN)")
+
     print(f"  Schema OK — {len(EXPECTED_COLUMNS)} colunas validadas em todos os registros.")
     print("Validação concluída com sucesso.")
+
 
 if __name__ == "__main__":
     main()
