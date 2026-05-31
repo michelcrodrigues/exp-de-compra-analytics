@@ -462,7 +462,7 @@ async function loadData(){
     const j=await res.json();
     ALL=(j.daily||[]).sort((a,b)=>a.data<b.data?-1:1);
     INSIGHTS=j.insights||[];
-    document.getElementById("headerUpdated").textContent="Atualizado em "+fmtDT(j.gerado_em);
+    const lastDay=ALL.length?ALL[ALL.length-1].data:"";document.getElementById("headerUpdated").textContent="Dados até "+fmtDF(lastDay);
     setPresetDays(30);
     document.getElementById("appState").style.display="none";
     document.getElementById("appContent").style.display="block";
