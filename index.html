@@ -156,7 +156,7 @@ tr.cmp-tr td{background:#f5f8ff;font-size:12px;color:var(--compare)}
 .ins-date-group{margin-bottom:20px}
 .ins-date-header{font-size:11px;font-weight:700;color:var(--neutral-500);text-transform:uppercase;letter-spacing:.8px;padding:8px 0;border-bottom:1px solid var(--neutral-200);margin-bottom:8px}
 .ins-card{background:#fff;border-radius:var(--r-md);box-shadow:var(--shadow-01);overflow:hidden;margin-bottom:8px}
-.ins-card-header{display:flex;align-items:center;gap:10px;padding:14px 16px;cursor:pointer;transition:background .15s;user-select:none}
+.ins-card-header{display:flex;align-items:center;gap:8px;padding:14px 16px;cursor:pointer;transition:background .15s;user-select:none}
 .ins-card-header:hover{background:var(--neutral-100)}
 .ins-chevron{font-size:11px;color:var(--neutral-500);transition:transform .2s;flex-shrink:0;margin-left:auto}
 .ins-card.open .ins-chevron{transform:rotate(180deg)}
@@ -177,6 +177,26 @@ tr.cmp-tr td{background:#f5f8ff;font-size:12px;color:var(--compare)}
 .ins-filter-btn{font-family:inherit;font-size:11px;font-weight:700;padding:4px 12px;border-radius:9999px;border:1px solid var(--neutral-300);background:#fff;color:var(--neutral-700);cursor:pointer;transition:all .15s}
 .ins-filter-btn:hover{border-color:var(--brand-primary);color:var(--brand-primary)}
 .ins-filter-btn.active{background:var(--brand-primary);color:#fff;border-color:var(--brand-primary)}
+/* Insight filter bar */
+.ins-filter-bar{display:flex;align-items:center;gap:6px;margin-bottom:12px;flex-wrap:wrap}
+.ins-filter-group{display:flex;align-items:center;gap:4px;flex-wrap:wrap}
+.ins-filter-group-label{font-size:10px;font-weight:700;color:var(--neutral-500);text-transform:uppercase;letter-spacing:.5px;white-space:nowrap}
+.ins-filter-pill{font-family:inherit;font-size:11px;font-weight:700;padding:3px 10px;border-radius:9999px;border:1px solid var(--neutral-300);background:#fff;color:var(--neutral-700);cursor:pointer;transition:all .15s;display:inline-flex;align-items:center;gap:4px}
+.ins-filter-pill:hover{border-color:var(--brand-primary);color:var(--brand-primary)}
+.ins-filter-pill .fp-x{font-size:9px;opacity:.7}
+.ins-filter-clear{font-family:inherit;font-size:11px;font-weight:700;padding:3px 10px;border-radius:9999px;border:none;background:var(--negative-100);color:var(--negative-700);cursor:pointer}
+.ins-filter-count{font-size:11px;color:var(--neutral-500);white-space:nowrap;margin-left:auto}
+/* Insight card extra sections */
+.ins-criteria-box{background:var(--brand-secondary-c-100);border-radius:var(--r-sm);padding:10px 12px;margin-top:10px}
+.ins-criteria-title{font-size:10px;font-weight:700;color:var(--brand-primary);text-transform:uppercase;letter-spacing:.7px;margin-bottom:6px}
+.ins-criteria-row{display:flex;align-items:center;gap:6px;flex-wrap:wrap}
+.ins-criteria-chip{background:#fff;border:1px solid var(--neutral-300);border-radius:9999px;padding:2px 8px;font-size:11px;color:var(--neutral-700)}
+.ins-revisao-box{background:var(--neutral-100);border-radius:var(--r-sm);padding:10px 12px;margin-top:10px;border-left:3px solid var(--neutral-300)}
+.ins-revisao-txt{font-size:12px;color:var(--neutral-800);line-height:1.6;margin-top:4px}
+.ins-exp-box{background:#F5F0FF;border-radius:var(--r-sm);padding:10px 12px;margin-top:10px;border-left:3px solid #532AB4}
+.ins-exp-title{font-size:10px;font-weight:700;color:#532AB4;text-transform:uppercase;letter-spacing:.7px;margin-bottom:4px}
+.ins-exp-link{font-size:12px;color:#532AB4;font-weight:700;cursor:pointer;text-decoration:underline}
+.ins-no-exp-box{background:var(--neutral-200);border-radius:var(--r-sm);padding:8px 12px;margin-top:10px;font-size:12px;color:var(--neutral-700)}
 
 /* Tabs */
 .tabs{display:flex;gap:4px;background:#fff;padding:4px;border-radius:9999px;box-shadow:var(--shadow-01);width:fit-content;margin-bottom:20px;flex-wrap:wrap}
@@ -216,13 +236,26 @@ tr.cmp-tr td{background:#f5f8ff;font-size:12px;color:var(--compare)}
 
 /* ── INSIGHTS NAV ── */
 .ins-layout{display:flex;gap:0;align-items:flex-start}
-.ins-nav{width:190px;flex-shrink:0;border-right:1px solid var(--neutral-200);padding:8px 0;position:sticky;top:12px;max-height:80vh;overflow-y:auto}
+.ins-nav{width:210px;flex-shrink:0;border-right:1px solid var(--neutral-200);padding:0;position:sticky;top:12px;max-height:80vh;overflow-y:auto}
 .ins-content{flex:1;min-width:0;padding-left:16px}
-.ins-nav-year{font-size:10px;font-weight:700;color:var(--neutral-400);text-transform:uppercase;letter-spacing:.8px;padding:8px 12px 4px}
+.ins-nav-year{font-size:10px;font-weight:700;color:var(--neutral-500);text-transform:uppercase;letter-spacing:.8px;padding:8px 12px 4px}
 .ins-nav-month{font-size:11px;font-weight:600;color:var(--neutral-500);padding:4px 12px;text-transform:uppercase;letter-spacing:.04em}
-.ins-nav-week{font-size:12px;color:var(--neutral-600);padding:5px 12px 5px 20px;cursor:pointer;border-radius:0 6px 6px 0;transition:background .15s;margin-right:8px}
+.ins-nav-week{font-size:12px;color:var(--neutral-700);padding:5px 12px 5px 20px;cursor:pointer;border-radius:0 6px 6px 0;transition:background .15s;margin-right:8px;display:flex;align-items:center;gap:4px}
 .ins-nav-week:hover{background:var(--neutral-100)}
 .ins-nav-week.active{background:#e0eaff;color:#19398A;font-weight:600}
+.ins-nav-month-item{font-size:12px;color:var(--neutral-700);padding:5px 12px;cursor:pointer;border-radius:0 6px 6px 0;transition:background .15s;margin-right:8px;display:flex;align-items:center;gap:4px}
+.ins-nav-month-item:hover{background:var(--neutral-100)}
+.ins-nav-month-item.active{background:#e0eaff;color:#19398A;font-weight:600}
+.ins-nav-year-item{font-size:12px;font-weight:500;color:var(--neutral-700);padding:6px 12px;cursor:pointer;border-radius:0 6px 6px 0;transition:background .15s;margin-right:8px}
+.ins-nav-year-item:hover{background:var(--neutral-100)}
+.ins-nav-year-item.active{background:#e0eaff;color:#19398A;font-weight:700}
+.ins-nav-count{font-size:10px;color:var(--neutral-500);margin-left:auto;padding-left:4px;flex-shrink:0}
+.ins-nav-dots{display:flex;gap:2px;flex-shrink:0}
+.ins-dot{width:6px;height:6px;border-radius:50%;flex-shrink:0}
+.ins-gran-pills{display:flex;gap:4px;padding:8px 12px;border-bottom:1px solid var(--neutral-200);flex-wrap:wrap}
+.ins-gran-pill{font-family:inherit;font-size:10px;font-weight:700;padding:3px 10px;border-radius:9999px;border:1px solid var(--neutral-300);background:#fff;color:var(--neutral-700);cursor:pointer;transition:all .15s}
+.ins-gran-pill:hover{border-color:var(--brand-primary);color:var(--brand-primary)}
+.ins-gran-pill.active{background:var(--brand-primary);color:#fff;border-color:var(--brand-primary)}
 </style>
 </head>
 <body>
@@ -434,7 +467,8 @@ tr.cmp-tr td{background:#f5f8ff;font-size:12px;color:var(--compare)}
       <div class="ins-layout">
         <nav class="ins-nav" id="insNav"></nav>
         <div class="ins-content">
-          <div class="sec">Análise semanal — Claude AI</div>
+          <div class="sec" id="insSec">Insights IA</div>
+          <div id="insFiltersBar"></div>
           <div class="insights" id="insightsWrap"></div>
         </div>
       </div>
@@ -891,84 +925,308 @@ function renderRotas(pri,cmp){
 // ════════════════════════════════════════════════════════
 // INSIGHTS
 // ════════════════════════════════════════════════════════
-function renderInsights() {
-  const nav = document.getElementById('insNav');
-  const wrap = document.getElementById('insightsWrap');
-  if (!nav || !wrap) return;
+let INS_GRAN = 'semana';
+let INS_SELECTED = null;
+let INS_FILTERS = {prioridade:[], classificacao:[], status:[], tipo_acao:[]};
+let _insIdx = 0;
 
-  if (!INSIGHTS || INSIGHTS.length === 0) {
-    wrap.innerHTML = '<div class="ins-empty">Nenhum insight gerado ainda. O Claude Cowork gera a análise toda terça-feira.</div>';
-    nav.innerHTML = '';
-    return;
-  }
+const STATUS_CFG = {
+  nova:          {label:'Nova',          bg:'#D6ECFC', color:'#1A6FA8', dot:'#308CE0'},
+  monitorando:   {label:'Monitorando',   bg:'#FFF0C0', color:'#8A6400', dot:'#C3940F'},
+  testando:      {label:'Testando',      bg:'#EADAFF', color:'#532AB4', dot:'#532AB4'},
+  confirmada:    {label:'Confirmada',    bg:'#C6E5C3', color:'#278A22', dot:'#278A22'},
+  refutada:      {label:'Refutada',      bg:'#FAD1D7', color:'#E1393E', dot:'#E1393E'},
+  inconclusiva:  {label:'Inconclusiva',  bg:'#E3E3E3', color:'#515151', dot:'#8B8B8B'},
+  nunca_testada: {label:'Nunca testada', bg:'#EEEEEE', color:'#8B8B8B', dot:'#D1D1D1'},
+};
 
-  const monthNames = ['Jan','Fev','Mar','Abr','Mai','Jun','Jul','Ago','Set','Out','Nov','Dez'];
+const MONTH_NAMES_FULL = ['Janeiro','Fevereiro','Março','Abril','Maio','Junho','Julho','Agosto','Setembro','Outubro','Novembro','Dezembro'];
+
+function getInsTree() {
   const tree = {};
-  INSIGHTS.forEach(w => {
-    const parts = w.semana.split('-');
-    const y = parts[0], m = parts[1];
+  (INSIGHTS||[]).forEach(w => {
+    const [y, m] = w.semana.split('-');
     if (!tree[y]) tree[y] = {};
     if (!tree[y][m]) tree[y][m] = [];
     tree[y][m].push(w);
   });
-
-  let navHtml = '';
-  Object.keys(tree).sort((a,b) => b-a).forEach(year => {
-    navHtml += '<div class="ins-nav-year">' + year + '</div>';
-    Object.keys(tree[year]).sort((a,b) => b-a).forEach(month => {
-      navHtml += '<div class="ins-nav-month">' + monthNames[parseInt(month)-1] + '</div>';
-      tree[year][month].forEach(w => {
-        navHtml += '<div class="ins-nav-week" data-semana="' + w.semana + '" onclick="selectWeek(\'' + w.semana + '\')">' + w.label + '</div>';
-      });
-    });
-  });
-  nav.innerHTML = navHtml;
-  selectWeek(INSIGHTS[0].semana);
+  return tree;
 }
 
-function selectWeek(semana) {
-  document.querySelectorAll('.ins-nav-week').forEach(el =>
-    el.classList.toggle('active', el.dataset.semana === semana));
-  const week = INSIGHTS.find(w => w.semana === semana);
-  const wrap = document.getElementById('insightsWrap');
-  if (!wrap) return;
-  if (!week || !week.items || week.items.length === 0) {
-    wrap.innerHTML = '<div class="ins-empty">Nenhum insight para esta semana.</div>';
+function countStatuses(items) {
+  const c = {};
+  (items||[]).forEach(it => { const s = it.status||'nunca_testada'; c[s]=(c[s]||0)+1; });
+  return c;
+}
+
+function getItemsForPeriod(type, value) {
+  const items = [];
+  (INSIGHTS||[]).forEach(w => {
+    const match = type==='semana' ? w.semana===value : w.semana.startsWith(value);
+    if (match) (w.items||[]).forEach(it => items.push(Object.assign({}, it, {_semana:w.semana, _label:w.label})));
+  });
+  return items;
+}
+
+function filterItems(items) {
+  return items.filter(it => {
+    if (INS_FILTERS.prioridade.length    && !INS_FILTERS.prioridade.includes(it.prioridade)) return false;
+    if (INS_FILTERS.classificacao.length && !INS_FILTERS.classificacao.includes(it.classificacao)) return false;
+    if (INS_FILTERS.status.length        && !INS_FILTERS.status.includes(it.status||'nunca_testada')) return false;
+    if (INS_FILTERS.tipo_acao.length     && !INS_FILTERS.tipo_acao.includes(it.tipo_acao)) return false;
+    return true;
+  });
+}
+
+function renderInsights() {
+  if (!INSIGHTS||INSIGHTS.length===0) {
+    const nav=document.getElementById('insNav'), wrap=document.getElementById('insightsWrap');
+    if (nav) nav.innerHTML='';
+    if (wrap) wrap.innerHTML='<div class="ins-empty">Nenhum insight gerado ainda. O Claude Cowork gera a análise toda terça-feira.</div>';
     return;
   }
-  buildList(week.items);
+  if (!INS_SELECTED) {
+    if (INS_GRAN==='semana')   INS_SELECTED = INSIGHTS[0].semana;
+    else if (INS_GRAN==='mes') INS_SELECTED = INSIGHTS[0].semana.slice(0,7);
+    else                       INS_SELECTED = INSIGHTS[0].semana.slice(0,4);
+  }
+  buildInsNav();
+  buildInsFilterBar();
+  applyInsFilters();
 }
 
-function buildList(items) {
+function buildInsNav() {
+  const nav = document.getElementById('insNav');
+  if (!nav) return;
+  const tree = getInsTree();
+  let html = '<div class="ins-gran-pills">'
+    + '<button class="ins-gran-pill' + (INS_GRAN==='semana'?' active':'') + '" onclick="setInsGran(\'semana\')">Semana</button>'
+    + '<button class="ins-gran-pill' + (INS_GRAN==='mes'?' active':'') + '" onclick="setInsGran(\'mes\')">Mês</button>'
+    + '<button class="ins-gran-pill' + (INS_GRAN==='ano'?' active':'') + '" onclick="setInsGran(\'ano\')">Ano</button>'
+    + '</div>';
+
+  if (INS_GRAN==='semana') {
+    Object.keys(tree).sort((a,b)=>b-a).forEach(year => {
+      html += '<div class="ins-nav-year">' + year + '</div>';
+      Object.keys(tree[year]).sort((a,b)=>b-a).forEach(month => {
+        html += '<div class="ins-nav-month">' + MONTH_NAMES_FULL[parseInt(month)-1] + '</div>';
+        tree[year][month].forEach(w => {
+          const items = w.items||[];
+          const sc = countStatuses(items);
+          let dots = '';
+          Object.entries(sc).forEach(function(e){ const cfg=STATUS_CFG[e[0]]||STATUS_CFG.nunca_testada; dots+='<span class="ins-dot" style="background:'+cfg.dot+'" title="'+cfg.label+': '+e[1]+'"></span>'; });
+          html += '<div class="ins-nav-week' + (INS_SELECTED===w.semana?' active':'') + '" onclick="selectPeriod(\'semana\',\''+w.semana+'\')">'
+            + '<span>'+w.label+'</span>'
+            + '<span class="ins-nav-count">'+items.length+'</span>'
+            + '<span class="ins-nav-dots">'+dots+'</span>'
+            + '</div>';
+        });
+      });
+    });
+  } else if (INS_GRAN==='mes') {
+    Object.keys(tree).sort((a,b)=>b-a).forEach(year => {
+      Object.keys(tree[year]).sort((a,b)=>b-a).forEach(month => {
+        const mesKey = year+'-'+month;
+        const cnt = tree[year][month].reduce(function(s,w){return s+(w.items||[]).length;},0);
+        html += '<div class="ins-nav-month-item' + (INS_SELECTED===mesKey?' active':'') + '" onclick="selectPeriod(\'mes\',\''+mesKey+'\')">'
+          + '<span>'+MONTH_NAMES_FULL[parseInt(month)-1]+' '+year+'</span>'
+          + '<span class="ins-nav-count">'+cnt+'</span>'
+          + '</div>';
+      });
+    });
+  } else {
+    const yearMap = {};
+    (INSIGHTS||[]).forEach(function(w){ const y=w.semana.slice(0,4); if(!yearMap[y]) yearMap[y]=[]; Array.prototype.push.apply(yearMap[y], w.items||[]); });
+    Object.keys(yearMap).sort((a,b)=>b-a).forEach(function(year) {
+      const items = yearMap[year];
+      const sc = countStatuses(items);
+      let breakdown = '';
+      Object.entries(sc).forEach(function(e){ const cfg=STATUS_CFG[e[0]]||STATUS_CFG.nunca_testada; if(breakdown) breakdown+=' · '; breakdown+='<span style="color:'+cfg.color+'">'+cfg.label+' '+e[1]+'</span>'; });
+      html += '<div class="ins-nav-year-item' + (INS_SELECTED===year?' active':'') + '" onclick="selectPeriod(\'ano\',\''+year+'\')">'
+        + '<div style="display:flex;align-items:center;justify-content:space-between"><span>'+year+'</span><span class="ins-nav-count">'+items.length+'</span></div>'
+        + (breakdown?'<div style="font-size:10px;margin-top:2px;line-height:1.5">'+breakdown+'</div>':'')
+        + '</div>';
+    });
+  }
+  nav.innerHTML = html;
+}
+
+function setInsGran(gran) {
+  INS_GRAN = gran; INS_SELECTED = null;
+  INS_FILTERS = {prioridade:[], classificacao:[], status:[], tipo_acao:[]};
+  if (gran==='semana')   INS_SELECTED = INSIGHTS[0]&&INSIGHTS[0].semana||null;
+  else if (gran==='mes') INS_SELECTED = INSIGHTS[0]&&INSIGHTS[0].semana&&INSIGHTS[0].semana.slice(0,7)||null;
+  else                   INS_SELECTED = INSIGHTS[0]&&INSIGHTS[0].semana&&INSIGHTS[0].semana.slice(0,4)||null;
+  buildInsNav(); buildInsFilterBar(); applyInsFilters();
+}
+
+function selectPeriod(type, value) {
+  INS_GRAN = type; INS_SELECTED = value;
+  buildInsNav(); buildInsFilterBar(); applyInsFilters();
+}
+
+function buildInsFilterBar() {
+  const bar = document.getElementById('insFiltersBar');
+  const sec = document.getElementById('insSec');
+  if (!bar) return;
+  const allItems = getItemsForPeriod(INS_GRAN, INS_SELECTED);
+
+  if (sec) {
+    if (INS_GRAN==='semana') {
+      const w = INSIGHTS.find(function(w){return w.semana===INS_SELECTED;});
+      sec.textContent = w ? 'Semana de '+w.label : 'Insights IA';
+    } else if (INS_GRAN==='mes') {
+      const parts = (INS_SELECTED||'').split('-');
+      sec.textContent = parts[1] ? MONTH_NAMES_FULL[parseInt(parts[1])-1]+' '+parts[0] : 'Insights IA';
+    } else {
+      sec.textContent = INS_SELECTED ? 'Ano '+INS_SELECTED : 'Insights IA';
+    }
+  }
+
+  const classifs = [];
+  allItems.forEach(function(it){ if(it.classificacao && classifs.indexOf(it.classificacao)<0) classifs.push(it.classificacao); });
+  const statusPresent = [];
+  allItems.forEach(function(it){ const s=it.status||'nunca_testada'; if(statusPresent.indexOf(s)<0) statusPresent.push(s); });
+  const allStatuses = Object.keys(STATUS_CFG);
+  const hasFilt = Object.values(INS_FILTERS).some(function(a){return a.length>0;});
+  const filteredCount = filterItems(allItems).length;
+
+  function pill(type, val, label, bg, color) {
+    const active = INS_FILTERS[type].indexOf(val)>=0;
+    const style = active ? 'background:'+bg+';color:'+color+';border-color:transparent' : '';
+    const x = active ? '<span class="fp-x" onclick="removeInsFilter(event,\''+type+'\',\''+val+'\')">&#x2715;</span>' : '';
+    return '<button class="ins-filter-pill'+(active?' active':'')+'" style="'+style+'" onclick="toggleInsFilter(\''+type+'\',\''+val+'\')">'+label+x+'</button>';
+  }
+
+  const prioPills = pill('prioridade','Alta','Alta','#FAD1D7','#E1393E')
+    + pill('prioridade','Média','Média','#FCE9B4','#C3940F')
+    + pill('prioridade','Baixa','Baixa','#C6E5C3','#278A22');
+  const clsPills = classifs.map(function(c){return pill('classificacao',c,c,'#E0EAFF','#19398A');}).join('');
+  const statusPills = allStatuses.filter(function(s){return statusPresent.indexOf(s)>=0;}).map(function(s){const cfg=STATUS_CFG[s]; return pill('status',s,cfg.label,cfg.bg,cfg.color);}).join('');
+  const tipoPills = pill('tipo_acao','monitorar','Monitorar','#E0EAFF','#19398A') + pill('tipo_acao','testar','Testar','#EADAFF','#532AB4');
+
+  let html = '<div class="ins-filter-bar">'
+    + '<span class="ins-filter-group-label">Prioridade</span><div class="ins-filter-group">'+prioPills+'</div>';
+  if (classifs.length) html += '<span class="ins-filter-group-label" style="margin-left:4px">Classif.</span><div class="ins-filter-group">'+clsPills+'</div>';
+  if (statusPresent.length) html += '<span class="ins-filter-group-label" style="margin-left:4px">Status</span><div class="ins-filter-group">'+statusPills+'</div>';
+  html += '<span class="ins-filter-group-label" style="margin-left:4px">Ação</span><div class="ins-filter-group">'+tipoPills+'</div>';
+  if (hasFilt) html += '<button class="ins-filter-clear" onclick="clearInsFilters()">Limpar filtros</button>';
+  html += '<span class="ins-filter-count">'+filteredCount+' de '+allItems.length+' insight'+(allItems.length!==1?'s':'')+'</span></div>';
+  bar.innerHTML = html;
+}
+
+function toggleInsFilter(type, val) {
+  const idx = INS_FILTERS[type].indexOf(val);
+  if (idx>=0) INS_FILTERS[type].splice(idx,1); else INS_FILTERS[type].push(val);
+  applyInsFilters();
+}
+
+function removeInsFilter(e, type, val) {
+  e.stopPropagation();
+  const idx = INS_FILTERS[type].indexOf(val);
+  if (idx>=0) INS_FILTERS[type].splice(idx,1);
+  applyInsFilters();
+}
+
+function clearInsFilters() {
+  INS_FILTERS = {prioridade:[], classificacao:[], status:[], tipo_acao:[]};
+  applyInsFilters();
+}
+
+function applyInsFilters() {
+  const allItems = getItemsForPeriod(INS_GRAN, INS_SELECTED);
+  buildInsFilterBar();
+  renderInsCards(filterItems(allItems));
+}
+
+function renderInsCards(items) {
   const wrap = document.getElementById('insightsWrap');
-  const priColor = {Alta:'#E24B4A',Media:'#EF9F27',Baixa:'#19398A'};
-  const clsColor = {'Diagnostico comprovado':'#1D9E75','Hipotese':'#6366f1','Tendencia':'#EF9F27','Resultado fora da curva':'#E24B4A','Correlacao':'#19398A','Explicacao':'#6b6b67'};
-  const priColorMap = (p) => p === 'Alta' ? '#E24B4A' : p === 'Média' ? '#EF9F27' : '#19398A';
-  const clsColorMap = (c) => {
-    const map = {'Diagnóstico comprovado':'#1D9E75','Hipótese':'#6366f1','Tendência':'#EF9F27','Resultado fora da curva':'#E24B4A','Correlação':'#19398A','Explicação':'#6b6b67'};
-    return map[c] || '#6b6b67';
+  if (!wrap) return;
+  if (!items||items.length===0) {
+    wrap.innerHTML='<div class="ins-empty">Nenhum insight corresponde aos filtros selecionados.</div>';
+    return;
+  }
+  const priColorMap = function(p){return p==='Alta'?'#E24B4A':p==='Média'?'#EF9F27':'#19398A';};
+  const clsColorMap = function(c){
+    const m={'Diagnóstico comprovado':'#1D9E75','Hipótese':'#6366f1','Tendência':'#EF9F27','Resultado fora da curva':'#E24B4A','Correlação':'#19398A','Explicação':'#6b6b67'};
+    return m[c]||'#6b6b67';
   };
-  wrap.innerHTML = items.map((ins, i) => {
-    const id = 'ins_' + i;
+  wrap.innerHTML = items.map(function(ins,i) {
+    const id = 'ins_' + (++_insIdx);
     const pc = priColorMap(ins.prioridade);
     const cc = clsColorMap(ins.classificacao);
-    return '<div class="ins-card" id="' + id + '">' +
-      '<div class="ins-card-header" onclick="toggleIns(\'' + id + '\')">' +
-        '<span class="ins-tag" style="background:' + pc + '20;color:' + pc + '">' + ins.prioridade + '</span>' +
-        '<span class="ins-tag" style="background:' + cc + '20;color:' + cc + '">' + ins.classificacao + '</span>' +
-        '<span style="flex:1;font-size:13px;font-weight:500;margin-left:4px">' + ins.tag + '</span>' +
-        '<span class="ins-chevron">▼</span>' +
-      '</div>' +
-      '<div class="ins-body">' + parseSections(ins.texto) + '</div>' +
-    '</div>';
+    const status = ins.status||'nunca_testada';
+    const scfg = STATUS_CFG[status]||STATUS_CFG.nunca_testada;
+    let extra = '';
+
+    if (ins.criterio_confirmacao) {
+      const cr = ins.criterio_confirmacao;
+      const dir = cr.direcao==='subir'?'↑ Subir':cr.direcao==='cair'?'↓ Cair':'↔ Estabilizar';
+      extra += '<div class="ins-criteria-box">'
+        + '<div class="ins-criteria-title">Critério de confirmação</div>'
+        + '<div class="ins-criteria-row">'
+        + '<span class="ins-criteria-chip">📊 '+(cr.metrica||'—')+'</span>'
+        + '<span class="ins-criteria-chip">'+dir+'</span>'
+        + '<span class="ins-criteria-chip">±'+(cr.variacao_minima_pct||0)+'%</span>'
+        + '<span class="ins-criteria-chip">⏱ '+(cr.prazo_dias||0)+' dias</span>'
+        + '</div></div>';
+    }
+
+    if (ins.revisao) {
+      const rv = ins.revisao;
+      const vd = rv.veredicto||'';
+      const vdColors = {confirmada:'#278A22',refutada:'#E1393E',inconclusiva:'#515151',parcialmente_confirmada:'#C3940F'};
+      const vdBgs   = {confirmada:'#C6E5C3',refutada:'#FAD1D7',inconclusiva:'#E3E3E3',parcialmente_confirmada:'#FFF0C0'};
+      const vc = vdColors[vd]||'#515151', vb = vdBgs[vd]||'#E3E3E3';
+      extra += '<div class="ins-revisao-box" style="border-left-color:'+vc+'">'
+        + '<div style="display:flex;align-items:center;gap:8px;margin-bottom:6px">'
+        + '<span style="background:'+vb+';color:'+vc+';font-size:9px;font-weight:700;padding:2px 8px;border-radius:9999px;text-transform:uppercase">'+vd.replace(/_/g,' ')+'</span>'
+        + (rv.data_revisao?'<span style="font-size:10px;color:var(--neutral-500)">'+rv.data_revisao+'</span>':'')
+        + (rv.fonte?'<span style="font-size:10px;color:var(--neutral-500)">'+rv.fonte+'</span>':'')
+        + '</div>'
+        + (rv.evidencia?'<div class="ins-revisao-txt"><strong>Evidência:</strong> '+rv.evidencia+'</div>':'')
+        + (rv.observacao?'<div class="ins-revisao-txt"><strong>Observação:</strong> '+rv.observacao+'</div>':'')
+        + '</div>';
+    }
+
+    if (ins.experimento_id) {
+      extra += '<div class="ins-exp-box">'
+        + '<div class="ins-exp-title">Experimento vinculado</div>'
+        + '<span class="ins-exp-link" onclick="goToExp(\''+ins.experimento_id+'\')">'+ins.experimento_id+' — Ver experimento →</span>'
+        + '</div>';
+    } else if (ins.tipo_acao==='testar') {
+      extra += '<div class="ins-no-exp-box">Sem experimento registrado — crie uma issue no Linear com o título sugerido no plano de ação.</div>';
+    }
+
+    return '<div class="ins-card" id="'+id+'">'
+      + '<div class="ins-card-header" onclick="toggleIns(\''+id+'\')">'
+      + '<span class="ins-tag" style="background:'+pc+'20;color:'+pc+'">'+(ins.prioridade||'—')+'</span>'
+      + '<span class="ins-tag" style="background:'+cc+'20;color:'+cc+'">'+(ins.classificacao||'—')+'</span>'
+      + '<span style="background:'+scfg.bg+';color:'+scfg.color+';font-size:10px;font-weight:700;padding:3px 8px;border-radius:9999px;white-space:nowrap;flex-shrink:0">'+scfg.label+'</span>'
+      + '<span style="flex:1;font-size:13px;font-weight:500;margin-left:4px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">'+(ins.tag||'')+'</span>'
+      + '<span class="ins-chevron">▼</span>'
+      + '</div>'
+      + '<div class="ins-body">'+parseSections(ins.texto)+extra+'</div>'
+      + '</div>';
   }).join('');
-  const first = document.getElementById('ins_0');
+  const first = document.querySelector('#insightsWrap .ins-card');
   if (first) first.classList.add('open');
 }
 
+function goToExp(expId) {
+  document.querySelectorAll('.tab').forEach(function(b){b.classList.remove('active');});
+  document.querySelectorAll('.tbc').forEach(function(c){c.classList.remove('active');});
+  const t = document.querySelector('[data-tab="ex"]');
+  if (t) { t.classList.add('active'); const el=document.getElementById('tab-ex'); if(el) el.classList.add('active'); }
+}
+
+function selectWeek(semana) { selectPeriod('semana', semana); }
+
+function buildList(items) { renderInsCards(items); }
+
 function parseSections(texto) {
   if (!texto) return '';
-  return texto.split('\n\n').map(block => {
+  return texto.split('\n\n').map(function(block) {
     const ci = block.indexOf(':');
     if (ci > 0 && ci < 30) {
       const lbl = block.slice(0, ci);
