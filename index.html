@@ -1119,7 +1119,7 @@ function renderExperimentos() {
     navHtml += '<div class="exp-group-lbl">' + GROUP_LABELS[key] + ' (' + items.length + ')</div>';
     items.forEach(exp => {
       const p = expPeriodStr(exp);
-      navHtml += '<div class="exp-nav-item" data-expid="' + escH(exp.id) + '" onclick="selectExp('' + escH(exp.id) + '')">' +
+      navHtml += '<div class="exp-nav-item" data-expid="' + escH(exp.id) + '" onclick="selectExp(this.dataset.expid)">' +
         '<div class="exp-nav-title">' + escH(exp.titulo || exp.id) + '</div>' +
         (p ? '<div class="exp-nav-period">' + p + '</div>' : '') +
         '</div>';
@@ -1180,7 +1180,7 @@ function selectExp(id) {
     h += '<span class="exp-insight-tag">' + escH(exp.insight_id) + '</span>';
     if (ins) {
       h += '<span style="font-size:13px;color:var(--neutral-800);flex:1;min-width:0">' + escH(ins.tag || ins.titulo || '') + '</span>';
-      h += '<button class="exp-insight-link" onclick="goToInsight('' + escH(exp.insight_id) + '')">Ver insight →</button>';
+      h += '<button class="exp-insight-link" data-insid="' + escH(exp.insight_id) + '" onclick="goToInsight(this.dataset.insid)">Ver insight →</button>';
     } else {
       h += '<span style="font-size:12px;color:var(--neutral-500)">Insight ID: ' + escH(exp.insight_id) + '</span>';
     }
@@ -1742,6 +1742,3 @@ function dateDiff(a,b){return Math.round((new Date(b)-new Date(a))/86400000);}
 })();
 
 loadData();
-</script>
-</body>
-</html>
