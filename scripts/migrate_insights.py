@@ -84,7 +84,7 @@ def main():
         print(f"  {total_items} insights no total, {total_migrated} atualizados.")
 
     with open(DATA_PATH, 'w', encoding='utf-8') as f:
-        json.dump(data, f, ensure_ascii=False, indent=2)
+        json.dump(data, f, ensure_ascii=False, separators=(',', ':'))
 
     print(f"Migracao concluida.")
     print(f"   experimentos: {len(data['experimentos'])}, resumo_mensal: {len(data['resumo_mensal'])}")
