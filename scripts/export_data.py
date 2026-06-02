@@ -151,21 +151,41 @@ def load_existing_insights():
     except Exception:
         return []
 
+def load_existing_loop_data():
+    """Lê experimentos e resumo_mensal já gravados no data.json para não apagá-los."""
+    if not os.path.exists(OUTPUT_PATH):
+        return [], []
+    try:
+        with open(OUTPUT_PATH, "r", encoding="utf-8") as f:
+            existing = json.load(f)
+        experimentos = existing.get("experimentos", [])
+        resumo_mensal = existing.get("resumo_mensal", [])
+        if experimentos:
+            print(f"  Preservando {len(experimentos)} experimento(s) existentes.")
+        if resumo_mensal:
+            print(f"  Preservando {len(resumo_mensal)} entrada(s) de resumo_mensal.")
+        return experimentos, resumo_mensal
+    except Exception:
+        return [], []
+
 def main():
     print(f"Lendo {HISTORY_FILE}...")
     records = load_history()
     print(f"  {len(records)} registros carregados.")
 
     existing_insights = load_existing_insights()
+    existing_experimentos, existing_resumo_mensal = load_existing_loop_data()
 
     print("Gerando data.json...")
     daily = build_daily(records)
 
     data = {
-        "gerado_em":  datetime.datetime.utcnow().strftime("%Y-%m-%dT%H:%M:%SZ"),
-        "total_dias": len(daily),
-        "daily":      daily,
-        "insights":   existing_insights,
+        "gerado_em":    datetime.datetime.utcnow().strftime("%Y-%m-%dT%H:%M:%SZ"),
+        "total_dias":   len(daily),
+        "daily":        daily,
+        "insights":     existing_insights,
+        "experimentos": existing_experimentos,
+        "resumo_mensal": existing_resumo_mensal,
     }
 
     # Validar serializabilidade antes de gravar
@@ -179,7 +199,7 @@ def main():
         f.write(payload)
 
     size_kb = os.path.getsize(OUTPUT_PATH) / 1024
-    print(f"  data.json gerado: {size_kb:.1f} KB, {data['total_dias']} dias, {len(existing_insights)} insights")
+    print(f"  data.json gerado: {size_kb:.1f} KB, {data['total_dias']} dias, {len(existing_insights)} insights, {len(existing_experimentos)} experimentos")
     print("Concluído.")
 
 if __name__ == "__main__":
