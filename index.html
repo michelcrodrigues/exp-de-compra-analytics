@@ -162,7 +162,6 @@ tr.cmp-tr td{background:#f5f8ff;font-size:12px;color:var(--compare)}
 .ins-card.open .ins-chevron{transform:rotate(180deg)}
 .ins-tag{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.8px;color:var(--brand-secondary-b);background:var(--brand-secondary-b-100);padding:3px 8px;border-radius:9999px;white-space:nowrap;flex-shrink:0}
 .ins-status-badge{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.7px;padding:3px 8px;border-radius:9999px;white-space:nowrap;flex-shrink:0}
-.ins-status-badge.nova{background:#E0F0FF;color:#308CE0}
 .ins-status-badge.monitorando{background:#FFEFC0;color:#C3940F}
 .ins-status-badge.testando{background:#EDE8FF;color:#532AB4}
 .ins-status-badge.confirmada{background:#C6E5C3;color:#278A22}
@@ -1139,8 +1138,9 @@ function renderInsFilters() {
   const bar = document.getElementById('insFiltersBar');
   if (!bar) return;
   const prioridades = ['Alta','Média','Baixa'];
-  const statuses = ['nova','monitorando','testando','confirmada','refutada','inconclusiva','nunca_testada'];
-  const tipos = ['monitorar','testar'];
+  const statuses = ['monitorando','testando','confirmada','refutada','inconclusiva','nunca_testada'];
+  const tipos = ['testar','monitorar'];
+  const tipoLabel = {'testar':'Testável','monitorar':'Monitorar'};
   const pill = (label, arr, val, toggle) =>
     '<button class="ins-filter-btn' + (arr.includes(val) ? ' active' : '') + '" onclick="' + toggle + '(\'' + val + '\')">' + label + '</button>';
   const sep = '<span style="width:1px;height:20px;background:#ddd;margin:0 4px;flex-shrink:0"></span>';
@@ -1152,7 +1152,7 @@ function renderInsFilters() {
   statuses.forEach(s => { h += pill(s.replace('_',' '), INS_F_STATUS, s, 'toggleInsFilter_s'); });
   h += sep;
   h += '<span class="ins-filter-grp-lbl">Ação</span>';
-  tipos.forEach(t => { h += pill(t, INS_F_TIPO, t, 'toggleInsFilter_t'); });
+  tipos.forEach(t => { h += pill(tipoLabel[t]||t, INS_F_TIPO, t, 'toggleInsFilter_t'); });
   const total = INS_CURRENT_ITEMS.length;
   const filtered = filteredInsItems().length;
   const hasFilter = INS_F_PRIORIDADE.length || INS_F_STATUS.length || INS_F_TIPO.length;
@@ -1209,16 +1209,27 @@ function buildList(items) {
     return map[c] || '#6b6b67';
   };
   const statusVeredictoColor = (v) => {
-    const m = {nova:'#308CE0',monitorando:'#C3940F',testando:'#532AB4',confirmada:'#278A22',refutada:'#E1393E',inconclusiva:'#515151',nunca_testada:'#8B8B8B'};
-    const bg = {nova:'#E0F0FF',monitorando:'#FFEFC0',testando:'#EDE8FF',confirmada:'#C6E5C3',refutada:'#FAD1D7',inconclusiva:'#E3E3E3',nunca_testada:'#EEEEEE'};
+    const m = {monitorando:'#C3940F',testando:'#532AB4',confirmada:'#278A22',refutada:'#E1393E',inconclusiva:'#515151',nunca_testada:'#8B8B8B'};
+    const bg = {monitorando:'#FFEFC0',testando:'#EDE8FF',confirmada:'#C6E5C3',refutada:'#FAD1D7',inconclusiva:'#E3E3E3',nunca_testada:'#EEEEEE'};
     return {color: m[v]||'#515151', background: bg[v]||'#E3E3E3'};
   };
+
+  // Render global copy feedback element once
+  if (!document.getElementById('ins-copy-toast')) {
+    const t = document.createElement('div');
+    t.id = 'ins-copy-toast';
+    t.style.cssText = 'position:fixed;bottom:24px;right:24px;background:#19398A;color:#fff;font-size:12px;font-weight:700;padding:10px 18px;border-radius:9999px;box-shadow:0 4px 16px rgba(0,0,0,.18);z-index:9999;opacity:0;transition:opacity .2s;pointer-events:none';
+    t.textContent = '✓ Copiado para a área de transferência';
+    document.body.appendChild(t);
+  }
+
   wrap.innerHTML = items.map((ins, i) => {
     const id = 'ins_' + i;
+    const cardKey = 'ins_card_' + i;
     const pc = priColorMap(ins.prioridade);
     const cc = clsColorMap(ins.classificacao);
 
-    // Corpo expandido — blocos adicionais
+    // Corpo expandido — blocos do texto
     let extra = parseSections(ins.texto);
 
     // a) Critério de confirmação
@@ -1257,18 +1268,17 @@ function buildList(items) {
         '<a href="#" style="font-size:12px;color:#308CE0;font-weight:600;text-decoration:none" onclick="event.stopPropagation();document.querySelector(\'[data-tab=\\\"ex\\\"]\').click();selectExp(\'' + ins.experimento_id + '\');return false">Ver experimento → ' + ins.experimento_id + '</a>' +
       '</div>';
     }
-    // d) Sem experimento mas tipo_acao === 'testar'
+    // d) Testável sem experimento registrado → template Linear
     else if (ins.tipo_acao === 'testar') {
-      extra += '<div class="ins-section" style="margin-top:8px;padding:10px 12px;background:#F0F0F0;border-radius:8px;font-size:12px;color:#666">' +
-        'Sem experimento registrado — crie uma issue no Linear com o título sugerido no plano de ação.' +
-      '</div>';
+      extra += buildLinearTemplate(ins, cardKey);
     }
 
-    return '<div class="ins-card" id="' + id + '">' +
+    return '<div class="ins-card" id="' + id + '" data-cardkey="' + cardKey + '">' +
       '<div class="ins-card-header" onclick="toggleIns(\'' + id + '\')">' +
         '<span class="ins-tag" style="background:' + pc + '20;color:' + pc + '">' + ins.prioridade + '</span>' +
         '<span class="ins-tag" style="background:' + cc + '20;color:' + cc + '">' + ins.classificacao + '</span>' +
-        (ins.status ? '<span class="ins-status-badge ' + ins.status + '">' + ins.status.replace('_',' ') + '</span>' : '') +
+        (ins.status && ins.status !== 'nova' ? '<span class="ins-status-badge ' + ins.status + '">' + ins.status.replace('_',' ') + '</span>' : '') +
+        (ins.tipo_acao === 'testar' && !ins.experimento_id ? '<span style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.7px;padding:3px 8px;border-radius:9999px;background:#EDE8FF;color:#532AB4;flex-shrink:0">Testável</span>' : '') +
         '<span style="flex:1;font-size:13px;font-weight:500;margin-left:4px">' + ins.tag + '</span>' +
         '<span class="ins-chevron">▼</span>' +
       '</div>' +
@@ -1277,6 +1287,98 @@ function buildList(items) {
   }).join('');
   const first = document.getElementById('ins_0');
   if (first) first.classList.add('open');
+}
+
+function buildLinearTemplate(ins, cardKey) {
+  // Extrai campos do texto (formato "Campo: valor\n\n")
+  const get = (campo) => {
+    if (!ins.texto) return '';
+    const re = new RegExp(campo + ':\\s*([\\s\\S]*?)(?=\\n\\n[A-ZÀÁÂÃÉÊÍÓÔÕÚ][^:]{0,25}:|$)', 'i');
+    const m = ins.texto.match(re);
+    return m ? m[1].trim() : '';
+  };
+
+  const insId = ins.id || '';
+  const insIdSuffix = insId ? ' [' + insId + ']' : '';
+  const tituloLinear = (ins.titulo_linear || ins.tag || '') + insIdSuffix;
+
+  const diagnostico = get('Diagnóstico') || get('Diagnostico');
+  const evidencia   = get('Evidência') || get('Evidencia');
+  const plano       = get('Plano de ação') || get('Plano de acao');
+  const impacto     = get('Impacto');
+  const criterio    = ins.criterio_confirmacao;
+
+  // Monta o corpo do Linear em texto plano (para copiar)
+  let corpo = '';
+  if (diagnostico) corpo += '## Diagnóstico\n' + diagnostico + '\n\n';
+  if (evidencia)   corpo += '## Evidência\n' + evidencia + '\n\n';
+  if (plano)       corpo += '## Plano de ação\n' + plano + '\n\n';
+  if (impacto)     corpo += '## Impacto esperado\n' + impacto + '\n\n';
+  if (criterio) {
+    corpo += '## Critério de confirmação\n';
+    corpo += '- Métrica: ' + (criterio.metrica||'—') + '\n';
+    corpo += '- Direção: ' + (criterio.direcao||'—') + '\n';
+    corpo += '- Variação mínima: ' + (criterio.variacao_minima_pct != null ? criterio.variacao_minima_pct + '%' : '—') + '\n';
+    corpo += '- Prazo: ' + (criterio.prazo_dias != null ? criterio.prazo_dias + ' dias' : '—') + '\n\n';
+  }
+  corpo += '## Rastreabilidade\n';
+  corpo += 'Insight de origem: ' + (insId || 'sem ID') + '\n';
+  corpo += 'Gerado em: ' + (ins.data || '') + '\n';
+  corpo += 'Classificação: ' + (ins.classificacao || '') + '\n';
+  corpo += 'Prioridade: ' + (ins.prioridade || '') + '\n';
+
+  const tituloEscaped = tituloLinear.replace(/'/g, "\\'");
+  const corpoEscaped = corpo.replace(/'/g, "\\'").replace(/\n/g, '\\n');
+
+  return '<div class="ins-section" style="margin-top:12px;border:1.5px dashed #532AB4;border-radius:10px;overflow:hidden">' +
+    '<div style="background:#EDE8FF;padding:8px 14px;display:flex;align-items:center;justify-content:space-between;gap:8px">' +
+      '<div style="display:flex;align-items:center;gap:8px">' +
+        '<span style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.7px;color:#532AB4">Issue Linear</span>' +
+        '<span style="font-size:10px;color:#532AB4;opacity:.7">Copie o título e o corpo para criar no Linear</span>' +
+      '</div>' +
+      '<button onclick="copyLinearIssue(\'' + tituloEscaped + '\',\'' + corpoEscaped + '\')" ' +
+        'style="font-family:inherit;font-size:11px;font-weight:700;padding:5px 14px;border-radius:9999px;border:1.5px solid #532AB4;background:#fff;color:#532AB4;cursor:pointer;transition:all .15s;flex-shrink:0" ' +
+        'onmouseover="this.style.background=\'#532AB4\';this.style.color=\'#fff\'" ' +
+        'onmouseout="this.style.background=\'#fff\';this.style.color=\'#532AB4\'">' +
+        '⎘ Copiar issue completa' +
+      '</button>' +
+    '</div>' +
+    '<div style="padding:12px 14px;background:#faf9ff">' +
+      '<div style="margin-bottom:10px">' +
+        '<div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.6px;color:#8B8B8B;margin-bottom:4px">Título</div>' +
+        '<div style="font-size:13px;font-weight:700;color:#19398A;font-family:monospace;background:#fff;padding:8px 12px;border-radius:6px;border:1px solid #D1D1D1;word-break:break-all">' + escH(tituloLinear) + '</div>' +
+      '</div>' +
+      (diagnostico ? '<div style="margin-bottom:6px"><span style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.6px;color:#8B8B8B">Diagnóstico: </span><span style="font-size:12px;color:#444">' + escH(diagnostico.substring(0,200)) + (diagnostico.length>200?'…':'') + '</span></div>' : '') +
+      (plano ? '<div style="margin-bottom:6px"><span style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.6px;color:#8B8B8B">Plano de ação: </span><span style="font-size:12px;color:#444">' + escH(plano.substring(0,200)) + (plano.length>200?'…':'') + '</span></div>' : '') +
+      (criterio ? '<div><span style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.6px;color:#8B8B8B">Confirmar quando: </span><span style="font-size:12px;color:#444">' + escH((criterio.metrica||'') + ' ' + (criterio.direcao||'') + (criterio.variacao_minima_pct != null ? ' ≥ ' + criterio.variacao_minima_pct + '%' : '') + (criterio.prazo_dias != null ? ' em ' + criterio.prazo_dias + ' dias' : '')) + '</span></div>' : '') +
+    '</div>' +
+  '</div>';
+}
+
+function copyLinearIssue(titulo, corpo) {
+  const texto = 'TÍTULO:\n' + titulo + '\n\n---\n\n' + corpo.replace(/\\n/g, '\n');
+  if (navigator.clipboard && navigator.clipboard.writeText) {
+    navigator.clipboard.writeText(texto).then(() => showCopyToast()).catch(() => fallbackCopy(texto));
+  } else {
+    fallbackCopy(texto);
+  }
+}
+
+function fallbackCopy(texto) {
+  const ta = document.createElement('textarea');
+  ta.value = texto;
+  ta.style.cssText = 'position:fixed;left:-9999px;top:-9999px';
+  document.body.appendChild(ta);
+  ta.focus(); ta.select();
+  try { document.execCommand('copy'); showCopyToast(); } catch(e) {}
+  document.body.removeChild(ta);
+}
+
+function showCopyToast() {
+  const t = document.getElementById('ins-copy-toast');
+  if (!t) return;
+  t.style.opacity = '1';
+  setTimeout(() => { t.style.opacity = '0'; }, 2200);
 }
 
 function parseSections(texto) {
