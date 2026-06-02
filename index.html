@@ -226,11 +226,16 @@ tr.cmp-tr td{background:#f5f8ff;font-size:12px;color:var(--compare)}
 .ins-layout{display:flex;gap:0;align-items:flex-start}
 .ins-nav{width:190px;flex-shrink:0;border-right:1px solid var(--neutral-200);padding:8px 0;position:sticky;top:12px;max-height:80vh;overflow-y:auto}
 .ins-content{flex:1;min-width:0;padding-left:16px}
-.ins-nav-year{font-size:10px;font-weight:700;color:var(--neutral-400);text-transform:uppercase;letter-spacing:.8px;padding:8px 12px 4px}
-.ins-nav-month{font-size:11px;font-weight:600;color:var(--neutral-500);padding:4px 12px;text-transform:uppercase;letter-spacing:.04em}
-.ins-nav-week{font-size:12px;color:var(--neutral-600);padding:5px 12px 5px 20px;cursor:pointer;border-radius:0 6px 6px 0;transition:background .15s;margin-right:8px}
+.ins-nav-year{font-size:10px;font-weight:700;color:var(--neutral-400);text-transform:uppercase;letter-spacing:.8px;padding:8px 12px 4px;cursor:pointer;border-radius:0 6px 6px 0;transition:background .15s;margin-right:8px}
+.ins-nav-year:hover{background:var(--neutral-100);color:var(--neutral-600)}
+.ins-nav-year.active{background:#e0eaff;color:#19398A}
+.ins-nav-month{font-size:11px;font-weight:600;color:var(--neutral-500);padding:5px 12px;text-transform:uppercase;letter-spacing:.04em;cursor:pointer;border-radius:0 6px 6px 0;transition:background .15s;margin-right:8px}
+.ins-nav-month:hover{background:var(--neutral-100);color:var(--neutral-700)}
+.ins-nav-month.active{background:#e0eaff;color:#19398A}
+.ins-nav-week{font-size:12px;color:var(--neutral-600);padding:5px 12px 5px 24px;cursor:pointer;border-radius:0 6px 6px 0;transition:background .15s;margin-right:8px}
 .ins-nav-week:hover{background:var(--neutral-100)}
 .ins-nav-week.active{background:#e0eaff;color:#19398A;font-weight:600}
+.ins-filter-grp-lbl{font-size:10px;font-weight:700;color:var(--neutral-400);text-transform:uppercase;letter-spacing:.6px;white-space:nowrap;padding:0 2px}
 
 /* ── EXPERIMENTOS ── */
 .exp-layout{display:flex;gap:0;align-items:flex-start}
@@ -1047,9 +1052,10 @@ function renderInsights() {
 
   let navHtml = '';
   Object.keys(tree).sort((a,b) => b-a).forEach(year => {
-    navHtml += '<div class="ins-nav-year">' + year + '</div>';
+    navHtml += '<div class="ins-nav-year" data-year="' + year + '" onclick="selectYear(\'' + year + '\')">' + year + '</div>';
     Object.keys(tree[year]).sort((a,b) => b-a).forEach(month => {
-      navHtml += '<div class="ins-nav-month">' + monthNames[parseInt(month)-1] + '</div>';
+      const monthKey = year + '-' + month;
+      navHtml += '<div class="ins-nav-month" data-monthkey="' + monthKey + '" onclick="selectMonth(\'' + monthKey + '\')">' + monthNames[parseInt(month)-1] + '</div>';
       tree[year][month].forEach(w => {
         navHtml += '<div class="ins-nav-week" data-semana="' + w.semana + '" onclick="selectWeek(\'' + w.semana + '\')">' + w.label + '</div>';
       });
@@ -1067,6 +1073,7 @@ let INS_F_TIPO = [];
 function selectWeek(semana) {
   document.querySelectorAll('.ins-nav-week').forEach(el =>
     el.classList.toggle('active', el.dataset.semana === semana));
+  document.querySelectorAll('.ins-nav-month,.ins-nav-year').forEach(el => el.classList.remove('active'));
   const week = INSIGHTS.find(w => w.semana === semana);
   const wrap = document.getElementById('insightsWrap');
   if (!wrap) return;
@@ -1082,6 +1089,52 @@ function selectWeek(semana) {
   applyInsFilters();
 }
 
+function selectMonth(monthKey) {
+  document.querySelectorAll('.ins-nav-week,.ins-nav-year').forEach(el => el.classList.remove('active'));
+  document.querySelectorAll('.ins-nav-month').forEach(el =>
+    el.classList.toggle('active', el.dataset.monthkey === monthKey));
+  const [year, month] = monthKey.split('-');
+  const allItems = [];
+  INSIGHTS.forEach(w => {
+    const parts = w.semana.split('-');
+    if (parts[0] === year && parts[1] === month && w.items) allItems.push(...w.items);
+  });
+  const wrap = document.getElementById('insightsWrap');
+  if (!wrap) return;
+  if (allItems.length === 0) {
+    wrap.innerHTML = '<div class="ins-empty">Nenhum insight para este mês.</div>';
+    return;
+  }
+  INS_CURRENT_ITEMS = allItems;
+  INS_F_PRIORIDADE = [];
+  INS_F_STATUS = [];
+  INS_F_TIPO = [];
+  renderInsFilters();
+  applyInsFilters();
+}
+
+function selectYear(year) {
+  document.querySelectorAll('.ins-nav-week,.ins-nav-month').forEach(el => el.classList.remove('active'));
+  document.querySelectorAll('.ins-nav-year').forEach(el =>
+    el.classList.toggle('active', el.dataset.year === year));
+  const allItems = [];
+  INSIGHTS.forEach(w => {
+    if (w.semana.startsWith(year + '-') && w.items) allItems.push(...w.items);
+  });
+  const wrap = document.getElementById('insightsWrap');
+  if (!wrap) return;
+  if (allItems.length === 0) {
+    wrap.innerHTML = '<div class="ins-empty">Nenhum insight para este ano.</div>';
+    return;
+  }
+  INS_CURRENT_ITEMS = allItems;
+  INS_F_PRIORIDADE = [];
+  INS_F_STATUS = [];
+  INS_F_TIPO = [];
+  renderInsFilters();
+  applyInsFilters();
+}
+
 function renderInsFilters() {
   const bar = document.getElementById('insFiltersBar');
   if (!bar) return;
@@ -1090,11 +1143,15 @@ function renderInsFilters() {
   const tipos = ['monitorar','testar'];
   const pill = (label, arr, val, toggle) =>
     '<button class="ins-filter-btn' + (arr.includes(val) ? ' active' : '') + '" onclick="' + toggle + '(\'' + val + '\')">' + label + '</button>';
-  let h = '<div class="ins-filters">';
+  const sep = '<span style="width:1px;height:20px;background:#ddd;margin:0 4px;flex-shrink:0"></span>';
+  let h = '<div class="ins-filters" style="flex-wrap:wrap;row-gap:8px;">';
+  h += '<span class="ins-filter-grp-lbl">Prioridade</span>';
   prioridades.forEach(p => { h += pill(p, INS_F_PRIORIDADE, p, 'toggleInsFilter_p'); });
-  h += '<span style="width:1px;height:16px;background:#ddd;margin:0 2px"></span>';
+  h += sep;
+  h += '<span class="ins-filter-grp-lbl">Status</span>';
   statuses.forEach(s => { h += pill(s.replace('_',' '), INS_F_STATUS, s, 'toggleInsFilter_s'); });
-  h += '<span style="width:1px;height:16px;background:#ddd;margin:0 2px"></span>';
+  h += sep;
+  h += '<span class="ins-filter-grp-lbl">Ação</span>';
   tipos.forEach(t => { h += pill(t, INS_F_TIPO, t, 'toggleInsFilter_t'); });
   const total = INS_CURRENT_ITEMS.length;
   const filtered = filteredInsItems().length;
