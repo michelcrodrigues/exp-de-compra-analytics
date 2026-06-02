@@ -161,6 +161,14 @@ tr.cmp-tr td{background:#f5f8ff;font-size:12px;color:var(--compare)}
 .ins-chevron{font-size:11px;color:var(--neutral-500);transition:transform .2s;flex-shrink:0;margin-left:auto}
 .ins-card.open .ins-chevron{transform:rotate(180deg)}
 .ins-tag{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.8px;color:var(--brand-secondary-b);background:var(--brand-secondary-b-100);padding:3px 8px;border-radius:9999px;white-space:nowrap;flex-shrink:0}
+.ins-status-badge{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.7px;padding:3px 8px;border-radius:9999px;white-space:nowrap;flex-shrink:0}
+.ins-status-badge.nova{background:#E0F0FF;color:#308CE0}
+.ins-status-badge.monitorando{background:#FFEFC0;color:#C3940F}
+.ins-status-badge.testando{background:#EDE8FF;color:#532AB4}
+.ins-status-badge.confirmada{background:#C6E5C3;color:#278A22}
+.ins-status-badge.refutada{background:#FAD1D7;color:#E1393E}
+.ins-status-badge.inconclusiva{background:#E3E3E3;color:#515151}
+.ins-status-badge.nunca_testada{background:#EEEEEE;color:#8B8B8B}
 .ins-prio{font-size:10px;font-weight:700;padding:3px 8px;border-radius:9999px;white-space:nowrap;flex-shrink:0}
 .ins-prio.alta{background:var(--negative-100);color:var(--negative-700)}
 .ins-prio.media{background:#FCE9B4;color:#C3940F}
@@ -1080,6 +1088,7 @@ function buildList(items) {
       '<div class="ins-card-header" onclick="toggleIns(\'' + id + '\')">' +
         '<span class="ins-tag" style="background:' + pc + '20;color:' + pc + '">' + ins.prioridade + '</span>' +
         '<span class="ins-tag" style="background:' + cc + '20;color:' + cc + '">' + ins.classificacao + '</span>' +
+        (ins.status ? '<span class="ins-status-badge ' + ins.status + '">' + ins.status.replace('_',' ') + '</span>' : '') +
         '<span style="flex:1;font-size:13px;font-weight:500;margin-left:4px">' + ins.tag + '</span>' +
         '<span class="ins-chevron">▼</span>' +
       '</div>' +
