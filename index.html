@@ -523,6 +523,7 @@ tr.cmp-tr td{background:#f5f8ff;font-size:12px;color:var(--compare)}
         <nav class="ins-nav" id="insNav"></nav>
         <div class="ins-content">
           <div class="sec">Análise semanal — Claude AI</div>
+          <div id="insFiltersBar"></div>
           <div class="insights" id="insightsWrap"></div>
         </div>
       </div>
@@ -1058,6 +1059,11 @@ function renderInsights() {
   selectWeek(INSIGHTS[0].semana);
 }
 
+let INS_CURRENT_ITEMS = [];
+let INS_F_PRIORIDADE = [];
+let INS_F_STATUS = [];
+let INS_F_TIPO = [];
+
 function selectWeek(semana) {
   document.querySelectorAll('.ins-nav-week').forEach(el =>
     el.classList.toggle('active', el.dataset.semana === semana));
@@ -1068,7 +1074,74 @@ function selectWeek(semana) {
     wrap.innerHTML = '<div class="ins-empty">Nenhum insight para esta semana.</div>';
     return;
   }
-  buildList(week.items);
+  INS_CURRENT_ITEMS = week.items;
+  INS_F_PRIORIDADE = [];
+  INS_F_STATUS = [];
+  INS_F_TIPO = [];
+  renderInsFilters();
+  applyInsFilters();
+}
+
+function renderInsFilters() {
+  const bar = document.getElementById('insFiltersBar');
+  if (!bar) return;
+  const prioridades = ['Alta','Média','Baixa'];
+  const statuses = ['nova','monitorando','testando','confirmada','refutada','inconclusiva','nunca_testada'];
+  const tipos = ['monitorar','testar'];
+  const pill = (label, arr, val, toggle) =>
+    '<button class="ins-filter-btn' + (arr.includes(val) ? ' active' : '') + '" onclick="' + toggle + '('' + val + '')">' + label + '</button>';
+  let h = '<div class="ins-filters">';
+  prioridades.forEach(p => { h += pill(p, INS_F_PRIORIDADE, p, 'toggleInsFilter_p'); });
+  h += '<span style="width:1px;height:16px;background:#ddd;margin:0 2px"></span>';
+  statuses.forEach(s => { h += pill(s.replace('_',' '), INS_F_STATUS, s, 'toggleInsFilter_s'); });
+  h += '<span style="width:1px;height:16px;background:#ddd;margin:0 2px"></span>';
+  tipos.forEach(t => { h += pill(t, INS_F_TIPO, t, 'toggleInsFilter_t'); });
+  const total = INS_CURRENT_ITEMS.length;
+  const filtered = filteredInsItems().length;
+  const hasFilter = INS_F_PRIORIDADE.length || INS_F_STATUS.length || INS_F_TIPO.length;
+  h += '<span style="margin-left:8px;font-size:11px;color:#888">' + filtered + ' de ' + total + ' insights</span>';
+  if (hasFilter) h += '<button class="ins-filter-btn" style="margin-left:4px;color:#E24B4A;border-color:#E24B4A" onclick="clearInsFilters()">Limpar</button>';
+  h += '</div>';
+  bar.innerHTML = h;
+}
+
+function filteredInsItems() {
+  return INS_CURRENT_ITEMS.filter(ins => {
+    if (INS_F_PRIORIDADE.length && !INS_F_PRIORIDADE.includes(ins.prioridade)) return false;
+    if (INS_F_STATUS.length && !INS_F_STATUS.includes(ins.status)) return false;
+    if (INS_F_TIPO.length && !INS_F_TIPO.includes(ins.tipo_acao)) return false;
+    return true;
+  });
+}
+
+function applyInsFilters() {
+  renderInsFilters();
+  const items = filteredInsItems();
+  if (items.length === 0) {
+    document.getElementById('insightsWrap').innerHTML = '<div class="ins-empty">Nenhum insight corresponde aos filtros.</div>';
+  } else {
+    buildList(items);
+  }
+}
+
+function toggleInsFilter_p(val) {
+  const i = INS_F_PRIORIDADE.indexOf(val);
+  if (i >= 0) INS_F_PRIORIDADE.splice(i, 1); else INS_F_PRIORIDADE.push(val);
+  applyInsFilters();
+}
+function toggleInsFilter_s(val) {
+  const i = INS_F_STATUS.indexOf(val);
+  if (i >= 0) INS_F_STATUS.splice(i, 1); else INS_F_STATUS.push(val);
+  applyInsFilters();
+}
+function toggleInsFilter_t(val) {
+  const i = INS_F_TIPO.indexOf(val);
+  if (i >= 0) INS_F_TIPO.splice(i, 1); else INS_F_TIPO.push(val);
+  applyInsFilters();
+}
+function clearInsFilters() {
+  INS_F_PRIORIDADE = []; INS_F_STATUS = []; INS_F_TIPO = [];
+  applyInsFilters();
 }
 
 function buildList(items) {
