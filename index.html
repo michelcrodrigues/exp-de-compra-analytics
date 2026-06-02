@@ -1089,7 +1089,7 @@ function renderInsFilters() {
   const statuses = ['nova','monitorando','testando','confirmada','refutada','inconclusiva','nunca_testada'];
   const tipos = ['monitorar','testar'];
   const pill = (label, arr, val, toggle) =>
-    '<button class="ins-filter-btn' + (arr.includes(val) ? ' active' : '') + '" onclick="' + toggle + '('' + val + '')">' + label + '</button>';
+    '<button class="ins-filter-btn' + (arr.includes(val) ? ' active' : '') + '" onclick="' + toggle + '(\'' + val + '\')">' + label + '</button>';
   let h = '<div class="ins-filters">';
   prioridades.forEach(p => { h += pill(p, INS_F_PRIORIDADE, p, 'toggleInsFilter_p'); });
   h += '<span style="width:1px;height:16px;background:#ddd;margin:0 2px"></span>';
@@ -1197,7 +1197,7 @@ function buildList(items) {
     // c) Experimento vinculado
     if (ins.experimento_id != null) {
       extra += '<div class="ins-section" style="margin-top:8px">' +
-        '<a href="#" style="font-size:12px;color:#308CE0;font-weight:600;text-decoration:none" onclick="event.stopPropagation();document.querySelector('[data-tab=\"ex\"]').click();selectExp('' + ins.experimento_id + '');return false">Ver experimento → ' + ins.experimento_id + '</a>' +
+        '<a href="#" style="font-size:12px;color:#308CE0;font-weight:600;text-decoration:none" onclick="event.stopPropagation();document.querySelector(\'[data-tab=\\\"ex\\\"]\').click();selectExp(\'' + ins.experimento_id + '\');return false">Ver experimento → ' + ins.experimento_id + '</a>' +
       '</div>';
     }
     // d) Sem experimento mas tipo_acao === 'testar'
