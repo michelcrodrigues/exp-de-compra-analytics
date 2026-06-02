@@ -1073,17 +1073,67 @@ function selectWeek(semana) {
 
 function buildList(items) {
   const wrap = document.getElementById('insightsWrap');
-  const priColor = {Alta:'#E24B4A',Media:'#EF9F27',Baixa:'#19398A'};
-  const clsColor = {'Diagnostico comprovado':'#1D9E75','Hipotese':'#6366f1','Tendencia':'#EF9F27','Resultado fora da curva':'#E24B4A','Correlacao':'#19398A','Explicacao':'#6b6b67'};
   const priColorMap = (p) => p === 'Alta' ? '#E24B4A' : p === 'Média' ? '#EF9F27' : '#19398A';
   const clsColorMap = (c) => {
     const map = {'Diagnóstico comprovado':'#1D9E75','Hipótese':'#6366f1','Tendência':'#EF9F27','Resultado fora da curva':'#E24B4A','Correlação':'#19398A','Explicação':'#6b6b67'};
     return map[c] || '#6b6b67';
   };
+  const statusVeredictoColor = (v) => {
+    const m = {nova:'#308CE0',monitorando:'#C3940F',testando:'#532AB4',confirmada:'#278A22',refutada:'#E1393E',inconclusiva:'#515151',nunca_testada:'#8B8B8B'};
+    const bg = {nova:'#E0F0FF',monitorando:'#FFEFC0',testando:'#EDE8FF',confirmada:'#C6E5C3',refutada:'#FAD1D7',inconclusiva:'#E3E3E3',nunca_testada:'#EEEEEE'};
+    return {color: m[v]||'#515151', background: bg[v]||'#E3E3E3'};
+  };
   wrap.innerHTML = items.map((ins, i) => {
     const id = 'ins_' + i;
     const pc = priColorMap(ins.prioridade);
     const cc = clsColorMap(ins.classificacao);
+
+    // Corpo expandido — blocos adicionais
+    let extra = parseSections(ins.texto);
+
+    // a) Critério de confirmação
+    if (ins.criterio_confirmacao != null) {
+      const cr = ins.criterio_confirmacao;
+      extra += '<div class="ins-section" style="margin-top:8px;padding:10px 12px;background:#F5F7FA;border-radius:8px;border-left:3px solid #308CE0">' +
+        '<div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.6px;color:#308CE0;margin-bottom:6px">Critério de confirmação</div>' +
+        '<div style="font-size:12px;color:#444;display:grid;grid-template-columns:1fr 1fr;gap:4px 12px">' +
+          '<span><b>Métrica:</b> ' + (cr.metrica||'—') + '</span>' +
+          '<span><b>Direção:</b> ' + (cr.direcao||'—') + '</span>' +
+          '<span><b>Variação mín.:</b> ' + (cr.variacao_minima_pct != null ? cr.variacao_minima_pct + '%' : '—') + '</span>' +
+          '<span><b>Prazo:</b> ' + (cr.prazo_dias != null ? cr.prazo_dias + ' dias' : '—') + '</span>' +
+        '</div>' +
+      '</div>';
+    }
+
+    // b) Revisão
+    if (ins.revisao != null) {
+      const rv = ins.revisao;
+      const vc = statusVeredictoColor(rv.veredicto);
+      extra += '<div class="ins-section" style="margin-top:8px;padding:10px 12px;background:#F5F7FA;border-radius:8px;border-left:3px solid #6b6b67">' +
+        '<div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.6px;color:#6b6b67;margin-bottom:6px">Revisão</div>' +
+        (rv.veredicto ? '<span style="display:inline-block;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.7px;padding:3px 8px;border-radius:9999px;margin-bottom:6px;background:' + vc.background + ';color:' + vc.color + '">' + rv.veredicto.replace('_',' ') + '</span>' : '') +
+        '<div style="font-size:12px;color:#444">' +
+          (rv.evidencia ? '<div><b>Evidência:</b> ' + rv.evidencia + '</div>' : '') +
+          (rv.fonte ? '<div><b>Fonte:</b> ' + rv.fonte + '</div>' : '') +
+          (rv.observacao ? '<div><b>Observação:</b> ' + rv.observacao + '</div>' : '') +
+          (rv.data ? '<div style="margin-top:4px;font-size:11px;color:#888">' + rv.data + '</div>' : '') +
+        '</div>' +
+      '</div>';
+    }
+
+    // c) Experimento vinculado
+    if (ins.experimento_id != null) {
+      extra += '<div class="ins-section" style="margin-top:8px">' +
+        '<a href="#" style="font-size:12px;color:#308CE0;font-weight:600;text-decoration:none" onclick="event.stopPropagation();document.querySelector('[data-tab=\"ex\"]').click();selectExp('' + ins.experimento_id + '');return false">Ver experimento → ' + ins.experimento_id + '</a>' +
+      '</div>';
+    }
+    // d) Sem experimento mas tipo_acao === 'testar'
+    else if (ins.tipo_acao === 'testar') {
+      extra += '<div class="ins-section" style="margin-top:8px;padding:10px 12px;background:#F0F0F0;border-radius:8px;font-size:12px;color:#666">' +
+        'Sem experimento registrado — crie uma issue no Linear com o título sugerido no plano de ação.' +
+      '</div>';
+    }
+
     return '<div class="ins-card" id="' + id + '">' +
       '<div class="ins-card-header" onclick="toggleIns(\'' + id + '\')">' +
         '<span class="ins-tag" style="background:' + pc + '20;color:' + pc + '">' + ins.prioridade + '</span>' +
@@ -1092,7 +1142,7 @@ function buildList(items) {
         '<span style="flex:1;font-size:13px;font-weight:500;margin-left:4px">' + ins.tag + '</span>' +
         '<span class="ins-chevron">▼</span>' +
       '</div>' +
-      '<div class="ins-body">' + parseSections(ins.texto) + '</div>' +
+      '<div class="ins-body">' + extra + '</div>' +
     '</div>';
   }).join('');
   const first = document.getElementById('ins_0');
