@@ -7,7 +7,8 @@ Cada linha do ndjson é um JSON completo representando um dia de dados.
 Modos de operação:
   HISTÓRICO — ativado por FORCE_HISTORICAL=true ou arquivo vazio/inexistente
               coleta de 01/01/2025 até ontem, dia a dia
-  DIÁRIO    — padrão; coleta só o dia anterior
+  DIÁRIO    — padrão; re-coleta sempre os últimos 3 dias (D-1, D-2, D-3)
+              para corrigir late-arriving data do GA4 (dados se finalizam em ~72h)
 
 Secrets necessários no GitHub Actions:
   GA4_CREDENTIALS_JSON   → conteúdo do JSON da service account
@@ -40,6 +41,10 @@ HISTORY_FILE       = "data/history.ndjson"
 CHECKPOINT_EVERY   = 30    # gravar no arquivo a cada N dias coletados
 PAUSE_BETWEEN_DAYS = 0.15  # segundos entre chamadas GA4 no modo histórico
 MAX_RETRIES        = 3     # tentativas em caso de erro transitório da API
+
+# Quantos dias recentes re-coletar no modo diário para corrigir late-arriving data.
+# GA4 finaliza dados em até ~72h; 3 dias garante que D-1, D-2 e D-3 fiquem atualizados.
+DAILY_REFRESH_DAYS = 3
 
 SCOPES = [
     "https://www.googleapis.com/auth/analytics.readonly",
@@ -116,6 +121,8 @@ def append_records(records):
     """
     Appenda uma lista de dicts ao history.ndjson.
     Cria o arquivo (e o diretório data/) se não existir.
+    Registros duplicados para a mesma data são aceitos intencionalmente —
+    o export_data.py deduplica mantendo o último (mais recente) por data.
     """
     os.makedirs(os.path.dirname(HISTORY_FILE), exist_ok=True)
     with open(HISTORY_FILE, "a", encoding="utf-8") as f:
@@ -355,7 +362,8 @@ def metrics_to_record(date_str, m):
 def main():
     force_historical = os.environ.get("FORCE_HISTORICAL", "").lower() == "true"
     force_reprocess  = os.environ.get("FORCE_REPROCESS", "").lower() == "true"
-    yesterday        = datetime.date.today() - datetime.timedelta(days=1)
+    today            = datetime.date.today()  # UTC no runner do GitHub Actions
+    yesterday        = today - datetime.timedelta(days=1)
 
     print("Autenticando...")
     creds       = get_credentials()
@@ -391,15 +399,23 @@ def main():
         print(f"  {total_days} dias para coletar — estimativa: ~{est_min} min")
 
     else:
-        date_str = yesterday.strftime("%Y-%m-%d")
-        if date_str in existing_dates:
-            print(f"MODO DIÁRIO — {date_str} já existe. Nada a fazer.")
-            sys.exit(0)
-        print(f"MODO DIÁRIO — coletando {date_str}")
-        dates_to_collect = [date_str]
+        # ── Modo diário: re-coleta sempre D-1, D-2 e D-3 ────────────────────
+        # Motivo: o GA4 finaliza dados em até ~72h após a sessão. Coletar D-1
+        # às 08:00 BRT significa que o dado tem apenas 8h — incompleto. Re-coletar
+        # os últimos 3 dias garante que, ao chegar no D-3, os dados estão finalizados.
+        # O export_data.py deduplica mantendo sempre o registro mais recente.
+        dates_to_collect = []
+        for lag in range(1, DAILY_REFRESH_DAYS + 1):
+            d = today - datetime.timedelta(days=lag)
+            # Não coletar antes do início do histórico
+            if d >= HISTORY_START:
+                dates_to_collect.append(d.strftime("%Y-%m-%d"))
+
+        print(f"MODO DIÁRIO — re-coletando {len(dates_to_collect)} dia(s) recentes: {', '.join(dates_to_collect)}")
+        print(f"  (D-1 a D-{DAILY_REFRESH_DAYS} sempre re-coletados para corrigir late-arriving data do GA4)")
 
     if not dates_to_collect:
-        print("Nenhuma data nova para coletar.")
+        print("Nenhuma data para coletar.")
         sys.exit(0)
 
     # ── Coleta e gravação ────────────────────────────────────────────────────
@@ -436,7 +452,7 @@ def main():
 
     # ── Gravar restante ──────────────────────────────────────────────────────
     if batch:
-        print(f"\nGravando {len(batch)} registro(s) finais em {HISTORY_FILE}...")
+        print(f"\nGravando {len(batch)} registro(s) em {HISTORY_FILE}...")
         append_records(batch)
 
     # ── Relatório final ──────────────────────────────────────────────────────
