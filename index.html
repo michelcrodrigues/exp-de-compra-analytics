@@ -2113,11 +2113,13 @@ function fmtDur(s){const m=Math.floor(s/60),r=Math.round(s%60);return m>0?`${m}m
 function fmtDS(iso){if(!iso)return"";const[,m,d]=iso.split("-");return`${d}/${m}`;}
 function fmtDF(iso){if(!iso)return"";const[y,m,d]=iso.split("-");return`${d}/${m}/${y}`;}
 function fmtDT(iso){if(!iso)return"";return new Date(iso).toLocaleString("pt-BR",{timeZone:"America/Sao_Paulo",dateStyle:"short",timeStyle:"short"});}
-function todayISO(){return new Date().toISOString().slice(0,10);}
+// todayISO usa America/Sao_Paulo para evitar offset de data nas primeiras 3h do dia (BRT = UTC-3)
+function todayISO(){return new Date().toLocaleDateString("sv-SE",{timeZone:"America/Sao_Paulo"});}
 function isoD(d){return d.toISOString().slice(0,10);}
 function offDate(iso,days){const d=new Date(iso+"T12:00:00Z");d.setUTCDate(d.getUTCDate()+days);return isoD(d);}
 function offYears(iso,y){const d=new Date(iso+"T12:00:00Z");d.setUTCFullYear(d.getUTCFullYear()+y);return isoD(d);}
-function dateDiff(a,b){return Math.round((new Date(b)-new Date(a))/86400000);}
+// dateDiff usa T12:00:00Z para evitar que new Date("YYYY-MM-DD") interprete como UTC midnight
+function dateDiff(a,b){return Math.round((new Date(b+"T12:00:00Z")-new Date(a+"T12:00:00Z"))/86400000);}
 
 
 // ════════════════════════════════════════════════════════
