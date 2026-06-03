@@ -5,6 +5,11 @@ Roda no GitHub Actions após o fetch_ga4.py, ou pode rodar separado.
 O data.json é commitado no repositório e servido pelo GitHub Pages.
 
 Não depende de nenhuma API externa — lê apenas o arquivo local.
+
+Deduplicação: como o fetch_ga4.py re-coleta os últimos 3 dias a cada execução
+(para corrigir late-arriving data do GA4), o ndjson pode ter múltiplas linhas
+para a mesma data. Este script mantém sempre o ÚLTIMO registro por data
+(o mais recente, appended ao final do arquivo).
 """
 
 import os
@@ -16,20 +21,31 @@ HISTORY_FILE = "data/history.ndjson"
 OUTPUT_PATH  = "data.json"
 
 def load_history():
-    """Lê o history.ndjson e retorna lista de registros ordenados por data."""
+    """
+    Lê o history.ndjson e retorna lista de registros, um por data, ordenados.
+    Se a mesma data aparecer mais de uma vez, mantém o ÚLTIMO registro
+    (o fetch_ga4.py appenda novas coletas ao final — logo o último é o mais fresco).
+    """
     if not os.path.exists(HISTORY_FILE):
         print(f"ERRO: {HISTORY_FILE} não encontrado.")
         sys.exit(1)
 
-    records = []
+    # Dict data → record: sobrescreve ao iterar, então o último vence
+    records_by_date = {}
     errors  = 0
+    total_lines = 0
+
     with open(HISTORY_FILE, "r", encoding="utf-8") as f:
         for i, line in enumerate(f, 1):
             line = line.strip()
             if not line:
                 continue
+            total_lines += 1
             try:
-                records.append(json.loads(line))
+                record = json.loads(line)
+                date = record.get("data", "")
+                if date:
+                    records_by_date[date] = record  # último por data vence
             except json.JSONDecodeError as e:
                 print(f"  AVISO: linha {i} inválida ignorada — {e}")
                 errors += 1
@@ -37,7 +53,12 @@ def load_history():
     if errors:
         print(f"  {errors} linha(s) corrompida(s) ignorada(s).")
 
-    records.sort(key=lambda r: r.get("data", ""))
+    duplicates = total_lines - len(records_by_date) - errors
+    if duplicates > 0:
+        print(f"  {duplicates} registro(s) duplicado(s) descartado(s) (mantido o mais recente por data).")
+
+    # Ordenar por data crescente
+    records = sorted(records_by_date.values(), key=lambda r: r.get("data", ""))
     return records
 
 def safe_float(v, default=0.0):
@@ -171,7 +192,7 @@ def load_existing_loop_data():
 def main():
     print(f"Lendo {HISTORY_FILE}...")
     records = load_history()
-    print(f"  {len(records)} registros carregados.")
+    print(f"  {len(records)} datas únicas carregadas.")
 
     existing_insights = load_existing_insights()
     existing_experimentos, existing_resumo_mensal = load_existing_loop_data()
