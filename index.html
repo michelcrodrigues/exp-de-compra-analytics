@@ -591,11 +591,15 @@ let C={start:null,end:null,active:false};
 // ════════════════════════════════════════════════════════
 async function loadData(){
   try{
-    const res=await fetch("data.json?v="+Date.now());
+    const [res, resIns] = await Promise.all([
+      fetch("data.json?v="+Date.now()),
+      fetch("insights.json?v="+Date.now())
+    ]);
     if(!res.ok) throw new Error("HTTP "+res.status);
     const j=await res.json();
+    const jIns = resIns.ok ? await resIns.json() : {};
     ALL=(j.daily||[]).sort((a,b)=>a.data<b.data?-1:1);
-    INSIGHTS=j.insights||[];
+    INSIGHTS=jIns.insights||j.insights||[];
     EXPERIMENTOS=j.experimentos||[];
     RESUMO_MENSAL=(j.resumo_mensal||[]).sort((a,b)=>b.mes.localeCompare(a.mes));
     const lastDay=ALL.length?ALL[ALL.length-1].data:"";document.getElementById("headerUpdated").textContent="Dados até "+fmtDF(lastDay);
@@ -1348,8 +1352,8 @@ function buildLinearTemplate(ins, cardKey) {
         '<div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.6px;color:#8B8B8B;margin-bottom:4px">Título</div>' +
         '<div style="font-size:13px;font-weight:700;color:#19398A;font-family:monospace;background:#fff;padding:8px 12px;border-radius:6px;border:1px solid #D1D1D1;word-break:break-all">' + escH(tituloLinear) + '</div>' +
       '</div>' +
-      (diagnostico ? '<div style="margin-bottom:6px"><span style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.6px;color:#8B8B8B">Diagnóstico: </span><span style="font-size:12px;color:#444">' + escH(diagnostico.substring(0,200)) + (diagnostico.length>200?'…':'') + '</span></div>' : '') +
-      (plano ? '<div style="margin-bottom:6px"><span style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.6px;color:#8B8B8B">Plano de ação: </span><span style="font-size:12px;color:#444">' + escH(plano.substring(0,200)) + (plano.length>200?'…':'') + '</span></div>' : '') +
+      (diagnostico ? '<div style="margin-bottom:6px"><span style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.6px;color:#8B8B8B">Diagnóstico: </span><span style="font-size:12px;color:#444">' + escH(diagnostico) + '</span></div>' : '') +
+      (plano ? '<div style="margin-bottom:6px"><span style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.6px;color:#8B8B8B">Plano de ação: </span><span style="font-size:12px;color:#444">' + escH(plano) + '</span></div>' : '') +
       (criterio ? '<div><span style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.6px;color:#8B8B8B">Confirmar quando: </span><span style="font-size:12px;color:#444">' + escH((criterio.metrica||'') + ' ' + (criterio.direcao||'') + (criterio.variacao_minima_pct != null ? ' ≥ ' + criterio.variacao_minima_pct + '%' : '') + (criterio.prazo_dias != null ? ' em ' + criterio.prazo_dias + ' dias' : '')) + '</span></div>' : '') +
     '</div>' +
   '</div>';
