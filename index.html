@@ -220,17 +220,23 @@ tr.cmp-tr td{background:#f5f8ff;font-size:12px;color:var(--compare)}
 .rm-cls-badge.rm-cls-alerta{background:var(--brand-secondary-b-100);color:var(--brand-secondary-b)}
 .rm-cls-badge.rm-cls-queda{background:var(--negative-100);color:var(--negative-700)}
 .rm-narrativa{background:#fff;border-radius:var(--r-md);padding:20px 24px;box-shadow:var(--shadow-01);font-size:14px;line-height:1.75;color:var(--neutral-800);border-left:4px solid var(--brand-primary)}
-.rm-devices{display:grid;grid-template-columns:1fr 1fr;gap:16px}
-.rm-dev-card{background:#fff;border-radius:var(--r-md);padding:20px;box-shadow:var(--shadow-01)}
-.rm-dev-header{display:flex;align-items:center;gap:8px;margin-bottom:16px}
-.rm-dev-icon{font-size:20px;line-height:1}
-.rm-dev-name{font-size:14px;font-weight:900;color:var(--neutral-800)}
-.rm-dev-share{font-size:11px;color:var(--neutral-500);margin-left:auto;background:var(--neutral-100);padding:2px 9px;border-radius:9999px;font-weight:600}
-.rm-dev-kpis{display:grid;grid-template-columns:repeat(2,1fr);gap:14px;margin-bottom:16px}
+.rm-ctx-banner{background:var(--brand-secondary-c-100,#E0EAFF);border:1px solid var(--brand-secondary-c,#6589D4);border-radius:var(--r-sm);padding:12px 16px;margin-top:12px;font-size:12px;line-height:1.6;color:var(--neutral-800)}
+.rm-ctx-label{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.7px;color:var(--brand-secondary-c,#6589D4);margin-bottom:5px}
+/* dispositivos — empilhados verticalmente */
+.rm-dev-section{background:#fff;border-radius:var(--r-md);box-shadow:var(--shadow-01);overflow:hidden;margin-bottom:0}
+.rm-dev-section-header{display:flex;align-items:center;gap:10px;padding:14px 20px 14px 20px;border-bottom:1px solid var(--neutral-200)}
+.rm-dev-section-icon{font-size:18px;line-height:1}
+.rm-dev-section-name{font-size:14px;font-weight:900;color:var(--neutral-800)}
+.rm-dev-section-share{font-size:11px;color:var(--neutral-500);margin-left:auto;background:var(--neutral-100);padding:2px 9px;border-radius:9999px;font-weight:600}
+.rm-dev-body{padding:16px 20px}
+.rm-dev-kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:14px}
 .rm-dev-kpi-lbl{font-size:10px;font-weight:700;color:var(--neutral-500);text-transform:uppercase;letter-spacing:.7px;margin-bottom:3px}
 .rm-dev-kpi-val{font-size:18px;font-weight:900;color:var(--brand-primary);line-height:1.1;margin-bottom:3px}
 .rm-dev-analise{font-size:13px;line-height:1.65;color:var(--neutral-700);border-top:1px solid var(--neutral-200);padding-top:13px}
-.rm-recs{display:flex;flex-direction:column;gap:10px}
+/* recomendações inline por dispositivo */
+.rm-dev-recs{margin-top:14px;border-top:1px solid var(--neutral-200);padding-top:14px;display:flex;flex-direction:column;gap:8px}
+.rm-dev-recs-lbl{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.8px;color:var(--brand-secondary-a);margin-bottom:6px}
+.rm-recs-global{display:flex;flex-direction:column;gap:10px}
 .rm-rec-card{background:#fff;border-radius:var(--r-md);padding:18px 20px;box-shadow:var(--shadow-01)}
 .rm-rec-badges{display:flex;gap:6px;margin-bottom:10px;flex-wrap:wrap}
 .rm-rec-badge{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.6px;padding:3px 10px;border-radius:9999px}
@@ -239,7 +245,7 @@ tr.cmp-tr td{background:#f5f8ff;font-size:12px;color:var(--compare)}
 .rm-rec-impacto{font-size:12px;color:var(--neutral-500)}
 .rm-rec-impacto-lbl{font-weight:700;color:var(--neutral-700)}
 .rm-empty{background:#fff;border-radius:var(--r-md);padding:40px 32px;box-shadow:var(--shadow-01);text-align:center;color:var(--neutral-500);font-size:13px}
-@media(max-width:900px){.rm-devices{grid-template-columns:1fr}.rm-layout{flex-direction:column}.rm-nav{width:100%;border-right:none;border-bottom:1px solid var(--neutral-200);padding-bottom:8px;position:static;max-height:none}.rm-content{padding-left:0;padding-top:16px}}
+@media(max-width:900px){.rm-dev-kpis{grid-template-columns:repeat(2,1fr)}.rm-layout{flex-direction:column}.rm-nav{width:100%;border-right:none;border-bottom:1px solid var(--neutral-200);padding-bottom:8px;position:static;max-height:none}.rm-content{padding-left:0;padding-top:16px}}
 
 /* ── Tela de senha ───────────────────────────────────── */
 .auth-screen{position:fixed;inset:0;background:var(--brand-primary);display:flex;align-items:center;justify-content:center;z-index:9999;flex-direction:column;gap:0}
@@ -1337,9 +1343,19 @@ function selectMes(mes) {
   const dev = rm.analise_dispositivos || {};
   const recs = rm.recomendacoes || [];
 
+  // Separar recomendações por escopo
+  const recsMobile  = recs.filter(r => r.dispositivo === 'mobile');
+  const recsDesktop = recs.filter(r => r.dispositivo === 'desktop');
+  const recsAmbos   = recs.filter(r => !r.dispositivo || r.dispositivo === 'ambos');
+
+  // Contexto histórico: mês anterior no array
+  const idxAtual = RESUMO_MENSAL.findIndex(r => r.mes === mes);
+  const rmAnterior = idxAtual >= 0 && idxAtual < RESUMO_MENSAL.length - 1
+    ? RESUMO_MENSAL[idxAtual + 1] : null; // array ordenado desc, então +1 é o mês anterior
+
   let h = '';
 
-  // Cabeçalho
+  // ── Cabeçalho ────────────────────────────────────────
   h += '<div class="rm-header">';
   h += '<div><div class="rm-title">' + escH(rm.label) + '</div>';
   if (rm.gerado_em) h += '<div class="rm-generated">Gerado em ' + fmtDT(rm.gerado_em) + '</div>';
@@ -1347,7 +1363,7 @@ function selectMes(mes) {
   h += '<span class="rm-cls-badge rm-cls-' + cls + '">' + rmClsLabel(cls) + '</span>';
   h += '</div>';
 
-  // KPIs consolidados
+  // ── KPIs consolidados ─────────────────────────────────
   h += '<div class="sec" style="margin-top:20px">Métricas consolidadas</div>';
   h += '<div class="kpi-grid">';
   h += rmKpi('Sessões',   m.sessoes,            false, '');
@@ -1356,25 +1372,53 @@ function selectMes(mes) {
   h += rmKpi('Rejeição',  m.taxa_rejeicao_pct,  true,  '%', true);
   h += '</div>';
 
-  // Narrativa
+  // ── Análise do período + contexto histórico ───────────
   if (rm.narrativa) {
     h += '<div class="sec">Análise do período</div>';
     h += '<div class="rm-narrativa">' + escH(rm.narrativa) + '</div>';
+    if (rmAnterior) {
+      const mAnt = rmAnterior.metricas || {};
+      const clsAnt = rmAnterior.classificacao || 'estavel';
+      const crAnt = mAnt.taxa_conversao_pct && mAnt.taxa_conversao_pct.valor != null
+        ? mAnt.taxa_conversao_pct.valor.toFixed(2) + '%' : '—';
+      const comprasAnt = mAnt.compras && mAnt.compras.valor != null
+        ? fmtN(mAnt.compras.valor) : '—';
+      h += '<div class="rm-ctx-banner">' +
+        '<div class="rm-ctx-label">Contexto — ' + escH(rmAnterior.label) + ' (' + rmClsLabel(clsAnt) + ')</div>' +
+        'CR: <strong>' + crAnt + '</strong> · Compras: <strong>' + comprasAnt + '</strong>' +
+        (rmAnterior.narrativa ? ' · <em style="color:var(--neutral-500)">' + escH(rmAnterior.narrativa.substring(0, 160)) + (rmAnterior.narrativa.length > 160 ? '…' : '') + '</em>' : '') +
+        '</div>';
+    }
   }
 
-  // Dispositivos
-  if (dev.mobile || dev.desktop) {
+  // ── Seções por dispositivo (empilhadas) ───────────────
+  const hasDevs = dev.mobile || dev.desktop;
+  if (hasDevs) {
     h += '<div class="sec">Análise por dispositivo</div>';
-    h += '<div class="rm-devices">';
-    if (dev.mobile)  h += rmDevCard('Mobile',  dev.mobile,  '📱');
-    if (dev.desktop) h += rmDevCard('Desktop', dev.desktop, '🖥');
+    h += '<div style="display:flex;flex-direction:column;gap:16px">';
+
+    if (dev.mobile) {
+      h += rmDevSection('Mobile', dev.mobile, '📱', recsMobile);
+    }
+    if (dev.desktop) {
+      h += rmDevSection('Desktop', dev.desktop, '🖥', recsDesktop);
+    }
+
     h += '</div>';
   }
 
-  // Recomendações
-  if (recs.length > 0) {
+  // ── Recomendações gerais (ambos / sem dispositivo) ────
+  if (recsAmbos.length > 0) {
+    h += '<div class="sec">Recomendações gerais</div>';
+    h += '<div class="rm-recs-global">';
+    recsAmbos.forEach(rec => { h += rmRecCard(rec); });
+    h += '</div>';
+  }
+
+  // Se não há dados de dispositivo, mostrar todas as recomendações aqui
+  if (!hasDevs && recs.length > 0) {
     h += '<div class="sec">Recomendações</div>';
-    h += '<div class="rm-recs">';
+    h += '<div class="rm-recs-global">';
     recs.forEach(rec => { h += rmRecCard(rec); });
     h += '</div>';
   }
@@ -1409,7 +1453,7 @@ function rmKpi(label, metrica, isPct, suffix, inv) {
   '</div>';
 }
 
-function rmDevCard(name, dev, icon) {
+function rmDevSection(name, dev, icon, devRecs) {
   function db(d, inv) {
     if (d == null) return '';
     const up = inv ? d < 0 : d > 0;
@@ -1418,15 +1462,20 @@ function rmDevCard(name, dev, icon) {
     return '<span class="delta ' + cl + '">' + ar + ' ' + Math.abs(d).toFixed(1) + '%</span>';
   }
 
-  let h = '<div class="rm-dev-card">';
-  h += '<div class="rm-dev-header">';
-  h += '<span class="rm-dev-icon">' + icon + '</span>';
-  h += '<span class="rm-dev-name">' + name + '</span>';
+  let h = '<div class="rm-dev-section">';
+
+  // Header da seção
+  h += '<div class="rm-dev-section-header">';
+  h += '<span class="rm-dev-section-icon">' + icon + '</span>';
+  h += '<span class="rm-dev-section-name">' + name + '</span>';
   if (dev.sessoes && dev.sessoes.share_pct != null) {
-    h += '<span class="rm-dev-share">' + dev.sessoes.share_pct.toFixed(1) + '% das sessões</span>';
+    h += '<span class="rm-dev-section-share">' + dev.sessoes.share_pct.toFixed(1) + '% das sessões</span>';
   }
   h += '</div>';
 
+  h += '<div class="rm-dev-body">';
+
+  // KPIs em grid de 4 colunas
   h += '<div class="rm-dev-kpis">';
 
   if (dev.sessoes) h += '<div>' +
@@ -1435,13 +1484,19 @@ function rmDevCard(name, dev, icon) {
     (dev.sessoes.delta_mes_anterior_pct != null
       ? '<div style="font-size:10px;margin-top:2px">' + db(dev.sessoes.delta_mes_anterior_pct) + ' <span style="color:var(--neutral-500)">vs mês ant.</span></div>'
       : '') +
+    (dev.sessoes.delta_ano_anterior_pct != null
+      ? '<div style="font-size:10px;margin-top:1px">' + db(dev.sessoes.delta_ano_anterior_pct) + ' <span style="color:var(--neutral-500)">vs ano ant.</span></div>'
+      : '') +
   '</div>';
 
   if (dev.compras) h += '<div>' +
-    '<div class="rm-dev-kpi-lbl">Compras' + (dev.compras.share_pct != null ? ' (' + dev.compras.share_pct.toFixed(1) + '%)' : '') + '</div>' +
+    '<div class="rm-dev-kpi-lbl">Compras' + (dev.compras.share_pct != null ? ' <span style="font-weight:400;text-transform:none;letter-spacing:0">(' + dev.compras.share_pct.toFixed(1) + '%)</span>' : '') + '</div>' +
     '<div class="rm-dev-kpi-val">' + fmtN(dev.compras.valor) + '</div>' +
     (dev.compras.delta_mes_anterior_pct != null
       ? '<div style="font-size:10px;margin-top:2px">' + db(dev.compras.delta_mes_anterior_pct) + ' <span style="color:var(--neutral-500)">vs mês ant.</span></div>'
+      : '') +
+    (dev.compras.delta_ano_anterior_pct != null
+      ? '<div style="font-size:10px;margin-top:1px">' + db(dev.compras.delta_ano_anterior_pct) + ' <span style="color:var(--neutral-500)">vs ano ant.</span></div>'
       : '') +
   '</div>';
 
@@ -1451,6 +1506,9 @@ function rmDevCard(name, dev, icon) {
     (dev.taxa_conversao_pct.delta_mes_anterior_pct != null
       ? '<div style="font-size:10px;margin-top:2px">' + db(dev.taxa_conversao_pct.delta_mes_anterior_pct) + ' <span style="color:var(--neutral-500)">vs mês ant.</span></div>'
       : '') +
+    (dev.taxa_conversao_pct.delta_ano_anterior_pct != null
+      ? '<div style="font-size:10px;margin-top:1px">' + db(dev.taxa_conversao_pct.delta_ano_anterior_pct) + ' <span style="color:var(--neutral-500)">vs ano ant.</span></div>'
+      : '') +
   '</div>';
 
   if (dev.taxa_rejeicao_pct) h += '<div>' +
@@ -1459,19 +1517,32 @@ function rmDevCard(name, dev, icon) {
     (dev.taxa_rejeicao_pct.delta_mes_anterior_pct != null
       ? '<div style="font-size:10px;margin-top:2px">' + db(dev.taxa_rejeicao_pct.delta_mes_anterior_pct, true) + ' <span style="color:var(--neutral-500)">vs mês ant.</span></div>'
       : '') +
+    (dev.taxa_rejeicao_pct.delta_ano_anterior_pct != null
+      ? '<div style="font-size:10px;margin-top:1px">' + db(dev.taxa_rejeicao_pct.delta_ano_anterior_pct, true) + ' <span style="color:var(--neutral-500)">vs ano ant.</span></div>'
+      : '') +
   '</div>';
 
-  h += '</div>';
+  h += '</div>'; // rm-dev-kpis
 
+  // Análise qualitativa
   if (dev.analise) {
     h += '<div class="rm-dev-analise">' + escH(dev.analise) + '</div>';
   }
 
-  h += '</div>';
+  // Recomendações específicas deste dispositivo
+  if (devRecs && devRecs.length > 0) {
+    h += '<div class="rm-dev-recs">';
+    h += '<div class="rm-dev-recs-lbl">Recomendações para ' + name + '</div>';
+    devRecs.forEach(rec => { h += rmRecCard(rec, true); });
+    h += '</div>';
+  }
+
+  h += '</div>'; // rm-dev-body
+  h += '</div>'; // rm-dev-section
   return h;
 }
 
-function rmRecCard(rec) {
+function rmRecCard(rec, inline) {
   const tipoMap = {
     monitorar: {bg:'#FFEFC0', color:'#C3940F'},
     investigar: {bg:'#E0EAFF', color:'#19398A'},
@@ -1486,7 +1557,7 @@ function rmRecCard(rec) {
   const tc = tipoMap[rec.tipo] || tipoMap.monitorar;
   const dc = devMap[rec.dispositivo] || devMap.ambos;
 
-  let h = '<div class="rm-rec-card">';
+  let h = '<div class="rm-rec-card" style="' + (inline ? 'box-shadow:none;background:var(--neutral-100);padding:14px 16px' : '') + '">';
   h += '<div class="rm-rec-badges">';
   h += '<span class="rm-rec-badge" style="background:' + tc.bg + ';color:' + tc.color + '">' + escH(rec.tipo || 'monitorar') + '</span>';
   h += '<span class="rm-rec-badge" style="background:' + dc.bg + ';color:' + dc.color + '">' + escH(rec.dispositivo || 'ambos') + '</span>';
