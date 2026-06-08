@@ -7,6 +7,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@300;400;500;700;900&display=swap" rel="stylesheet">
 <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <style>
 :root{
   --brand-primary:#19398A;--brand-primary-100:#BADAF6;
@@ -340,10 +341,14 @@ tr.cmp-tr td{background:#f5f8ff;font-size:12px;color:var(--compare)}
     </div>
     <div class="auth-sub">Analytics — Experiência de Compra</div>
     <div class="auth-field">
-      <label class="auth-label" for="authInput">Senha de acesso</label>
+      <label class="auth-label" for="authEmail">E-mail</label>
+      <input type="email" class="auth-input" id="authEmail" placeholder="seu@email.com" autocomplete="email">
+    </div>
+    <div class="auth-field">
+      <label class="auth-label" for="authInput">Senha</label>
       <input type="password" class="auth-input" id="authInput" placeholder="••••••••••••" autocomplete="current-password">
     </div>
-    <div class="auth-error" id="authError">Senha incorreta. Tente novamente.</div>
+    <div class="auth-error" id="authError">E-mail ou senha incorretos.</div>
     <button class="auth-btn" id="authBtn">Entrar</button>
   </div>
 </div>
@@ -364,6 +369,7 @@ tr.cmp-tr td{background:#f5f8ff;font-size:12px;color:var(--compare)}
     </div>
   </div>
   <div class="header-updated" id="headerUpdated">carregando...</div>
+  <button onclick="logout()" style="font-family:inherit;font-size:11px;font-weight:600;color:rgba(255,255,255,0.7);background:none;border:1px solid rgba(255,255,255,0.3);border-radius:9999px;padding:4px 12px;cursor:pointer;margin-left:12px" onmouseover="this.style.color='#fff'" onmouseout="this.style.color='rgba(255,255,255,0.7)'">Sair</button>
 </header>
 
 <div class="filters-bar">
@@ -2032,54 +2038,63 @@ function dateDiff(a,b){return Math.round((new Date(b)-new Date(a))/86400000);}
 
 
 // ════════════════════════════════════════════════════════
-// AUTENTICAÇÃO
+// AUTENTICAÇÃO — Supabase
 // ════════════════════════════════════════════════════════
-(function(){
-  const HASH = "6f6231e023dcda666fea36237f7078280f0fee08da395578a2e97bdb49c14819";
-  // hash SHA-256 de "gbexpdecompra#anl26" — a senha nunca fica em texto no código
-  const KEY  = "gbdash_auth";
+const _SB_URL = 'https://ddspskifskoqznemxuuu.supabase.co';
+const _SB_KEY = 'sb_publishable_zY82pfmfz7OuD-RjLrEngA_cUzm7bVH';
+const _sb = supabase.createClient(_SB_URL, _SB_KEY);
 
-  function sha256(str){
-    // Implementação simples via SubtleCrypto
-    const buf = new TextEncoder().encode(str);
-    return crypto.subtle.digest("SHA-256", buf).then(h =>
-      Array.from(new Uint8Array(h)).map(b=>b.toString(16).padStart(2,"0")).join("")
-    );
+(async function(){
+  const { data: { session } } = await _sb.auth.getSession();
+  if(session){
+    document.getElementById('authScreen').classList.add('hidden');
+    loadData();
+    return;
   }
 
-  function isAuthed(){
-    return sessionStorage.getItem(KEY) === "1";
-  }
+  async function tryLogin(){
+    const email = document.getElementById('authEmail').value.trim();
+    const password = document.getElementById('authInput').value;
+    const btn = document.getElementById('authBtn');
+    btn.disabled = true;
+    btn.textContent = 'Entrando...';
 
-  function showApp(){
-    document.getElementById("authScreen").classList.add("hidden");
-  }
+    const { data, error } = await _sb.auth.signInWithPassword({ email, password });
 
-  function tryLogin(){
-    const val = document.getElementById("authInput").value;
-    sha256(val).then(h => {
-      if(h === HASH){
-        sessionStorage.setItem(KEY, "1");
-        showApp();
-      } else {
-        const err = document.getElementById("authError");
-        err.classList.add("show");
-        document.getElementById("authInput").value = "";
-        document.getElementById("authInput").focus();
-        setTimeout(() => err.classList.remove("show"), 3000);
-      }
+    if(error){
+      const err = document.getElementById('authError');
+      err.classList.add('show');
+      document.getElementById('authInput').value = '';
+      document.getElementById('authInput').focus();
+      setTimeout(() => err.classList.remove('show'), 3000);
+      btn.disabled = false;
+      btn.textContent = 'Entrar';
+      return;
+    }
+
+    await _sb.from('audit_log').insert({
+      user_email: email,
+      dashboard: 'exp-de-compra',
+      action: 'login'
     });
+
+    document.getElementById('authScreen').classList.add('hidden');
+    loadData();
   }
 
-  document.getElementById("authBtn").addEventListener("click", tryLogin);
-  document.getElementById("authInput").addEventListener("keydown", e => {
-    if(e.key === "Enter") tryLogin();
+  document.getElementById('authBtn').addEventListener('click', tryLogin);
+  document.getElementById('authInput').addEventListener('keydown', e => {
+    if(e.key === 'Enter') tryLogin();
   });
-
-  if(isAuthed()) showApp();
+  document.getElementById('authEmail').addEventListener('keydown', e => {
+    if(e.key === 'Enter') document.getElementById('authInput').focus();
+  });
 })();
 
-loadData();
+async function logout(){
+  await _sb.auth.signOut();
+  location.reload();
+}
 </script>
 </body>
 </html>
