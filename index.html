@@ -7,6 +7,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@300;400;500;700;900&display=swap" rel="stylesheet">
 <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <style>
 :root{
   --brand-primary:#19398A;--brand-primary-100:#BADAF6;
@@ -214,6 +215,52 @@ tr.cmp-tr td{background:#f5f8ff;font-size:12px;color:var(--compare)}
 .auth-error.show{display:block}
 .auth-screen.hidden{display:none}
 
+/* ── EXPERIMENTOS ── */
+.exp-layout{display:flex;gap:0;align-items:flex-start}
+.exp-nav{width:220px;flex-shrink:0;border-right:1px solid var(--neutral-200);padding:8px 0;position:sticky;top:12px;max-height:80vh;overflow-y:auto}
+.exp-group-lbl{font-size:10px;font-weight:700;color:var(--neutral-400);text-transform:uppercase;letter-spacing:.8px;padding:10px 12px 4px;margin-top:4px}
+.exp-nav-item{padding:7px 12px 7px 16px;cursor:pointer;border-radius:0 6px 6px 0;transition:background .15s;margin-right:8px}
+.exp-nav-item:hover{background:var(--neutral-100)}
+.exp-nav-item.active{background:#e0eaff;color:#19398A}
+.exp-nav-title{font-size:12px;font-weight:600;color:var(--neutral-800);line-height:1.3}
+.exp-nav-period{font-size:10px;color:var(--neutral-500);margin-top:2px}
+.exp-content{flex:1;min-width:0;padding-left:16px}
+.exp-card{background:#fff;border-radius:var(--r-md);box-shadow:var(--shadow-01);padding:24px}
+.exp-card-header{display:flex;align-items:flex-start;gap:12px;margin-bottom:20px;flex-wrap:wrap}
+.exp-card-title{font-size:16px;font-weight:700;color:var(--neutral-800);flex:1;min-width:200px}
+.exp-status-badge{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.7px;padding:4px 10px;border-radius:9999px;white-space:nowrap;flex-shrink:0}
+.exp-status-badge.em_andamento{background:#E0EAFF;color:#19398A}
+.exp-status-badge.concluido{background:#C6E5C3;color:#278A22}
+.exp-status-badge.planejado{background:#FFEFC0;color:#C3940F}
+.exp-status-badge.cancelado{background:#FAD1D7;color:#E1393E}
+.exp-period-lbl{font-size:11px;color:var(--neutral-500);margin-top:3px}
+.exp-section{margin-top:18px}
+.exp-section-lbl{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.7px;color:var(--neutral-500);margin-bottom:8px}
+.exp-metrics{display:flex;flex-wrap:wrap;gap:6px}
+.exp-metric-chip{font-size:11px;font-weight:600;padding:3px 10px;border-radius:9999px;background:var(--neutral-200);color:var(--neutral-700)}
+.exp-linear-link{display:inline-flex;align-items:center;gap:6px;font-size:12px;font-weight:600;color:var(--brand-primary);text-decoration:none;padding:6px 14px;border:1px solid #c0ccf0;border-radius:var(--r-sm);transition:background .15s}
+.exp-linear-link:hover{background:var(--brand-secondary-c-100)}
+.exp-insight-box{background:var(--neutral-100);border-radius:var(--r-sm);padding:12px 16px;display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.exp-insight-tag{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.7px;color:var(--brand-secondary-b);background:var(--brand-secondary-b-100);padding:3px 8px;border-radius:9999px;flex-shrink:0}
+.exp-insight-link{font-family:inherit;font-size:12px;font-weight:600;color:var(--brand-primary);background:none;border:none;cursor:pointer;text-decoration:underline;padding:0;margin-left:auto}
+.exp-resultado-box{background:var(--neutral-100);border-radius:var(--r-sm);padding:16px}
+.exp-veredicto{display:inline-flex;align-items:center;gap:6px;font-size:12px;font-weight:700;padding:4px 12px;border-radius:9999px;margin-bottom:10px}
+.exp-veredicto.confirmado{background:#C6E5C3;color:#278A22}
+.exp-veredicto.refutado{background:#FAD1D7;color:#E1393E}
+.exp-veredicto.inconclusivo{background:var(--neutral-200);color:var(--neutral-700)}
+.exp-delta{font-size:13px;font-weight:700;color:var(--neutral-800);margin-bottom:6px}
+.exp-obs{font-size:13px;color:var(--neutral-700);line-height:1.5}
+.exp-empty{background:#fff;border-radius:var(--r-md);padding:40px 32px;box-shadow:var(--shadow-01);text-align:center;color:var(--neutral-500)}
+.exp-empty-title{font-size:15px;font-weight:700;margin-bottom:8px;color:var(--neutral-700)}
+.exp-empty-sub{font-size:13px;line-height:1.6;max-width:480px;margin:0 auto}
+.exp-filters{display:flex;align-items:center;gap:8px;margin-bottom:20px;flex-wrap:wrap}
+.exp-filter-grp{display:flex;align-items:center;gap:6px}
+.exp-filter-lbl{font-size:11px;font-weight:700;color:var(--neutral-500);text-transform:uppercase;letter-spacing:.5px;white-space:nowrap}
+.exp-filter-btn{font-family:inherit;font-size:11px;font-weight:600;padding:4px 12px;border-radius:9999px;border:1px solid var(--neutral-300);background:#fff;color:var(--neutral-700);cursor:pointer;transition:all .15s;white-space:nowrap}
+.exp-filter-btn:hover{border-color:var(--brand-primary);color:var(--brand-primary)}
+.exp-filter-btn.active{background:var(--brand-primary);color:#fff;border-color:var(--brand-primary)}
+.exp-no-results{background:#fff;border-radius:var(--r-md);padding:24px;box-shadow:var(--shadow-01);color:var(--neutral-500);font-size:13px}
+
 /* ── INSIGHTS NAV ── */
 .ins-layout{display:flex;gap:0;align-items:flex-start}
 .ins-nav{width:190px;flex-shrink:0;border-right:1px solid var(--neutral-200);padding:8px 0;position:sticky;top:12px;max-height:80vh;overflow-y:auto}
@@ -244,10 +291,14 @@ tr.cmp-tr td{background:#f5f8ff;font-size:12px;color:var(--compare)}
     </div>
     <div class="auth-sub">Analytics — Experiência de Compra</div>
     <div class="auth-field">
-      <label class="auth-label" for="authInput">Senha de acesso</label>
+      <label class="auth-label" for="authEmail">E-mail</label>
+      <input type="email" class="auth-input" id="authEmail" placeholder="seu@email.com" autocomplete="email">
+    </div>
+    <div class="auth-field">
+      <label class="auth-label" for="authInput">Senha</label>
       <input type="password" class="auth-input" id="authInput" placeholder="••••••••••••" autocomplete="current-password">
     </div>
-    <div class="auth-error" id="authError">Senha incorreta. Tente novamente.</div>
+    <div class="auth-error" id="authError">E-mail ou senha incorretos.</div>
     <button class="auth-btn" id="authBtn">Entrar</button>
   </div>
 </div>
@@ -268,6 +319,7 @@ tr.cmp-tr td{background:#f5f8ff;font-size:12px;color:var(--compare)}
     </div>
   </div>
   <div class="header-updated" id="headerUpdated">carregando...</div>
+  <button onclick="logout()" style="font-family:inherit;font-size:11px;font-weight:600;color:rgba(255,255,255,0.7);background:none;border:1px solid rgba(255,255,255,0.3);border-radius:9999px;padding:4px 12px;cursor:pointer;margin-left:12px" onmouseover="this.style.color='#fff'" onmouseout="this.style.color='rgba(255,255,255,0.7)'">Sair</button>
 </header>
 
 <div class="filters-bar">
@@ -389,6 +441,7 @@ tr.cmp-tr td{background:#f5f8ff;font-size:12px;color:var(--compare)}
       <button class="tab" data-tab="fu">Funil</button>
       <button class="tab" data-tab="ro">Rotas</button>
       <button class="tab" data-tab="in">Insights IA</button>
+      <button class="tab" data-tab="ex">Experimentos</button>
     </div>
 
     <!-- VISÃO GERAL -->
@@ -474,6 +527,38 @@ tr.cmp-tr td{background:#f5f8ff;font-size:12px;color:var(--compare)}
       </div>
     </div>
 
+    <!-- EXPERIMENTOS -->
+    <div class="tbc" id="tab-ex">
+      <div class="exp-filters" id="expFilters">
+        <div class="exp-filter-grp">
+          <span class="exp-filter-lbl">Status</span>
+          <button class="exp-filter-btn active" data-expf="status" data-expv="">Todos</button>
+          <button class="exp-filter-btn" data-expf="status" data-expv="em_andamento">Em andamento</button>
+          <button class="exp-filter-btn" data-expf="status" data-expv="concluido">Concluídos</button>
+          <button class="exp-filter-btn" data-expf="status" data-expv="planejado">Planejados</button>
+          <button class="exp-filter-btn" data-expf="status" data-expv="cancelado">Cancelados</button>
+        </div>
+        <div class="fdiv"></div>
+        <div class="exp-filter-grp">
+          <span class="exp-filter-lbl">Período</span>
+          <button class="exp-filter-btn active" data-expf="periodo" data-expv="">Tudo</button>
+          <button class="exp-filter-btn" data-expf="periodo" data-expv="30">Últ. 30d</button>
+          <button class="exp-filter-btn" data-expf="periodo" data-expv="90">Últ. 90d</button>
+        </div>
+        <div class="fdiv"></div>
+        <div class="exp-filter-grp">
+          <span class="exp-filter-lbl">Origem</span>
+          <button class="exp-filter-btn active" data-expf="origem" data-expv="">Todos</button>
+          <button class="exp-filter-btn" data-expf="origem" data-expv="com_insight">Com insight</button>
+          <button class="exp-filter-btn" data-expf="origem" data-expv="sem_insight">Sem insight</button>
+        </div>
+      </div>
+      <div class="exp-layout">
+        <nav class="exp-nav" id="expNav"></nav>
+        <div class="exp-content" id="expContent"></div>
+      </div>
+    </div>
+
     <!-- INSIGHTS -->
     <div class="tbc" id="tab-in">
       <div class="ins-layout">
@@ -492,9 +577,13 @@ tr.cmp-tr td{background:#f5f8ff;font-size:12px;color:var(--compare)}
 // ════════════════════════════════════════════════════════
 // ESTADO
 // ════════════════════════════════════════════════════════
-let ALL=[], INSIGHTS=[], CHARTS={};
+let ALL=[], INSIGHTS=[], EXPERIMENTOS=[], CHARTS={};
 let DEV="all";
 let CANAL="all";
+let EXP_FS = ''; // status filter
+let EXP_FP = ''; // periodo filter
+let EXP_FO = ''; // origem filter
+let SEL_EXP = null;
 let P={start:null,end:null};
 let C={start:null,end:null,active:false};
 
@@ -508,6 +597,7 @@ async function loadData(){
     const j=await res.json();
     ALL=(j.daily||[]).sort((a,b)=>a.data<b.data?-1:1);
     INSIGHTS=j.insights||[];
+    EXPERIMENTOS=j.experimentos||[];
     const lastDay=ALL.length?ALL[ALL.length-1].data:"";document.getElementById("headerUpdated").textContent="Dados até "+fmtDF(lastDay);
     setPresetDays(30);
     document.getElementById("appState").style.display="none";
@@ -603,6 +693,7 @@ function render(){
   renderFunil(pri,cmp);
   renderRotas(pri,cmp);
   renderInsights();
+  renderExperimentos();
 }
 
 // ════════════════════════════════════════════════════════
@@ -1067,6 +1158,158 @@ function toggleIns(id) {
 }
 
 // ════════════════════════════════════════════════════════
+// EXPERIMENTOS
+// ════════════════════════════════════════════════════════
+function renderExperimentos() {
+  const nav = document.getElementById('expNav');
+  const content = document.getElementById('expContent');
+  if (!nav || !content) return;
+
+  if (!EXPERIMENTOS || EXPERIMENTOS.length === 0) {
+    nav.innerHTML = '';
+    content.innerHTML = '<div class="exp-empty"><div class="exp-empty-title">Nenhum experimento registrado ainda.</div><div class="exp-empty-sub">Quando o time criar issues no Linear com IDs de insight no formato [INS-YYYY-NNN], os experimentos aparecerão aqui após a revisão quinzenal vincular os resultados.</div></div>';
+    return;
+  }
+
+  let filtered = EXPERIMENTOS.slice();
+  if (EXP_FS) filtered = filtered.filter(e => e.status === EXP_FS);
+  if (EXP_FO === 'com_insight') filtered = filtered.filter(e => e.insight_id);
+  if (EXP_FO === 'sem_insight') filtered = filtered.filter(e => !e.insight_id);
+  if (EXP_FP) {
+    const cutoff = offDate(todayISO(), -parseInt(EXP_FP));
+    filtered = filtered.filter(e => !e.periodo_inicio || e.periodo_inicio >= cutoff);
+  }
+
+  if (filtered.length === 0) {
+    nav.innerHTML = '';
+    content.innerHTML = '<div class="exp-no-results">Nenhum experimento encontrado com os filtros selecionados.</div>';
+    return;
+  }
+
+  const ORDER = ['em_andamento','planejado','concluido','cancelado'];
+  const GROUP_LABELS = {em_andamento:'Em andamento',planejado:'Planejados',concluido:'Concluídos',cancelado:'Cancelados'};
+  const groups = {};
+  ORDER.forEach(k => { groups[k] = []; });
+  filtered.forEach(e => {
+    const k = ORDER.includes(e.status) ? e.status : 'concluido';
+    groups[k].push(e);
+  });
+
+  let navHtml = '';
+  ORDER.forEach(key => {
+    const items = groups[key];
+    if (!items.length) return;
+    navHtml += '<div class="exp-group-lbl">' + GROUP_LABELS[key] + ' (' + items.length + ')</div>';
+    items.forEach(exp => {
+      const p = expPeriodStr(exp);
+      navHtml += '<div class="exp-nav-item" data-expid="' + escH(exp.id) + '" onclick="selectExp(this.dataset.expid)">' +
+        '<div class="exp-nav-title">' + escH(exp.titulo || exp.id) + '</div>' +
+        (p ? '<div class="exp-nav-period">' + p + '</div>' : '') +
+        '</div>';
+    });
+  });
+  nav.innerHTML = navHtml;
+
+  const ids = filtered.map(e => e.id);
+  if (!SEL_EXP || !ids.includes(SEL_EXP)) SEL_EXP = filtered[0]?.id || null;
+  if (SEL_EXP) selectExp(SEL_EXP);
+}
+
+function selectExp(id) {
+  SEL_EXP = id;
+  document.querySelectorAll('.exp-nav-item').forEach(el =>
+    el.classList.toggle('active', el.dataset.expid === id));
+  const exp = EXPERIMENTOS.find(e => e.id === id);
+  const content = document.getElementById('expContent');
+  if (!content) return;
+  if (!exp) { content.innerHTML = ''; return; }
+
+  const STATUS_LABELS = {em_andamento:'Em andamento',concluido:'Concluído',planejado:'Planejado',cancelado:'Cancelado'};
+  const p = expPeriodStr(exp);
+
+  let h = '<div class="exp-card">';
+  h += '<div class="exp-card-header">';
+  h += '<div><div class="exp-card-title">' + escH(exp.titulo || exp.id) + '</div>';
+  if (p) h += '<div class="exp-period-lbl">' + p + '</div>';
+  h += '</div>';
+  h += '<span class="exp-status-badge ' + (exp.status||'') + '">' + (STATUS_LABELS[exp.status]||exp.status||'') + '</span>';
+  h += '</div>';
+
+  if (exp.metricas_alvo && exp.metricas_alvo.length) {
+    h += '<div class="exp-section"><div class="exp-section-lbl">Métricas-alvo</div>';
+    h += '<div class="exp-metrics">' + exp.metricas_alvo.map(m => '<span class="exp-metric-chip">' + escH(m) + '</span>').join('') + '</div>';
+    h += '</div>';
+  }
+
+  if (exp.linear_id) {
+    h += '<div class="exp-section"><div class="exp-section-lbl">Issue no Linear</div>';
+    h += '<a class="exp-linear-link" href="https://linear.app/issue/' + encodeURIComponent(exp.linear_id) + '" target="_blank" rel="noopener">↗ Ver ' + escH(exp.linear_id) + ' no Linear</a>';
+    h += '</div>';
+  }
+
+  if (exp.insight_id) {
+    const ins = findInsightById(exp.insight_id);
+    h += '<div class="exp-section"><div class="exp-section-lbl">Insight de origem</div>';
+    h += '<div class="exp-insight-box">';
+    h += '<span class="exp-insight-tag">' + escH(exp.insight_id) + '</span>';
+    if (ins) {
+      h += '<span style="font-size:13px;color:var(--neutral-800);flex:1;min-width:0">' + escH(ins.tag || ins.titulo || '') + '</span>';
+      h += '<button class="exp-insight-link" data-insid="' + escH(exp.insight_id) + '" onclick="goToInsight(this.dataset.insid)">Ver insight →</button>';
+    } else {
+      h += '<span style="font-size:12px;color:var(--neutral-500)">Insight ID: ' + escH(exp.insight_id) + '</span>';
+    }
+    h += '</div></div>';
+  }
+
+  if (exp.resultado) {
+    const r = exp.resultado;
+    const VL = {confirmado:'✓ Confirmado',refutado:'✗ Refutado',inconclusivo:'~ Inconclusivo'};
+    h += '<div class="exp-section"><div class="exp-section-lbl">Resultado</div>';
+    h += '<div class="exp-resultado-box">';
+    if (r.veredicto) h += '<div class="exp-veredicto ' + r.veredicto + '">' + (VL[r.veredicto]||r.veredicto) + '</div>';
+    if (r.delta_observado) h += '<div class="exp-delta">' + escH(r.delta_observado) + '</div>';
+    if (r.observacao) h += '<div class="exp-obs">' + escH(r.observacao) + '</div>';
+    h += '</div></div>';
+  }
+
+  h += '</div>';
+  content.innerHTML = h;
+}
+
+function expPeriodStr(exp) {
+  if (!exp.periodo_inicio) return '';
+  if (exp.periodo_fim) return fmtDF(exp.periodo_inicio) + ' – ' + fmtDF(exp.periodo_fim);
+  if (exp.status === 'em_andamento') return 'Desde ' + fmtDF(exp.periodo_inicio);
+  return fmtDF(exp.periodo_inicio);
+}
+
+function findInsightById(insId) {
+  for (const week of INSIGHTS) {
+    if (week.items) {
+      const found = week.items.find(ins => ins.id === insId);
+      if (found) return found;
+    }
+  }
+  return null;
+}
+
+function goToInsight(insId) {
+  document.querySelectorAll('.tab').forEach(b => b.classList.remove('active'));
+  document.querySelectorAll('.tbc').forEach(c => c.classList.remove('active'));
+  const btn = document.querySelector('[data-tab="in"]');
+  const tab = document.getElementById('tab-in');
+  if (btn) btn.classList.add('active');
+  if (tab) tab.classList.add('active');
+  const ins = findInsightById(insId);
+  if (ins && ins.semana && typeof selectWeek === 'function') selectWeek(ins.semana);
+}
+
+function escH(s) {
+  if (!s) return '';
+  return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+
+// ════════════════════════════════════════════════════════
 // VARIAÇÃO POR SEGMENTO
 // ════════════════════════════════════════════════════════
 function renderVariacaoSegmento(pri,cmp){
@@ -1146,53 +1389,26 @@ function renderVariacaoSegmento(pri,cmp){
     const bgColors=sorted.delta.map(v=>v>=0?"rgba(39,138,34,0.18)":"rgba(225,57,62,0.18)");
     CHARTS[canvasId]=new Chart(ctx,{
       type:"bar",
-      data:{
-        labels:sorted.labels,
-        datasets:[{
-          label:"Δ vs Período 2",
-          data:sorted.delta,
-          backgroundColor:bgColors,
-          borderColor:colors,
-          borderWidth:2,
-          borderRadius:4,
-          barPercentage:0.6,
-        }]
-      },
+      data:{labels:sorted.labels,datasets:[{label:"Δ vs Período 2",data:sorted.delta,backgroundColor:bgColors,borderColor:colors,borderWidth:2,borderRadius:4,barPercentage:0.6}]},
       options:{
-        indexAxis:"y",
-        responsive:true,maintainAspectRatio:false,
+        indexAxis:"y",responsive:true,maintainAspectRatio:false,
         plugins:{
           legend:{display:false},
           tooltip:{
             callbacks:{
               title:(items)=>items[0]?.label||"",
               label:(item)=>{
-                const v=item.parsed.x;
-                const idx=item.dataIndex;
-                const pv=sorted.pri[idx];
-                const cv=sorted.cmp[idx];
+                const v=item.parsed.x,idx=item.dataIndex,pv=sorted.pri[idx],cv=sorted.cmp[idx];
                 const pct=cv!==0?((v/Math.abs(cv))*100):null;
                 const sign=v>0?"+":"";
                 const pctStr=pct!=null?` (${sign}${pct.toFixed(1)}%)`:"";
-                return[
-                  `Δ: ${v>=0?"+":""}${fmtN(v)}${suffix}${pctStr}`,
-                  `P1: ${fmtN(pv)}${suffix}`,
-                  `P2: ${fmtN(cv)}${suffix}`,
-                ];
+                return[`Δ: ${v>=0?"+":""}${fmtN(v)}${suffix}${pctStr}`,`P1: ${fmtN(pv)}${suffix}`,`P2: ${fmtN(cv)}${suffix}`];
               },
             },
-            backgroundColor:"rgba(14,14,14,0.88)",titleColor:"#fff",
-            bodyColor:"#e0e0e0",padding:10,
-            bodyFont:{size:11,family:"'Nunito Sans'"},
+            backgroundColor:"rgba(14,14,14,0.88)",titleColor:"#fff",bodyColor:"#e0e0e0",padding:10,bodyFont:{size:11,family:"'Nunito Sans'"},
           },
         },
-        scales:{
-          x:{
-            ticks:{font:{size:10},callback:v=>fmtN(v)+suffix},
-            grid:{color:"#EEEEEE"},
-          },
-          y:{ticks:{font:{size:11}},grid:{display:false}},
-        },
+        scales:{x:{ticks:{font:{size:10},callback:v=>fmtN(v)+suffix},grid:{color:"#EEEEEE"}},y:{ticks:{font:{size:11}},grid:{display:false}}},
       }
     });
   }
@@ -1255,27 +1471,17 @@ function mkLine(cid,lid,pri,cmp,metric,label,color,hasCmp){
           title:(items)=>{
             const idx=items[0]?.dataIndex;
             const priDate=pri[idx]?.data||"";
-            // Sem comparação: mostrar só a data do dia
-            if(!hasCmp||!cmp.length){
-              return priDate?fmtDF(priDate):"";
-            }
-            // Com comparação: mostrar data de cada série
+            if(!hasCmp||!cmp.length){ return priDate?fmtDF(priDate):""; }
             const pos=idx/Math.max(vals.length-1,1)*Math.max(cmpVals.length-1,0);
             const ci=Math.round(pos);
             const cd=cmp[ci]?.data||"";
-            return[
-              priDate?"P1 · "+fmtDF(priDate):"",
-              cd?"P2 · "+fmtDF(cd):"",
-            ].filter(Boolean);
+            return[priDate?"P1 · "+fmtDF(priDate):"",cd?"P2 · "+fmtDF(cd):""].filter(Boolean);
           },
           label:(item)=>{
             const v=item.parsed.y; if(v==null) return null;
             const sym=item.datasetIndex===0?"●":"◌";
             const suf=metric.includes("pct")?"%":"";
-            // Exibir só o nome da métrica no corpo, não o intervalo completo
-            const seriesName=hasCmp&&cmp.length
-              ?(item.datasetIndex===0?"Período 1":"Período 2")
-              :label;
+            const seriesName=hasCmp&&cmp.length?(item.datasetIndex===0?"Período 1":"Período 2"):label;
             return`${sym} ${seriesName}: ${fmtN(v)}${suf}`;
           },
           afterLabel:(item)=>{
@@ -1304,70 +1510,28 @@ function mkDonut(id,labels,values,colors,cmpValues,cmpLabel){
   if(!ctx) return;
   if(CHARTS[id]) CHARTS[id].destroy();
 
-  // Com comparativo: barras horizontais agrupadas (melhor para comparar shares)
   if(cmpValues&&cmpValues.length){
     const priTot=values.reduce((s,v)=>s+v,0)||1;
     const cmpTot=cmpValues.reduce((s,v)=>s+v,0)||1;
     const priPct=values.map(v=>+(v/priTot*100).toFixed(1));
     const cmpPct=cmpValues.map(v=>+(v/cmpTot*100).toFixed(1));
-    // Labels sem o % (vem do donut) — limpar
     const cleanLabels=labels.map(l=>l.replace(/\s[\d.]+%$/,''));
     const priLabel_=P.start&&P.end?fmtDF(P.start)+" – "+fmtDF(P.end):"Período";
     CHARTS[id]=new Chart(ctx,{type:'bar',
       data:{
         labels:cleanLabels,
         datasets:[
-          {
-            label: priLabel_,
-            data: priPct,
-            backgroundColor: colors.map(c=>c+'DD'),
-            borderColor: colors,
-            borderWidth: 1.5,
-            borderRadius: 4,
-            barPercentage: 0.55,
-            categoryPercentage: 0.85,
-          },
-          {
-            label: cmpLabel||'Comparação',
-            data: cmpPct,
-            backgroundColor: colors.map(c=>c+'55'),
-            borderColor: colors,
-            borderWidth: 1.5,
-            borderRadius: 4,
-            borderDash: [4,3],
-            barPercentage: 0.55,
-            categoryPercentage: 0.85,
-          },
+          {label:priLabel_,data:priPct,backgroundColor:colors.map(c=>c+'DD'),borderColor:colors,borderWidth:1.5,borderRadius:4,barPercentage:0.55,categoryPercentage:0.85},
+          {label:cmpLabel||'Comparação',data:cmpPct,backgroundColor:colors.map(c=>c+'55'),borderColor:colors,borderWidth:1.5,borderRadius:4,barPercentage:0.55,categoryPercentage:0.85},
         ]
       },
       options:{
         indexAxis:'y',responsive:true,maintainAspectRatio:false,
         plugins:{
-          legend:{
-            display:true,position:'top',
-            labels:{
-              font:{size:10,family:"'Nunito Sans'"},
-              boxWidth:12,padding:10,
-              generateLabels:(chart)=>{
-                return chart.data.datasets.map((ds,i)=>({
-                  text: ds.label,
-                  fillStyle: i===0 ? colors[0]+'DD' : colors[0]+'55',
-                  strokeStyle: colors[0],
-                  lineWidth: 1.5,
-                  lineDash: i===1 ? [4,3] : [],
-                  hidden: false,
-                  datasetIndex: i,
-                }));
-              }
-            }
-          },
+          legend:{display:true,position:'top',labels:{font:{size:10,family:"'Nunito Sans'"},boxWidth:12,padding:10}},
           tooltip:{
             callbacks:{
-              label:(item)=>{
-                const v=item.parsed.x;
-                const sym=item.datasetIndex===0?"●":"◌";
-                return`${sym} ${item.dataset.label}: ${v}%`;
-              },
+              label:(item)=>{const v=item.parsed.x;const sym=item.datasetIndex===0?"●":"◌";return`${sym} ${item.dataset.label}: ${v}%`;},
               afterBody:(items)=>{
                 if(items.length<2) return null;
                 const priV=items.find(i=>i.datasetIndex===0)?.parsed.x;
@@ -1378,21 +1542,15 @@ function mkDonut(id,labels,values,colors,cmpValues,cmpLabel){
                 return`  ${arrow} ${diff>0?"+":""}${diff}pp vs comparação`;
               }
             },
-            backgroundColor:"rgba(14,14,14,0.88)",
-            titleColor:"#fff",bodyColor:"#e0e0e0",
-            padding:10,bodyFont:{size:11,family:"'Nunito Sans'"},
+            backgroundColor:"rgba(14,14,14,0.88)",titleColor:"#fff",bodyColor:"#e0e0e0",padding:10,bodyFont:{size:11,family:"'Nunito Sans'"},
           },
         },
-        scales:{
-          x:{ticks:{callback:v=>v+'%',font:{size:10}},grid:{color:'#EEEEEE'},suggestedMax:100},
-          y:{ticks:{font:{size:10}},grid:{display:false}},
-        },
+        scales:{x:{ticks:{callback:v=>v+'%',font:{size:10}},grid:{color:'#EEEEEE'},suggestedMax:100},y:{ticks:{font:{size:10}},grid:{display:false}}},
       }
     });
     return;
   }
 
-  // Sem comparativo: donut padrão
   CHARTS[id]=new Chart(ctx,{type:'doughnut',
     data:{labels,datasets:[{data:values,backgroundColor:colors,borderWidth:2,borderColor:'#fff'}]},
     options:{responsive:true,maintainAspectRatio:false,cutout:'60%',
@@ -1427,7 +1585,6 @@ function clearCompare(){C.active=false;C.start=null;C.end=null;updateCmpBanner()
 function setPresetDays(days){
   const last=ALL[ALL.length-1]?.data; if(!last) return;
   setPrimary(offDate(last,-days+1),last);
-  // marcar pill ativo
   document.querySelectorAll("[data-period]").forEach(b=>b.classList.toggle("active",parseInt(b.dataset.period)===days));
   document.getElementById("btnPri").classList.remove("active");
 }
@@ -1454,13 +1611,11 @@ function applyCmpPreset(key){
     setCompare(offDate(e,-days+1),e);
   }
   else if(key==="pm"){
-    // Usar T12:00:00Z para evitar problema de fuso (UTC-3 vira dia anterior)
     const d=new Date(P.start+"T12:00:00Z");
-    const y=d.getUTCFullYear(), m=d.getUTCMonth(); // mês do P.start (0-indexed)
-    // Mês anterior: se m=0 (jan), volta para dez do ano anterior
+    const y=d.getUTCFullYear(), m=d.getUTCMonth();
     const pm=m===0?11:m-1;
     const py=m===0?y-1:y;
-    const lastDay=new Date(Date.UTC(py,pm+1,0)); // dia 0 do próximo mês = último dia do mês
+    const lastDay=new Date(Date.UTC(py,pm+1,0));
     const s=`${String(py).padStart(4,'0')}-${String(pm+1).padStart(2,'0')}-01`;
     const e=isoD(lastDay);
     setCompare(s,e);
@@ -1476,4 +1631,248 @@ function updatePriBtn(){
     document.querySelectorAll("[data-period]").forEach(b=>b.classList.remove("active"));}
   else{lbl.textContent="Customizado";btn.classList.remove("active");}
 }
-function updateCmpBan
+function updateCmpBanner(){
+  const banner=document.getElementById("cmpBanner"),btn=document.getElementById("btnCmp"),lbl=document.getElementById("lblCmp");
+  if(C.active&&C.start&&C.end){
+    banner.classList.remove("hidden");
+    document.getElementById("banPri").textContent=fmtDF(P.start)+" – "+fmtDF(P.end);
+    document.getElementById("banCmp").textContent=fmtDF(C.start)+" – "+fmtDF(C.end);
+    btn.classList.add("cactive"); lbl.textContent=fmtDS(C.start)+" – "+fmtDS(C.end);
+  }else{
+    banner.classList.add("hidden");
+    btn.classList.remove("cactive"); lbl.textContent="Adicionar comparação";
+  }
+}
+
+// ════════════════════════════════════════════════════════
+// DROPDOWN UI
+// ════════════════════════════════════════════════════════
+function openDrop(id, triggerEl){
+  document.querySelectorAll(".dr-drop").forEach(d=>d.classList.remove("open"));
+  const drop = document.getElementById(id);
+  if(triggerEl){
+    const rect = triggerEl.getBoundingClientRect();
+    const dropW = 340;
+    const left  = Math.min(rect.left, window.innerWidth - dropW - 8);
+    drop.style.top  = (rect.bottom + window.scrollY + 8) + "px";
+    drop.style.left = left + "px";
+  }
+  drop.classList.add("open");
+  document._openDrop = id;
+}
+function closeDrop(){
+  document.querySelectorAll(".dr-drop").forEach(d=>d.classList.remove("open"));
+  document._openDrop = null;
+}
+
+document.getElementById("btnPri").addEventListener("click",e=>{
+  e.stopPropagation();
+  const open=document.getElementById("dropPri").classList.contains("open");
+  closeDrop();
+  if(!open){
+    if(P.start) document.getElementById("priS").value=P.start;
+    if(P.end)   document.getElementById("priE").value=P.end;
+    openDrop("dropPri", document.getElementById("btnPri"));
+  }
+});
+document.getElementById("btnCmp").addEventListener("click",e=>{
+  e.stopPropagation();
+  const open=document.getElementById("dropCmp").classList.contains("open");
+  closeDrop();
+  if(!open){
+    if(C.start) document.getElementById("cmpS").value=C.start;
+    if(C.end)   document.getElementById("cmpE").value=C.end;
+    openDrop("dropCmp", document.getElementById("btnCmp"));
+  }
+});
+document.addEventListener("mousedown", function(e){
+  if(!document._openDrop) return;
+  const drop = document.getElementById(document._openDrop);
+  const btnPri = document.getElementById("btnPri");
+  const btnCmp = document.getElementById("btnCmp");
+  if(drop && !drop.contains(e.target) && !btnPri.contains(e.target) && !btnCmp.contains(e.target)){
+    closeDrop();
+  }
+});
+
+// Presets período principal
+document.querySelectorAll("#priPresets .dr-preset").forEach(btn=>{
+  btn.addEventListener("click",()=>{
+    document.querySelectorAll("#priPresets .dr-preset").forEach(b=>b.classList.remove("active"));
+    btn.classList.add("active");
+    if(btn.dataset.days) setPresetDays(parseInt(btn.dataset.days));
+    else if(btn.dataset.sp) setPresetSp(btn.dataset.sp);
+    closeDrop();
+  });
+});
+
+// Presets comparação
+document.querySelectorAll("#cmpPresets .dr-preset").forEach(btn=>{
+  btn.addEventListener("click",()=>{
+    document.querySelectorAll("#cmpPresets .dr-preset").forEach(b=>b.classList.remove("active"));
+    btn.classList.add("active");
+    if(btn.dataset.cmp){applyCmpPreset(btn.dataset.cmp);closeDrop();}
+    else if(btn.dataset.days){
+      const last=ALL[ALL.length-1]?.data;
+      if(last) setCompare(offDate(last,-parseInt(btn.dataset.days)+1),last);
+      closeDrop();
+    }
+  });
+});
+
+document.getElementById("btnApplyPri").addEventListener("click",()=>{
+  const s=document.getElementById("priS").value,e=document.getElementById("priE").value;
+  if(s&&e&&s<=e){setPrimary(s,e);closeDrop();}else alert("Intervalo inválido.");
+});
+document.getElementById("btnCancelPri").addEventListener("click",closeDrop);
+
+document.getElementById("btnApplyCmp").addEventListener("click",()=>{
+  const s=document.getElementById("cmpS").value,e=document.getElementById("cmpE").value;
+  if(s&&e&&s<=e){setCompare(s,e);closeDrop();}else alert("Intervalo inválido.");
+});
+document.getElementById("btnCancelCmp").addEventListener("click",closeDrop);
+document.getElementById("btnClearCmp").addEventListener("click",()=>{clearCompare();closeDrop();});
+document.getElementById("btnBanClear").addEventListener("click",clearCompare);
+
+// Pills de período rápido
+document.querySelectorAll("[data-period]").forEach(btn=>{
+  btn.addEventListener("click",()=>{
+    const days=parseInt(btn.dataset.period);
+    if(days===0) setPresetSp("all");
+    else setPresetDays(days);
+  });
+});
+
+// Dispositivo
+document.querySelectorAll("[data-dev]").forEach(btn=>{
+  btn.addEventListener("click",()=>{
+    document.querySelectorAll("[data-dev]").forEach(b=>b.classList.remove("active"));
+    btn.classList.add("active");
+    DEV=btn.dataset.dev;
+    render();
+  });
+});
+
+// Experimentos — filtros
+document.querySelectorAll("[data-expf]").forEach(btn=>{
+  btn.addEventListener("click",()=>{
+    const field=btn.dataset.expf, val=btn.dataset.expv;
+    document.querySelectorAll(`[data-expf="${field}"]`).forEach(b=>b.classList.remove("active"));
+    btn.classList.add("active");
+    if(field==="status") EXP_FS=val;
+    else if(field==="periodo") EXP_FP=val;
+    else if(field==="origem") EXP_FO=val;
+    renderExperimentos();
+  });
+});
+
+// Origem / Canal
+document.querySelectorAll("[data-canal]").forEach(btn=>{
+  btn.addEventListener("click",()=>{
+    document.querySelectorAll("[data-canal]").forEach(b=>b.classList.remove("active"));
+    btn.classList.add("active");
+    CANAL=btn.dataset.canal;
+    render();
+  });
+});
+
+// Tabs
+document.querySelectorAll("[data-tab]").forEach(btn=>{
+  btn.addEventListener("click",()=>{
+    document.querySelectorAll(".tab").forEach(b=>b.classList.remove("active"));
+    document.querySelectorAll(".tbc").forEach(c=>c.classList.remove("active"));
+    btn.classList.add("active");
+    document.getElementById("tab-"+btn.dataset.tab).classList.add("active");
+  });
+});
+
+// ════════════════════════════════════════════════════════
+// UTILS
+// ════════════════════════════════════════════════════════
+function agg(data){
+  return data.reduce(function(a,d){return{
+    sessoes:a.sessoes+(d.sessoes||0),
+    usuarios:a.usuarios+(d.usuarios||0),
+    novos_usuarios:a.novos_usuarios+(d.novos_usuarios||0),
+    pageviews:a.pageviews+(d.pageviews||0),
+    compras:a.compras+(d.compras||0),
+  };},{sessoes:0,usuarios:0,novos_usuarios:0,pageviews:0,compras:0});
+}
+function wavg(data,m,w){
+  const tw=data.reduce((s,d)=>s+parseFloat(d[w]||0),0);
+  if(!tw) return 0;
+  return data.reduce((s,d)=>s+parseFloat(d[m]||0)*parseFloat(d[w]||0),0)/tw;
+}
+function r4(v){return Math.round(v*10000)/10000;}
+function fmtN(n){if(n==null)return"—";return Number(n).toLocaleString("pt-BR");}
+function fmtDur(s){const m=Math.floor(s/60),r=Math.round(s%60);return m>0?`${m}m ${r}s`:`${r}s`;}
+function fmtDS(iso){if(!iso)return"";const[,m,d]=iso.split("-");return`${d}/${m}`;}
+function fmtDF(iso){if(!iso)return"";const[y,m,d]=iso.split("-");return`${d}/${m}/${y}`;}
+function fmtDT(iso){if(!iso)return"";return new Date(iso).toLocaleString("pt-BR",{timeZone:"America/Sao_Paulo",dateStyle:"short",timeStyle:"short"});}
+function todayISO(){return new Date().toISOString().slice(0,10);}
+function isoD(d){return d.toISOString().slice(0,10);}
+function offDate(iso,days){const d=new Date(iso+"T12:00:00Z");d.setUTCDate(d.getUTCDate()+days);return isoD(d);}
+function offYears(iso,y){const d=new Date(iso+"T12:00:00Z");d.setUTCFullYear(d.getUTCFullYear()+y);return isoD(d);}
+function dateDiff(a,b){return Math.round((new Date(b)-new Date(a))/86400000);}
+
+// ════════════════════════════════════════════════════════
+// AUTENTICAÇÃO — Supabase
+// ════════════════════════════════════════════════════════
+const _SB_URL = 'https://ddspskifskoqznemxuuu.supabase.co';
+const _SB_KEY = 'sb_publishable_zY82pfmfz7OuD-RjLrEngA_cUzm7bVH';
+const _sb = supabase.createClient(_SB_URL, _SB_KEY);
+
+(async function(){
+  const { data: { session } } = await _sb.auth.getSession();
+  if(session){
+    document.getElementById('authScreen').classList.add('hidden');
+    loadData();
+    return;
+  }
+
+  async function tryLogin(){
+    const email = document.getElementById('authEmail').value.trim();
+    const password = document.getElementById('authInput').value;
+    const btn = document.getElementById('authBtn');
+    btn.disabled = true;
+    btn.textContent = 'Entrando...';
+
+    const { data, error } = await _sb.auth.signInWithPassword({ email, password });
+
+    if(error){
+      const err = document.getElementById('authError');
+      err.classList.add('show');
+      document.getElementById('authInput').value = '';
+      document.getElementById('authInput').focus();
+      setTimeout(() => err.classList.remove('show'), 3000);
+      btn.disabled = false;
+      btn.textContent = 'Entrar';
+      return;
+    }
+
+    await _sb.from('audit_log').insert({
+      user_email: email,
+      dashboard: 'exp-de-compra',
+      action: 'login'
+    });
+
+    document.getElementById('authScreen').classList.add('hidden');
+    loadData();
+  }
+
+  document.getElementById('authBtn').addEventListener('click', tryLogin);
+  document.getElementById('authInput').addEventListener('keydown', e => {
+    if(e.key === 'Enter') tryLogin();
+  });
+  document.getElementById('authEmail').addEventListener('keydown', e => {
+    if(e.key === 'Enter') document.getElementById('authInput').focus();
+  });
+})();
+
+async function logout(){
+  await _sb.auth.signOut();
+  location.reload();
+}
+</script>
+</body>
+</html>
