@@ -1876,3 +1876,284 @@ async function logout(){
 </script>
 </body>
 </html>
+
+
+/* Restored missing functions */
+function db(d, inverted) {
+    if (d == null) return '';
+    const up = inverted ? d < 0 : d > 0;
+    const cl = Math.abs(d) < 0.1 ? 'nt' : (up ? 'up' : 'dn');
+    const ar = d > 0.1 ? '▲' : (d < -0.1 ? '▼' : '—');
+    return '<span class="delta ' + cl + '">' + ar + ' ' + Math.abs(d).toFixed(1) + '%</span>';
+  }
+
+function renderResumoMensal() {
+  const nav = document.getElementById('rmNav');
+  const content = document.getElementById('rmContent');
+  if (!nav || !content) return;
+
+  if (!RESUMO_MENSAL || RESUMO_MENSAL.length === 0) {
+    nav.innerHTML = '';
+    content.innerHTML = '<div class="rm-empty">Nenhum resumo mensal gerado ainda.<br>A tarefa agendada gera o resumo automaticamente no dia 1 de cada mês.</div>';
+    return;
+  }
+
+  let navHtml = '';
+  RESUMO_MENSAL.forEach(rm => {
+    const cls = rm.classificacao || 'estavel';
+    navHtml += '<div class="rm-nav-item rm-cls-' + cls + '" data-mes="' + escH(rm.mes) + '" onclick="selectMes(\'' + escH(rm.mes) + '\')">' +
+      '<div class="rm-nav-label">' + escH(rm.label) + '</div>' +
+      '<div class="rm-nav-cls">' + rmClsLabel(cls) + '</div>' +
+    '</div>';
+  });
+  nav.innerHTML = navHtml;
+
+  if (!SEL_RM || !RESUMO_MENSAL.find(r => r.mes === SEL_RM)) {
+    SEL_RM = RESUMO_MENSAL[0].mes;
+  }
+  selectMes(SEL_RM);
+}
+
+function rmClsLabel(cls) {
+  return {crescimento:'Crescimento', estavel:'Estável', alerta:'Alerta', queda:'Queda'}[cls] || cls;
+}
+
+function rmDevSection(name, dev, icon, devRecs) {
+  function db(d, inv) {
+    if (d == null) return '';
+    const up = inv ? d < 0 : d > 0;
+    const cl = Math.abs(d) < 0.1 ? 'nt' : (up ? 'up' : 'dn');
+    const ar = d > 0.1 ? '▲' : (d < -0.1 ? '▼' : '—');
+    return '<span class="delta ' + cl + '">' + ar + ' ' + Math.abs(d).toFixed(1) + '%</span>';
+  }
+
+  let h = '<div class="rm-dev-section">';
+
+  // Header da seção
+  h += '<div class="rm-dev-section-header">';
+  h += '<span class="rm-dev-section-icon">' + icon + '</span>';
+  h += '<span class="rm-dev-section-name">' + name + '</span>';
+  if (dev.sessoes && dev.sessoes.share_pct != null) {
+    h += '<span class="rm-dev-section-share">' + dev.sessoes.share_pct.toFixed(1) + '% das sessões</span>';
+  }
+  h += '</div>';
+
+  h += '<div class="rm-dev-body">';
+
+  // KPIs em grid de 4 colunas
+  h += '<div class="rm-dev-kpis">';
+
+  if (dev.sessoes) h += '<div>' +
+    '<div class="rm-dev-kpi-lbl">Sessões</div>' +
+    '<div class="rm-dev-kpi-val">' + fmtN(dev.sessoes.valor) + '</div>' +
+    (dev.sessoes.delta_mes_anterior_pct != null
+      ? '<div style="font-size:10px;margin-top:2px">' + db(dev.sessoes.delta_mes_anterior_pct) + ' <span style="color:var(--neutral-500)">vs mês ant.</span></div>'
+      : '') +
+    (dev.sessoes.delta_ano_anterior_pct != null
+      ? '<div style="font-size:10px;margin-top:1px">' + db(dev.sessoes.delta_ano_anterior_pct) + ' <span style="color:var(--neutral-500)">vs ano ant.</span></div>'
+      : '') +
+  '</div>';
+
+  if (dev.compras) h += '<div>' +
+    '<div class="rm-dev-kpi-lbl">Compras' + (dev.compras.share_pct != null ? ' <span style="font-weight:400;text-transform:none;letter-spacing:0">(' + dev.compras.share_pct.toFixed(1) + '%)</span>' : '') + '</div>' +
+    '<div class="rm-dev-kpi-val">' + fmtN(dev.compras.valor) + '</div>' +
+    (dev.compras.delta_mes_anterior_pct != null
+      ? '<div style="font-size:10px;margin-top:2px">' + db(dev.compras.delta_mes_anterior_pct) + ' <span style="color:var(--neutral-500)">vs mês ant.</span></div>'
+      : '') +
+    (dev.compras.delta_ano_anterior_pct != null
+      ? '<div style="font-size:10px;margin-top:1px">' + db(dev.compras.delta_ano_anterior_pct) + ' <span style="color:var(--neutral-500)">vs ano ant.</span></div>'
+      : '') +
+  '</div>';
+
+  if (dev.taxa_conversao_pct) h += '<div>' +
+    '<div class="rm-dev-kpi-lbl">Conversão</div>' +
+    '<div class="rm-dev-kpi-val">' + (typeof dev.taxa_conversao_pct.valor === 'number' ? dev.taxa_conversao_pct.valor.toFixed(2) : dev.taxa_conversao_pct.valor) + '%</div>' +
+    (dev.taxa_conversao_pct.delta_mes_anterior_pct != null
+      ? '<div style="font-size:10px;margin-top:2px">' + db(dev.taxa_conversao_pct.delta_mes_anterior_pct) + ' <span style="color:var(--neutral-500)">vs mês ant.</span></div>'
+      : '') +
+    (dev.taxa_conversao_pct.delta_ano_anterior_pct != null
+      ? '<div style="font-size:10px;margin-top:1px">' + db(dev.taxa_conversao_pct.delta_ano_anterior_pct) + ' <span style="color:var(--neutral-500)">vs ano ant.</span></div>'
+      : '') +
+  '</div>';
+
+  if (dev.taxa_rejeicao_pct) h += '<div>' +
+    '<div class="rm-dev-kpi-lbl">Rejeição</div>' +
+    '<div class="rm-dev-kpi-val">' + (typeof dev.taxa_rejeicao_pct.valor === 'number' ? dev.taxa_rejeicao_pct.valor.toFixed(2) : dev.taxa_rejeicao_pct.valor) + '%</div>' +
+    (dev.taxa_rejeicao_pct.delta_mes_anterior_pct != null
+      ? '<div style="font-size:10px;margin-top:2px">' + db(dev.taxa_rejeicao_pct.delta_mes_anterior_pct, true) + ' <span style="color:var(--neutral-500)">vs mês ant.</span></div>'
+      : '') +
+    (dev.taxa_rejeicao_pct.delta_ano_anterior_pct != null
+      ? '<div style="font-size:10px;margin-top:1px">' + db(dev.taxa_rejeicao_pct.delta_ano_anterior_pct, true) + ' <span style="color:var(--neutral-500)">vs ano ant.</span></div>'
+      : '') +
+  '</div>';
+
+  h += '</div>'; // rm-dev-kpis
+
+  // Análise qualitativa
+  if (dev.analise) {
+    h += '<div class="rm-dev-analise">' + escH(dev.analise) + '</div>';
+  }
+
+  // Recomendações específicas deste dispositivo
+  if (devRecs && devRecs.length > 0) {
+    h += '<div class="rm-dev-recs">';
+    h += '<div class="rm-dev-recs-lbl">Recomendações para ' + name + '</div>';
+    devRecs.forEach(rec => { h += rmRecCard(rec, true); });
+    h += '</div>';
+  }
+
+  h += '</div>'; // rm-dev-body
+  h += '</div>'; // rm-dev-section
+  return h;
+}
+
+function rmKpi(label, metrica, isPct, suffix, inv) {
+  if (!metrica) return '';
+  const val = metrica.valor;
+  const dmp = metrica.delta_mes_anterior_pct;
+  const dap = metrica.delta_ano_anterior_pct;
+  const valFmt = isPct
+    ? (typeof val === 'number' ? val.toFixed(2) : val) + suffix
+    : fmtN(val) + suffix;
+
+  function db(d, inverted) {
+    if (d == null) return '';
+    const up = inverted ? d < 0 : d > 0;
+    const cl = Math.abs(d) < 0.1 ? 'nt' : (up ? 'up' : 'dn');
+    const ar = d > 0.1 ? '▲' : (d < -0.1 ? '▼' : '—');
+    return '<span class="delta ' + cl + '">' + ar + ' ' + Math.abs(d).toFixed(1) + '%</span>';
+  }
+
+  return '<div class="kpi">' +
+    '<div class="kpi-lbl">' + escH(label) + '</div>' +
+    '<div class="kpi-val">' + valFmt + '</div>' +
+    '<div style="display:flex;flex-direction:column;gap:4px;margin-top:8px">' +
+      (dmp != null ? '<div style="font-size:11px;color:var(--neutral-500)">vs mês ant. ' + db(dmp, inv) + '</div>' : '') +
+      (dap != null ? '<div style="font-size:11px;color:var(--neutral-500)">vs ano ant. ' + db(dap, inv) + '</div>' : '') +
+    '</div>' +
+  '</div>';
+}
+
+function rmRecCard(rec, inline) {
+  const tipoMap = {
+    monitorar: {bg:'#FFEFC0', color:'#C3940F'},
+    investigar: {bg:'#E0EAFF', color:'#19398A'},
+    corrigir:   {bg:'#FAD1D7', color:'#E1393E'},
+    testar:     {bg:'#C6E5C3', color:'#278A22'},
+  };
+  const devMap = {
+    mobile:  {bg:'#f3f0ff', color:'#6366f1'},
+    desktop: {bg:'#E0EAFF', color:'#19398A'},
+    ambos:   {bg:'#EEEEEE', color:'#515151'},
+  };
+  const tc = tipoMap[rec.tipo] || tipoMap.monitorar;
+  const dc = devMap[rec.dispositivo] || devMap.ambos;
+
+  let h = '<div class="rm-rec-card" style="' + (inline ? 'box-shadow:none;background:var(--neutral-100);padding:14px 16px' : '') + '">';
+  h += '<div class="rm-rec-badges">';
+  h += '<span class="rm-rec-badge" style="background:' + tc.bg + ';color:' + tc.color + '">' + escH(rec.tipo || 'monitorar') + '</span>';
+  h += '<span class="rm-rec-badge" style="background:' + dc.bg + ';color:' + dc.color + '">' + escH(rec.dispositivo || 'ambos') + '</span>';
+  h += '</div>';
+  h += '<div class="rm-rec-acao">' + escH(rec.acao) + '</div>';
+  if (rec.justificativa) h += '<div class="rm-rec-just">' + escH(rec.justificativa) + '</div>';
+  if (rec.impacto_esperado) h += '<div class="rm-rec-impacto"><span class="rm-rec-impacto-lbl">Impacto esperado:</span> ' + escH(rec.impacto_esperado) + '</div>';
+  h += '</div>';
+  return h;
+}
+
+function selectMes(mes) {
+  SEL_RM = mes;
+  document.querySelectorAll('.rm-nav-item').forEach(el =>
+    el.classList.toggle('active', el.dataset.mes === mes));
+
+  const rm = RESUMO_MENSAL.find(r => r.mes === mes);
+  const content = document.getElementById('rmContent');
+  if (!content || !rm) return;
+
+  const cls = rm.classificacao || 'estavel';
+  const m = rm.metricas || {};
+  const dev = rm.analise_dispositivos || {};
+  const recs = rm.recomendacoes || [];
+
+  // Separar recomendações por escopo
+  const recsMobile  = recs.filter(r => r.dispositivo === 'mobile');
+  const recsDesktop = recs.filter(r => r.dispositivo === 'desktop');
+  const recsAmbos   = recs.filter(r => !r.dispositivo || r.dispositivo === 'ambos');
+
+  // Contexto histórico: mês anterior no array
+  const idxAtual = RESUMO_MENSAL.findIndex(r => r.mes === mes);
+  const rmAnterior = idxAtual >= 0 && idxAtual < RESUMO_MENSAL.length - 1
+    ? RESUMO_MENSAL[idxAtual + 1] : null; // array ordenado desc, então +1 é o mês anterior
+
+  let h = '';
+
+  // ── Cabeçalho ────────────────────────────────────────
+  h += '<div class="rm-header">';
+  h += '<div><div class="rm-title">' + escH(rm.label) + '</div>';
+  if (rm.gerado_em) h += '<div class="rm-generated">Gerado em ' + fmtDT(rm.gerado_em) + '</div>';
+  h += '</div>';
+  h += '<span class="rm-cls-badge rm-cls-' + cls + '">' + rmClsLabel(cls) + '</span>';
+  h += '</div>';
+
+  // ── KPIs consolidados ─────────────────────────────────
+  h += '<div class="sec" style="margin-top:20px">Métricas consolidadas</div>';
+  h += '<div class="kpi-grid">';
+  h += rmKpi('Sessões',   m.sessoes,            false, '');
+  h += rmKpi('Compras',   m.compras,            false, '');
+  h += rmKpi('Conversão', m.taxa_conversao_pct, true,  '%', false);
+  h += rmKpi('Rejeição',  m.taxa_rejeicao_pct,  true,  '%', true);
+  h += '</div>';
+
+  // ── Análise do período + contexto histórico ───────────
+  if (rm.narrativa) {
+    h += '<div class="sec">Análise do período</div>';
+    h += '<div class="rm-narrativa">' + escH(rm.narrativa) + '</div>';
+    if (rmAnterior) {
+      const mAnt = rmAnterior.metricas || {};
+      const clsAnt = rmAnterior.classificacao || 'estavel';
+      const crAnt = mAnt.taxa_conversao_pct && mAnt.taxa_conversao_pct.valor != null
+        ? mAnt.taxa_conversao_pct.valor.toFixed(2) + '%' : '—';
+      const comprasAnt = mAnt.compras && mAnt.compras.valor != null
+        ? fmtN(mAnt.compras.valor) : '—';
+      h += '<div class="rm-ctx-banner">' +
+        '<div class="rm-ctx-label">Contexto — ' + escH(rmAnterior.label) + ' (' + rmClsLabel(clsAnt) + ')</div>' +
+        'CR: <strong>' + crAnt + '</strong> · Compras: <strong>' + comprasAnt + '</strong>' +
+        (rmAnterior.narrativa ? ' · <em style="color:var(--neutral-500)">' + escH(rmAnterior.narrativa.substring(0, 160)) + (rmAnterior.narrativa.length > 160 ? '…' : '') + '</em>' : '') +
+        '</div>';
+    }
+  }
+
+  // ── Seções por dispositivo (empilhadas) ───────────────
+  const hasDevs = dev.mobile || dev.desktop;
+  if (hasDevs) {
+    h += '<div class="sec">Análise por dispositivo</div>';
+    h += '<div style="display:flex;flex-direction:column;gap:16px">';
+
+    if (dev.mobile) {
+      h += rmDevSection('Mobile', dev.mobile, '📱', recsMobile);
+    }
+    if (dev.desktop) {
+      h += rmDevSection('Desktop', dev.desktop, '🖥', recsDesktop);
+    }
+
+    h += '</div>';
+  }
+
+  // ── Recomendações gerais (ambos / sem dispositivo) ────
+  if (recsAmbos.length > 0) {
+    h += '<div class="sec">Recomendações gerais</div>';
+    h += '<div class="rm-recs-global">';
+    recsAmbos.forEach(rec => { h += rmRecCard(rec); });
+    h += '</div>';
+  }
+
+  // Se não há dados de dispositivo, mostrar todas as recomendações aqui
+  if (!hasDevs && recs.length > 0) {
+    h += '<div class="sec">Recomendações</div>';
+    h += '<div class="rm-recs-global">';
+    recs.forEach(rec => { h += rmRecCard(rec); });
+    h += '</div>';
+  }
+
+  content.innerHTML = h;
+}
