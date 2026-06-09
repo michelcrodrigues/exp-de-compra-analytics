@@ -320,6 +320,14 @@ tr.cmp-tr td{background:#f5f8ff;font-size:12px;color:var(--compare)}
 .exp-filter-btn:hover{border-color:var(--brand-primary);color:var(--brand-primary)}
 .exp-filter-btn.active{background:var(--brand-primary);color:#fff;border-color:var(--brand-primary)}
 .exp-no-results{background:#fff;border-radius:var(--r-md);padding:32px;box-shadow:var(--shadow-01);text-align:center;color:var(--neutral-500);font-size:13px}
+
+/* ── CANAL FILTER (Visão Geral) ── */
+.vg-canal-bar{display:flex;flex-direction:column;gap:8px;margin-bottom:16px;padding:14px 16px;background:#fff;border-radius:var(--r-md);box-shadow:var(--shadow-01)}
+.vg-canal-bar .fg{flex-wrap:wrap}
+.canal-banner{background:var(--brand-secondary-b-100);border:1px solid var(--brand-secondary-b);border-radius:var(--r-sm);padding:7px 14px;display:flex;align-items:center;gap:10px;flex-wrap:wrap;font-size:12px}
+.canal-banner.hidden{display:none}
+.canal-banner-lbl{font-weight:700;color:var(--brand-secondary-b)}
+.canal-banner-note{font-size:11px;color:var(--neutral-500)}
 </style>
 </head>
 <body>
@@ -482,6 +490,25 @@ tr.cmp-tr td{background:#f5f8ff;font-size:12px;color:var(--compare)}
 
     <!-- VISÃO GERAL -->
     <div class="tbc active" id="tab-vg">
+      <!-- Filtro de canal — local da Visão Geral -->
+      <div class="vg-canal-bar">
+        <div class="fg">
+          <span class="flabel">Canal</span>
+          <button class="fbtn active" data-canal="all">Todos</button>
+          <button class="fbtn" data-canal="organico">Orgânico</button>
+          <button class="fbtn" data-canal="direto">Direto</button>
+          <button class="fbtn" data-canal="pago">Pago</button>
+          <button class="fbtn" data-canal="social">Social</button>
+          <button class="fbtn" data-canal="email">E-mail</button>
+          <button class="fbtn" data-canal="referral">Referral</button>
+          <button class="fbtn" data-canal="outros_canais">Outros</button>
+        </div>
+        <div class="canal-banner hidden" id="canalBanner">
+          <span class="canal-banner-lbl" id="canalBannerLbl">—</span>
+          <span class="canal-banner-note">Compras e funil estimados proporcionalmente · Rejeição e duração refletem o total</span>
+          <button class="cmp-x" onclick="setCanalFilter('all')">✕ Limpar</button>
+        </div>
+      </div>
       <div class="sec">KPIs do período</div>
       <div class="kpi-grid" id="kpiGrid"></div>
       <div class="sec">Tendência diária</div>
@@ -490,6 +517,19 @@ tr.cmp-tr td{background:#f5f8ff;font-size:12px;color:var(--compare)}
         <div class="cc"><div class="cc-title">Compras por dia</div><div class="cc-legend" id="legComp"></div><div class="cc-wrap"><canvas id="cComp"></canvas></div></div>
         <div class="cc"><div class="cc-title">Conversão % por dia</div><div class="cc-legend" id="legCR"></div><div class="cc-wrap"><canvas id="cCR"></canvas></div></div>
         <div class="cc"><div class="cc-title">Rejeição % por dia</div><div class="cc-legend" id="legBnc"></div><div class="cc-wrap"><canvas id="cBnc"></canvas></div></div>
+      </div>
+
+      <div class="sec" style="margin-top:28px">Tendência por canal e dispositivo</div>
+      <p style="font-size:12px;color:var(--neutral-500);margin-top:-8px;margin-bottom:12px">Sessões diárias por canal de aquisição e por dispositivo — sempre mostra todos, independente dos filtros acima. Use para identificar de onde vieram aumentos ou quedas.</p>
+      <div class="charts-grid">
+        <div class="cc">
+          <div class="cc-title">Sessões por canal de aquisição</div>
+          <div class="cc-wrap" style="height:260px"><canvas id="cCanalTrend"></canvas></div>
+        </div>
+        <div class="cc">
+          <div class="cc-title">Sessões por dispositivo</div>
+          <div class="cc-wrap" style="height:260px"><canvas id="cDevTrend"></canvas></div>
+        </div>
       </div>
     </div>
 
@@ -593,6 +633,7 @@ tr.cmp-tr td{background:#f5f8ff;font-size:12px;color:var(--compare)}
 // ════════════════════════════════════════════════════════
 let ALL=[], INSIGHTS=[], EXPERIMENTOS=[], RESUMO_MENSAL=[], CHARTS={};
 let DEV="all";
+let CANAL="all"; // canal de aquisição — filtro local da Visão Geral
 let P={start:null,end:null};
 let C={start:null,end:null,active:false};
 
@@ -622,8 +663,7 @@ async function loadData(){
 // ════════════════════════════════════════════════════════
 function getRange(s,e){return ALL.filter(d=>d.data>=s&&d.data<=e);}
 
-// applyDevice: remapeia sessoes/compras/bounce/dur conforme dispositivo selecionado.
-// usuarios e pageviews NÃO têm breakdown por device no GA4 — mostramos 0 quando device != all.
+// applyDevice: mantido para uso interno em renderAcquisicao (scaleByDevice).
 function applyDevice(data){
   if(DEV==="all"){
     return data.map(d=>({
@@ -634,19 +674,17 @@ function applyDevice(data){
       duracao_media_seg:  parseFloat(d.duracao_media_seg)||0,
     }));
   }
-  // Usar campos reais coletados por dispositivo
   return data.map(d=>({
     ...d,
     sessoes:          parseFloat(d["sessoes_"+DEV])||0,
     compras:          parseFloat(d["compras_"+DEV])||0,
     usuarios:         parseFloat(d["usuarios_"+DEV])||0,
     novos_usuarios:   parseFloat(d["novos_usuarios_"+DEV])||0,
-    pageviews:        0, // GA4 não fornece pageviews por device
+    pageviews:        0,
     taxa_conversao_pct: (parseFloat(d["sessoes_"+DEV])||0)>0
       ? r4((parseFloat(d["compras_"+DEV])||0)/(parseFloat(d["sessoes_"+DEV]))*100) : 0,
     taxa_rejeicao_pct: parseFloat(d["taxa_rejeicao_"+DEV])||0,
     duracao_media_seg: parseFloat(d["duracao_media_"+DEV])||0,
-    // Funil por dispositivo
     funil_search:         parseFloat(d["funil_search_"+DEV])||0,
     funil_select_item:    parseFloat(d["funil_select_item_"+DEV])||0,
     funil_add_to_cart:    parseFloat(d["funil_add_to_cart_"+DEV])||0,
@@ -655,8 +693,67 @@ function applyDevice(data){
   }));
 }
 
-function getPri(){if(!P.start||!P.end)return[];return applyDevice(getRange(P.start,P.end));}
-function getCmp(){if(!C.active||!C.start||!C.end)return[];return applyDevice(getRange(C.start,C.end));}
+// applyFilters: aplica device + canal combinados (usado por getPri/getCmp)
+function applyFilters(data){
+  return data.map(d=>{
+    // ── Device ────────────────────────────────────
+    let sessoes, compras, usuarios, novos_usuarios;
+    if(DEV==="all"){
+      sessoes        = parseFloat(d.sessoes)||0;
+      compras        = parseFloat(d.compras)||0;
+      usuarios       = parseFloat(d.usuarios)||0;
+      novos_usuarios = parseFloat(d.novos_usuarios)||0;
+    } else {
+      sessoes        = parseFloat(d["sessoes_"+DEV])||0;
+      compras        = parseFloat(d["compras_"+DEV])||0;
+      usuarios       = parseFloat(d["usuarios_"+DEV])||0;
+      novos_usuarios = parseFloat(d["novos_usuarios_"+DEV])||0;
+    }
+
+    // ── Canal (proporcional sobre sessões já filtradas por device) ─────
+    if(CANAL!=="all"){
+      const totSessRaw = parseFloat(d.sessoes)||1;
+      const canalSessRaw = parseFloat(d["sessoes_"+CANAL])||0;
+      const canalRatio = canalSessRaw / totSessRaw;
+      sessoes        = Math.round(sessoes * canalRatio);
+      compras        = Math.round(compras * canalRatio);
+      usuarios       = Math.round(usuarios * canalRatio);
+      novos_usuarios = Math.round(novos_usuarios * canalRatio);
+    }
+
+    // ── Bounce / Duração (device-specific quando disponível) ──────────
+    let taxa_rejeicao_pct, duracao_media_seg;
+    if(DEV!=="all"){
+      taxa_rejeicao_pct = parseFloat(d["taxa_rejeicao_"+DEV])||0;
+      duracao_media_seg = parseFloat(d["duracao_media_"+DEV])||0;
+    } else {
+      taxa_rejeicao_pct = parseFloat(d.taxa_rejeicao_pct)||0;
+      duracao_media_seg = parseFloat(d.duracao_media_seg)||0;
+    }
+
+    // ── Funil ─────────────────────────────────────
+    const FSTEPS = ["search","select_item","add_to_cart","begin_checkout","purchase"];
+    const funil = {};
+    const canalRatioFunil = CANAL!=="all"
+      ? (parseFloat(d["sessoes_"+CANAL])||0) / (parseFloat(d.sessoes)||1)
+      : 1;
+    FSTEPS.forEach(s=>{
+      const base = DEV!=="all"
+        ? (parseFloat(d["funil_"+s+"_"+DEV])||0)
+        : (parseFloat(d["funil_"+s])||0);
+      funil["funil_"+s] = CANAL!=="all" ? Math.round(base * canalRatioFunil) : base;
+    });
+
+    const taxa_conversao_pct = sessoes>0 ? r4(compras/sessoes*100) : 0;
+    const pageviews = (DEV==="all" && CANAL==="all") ? (parseFloat(d.pageviews)||0) : 0;
+
+    return {...d, sessoes, compras, usuarios, novos_usuarios, pageviews,
+      taxa_conversao_pct, taxa_rejeicao_pct, duracao_media_seg, ...funil};
+  });
+}
+
+function getPri(){if(!P.start||!P.end)return[];return applyFilters(getRange(P.start,P.end));}
+function getCmp(){if(!C.active||!C.start||!C.end)return[];return applyFilters(getRange(C.start,C.end));}
 
 // ════════════════════════════════════════════════════════
 // RENDER
@@ -666,6 +763,7 @@ function render(){
   renderKPIs(pri,cmp);
   renderCharts(pri,cmp);
   renderAcquisicao(pri,cmp);
+  renderBreakdownCharts();
   renderFunil(pri,cmp);
   renderRotas(pri,cmp);
   renderInsights();
@@ -886,6 +984,75 @@ function renderAcquisicao(pri,cmp){
       <td class="num">${devRej.toFixed(2)}%</td><td class="num">${fmtDur(devDur)}</td>
     </tr>`;
   }).join("");
+}
+
+
+// ════════════════════════════════════════════════════════
+// BREAKDOWN CHARTS (Tendência por canal e dispositivo)
+// ════════════════════════════════════════════════════════
+function renderBreakdownCharts(){
+  const priRaw = P.start&&P.end ? getRange(P.start,P.end) : [];
+  if(!priRaw.length) return;
+  const CANAL_CFG=[
+    {label:"Orgânico",   key:"sessoes_organico",         color:"#19398A"},
+    {label:"Direto",     key:"sessoes_direto",            color:"#A43C3E"},
+    {label:"Pago",       key:"sessoes_pago",              color:"#C3940F"},
+    {label:"Social",     key:"sessoes_social",            color:"#6589D4"},
+    {label:"E-mail",     key:"sessoes_email",             color:"#278A22"},
+    {label:"Referral",   key:"sessoes_referral",          color:"#8B8B8B"},
+    {label:"Outros",     key:"sessoes_outros_canais",     color:"#D1D1D1"},
+  ];
+  const DEV_CFG=[
+    {label:"Mobile",  key:"sessoes_mobile",  color:"#19398A"},
+    {label:"Desktop", key:"sessoes_desktop", color:"#A43C3E"},
+    {label:"Tablet",  key:"sessoes_tablet",  color:"#C3940F"},
+  ];
+  mkMultiLine("cCanalTrend", CANAL_CFG, priRaw);
+  mkMultiLine("cDevTrend",   DEV_CFG,   priRaw);
+}
+
+function mkMultiLine(cid, seriesCfg, priRaw){
+  const ctx=document.getElementById(cid);
+  if(!ctx) return;
+  if(CHARTS[cid]) CHARTS[cid].destroy();
+  const labels=priRaw.map(d=>fmtDS(d.data));
+  const datasets=seriesCfg.map(cfg=>({
+    label:cfg.label,
+    data:priRaw.map(d=>parseFloat(d[cfg.key])||0),
+    borderColor:cfg.color,
+    backgroundColor:"transparent",
+    borderWidth:2,
+    pointRadius:priRaw.length>60?0:2,
+    pointHoverRadius:4,
+    fill:false,
+    tension:0.3,
+  }));
+  CHARTS[cid]=new Chart(ctx,{type:"line",data:{labels,datasets},options:{
+    responsive:true,maintainAspectRatio:false,
+    interaction:{mode:"index",intersect:false},
+    plugins:{
+      legend:{display:true,position:"top",
+        labels:{font:{size:10,family:"'Nunito Sans'"},boxWidth:12,padding:8,usePointStyle:true}},
+      tooltip:{
+        callbacks:{
+          title:(items)=>{
+            const idx=items[0]?.dataIndex;
+            return priRaw[idx]?.data ? fmtDF(priRaw[idx].data) : "";
+          },
+          label:(item)=>{
+            const v=item.parsed.y;
+            return`${item.dataset.label}: ${fmtN(v)}`;
+          },
+        },
+        backgroundColor:"rgba(14,14,14,0.88)",titleColor:"#fff",bodyColor:"#e0e0e0",
+        padding:10,bodyFont:{size:11,family:"'Nunito Sans'"},
+      },
+    },
+    scales:{
+      x:{ticks:{maxTicksLimit:8,font:{size:10}},grid:{display:false}},
+      y:{ticks:{font:{size:10}},grid:{color:"#EEEEEE"},beginAtZero:true},
+    },
+  }});
 }
 
 // ════════════════════════════════════════════════════════
@@ -1636,20 +1803,22 @@ function mkLine(cid,lid,pri,cmp,metric,label,color,hasCmp){
           title:(items)=>{
             const idx=items[0]?.dataIndex;
             const priDate=pri[idx]?.data||"";
-            const out=[priDate?fmtDF(priDate)+" (principal)":""];
-            if(hasCmp&&cmp.length){
-              const pos=idx/Math.max(vals.length-1,1)*Math.max(cmpVals.length-1,0);
-              const ci=Math.round(pos);
-              const cd=cmp[ci]?.data||"";
-              if(cd) out.push(fmtDF(cd)+" (comparação)");
+            if(!hasCmp||!cmp.length){
+              return priDate?fmtDF(priDate):"";
             }
+            const out=[];
+            if(priDate) out.push("● "+fmtDF(priDate));
+            const pos=idx/Math.max(vals.length-1,1)*Math.max(cmpVals.length-1,0);
+            const ci=Math.round(pos);
+            const cd=cmp[ci]?.data||"";
+            if(cd) out.push("◌ "+fmtDF(cd)+" (comparação)");
             return out;
           },
           label:(item)=>{
             const v=item.parsed.y; if(v==null) return null;
             const sym=item.datasetIndex===0?"●":"◌";
             const suf=metric.includes("pct")?"%":"";
-            return`${sym} ${item.dataset.label}: ${fmtN(v)}${suf}`;
+            return`${sym} ${label}: ${fmtN(v)}${suf}`;
           },
           afterLabel:(item)=>{
             if(!hasCmp||!cmp.length||item.datasetIndex!==0) return null;
@@ -1976,6 +2145,27 @@ document.querySelectorAll("[data-dev]").forEach(btn=>{
   });
 });
 
+
+
+// Canal filter (Visão Geral)
+function setCanalFilter(canal){
+  CANAL=canal;
+  document.querySelectorAll("[data-canal]").forEach(b=>b.classList.toggle("active",b.dataset.canal===canal));
+  const banner=document.getElementById("canalBanner");
+  const lbl=document.getElementById("canalBannerLbl");
+  if(canal==="all"){
+    banner.classList.add("hidden");
+  } else {
+    const names={organico:"Orgânico",direto:"Direto",pago:"Pago",social:"Social",
+      email:"E-mail",referral:"Referral",outros_canais:"Outros"};
+    lbl.textContent="Filtrando por canal: "+(names[canal]||canal);
+    banner.classList.remove("hidden");
+  }
+  render();
+}
+document.querySelectorAll("[data-canal]").forEach(btn=>{
+  btn.addEventListener("click",()=>setCanalFilter(btn.dataset.canal));
+});
 
 // Filtros de experimentos
 document.querySelectorAll('[data-expf]').forEach(btn => {
