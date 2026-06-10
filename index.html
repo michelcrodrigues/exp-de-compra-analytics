@@ -178,6 +178,27 @@ tr.cmp-tr td{background:#f5f8ff;font-size:12px;color:var(--compare)}
 .ins-filter-btn{font-family:inherit;font-size:11px;font-weight:700;padding:4px 12px;border-radius:9999px;border:1px solid var(--neutral-300);background:#fff;color:var(--neutral-700);cursor:pointer;transition:all .15s}
 .ins-filter-btn:hover{border-color:var(--brand-primary);color:var(--brand-primary)}
 .ins-filter-btn.active{background:var(--brand-primary);color:#fff;border-color:var(--brand-primary)}
+/* Insight ID label */
+.ins-id-lbl{font-size:10px;color:var(--neutral-400);font-variant-numeric:tabular-nums;flex-shrink:0;letter-spacing:.3px}
+/* Insight status badges */
+.ins-status-badge{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.6px;padding:3px 9px;border-radius:9999px;white-space:nowrap;flex-shrink:0}
+.ins-status-badge.em_teste{background:#E0EAFF;color:#19398A}
+.ins-status-badge.testada_confirmada{background:#C6E5C3;color:#278A22}
+.ins-status-badge.testada_refutada{background:#FAD1D7;color:#E1393E}
+/* Experiment template expandable */
+.ins-exp-tmpl-btn{font-family:inherit;font-size:11px;font-weight:700;color:var(--brand-primary);background:none;border:1px solid #c0ccf0;border-radius:var(--r-sm);padding:5px 14px;cursor:pointer;transition:all .15s;margin-top:14px;display:inline-flex;align-items:center;gap:5px}
+.ins-exp-tmpl-btn:hover{background:#E0EAFF}
+.ins-exp-tmpl-box{display:none;margin-top:10px;background:var(--neutral-100);border-radius:var(--r-sm);padding:14px 16px;border-left:3px solid var(--brand-primary)}
+.ins-exp-tmpl-box.open{display:block}
+.ins-exp-tmpl-title{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.7px;color:var(--neutral-500);margin-bottom:10px}
+.ins-exp-tmpl-field{margin-bottom:8px}
+.ins-exp-tmpl-lbl{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.6px;color:var(--neutral-500)}
+.ins-exp-tmpl-val{font-size:12px;color:var(--neutral-800);line-height:1.5;margin-top:2px}
+.ins-exp-link-btn{font-family:inherit;font-size:11px;font-weight:700;color:var(--brand-primary);background:none;border:none;cursor:pointer;text-decoration:underline;padding:0;margin-top:2px}
+/* Experiment link from insight */
+.ins-exp-ref{margin-top:12px;display:flex;align-items:center;gap:8px;padding:8px 12px;background:var(--neutral-100);border-radius:var(--r-sm)}
+.ins-exp-ref-lbl{font-size:11px;color:var(--neutral-500)}
+.ins-exp-ref-link{font-family:inherit;font-size:11px;font-weight:700;color:var(--brand-primary);background:none;border:none;cursor:pointer;text-decoration:underline;padding:0}
 
 /* Tabs */
 .tabs{display:flex;gap:4px;background:#fff;padding:4px;border-radius:9999px;box-shadow:var(--shadow-01);width:fit-content;margin-bottom:20px;flex-wrap:wrap}
@@ -1256,25 +1277,90 @@ function selectWeek(semana) {
 
 function buildList(items) {
   const wrap = document.getElementById('insightsWrap');
-  const priColor = {Alta:'#E24B4A',Media:'#EF9F27',Baixa:'#19398A'};
-  const clsColor = {'Diagnostico comprovado':'#1D9E75','Hipotese':'#6366f1','Tendencia':'#EF9F27','Resultado fora da curva':'#E24B4A','Correlacao':'#19398A','Explicacao':'#6b6b67'};
   const priColorMap = (p) => p === 'Alta' ? '#E24B4A' : p === 'Média' ? '#EF9F27' : '#19398A';
   const clsColorMap = (c) => {
     const map = {'Diagnóstico comprovado':'#1D9E75','Hipótese':'#6366f1','Tendência':'#EF9F27','Resultado fora da curva':'#E24B4A','Correlação':'#19398A','Explicação':'#6b6b67'};
     return map[c] || '#6b6b67';
   };
+  const STATUS_LABELS = { em_teste: 'Em teste', testada_confirmada: 'Confirmada', testada_refutada: 'Refutada' };
+
   wrap.innerHTML = items.map((ins, i) => {
     const id = 'ins_' + i;
     const pc = priColorMap(ins.prioridade);
     const cc = clsColorMap(ins.classificacao);
+    const hasStatus = ins.status && STATUS_LABELS[ins.status];
+    const statusBadge = hasStatus
+      ? '<span class="ins-status-badge ' + ins.status + '">' + STATUS_LABELS[ins.status] + '</span>'
+      : '';
+    const idLabel = ins.id
+      ? '<span class="ins-id-lbl">' + escH(ins.id) + '</span>'
+      : '';
+
+    // Body: use structured fields if available, fallback to parseSections(texto)
+    let bodyHtml = '';
+    const FIELDS = [
+      ['diagnostico', 'Diagnóstico'],
+      ['evidencia', 'Evidência'],
+      ['plano_acao', 'Plano de ação'],
+      ['impacto', 'Impacto'],
+      ['acompanhamento', 'Acompanhamento']
+    ];
+    const hasStructured = FIELDS.some(([k]) => ins[k]);
+    if (hasStructured) {
+      bodyHtml = FIELDS.filter(([k]) => ins[k]).map(([k, lbl]) =>
+        '<div class="ins-section">' +
+          '<div class="ins-section-lbl">' + lbl + '</div>' +
+          '<div class="ins-section-txt">' + escH(ins[k]) + '</div>' +
+        '</div>'
+      ).join('');
+    } else {
+      bodyHtml = parseSections(ins.texto);
+    }
+
+    // Experiment template button (testavel: true)
+    let tmplHtml = '';
+    if (ins.testavel && ins.experimento_template) {
+      const t = ins.experimento_template;
+      const tmplId = 'tmpl_' + i;
+      const guardrails = Array.isArray(t.guardrails) ? t.guardrails.join(', ') : (t.guardrails || '—');
+      tmplHtml =
+        '<button class="ins-exp-tmpl-btn" onclick="toggleExpTmpl(\'' + tmplId + '\', this)">Ver template de experimento ↓</button>' +
+        '<div class="ins-exp-tmpl-box" id="' + tmplId + '">' +
+          '<div class="ins-exp-tmpl-title">Template de Experimento — copie para criar a issue no Linear</div>' +
+          '<div class="ins-exp-tmpl-field"><div class="ins-exp-tmpl-lbl">ID</div><div class="ins-exp-tmpl-val"><code>' + escH(t.id || '—') + '</code></div></div>' +
+          '<div class="ins-exp-tmpl-field"><div class="ins-exp-tmpl-lbl">Título Linear</div><div class="ins-exp-tmpl-val">' + escH(t.titulo || '—') + '</div></div>' +
+          '<div class="ins-exp-tmpl-field"><div class="ins-exp-tmpl-lbl">Hipótese</div><div class="ins-exp-tmpl-val">' + escH(t.hipotese || '—') + '</div></div>' +
+          '<div class="ins-exp-tmpl-field"><div class="ins-exp-tmpl-lbl">Métrica primária</div><div class="ins-exp-tmpl-val">' + escH(t.metrica_primaria || '—') + '</div></div>' +
+          '<div class="ins-exp-tmpl-field"><div class="ins-exp-tmpl-lbl">Guardrails</div><div class="ins-exp-tmpl-val">' + escH(guardrails) + '</div></div>' +
+          '<div class="ins-exp-tmpl-field"><div class="ins-exp-tmpl-lbl">Critério de sucesso</div><div class="ins-exp-tmpl-val">' + escH(t.criterio_sucesso || '—') + '</div></div>' +
+          '<div class="ins-exp-tmpl-field"><div class="ins-exp-tmpl-lbl">Duração mínima</div><div class="ins-exp-tmpl-val">' + (t.duracao_minima_dias || '—') + ' dias</div></div>' +
+          (t.notas ? '<div class="ins-exp-tmpl-field"><div class="ins-exp-tmpl-lbl">Notas</div><div class="ins-exp-tmpl-val">' + escH(t.notas) + '</div></div>' : '') +
+        '</div>';
+    }
+
+    // Experiment link for insights in test / concluded
+    let expRefHtml = '';
+    if (ins.status === 'em_teste' || ins.status === 'testada_confirmada' || ins.status === 'testada_refutada') {
+      const expId = ins.experimento_id;
+      if (expId) {
+        expRefHtml =
+          '<div class="ins-exp-ref">' +
+            '<span class="ins-exp-ref-lbl">Experimento vinculado:</span>' +
+            '<button class="ins-exp-ref-link" onclick="goToExperimento(\'' + escH(expId) + '\')">' + escH(expId) + ' → Ver na aba Experimentos</button>' +
+          '</div>';
+      }
+    }
+
     return '<div class="ins-card" id="' + id + '">' +
       '<div class="ins-card-header" onclick="toggleIns(\'' + id + '\')">' +
-        '<span class="ins-tag" style="background:' + pc + '20;color:' + pc + '">' + ins.prioridade + '</span>' +
-        '<span class="ins-tag" style="background:' + cc + '20;color:' + cc + '">' + ins.classificacao + '</span>' +
-        '<span style="flex:1;font-size:13px;font-weight:500;margin-left:4px">' + ins.tag + '</span>' +
+        '<span class="ins-tag" style="background:' + pc + '20;color:' + pc + '">' + escH(ins.prioridade) + '</span>' +
+        '<span class="ins-tag" style="background:' + cc + '20;color:' + cc + '">' + escH(ins.classificacao) + '</span>' +
+        statusBadge +
+        '<span style="flex:1;font-size:13px;font-weight:500;margin-left:4px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">' + escH(ins.tag) + '</span>' +
+        idLabel +
         '<span class="ins-chevron">▼</span>' +
       '</div>' +
-      '<div class="ins-body">' + parseSections(ins.texto) + '</div>' +
+      '<div class="ins-body">' + bodyHtml + expRefHtml + tmplHtml + '</div>' +
     '</div>';
   }).join('');
   const first = document.getElementById('ins_0');
@@ -1288,10 +1374,28 @@ function parseSections(texto) {
     if (ci > 0 && ci < 30) {
       const lbl = block.slice(0, ci);
       const body = block.slice(ci + 1).trim();
-      return '<div class="ins-section"><span class="ins-section-lbl">' + lbl + ':</span> ' + body + '</div>';
+      return '<div class="ins-section"><div class="ins-section-lbl">' + lbl + '</div><div class="ins-section-txt">' + body + '</div></div>';
     }
-    return '<div class="ins-section">' + block + '</div>';
+    return '<div class="ins-section ins-section-txt">' + block + '</div>';
   }).join('');
+}
+
+function toggleExpTmpl(id, btn) {
+  const box = document.getElementById(id);
+  if (!box) return;
+  box.classList.toggle('open');
+  btn.textContent = box.classList.contains('open') ? 'Ocultar template ↑' : 'Ver template de experimento ↓';
+}
+
+function goToExperimento(expId) {
+  document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+  document.querySelectorAll('.tbc').forEach(t => t.classList.remove('active'));
+  const exTab = document.querySelector('[data-tab="ex"]');
+  const exPane = document.getElementById('tab-ex');
+  if (exTab) exTab.classList.add('active');
+  if (exPane) exPane.classList.add('active');
+  SEL_EXP = expId;
+  renderExperimentos();
 }
 
 function re_renderInsights() {}
@@ -2127,164 +2231,4 @@ document.getElementById("btnClearCmp").addEventListener("click",()=>{clearCompar
 document.getElementById("btnBanClear").addEventListener("click",clearCompare);
 
 // Pills de período rápido
-document.querySelectorAll("[data-period]").forEach(btn=>{
-  btn.addEventListener("click",()=>{
-    const days=parseInt(btn.dataset.period);
-    if(days===0) setPresetSp("all");
-    else setPresetDays(days);
-  });
-});
-
-// Dispositivo
-document.querySelectorAll("[data-dev]").forEach(btn=>{
-  btn.addEventListener("click",()=>{
-    document.querySelectorAll("[data-dev]").forEach(b=>b.classList.remove("active"));
-    btn.classList.add("active");
-    DEV=btn.dataset.dev;
-    render();
-  });
-});
-
-
-
-// Canal filter (Visão Geral)
-function setCanalFilter(canal){
-  CANAL=canal;
-  document.querySelectorAll("[data-canal]").forEach(b=>b.classList.toggle("active",b.dataset.canal===canal));
-  const banner=document.getElementById("canalBanner");
-  const lbl=document.getElementById("canalBannerLbl");
-  if(canal==="all"){
-    banner.classList.add("hidden");
-  } else {
-    const names={organico:"Orgânico",direto:"Direto",pago:"Pago",social:"Social",
-      email:"E-mail",referral:"Referral",outros_canais:"Outros"};
-    lbl.textContent="Filtrando por canal: "+(names[canal]||canal);
-    banner.classList.remove("hidden");
-  }
-  render();
-}
-document.querySelectorAll("[data-canal]").forEach(btn=>{
-  btn.addEventListener("click",()=>setCanalFilter(btn.dataset.canal));
-});
-
-// Filtros de experimentos
-document.querySelectorAll('[data-expf]').forEach(btn => {
-  btn.addEventListener('click', () => {
-    const ft = btn.dataset.expf;
-    const val = btn.dataset.expv;
-    if (ft === 'status') {
-      EXP_FS = val;
-      document.querySelectorAll('[data-expf="status"]').forEach(b => b.classList.toggle('active', b.dataset.expv === val));
-    } else if (ft === 'periodo') {
-      EXP_FP = val;
-      document.querySelectorAll('[data-expf="periodo"]').forEach(b => b.classList.toggle('active', b.dataset.expv === val));
-    } else if (ft === 'origem') {
-      EXP_FO = val;
-      document.querySelectorAll('[data-expf="origem"]').forEach(b => b.classList.toggle('active', b.dataset.expv === val));
-    }
-    renderExperimentos();
-  });
-});
-
-// Tabs
-document.querySelectorAll("[data-tab]").forEach(btn=>{
-  btn.addEventListener("click",()=>{
-    document.querySelectorAll(".tab").forEach(b=>b.classList.remove("active"));
-    document.querySelectorAll(".tbc").forEach(c=>c.classList.remove("active"));
-    btn.classList.add("active");
-    document.getElementById("tab-"+btn.dataset.tab).classList.add("active");
-  });
-});
-
-// ════════════════════════════════════════════════════════
-// UTILS
-// ════════════════════════════════════════════════════════
-function agg(data){
-  return data.reduce(function(a,d){return{
-    sessoes:a.sessoes+(d.sessoes||0),
-    usuarios:a.usuarios+(d.usuarios||0),
-    novos_usuarios:a.novos_usuarios+(d.novos_usuarios||0),
-    pageviews:a.pageviews+(d.pageviews||0),
-    compras:a.compras+(d.compras||0),
-  };},{sessoes:0,usuarios:0,novos_usuarios:0,pageviews:0,compras:0});
-}
-function wavg(data,m,w){
-  // parseFloat garante conversão mesmo se o valor vier como string do JSON
-  const tw=data.reduce((s,d)=>s+parseFloat(d[w]||0),0);
-  if(!tw) return 0;
-  return data.reduce((s,d)=>s+parseFloat(d[m]||0)*parseFloat(d[w]||0),0)/tw;
-}
-function r4(v){return Math.round(v*10000)/10000;}
-function fmtN(n){if(n==null)return"—";return Number(n).toLocaleString("pt-BR");}
-function fmtDur(s){const m=Math.floor(s/60),r=Math.round(s%60);return m>0?`${m}m ${r}s`:`${r}s`;}
-function fmtDS(iso){if(!iso)return"";const[,m,d]=iso.split("-");return`${d}/${m}`;}
-function fmtDF(iso){if(!iso)return"";const[y,m,d]=iso.split("-");return`${d}/${m}/${y}`;}
-function fmtDT(iso){if(!iso)return"";return new Date(iso).toLocaleString("pt-BR",{timeZone:"America/Sao_Paulo",dateStyle:"short",timeStyle:"short"});}
-function todayISO(){return new Date().toISOString().slice(0,10);}
-function isoD(d){return d.toISOString().slice(0,10);}
-function offDate(iso,days){const d=new Date(iso+"T12:00:00Z");d.setUTCDate(d.getUTCDate()+days);return isoD(d);}
-function offYears(iso,y){const d=new Date(iso+"T12:00:00Z");d.setUTCFullYear(d.getUTCFullYear()+y);return isoD(d);}
-function dateDiff(a,b){return Math.round((new Date(b)-new Date(a))/86400000);}
-
-
-// ════════════════════════════════════════════════════════
-// AUTENTICAÇÃO — Supabase
-// ════════════════════════════════════════════════════════
-const _SB_URL = 'https://ddspskifskoqznemxuuu.supabase.co';
-const _SB_KEY = 'sb_publishable_zY82pfmfz7OuD-RjLrEngA_cUzm7bVH';
-const _sb = supabase.createClient(_SB_URL, _SB_KEY);
-
-(async function(){
-  const { data: { session } } = await _sb.auth.getSession();
-  if(session){
-    document.getElementById('authScreen').classList.add('hidden');
-    loadData();
-    return;
-  }
-
-  async function tryLogin(){
-    const email = document.getElementById('authEmail').value.trim();
-    const password = document.getElementById('authInput').value;
-    const btn = document.getElementById('authBtn');
-    btn.disabled = true;
-    btn.textContent = 'Entrando...';
-
-    const { data, error } = await _sb.auth.signInWithPassword({ email, password });
-
-    if(error){
-      const err = document.getElementById('authError');
-      err.classList.add('show');
-      document.getElementById('authInput').value = '';
-      document.getElementById('authInput').focus();
-      setTimeout(() => err.classList.remove('show'), 3000);
-      btn.disabled = false;
-      btn.textContent = 'Entrar';
-      return;
-    }
-
-    await _sb.from('audit_log').insert({
-      user_email: email,
-      dashboard: 'exp-de-compra',
-      action: 'login'
-    });
-
-    document.getElementById('authScreen').classList.add('hidden');
-    loadData();
-  }
-
-  document.getElementById('authBtn').addEventListener('click', tryLogin);
-  document.getElementById('authInput').addEventListener('keydown', e => {
-    if(e.key === 'Enter') tryLogin();
-  });
-  document.getElementById('authEmail').addEventListener('keydown', e => {
-    if(e.key === 'Enter') document.getElementById('authInput').focus();
-  });
-})();
-
-async function logout(){
-  await _sb.auth.signOut();
-  location.reload();
-}
-</script>
-</body>
-</html>
+docume
