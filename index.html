@@ -506,6 +506,7 @@ tr.cmp-tr td{background:#f5f8ff;font-size:12px;color:var(--compare)}
       <button class="tab" data-tab="in">Insights IA</button>
       <button class="tab" data-tab="ex">Experimentos</button>
       <button class="tab" data-tab="rm">Resumo Mensal</button>
+      <button class="tab" data-tab="ap">App</button>
     </div>
 
     <!-- VISÃO GERAL -->
@@ -644,6 +645,56 @@ tr.cmp-tr td{background:#f5f8ff;font-size:12px;color:var(--compare)}
       </div>
     </div>
 
+    <!-- APP -->
+    <div class="tbc" id="tab-ap">
+      <div id="appTabState" class="state-wrap" style="display:none"><div class="spin"></div><span>Carregando dados do App...</span></div>
+      <div id="appTabContent" style="display:none">
+        <!-- Filtro de plataforma -->
+        <div class="vg-canal-bar" style="margin-bottom:16px">
+          <div class="fg">
+            <span class="flabel">Plataforma</span>
+            <button class="fbtn active" data-appdev="all">Todas</button>
+            <button class="fbtn" data-appdev="mobile">Android</button>
+            <button class="fbtn" data-appdev="desktop">iOS</button>
+          </div>
+          <div class="canal-banner hidden" id="appPlatBanner">
+            <span class="canal-banner-lbl" id="appPlatBannerLbl">—</span>
+            <button class="cmp-x" onclick="setAppDev('all')">✕ Limpar</button>
+          </div>
+        </div>
+        <!-- KPIs -->
+        <div class="sec">KPIs do período — App</div>
+        <div class="kpi-grid" id="appKpiGrid"></div>
+        <!-- Gráficos -->
+        <div class="sec">Tendência diária — App</div>
+        <div class="charts-grid">
+          <div class="cc"><div class="cc-title">Sessões por dia</div><div class="cc-legend" id="appLegSess"></div><div class="cc-wrap"><canvas id="appCSess"></canvas></div></div>
+          <div class="cc"><div class="cc-title">Compras por dia</div><div class="cc-legend" id="appLegComp"></div><div class="cc-wrap"><canvas id="appCComp"></canvas></div></div>
+          <div class="cc"><div class="cc-title">Conversão % por dia</div><div class="cc-legend" id="appLegCR"></div><div class="cc-wrap"><canvas id="appCCR"></canvas></div></div>
+          <div class="cc"><div class="cc-title">Engajamento % por dia</div><div class="cc-legend" id="appLegBnc"></div><div class="cc-wrap"><canvas id="appCBnc"></canvas></div></div>
+        </div>
+        <!-- Aquisição -->
+        <div class="sec" style="margin-top:28px">Aquisição — App</div>
+        <div class="charts-grid">
+          <div class="cc"><div class="cc-title">Canais</div><div class="cc-wrap"><canvas id="appCCanais"></canvas></div></div>
+          <div class="cc"><div class="cc-title">Plataforma</div><div class="cc-wrap"><canvas id="appCDevs"></canvas></div></div>
+        </div>
+        <div class="sec">Detalhamento por canal — App</div>
+        <div class="tc"><table>
+          <thead id="appThCanais"></thead>
+          <tbody id="appTbCanais"></tbody>
+        </table></div>
+        <div class="sec" style="margin-top:20px">CR por plataforma — App</div>
+        <div class="tc"><table>
+          <thead><tr><th>Plataforma</th><th class="num">Sessões</th><th class="num">Compras</th><th class="num">CR %</th></tr></thead>
+          <tbody id="appTbDevs"></tbody>
+        </table></div>
+        <!-- Funil -->
+        <div class="sec" style="margin-top:28px">Funil de conversão — App</div>
+        <div class="funil-wrap"><div class="funil-steps" id="appFunilSteps"></div></div>
+      </div>
+    </div>
+
   </div>
 </main>
 
@@ -656,6 +707,211 @@ let DEV="all";
 let CANAL="all"; // canal de aquisição — filtro local da Visão Geral
 let P={start:null,end:null};
 let C={start:null,end:null,active:false};
+
+// ── APP ──────────────────────────────────────────────────────────────────────
+let ALL_APP=[], CHARTS_APP={};
+let APP_DEV="all";     // filtro de plataforma local da aba App
+let APP_LOADED=false;  // lazy load — carrega data_app.json só ao abrir a aba pela 1ª vez
+
+async function loadAppData(){
+  if(APP_LOADED) return;
+  const st=document.getElementById("appTabState");
+  const ct=document.getElementById("appTabContent");
+  st.style.display="flex"; ct.style.display="none";
+  try{
+    const res=await fetch("data_app.json?v="+Date.now());
+    if(!res.ok) throw new Error("HTTP "+res.status);
+    const j=await res.json();
+    ALL_APP=(j.daily||[]).sort((a,b)=>a.data<b.data?-1:1);
+    APP_LOADED=true;
+    st.style.display="none"; ct.style.display="block";
+    renderApp();
+  }catch(e){
+    st.innerHTML=`<span style="color:var(--negative-700)">⚠ Erro ao carregar dados do App: ${e.message}</span>`;
+  }
+}
+
+function setAppDev(dev){
+  APP_DEV=dev;
+  document.querySelectorAll("[data-appdev]").forEach(b=>{
+    b.classList.toggle("active",b.dataset.appdev===dev);
+  });
+  const banner=document.getElementById("appPlatBanner");
+  const bannerLbl=document.getElementById("appPlatBannerLbl");
+  if(dev==="all"){banner.classList.add("hidden");}
+  else{
+    const labels={mobile:"Android",desktop:"iOS"};
+    bannerLbl.textContent=labels[dev]||dev;
+    banner.classList.remove("hidden");
+  }
+  if(APP_LOADED) renderApp();
+}
+
+function getAppRange(){
+  if(!P.start||!P.end) return [];
+  return ALL_APP.filter(d=>d.data>=P.start&&d.data<=P.end);
+}
+
+function getAppCmp(){
+  if(!C.active||!C.start||!C.end) return [];
+  return ALL_APP.filter(d=>d.data>=C.start&&d.data<=C.end);
+}
+
+function applyAppDev(data){
+  if(APP_DEV==="all") return data.map(d=>({...d,
+    taxa_conversao_pct:(parseFloat(d.sessoes)||0)>0?r4((parseFloat(d.compras)||0)/(parseFloat(d.sessoes))*100):0,
+  }));
+  return data.map(d=>({...d,
+    sessoes:          parseFloat(d["sessoes_"+APP_DEV])||0,
+    compras:          parseFloat(d["compras_"+APP_DEV])||0,
+    usuarios:         parseFloat(d["usuarios_"+APP_DEV])||0,
+    novos_usuarios:   parseFloat(d["novos_usuarios_"+APP_DEV])||0,
+    pageviews:        0,
+    taxa_conversao_pct:(parseFloat(d["sessoes_"+APP_DEV])||0)>0?r4((parseFloat(d["compras_"+APP_DEV])||0)/(parseFloat(d["sessoes_"+APP_DEV]))*100):0,
+    taxa_rejeicao_pct:parseFloat(d["taxa_rejeicao_"+APP_DEV])||0,
+    duracao_media_seg:parseFloat(d["duracao_media_"+APP_DEV])||0,
+    funil_search:         parseFloat(d["funil_search_"+APP_DEV])||0,
+    funil_select_item:    parseFloat(d["funil_select_item_"+APP_DEV])||0,
+    funil_add_to_cart:    parseFloat(d["funil_add_to_cart_"+APP_DEV])||0,
+    funil_begin_checkout: parseFloat(d["funil_begin_checkout_"+APP_DEV])||0,
+    funil_purchase:       parseFloat(d["funil_purchase_"+APP_DEV])||0,
+  }));
+}
+
+function renderApp(){
+  const pri=applyAppDev(getAppRange());
+  const cmp=applyAppDev(getAppCmp());
+  renderAppKPIs(pri,cmp);
+  renderAppCharts(pri,cmp);
+  renderAppAcquisicao(pri,cmp);
+  renderAppFunil(pri,cmp);
+}
+
+function renderAppKPIs(pri,cmp){
+  const tp=agg(pri),tc=cmp.length?agg(cmp):null;
+  const crP=tp.sessoes>0?r4(tp.compras/tp.sessoes*100):0;
+  const brP=wavg(pri,"taxa_rejeicao_pct","sessoes");
+  const durP=wavg(pri,"duracao_media_seg","sessoes");
+  const crC=tc&&tc.sessoes>0?r4(tc.compras/tc.sessoes*100):null;
+  const brC=tc?wavg(cmp,"taxa_rejeicao_pct","sessoes"):null;
+  const durC=tc?wavg(cmp,"duracao_media_seg","sessoes"):null;
+  const kpis=[
+    {l:"Sessões",v:fmtN(tp.sessoes),cv:tc?fmtN(tc.sessoes):null,raw:tp.sessoes,rawC:tc?tc.sessoes:null,inv:false},
+    {l:"Usuários",v:fmtN(tp.usuarios),cv:tc?fmtN(tc.usuarios):null,raw:tp.usuarios,rawC:tc?tc.usuarios:null,inv:false},
+    {l:"Compras",v:fmtN(tp.compras),cv:tc?fmtN(tc.compras):null,raw:tp.compras,rawC:tc?tc.compras:null,inv:false},
+    {l:"Conversão %",v:crP.toFixed(2)+"%",cv:crC!=null?crC.toFixed(2)+"%":null,raw:crP,rawC:crC,inv:false},
+    {l:"Tx. Rejeição %",v:brP.toFixed(2)+"%",cv:brC!=null?brC.toFixed(2)+"%":null,raw:brP,rawC:brC,inv:true},
+    {l:"Duração Média",v:fmtDur(durP),cv:durC!=null?fmtDur(durC):null,raw:durP,rawC:durC,inv:false},
+    {l:"Novos Usuários",v:fmtN(tp.novos_usuarios),cv:tc?fmtN(tc.novos_usuarios):null,raw:tp.novos_usuarios,rawC:tc?tc.novos_usuarios:null,inv:false},
+  ];
+  document.getElementById("appKpiGrid").innerHTML=kpis.map(k=>kpiCard(k)).join("");
+}
+
+function renderAppCharts(pri,cmp){
+  ["appCSess","appCComp","appCCR","appCBnc"].forEach(id=>{
+    if(CHARTS_APP[id]){CHARTS_APP[id].destroy();delete CHARTS_APP[id];}
+  });
+  function mkLine(cid,legId,priData,cmpData,color,fmt){
+    const ctx=document.getElementById(cid);
+    if(!ctx)return;
+    const labels=pri.map(d=>fmtDS(d.data));
+    const ds=[{label:"Período",data:priData,borderColor:color,backgroundColor:color+"22",fill:true,tension:.35,pointRadius:0,borderWidth:2}];
+    if(cmpData&&cmpData.length){ds.push({label:"Comparativo",data:cmpData,borderColor:"var(--compare)",backgroundColor:"transparent",borderDash:[4,3],tension:.35,pointRadius:0,borderWidth:1.5});}
+    document.getElementById(legId).innerHTML=ds.map(s=>`<span class="cc-li"><span class="cc-dot" style="background:${s.borderColor}"></span>${s.label}</span>`).join("");
+    CHARTS_APP[cid]=new Chart(ctx,{type:"line",data:{labels,datasets:ds},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false},tooltip:{callbacks:{label:c=>fmt(c.raw)}}},scales:{x:{grid:{display:false},ticks:{font:{size:10},maxTicksLimit:8}},y:{grid:{color:"#f0f0f0"},ticks:{font:{size:10},callback:v=>fmt(v)}}}}});
+  }
+  mkLine("appCSess","appLegSess",pri.map(d=>d.sessoes),cmp.map(d=>d.sessoes),"var(--brand-primary)",fmtN);
+  mkLine("appCComp","appLegComp",pri.map(d=>d.compras),cmp.map(d=>d.compras),"var(--brand-secondary-a)",fmtN);
+  mkLine("appCCR","appLegCR",pri.map(d=>d.taxa_conversao_pct),cmp.map(d=>d.taxa_conversao_pct),"var(--brand-secondary-b)",v=>v.toFixed(2)+"%");
+  mkLine("appCBnc","appLegBnc",pri.map(d=>d.taxa_rejeicao_pct),cmp.map(d=>d.taxa_rejeicao_pct),"var(--brand-secondary-c)",v=>v.toFixed(2)+"%");
+}
+
+function renderAppAcquisicao(pri,cmp){
+  const channels=[
+    {l:"Orgânico",k:"sessoes_organico"},
+    {l:"Direto",k:"sessoes_direto"},
+    {l:"Pago",k:"sessoes_pago"},
+    {l:"Social",k:"sessoes_social"},
+    {l:"E-mail",k:"sessoes_email"},
+    {l:"Referral",k:"sessoes_referral"},
+    {l:"Outros",k:"sessoes_outros_canais"},
+  ];
+  const COLORS=["#19398A","#A43C3E","#C3940F","#6589D4","#278A22","#8B4513","#8B8B8B"];
+  const totPri=pri.reduce((s,d)=>s+(parseFloat(d.sessoes)||0),0)||1;
+  const canPri=channels.map(c=>({l:c.l,v:pri.reduce((s,d)=>s+(parseFloat(d[c.k])||0),0)}));
+
+  if(CHARTS_APP["appCCanais"]){CHARTS_APP["appCCanais"].destroy();}
+  const ctxC=document.getElementById("appCCanais");
+  if(ctxC) CHARTS_APP["appCCanais"]=new Chart(ctxC,{type:"doughnut",data:{labels:canPri.map(c=>c.l),datasets:[{data:canPri.map(c=>c.v),backgroundColor:COLORS,borderWidth:0}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{position:"right",labels:{font:{size:11},boxWidth:12}}}}});
+
+  const platLabels=APP_DEV==="all"?["Android","iOS","Outros"]:APP_DEV==="mobile"?["Android"]:["iOS"];
+  const platKeys=APP_DEV==="all"?["sessoes_mobile","sessoes_desktop","sessoes_tablet"]:APP_DEV==="mobile"?["sessoes_mobile"]:["sessoes_desktop"];
+  const platColors=["#19398A","#A43C3E","#8B8B8B"];
+  const platPri=platKeys.map(k=>pri.reduce((s,d)=>s+(parseFloat(d[k])||0),0));
+  if(CHARTS_APP["appCDevs"]){CHARTS_APP["appCDevs"].destroy();}
+  const ctxD=document.getElementById("appCDevs");
+  if(ctxD) CHARTS_APP["appCDevs"]=new Chart(ctxD,{type:"doughnut",data:{labels:platLabels,datasets:[{data:platPri,backgroundColor:platColors,borderWidth:0}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{position:"right",labels:{font:{size:11},boxWidth:12}}}}});
+
+  const thEl=document.getElementById("appThCanais");
+  const tbEl=document.getElementById("appTbCanais");
+  if(thEl) thEl.innerHTML=`<tr><th>Canal</th><th class="num">Sessões</th><th class="num">% do total</th></tr>`;
+  if(tbEl) tbEl.innerHTML=canPri.sort((a,b)=>b.v-a.v).map(c=>{
+    const barW=totPri>0?Math.round(c.v/totPri*80):0;
+    return `<tr><td>${c.l}</td><td class="num">${fmtN(c.v)}</td><td class="num"><div class="mbar-w bc"><div class="mbar" style="width:${barW}%"></div></div></td></tr>`;
+  }).join("");
+
+  const tbDevEl=document.getElementById("appTbDevs");
+  const devRows=[
+    {l:"Android",sk:"sessoes_mobile",ck:"compras_mobile"},
+    {l:"iOS",sk:"sessoes_desktop",ck:"compras_desktop"},
+    {l:"Outros",sk:"sessoes_tablet",ck:"compras_tablet"},
+  ];
+  if(tbDevEl) tbDevEl.innerHTML=devRows.map(r=>{
+    const s=pri.reduce((a,d)=>a+(parseFloat(d[r.sk])||0),0);
+    const c=pri.reduce((a,d)=>a+(parseFloat(d[r.ck])||0),0);
+    const cr=s>0?r4(c/s*100):0;
+    return `<tr><td>${r.l}</td><td class="num">${fmtN(s)}</td><td class="num">${fmtN(c)}</td><td class="num">${cr.toFixed(2)}%</td></tr>`;
+  }).join("");
+}
+
+function renderAppFunil(pri,cmp){
+  const steps=[
+    {l:"Busca",k:"funil_search"},
+    {l:"Selecionar viagem",k:"funil_select_item"},
+    {l:"Adicionar ao carrinho",k:"funil_add_to_cart"},
+    {l:"Iniciar checkout",k:"funil_begin_checkout"},
+    {l:"Compra",k:"funil_purchase"},
+  ];
+  const totals=steps.map(s=>pri.reduce((a,d)=>a+(parseFloat(d[s.k])||0),0));
+  const maxV=Math.max(...totals,1);
+  const cmpTotals=cmp.length?steps.map(s=>cmp.reduce((a,d)=>a+(parseFloat(d[s.k])||0),0)):null;
+  const el=document.getElementById("appFunilSteps");
+  if(!el) return;
+  el.innerHTML=steps.map((s,i)=>{
+    const v=totals[i];
+    const pct=i===0?100:totals[0]>0?r4(v/totals[0]*100):0;
+    const barW=Math.round(v/maxV*100);
+    const cv=cmpTotals?cmpTotals[i]:null;
+    const cBarW=cv!=null?Math.round(cv/maxV*100):0;
+    const conn=i<steps.length-1?`<div class="funil-conn"></div>`:"";
+    return `
+      <div class="funil-row">
+        <div class="funil-row-lbl">${s.l}</div>
+        <div class="funil-bars">
+          <div class="funil-bar-wrap"><div class="funil-bar pri" style="width:${barW}%"><span class="funil-bar-val">${fmtN(v)}</span></div></div>
+          ${cv!=null?`<div class="funil-bar-wrap"><div class="funil-bar cmp" style="width:${cBarW}%"><span class="funil-bar-val">${fmtN(cv)}</span></div></div>`:""}
+        </div>
+        <div class="funil-row-pct">${pct.toFixed(1)}%</div>
+      </div>${conn}`;
+  }).join("");
+}
+
+// Listeners do filtro de plataforma da aba App
+document.addEventListener("DOMContentLoaded",()=>{
+  document.querySelectorAll("[data-appdev]").forEach(btn=>{
+    btn.addEventListener("click",()=>setAppDev(btn.dataset.appdev));
+  });
+});
 
 // ════════════════════════════════════════════════════════
 // CARGA
@@ -789,6 +1045,7 @@ function render(){
   renderInsights();
   renderExperimentos();
   renderResumoMensal();
+  if(APP_LOADED) renderApp();
 }
 
 // ════════════════════════════════════════════════════════
@@ -2285,6 +2542,8 @@ document.querySelectorAll("[data-tab]").forEach(btn=>{
     document.querySelectorAll(".tbc").forEach(c=>c.classList.remove("active"));
     btn.classList.add("active");
     document.getElementById("tab-"+btn.dataset.tab).classList.add("active");
+    // Lazy load da aba App — carrega data_app.json só na primeira abertura
+    if(btn.dataset.tab==="ap") loadAppData();
   });
 });
 

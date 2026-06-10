@@ -7,7 +7,7 @@ on:
   workflow_dispatch:
     inputs:
       force_historical:
-        description: "Forçar modo histórico (recoleta dias faltando desde jan/2025)"
+        description: "Forçar modo histórico do SITE (recoleta dias faltando desde jan/2025)"
         required: false
         default: "false"
         type: choice
@@ -15,7 +15,23 @@ on:
           - "false"
           - "true"
       force_reprocess:
-        description: "Reprocessar tudo do zero — APAGA o history.ndjson e recoleta desde jan/2025"
+        description: "Reprocessar SITE do zero — APAGA o history.ndjson e recoleta desde jan/2025"
+        required: false
+        default: "false"
+        type: choice
+        options:
+          - "false"
+          - "true"
+      force_historical_app:
+        description: "Forçar modo histórico do APP (recoleta dias faltando desde jan/2025)"
+        required: false
+        default: "false"
+        type: choice
+        options:
+          - "false"
+          - "true"
+      force_reprocess_app:
+        description: "Reprocessar APP do zero — APAGA o history_app.ndjson e recoleta desde jan/2025"
         required: false
         default: "false"
         type: choice
@@ -28,7 +44,7 @@ jobs:
     runs-on: ubuntu-latest
     env:
       FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true  # opt-in Node.js 24 (obrigatório a partir de 16/jun/2026)
-    timeout-minutes: 60
+    timeout-minutes: 90  # aumentado para acomodar coleta do App em modo histórico
 
     permissions:
       contents: write
@@ -48,26 +64,46 @@ jobs:
             google-auth \
             google-api-python-client
 
-      - name: Passo 1 — Coletar GA4 → data/history.ndjson
+      # ── SITE ──────────────────────────────────────────────────────────────
+
+      - name: "[Site] Passo 1 — Coletar GA4 → data/history.ndjson"
         env:
           GA4_CREDENTIALS_JSON: ${{ secrets.GA4_CREDENTIALS_JSON }}
           FORCE_HISTORICAL:     ${{ github.event.inputs.force_historical || 'false' }}
           FORCE_REPROCESS:      ${{ github.event.inputs.force_reprocess || 'false' }}
         run: python scripts/fetch_ga4.py
 
-      - name: Passo 2 — Exportar history.ndjson → data.json
+      - name: "[Site] Passo 2 — Exportar history.ndjson → data.json"
         run: python scripts/export_data.py
 
-      - name: Passo 3 — Validar schema do data.json
+      - name: "[Site] Passo 3 — Validar schema do data.json"
         run: python scripts/validate_schema.py
 
-      - name: Passo 4 — Commitar arquivos no repositório
+      # ── APP ───────────────────────────────────────────────────────────────
+
+      - name: "[App] Passo 1 — Coletar GA4 App → data/history_app.ndjson"
+        env:
+          GA4_CREDENTIALS_JSON:  ${{ secrets.GA4_CREDENTIALS_JSON }}
+          GA4_APP_PROPERTY_ID:   ${{ secrets.GA4_APP_PROPERTY_ID }}
+          FORCE_HISTORICAL_APP:  ${{ github.event.inputs.force_historical_app || 'false' }}
+          FORCE_REPROCESS_APP:   ${{ github.event.inputs.force_reprocess_app || 'false' }}
+        run: python scripts/fetch_ga4_app.py
+
+      - name: "[App] Passo 2 — Exportar history_app.ndjson → data_app.json"
+        run: python scripts/export_data_app.py
+
+      - name: "[App] Passo 3 — Validar schema do data_app.json"
+        run: python scripts/validate_schema_app.py
+
+      # ── COMMIT ────────────────────────────────────────────────────────────
+
+      - name: "Passo final — Commitar todos os arquivos no repositório"
         run: |
           git config user.name  "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          git stash push --include-untracked -- data/history.ndjson data.json
+          git stash push --include-untracked -- data/history.ndjson data.json data/history_app.ndjson data_app.json
           git pull --rebase origin main
           git stash pop
-          git add data/history.ndjson data.json
-          git diff --cached --quiet || git commit -m "chore: atualiza dados [$(date -u '+%Y-%m-%d %H:%M')] UTC"
+          git add data/history.ndjson data.json data/history_app.ndjson data_app.json
+          git diff --cached --quiet || git commit -m "chore: atualiza dados site + app [$(date -u '+%Y-%m-%d %H:%M')] UTC"
           git push
