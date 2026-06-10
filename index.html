@@ -646,7 +646,7 @@ async function loadData(){
     if(!res.ok) throw new Error("HTTP "+res.status);
     const j=await res.json();
     ALL=(j.daily||[]).sort((a,b)=>a.data<b.data?-1:1);
-    INSIGHTS=j.insights||[];
+    INSIGHTS=j.insights||[];try{const ir=await fetch("insights.json?v="+Date.now());if(ir.ok){const ij=await ir.json();if(ij.insights&&ij.insights.length)INSIGHTS=ij.insights;}}catch(e){}
     EXPERIMENTOS=j.experimentos||[];
     RESUMO_MENSAL=(j.resumo_mensal||[]).sort((a,b)=>b.mes<a.mes?-1:1);
     const lastDay=ALL.length?ALL[ALL.length-1].data:"";document.getElementById("headerUpdated").textContent="Dados até "+fmtDF(lastDay);
