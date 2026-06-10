@@ -1276,14 +1276,28 @@ function selectWeek(semana) {
 
 function buildList(items) {
   const wrap = document.getElementById('insightsWrap');
-  const priColorMap = (p) => p === 'Alta' ? '#E24B4A' : p === 'Media' || p === 'Média' ? '#EF9F27' : '#19398A';
+  const priColorMap = (p) => p === 'Alta' ? '#E24B4A' : (p === 'Media' || p === 'Média') ? '#EF9F27' : '#19398A';
   const clsColorMap = (c) => {
-    const map = {'Diagnóstico comprovado':'#1D9E75','Hipótese':'#6366f1','Tendência':'#EF9F27','Resultado fora da curva':'#E24B4A','Correlação':'#19398A','Explicação':'#6b6b67'};
+    const map = {
+      'Diagnóstico comprovado':'#1D9E75',
+      'Hipótese':'#6366f1',
+      'Tendência':'#EF9F27',
+      'Resultado fora da curva':'#E24B4A',
+      'Correlação':'#19398A',
+      'Explicação':'#6b6b67'
+    };
     return map[c] || '#6b6b67';
   };
-  const STATUS_LABELS = { em_teste: 'Em teste', testada_confirmada: 'Confirmada', testada_refutada: 'Refutada' };
+  const STATUS_LABELS = { em_teste:'Em teste', testada_confirmada:'Confirmada', testada_refutada:'Refutada' };
+  const FIELDS = [
+    ['diagnostico','Diagnóstico'],
+    ['evidencia','Evidência'],
+    ['plano_acao','Plano de ação'],
+    ['impacto','Impacto'],
+    ['acompanhamento','Acompanhamento']
+  ];
 
-  wrap.innerHTML = items.map((ins, i) => {
+  wrap.innerHTML = items.map(function(ins, i) {
     const id = 'ins_' + i;
     const pc = priColorMap(ins.prioridade);
     const cc = clsColorMap(ins.classificacao);
@@ -1291,58 +1305,42 @@ function buildList(items) {
     const statusBadge = hasStatusBadge
       ? '<span class="ins-status-badge ' + ins.status + '">' + STATUS_LABELS[ins.status] + '</span>'
       : '';
-    const idLabel = ins.id
-      ? '<span class="ins-id-lbl">' + escH(ins.id) + '</span>'
-      : '';
+    const idLabel = ins.id ? '<span class="ins-id-lbl">' + escH(ins.id) + '</span>' : '';
 
-    const FIELDS = [
-      ['diagnostico', 'Diagnóstico'],
-      ['evidencia', 'Evidência'],
-      ['plano_acao', 'Plano de ação'],
-      ['impacto', 'Impacto'],
-      ['acompanhamento', 'Acompanhamento']
-    ];
     const hasStructured = FIELDS.some(function(kl){ return ins[kl[0]]; });
-    let bodyHtml = '';
-    if (hasStructured) {
-      bodyHtml = FIELDS.filter(function(kl){ return ins[kl[0]]; }).map(function(kl){
-        return '<div class="ins-section"><div class="ins-section-lbl">' + kl[1] + '</div><div class="ins-section-txt">' + escH(ins[kl[0]]) + '</div></div>';
-      }).join('');
-    } else {
-      bodyHtml = parseSections(ins.texto);
-    }
+    let bodyHtml = hasStructured
+      ? FIELDS.filter(function(kl){ return ins[kl[0]]; }).map(function(kl){
+          return '<div class="ins-section"><div class="ins-section-lbl">' + kl[1] + '</div><div class="ins-section-txt">' + escH(ins[kl[0]]) + '</div></div>';
+        }).join('')
+      : parseSections(ins.texto);
 
     let tmplHtml = '';
     if (ins.testavel && ins.experimento_template) {
-      var t = ins.experimento_template;
-      var tmplId = 'tmpl_' + i;
-      var guardrails = Array.isArray(t.guardrails) ? t.guardrails.join(', ') : (t.guardrails || '-');
-      tmplHtml =
-        '<button class="ins-exp-tmpl-btn" onclick="toggleExpTmpl('' + tmplId + '', this)">Ver template de experimento</button>' +
-        '<div class="ins-exp-tmpl-box" id="' + tmplId + '">' +
+      const t = ins.experimento_template;
+      const tid = 'tmpl_' + i;
+      const gl = Array.isArray(t.guardrails) ? t.guardrails.join(', ') : (t.guardrails || '-');
+      tmplHtml = '<button class="ins-exp-tmpl-btn" data-target="' + tid + '" onclick="var b=document.getElementById(this.dataset.target);b.classList.toggle(\'open\');this.textContent=b.classList.contains(\'open\')?\'Ocultar template\':\'Ver template de experimento\'">Ver template de experimento</button>' +
+        '<div class="ins-exp-tmpl-box" id="' + tid + '">' +
           '<div class="ins-exp-tmpl-title">Template de Experimento</div>' +
-          '<div class="ins-exp-tmpl-field"><div class="ins-exp-tmpl-lbl">ID</div><div class="ins-exp-tmpl-val">' + escH(t.id || '-') + '</div></div>' +
-          '<div class="ins-exp-tmpl-field"><div class="ins-exp-tmpl-lbl">Título Linear</div><div class="ins-exp-tmpl-val">' + escH(t.titulo || '-') + '</div></div>' +
-          '<div class="ins-exp-tmpl-field"><div class="ins-exp-tmpl-lbl">Hipótese</div><div class="ins-exp-tmpl-val">' + escH(t.hipotese || '-') + '</div></div>' +
-          '<div class="ins-exp-tmpl-field"><div class="ins-exp-tmpl-lbl">Métrica primária</div><div class="ins-exp-tmpl-val">' + escH(t.metrica_primaria || '-') + '</div></div>' +
-          '<div class="ins-exp-tmpl-field"><div class="ins-exp-tmpl-lbl">Guardrails</div><div class="ins-exp-tmpl-val">' + escH(guardrails) + '</div></div>' +
-          '<div class="ins-exp-tmpl-field"><div class="ins-exp-tmpl-lbl">Critério de sucesso</div><div class="ins-exp-tmpl-val">' + escH(t.criterio_sucesso || '-') + '</div></div>' +
-          '<div class="ins-exp-tmpl-field"><div class="ins-exp-tmpl-lbl">Duração mínima</div><div class="ins-exp-tmpl-val">' + (t.duracao_minima_dias || '-') + ' dias</div></div>' +
+          '<div class="ins-exp-tmpl-field"><div class="ins-exp-tmpl-lbl">ID</div><div class="ins-exp-tmpl-val">' + escH(t.id||'-') + '</div></div>' +
+          '<div class="ins-exp-tmpl-field"><div class="ins-exp-tmpl-lbl">Título Linear</div><div class="ins-exp-tmpl-val">' + escH(t.titulo||'-') + '</div></div>' +
+          '<div class="ins-exp-tmpl-field"><div class="ins-exp-tmpl-lbl">Hipótese</div><div class="ins-exp-tmpl-val">' + escH(t.hipotese||'-') + '</div></div>' +
+          '<div class="ins-exp-tmpl-field"><div class="ins-exp-tmpl-lbl">Métrica primária</div><div class="ins-exp-tmpl-val">' + escH(t.metrica_primaria||'-') + '</div></div>' +
+          '<div class="ins-exp-tmpl-field"><div class="ins-exp-tmpl-lbl">Guardrails</div><div class="ins-exp-tmpl-val">' + escH(gl) + '</div></div>' +
+          '<div class="ins-exp-tmpl-field"><div class="ins-exp-tmpl-lbl">Critério de sucesso</div><div class="ins-exp-tmpl-val">' + escH(t.criterio_sucesso||'-') + '</div></div>' +
+          '<div class="ins-exp-tmpl-field"><div class="ins-exp-tmpl-lbl">Duração mínima</div><div class="ins-exp-tmpl-val">' + (t.duracao_minima_dias||'-') + ' dias</div></div>' +
           (t.notas ? '<div class="ins-exp-tmpl-field"><div class="ins-exp-tmpl-lbl">Notas</div><div class="ins-exp-tmpl-val">' + escH(t.notas) + '</div></div>' : '') +
         '</div>';
     }
 
-    var expRefHtml = '';
-    if ((ins.status === 'em_teste' || ins.status === 'testada_confirmada' || ins.status === 'testada_refutada') && ins.experimento_id) {
-      expRefHtml =
-        '<div class="ins-exp-ref">' +
-          '<span class="ins-exp-ref-lbl">Experimento:</span>' +
-          '<button class="ins-exp-ref-link" onclick="goToExperimento('' + escH(ins.experimento_id) + '')">' + escH(ins.experimento_id) + ' - Ver na aba Experimentos</button>' +
-        '</div>';
+    let expRefHtml = '';
+    if ((ins.status==='em_teste'||ins.status==='testada_confirmada'||ins.status==='testada_refutada') && ins.experimento_id) {
+      expRefHtml = '<div class="ins-exp-ref"><span class="ins-exp-ref-lbl">Experimento:</span>' +
+        '<button class="ins-exp-ref-link" data-expid="' + escH(ins.experimento_id) + '" onclick="goToExperimento(this.dataset.expid)">' + escH(ins.experimento_id) + ' - Ver na aba Experimentos</button></div>';
     }
 
     return '<div class="ins-card" id="' + id + '">' +
-      '<div class="ins-card-header" onclick="toggleIns('' + id + '')">' +
+      '<div class="ins-card-header" onclick="toggleIns(\'' + id + '\')">' +
         '<span class="ins-tag" style="background:' + pc + '20;color:' + pc + '">' + escH(ins.prioridade) + '</span>' +
         '<span class="ins-tag" style="background:' + cc + '20;color:' + cc + '">' + escH(ins.classificacao) + '</span>' +
         statusBadge +
@@ -1353,7 +1351,7 @@ function buildList(items) {
       '<div class="ins-body">' + bodyHtml + expRefHtml + tmplHtml + '</div>' +
     '</div>';
   }).join('');
-  var first = document.getElementById('ins_0');
+  const first = document.getElementById('ins_0');
   if (first) first.classList.add('open');
 }
 
