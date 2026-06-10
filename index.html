@@ -199,12 +199,22 @@ tr.cmp-tr td{background:#f5f8ff;font-size:12px;color:var(--compare)}
 .ins-exp-ref-lbl{font-size:11px;color:var(--neutral-500)}
 .ins-exp-ref-link{font-family:inherit;font-size:11px;font-weight:700;color:var(--brand-primary);background:none;border:none;cursor:pointer;text-decoration:underline;padding:0}
 
-/* Tabs */
-.tabs{display:flex;gap:4px;background:#fff;padding:4px;border-radius:9999px;box-shadow:var(--shadow-01);width:fit-content;margin-bottom:20px;flex-wrap:wrap}
-.tab{font-family:inherit;font-size:12px;font-weight:700;padding:7px 18px;border-radius:9999px;border:none;cursor:pointer;background:transparent;color:var(--neutral-500);transition:all .15s}
-.tab.active{background:var(--brand-primary);color:#fff}
+/* Tabs — sistema de dois níveis */
+/* Nível 1: Site / App / abas compartilhadas */
+.tabs-l1{display:flex;gap:4px;background:#fff;padding:4px;border-radius:9999px;box-shadow:var(--shadow-01);width:fit-content;margin-bottom:12px;flex-wrap:wrap}
+.tab-l1{font-family:inherit;font-size:13px;font-weight:700;padding:8px 20px;border-radius:9999px;border:none;cursor:pointer;background:transparent;color:var(--neutral-500);transition:all .15s;display:flex;align-items:center;gap:6px}
+.tab-l1.active{background:var(--brand-primary);color:#fff}
+.tab-l1.shared{font-size:12px;padding:7px 16px}
+.tab-l1.shared.active{background:var(--neutral-700);color:#fff}
+/* Nível 2: sub-abas dentro de Site ou App */
+.tabs-l2{display:flex;gap:3px;background:var(--neutral-100);padding:3px;border-radius:9999px;width:fit-content;margin-bottom:16px;flex-wrap:wrap}
+.tab-l2{font-family:inherit;font-size:11px;font-weight:700;padding:5px 14px;border-radius:9999px;border:none;cursor:pointer;background:transparent;color:var(--neutral-600,#515151);transition:all .15s}
+.tab-l2.active{background:#fff;color:var(--brand-primary);box-shadow:var(--shadow-01)}
+/* Painéis */
 .tbc{display:none}
 .tbc.active{display:block}
+.section-pane{display:none}
+.section-pane.active{display:block}
 
 /* Loading */
 .state-wrap{display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:300px;gap:12px;color:var(--neutral-500)}
@@ -498,19 +508,31 @@ tr.cmp-tr td{background:#f5f8ff;font-size:12px;color:var(--compare)}
   <div id="appState" class="state-wrap"><div class="spin"></div><span>Carregando dados...</span></div>
   <div id="appContent" style="display:none">
 
-    <div class="tabs">
-      <button class="tab active" data-tab="vg">Visão Geral</button>
-      <button class="tab" data-tab="aq">Aquisição</button>
-      <button class="tab" data-tab="fu">Funil</button>
-      <button class="tab" data-tab="ro">Rotas</button>
-      <button class="tab" data-tab="in">Insights IA</button>
-      <button class="tab" data-tab="ex">Experimentos</button>
-      <button class="tab" data-tab="rm">Resumo Mensal</button>
-      <button class="tab" data-tab="ap">App</button>
+    <!-- ── NAVEGAÇÃO NÍVEL 1 ── -->
+    <div class="tabs-l1">
+      <button class="tab-l1 active" data-section="site">
+        <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" width="14" height="14"><rect x="1" y="2" width="14" height="11" rx="2"/><path d="M1 6h14"/><path d="M5 6v7"/></svg>
+        Site
+      </button>
+      <button class="tab-l1" data-section="app">
+        <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" width="14" height="14"><rect x="4" y="1" width="8" height="14" rx="2"/><circle cx="8" cy="12.5" r=".8" fill="currentColor" stroke="none"/></svg>
+        App
+      </button>
+      <div style="width:1px;background:var(--neutral-200);height:28px;align-self:center;margin:0 4px"></div>
+      <button class="tab-l1 shared" data-section="in">Insights IA</button>
+      <button class="tab-l1 shared" data-section="ex">Experimentos</button>
+      <button class="tab-l1 shared" data-section="rm">Resumo Mensal</button>
     </div>
 
-    <!-- VISÃO GERAL -->
-    <div class="tbc active" id="tab-vg">
+    <!-- ══ SITE ══ -->
+    <div class="section-pane active" id="section-site">
+      <div class="tabs-l2">
+        <button class="tab-l2 active" data-subtab="site-vg">Visão Geral</button>
+        <button class="tab-l2" data-subtab="site-aq">Aquisição</button>
+        <button class="tab-l2" data-subtab="site-fu">Funil</button>
+        <button class="tab-l2" data-subtab="site-ro">Rotas</button>
+      </div>
+    <div class="tbc active" id="tab-site-vg">
       <!-- Filtro de canal — local da Visão Geral -->
       <div class="vg-canal-bar">
         <div class="fg">
@@ -555,7 +577,7 @@ tr.cmp-tr td{background:#f5f8ff;font-size:12px;color:var(--compare)}
     </div>
 
     <!-- AQUISIÇÃO -->
-    <div class="tbc" id="tab-aq">
+    <div class="tbc" id="tab-site-aq">
       <div class="sec">Sessões por canal e dispositivo</div>
       <div class="charts-grid">
         <div class="cc"><div class="cc-title">Canais</div><div class="cc-wrap"><canvas id="cCanais"></canvas></div></div>
@@ -574,13 +596,13 @@ tr.cmp-tr td{background:#f5f8ff;font-size:12px;color:var(--compare)}
     </div>
 
     <!-- FUNIL -->
-    <div class="tbc" id="tab-fu">
+    <div class="tbc" id="tab-site-fu">
       <div class="sec">Funil de conversão</div>
       <div class="funil-wrap"><div class="funil-steps" id="funilSteps"></div></div>
     </div>
 
     <!-- ROTAS -->
-    <div class="tbc" id="tab-ro">
+    <div class="tbc" id="tab-site-ro">
       <div class="sec">Top origens e destinos (acumulado do período)</div>
       <div class="rg" id="rotasGrid">
         <div class="tc">
@@ -594,8 +616,74 @@ tr.cmp-tr td{background:#f5f8ff;font-size:12px;color:var(--compare)}
       </div>
     </div>
 
+    </div><!-- /section-pane site -->
+
+    <!-- ══ APP ══ -->
+    <div class="section-pane" id="section-app">
+      <div class="tabs-l2">
+        <button class="tab-l2 active" data-subtab="app-vg">Visão Geral</button>
+        <button class="tab-l2" data-subtab="app-aq">Aquisição</button>
+        <button class="tab-l2" data-subtab="app-fu">Funil</button>
+      </div>
+      <div id="appTabState" class="state-wrap" style="display:none"><div class="spin"></div><span>Carregando dados do App...</span></div>
+      <div id="appTabContent" style="display:none">
+        <!-- Filtro de plataforma -->
+        <div class="vg-canal-bar" style="margin-bottom:16px">
+          <div class="fg">
+            <span class="flabel">Plataforma</span>
+            <button class="fbtn active" data-appdev="all">Todas</button>
+            <button class="fbtn" data-appdev="mobile">Android</button>
+            <button class="fbtn" data-appdev="desktop">iOS</button>
+          </div>
+          <div class="canal-banner hidden" id="appPlatBanner">
+            <span class="canal-banner-lbl" id="appPlatBannerLbl">—</span>
+            <button class="cmp-x" onclick="setAppDev('all')">✕ Limpar</button>
+          </div>
+        </div>
+
+        <!-- App — Visão Geral -->
+        <div class="tbc active" id="tab-app-vg">
+          <div class="sec">KPIs do período</div>
+          <div class="kpi-grid" id="appKpiGrid"></div>
+          <div class="sec">Tendência diária</div>
+          <div class="charts-grid">
+            <div class="cc"><div class="cc-title">Sessões por dia</div><div class="cc-legend" id="appLegSess"></div><div class="cc-wrap"><canvas id="appCSess"></canvas></div></div>
+            <div class="cc"><div class="cc-title">Compras por dia</div><div class="cc-legend" id="appLegComp"></div><div class="cc-wrap"><canvas id="appCComp"></canvas></div></div>
+            <div class="cc"><div class="cc-title">Conversão % por dia</div><div class="cc-legend" id="appLegCR"></div><div class="cc-wrap"><canvas id="appCCR"></canvas></div></div>
+            <div class="cc"><div class="cc-title">Rejeição % por dia</div><div class="cc-legend" id="appLegBnc"></div><div class="cc-wrap"><canvas id="appCBnc"></canvas></div></div>
+          </div>
+        </div>
+
+        <!-- App — Aquisição -->
+        <div class="tbc" id="tab-app-aq">
+          <div class="sec">Sessões por canal e plataforma</div>
+          <div class="charts-grid">
+            <div class="cc"><div class="cc-title">Canais</div><div class="cc-wrap"><canvas id="appCCanais"></canvas></div></div>
+            <div class="cc"><div class="cc-title">Plataforma</div><div class="cc-wrap"><canvas id="appCDevs"></canvas></div></div>
+          </div>
+          <div class="sec">Detalhamento por canal</div>
+          <div class="tc"><table>
+            <thead id="appThCanais"></thead>
+            <tbody id="appTbCanais"></tbody>
+          </table></div>
+          <div class="sec" style="margin-top:20px">CR por plataforma</div>
+          <div class="tc"><table>
+            <thead><tr><th>Plataforma</th><th class="num">Sessões</th><th class="num">Compras</th><th class="num">CR %</th></tr></thead>
+            <tbody id="appTbDevs"></tbody>
+          </table></div>
+        </div>
+
+        <!-- App — Funil -->
+        <div class="tbc" id="tab-app-fu">
+          <div class="sec">Funil de conversão</div>
+          <div class="funil-wrap"><div class="funil-steps" id="appFunilSteps"></div></div>
+        </div>
+      </div>
+    </div><!-- /section-pane app -->
+
+    <!-- ══ COMPARTILHADAS ══ -->
     <!-- INSIGHTS -->
-    <div class="tbc" id="tab-in">
+    <div class="section-pane" id="section-in">
       <div class="ins-layout">
         <nav class="ins-nav" id="insNav"></nav>
         <div class="ins-content">
@@ -604,9 +692,11 @@ tr.cmp-tr td{background:#f5f8ff;font-size:12px;color:var(--compare)}
         </div>
       </div>
     </div>
+    </div><!-- /section-pane in -->
 
     <!-- EXPERIMENTOS -->
-    <div class="tbc" id="tab-ex">
+    <div class="section-pane" id="section-ex">
+    <div class="tbc active" id="tab-ex">
       <div class="exp-filters" id="expFilters">
         <div class="exp-filter-grp">
           <span class="exp-filter-lbl">Status</span>
@@ -636,66 +726,18 @@ tr.cmp-tr td{background:#f5f8ff;font-size:12px;color:var(--compare)}
         <div class="exp-content" id="expContent"></div>
       </div>
     </div>
+    </div><!-- /section-pane ex -->
 
     <!-- RESUMO MENSAL -->
-    <div class="tbc" id="tab-rm">
+    <div class="section-pane" id="section-rm">
+    <div class="tbc active" id="tab-rm">
       <div class="rm-layout">
         <nav class="rm-nav" id="rmNav"></nav>
         <div class="rm-content" id="rmContent"></div>
       </div>
     </div>
+    </div><!-- /section-pane rm -->
 
-    <!-- APP -->
-    <div class="tbc" id="tab-ap">
-      <div id="appTabState" class="state-wrap" style="display:none"><div class="spin"></div><span>Carregando dados do App...</span></div>
-      <div id="appTabContent" style="display:none">
-        <!-- Filtro de plataforma -->
-        <div class="vg-canal-bar" style="margin-bottom:16px">
-          <div class="fg">
-            <span class="flabel">Plataforma</span>
-            <button class="fbtn active" data-appdev="all">Todas</button>
-            <button class="fbtn" data-appdev="mobile">Android</button>
-            <button class="fbtn" data-appdev="desktop">iOS</button>
-          </div>
-          <div class="canal-banner hidden" id="appPlatBanner">
-            <span class="canal-banner-lbl" id="appPlatBannerLbl">—</span>
-            <button class="cmp-x" onclick="setAppDev('all')">✕ Limpar</button>
-          </div>
-        </div>
-        <!-- KPIs -->
-        <div class="sec">KPIs do período — App</div>
-        <div class="kpi-grid" id="appKpiGrid"></div>
-        <!-- Gráficos -->
-        <div class="sec">Tendência diária — App</div>
-        <div class="charts-grid">
-          <div class="cc"><div class="cc-title">Sessões por dia</div><div class="cc-legend" id="appLegSess"></div><div class="cc-wrap"><canvas id="appCSess"></canvas></div></div>
-          <div class="cc"><div class="cc-title">Compras por dia</div><div class="cc-legend" id="appLegComp"></div><div class="cc-wrap"><canvas id="appCComp"></canvas></div></div>
-          <div class="cc"><div class="cc-title">Conversão % por dia</div><div class="cc-legend" id="appLegCR"></div><div class="cc-wrap"><canvas id="appCCR"></canvas></div></div>
-          <div class="cc"><div class="cc-title">Engajamento % por dia</div><div class="cc-legend" id="appLegBnc"></div><div class="cc-wrap"><canvas id="appCBnc"></canvas></div></div>
-        </div>
-        <!-- Aquisição -->
-        <div class="sec" style="margin-top:28px">Aquisição — App</div>
-        <div class="charts-grid">
-          <div class="cc"><div class="cc-title">Canais</div><div class="cc-wrap"><canvas id="appCCanais"></canvas></div></div>
-          <div class="cc"><div class="cc-title">Plataforma</div><div class="cc-wrap"><canvas id="appCDevs"></canvas></div></div>
-        </div>
-        <div class="sec">Detalhamento por canal — App</div>
-        <div class="tc"><table>
-          <thead id="appThCanais"></thead>
-          <tbody id="appTbCanais"></tbody>
-        </table></div>
-        <div class="sec" style="margin-top:20px">CR por plataforma — App</div>
-        <div class="tc"><table>
-          <thead><tr><th>Plataforma</th><th class="num">Sessões</th><th class="num">Compras</th><th class="num">CR %</th></tr></thead>
-          <tbody id="appTbDevs"></tbody>
-        </table></div>
-        <!-- Funil -->
-        <div class="sec" style="margin-top:28px">Funil de conversão — App</div>
-        <div class="funil-wrap"><div class="funil-steps" id="appFunilSteps"></div></div>
-      </div>
-    </div>
-
-  </div>
 </main>
 
 <script>
@@ -728,6 +770,7 @@ async function loadAppData(){
     renderApp();
   }catch(e){
     st.innerHTML=`<span style="color:var(--negative-700)">⚠ Erro ao carregar dados do App: ${e.message}</span>`;
+    st.style.display="flex";
   }
 }
 
@@ -816,14 +859,14 @@ function renderAppCharts(pri,cmp){
     if(!ctx)return;
     const labels=pri.map(d=>fmtDS(d.data));
     const ds=[{label:"Período",data:priData,borderColor:color,backgroundColor:color+"22",fill:true,tension:.35,pointRadius:0,borderWidth:2}];
-    if(cmpData&&cmpData.length){ds.push({label:"Comparativo",data:cmpData,borderColor:"var(--compare)",backgroundColor:"transparent",borderDash:[4,3],tension:.35,pointRadius:0,borderWidth:1.5});}
+    if(cmpData&&cmpData.length){ds.push({label:"Comparativo",data:cmpData,borderColor:"#6589D4",backgroundColor:"transparent",borderDash:[4,3],tension:.35,pointRadius:0,borderWidth:1.5});}
     document.getElementById(legId).innerHTML=ds.map(s=>`<span class="cc-li"><span class="cc-dot" style="background:${s.borderColor}"></span>${s.label}</span>`).join("");
     CHARTS_APP[cid]=new Chart(ctx,{type:"line",data:{labels,datasets:ds},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false},tooltip:{callbacks:{label:c=>fmt(c.raw)}}},scales:{x:{grid:{display:false},ticks:{font:{size:10},maxTicksLimit:8}},y:{grid:{color:"#f0f0f0"},ticks:{font:{size:10},callback:v=>fmt(v)}}}}});
   }
-  mkLine("appCSess","appLegSess",pri.map(d=>d.sessoes),cmp.map(d=>d.sessoes),"var(--brand-primary)",fmtN);
-  mkLine("appCComp","appLegComp",pri.map(d=>d.compras),cmp.map(d=>d.compras),"var(--brand-secondary-a)",fmtN);
-  mkLine("appCCR","appLegCR",pri.map(d=>d.taxa_conversao_pct),cmp.map(d=>d.taxa_conversao_pct),"var(--brand-secondary-b)",v=>v.toFixed(2)+"%");
-  mkLine("appCBnc","appLegBnc",pri.map(d=>d.taxa_rejeicao_pct),cmp.map(d=>d.taxa_rejeicao_pct),"var(--brand-secondary-c)",v=>v.toFixed(2)+"%");
+  mkLine("appCSess","appLegSess",pri.map(d=>d.sessoes),cmp.map(d=>d.sessoes),"#19398A",fmtN);
+  mkLine("appCComp","appLegComp",pri.map(d=>d.compras),cmp.map(d=>d.compras),"#A43C3E",fmtN);
+  mkLine("appCCR","appLegCR",pri.map(d=>d.taxa_conversao_pct),cmp.map(d=>d.taxa_conversao_pct),"#278A22",v=>v.toFixed(2)+"%");
+  mkLine("appCBnc","appLegBnc",pri.map(d=>d.taxa_rejeicao_pct),cmp.map(d=>d.taxa_rejeicao_pct),"#C3940F",v=>v.toFixed(2)+"%");
 }
 
 function renderAppAcquisicao(pri,cmp){
@@ -1633,11 +1676,11 @@ function toggleExpTmpl(id, btn) {
 }
 
 function goToExperimento(expId) {
-  document.querySelectorAll('.tab').forEach(function(t){ t.classList.remove('active'); });
-  document.querySelectorAll('.tbc').forEach(function(t){ t.classList.remove('active'); });
-  var exTab = document.querySelector('[data-tab="ex"]');
-  var exPane = document.getElementById('tab-ex');
-  if (exTab) exTab.classList.add('active');
+  document.querySelectorAll('.tab-l1').forEach(function(t){ t.classList.remove('active'); });
+  document.querySelectorAll('.section-pane').forEach(function(t){ t.classList.remove('active'); });
+  var exBtn = document.querySelector('[data-section="ex"]');
+  var exPane = document.getElementById('section-ex');
+  if (exBtn) exBtn.classList.add('active');
   if (exPane) exPane.classList.add('active');
   SEL_EXP = expId;
   renderExperimentos();
@@ -1805,14 +1848,12 @@ function findInsightById(insId) {
 }
 
 function goToInsight(insId) {
-  // Mudar para aba Insights
-  document.querySelectorAll('.tab').forEach(b => b.classList.remove('active'));
-  document.querySelectorAll('.tbc').forEach(c => c.classList.remove('active'));
-  const btn = document.querySelector('[data-tab="in"]');
-  const tab = document.getElementById('tab-in');
+  document.querySelectorAll('.tab-l1').forEach(b => b.classList.remove('active'));
+  document.querySelectorAll('.section-pane').forEach(c => c.classList.remove('active'));
+  const btn = document.querySelector('[data-section="in"]');
+  const pane = document.getElementById('section-in');
   if (btn) btn.classList.add('active');
-  if (tab) tab.classList.add('active');
-  // Tentar selecionar o insight na nav (se a função selectWeek existir e o insight tiver semana)
+  if (pane) pane.classList.add('active');
   const ins = findInsightById(insId);
   if (ins && ins.semana && typeof selectWeek === 'function') {
     selectWeek(ins.semana);
@@ -2535,15 +2576,32 @@ document.querySelectorAll('[data-expf]').forEach(btn => {
   });
 });
 
-// Tabs
-document.querySelectorAll("[data-tab]").forEach(btn=>{
+// Tabs — sistema de dois níveis
+// NÍVEL 1: section (site / app / in / ex / rm)
+document.querySelectorAll("[data-section]").forEach(btn=>{
   btn.addEventListener("click",()=>{
-    document.querySelectorAll(".tab").forEach(b=>b.classList.remove("active"));
-    document.querySelectorAll(".tbc").forEach(c=>c.classList.remove("active"));
+    document.querySelectorAll(".tab-l1").forEach(b=>b.classList.remove("active"));
+    document.querySelectorAll(".section-pane").forEach(p=>p.classList.remove("active"));
     btn.classList.add("active");
-    document.getElementById("tab-"+btn.dataset.tab).classList.add("active");
-    // Lazy load da aba App — carrega data_app.json só na primeira abertura
-    if(btn.dataset.tab==="ap") loadAppData();
+    const sec=btn.dataset.section;
+    document.getElementById("section-"+sec).classList.add("active");
+    // Lazy load App na primeira abertura
+    if(sec==="app") loadAppData();
+  });
+});
+
+// NÍVEL 2: sub-abas dentro de site ou app
+document.querySelectorAll("[data-subtab]").forEach(btn=>{
+  btn.addEventListener("click",()=>{
+    // Encontrar irmãos tab-l2 dentro do mesmo tabs-l2
+    const parent=btn.closest(".tabs-l2");
+    parent.querySelectorAll(".tab-l2").forEach(b=>b.classList.remove("active"));
+    btn.classList.add("active");
+    // Encontrar o section-pane pai e alternar os tbc dentro dele
+    const pane=btn.closest(".section-pane");
+    const prefix=btn.dataset.subtab.startsWith("app-")?"tab-app-":"tab-site-";
+    pane.querySelectorAll(".tbc").forEach(c=>c.classList.remove("active"));
+    document.getElementById("tab-"+btn.dataset.subtab).classList.add("active");
   });
 });
 
