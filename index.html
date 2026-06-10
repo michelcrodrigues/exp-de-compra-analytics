@@ -178,8 +178,19 @@ tr.cmp-tr td{background:#f5f8ff;font-size:12px;color:var(--compare)}
 .ins-filter-btn{font-family:inherit;font-size:11px;font-weight:700;padding:4px 12px;border-radius:9999px;border:1px solid var(--neutral-300);background:#fff;color:var(--neutral-700);cursor:pointer;transition:all .15s}
 .ins-filter-btn:hover{border-color:var(--brand-primary);color:var(--brand-primary)}
 .ins-filter-btn.active{background:var(--brand-primary);color:#fff;border-color:var(--brand-primary)}
-/* Insight ID label */
-.ins-id-lbl{font-size:10px;color:var(--neutral-400);font-variant-numeric:tabular-nums;flex-shrink:0;letter-spacing:.3px}
+/* Filtros de canal e prioridade — Insights */
+.ins-canal-btn{font-family:inherit;font-size:11px;font-weight:700;padding:4px 12px;border-radius:9999px;border:1px solid var(--neutral-300);background:#fff;color:var(--neutral-700);cursor:pointer;transition:all .15s;white-space:nowrap}
+.ins-canal-btn:hover{border-color:var(--brand-primary);color:var(--brand-primary)}
+.ins-canal-btn.active{background:var(--brand-primary);color:#fff;border-color:var(--brand-primary)}
+/* Badge de canal no card de insight */
+.ins-canal-badge{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.6px;padding:3px 9px;border-radius:9999px;white-space:nowrap;flex-shrink:0}
+.ins-canal-badge.site{background:#E0EAFF;color:#19398A}
+.ins-canal-badge.app{background:#C6E5C3;color:#278A22}
+.ins-canal-badge.conjunto{background:#FFEFC0;color:#C3940F}
+.ins-canal-badge.site-mobile{background:#e8e0ff;color:#6366f1}
+.ins-canal-badge.site-desktop{background:#E0EAFF;color:#19398A}
+
+
 /* Insight status badges */
 .ins-status-badge{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.6px;padding:3px 9px;border-radius:9999px;white-space:nowrap;flex-shrink:0}
 .ins-status-badge.em_teste{background:#E0EAFF;color:#19398A}
@@ -684,6 +695,19 @@ tr.cmp-tr td{background:#f5f8ff;font-size:12px;color:var(--compare)}
     <!-- ══ COMPARTILHADAS ══ -->
     <!-- INSIGHTS -->
     <div class="section-pane" id="section-in">
+      <div class="ins-canal-bar" style="background:#fff;border-radius:var(--r-md);box-shadow:var(--shadow-01);padding:12px 16px;margin-bottom:16px;display:flex;align-items:center;gap:8px;flex-wrap:wrap">
+        <span class="flabel">Canal</span>
+        <button class="ins-canal-btn active" data-inscanal="todos">Todos</button>
+        <button class="ins-canal-btn" data-inscanal="site">Site</button>
+        <button class="ins-canal-btn" data-inscanal="app">App</button>
+        <button class="ins-canal-btn" data-inscanal="conjunto">Site vs App</button>
+        <div class="fdiv"></div>
+        <span class="flabel">Prioridade</span>
+        <button class="ins-canal-btn active" data-insprio="todos">Todas</button>
+        <button class="ins-canal-btn" data-insprio="Alta">Alta</button>
+        <button class="ins-canal-btn" data-insprio="Média">Média</button>
+        <button class="ins-canal-btn" data-insprio="Baixa">Baixa</button>
+      </div>
       <div class="ins-layout">
         <nav class="ins-nav" id="insNav"></nav>
         <div class="ins-content">
@@ -698,6 +722,14 @@ tr.cmp-tr td{background:#f5f8ff;font-size:12px;color:var(--compare)}
     <div class="section-pane" id="section-ex">
     <div class="tbc active" id="tab-ex">
       <div class="exp-filters" id="expFilters">
+        <div class="exp-filter-grp">
+          <span class="exp-filter-lbl">Canal</span>
+          <button class="exp-filter-btn active" data-expf="canal" data-expv="">Todos</button>
+          <button class="exp-filter-btn" data-expf="canal" data-expv="site">Site</button>
+          <button class="exp-filter-btn" data-expf="canal" data-expv="app">App</button>
+          <button class="exp-filter-btn" data-expf="canal" data-expv="conjunto">Site vs App</button>
+        </div>
+        <div class="fdiv"></div>
         <div class="exp-filter-grp">
           <span class="exp-filter-lbl">Status</span>
           <button class="exp-filter-btn active" data-expf="status" data-expv="">Todos</button>
@@ -749,6 +781,11 @@ let DEV="all";
 let CANAL="all"; // canal de aquisição — filtro local da Visão Geral
 let P={start:null,end:null};
 let C={start:null,end:null,active:false};
+// Filtros de Insights
+let INS_CANAL="todos";   // todos | site | app | conjunto
+let INS_PRIO="todos";    // todos | Alta | Média | Baixa
+// Filtro de Canal nos Experimentos
+let EXP_FC="";
 
 // ── APP ──────────────────────────────────────────────────────────────────────
 let ALL_APP=[], CHARTS_APP={};
@@ -1526,6 +1563,41 @@ function renderRotas(pri,cmp){
 // ════════════════════════════════════════════════════════
 // INSIGHTS
 // ════════════════════════════════════════════════════════
+
+// Detecta o canal de um insight pela tag
+function insCanal(ins) {
+  const tag = (ins.tag || '').toLowerCase();
+  if (tag.startsWith('[site vs app]') || tag.startsWith('[app vs site]')) return 'conjunto';
+  if (tag.startsWith('[app]')) return 'app';
+  // site-mobile / site-desktop: tags sem prefixo especial mas com "mobile" ou "desktop" no início
+  if (tag.startsWith('[mobile]') || tag.startsWith('[site mobile]')) return 'site-mobile';
+  if (tag.startsWith('[desktop]') || tag.startsWith('[site desktop]')) return 'site-desktop';
+  // campo explícito se a skill gravar
+  if (ins.canal === 'app') return 'app';
+  if (ins.canal === 'conjunto') return 'conjunto';
+  if (ins.canal === 'site-mobile') return 'site-mobile';
+  if (ins.canal === 'site-desktop') return 'site-desktop';
+  return 'site';
+}
+
+function insCanalLabel(canal) {
+  return {site:'Site',app:'App',conjunto:'Site vs App','site-mobile':'Site · Mobile','site-desktop':'Site · Desktop'}[canal] || 'Site';
+}
+
+function insMatchFiltro(ins) {
+  const canal = insCanal(ins);
+  const prio  = ins.prioridade || '';
+  // filtro canal
+  if (INS_CANAL !== 'todos') {
+    if (INS_CANAL === 'site' && canal !== 'site' && canal !== 'site-mobile' && canal !== 'site-desktop') return false;
+    if (INS_CANAL === 'app' && canal !== 'app') return false;
+    if (INS_CANAL === 'conjunto' && canal !== 'conjunto') return false;
+  }
+  // filtro prioridade
+  if (INS_PRIO !== 'todos' && prio !== INS_PRIO) return false;
+  return true;
+}
+
 function renderInsights() {
   const nav = document.getElementById('insNav');
   const wrap = document.getElementById('insightsWrap');
@@ -1538,8 +1610,14 @@ function renderInsights() {
   }
 
   const monthNames = ['Jan','Fev','Mar','Abr','Mai','Jun','Jul','Ago','Set','Out','Nov','Dez'];
+  // Filtrar semanas que tenham pelo menos 1 item que passa no filtro
+  const filteredWeeks = INSIGHTS.map(w => ({
+    ...w,
+    items: (w.items || []).filter(insMatchFiltro)
+  })).filter(w => w.items.length > 0);
+
   const tree = {};
-  INSIGHTS.forEach(w => {
+  filteredWeeks.forEach(w => {
     const parts = w.semana.split('-');
     const y = parts[0], m = parts[1];
     if (!tree[y]) tree[y] = {};
@@ -1553,22 +1631,35 @@ function renderInsights() {
     Object.keys(tree[year]).sort((a,b) => b-a).forEach(month => {
       navHtml += '<div class="ins-nav-month">' + monthNames[parseInt(month)-1] + '</div>';
       tree[year][month].forEach(w => {
-        navHtml += '<div class="ins-nav-week" data-semana="' + w.semana + '" onclick="selectWeek(\'' + w.semana + '\')">' + w.label + '</div>';
+        const cnt = w.items.length;
+        navHtml += '<div class="ins-nav-week" data-semana="' + w.semana + '" onclick="selectWeek(\'' + w.semana + '\')">' + w.label + ' <span style="font-size:10px;color:var(--neutral-500);margin-left:4px">(' + cnt + ')</span></div>';
       });
     });
   });
   nav.innerHTML = navHtml;
-  selectWeek(INSIGHTS[0].semana);
+
+  if (filteredWeeks.length > 0) {
+    selectWeek(filteredWeeks[0].semana, filteredWeeks);
+  } else {
+    wrap.innerHTML = '<div class="ins-empty">Nenhum insight para os filtros selecionados.</div>';
+  }
 }
 
-function selectWeek(semana) {
+function selectWeek(semana, filteredWeeksOverride) {
   document.querySelectorAll('.ins-nav-week').forEach(el =>
     el.classList.toggle('active', el.dataset.semana === semana));
-  const week = INSIGHTS.find(w => w.semana === semana);
   const wrap = document.getElementById('insightsWrap');
   if (!wrap) return;
+  // Usar override (já filtrado) ou buscar semana original e filtrar
+  let week;
+  if (filteredWeeksOverride) {
+    week = filteredWeeksOverride.find(w => w.semana === semana);
+  } else {
+    const raw = INSIGHTS.find(w => w.semana === semana);
+    week = raw ? { ...raw, items: (raw.items || []).filter(insMatchFiltro) } : null;
+  }
   if (!week || !week.items || week.items.length === 0) {
-    wrap.innerHTML = '<div class="ins-empty">Nenhum insight para esta semana.</div>';
+    wrap.innerHTML = '<div class="ins-empty">Nenhum insight para esta semana com os filtros selecionados.</div>';
     return;
   }
   buildList(week.items);
@@ -1597,6 +1688,11 @@ function buildList(items) {
     ['acompanhamento','Acompanhamento']
   ];
 
+  // Remove prefixos de canal da tag para exibição limpa no card
+  function cleanTag(tag) {
+    return (tag || '').replace(/^\[(App|Site vs App|App vs Site|Mobile|Site Mobile|Desktop|Site Desktop)\]\s*/i, '').trim();
+  }
+
   wrap.innerHTML = items.map(function(ins, i) {
     const id = 'ins_' + i;
     const pc = priColorMap(ins.prioridade);
@@ -1606,6 +1702,10 @@ function buildList(items) {
       ? '<span class="ins-status-badge ' + ins.status + '">' + STATUS_LABELS[ins.status] + '</span>'
       : '';
     const idLabel = ins.id ? '<span class="ins-id-lbl">' + escH(ins.id) + '</span>' : '';
+
+    // Badge de canal
+    const canal = insCanal(ins);
+    const canalBadge = '<span class="ins-canal-badge ' + canal + '">' + insCanalLabel(canal) + '</span>';
 
     const hasStructured = FIELDS.some(function(kl){ return ins[kl[0]]; });
     let bodyHtml = hasStructured
@@ -1641,10 +1741,11 @@ function buildList(items) {
 
     return '<div class="ins-card" id="' + id + '">' +
       '<div class="ins-card-header" onclick="toggleIns(\'' + id + '\')">' +
+        canalBadge +
         '<span class="ins-tag" style="background:' + pc + '20;color:' + pc + '">' + escH(ins.prioridade) + '</span>' +
         '<span class="ins-tag" style="background:' + cc + '20;color:' + cc + '">' + escH(ins.classificacao) + '</span>' +
         statusBadge +
-        '<span style="flex:1;font-size:13px;font-weight:500;margin-left:4px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">' + escH(ins.tag) + '</span>' +
+        '<span style="flex:1;font-size:13px;font-weight:500;margin-left:4px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">' + escH(cleanTag(ins.tag)) + '</span>' +
         idLabel +
         '<span class="ins-chevron">▼</span>' +
       '</div>' +
@@ -1701,6 +1802,20 @@ let EXP_FS = ''; // status filter
 let EXP_FP = ''; // periodo filter
 let EXP_FO = ''; // origem filter
 let SEL_EXP = null;
+// EXP_FC declarado no estado global acima
+
+function expInsCanal(exp) {
+  if (exp.insight_id) {
+    for (const week of INSIGHTS) {
+      const ins = (week.items||[]).find(i => i.id === exp.insight_id);
+      if (ins) return insCanal(ins);
+    }
+  }
+  const t = (exp.titulo || '').toLowerCase();
+  if (t.includes('[app]')) return 'app';
+  if (t.includes('site vs app') || t.includes('[conjunto]')) return 'conjunto';
+  return 'site';
+}
 
 function renderExperimentos() {
   const nav = document.getElementById('expNav');
@@ -1715,6 +1830,13 @@ function renderExperimentos() {
 
   // Apply filters
   let filtered = EXPERIMENTOS.slice();
+  if (EXP_FC) {
+    filtered = filtered.filter(e => {
+      const c = expInsCanal(e);
+      if (EXP_FC === 'site') return c === 'site' || c === 'site-mobile' || c === 'site-desktop';
+      return c === EXP_FC;
+    });
+  }
   if (EXP_FS) filtered = filtered.filter(e => e.status === EXP_FS);
   if (EXP_FO === 'com_insight') filtered = filtered.filter(e => e.insight_id);
   if (EXP_FO === 'sem_insight') filtered = filtered.filter(e => !e.insight_id);
@@ -1905,11 +2027,14 @@ function selectMes(mes) {
   const m = rm.metricas || {};
   const dev = rm.analise_dispositivos || {};
   const recs = rm.recomendacoes || [];
+  const appData = rm.analise_app || null;
 
   // Separar recomendações por escopo
-  const recsMobile  = recs.filter(r => r.dispositivo === 'mobile');
-  const recsDesktop = recs.filter(r => r.dispositivo === 'desktop');
-  const recsAmbos   = recs.filter(r => !r.dispositivo || r.dispositivo === 'ambos');
+  const recsMobile   = recs.filter(r => r.dispositivo === 'mobile');
+  const recsDesktop  = recs.filter(r => r.dispositivo === 'desktop');
+  const recsAndroid  = recs.filter(r => r.dispositivo === 'android');
+  const recsIos      = recs.filter(r => r.dispositivo === 'ios');
+  const recsAmbos    = recs.filter(r => !r.dispositivo || r.dispositivo === 'ambos');
 
   // Contexto histórico: mês anterior no array
   const idxAtual = RESUMO_MENSAL.findIndex(r => r.mes === mes);
@@ -1926,8 +2051,8 @@ function selectMes(mes) {
   h += '<span class="rm-cls-badge rm-cls-' + cls + '">' + rmClsLabel(cls) + '</span>';
   h += '</div>';
 
-  // ── KPIs consolidados ─────────────────────────────────
-  h += '<div class="sec" style="margin-top:20px">Métricas consolidadas</div>';
+  // ── KPIs consolidados — Site ───────────────────────────
+  h += '<div class="sec" style="margin-top:20px">Site — Métricas consolidadas</div>';
   h += '<div class="kpi-grid">';
   h += rmKpi('Sessões',   m.sessoes,            false, '');
   h += rmKpi('Compras',   m.compras,            false, '');
@@ -1954,20 +2079,60 @@ function selectMes(mes) {
     }
   }
 
-  // ── Seções por dispositivo (empilhadas) ───────────────
+  // ── Seções por dispositivo do Site ────────────────────
   const hasDevs = dev.mobile || dev.desktop;
   if (hasDevs) {
-    h += '<div class="sec">Análise por dispositivo</div>';
+    h += '<div class="sec">Site — Análise por dispositivo</div>';
     h += '<div style="display:flex;flex-direction:column;gap:16px">';
-
-    if (dev.mobile) {
-      h += rmDevSection('Mobile', dev.mobile, '📱', recsMobile);
-    }
-    if (dev.desktop) {
-      h += rmDevSection('Desktop', dev.desktop, '🖥', recsDesktop);
-    }
-
+    if (dev.mobile)  h += rmDevSection('Mobile',  dev.mobile,  '📱', recsMobile);
+    if (dev.desktop) h += rmDevSection('Desktop', dev.desktop, '🖥', recsDesktop);
     h += '</div>';
+  }
+
+  // ── Seção App ─────────────────────────────────────────
+  const appCls = appData ? (appData.classificacao || 'estavel') : null;
+  const hasAppData = appData && appCls !== 'sem_dados';
+  const appMetricas = hasAppData ? (appData.metricas || {}) : null;
+
+  h += '<div class="sec" style="margin-top:28px">App — Métricas consolidadas</div>';
+  if (!hasAppData) {
+    h += '<div class="rm-empty" style="padding:20px 24px;font-size:13px;text-align:left">';
+    h += '<span style="color:var(--neutral-500)">Sem dados do App para este mês.</span>';
+    h += '</div>';
+  } else {
+    // Badge de classificação do App
+    h += '<div style="display:flex;align-items:center;gap:10px;margin-bottom:12px">';
+    h += '<span class="rm-cls-badge rm-cls-' + appCls + '">' + rmClsLabel(appCls) + '</span>';
+    // Comparativo site vs App se disponível
+    const cmpSite = appData.comparativo_site;
+    if (cmpSite) {
+      const deltaCR = cmpSite.delta_cr_pp;
+      const canalMaior = cmpSite.canal_maior_compras;
+      if (deltaCR != null) {
+        const sinal = deltaCR > 0 ? '+' : '';
+        h += '<span style="font-size:12px;color:var(--neutral-600)">CR app vs site: <strong>' + sinal + deltaCR.toFixed(2) + ' pp</strong></span>';
+      }
+      if (canalMaior) {
+        h += '<span style="font-size:11px;background:var(--neutral-200);color:var(--neutral-700);padding:2px 8px;border-radius:9999px;font-weight:700">Maior volume: ' + escH(canalMaior) + '</span>';
+      }
+    }
+    h += '</div>';
+    h += '<div class="kpi-grid">';
+    h += rmKpi('Sessões',   appMetricas.sessoes,            false, '');
+    h += rmKpi('Compras',   appMetricas.compras,            false, '');
+    h += rmKpi('Conversão', appMetricas.taxa_conversao_pct, true,  '%', false);
+    h += rmKpi('Rejeição',  appMetricas.taxa_rejeicao_pct,  true,  '%', true);
+    h += '</div>';
+
+    // Plataformas Android / iOS
+    const hasPlat = appData.android || appData.ios;
+    if (hasPlat) {
+      h += '<div class="sec" style="margin-top:20px">App — Análise por plataforma</div>';
+      h += '<div style="display:flex;flex-direction:column;gap:16px">';
+      if (appData.android) h += rmDevSection('Android', appData.android, '🤖', recsAndroid);
+      if (appData.ios)     h += rmDevSection('iOS',     appData.ios,     '🍎', recsIos);
+      h += '</div>';
+    }
   }
 
   // ── Recomendações gerais (ambos / sem dispositivo) ────
@@ -1979,7 +2144,7 @@ function selectMes(mes) {
   }
 
   // Se não há dados de dispositivo, mostrar todas as recomendações aqui
-  if (!hasDevs && recs.length > 0) {
+  if (!hasDevs && !hasAppData && recs.length > 0) {
     h += '<div class="sec">Recomendações</div>';
     h += '<div class="rm-recs-global">';
     recs.forEach(rec => { h += rmRecCard(rec); });
@@ -2562,7 +2727,10 @@ document.querySelectorAll('[data-expf]').forEach(btn => {
   btn.addEventListener('click', () => {
     const ft = btn.dataset.expf;
     const val = btn.dataset.expv;
-    if (ft === 'status') {
+    if (ft === 'canal') {
+      EXP_FC = val;
+      document.querySelectorAll('[data-expf="canal"]').forEach(b => b.classList.toggle('active', b.dataset.expv === val));
+    } else if (ft === 'status') {
       EXP_FS = val;
       document.querySelectorAll('[data-expf="status"]').forEach(b => b.classList.toggle('active', b.dataset.expv === val));
     } else if (ft === 'periodo') {
@@ -2573,6 +2741,22 @@ document.querySelectorAll('[data-expf]').forEach(btn => {
       document.querySelectorAll('[data-expf="origem"]').forEach(b => b.classList.toggle('active', b.dataset.expv === val));
     }
     renderExperimentos();
+  });
+});
+
+// Filtros de canal e prioridade dos Insights
+document.querySelectorAll('[data-inscanal]').forEach(btn => {
+  btn.addEventListener('click', () => {
+    INS_CANAL = btn.dataset.inscanal;
+    document.querySelectorAll('[data-inscanal]').forEach(b => b.classList.toggle('active', b.dataset.inscanal === INS_CANAL));
+    renderInsights();
+  });
+});
+document.querySelectorAll('[data-insprio]').forEach(btn => {
+  btn.addEventListener('click', () => {
+    INS_PRIO = btn.dataset.insprio;
+    document.querySelectorAll('[data-insprio]').forEach(b => b.classList.toggle('active', b.dataset.insprio === INS_PRIO));
+    renderInsights();
   });
 });
 
