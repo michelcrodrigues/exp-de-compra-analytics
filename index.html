@@ -690,7 +690,89 @@ tr.cmp-tr td{background:#f5f8ff;font-size:12px;color:var(--compare)}
           <div class="funil-wrap"><div class="funil-steps" id="appFunilSteps"></div></div>
         </div>
       </div>
+
     </div><!-- /section-pane app -->
+
+    <!-- ══ COMPARATIVO (Site vs App) ══ -->
+    <div class="section-pane" id="section-cmp">
+      <div class="tabs-l2">
+        <button class="tab-l2 active" data-subtab="cmp-cp">Compras</button>
+        <button class="tab-l2" data-subtab="cmp-se">Sessões</button>
+        <button class="tab-l2" data-subtab="cmp-cn">Canais</button>
+        <button class="tab-l2" data-subtab="cmp-cv">Conversão</button>
+      </div>
+      <div id="cmpTabState" class="state-wrap" style="display:none"><div class="spin"></div><span>Carregando dados comparativos...</span></div>
+      <div id="cmpContent" style="display:none">
+        <!-- Controle de detalhamento do Site -->
+        <div class="vg-canal-bar" style="margin-bottom:16px">
+          <div class="fg">
+            <span class="flabel">Site</span>
+            <button class="fbtn active" data-cmpsite="agg">Agrupado</button>
+            <button class="fbtn" data-cmpsite="det">Desktop + Mobile</button>
+          </div>
+        </div>
+
+        <!-- ── Compras ── -->
+        <div class="tbc active" id="tab-cmp-cp">
+          <div class="sec">KPIs de compras — período selecionado</div>
+          <div class="kpi-grid" id="cmpCpKpis"></div>
+          <div class="sec">Share de compras</div>
+          <div class="charts-grid">
+            <div class="cc"><div class="cc-title">Distribuição de compras</div><div class="cc-wrap"><canvas id="cmpCpDonut"></canvas></div></div>
+            <div class="cc"><div class="cc-title">Compras por dia — Site vs App</div><div class="cc-legend" id="cmpCpLineLeg"></div><div class="cc-wrap"><canvas id="cmpCpLine"></canvas></div></div>
+          </div>
+          <div class="sec">Detalhamento</div>
+          <div class="tc"><table>
+            <thead><tr><th>Canal</th><th class="num">Compras</th><th class="num">Share %</th><th class="num">CR %</th></tr></thead>
+            <tbody id="cmpCpTable"></tbody>
+          </table></div>
+        </div>
+
+        <!-- ── Sessões ── -->
+        <div class="tbc" id="tab-cmp-se">
+          <div class="sec">KPIs de sessões — período selecionado</div>
+          <div class="kpi-grid" id="cmpSeKpis"></div>
+          <div class="sec">Share de sessões</div>
+          <div class="charts-grid">
+            <div class="cc"><div class="cc-title">Distribuição de sessões</div><div class="cc-wrap"><canvas id="cmpSeDonut"></canvas></div></div>
+            <div class="cc"><div class="cc-title">Sessões por dia — Site vs App</div><div class="cc-legend" id="cmpSeLineLeg"></div><div class="cc-wrap"><canvas id="cmpSeLine"></canvas></div></div>
+          </div>
+          <div class="sec">Detalhamento</div>
+          <div class="tc"><table>
+            <thead><tr><th>Canal</th><th class="num">Sessões</th><th class="num">Share %</th></tr></thead>
+            <tbody id="cmpSeTable"></tbody>
+          </table></div>
+        </div>
+
+        <!-- ── Canais / Origem ── -->
+        <div class="tbc" id="tab-cmp-cn">
+          <div class="sec">Share de sessões por canal de origem</div>
+          <div class="charts-grid">
+            <div class="cc"><div class="cc-title">Site — Canais de aquisição</div><div class="cc-wrap"><canvas id="cmpCnSite"></canvas></div></div>
+            <div class="cc"><div class="cc-title">App — Canais de aquisição</div><div class="cc-wrap"><canvas id="cmpCnApp"></canvas></div></div>
+          </div>
+          <div class="sec">Comparativo de canais</div>
+          <div class="tc"><table>
+            <thead id="cmpCnThead"></thead>
+            <tbody id="cmpCnTable"></tbody>
+          </table></div>
+        </div>
+
+        <!-- ── Conversão ── -->
+        <div class="tbc" id="tab-cmp-cv">
+          <div class="sec">KPIs de conversão — período selecionado</div>
+          <div class="kpi-grid" id="cmpCvKpis"></div>
+          <div class="sec">Taxa de conversão por dia — Site vs App</div>
+          <div class="charts-grid" style="grid-template-columns:1fr">
+            <div class="cc"><div class="cc-title">CR % diário</div><div class="cc-legend" id="cmpCvLineLeg"></div><div class="cc-wrap" style="height:220px"><canvas id="cmpCvLine"></canvas></div></div>
+          </div>
+          <div class="sec">Taxa de rejeição por dia — Site vs App</div>
+          <div class="charts-grid" style="grid-template-columns:1fr">
+            <div class="cc"><div class="cc-title">Rejeição % diária</div><div class="cc-legend" id="cmpCvBncLeg"></div><div class="cc-wrap" style="height:220px"><canvas id="cmpCvBnc"></canvas></div></div>
+          </div>
+        </div>
+      </div>
+    </div><!-- /section-pane cmp -->
 
     <!-- ══ COMPARTILHADAS ══ -->
     <!-- INSIGHTS -->
@@ -792,6 +874,10 @@ let ALL_APP=[], CHARTS_APP={};
 let APP_DEV="all";     // filtro de plataforma local da aba App
 let APP_LOADED=false;  // lazy load — carrega data_app.json só ao abrir a aba pela 1ª vez
 
+// ── COMPARATIVO ──────────────────────────────────────────────────────────────
+let CMP_SITE="agg";   // "agg" = site agrupado | "det" = desktop + mobile separados
+let CHARTS_CMP={};    // instâncias Chart.js do comparativo
+
 async function loadAppData(){
   if(APP_LOADED) return;
   const st=document.getElementById("appTabState");
@@ -804,10 +890,17 @@ async function loadAppData(){
     ALL_APP=(j.daily||[]).sort((a,b)=>a.data<b.data?-1:1);
     APP_LOADED=true;
     st.style.display="none"; ct.style.display="block";
+    // Desbloquear seção Comparativo se estava aguardando
+    const cmpSt=document.getElementById("cmpTabState");
+    const cmpCt=document.getElementById("cmpContent");
+    if(cmpSt&&cmpCt){cmpSt.style.display="none";cmpCt.style.display="block";}
     renderApp();
+    renderComparativo();
   }catch(e){
     st.innerHTML=`<span style="color:var(--negative-700)">⚠ Erro ao carregar dados do App: ${e.message}</span>`;
     st.style.display="flex";
+    const cmpSt=document.getElementById("cmpTabState");
+    if(cmpSt) cmpSt.innerHTML=`<span style="color:var(--negative-700)">⚠ Erro ao carregar dados: ${e.message}</span>`;
   }
 }
 
@@ -865,6 +958,7 @@ function renderApp(){
   renderAppCharts(pri,cmp);
   renderAppAcquisicao(pri,cmp);
   renderAppFunil(pri,cmp);
+  renderComparativo();
 }
 
 function renderAppKPIs(pri,cmp){
@@ -1126,6 +1220,7 @@ function render(){
   renderExperimentos();
   renderResumoMensal();
   if(APP_LOADED) renderApp();
+  if(APP_LOADED) renderComparativo();
 }
 
 // ════════════════════════════════════════════════════════
@@ -2771,6 +2866,20 @@ document.querySelectorAll("[data-section]").forEach(btn=>{
     document.getElementById("section-"+sec).classList.add("active");
     // Lazy load App na primeira abertura
     if(sec==="app") loadAppData();
+    // Lazy load App ao abrir Comparativo (se ainda não carregado)
+    if(sec==="cmp"){
+      if(!APP_LOADED){
+        const cmpSt=document.getElementById("cmpTabState");
+        const cmpCt=document.getElementById("cmpContent");
+        if(cmpSt&&cmpCt){cmpSt.style.display="flex";cmpCt.style.display="none";}
+        loadAppData();
+      }else{
+        const cmpSt=document.getElementById("cmpTabState");
+        const cmpCt=document.getElementById("cmpContent");
+        if(cmpSt&&cmpCt){cmpSt.style.display="none";cmpCt.style.display="block";}
+        renderComparativo();
+      }
+    }
   });
 });
 
@@ -2783,11 +2892,275 @@ document.querySelectorAll("[data-subtab]").forEach(btn=>{
     btn.classList.add("active");
     // Encontrar o section-pane pai e alternar os tbc dentro dele
     const pane=btn.closest(".section-pane");
-    const prefix=btn.dataset.subtab.startsWith("app-")?"tab-app-":"tab-site-";
     pane.querySelectorAll(".tbc").forEach(c=>c.classList.remove("active"));
     document.getElementById("tab-"+btn.dataset.subtab).classList.add("active");
   });
 });
+
+
+// ════════════════════════════════════════════════════════
+// COMPARATIVO (Site vs App)
+// ════════════════════════════════════════════════════════
+
+// Listener do toggle de detalhamento
+document.querySelectorAll("[data-cmpsite]").forEach(btn=>{
+  btn.addEventListener("click",()=>{
+    CMP_SITE=btn.dataset.cmpsite;
+    document.querySelectorAll("[data-cmpsite]").forEach(b=>b.classList.toggle("active",b.dataset.cmpsite===CMP_SITE));
+    if(APP_LOADED) renderComparativo();
+  });
+});
+
+function renderComparativo(){
+  if(!APP_LOADED) return;
+
+  const sitePri=getPri();
+  const appPri=getAppRange().map(d=>({...d,
+    sessoes:parseFloat(d.sessoes)||0,
+    compras:parseFloat(d.compras)||0,
+    sessoes_mobile:parseFloat(d.sessoes_mobile)||0,
+    sessoes_desktop:parseFloat(d.sessoes_desktop)||0,
+    compras_mobile:parseFloat(d.compras_mobile)||0,
+    compras_desktop:parseFloat(d.compras_desktop)||0,
+  }));
+
+  // Agrega totais
+  const sTotal={
+    sessoes:sitePri.reduce((a,d)=>a+(parseFloat(d.sessoes)||0),0),
+    sessoes_mobile:sitePri.reduce((a,d)=>a+(parseFloat(d.sessoes_mobile)||0),0),
+    sessoes_desktop:sitePri.reduce((a,d)=>a+(parseFloat(d.sessoes_desktop)||0),0),
+    compras:sitePri.reduce((a,d)=>a+(parseFloat(d.compras)||0),0),
+    compras_mobile:sitePri.reduce((a,d)=>a+(parseFloat(d.compras_mobile)||0),0),
+    compras_desktop:sitePri.reduce((a,d)=>a+(parseFloat(d.compras_desktop)||0),0),
+  };
+  const aTotal={
+    sessoes:appPri.reduce((a,d)=>a+(parseFloat(d.sessoes)||0),0),
+    compras:appPri.reduce((a,d)=>a+(parseFloat(d.compras)||0),0),
+  };
+
+  renderCmpCompras(sitePri,appPri,sTotal,aTotal);
+  renderCmpSessoes(sitePri,appPri,sTotal,aTotal);
+  renderCmpCanais(sitePri,appPri,sTotal,aTotal);
+  renderCmpConversao(sitePri,appPri,sTotal,aTotal);
+}
+
+function cmpDestroyCharts(ids){
+  ids.forEach(id=>{if(CHARTS_CMP[id]){CHARTS_CMP[id].destroy();delete CHARTS_CMP[id];}});
+}
+
+function cmpDonut(canvasId,labels,data,colors){
+  const ctx=document.getElementById(canvasId);
+  if(!ctx) return;
+  cmpDestroyCharts([canvasId]);
+  CHARTS_CMP[canvasId]=new Chart(ctx,{
+    type:"doughnut",
+    data:{labels,datasets:[{data,backgroundColor:colors,borderWidth:2,borderColor:"#fff"}]},
+    options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{position:"right",labels:{font:{size:11},boxWidth:12,padding:10}}}}
+  });
+}
+
+function cmpLine(canvasId,legId,labels,datasets){
+  const ctx=document.getElementById(canvasId);
+  if(!ctx) return;
+  cmpDestroyCharts([canvasId]);
+  if(legId){
+    const legEl=document.getElementById(legId);
+    if(legEl) legEl.innerHTML=datasets.map(s=>`<span class="cc-li"><span class="cc-dot" style="background:${s.borderColor}"></span>${s.label}</span>`).join("");
+  }
+  CHARTS_CMP[canvasId]=new Chart(ctx,{
+    type:"line",
+    data:{labels,datasets:datasets.map(s=>({...s,fill:false,tension:.35,pointRadius:0,borderWidth:2}))},
+    options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false},tooltip:{mode:"index",intersect:false}},scales:{x:{grid:{display:false},ticks:{font:{size:10},maxTicksLimit:8}},y:{grid:{color:"#f0f0f0"},ticks:{font:{size:10}}}}}
+  });
+}
+
+const CMP_COLORS={
+  site:"#19398A",
+  siteDesk:"#6589D4",
+  siteMob:"#19398A",
+  app:"#A43C3E",
+};
+
+// ── Compras ──────────────────────────────────────────────────────────────
+function renderCmpCompras(sitePri,appPri,sTotal,aTotal){
+  const det=CMP_SITE==="det";
+  const totalCompras=sTotal.compras+aTotal.compras||1;
+
+  // Donut
+  const donutLabels=det?["Site Desktop","Site Mobile","App"]:["Site","App"];
+  const donutData=det?[sTotal.compras_desktop,sTotal.compras_mobile,aTotal.compras]:
+                      [sTotal.compras,aTotal.compras];
+  const donutColors=det?[CMP_COLORS.siteDesk,CMP_COLORS.siteMob,CMP_COLORS.app]:
+                        [CMP_COLORS.site,CMP_COLORS.app];
+  cmpDonut("cmpCpDonut",donutLabels,donutData,donutColors);
+
+  // Line chart diário — alinha datas entre os dois arrays
+  const siteMap=new Map(sitePri.map(d=>[d.data,parseFloat(d.compras)||0]));
+  const appMap=new Map(appPri.map(d=>[d.data,parseFloat(d.compras)||0]));
+  const allDates=[...new Set([...sitePri.map(d=>d.data),...appPri.map(d=>d.data)])].sort();
+  const lineLabels=allDates.map(d=>fmtDS(d));
+  const lineDsSite={label:"Site",data:allDates.map(d=>siteMap.get(d)||0),borderColor:CMP_COLORS.site,backgroundColor:CMP_COLORS.site+"22"};
+  const lineDsApp={label:"App",data:allDates.map(d=>appMap.get(d)||0),borderColor:CMP_COLORS.app,backgroundColor:CMP_COLORS.app+"22"};
+  const lineSets=det?[
+    {label:"Site Desktop",data:allDates.map(d=>{const r=sitePri.find(x=>x.data===d);return r?parseFloat(r.compras_desktop)||0:0}),borderColor:CMP_COLORS.siteDesk},
+    {label:"Site Mobile",data:allDates.map(d=>{const r=sitePri.find(x=>x.data===d);return r?parseFloat(r.compras_mobile)||0:0}),borderColor:CMP_COLORS.siteMob,borderDash:[4,3]},
+    lineDsApp
+  ]:[lineDsSite,lineDsApp];
+  cmpLine("cmpCpLine","cmpCpLineLeg",lineLabels,lineSets);
+
+  // KPI cards
+  const siteShare=r4(sTotal.compras/totalCompras*100);
+  const appShare=r4(aTotal.compras/totalCompras*100);
+  const siteCR=sTotal.sessoes>0?r4(sTotal.compras/sTotal.sessoes*100):0;
+  const appCR=aTotal.sessoes>0?r4(aTotal.compras/aTotal.sessoes*100):0;
+  const kpis=[
+    {l:"Total Compras",v:fmtN(sTotal.compras+aTotal.compras)},
+    {l:"Site — Compras",v:fmtN(sTotal.compras)},
+    {l:"App — Compras",v:fmtN(aTotal.compras)},
+    {l:"Share Site",v:siteShare.toFixed(1)+"%"},
+    {l:"Share App",v:appShare.toFixed(1)+"%"},
+    {l:"CR Site",v:siteCR.toFixed(2)+"%"},
+    {l:"CR App",v:appCR.toFixed(2)+"%"},
+  ];
+  document.getElementById("cmpCpKpis").innerHTML=kpis.map(k=>`<div class="kpi-card"><div class="kpi-lbl">${k.l}</div><div class="kpi-val">${k.v}</div></div>`).join("");
+
+  // Tabela
+  const rows=det?[
+    {l:"Site Desktop",compras:sTotal.compras_desktop,sessoes:sTotal.sessoes_desktop},
+    {l:"Site Mobile",compras:sTotal.compras_mobile,sessoes:sTotal.sessoes_mobile},
+    {l:"App",compras:aTotal.compras,sessoes:aTotal.sessoes},
+  ]:[
+    {l:"Site",compras:sTotal.compras,sessoes:sTotal.sessoes},
+    {l:"App",compras:aTotal.compras,sessoes:aTotal.sessoes},
+  ];
+  document.getElementById("cmpCpTable").innerHTML=rows.map(r=>{
+    const share=r4(r.compras/(sTotal.compras+aTotal.compras||1)*100);
+    const cr=r.sessoes>0?r4(r.compras/r.sessoes*100):0;
+    return `<tr><td>${r.l}</td><td class="num">${fmtN(r.compras)}</td><td class="num">${share.toFixed(1)}%</td><td class="num">${cr.toFixed(2)}%</td></tr>`;
+  }).join("");
+}
+
+// ── Sessões ──────────────────────────────────────────────────────────────
+function renderCmpSessoes(sitePri,appPri,sTotal,aTotal){
+  const det=CMP_SITE==="det";
+  const totalSess=sTotal.sessoes+aTotal.sessoes||1;
+
+  const donutLabels=det?["Site Desktop","Site Mobile","App"]:["Site","App"];
+  const donutData=det?[sTotal.sessoes_desktop,sTotal.sessoes_mobile,aTotal.sessoes]:
+                      [sTotal.sessoes,aTotal.sessoes];
+  const donutColors=det?[CMP_COLORS.siteDesk,CMP_COLORS.siteMob,CMP_COLORS.app]:
+                        [CMP_COLORS.site,CMP_COLORS.app];
+  cmpDonut("cmpSeDonut",donutLabels,donutData,donutColors);
+
+  const siteMap=new Map(sitePri.map(d=>[d.data,parseFloat(d.sessoes)||0]));
+  const appMap=new Map(appPri.map(d=>[d.data,parseFloat(d.sessoes)||0]));
+  const allDates=[...new Set([...sitePri.map(d=>d.data),...appPri.map(d=>d.data)])].sort();
+  const lineLabels=allDates.map(d=>fmtDS(d));
+  const lineDsSite={label:"Site",data:allDates.map(d=>siteMap.get(d)||0),borderColor:CMP_COLORS.site};
+  const lineDsApp={label:"App",data:allDates.map(d=>appMap.get(d)||0),borderColor:CMP_COLORS.app};
+  const lineSets=det?[
+    {label:"Site Desktop",data:allDates.map(d=>{const r=sitePri.find(x=>x.data===d);return r?parseFloat(r.sessoes_desktop)||0:0}),borderColor:CMP_COLORS.siteDesk},
+    {label:"Site Mobile",data:allDates.map(d=>{const r=sitePri.find(x=>x.data===d);return r?parseFloat(r.sessoes_mobile)||0:0}),borderColor:CMP_COLORS.siteMob,borderDash:[4,3]},
+    lineDsApp
+  ]:[lineDsSite,lineDsApp];
+  cmpLine("cmpSeLine","cmpSeLineLeg",lineLabels,lineSets);
+
+  const siteShare=r4(sTotal.sessoes/totalSess*100);
+  const appShare=r4(aTotal.sessoes/totalSess*100);
+  const kpis=[
+    {l:"Total Sessões",v:fmtN(sTotal.sessoes+aTotal.sessoes)},
+    {l:"Site — Sessões",v:fmtN(sTotal.sessoes)},
+    {l:"App — Sessões",v:fmtN(aTotal.sessoes)},
+    {l:"Share Site",v:siteShare.toFixed(1)+"%"},
+    {l:"Share App",v:appShare.toFixed(1)+"%"},
+  ];
+  document.getElementById("cmpSeKpis").innerHTML=kpis.map(k=>`<div class="kpi-card"><div class="kpi-lbl">${k.l}</div><div class="kpi-val">${k.v}</div></div>`).join("");
+
+  const rows=det?[
+    {l:"Site Desktop",sessoes:sTotal.sessoes_desktop},
+    {l:"Site Mobile",sessoes:sTotal.sessoes_mobile},
+    {l:"App",sessoes:aTotal.sessoes},
+  ]:[
+    {l:"Site",sessoes:sTotal.sessoes},
+    {l:"App",sessoes:aTotal.sessoes},
+  ];
+  document.getElementById("cmpSeTable").innerHTML=rows.map(r=>{
+    const share=r4(r.sessoes/totalSess*100);
+    return `<tr><td>${r.l}</td><td class="num">${fmtN(r.sessoes)}</td><td class="num">${share.toFixed(1)}%</td></tr>`;
+  }).join("");
+}
+
+// ── Canais ───────────────────────────────────────────────────────────────
+function renderCmpCanais(sitePri,appPri,sTotal,aTotal){
+  const channels=[
+    {l:"Orgânico",k:"sessoes_organico"},
+    {l:"Direto",k:"sessoes_direto"},
+    {l:"Pago",k:"sessoes_pago"},
+    {l:"Social",k:"sessoes_social"},
+    {l:"E-mail",k:"sessoes_email"},
+    {l:"Referral",k:"sessoes_referral"},
+    {l:"Outros",k:"sessoes_outros_canais"},
+  ];
+  const COLORS_PIE=["#19398A","#A43C3E","#C3940F","#6589D4","#278A22","#8B4513","#8B8B8B"];
+
+  const siteCanais=channels.map(c=>({l:c.l,v:sitePri.reduce((a,d)=>a+(parseFloat(d[c.k])||0),0)}));
+  const appCanais=channels.map(c=>({l:c.l,v:appPri.reduce((a,d)=>a+(parseFloat(d[c.k])||0),0)}));
+
+  cmpDonut("cmpCnSite",siteCanais.map(c=>c.l),siteCanais.map(c=>c.v),COLORS_PIE);
+  cmpDonut("cmpCnApp",appCanais.map(c=>c.l),appCanais.map(c=>c.v),COLORS_PIE);
+
+  const totSite=siteCanais.reduce((a,c)=>a+c.v,0)||1;
+  const totApp=appCanais.reduce((a,c)=>a+c.v,0)||1;
+
+  const thead=document.getElementById("cmpCnThead");
+  const tbody=document.getElementById("cmpCnTable");
+  if(thead) thead.innerHTML="<tr><th>Canal</th><th class='num'>Site Sessões</th><th class='num'>Site %</th><th class='num'>App Sessões</th><th class='num'>App %</th></tr>";
+  if(tbody) tbody.innerHTML=channels.map((c,i)=>{
+    const sv=siteCanais[i].v, av=appCanais[i].v;
+    const sp=r4(sv/totSite*100), ap=r4(av/totApp*100);
+    return `<tr><td>${c.l}</td><td class="num">${fmtN(sv)}</td><td class="num">${sp.toFixed(1)}%</td><td class="num">${fmtN(av)}</td><td class="num">${ap.toFixed(1)}%</td></tr>`;
+  }).join("");
+}
+
+// ── Conversão ────────────────────────────────────────────────────────────
+function renderCmpConversao(sitePri,appPri,sTotal,aTotal){
+  const det=CMP_SITE==="det";
+
+  const siteCR=sTotal.sessoes>0?r4(sTotal.compras/sTotal.sessoes*100):0;
+  const appCR=aTotal.sessoes>0?r4(aTotal.compras/aTotal.sessoes*100):0;
+  const siteBnc=wavg(sitePri,"taxa_rejeicao_pct","sessoes");
+  const appBnc=wavg(appPri,"taxa_rejeicao_pct","sessoes");
+  const siteDur=wavg(sitePri,"duracao_media_seg","sessoes");
+  const appDur=wavg(appPri,"duracao_media_seg","sessoes");
+  const kpis=[
+    {l:"CR Site",v:siteCR.toFixed(2)+"%"},
+    {l:"CR App",v:appCR.toFixed(2)+"%"},
+    {l:"Rejeição Site",v:siteBnc.toFixed(2)+"%"},
+    {l:"Rejeição App",v:appBnc.toFixed(2)+"%"},
+    {l:"Duração Site",v:fmtDur(siteDur)},
+    {l:"Duração App",v:fmtDur(appDur)},
+  ];
+  document.getElementById("cmpCvKpis").innerHTML=kpis.map(k=>`<div class="kpi-card"><div class="kpi-lbl">${k.l}</div><div class="kpi-val">${k.v}</div></div>`).join("");
+
+  const siteMap=new Map(sitePri.map(d=>[d.data,{s:parseFloat(d.sessoes)||0,c:parseFloat(d.compras)||0,sm:parseFloat(d.sessoes_mobile)||0,cm:parseFloat(d.compras_mobile)||0,sd:parseFloat(d.sessoes_desktop)||0,cd:parseFloat(d.compras_desktop)||0}]));
+  const appMap=new Map(appPri.map(d=>[d.data,{s:parseFloat(d.sessoes)||0,c:parseFloat(d.compras)||0}]));
+  const allDates=[...new Set([...sitePri.map(d=>d.data),...appPri.map(d=>d.data)])].sort();
+  const lineLabels=allDates.map(d=>fmtDS(d));
+
+  const calcCR=(s,c)=>s>0?r4(c/s*100):null;
+  const lineDsSite={label:"Site CR%",data:allDates.map(d=>{const r=siteMap.get(d);return r?calcCR(r.s,r.c):null}),borderColor:CMP_COLORS.site};
+  const lineDsApp={label:"App CR%",data:allDates.map(d=>{const r=appMap.get(d);return r?calcCR(r.s,r.c):null}),borderColor:CMP_COLORS.app};
+  const crSets=det?[
+    {label:"Site Desktop CR%",data:allDates.map(d=>{const r=siteMap.get(d);return r?calcCR(r.sd,r.cd):null}),borderColor:CMP_COLORS.siteDesk},
+    {label:"Site Mobile CR%",data:allDates.map(d=>{const r=siteMap.get(d);return r?calcCR(r.sm,r.cm):null}),borderColor:CMP_COLORS.siteMob,borderDash:[4,3]},
+    lineDsApp
+  ]:[lineDsSite,lineDsApp];
+  cmpLine("cmpCvLine","cmpCvLineLeg",lineLabels,crSets.map(s=>({...s})));
+
+  const bncDsSite={label:"Site Rejeição%",data:allDates.map(d=>{const r=siteMap.get(d);return r?parseFloat(sitePri.find(x=>x.data===d)?.taxa_rejeicao_pct)||null:null}),borderColor:CMP_COLORS.site};
+  const bncDsApp={label:"App Rejeição%",data:allDates.map(d=>{const r=appPri.find(x=>x.data===d);return r?parseFloat(r.taxa_rejeicao_pct)||null:null}),borderColor:CMP_COLORS.app};
+  cmpLine("cmpCvBnc","cmpCvBncLeg",lineLabels,[bncDsSite,bncDsApp]);
+}
 
 // ════════════════════════════════════════════════════════
 // UTILS
