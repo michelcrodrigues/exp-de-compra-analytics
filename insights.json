@@ -223,7 +223,20 @@
             "variacao_minima_pct": 10,
             "prazo_dias": 28
           },
-          "experimento_template": null,
+          "experimento_template": {
+            "id": "INS-EXP-008",
+            "titulo": "Redesign fluxo de pagamento e dados passageiro mobile",
+            "hipotese": "Se redesenharmos o fluxo de pagamento (SEN-381, SEN-383) e a tela de dados do passageiro no mobile, então a taxa de conversão mobile subirá em ≥10% em 28 dias, porque o gap de 5,18pp entre mobile (8,39%) e desktop (13,57%) indica atrito estrutural concentrado no checkout.",
+            "metrica_primaria": "taxa_conversao_pct_mobile",
+            "guardrails": [
+              "CR desktop não pode cair",
+              "Taxa de erros no checkout mobile não pode subir",
+              "Volume de sessões mobile não pode cair mais de 5%"
+            ],
+            "criterio_sucesso": "CR mobile sobe de 8,39% para ≥9,5% por pelo menos 2 semanas consecutivas após entrega dos redesigns",
+            "duracao_minima_dias": 28,
+            "notas": "Vinculado às iniciativas SEN-381 (redesign tela de pagamento site), SEN-383 (redesign dados passageiro site). Ativar após entrega das iniciativas no ciclo ativo."
+          },
           "status": "nunca_testada",
           "experimento_id": null,
           "revisao": null
@@ -250,7 +263,19 @@
             "variacao_minima_pct": 5,
             "prazo_dias": 7
           },
-          "experimento_template": null,
+          "experimento_template": {
+            "id": "INS-EXP-009",
+            "titulo": "Auditoria do evento funil_purchase GA4 pós SEN-325",
+            "hipotese": "Se auditarmos a implementação do evento purchase no GA4 e corrigirmos o disparo alterado pelo SEN-325, então o ratio funil_purchase/compras voltará para o intervalo saudável de 1,0–1,2, porque a queda de 1,96 para 1,04 em 3 semanas coincide com o deploy da mudança.",
+            "metrica_primaria": "ratio_funil_purchase_vs_compras",
+            "guardrails": [
+              "Não introduzir duplicação de eventos purchase",
+              "Compras transacionais não podem ser afetadas pela correção de instrumentação"
+            ],
+            "criterio_sucesso": "Ratio funil_purchase/compras estabiliza entre 1,0 e 1,2 por pelo menos 7 dias consecutivos após correção",
+            "duracao_minima_dias": 7,
+            "notas": "Pré-requisito: comparar funil_purchase com transações no painel de e-commerce do GA4 e verificar GTM se SEN-325 alterou o disparo. Se o problema for técnico (tag quebrada), não é um A/B — é um hotfix de instrumentação."
+          },
           "status": "nunca_testada",
           "experimento_id": null,
           "revisao": null
@@ -429,4 +454,4 @@
       ]
     }
   ]
-        }
+}
