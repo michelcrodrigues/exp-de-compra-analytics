@@ -197,6 +197,64 @@ def calc_cr(compras, sessoes):
     return 0.0
 
 # ──────────────────────────────────────────────
+def fetch_nps_comments(service, start_date, end_date, top_n=30):
+    """
+    Busca os principais comentários do evento nps_response nos últimos N dias.
+    Retorna lista de dicts {texto, categoria, count} ordenada por count desc.
+
+    Requer que o GA4 tenha a dimensão customizada 'nps_comment' configurada
+    no evento 'nps_response', junto com 'nps_number' (nota 0-10).
+    """
+    body = {
+        "dateRanges": [{"startDate": start_date, "endDate": end_date}],
+        "dimensions": [
+            {"name": "customEvent:nps_comment"},
+            {"name": "customEvent:nps_number"},
+        ],
+        "metrics": [{"name": "eventCount"}],
+        "dimensionFilter": {
+            "filter": {
+                "fieldName": "eventName",
+                "stringFilter": {"matchType": "EXACT", "value": "nps_response"},
+            }
+        },
+        "orderBys": [{"metric": {"metricName": "eventCount"}, "desc": True}],
+        "limit": top_n * 5,
+    }
+    results = []
+    try:
+        resp = (
+            service.properties()
+            .runReport(property=f"properties/{GA4_PROPERTY_ID}", body=body)
+            .execute()
+        )
+        for row in resp.get("rows", []):
+            texto     = row["dimensionValues"][0]["value"].strip()
+            raw_score = row["dimensionValues"][1]["value"]
+            count     = safe_int(row["metricValues"][0]["value"])
+            if not texto or texto in ("(not set)", "") or count == 0:
+                continue
+            if len(texto) < 3:
+                continue
+            try:
+                score = int(float(raw_score))
+            except (ValueError, TypeError):
+                continue
+            if score >= 9:
+                categoria = "promotor"
+            elif score >= 7:
+                categoria = "neutro"
+            else:
+                categoria = "detrator"
+            results.append({"texto": texto, "categoria": categoria, "count": count})
+        results.sort(key=lambda x: x["count"], reverse=True)
+        results = results[:top_n]
+    except Exception as e:
+        print(f"  AVISO: nao foi possivel buscar comentarios NPS - {e}")
+        results = []
+    return results
+
+
 # GA4 — coleta de métricas por dia
 # ──────────────────────────────────────────────
 
@@ -533,7 +591,23 @@ def main():
         print(f"\nGravando {len(batch)} registro(s) em {HISTORY_FILE}...")
         append_records(batch)
 
-    # ── Relatório final ──────────────────────────────────────────────────────
+
+    # -- Comentarios NPS (ultimos 90 dias) -----------------------------------
+    nps_start = (today - datetime.timedelta(days=90)).strftime("%Y-%m-%d")
+    nps_end   = yesterday.strftime("%Y-%m-%d")
+    print("\nBuscando comentarios NPS (ultimos 90 dias)...")
+    nps_comments = fetch_nps_comments(ga4_service, nps_start, nps_end, top_n=30)
+    import os as _os, json as _json
+    _os.makedirs("data", exist_ok=True)
+    nps_comments_file = "data/nps_comentarios.json"
+    with open(nps_comments_file, "w", encoding="utf-8") as f:
+        _json.dump(
+            {"gerado_em": today.isoformat(), "comentarios": nps_comments},
+            f, ensure_ascii=False, separators=(",", ":")
+        )
+    print(f"  {len(nps_comments)} comentario(s) gravados em {nps_comments_file}.")
+
+    # ── Relatorio final ──────────────────────────────────────────────────────
     print(f"\n{'='*50}")
     print(f"Registros adicionados : {rows_added}")
     print(f"Erros                 : {len(errors)}")
