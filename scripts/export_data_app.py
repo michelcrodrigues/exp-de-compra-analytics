@@ -196,12 +196,29 @@ def load_existing_data():
         return [], [], []
 
 
+def load_nps_comentarios_app():
+    """Le data/nps_comentarios_app.json gerado pelo fetch_ga4_app.py. Retorna lista ou []."""
+    path = "data/nps_comentarios_app.json"
+    if not os.path.exists(path):
+        return []
+    try:
+        with open(path, "r", encoding="utf-8") as f:
+            obj = json.load(f)
+        comentarios = obj.get("comentarios", [])
+        if comentarios:
+            print(f"  Incluindo {len(comentarios)} comentario(s) NPS App de {path}.")
+        return comentarios
+    except Exception:
+        return []
+
+
 def main():
     print(f"Lendo {HISTORY_FILE}...")
     records = load_history()
     print(f"  {len(records)} datas únicas carregadas.")
 
     existing_insights, existing_experimentos, existing_resumo_mensal = load_existing_data()
+    nps_comentarios_app = load_nps_comentarios_app()
 
     print("Gerando data_app.json...")
     daily = build_daily(records)
@@ -213,6 +230,7 @@ def main():
         "insights":     existing_insights,
         "experimentos": existing_experimentos,
         "resumo_mensal": existing_resumo_mensal,
+        "nps_top_comentarios": nps_comentarios_app,
     }
 
     try:
