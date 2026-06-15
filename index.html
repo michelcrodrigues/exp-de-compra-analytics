@@ -213,6 +213,30 @@ tr.cmp-tr td{background:#f5f8ff;font-size:12px;color:var(--compare)}
 .ins-canal-badge.site-desktop{background:#E0EAFF;color:#19398A}
 
 
+/* Badge de template de experimento no insight */
+.ins-tmpl-badge{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.6px;padding:3px 9px;border-radius:9999px;white-space:nowrap;flex-shrink:0;background:#FFF3CD;color:#8B6914;border:1px solid #F0C040}
+/* NPS Comentários */
+.nps-comments-wrap{margin-top:4px}
+.nps-comment-item{display:flex;align-items:flex-start;gap:10px;padding:9px 12px;border-radius:var(--r-sm);margin-bottom:6px;background:#fff;border:1px solid var(--neutral-200)}
+.nps-comment-item:last-child{margin-bottom:0}
+.nps-comment-cat{flex-shrink:0;width:8px;height:8px;border-radius:50%;margin-top:5px}
+.nps-comment-cat.promotor{background:var(--positive-700)}
+.nps-comment-cat.neutro{background:var(--brand-secondary-b)}
+.nps-comment-cat.detrator{background:var(--negative-700)}
+.nps-comment-txt{font-size:12px;color:var(--neutral-800);line-height:1.5;flex:1}
+.nps-comment-count{flex-shrink:0;font-size:11px;font-weight:700;color:var(--neutral-500);white-space:nowrap;margin-top:2px}
+.nps-comments-legend{display:flex;gap:16px;margin-bottom:12px;flex-wrap:wrap}
+.nps-comments-legend-item{display:flex;align-items:center;gap:6px;font-size:11px;font-weight:700}
+.nps-comments-legend-dot{width:10px;height:10px;border-radius:50%;flex-shrink:0}
+.nps-comments-empty{background:var(--neutral-100);border-radius:var(--r-sm);padding:20px;text-align:center;font-size:12px;color:var(--neutral-500)}
+.nps-comments-bar-wrap{display:flex;align-items:center;gap:8px;margin-bottom:5px}
+.nps-comments-bar-bg{flex:1;background:var(--neutral-100);border-radius:4px;height:20px;overflow:hidden;position:relative}
+.nps-comments-bar-fill{height:100%;border-radius:4px;transition:width .6s ease}
+.nps-comments-bar-fill.promotor{background:#C6E5C3}
+.nps-comments-bar-fill.neutro{background:#FFF3CD}
+.nps-comments-bar-fill.detrator{background:#FAD1D7}
+.nps-comments-bar-label{font-size:11px;color:var(--neutral-800);position:absolute;left:8px;top:50%;transform:translateY(-50%);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:calc(100% - 16px)}
+.nps-comments-bar-pct{font-size:11px;font-weight:700;color:var(--neutral-600);white-space:nowrap;min-width:32px;text-align:right}
 /* Insight status badges */
 .ins-status-badge{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.6px;padding:3px 9px;border-radius:9999px;white-space:nowrap;flex-shrink:0}
 .ins-status-badge.em_teste{background:#E0EAFF;color:#19398A}
@@ -678,6 +702,13 @@ tr.cmp-tr td{background:#f5f8ff;font-size:12px;color:var(--compare)}
         <thead><tr><th>Dispositivo</th><th class="num">Respostas</th><th class="num">Promotores</th><th class="num">Neutros</th><th class="num">Detratores</th><th class="num">NPS Score</th><th class="num">Média Notas</th></tr></thead>
         <tbody id="siteNpsTbDev"></tbody>
       </table></div>
+      <div class="sec">Principais comentários qualitativos</div>
+      <div class="nps-comments-legend">
+        <div class="nps-comments-legend-item"><div class="nps-comments-legend-dot" style="background:var(--positive-700)"></div>Promotor (nota 9–10)</div>
+        <div class="nps-comments-legend-item"><div class="nps-comments-legend-dot" style="background:var(--brand-secondary-b)"></div>Neutro (nota 7–8)</div>
+        <div class="nps-comments-legend-item"><div class="nps-comments-legend-dot" style="background:var(--negative-700)"></div>Detrator (nota 0–6)</div>
+      </div>
+      <div class="nps-comments-wrap" id="siteNpsComentarios"></div>
     </div>
 
     </div><!-- /section-pane site -->
@@ -761,6 +792,13 @@ tr.cmp-tr td{background:#f5f8ff;font-size:12px;color:var(--compare)}
             <thead><tr><th>Plataforma</th><th class="num">Respostas</th><th class="num">Promotores</th><th class="num">Neutros</th><th class="num">Detratores</th><th class="num">NPS Score</th><th class="num">Média Notas</th></tr></thead>
             <tbody id="appNpsTbDev"></tbody>
           </table></div>
+          <div class="sec">Principais comentários qualitativos</div>
+          <div class="nps-comments-legend">
+            <div class="nps-comments-legend-item"><div class="nps-comments-legend-dot" style="background:var(--positive-700)"></div>Promotor (nota 9–10)</div>
+            <div class="nps-comments-legend-item"><div class="nps-comments-legend-dot" style="background:var(--brand-secondary-b)"></div>Neutro (nota 7–8)</div>
+            <div class="nps-comments-legend-item"><div class="nps-comments-legend-dot" style="background:var(--negative-700)"></div>Detrator (nota 0–6)</div>
+          </div>
+          <div class="nps-comments-wrap" id="appNpsComentarios"></div>
         </div>
       </div>
     </div><!-- /section-pane app -->
@@ -852,6 +890,8 @@ tr.cmp-tr td{background:#f5f8ff;font-size:12px;color:var(--compare)}
         <button class="ins-canal-btn" data-insprio="Alta">Alta</button>
         <button class="ins-canal-btn" data-insprio="Média">Média</button>
         <button class="ins-canal-btn" data-insprio="Baixa">Baixa</button>
+        <div class="fdiv"></div>
+        <button class="ins-canal-btn" id="btnInsTmpl" data-instmpl="true" style="background:#FFF3CD;color:#8B6914;border-color:#F0C040">🧪 Com experimento</button>
       </div>
       <div class="ins-layout">
         <nav class="ins-nav" id="insNav"></nav>
@@ -929,6 +969,7 @@ let C={start:null,end:null,active:false};
 // Filtros de Insights
 let INS_CANAL="todos";   // todos | site | app | conjunto
 let INS_PRIO="todos";    // todos | Alta | Média | Baixa
+let INS_TMPL=false;      // false | true — mostrar só insights com template de experimento
 // Filtro de Canal nos Experimentos
 let EXP_FC="";
 
@@ -951,6 +992,7 @@ async function loadAppData(){
     if(!res.ok) throw new Error("HTTP "+res.status);
     const j=await res.json();
     ALL_APP=(j.daily||[]).sort((a,b)=>a.data<b.data?-1:1);
+    window._DATA_APP=j; // expõe para renderNpsComentarios (app)
     APP_LOADED=true;
     st.style.display="none"; ct.style.display="block";
     const cmpSt=document.getElementById("cmpTabState");
@@ -1079,15 +1121,18 @@ function renderAppAcquisicao(pri,cmp){
 
   if(CHARTS_APP["appCCanais"]){CHARTS_APP["appCCanais"].destroy();}
   const ctxC=document.getElementById("appCCanais");
-  if(ctxC) CHARTS_APP["appCCanais"]=new Chart(ctxC,{type:"doughnut",data:{labels:canPri.map(c=>c.l),datasets:[{data:canPri.map(c=>c.v),backgroundColor:COLORS,borderWidth:0}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{position:"right",labels:{font:{size:11},boxWidth:12}}}}});
+  const totCanais=canPri.reduce((s,c)=>s+c.v,0)||1;
+  function donutLegendLabels(tot){return{generateLabels:function(chart){const ds=chart.data.datasets[0];return chart.data.labels.map((lbl,i)=>{const val=ds.data[i];const pct=tot>0?((val/tot)*100).toFixed(1):'0.0';return{text:lbl+' ('+pct+'%)',fillStyle:ds.backgroundColor[i],strokeStyle:ds.backgroundColor[i],lineWidth:0,hidden:false,index:i};});}};}
+  if(ctxC) CHARTS_APP["appCCanais"]=new Chart(ctxC,{type:"doughnut",data:{labels:canPri.map(c=>c.l),datasets:[{data:canPri.map(c=>c.v),backgroundColor:COLORS,borderWidth:0}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{position:"right",labels:{font:{size:11},boxWidth:12,...donutLegendLabels(totCanais)}}}}});
 
   const platLabels=APP_DEV==="all"?["Android","iOS","Outros"]:APP_DEV==="mobile"?["Android"]:["iOS"];
   const platKeys=APP_DEV==="all"?["sessoes_mobile","sessoes_desktop","sessoes_tablet"]:APP_DEV==="mobile"?["sessoes_mobile"]:["sessoes_desktop"];
   const platColors=["#19398A","#A43C3E","#8B8B8B"];
   const platPri=platKeys.map(k=>pri.reduce((s,d)=>s+(parseFloat(d[k])||0),0));
+  const totPlat=platPri.reduce((s,v)=>s+v,0)||1;
   if(CHARTS_APP["appCDevs"]){CHARTS_APP["appCDevs"].destroy();}
   const ctxD=document.getElementById("appCDevs");
-  if(ctxD) CHARTS_APP["appCDevs"]=new Chart(ctxD,{type:"doughnut",data:{labels:platLabels,datasets:[{data:platPri,backgroundColor:platColors,borderWidth:0}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{position:"right",labels:{font:{size:11},boxWidth:12}}}}});
+  if(ctxD) CHARTS_APP["appCDevs"]=new Chart(ctxD,{type:"doughnut",data:{labels:platLabels,datasets:[{data:platPri,backgroundColor:platColors,borderWidth:0}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{position:"right",labels:{font:{size:11},boxWidth:12,...donutLegendLabels(totPlat)}}}}});
 
   const thEl=document.getElementById("appThCanais");
   const tbEl=document.getElementById("appTbCanais");
@@ -1162,6 +1207,7 @@ async function loadData(){
     INSIGHTS=j.insights||[];try{const ir=await fetch("insights.json?v="+Date.now());if(ir.ok){const ij=await ir.json();if(ij.insights&&ij.insights.length)INSIGHTS=ij.insights;}}catch(e){}
     EXPERIMENTOS=j.experimentos||[];
     RESUMO_MENSAL=(j.resumo_mensal||[]).sort((a,b)=>b.mes<a.mes?-1:1);
+    window._DATA=j; // expõe para renderNpsComentarios
     const lastDay=ALL.length?ALL[ALL.length-1].data:"";document.getElementById("headerUpdated").textContent="Dados até "+fmtDF(lastDay);
     setPresetDays(30);
     document.getElementById("appState").style.display="none";
@@ -1824,6 +1870,56 @@ function mkNpsLine(chartStore, cid, legId, labels, priVals, cmpVals, color, fmt)
   chartStore[cid]=new Chart(ctx,{type:"line",data:{labels,datasets:ds},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false},tooltip:{callbacks:{label:c=>fmt(c.raw)}}},scales:{x:{grid:{display:false},ticks:{font:{size:10},maxTicksLimit:8}},y:{grid:{color:"#f0f0f0"},ticks:{font:{size:10},callback:v=>fmt(v)}}}}});
 }
 
+// ── Comentários NPS ───────────────────────────────────────────────────────
+function renderNpsComentarios(comentarios, containerId) {
+  const el = document.getElementById(containerId);
+  if (!el) return;
+
+  if (!comentarios || comentarios.length === 0) {
+    el.innerHTML = '<div class="nps-comments-empty">' +
+      '<div style="font-size:22px;margin-bottom:8px">💬</div>' +
+      '<strong>Comentários ainda não coletados</strong><br>' +
+      '<span style="font-size:11px;margin-top:4px;display:block">Para ativar: o pipeline precisa buscar a dimensão <code>nps_comment</code> do evento <code>nps_response</code> no GA4. ' +
+      'Atualize o <code>fetch_ga4.py</code> e aguarde a próxima coleta.</span>' +
+      '</div>';
+    return;
+  }
+
+  const catOrder = ['promotor', 'neutro', 'detrator'];
+  const catLabel = { promotor: 'Promotor', neutro: 'Neutro', detrator: 'Detrator' };
+  const catCls   = { promotor: 'promotor', neutro: 'neutro', detrator: 'detrator' };
+
+  const grouped = { promotor: [], neutro: [], detrator: [] };
+  comentarios.forEach(c => {
+    const cat = c.categoria || 'neutro';
+    if (grouped[cat]) grouped[cat].push(c);
+  });
+  Object.keys(grouped).forEach(k => grouped[k].sort((a, b) => (b.count || 1) - (a.count || 1)));
+
+  const maxCount = Math.max(...comentarios.map(c => c.count || 1), 1);
+
+  let html = '';
+  catOrder.forEach(cat => {
+    const items = grouped[cat];
+    if (!items || items.length === 0) return;
+    html += '<div style="margin-bottom:16px">';
+    html += '<div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.7px;color:var(--neutral-500);margin-bottom:8px">' + catLabel[cat] + ' (' + items.length + ')</div>';
+    items.slice(0, 8).forEach(c => {
+      const pct = maxCount > 0 ? Math.max(4, Math.round((c.count || 1) / maxCount * 100)) : 4;
+      html += '<div class="nps-comments-bar-wrap">' +
+        '<div class="nps-comments-bar-bg">' +
+          '<div class="nps-comments-bar-fill ' + catCls[cat] + '" style="width:' + pct + '%"></div>' +
+          '<div class="nps-comments-bar-label">' + escH(c.texto) + '</div>' +
+        '</div>' +
+        '<div class="nps-comments-bar-pct">' + (c.count || 1) + 'x</div>' +
+      '</div>';
+    });
+    html += '</div>';
+  });
+
+  el.innerHTML = html || '<div class="nps-comments-empty">Nenhum comentário no período selecionado.</div>';
+}
+
 function renderNPS(pri,cmp){
   // Dados brutos do período (sem applyFilters) para ler campos nps_*_mobile / nps_*_desktop
   const rawPri=P.start&&P.end?getRange(P.start,P.end):pri;
@@ -1872,6 +1968,8 @@ function renderNPS(pri,cmp){
       buildNpsDevTableRow("Mobile",aggMob)+
       buildNpsDevTableRow("Desktop",aggDesk);
   }
+  // Comentários qualitativos do site
+  renderNpsComentarios((window._DATA && window._DATA.nps_top_comentarios) || null, "siteNpsComentarios");
 }
 
 function renderAppNPS(pri,cmp){
@@ -1918,6 +2016,8 @@ function renderAppNPS(pri,cmp){
       buildNpsDevTableRow("Android",aggAndroid)+
       buildNpsDevTableRow("iOS",aggIos);
   }
+  // Comentários qualitativos do app
+  renderNpsComentarios((window._DATA_APP && window._DATA_APP.nps_top_comentarios) || null, "appNpsComentarios");
 }
 
 // ════════════════════════════════════════════════════════
@@ -1955,6 +2055,8 @@ function insMatchFiltro(ins) {
   }
   // filtro prioridade
   if (INS_PRIO !== 'todos' && prio !== INS_PRIO) return false;
+  // filtro template de experimento
+  if (INS_TMPL && !(ins.testavel && ins.experimento_template)) return false;
   return true;
 }
 
@@ -2062,6 +2164,9 @@ function buildList(items) {
       ? '<span class="ins-status-badge ' + ins.status + '">' + STATUS_LABELS[ins.status] + '</span>'
       : '';
     const idLabel = ins.id ? '<span class="ins-id-lbl">' + escH(ins.id) + '</span>' : '';
+    const tmplBadge = (ins.testavel && ins.experimento_template)
+      ? '<span class="ins-tmpl-badge">🧪 Experimento</span>'
+      : '';
 
     // Badge de canal
     const canal = insCanal(ins);
@@ -2105,6 +2210,7 @@ function buildList(items) {
         '<span class="ins-tag" style="background:' + pc + '20;color:' + pc + '">' + escH(ins.prioridade) + '</span>' +
         '<span class="ins-tag" style="background:' + cc + '20;color:' + cc + '">' + escH(ins.classificacao) + '</span>' +
         statusBadge +
+        tmplBadge +
         '<span style="flex:1;font-size:13px;font-weight:500;margin-left:4px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">' + escH(cleanTag(ins.tag)) + '</span>' +
         idLabel +
         '<span class="ins-chevron">▼</span>' +
@@ -3119,6 +3225,18 @@ document.querySelectorAll('[data-insprio]').forEach(btn => {
     renderInsights();
   });
 });
+// Filtro de template de experimento nos Insights
+const btnInsTmpl = document.getElementById('btnInsTmpl');
+if (btnInsTmpl) {
+  btnInsTmpl.addEventListener('click', () => {
+    INS_TMPL = !INS_TMPL;
+    btnInsTmpl.style.background  = INS_TMPL ? '#F0C040' : '#FFF3CD';
+    btnInsTmpl.style.color        = INS_TMPL ? '#4A3800' : '#8B6914';
+    btnInsTmpl.style.borderColor  = '#F0C040';
+    btnInsTmpl.style.fontWeight   = INS_TMPL ? '900'    : '700';
+    renderInsights();
+  });
+}
 
 // Tabs — sistema de dois níveis
 // NÍVEL 1: section (site / app / in / ex / rm)
