@@ -197,9 +197,15 @@
           "testavel": false,
           "criterio_confirmacao": null,
           "experimento_template": null,
-          "status": "nunca_testada",
+          "status": "inconclusiva",
           "experimento_id": null,
-          "revisao": null
+          "revisao": {
+            "veredicto": "inconclusiva",
+            "evidencia": "Canal pago representou ~49-52% das sessões em W2 e W3. CPV não obtido. Orgânico cresceu 23% em W3 melhorando o mix, mas dependência do pago permanece estrutural. Diagnóstico formalizado em INS-2026-016.",
+            "fonte": "dados",
+            "observacao": "Sem integração de dados de mídia (CPV/CAC) com GA4, o loop de aprendizado de eficiência de canal fica incompleto.",
+            "data_revisao": "2026-06-15"
+          }
         },
         {
           "id": "INS-2026-008",
@@ -276,9 +282,15 @@
             "duracao_minima_dias": 7,
             "notas": "Pré-requisito: comparar funil_purchase com transações no painel de e-commerce do GA4 e verificar GTM se SEN-325 alterou o disparo. Se o problema for técnico (tag quebrada), não é um A/B — é um hotfix de instrumentação."
           },
-          "status": "nunca_testada",
+          "status": "testada_confirmada",
           "experimento_id": null,
-          "revisao": null
+          "revisao": {
+            "veredicto": "testada_confirmada",
+            "evidencia": "Ratio funil_purchase/compras estabilizou em 1,030-1,074 nos dados diários de Jun 1-13 (7+ dias consecutivos no range saudável 1,0-1,2). Prazo de 7 dias venceu em 10/06 com critério atingido. SEN-325 (NPS pós-compra via GA, concluído 03/06) normalizou o evento purchase colateralmente.",
+            "fonte": "dados",
+            "observacao": "Ratio estabilizou sem auditoria formal — correção colateral via SEN-325. Para futuros insights de instrumentação: criar issue de auditoria imediatamente ao detectar divergência.",
+            "data_revisao": "2026-06-15"
+          }
         },
         {
           "id": "INS-2026-010",
@@ -298,9 +310,15 @@
           "testavel": false,
           "criterio_confirmacao": null,
           "experimento_template": null,
-          "status": "nunca_testada",
+          "status": "testada_confirmada",
           "experimento_id": null,
-          "revisao": null
+          "revisao": {
+            "veredicto": "testada_confirmada",
+            "evidencia": "Meta de 80k sessões orgânicas/semana atingida em 1 semana: W3 (01-07/06) registrou 79.989 sessões. Crescimento acelerou de +12,4% (W2) para +23,0% (W3). Formalizado em INS-2026-012.",
+            "fonte": "dados",
+            "observacao": "Entregas SEO (SEN-342, SEN-310/327/328, SEN-339, SEN-345-348) geraram impacto muito mais rápido que o esperado. Meta revisada para 100k/semana.",
+            "data_revisao": "2026-06-15"
+          }
         },
         {
           "id": "INS-2026-011",
@@ -320,9 +338,15 @@
           "testavel": false,
           "criterio_confirmacao": null,
           "experimento_template": null,
-          "status": "nunca_testada",
+          "status": "inconclusiva",
           "experimento_id": null,
-          "revisao": null
+          "revisao": {
+            "veredicto": "inconclusiva",
+            "evidencia": "Rejeição diária Jun 8-13 oscilou entre 22,9% e 28,0% (média ~25,1%) — acima do baseline W3 de 23,67%. Meta de 22% em 30 dias (até 03/07) ainda aberta. Alta variabilidade diária impede conclusão.",
+            "fonte": "dados",
+            "observacao": "Taxa de rejeição tem alta variabilidade diária (fim de semana vs dia útil). Avaliar por média semanal, não por dia isolado.",
+            "data_revisao": "2026-06-15"
+          }
         }
       ]
     },
@@ -347,9 +371,15 @@
           "titulo_linear": null,
           "tipo_acao": "monitorar",
           "criterio_confirmacao": null,
-          "status": "nunca_testada",
+          "status": "testada_confirmada",
           "experimento_id": null,
-          "revisao": null
+          "revisao": {
+            "veredicto": "testada_confirmada",
+            "evidencia": "CR recuperou de 9,11% (W1) para 9,43% (W2), confirmando queda transitória ligada a migração DNS/motor Smart. W3 caiu para 8,81% por causa distinta (diluição de mix de canais — documentada em INS-2026-016). Dados diários Jun 9-13 mostram CR estável entre 9,13-9,80%.",
+            "fonte": "dados",
+            "observacao": "Quedas de CR em incidentes de infraestrutura tendem a se recuperar em 1-2 semanas. Monitorar CR sempre junto ao status do motor Smart.",
+            "data_revisao": "2026-06-15"
+          }
         },
         {
           "id": "INS-2026-002",
@@ -367,9 +397,15 @@
           "titulo_linear": null,
           "tipo_acao": "monitorar",
           "criterio_confirmacao": null,
-          "status": "nunca_testada",
+          "status": "testada_confirmada",
           "experimento_id": null,
-          "revisao": null
+          "revisao": {
+            "veredicto": "testada_confirmada",
+            "evidencia": "Ratio funil_purchase/compras convergiu de 1,96 (W1) para 1,04 (W3) e estabilizou em 1,030-1,074 nos dados diários de Jun 1-13 — dentro do range saudável 1,0-1,2. Inversão corrigida, provavelmente via SEN-238 (Event ID para deduplicação, concluído 06/05).",
+            "fonte": "dados",
+            "observacao": "Inversões de funil GA4 têm origem em duplicação de eventos. Event ID de deduplicação (SEN-238) deve ser padrão em todos os eventos de funil.",
+            "data_revisao": "2026-06-15"
+          }
         },
         {
           "id": "INS-2026-003",
@@ -387,9 +423,15 @@
           "titulo_linear": null,
           "tipo_acao": "monitorar",
           "criterio_confirmacao": null,
-          "status": "nunca_testada",
+          "status": "testada_confirmada",
           "experimento_id": null,
-          "revisao": null
+          "revisao": {
+            "veredicto": "testada_confirmada",
+            "evidencia": "CR desktop recuperou de 12,95% (W1) para 13,45% (W2), confirmando que a queda desproporcional foi transitória e ligada ao incidente DNS/Smart. W3 manteve 12,96%. Dados Jun 9-13: CR desktop entre 11,7-16,1%.",
+            "fonte": "dados",
+            "observacao": "CR desktop cai mais que mobile em incidentes de infraestrutura. Monitorar sempre em conjunto.",
+            "data_revisao": "2026-06-15"
+          }
         },
         {
           "id": "INS-2026-004",
@@ -407,9 +449,15 @@
           "titulo_linear": null,
           "tipo_acao": "monitorar",
           "criterio_confirmacao": null,
-          "status": "nunca_testada",
+          "status": "inconclusiva",
           "experimento_id": null,
-          "revisao": null
+          "revisao": {
+            "veredicto": "inconclusiva",
+            "evidencia": "CPV (custo por viagem vendida) não foi obtido junto ao time de mídia. Canal pago cresceu W2 +10,7% e W3 +9,7%. Sem CPV, impossível avaliar se CAC está dentro do payback esperado.",
+            "fonte": "qualitativo",
+            "observacao": "Diagnósticos de eficiência de canal pago requerem integração de dados de mídia (CPV/CAC) com GA4. Criar processo de compartilhamento semanal do CPV.",
+            "data_revisao": "2026-06-15"
+          }
         },
         {
           "id": "INS-2026-005",
@@ -427,9 +475,15 @@
           "titulo_linear": null,
           "tipo_acao": "monitorar",
           "criterio_confirmacao": null,
-          "status": "nunca_testada",
+          "status": "testada_confirmada",
           "experimento_id": null,
-          "revisao": null
+          "revisao": {
+            "veredicto": "testada_confirmada",
+            "evidencia": "Sessões orgânicas cresceram de 58.258/semana (baseline) para 65.014 (W2, +11,6%) e 79.989 (W3, +23%), atingindo a meta de 80k/semana em 3 semanas — 1 semana antes do prazo estimado.",
+            "fonte": "dados",
+            "observacao": "5 implementações SEO (SEN-335-338, SEN-349) geraram impacto em menos de 4 semanas. ROI comprovado. Meta revisada para 100k em INS-2026-012.",
+            "data_revisao": "2026-06-15"
+          }
         },
         {
           "id": "INS-2026-006",
@@ -447,9 +501,15 @@
           "titulo_linear": null,
           "tipo_acao": "monitorar",
           "criterio_confirmacao": null,
-          "status": "nunca_testada",
+          "status": "inconclusiva",
           "experimento_id": null,
-          "revisao": null
+          "revisao": {
+            "veredicto": "inconclusiva",
+            "evidencia": "Implementações ativas: SEN-267 (checkout, 18/05), SEN-176 (app, 03/06), SEN-318 (link pagamento, 22/05). Relatório de impacto na base comunicável Insider/CRM nunca foi gerado. KR Identificação de Base (+300%) não pode ser avaliado.",
+            "fonte": "qualitativo",
+            "observacao": "Opt-in ativo é pré-condição. Próximo passo obrigatório: análise CRM/Insider comparando taxa de opt-in por compra antes e depois das implementações.",
+            "data_revisao": "2026-06-15"
+          }
         }
       ]
     }
