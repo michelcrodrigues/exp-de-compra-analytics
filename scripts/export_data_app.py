@@ -149,6 +149,27 @@ def build_daily(records):
             "top_destino_4_sessoes": safe_int(r.get("top_destino_4_sessoes")),
             "top_destino_5":         r.get("top_destino_5") or "",
             "top_destino_5_sessoes": safe_int(r.get("top_destino_5_sessoes")),
+            # NPS — total (default 0 para registros históricos sem NPS)
+            "nps_respostas":          safe_int(r.get("nps_respostas")),
+            "nps_promotores":         safe_int(r.get("nps_promotores")),
+            "nps_neutros":            safe_int(r.get("nps_neutros")),
+            "nps_detratores":         safe_int(r.get("nps_detratores")),
+            "nps_score":              safe_float(r.get("nps_score")),
+            "nps_nota_media":         safe_float(r.get("nps_nota_media")),
+            # NPS mobile (Android no app)
+            "nps_respostas_mobile":   safe_int(r.get("nps_respostas_mobile")),
+            "nps_promotores_mobile":  safe_int(r.get("nps_promotores_mobile")),
+            "nps_neutros_mobile":     safe_int(r.get("nps_neutros_mobile")),
+            "nps_detratores_mobile":  safe_int(r.get("nps_detratores_mobile")),
+            "nps_score_mobile":       safe_float(r.get("nps_score_mobile")),
+            "nps_nota_media_mobile":  safe_float(r.get("nps_nota_media_mobile")),
+            # NPS desktop (iOS no app)
+            "nps_respostas_desktop":  safe_int(r.get("nps_respostas_desktop")),
+            "nps_promotores_desktop": safe_int(r.get("nps_promotores_desktop")),
+            "nps_neutros_desktop":    safe_int(r.get("nps_neutros_desktop")),
+            "nps_detratores_desktop": safe_int(r.get("nps_detratores_desktop")),
+            "nps_score_desktop":      safe_float(r.get("nps_score_desktop")),
+            "nps_nota_media_desktop": safe_float(r.get("nps_nota_media_desktop")),
         }
         daily.append(entry)
     return daily
