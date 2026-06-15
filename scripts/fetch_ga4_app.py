@@ -92,6 +92,10 @@ COLUMNS = [
     "top_destino_3", "top_destino_3_sessoes",
     "top_destino_4", "top_destino_4_sessoes",
     "top_destino_5", "top_destino_5_sessoes",
+    # NPS — total e por plataforma (android=mobile, ios=desktop)
+    "nps_respostas", "nps_promotores", "nps_neutros", "nps_detratores", "nps_score", "nps_nota_media",
+    "nps_respostas_mobile", "nps_promotores_mobile", "nps_neutros_mobile", "nps_detratores_mobile", "nps_score_mobile", "nps_nota_media_mobile",
+    "nps_respostas_desktop", "nps_promotores_desktop", "nps_neutros_desktop", "nps_detratores_desktop", "nps_score_desktop", "nps_nota_media_desktop",
 ]
 
 # ──────────────────────────────────────────────
@@ -345,6 +349,80 @@ def collect_metrics(service, date_str):
         m[f"top_origem_{i}_sessoes"] = 0
         m[f"top_destino_{i}"]        = ""
         m[f"top_destino_{i}_sessoes"] = 0
+
+    # ── Report 7: NPS por plataforma (Android / iOS) ──────────────────────────
+    # Evento: nps_response | Dimensão customizada: nps_number (0-10)
+    # Quebra: operatingSystem (Android → mobile, iOS → desktop, outros → tablet)
+    # Classificação padrão NPS: promotores ≥ 9, neutros 7-8, detratores ≤ 6
+    # _nps_soma* são acumuladores internos (score × count) para calcular média — não expostos no schema.
+    for dev in ("", "_mobile", "_desktop"):
+        m[f"nps_respostas{dev}"]  = 0
+        m[f"nps_promotores{dev}"] = 0
+        m[f"nps_neutros{dev}"]    = 0
+        m[f"nps_detratores{dev}"] = 0
+        m[f"nps_score{dev}"]      = 0.0
+        m[f"nps_nota_media{dev}"] = 0.0
+        m[f"_nps_soma{dev}"]      = 0  # acumulador interno
+
+    rows = run_report(
+        service, date_str,
+        ["customEvent:nps_number", "operatingSystem"],
+        ["eventCount"],
+        limit=200,
+    )
+    for row in rows:
+        raw_score = row["dimensionValues"][0]["value"]
+        platform  = row["dimensionValues"][1]["value"]
+        count     = safe_int(row["metricValues"][0]["value"])
+
+        if raw_score in ("(not set)", "") or count == 0:
+            continue
+
+        try:
+            score = int(float(raw_score))
+        except (ValueError, TypeError):
+            continue
+
+        # Categoria NPS padrão
+        if score >= 9:
+            cat = "promotores"
+        elif score >= 7:
+            cat = "neutros"
+        else:
+            cat = "detratores"
+
+        # Acumula total
+        m["nps_respostas"] += count
+        m[f"nps_{cat}"]    += count
+        m["_nps_soma"]     += score * count  # para média ponderada
+
+        # Acumula por plataforma usando o mesmo PLATFORM_MAP (android=mobile, ios=desktop)
+        dev_key = PLATFORM_MAP.get(platform.lower())
+        if dev_key in ("mobile", "desktop"):
+            m[f"nps_respostas_{dev_key}"] += count
+            m[f"nps_{cat}_{dev_key}"]     += count
+            m[f"_nps_soma_{dev_key}"]     += score * count
+
+    def calc_nps(prom, detr, resp):
+        if resp > 0:
+            return round((prom - detr) / resp * 100, 2)
+        return 0.0
+
+    def calc_media(soma, resp):
+        if resp > 0:
+            return round(soma / resp, 2)
+        return 0.0
+
+    m["nps_score"]         = calc_nps(m["nps_promotores"],         m["nps_detratores"],         m["nps_respostas"])
+    m["nps_score_mobile"]  = calc_nps(m["nps_promotores_mobile"],  m["nps_detratores_mobile"],  m["nps_respostas_mobile"])
+    m["nps_score_desktop"] = calc_nps(m["nps_promotores_desktop"], m["nps_detratores_desktop"], m["nps_respostas_desktop"])
+    m["nps_nota_media"]         = calc_media(m["_nps_soma"],         m["nps_respostas"])
+    m["nps_nota_media_mobile"]  = calc_media(m["_nps_soma_mobile"],  m["nps_respostas_mobile"])
+    m["nps_nota_media_desktop"] = calc_media(m["_nps_soma_desktop"], m["nps_respostas_desktop"])
+
+    # Remove acumuladores internos antes de retornar (não fazem parte do schema)
+    for dev in ("", "_mobile", "_desktop"):
+        m.pop(f"_nps_soma{dev}", None)
 
     return m
 
