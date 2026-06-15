@@ -124,6 +124,28 @@ body{font-family:'Nunito Sans',sans-serif;background:var(--neutral-100);color:va
 .funil-row-pct{font-size:11px;color:var(--neutral-500);width:auto;min-width:60px;flex-shrink:0;display:flex;align-items:center;gap:4px;flex-wrap:wrap}
 .funil-conn{width:2px;height:6px;background:var(--neutral-300);margin-left:145px}
 .funil-cmp-row{display:flex;align-items:center;gap:12px;margin-top:2px}
+/* NPS */
+.nps-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:12px;margin-bottom:16px}
+.nps-score-card{background:#fff;border-radius:var(--r-md);padding:20px;box-shadow:var(--shadow-01);text-align:center;position:relative;overflow:hidden}
+.nps-score-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:var(--brand-secondary-a)}
+.nps-score-card.promotor::before{background:var(--positive-700)}
+.nps-score-card.neutro::before{background:var(--brand-secondary-b)}
+.nps-score-card.detrator::before{background:var(--negative-700)}
+.nps-score-val{font-size:32px;font-weight:900;line-height:1;margin-bottom:4px}
+.nps-score-val.pos{color:var(--positive-700)}
+.nps-score-val.neu{color:var(--brand-secondary-b)}
+.nps-score-val.neg{color:var(--negative-700)}
+.nps-score-lbl{font-size:11px;font-weight:700;color:var(--neutral-500);text-transform:uppercase;letter-spacing:.8px}
+.nps-bar-wrap{background:var(--neutral-100);border-radius:4px;height:8px;overflow:hidden;margin:12px 0 4px}
+.nps-bar-seg{height:100%;float:left;transition:width .6s cubic-bezier(.4,0,.2,1)}
+.nps-bar-seg.prom{background:var(--positive-700)}
+.nps-bar-seg.neut{background:var(--brand-secondary-b)}
+.nps-bar-seg.detr{background:var(--negative-700)}
+.nps-breakdown{display:flex;justify-content:space-between;font-size:11px;font-weight:700;color:var(--neutral-500);margin-bottom:8px}
+.nps-breakdown span{display:flex;flex-direction:column;align-items:center;gap:2px}
+.nps-breakdown .prom-val{color:var(--positive-700)}
+.nps-breakdown .neut-val{color:var(--brand-secondary-b)}
+.nps-breakdown .detr-val{color:var(--negative-700)}
 
 /* Tabelas */
 .tc{background:#fff;border-radius:var(--r-md);padding:20px;box-shadow:var(--shadow-01)}
@@ -546,6 +568,7 @@ tr.cmp-tr td{background:#f5f8ff;font-size:12px;color:var(--compare)}
         <button class="tab-l2" data-subtab="site-aq">Aquisição</button>
         <button class="tab-l2" data-subtab="site-fu">Funil</button>
         <button class="tab-l2" data-subtab="site-ro">Rotas</button>
+        <button class="tab-l2" data-subtab="site-nps">NPS</button>
       </div>
     <div class="tbc active" id="tab-site-vg">
       <!-- Filtro de canal — local da Visão Geral -->
@@ -631,6 +654,32 @@ tr.cmp-tr td{background:#f5f8ff;font-size:12px;color:var(--compare)}
       </div>
     </div>
 
+    <!-- NPS SITE -->
+    <div class="tbc" id="tab-site-nps">
+      <!-- Filtro de dispositivo local da aba NPS -->
+      <div class="vg-canal-bar" style="margin-bottom:16px">
+        <div class="fg">
+          <span class="flabel">Dispositivo</span>
+          <button class="fbtn active" data-npssitedev="all" onclick="setNpsSiteDev('all')">Todos</button>
+          <button class="fbtn" data-npssitedev="mobile" onclick="setNpsSiteDev('mobile')">Mobile</button>
+          <button class="fbtn" data-npssitedev="desktop" onclick="setNpsSiteDev('desktop')">Desktop</button>
+        </div>
+      </div>
+      <div class="sec">NPS — Net Promoter Score (Site)</div>
+      <div class="nps-grid" id="siteNpsGrid"></div>
+      <div class="sec">Tendência NPS por dia</div>
+      <div class="charts-grid">
+        <div class="cc"><div class="cc-title">NPS Score por dia</div><div class="cc-legend" id="siteNpsLegScore"></div><div class="cc-wrap"><canvas id="siteNpsChartScore"></canvas></div></div>
+        <div class="cc"><div class="cc-title">Média de notas por dia</div><div class="cc-legend" id="siteNpsLegMedia"></div><div class="cc-wrap"><canvas id="siteNpsChartMedia"></canvas></div></div>
+        <div class="cc"><div class="cc-title">Respostas por dia</div><div class="cc-legend" id="siteNpsLegResp"></div><div class="cc-wrap"><canvas id="siteNpsChartResp"></canvas></div></div>
+      </div>
+      <div class="sec">Detalhamento por dispositivo</div>
+      <div class="tc"><table>
+        <thead><tr><th>Dispositivo</th><th class="num">Respostas</th><th class="num">Promotores</th><th class="num">Neutros</th><th class="num">Detratores</th><th class="num">NPS Score</th><th class="num">Média Notas</th></tr></thead>
+        <tbody id="siteNpsTbDev"></tbody>
+      </table></div>
+    </div>
+
     </div><!-- /section-pane site -->
 
     <!-- ══ APP ══ -->
@@ -639,6 +688,7 @@ tr.cmp-tr td{background:#f5f8ff;font-size:12px;color:var(--compare)}
         <button class="tab-l2 active" data-subtab="app-vg">Visão Geral</button>
         <button class="tab-l2" data-subtab="app-aq">Aquisição</button>
         <button class="tab-l2" data-subtab="app-fu">Funil</button>
+        <button class="tab-l2" data-subtab="app-nps">NPS</button>
       </div>
       <div id="appTabState" class="state-wrap" style="display:none"><div class="spin"></div><span>Carregando dados do App...</span></div>
       <div id="appTabContent" style="display:none">
@@ -692,6 +742,25 @@ tr.cmp-tr td{background:#f5f8ff;font-size:12px;color:var(--compare)}
         <div class="tbc" id="tab-app-fu">
           <div class="sec">Funil de conversão</div>
           <div class="funil-wrap"><div class="funil-steps" id="appFunilSteps"></div></div>
+        </div>
+
+        <!-- App — NPS -->
+        <div class="tbc" id="tab-app-nps">
+          <!-- Filtro de plataforma local da aba NPS App — usa o APP_DEV global -->
+          <div class="sec">NPS — Net Promoter Score (App)</div>
+          <div style="font-size:11px;color:var(--neutral-500);margin-bottom:12px">O filtro de plataforma (Android / iOS) da barra superior se aplica a esta aba.</div>
+          <div class="nps-grid" id="appNpsGrid"></div>
+          <div class="sec">Tendência NPS por dia</div>
+          <div class="charts-grid">
+            <div class="cc"><div class="cc-title">NPS Score por dia</div><div class="cc-legend" id="appNpsLegScore"></div><div class="cc-wrap"><canvas id="appNpsChartScore"></canvas></div></div>
+            <div class="cc"><div class="cc-title">Média de notas por dia</div><div class="cc-legend" id="appNpsLegMedia"></div><div class="cc-wrap"><canvas id="appNpsChartMedia"></canvas></div></div>
+            <div class="cc"><div class="cc-title">Respostas por dia</div><div class="cc-legend" id="appNpsLegResp"></div><div class="cc-wrap"><canvas id="appNpsChartResp"></canvas></div></div>
+          </div>
+          <div class="sec">Detalhamento por plataforma</div>
+          <div class="tc"><table>
+            <thead><tr><th>Plataforma</th><th class="num">Respostas</th><th class="num">Promotores</th><th class="num">Neutros</th><th class="num">Detratores</th><th class="num">NPS Score</th><th class="num">Média Notas</th></tr></thead>
+            <tbody id="appNpsTbDev"></tbody>
+          </table></div>
         </div>
       </div>
     </div><!-- /section-pane app -->
@@ -951,6 +1020,7 @@ function renderApp(){
   renderAppCharts(pri,cmp);
   renderAppAcquisicao(pri,cmp);
   renderAppFunil(pri,cmp);
+  renderAppNPS(getAppRange(),getAppCmp());
   renderComparativo();
 }
 
@@ -1209,6 +1279,7 @@ function render(){
   renderBreakdownCharts();
   renderFunil(pri,cmp);
   renderRotas(pri,cmp);
+  renderNPS(pri,cmp);
   renderInsights();
   renderExperimentos();
   renderResumoMensal();
@@ -1646,6 +1717,207 @@ function renderRotas(pri,cmp){
   }
     document.getElementById("tbOri").innerHTML=rows(origens,maxO,cmpOM);
   document.getElementById("tbDes").innerHTML=rows(destinos,maxD,cmpDM);
+}
+
+// ════════════════════════════════════════════════════════
+// NPS
+// ════════════════════════════════════════════════════════
+
+// Filtro de dispositivo local da aba NPS do site (independente do filtro global)
+let NPS_SITE_DEV="all";  // "all" | "mobile" | "desktop"
+
+function setNpsSiteDev(dev){
+  NPS_SITE_DEV=dev;
+  document.querySelectorAll("[data-npssitedev]").forEach(b=>{
+    b.classList.toggle("active",b.dataset.npssitedev===dev);
+  });
+  const pri=getPri(), cmp=getCmp();
+  renderNPS(pri,cmp);
+}
+
+function calcNpsAgg(data){
+  // Agrega NPS total sem quebra de dispositivo
+  let resp=0,prom=0,neut=0,detr=0,soma=0;
+  data.forEach(d=>{
+    resp+=(parseFloat(d.nps_respostas)||0);
+    prom+=(parseFloat(d.nps_promotores)||0);
+    neut+=(parseFloat(d.nps_neutros)||0);
+    detr+=(parseFloat(d.nps_detratores)||0);
+    soma+=(parseFloat(d.nps_nota_media)||0)*(parseFloat(d.nps_respostas)||0);
+  });
+  const score=resp>0?r4((prom-detr)/resp*100):null;
+  const media=resp>0?r4(soma/resp):null;
+  return{resp,prom,neut,detr,score,media};
+}
+
+function calcNpsAggDev(data,dev){
+  // Agrega NPS para um dispositivo específico (mobile ou desktop)
+  let resp=0,prom=0,neut=0,detr=0,soma=0;
+  const sfx=dev?"_"+dev:"";
+  data.forEach(d=>{
+    const r=(parseFloat(d["nps_respostas"+sfx])||0);
+    resp+=r;
+    prom+=(parseFloat(d["nps_promotores"+sfx])||0);
+    neut+=(parseFloat(d["nps_neutros"+sfx])||0);
+    detr+=(parseFloat(d["nps_detratores"+sfx])||0);
+    soma+=(parseFloat(d["nps_nota_media"+sfx])||0)*r;
+  });
+  const score=resp>0?r4((prom-detr)/resp*100):null;
+  const media=resp>0?r4(soma/resp):null;
+  return{resp,prom,neut,detr,score,media};
+}
+
+function npsScoreColor(score){
+  if(score===null) return"neu";
+  if(score>=50) return"pos";
+  if(score>=0) return"neu";
+  return"neg";
+}
+
+function npsScoreLabel(score){
+  if(score===null) return"—";
+  return(score>0?"+":"")+score.toFixed(1);
+}
+
+function buildNpsCardHTML(title, agg){
+  const {resp,prom,neut,detr,score,media}=agg;
+  if(resp===0) return`<div class="nps-score-card"><div class="nps-score-val neu">—</div><div class="nps-score-lbl">${title}</div><div style="font-size:11px;color:var(--neutral-500);margin-top:8px">Sem respostas no período</div></div>`;
+  const col=npsScoreColor(score);
+  const pW=resp>0?((prom/resp)*100).toFixed(1):0;
+  const nW=resp>0?((neut/resp)*100).toFixed(1):0;
+  const dW=resp>0?((detr/resp)*100).toFixed(1):0;
+  const mediaStr=media!==null?media.toFixed(2):"—";
+  return`<div class="nps-score-card">
+    <div class="nps-score-val ${col}">${npsScoreLabel(score)}</div>
+    <div class="nps-score-lbl">${title}</div>
+    <div style="font-size:11px;color:var(--neutral-500);margin-top:4px">Média: <strong>${mediaStr}</strong> / 10</div>
+    <div class="nps-bar-wrap">
+      <div class="nps-bar-seg prom" style="width:${pW}%"></div>
+      <div class="nps-bar-seg neut" style="width:${nW}%"></div>
+      <div class="nps-bar-seg detr" style="width:${dW}%"></div>
+    </div>
+    <div class="nps-breakdown">
+      <span><span class="prom-val">${fmtN(prom)}</span>Promotores</span>
+      <span><span class="neut-val">${fmtN(neut)}</span>Neutros</span>
+      <span><span class="detr-val">${fmtN(detr)}</span>Detratores</span>
+    </div>
+    <div style="font-size:11px;color:var(--neutral-500);text-align:center">${fmtN(resp)} respostas</div>
+  </div>`;
+}
+
+function buildNpsDevTableRow(label, agg){
+  const{resp,prom,neut,detr,score,media}=agg;
+  const col=npsScoreColor(score);
+  const scoreStr=score!==null?`<span style="font-weight:900;color:var(--${col==='pos'?'positive-700':col==='neg'?'negative-700':'brand-secondary-b'})">${npsScoreLabel(score)}</span>`:'<span style="color:var(--neutral-500)">—</span>';
+  const mediaStr=media!==null?`<strong>${media.toFixed(2)}</strong>`:'<span style="color:var(--neutral-500)">—</span>';
+  return`<tr><td>${label}</td><td class="num">${fmtN(resp)}</td><td class="num" style="color:var(--positive-700)">${fmtN(prom)}</td><td class="num" style="color:var(--brand-secondary-b)">${fmtN(neut)}</td><td class="num" style="color:var(--negative-700)">${fmtN(detr)}</td><td class="num">${scoreStr}</td><td class="num">${mediaStr}</td></tr>`;
+}
+
+function mkNpsLine(chartStore, cid, legId, labels, priVals, cmpVals, color, fmt){
+  if(chartStore[cid]){chartStore[cid].destroy();delete chartStore[cid];}
+  const ctx=document.getElementById(cid);
+  if(!ctx) return;
+  const ds=[{label:"Período",data:priVals,borderColor:color,backgroundColor:color+"22",fill:true,tension:.35,pointRadius:0,borderWidth:2}];
+  if(cmpVals&&cmpVals.length){ds.push({label:"Comparativo",data:cmpVals,borderColor:"#6589D4",backgroundColor:"transparent",borderDash:[4,3],tension:.35,pointRadius:0,borderWidth:1.5});}
+  const legEl=document.getElementById(legId);
+  if(legEl) legEl.innerHTML=ds.map(s=>`<span class="cc-li"><span class="cc-dot" style="background:${s.borderColor}"></span>${s.label}</span>`).join("");
+  chartStore[cid]=new Chart(ctx,{type:"line",data:{labels,datasets:ds},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false},tooltip:{callbacks:{label:c=>fmt(c.raw)}}},scales:{x:{grid:{display:false},ticks:{font:{size:10},maxTicksLimit:8}},y:{grid:{color:"#f0f0f0"},ticks:{font:{size:10},callback:v=>fmt(v)}}}}});
+}
+
+function renderNPS(pri,cmp){
+  // Dados brutos do período (sem applyFilters) para ler campos nps_*_mobile / nps_*_desktop
+  const rawPri=P.start&&P.end?getRange(P.start,P.end):pri;
+  const rawCmp=C.active&&C.start&&C.end?getRange(C.start,C.end):cmp;
+
+  // Agrega de acordo com o filtro de dispositivo local da aba NPS
+  const sfx = NPS_SITE_DEV==="all"?"":NPS_SITE_DEV;
+  const aggActive  = NPS_SITE_DEV==="all" ? calcNpsAgg(rawPri)           : calcNpsAggDev(rawPri, NPS_SITE_DEV);
+  const aggMob     = calcNpsAggDev(rawPri,"mobile");
+  const aggDesk    = calcNpsAggDev(rawPri,"desktop");
+
+  // Cards: mostra card do filtro ativo + breakdowns
+  const grid=document.getElementById("siteNpsGrid");
+  if(grid){
+    const activeTitle=NPS_SITE_DEV==="all"?"Score Total":NPS_SITE_DEV==="mobile"?"Mobile":"Desktop";
+    grid.innerHTML=
+      buildNpsCardHTML(activeTitle,aggActive)+
+      (NPS_SITE_DEV!=="mobile"?buildNpsCardHTML("Mobile",aggMob):"")+
+      (NPS_SITE_DEV!=="desktop"?buildNpsCardHTML("Desktop",aggDesk):"");
+  }
+
+  // Gráficos: usa campo correto de acordo com filtro
+  const scoreKey = NPS_SITE_DEV==="all"?"nps_score":"nps_score_"+NPS_SITE_DEV;
+  const mediaKey = NPS_SITE_DEV==="all"?"nps_nota_media":"nps_nota_media_"+NPS_SITE_DEV;
+  const respKey  = NPS_SITE_DEV==="all"?"nps_respostas":"nps_respostas_"+NPS_SITE_DEV;
+  const labels   = rawPri.map(d=>fmtDS(d.data));
+
+  mkNpsLine(CHARTS,"siteNpsChartScore","siteNpsLegScore",labels,
+    rawPri.map(d=>parseFloat(d[scoreKey])||0),
+    rawCmp.map(d=>parseFloat(d[scoreKey])||0),
+    "#19398A",v=>v.toFixed(1));
+  mkNpsLine(CHARTS,"siteNpsChartMedia","siteNpsLegMedia",labels,
+    rawPri.map(d=>parseFloat(d[mediaKey])||0),
+    rawCmp.map(d=>parseFloat(d[mediaKey])||0),
+    "#278A22",v=>v.toFixed(2));
+  mkNpsLine(CHARTS,"siteNpsChartResp","siteNpsLegResp",labels,
+    rawPri.map(d=>parseFloat(d[respKey])||0),
+    rawCmp.map(d=>parseFloat(d[respKey])||0),
+    "#A43C3E",fmtN);
+
+  // Tabela de detalhamento por dispositivo (sempre mostra os 3)
+  const tb=document.getElementById("siteNpsTbDev");
+  if(tb){
+    tb.innerHTML=
+      buildNpsDevTableRow("Total",calcNpsAgg(rawPri))+
+      buildNpsDevTableRow("Mobile",aggMob)+
+      buildNpsDevTableRow("Desktop",aggDesk);
+  }
+}
+
+function renderAppNPS(pri,cmp){
+  // pri/cmp são os dados brutos do App (getAppRange / getAppCmp — sem applyAppDev)
+  // O filtro de plataforma (APP_DEV) já define o contexto principal
+  const sfx = APP_DEV==="all"?"":"_"+APP_DEV;
+  const aggActive  = APP_DEV==="all" ? calcNpsAgg(pri)           : calcNpsAggDev(pri, APP_DEV);
+  const aggAndroid = calcNpsAggDev(pri,"mobile");   // android → mobile no schema
+  const aggIos     = calcNpsAggDev(pri,"desktop");  // ios → desktop no schema
+
+  const activeTitle=APP_DEV==="all"?"Score Total":APP_DEV==="mobile"?"Android":"iOS";
+  const grid=document.getElementById("appNpsGrid");
+  if(grid){
+    grid.innerHTML=
+      buildNpsCardHTML(activeTitle,aggActive)+
+      (APP_DEV!=="mobile"?buildNpsCardHTML("Android",aggAndroid):"")+
+      (APP_DEV!=="desktop"?buildNpsCardHTML("iOS",aggIos):"");
+  }
+
+  // Gráficos — campo correto pelo filtro de plataforma
+  const scoreKey = APP_DEV==="all"?"nps_score":"nps_score_"+APP_DEV;
+  const mediaKey = APP_DEV==="all"?"nps_nota_media":"nps_nota_media_"+APP_DEV;
+  const respKey  = APP_DEV==="all"?"nps_respostas":"nps_respostas_"+APP_DEV;
+  const labels   = pri.map(d=>fmtDS(d.data));
+
+  mkNpsLine(CHARTS_APP,"appNpsChartScore","appNpsLegScore",labels,
+    pri.map(d=>parseFloat(d[scoreKey])||0),
+    cmp.map(d=>parseFloat(d[scoreKey])||0),
+    "#19398A",v=>v.toFixed(1));
+  mkNpsLine(CHARTS_APP,"appNpsChartMedia","appNpsLegMedia",labels,
+    pri.map(d=>parseFloat(d[mediaKey])||0),
+    cmp.map(d=>parseFloat(d[mediaKey])||0),
+    "#278A22",v=>v.toFixed(2));
+  mkNpsLine(CHARTS_APP,"appNpsChartResp","appNpsLegResp",labels,
+    pri.map(d=>parseFloat(d[respKey])||0),
+    cmp.map(d=>parseFloat(d[respKey])||0),
+    "#A43C3E",fmtN);
+
+  // Tabela de detalhamento por plataforma
+  const tb=document.getElementById("appNpsTbDev");
+  if(tb){
+    tb.innerHTML=
+      buildNpsDevTableRow("Total",calcNpsAgg(pri))+
+      buildNpsDevTableRow("Android",aggAndroid)+
+      buildNpsDevTableRow("iOS",aggIos);
+  }
 }
 
 // ════════════════════════════════════════════════════════
