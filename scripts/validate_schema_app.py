@@ -46,6 +46,10 @@ EXPECTED_COLUMNS = [
     "top_destino_3", "top_destino_3_sessoes",
     "top_destino_4", "top_destino_4_sessoes",
     "top_destino_5", "top_destino_5_sessoes",
+    # NPS — total e por plataforma (android=mobile, ios=desktop)
+    "nps_respostas", "nps_promotores", "nps_neutros", "nps_detratores", "nps_score", "nps_nota_media",
+    "nps_respostas_mobile", "nps_promotores_mobile", "nps_neutros_mobile", "nps_detratores_mobile", "nps_score_mobile", "nps_nota_media_mobile",
+    "nps_respostas_desktop", "nps_promotores_desktop", "nps_neutros_desktop", "nps_detratores_desktop", "nps_score_desktop", "nps_nota_media_desktop",
 ]
 
 EXPECTED_SET = set(EXPECTED_COLUMNS)
