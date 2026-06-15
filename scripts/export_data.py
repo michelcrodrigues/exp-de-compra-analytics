@@ -210,6 +210,21 @@ def load_existing_loop_data():
     except Exception:
         return [], []
 
+def load_nps_comentarios():
+    """Lê data/nps_comentarios.json gerado pelo fetch_ga4.py. Retorna lista ou []."""
+    path = "data/nps_comentarios.json"
+    if not os.path.exists(path):
+        return []
+    try:
+        with open(path, "r", encoding="utf-8") as f:
+            obj = json.load(f)
+        comentarios = obj.get("comentarios", [])
+        if comentarios:
+            print(f"  Incluindo {len(comentarios)} comentário(s) NPS de {path}.")
+        return comentarios
+    except Exception:
+        return []
+
 def main():
     print(f"Lendo {HISTORY_FILE}...")
     records = load_history()
@@ -217,6 +232,7 @@ def main():
 
     existing_insights = load_existing_insights()
     existing_experimentos, existing_resumo_mensal = load_existing_loop_data()
+    nps_comentarios = load_nps_comentarios()
 
     print("Gerando data.json...")
     daily = build_daily(records)
@@ -228,21 +244,4 @@ def main():
         "insights":     existing_insights,
         "experimentos": existing_experimentos,
         "resumo_mensal": existing_resumo_mensal,
-    }
-
-    # Validar serializabilidade antes de gravar
-    try:
-        payload = json.dumps(data, ensure_ascii=False, separators=(",", ":"))
-    except Exception as e:
-        print(f"ERRO: falha ao serializar data.json — {e}")
-        sys.exit(1)
-
-    with open(OUTPUT_PATH, "w", encoding="utf-8") as f:
-        f.write(payload)
-
-    size_kb = os.path.getsize(OUTPUT_PATH) / 1024
-    print(f"  data.json gerado: {size_kb:.1f} KB, {data['total_dias']} dias, {len(existing_insights)} insights, {len(existing_experimentos)} experimentos")
-    print("Concluído.")
-
-if __name__ == "__main__":
-    main()
+        "nps_top_comentarios": nps_co
