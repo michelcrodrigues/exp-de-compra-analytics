@@ -543,6 +543,23 @@ def main():
 
         print(f"MODO DIÁRIO — re-coletando {len(dates_to_collect)} dia(s) recentes: {', '.join(dates_to_collect)}")
 
+    # ── Comentarios NPS App (ultimos 90 dias) ────────────────────────────────
+    # Executado ANTES do check de dates_to_collect para garantir que os comentarios
+    # sejam sempre atualizados, mesmo quando o historico ja esta completo e nao ha
+    # novas datas de metricas para coletar.
+    nps_start = (today - datetime.timedelta(days=90)).strftime("%Y-%m-%d")
+    nps_end   = yesterday.strftime("%Y-%m-%d")
+    print("\nBuscando comentarios NPS do App (ultimos 90 dias)...")
+    nps_comments = fetch_nps_comments(ga4_service, nps_start, nps_end, top_n=30)
+    os.makedirs("data", exist_ok=True)
+    nps_comments_file = "data/nps_comentarios_app.json"
+    with open(nps_comments_file, "w", encoding="utf-8") as f:
+        json.dump(
+            {"gerado_em": today.isoformat(), "comentarios": nps_comments},
+            f, ensure_ascii=False, separators=(",", ":")
+        )
+    print(f"  {len(nps_comments)} comentario(s) gravados em {nps_comments_file}.")
+
     if not dates_to_collect:
         print("Nenhuma data para coletar.")
         sys.exit(0)
@@ -580,22 +597,6 @@ def main():
         print(f"\nGravando {len(batch)} registro(s) em {HISTORY_FILE}...")
         append_records(batch)
 
-
-    # -- Comentarios NPS App (ultimos 90 dias) --------------------------------
-    nps_start = (today - datetime.timedelta(days=90)).strftime("%Y-%m-%d")
-    nps_end   = yesterday.strftime("%Y-%m-%d")
-    print("\nBuscando comentarios NPS do App (ultimos 90 dias)...")
-    nps_comments = fetch_nps_comments(ga4_service, nps_start, nps_end, top_n=30)
-    import os as _os, json as _json
-    _os.makedirs("data", exist_ok=True)
-    nps_comments_file = "data/nps_comentarios_app.json"
-    with open(nps_comments_file, "w", encoding="utf-8") as f:
-        _json.dump(
-            {"gerado_em": today.isoformat(), "comentarios": nps_comments},
-            f, ensure_ascii=False, separators=(",", ":")
-        )
-    print(f"  {len(nps_comments)} comentario(s) gravados em {nps_comments_file}.")
-
     print(f"\n{'='*50}")
     print(f"Registros adicionados : {rows_added}")
     print(f"Erros                 : {len(errors)}")
@@ -603,7 +604,7 @@ def main():
         print("Datas com erro:")
         for date_str, err in errors:
             print(f"  {date_str}: {err}")
-    print("Concluído.")
+    print("Conclu\u00eddo.")
 
     if errors:
         sys.exit(1)
