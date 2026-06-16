@@ -596,7 +596,7 @@ def main():
         )
     print(f"  {len(nps_comments)} comentario(s) gravados em {nps_comments_file}.")
 
-        print(f"\n{'='*50}")
+    print(f"\n{'='*50}")
     print(f"Registros adicionados : {rows_added}")
     print(f"Erros                 : {len(errors)}")
     if errors:
