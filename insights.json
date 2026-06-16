@@ -51,6 +51,7 @@
             "prazo_dias": 21
           },
           "experimento_template": {
+            "id": "INS-2026-025",
             "titulo": "[INS-2026-025] Expandir A/B de redesign de checkout de 20% para 50% da base",
             "hipotese": "Se expandirmos o rollout do redesign de checkout (SEN-381 tela de pagamento + SEN-383 tela de dados do passageiro) de 20% para 50% da base, então a taxa begin_checkout→purchase do site se manterá acima de 81,5% (mínimo de +3pp vs W2 de 78,8%), porque o novo layout reduz fricção visual e de preenchimento na etapa final do funil.",
             "metrica_primaria": "funil_begin_checkout",
