@@ -237,6 +237,28 @@ tr.cmp-tr td{background:#f5f8ff;font-size:12px;color:var(--compare)}
 .nps-comments-bar-fill.detrator{background:#FAD1D7}
 .nps-comments-bar-label{font-size:11px;color:var(--neutral-800);position:absolute;left:8px;top:50%;transform:translateY(-50%);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:calc(100% - 16px)}
 .nps-comments-bar-pct{font-size:11px;font-weight:700;color:var(--neutral-600);white-space:nowrap;min-width:32px;text-align:right}
+/* NPS Análise Qualitativa IA */
+.nps-analise-wrap{margin-top:4px}
+.nps-analise-ia-badge{display:inline-block;font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:.7px;padding:2px 7px;border-radius:9999px;background:#E0EAFF;color:#19398A;border:1px solid #B3C9F5;vertical-align:middle;margin-left:6px;position:relative;top:-1px}
+.nps-analise-cat-block{background:#fff;border:1px solid var(--neutral-200);border-radius:var(--r-sm);padding:14px 16px;margin-bottom:10px}
+.nps-analise-cat-block:last-child{margin-bottom:0}
+.nps-analise-cat-header{display:flex;align-items:center;gap:8px;margin-bottom:10px}
+.nps-analise-cat-dot{width:10px;height:10px;border-radius:50%;flex-shrink:0}
+.nps-analise-cat-dot.promotor{background:var(--positive-700)}
+.nps-analise-cat-dot.neutro{background:var(--brand-secondary-b)}
+.nps-analise-cat-dot.detrator{background:var(--negative-700)}
+.nps-analise-cat-title{font-size:12px;font-weight:700;color:var(--neutral-800);text-transform:uppercase;letter-spacing:.5px}
+.nps-analise-cat-count{font-size:11px;color:var(--neutral-500);font-weight:400}
+.nps-analise-temas{display:flex;flex-wrap:wrap;gap:5px;margin-bottom:10px}
+.nps-analise-tema-tag{font-size:11px;padding:3px 9px;border-radius:9999px;font-weight:600}
+.nps-analise-tema-tag.promotor{background:#C6E5C3;color:#1A6B17}
+.nps-analise-tema-tag.neutro{background:#FFF3CD;color:#7A5A00}
+.nps-analise-tema-tag.detrator{background:#FAD1D7;color:#A01D22}
+.nps-analise-resumo{font-size:12px;color:var(--neutral-700);line-height:1.6;margin-bottom:8px}
+.nps-analise-insight{font-size:12px;color:var(--neutral-600);line-height:1.5;padding:8px 10px;background:var(--neutral-50,#f9f9f9);border-left:3px solid var(--neutral-300);border-radius:0 4px 4px 0;margin-bottom:0}
+.nps-analise-recomendacao{font-size:12px;color:#7A3C00;line-height:1.5;padding:8px 10px;background:#FFF8F0;border-left:3px solid #F5A623;border-radius:0 4px 4px 0;margin-top:8px}
+.nps-analise-recomendacao strong{color:#5A2D00}
+.nps-analise-empty{background:var(--neutral-100);border-radius:var(--r-sm);padding:20px;text-align:center;font-size:12px;color:var(--neutral-500)}
 /* Insight status badges */
 .ins-status-badge{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.6px;padding:3px 9px;border-radius:9999px;white-space:nowrap;flex-shrink:0}
 .ins-status-badge.em_teste{background:#E0EAFF;color:#19398A}
@@ -709,6 +731,8 @@ tr.cmp-tr td{background:#f5f8ff;font-size:12px;color:var(--compare)}
         <div class="nps-comments-legend-item"><div class="nps-comments-legend-dot" style="background:var(--negative-700)"></div>Detrator (nota 0–6)</div>
       </div>
       <div class="nps-comments-wrap" id="siteNpsComentarios"></div>
+      <div class="sec" style="margin-top:24px">Síntese qualitativa <span class="nps-analise-ia-badge">IA</span></div>
+      <div class="nps-analise-wrap" id="siteNpsAnalise"></div>
     </div>
 
     </div><!-- /section-pane site -->
@@ -1208,6 +1232,7 @@ async function loadData(){
     EXPERIMENTOS=j.experimentos||[];
     RESUMO_MENSAL=(j.resumo_mensal||[]).sort((a,b)=>b.mes<a.mes?-1:1);
     window._DATA=j; // expõe para renderNpsComentarios
+    try{const ar=await fetch("nps_analise_qualitativa.json?v="+Date.now());if(ar.ok)window._ANALISE=await ar.json();}catch(e){window._ANALISE=null;}
     const lastDay=ALL.length?ALL[ALL.length-1].data:"";document.getElementById("headerUpdated").textContent="Dados até "+fmtDF(lastDay);
     setPresetDays(30);
     document.getElementById("appState").style.display="none";
@@ -1870,6 +1895,49 @@ function mkNpsLine(chartStore, cid, legId, labels, priVals, cmpVals, color, fmt)
   chartStore[cid]=new Chart(ctx,{type:"line",data:{labels,datasets:ds},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false},tooltip:{callbacks:{label:c=>fmt(c.raw)}}},scales:{x:{grid:{display:false},ticks:{font:{size:10},maxTicksLimit:8}},y:{grid:{color:"#f0f0f0"},ticks:{font:{size:10},callback:v=>fmt(v)}}}}});
 }
 
+// ── Análise Qualitativa NPS (IA) ──────────────────────────────────────────
+function renderNpsAnalise(analise, containerId) {
+  const el = document.getElementById(containerId);
+  if (!el) return;
+
+  if (!analise) {
+    el.innerHTML = '<div class="nps-analise-empty">Síntese ainda não gerada. A tarefa quinzenal criará a análise automaticamente nos dias 1 e 15.</div>';
+    return;
+  }
+
+  const catOrder = ['promotores', 'neutros', 'detratores'];
+  const catLabel = { promotores: 'Promotores', neutros: 'Neutros', detratores: 'Detratores' };
+  const catCls   = { promotores: 'promotor', neutros: 'neutro', detratores: 'detrator' };
+
+  let html = '';
+  catOrder.forEach(cat => {
+    const d = analise[cat];
+    if (!d) return;
+    const cls = catCls[cat];
+    html += '<div class="nps-analise-cat-block">';
+    html += '<div class="nps-analise-cat-header">';
+    html += '<div class="nps-analise-cat-dot ' + cls + '"></div>';
+    html += '<span class="nps-analise-cat-title">' + catLabel[cat] + '</span>';
+    if (d.total) html += '<span class="nps-analise-cat-count">(' + d.total + ' comentários)</span>';
+    html += '</div>';
+    if (d.temas_principais && d.temas_principais.length) {
+      html += '<div class="nps-analise-temas">';
+      d.temas_principais.forEach(t => {
+        html += '<span class="nps-analise-tema-tag ' + cls + '">' + escH(t) + '</span>';
+      });
+      html += '</div>';
+    }
+    if (d.resumo) html += '<div class="nps-analise-resumo">' + escH(d.resumo) + '</div>';
+    if (d.insight) html += '<div class="nps-analise-insight">' + escH(d.insight) + '</div>';
+    if (d.recomendacao_produto) {
+      html += '<div class="nps-analise-recomendacao"><strong>Recomendação:</strong> ' + escH(d.recomendacao_produto) + '</div>';
+    }
+    html += '</div>';
+  });
+
+  el.innerHTML = html || '<div class="nps-analise-empty">Nenhuma categoria disponível na análise.</div>';
+}
+
 // ── Comentários NPS ───────────────────────────────────────────────────────
 function renderNpsComentarios(comentarios, containerId) {
   const el = document.getElementById(containerId);
@@ -1970,6 +2038,8 @@ function renderNPS(pri,cmp){
   }
   // Comentários qualitativos do site
   renderNpsComentarios((window._DATA && window._DATA.nps_top_comentarios) || null, "siteNpsComentarios");
+  // Síntese qualitativa IA
+  renderNpsAnalise(window._ANALISE || null, "siteNpsAnalise");
 }
 
 function renderAppNPS(pri,cmp){
