@@ -724,14 +724,7 @@ tr.cmp-tr td{background:#f5f8ff;font-size:12px;color:var(--compare)}
         <thead><tr><th>Dispositivo</th><th class="num">Respostas</th><th class="num">Promotores</th><th class="num">Neutros</th><th class="num">Detratores</th><th class="num">NPS Score</th><th class="num">Média Notas</th></tr></thead>
         <tbody id="siteNpsTbDev"></tbody>
       </table></div>
-      <div class="sec">Principais comentários qualitativos</div>
-      <div class="nps-comments-legend">
-        <div class="nps-comments-legend-item"><div class="nps-comments-legend-dot" style="background:var(--positive-700)"></div>Promotor (nota 9–10)</div>
-        <div class="nps-comments-legend-item"><div class="nps-comments-legend-dot" style="background:var(--brand-secondary-b)"></div>Neutro (nota 7–8)</div>
-        <div class="nps-comments-legend-item"><div class="nps-comments-legend-dot" style="background:var(--negative-700)"></div>Detrator (nota 0–6)</div>
-      </div>
-      <div class="nps-comments-wrap" id="siteNpsComentarios"></div>
-      <div class="sec" style="margin-top:24px">Síntese qualitativa <span class="nps-analise-ia-badge">IA</span></div>
+      <div class="sec">Síntese qualitativa <span class="nps-analise-ia-badge">IA</span></div>
       <div class="nps-analise-wrap" id="siteNpsAnalise"></div>
     </div>
 
@@ -816,13 +809,8 @@ tr.cmp-tr td{background:#f5f8ff;font-size:12px;color:var(--compare)}
             <thead><tr><th>Plataforma</th><th class="num">Respostas</th><th class="num">Promotores</th><th class="num">Neutros</th><th class="num">Detratores</th><th class="num">NPS Score</th><th class="num">Média Notas</th></tr></thead>
             <tbody id="appNpsTbDev"></tbody>
           </table></div>
-          <div class="sec">Principais comentários qualitativos</div>
-          <div class="nps-comments-legend">
-            <div class="nps-comments-legend-item"><div class="nps-comments-legend-dot" style="background:var(--positive-700)"></div>Promotor (nota 9–10)</div>
-            <div class="nps-comments-legend-item"><div class="nps-comments-legend-dot" style="background:var(--brand-secondary-b)"></div>Neutro (nota 7–8)</div>
-            <div class="nps-comments-legend-item"><div class="nps-comments-legend-dot" style="background:var(--negative-700)"></div>Detrator (nota 0–6)</div>
-          </div>
-          <div class="nps-comments-wrap" id="appNpsComentarios"></div>
+          <div class="sec">Síntese qualitativa <span class="nps-analise-ia-badge">IA</span></div>
+          <div class="nps-analise-wrap" id="appNpsAnalise"></div>
         </div>
       </div>
     </div><!-- /section-pane app -->
@@ -1016,7 +1004,8 @@ async function loadAppData(){
     if(!res.ok) throw new Error("HTTP "+res.status);
     const j=await res.json();
     ALL_APP=(j.daily||[]).sort((a,b)=>a.data<b.data?-1:1);
-    window._DATA_APP=j; // expõe para renderNpsComentarios (app)
+    window._DATA_APP=j;
+    try{const ar=await fetch("nps_analise_qualitativa_app.json?v="+Date.now());if(ar.ok)window._ANALISE_APP=await ar.json();}catch(e){window._ANALISE_APP=null;}
     APP_LOADED=true;
     st.style.display="none"; ct.style.display="block";
     const cmpSt=document.getElementById("cmpTabState");
@@ -1900,8 +1889,15 @@ function renderNpsAnalise(analise, containerId) {
   const el = document.getElementById(containerId);
   if (!el) return;
 
-  if (!analise) {
+  // Sem arquivo gerado ainda
+  if (!analise || typeof analise !== 'object') {
     el.innerHTML = '<div class="nps-analise-empty">Síntese ainda não gerada. A tarefa quinzenal criará a análise automaticamente nos dias 1 e 15.</div>';
+    return;
+  }
+
+  // Arquivo existe mas sem comentários coletados
+  if (!analise.total_comentarios || analise.total_comentarios === 0) {
+    el.innerHTML = '<div class="nps-analise-empty">Nenhum comentário coletado no período para gerar síntese.</div>';
     return;
   }
 
@@ -1912,30 +1908,32 @@ function renderNpsAnalise(analise, containerId) {
   let html = '';
   catOrder.forEach(cat => {
     const d = analise[cat];
-    if (!d) return;
+    if (!d || typeof d !== 'object') return;
+    // Categoria presente mas sem comentários — pula silenciosamente
+    if (!d.total || d.total === 0) return;
     const cls = catCls[cat];
     html += '<div class="nps-analise-cat-block">';
     html += '<div class="nps-analise-cat-header">';
     html += '<div class="nps-analise-cat-dot ' + cls + '"></div>';
     html += '<span class="nps-analise-cat-title">' + catLabel[cat] + '</span>';
-    if (d.total) html += '<span class="nps-analise-cat-count">(' + d.total + ' comentários)</span>';
+    html += '<span class="nps-analise-cat-count">(' + d.total + ' comentários)</span>';
     html += '</div>';
-    if (d.temas_principais && d.temas_principais.length) {
+    if (Array.isArray(d.temas_principais) && d.temas_principais.length) {
       html += '<div class="nps-analise-temas">';
       d.temas_principais.forEach(t => {
-        html += '<span class="nps-analise-tema-tag ' + cls + '">' + escH(t) + '</span>';
+        if (t) html += '<span class="nps-analise-tema-tag ' + cls + '">' + escH(String(t)) + '</span>';
       });
       html += '</div>';
     }
-    if (d.resumo) html += '<div class="nps-analise-resumo">' + escH(d.resumo) + '</div>';
-    if (d.insight) html += '<div class="nps-analise-insight">' + escH(d.insight) + '</div>';
+    if (d.resumo) html += '<div class="nps-analise-resumo">' + escH(String(d.resumo)) + '</div>';
+    if (d.insight) html += '<div class="nps-analise-insight">' + escH(String(d.insight)) + '</div>';
     if (d.recomendacao_produto) {
-      html += '<div class="nps-analise-recomendacao"><strong>Recomendação:</strong> ' + escH(d.recomendacao_produto) + '</div>';
+      html += '<div class="nps-analise-recomendacao"><strong>Recomendação:</strong> ' + escH(String(d.recomendacao_produto)) + '</div>';
     }
     html += '</div>';
   });
 
-  el.innerHTML = html || '<div class="nps-analise-empty">Nenhuma categoria disponível na análise.</div>';
+  el.innerHTML = html || '<div class="nps-analise-empty">Nenhuma categoria com comentários neste período.</div>';
 }
 
 // ── Comentários NPS ───────────────────────────────────────────────────────
@@ -2036,8 +2034,6 @@ function renderNPS(pri,cmp){
       buildNpsDevTableRow("Mobile",aggMob)+
       buildNpsDevTableRow("Desktop",aggDesk);
   }
-  // Comentários qualitativos do site
-  renderNpsComentarios((window._DATA && window._DATA.nps_top_comentarios) || null, "siteNpsComentarios");
   // Síntese qualitativa IA
   renderNpsAnalise(window._ANALISE || null, "siteNpsAnalise");
 }
@@ -2086,8 +2082,8 @@ function renderAppNPS(pri,cmp){
       buildNpsDevTableRow("Android",aggAndroid)+
       buildNpsDevTableRow("iOS",aggIos);
   }
-  // Comentários qualitativos do app
-  renderNpsComentarios((window._DATA_APP && window._DATA_APP.nps_top_comentarios) || null, "appNpsComentarios");
+  // Síntese qualitativa IA — app
+  renderNpsAnalise(window._ANALISE_APP || null, "appNpsAnalise");
 }
 
 // ════════════════════════════════════════════════════════
