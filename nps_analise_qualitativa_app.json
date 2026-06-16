@@ -1,0 +1,14 @@
+{
+  "gerado_em": "2026-06-16",
+  "produto": "app",
+  "total_comentarios": 0,
+  "analise_temporal": {
+    "tendencia": null,
+    "nps_score_medio": null,
+    "nps_nota_media": null,
+    "dias_analisados": 0,
+    "dias_criticos": [],
+    "padrao": "sem_dados",
+    "diagnostico": "Sem dados de NPS coletados para o app neste ciclo."
+  }
+}
