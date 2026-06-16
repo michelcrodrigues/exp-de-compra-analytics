@@ -244,4 +244,22 @@ def main():
         "insights":     existing_insights,
         "experimentos": existing_experimentos,
         "resumo_mensal": existing_resumo_mensal,
-        "nps_top_comentarios": nps_co
+        "nps_top_comentarios": nps_comentarios,
+    }
+
+    try:
+        payload = json.dumps(data, ensure_ascii=False, separators=(",", ":"))
+    except Exception as e:
+        print(f"ERRO: falha ao serializar data.json — {e}")
+        sys.exit(1)
+
+    with open(OUTPUT_PATH, "w", encoding="utf-8") as f:
+        f.write(payload)
+
+    size_kb = os.path.getsize(OUTPUT_PATH) / 1024
+    print(f"  data.json gerado: {size_kb:.1f} KB, {data['total_dias']} dias.")
+    print("Concluído.")
+
+
+if __name__ == "__main__":
+    main()
