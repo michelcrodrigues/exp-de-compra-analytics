@@ -239,7 +239,7 @@
             "prazo_dias": 21
           },
           "experimento_template": {
-            "id": "INS-EXP-013",
+            "id": "INS-2026-013",
             "titulo": "Isolar causa de queda de CR iOS no app",
             "hipotese": "Se houver regressão em alguma tela do fluxo de checkout no iOS introduzida nas últimas 3 semanas, então reverter ou corrigir essa regressão vai recuperar o CR iOS para ≥13%, porque a queda acelerada é desproporcional ao Android.",
             "metrica_primaria": "cr_ios_app",
@@ -300,7 +300,7 @@
             "prazo_dias": 28
           },
           "experimento_template": {
-            "id": "INS-EXP-015",
+            "id": "INS-2026-015",
             "titulo": "Reduzir abandono app: carrinho → checkout",
             "hipotese": "Se simplificarmos o fluxo entre add_to_cart e begin_checkout no app reduzindo etapas intermediárias, então a taxa de avanço aumentará em ≥15% (de 19,5% para ~22,5%), porque o gap de 46pp vs site indica atrito desnecessário.",
             "metrica_primaria": "funil_begin_checkout_rate_app",
@@ -418,7 +418,7 @@
             "prazo_dias": 28
           },
           "experimento_template": {
-            "id": "INS-EXP-008",
+            "id": "INS-2026-008",
             "titulo": "Redesign fluxo de pagamento e dados passageiro mobile",
             "hipotese": "Se redesenharmos o fluxo de pagamento (SEN-381, SEN-383) e a tela de dados do passageiro no mobile, então a taxa de conversão mobile subirá em ≥10% em 28 dias, porque o gap de 5,18pp entre mobile (8,39%) e desktop (13,57%) indica atrito estrutural concentrado no checkout.",
             "metrica_primaria": "taxa_conversao_pct_mobile",
@@ -458,7 +458,7 @@
             "prazo_dias": 7
           },
           "experimento_template": {
-            "id": "INS-EXP-009",
+            "id": "INS-2026-009",
             "titulo": "Auditoria do evento funil_purchase GA4 pós SEN-325",
             "hipotese": "Se auditarmos a implementação do evento purchase no GA4 e corrigirmos o disparo alterado pelo SEN-325, então o ratio funil_purchase/compras voltará para o intervalo saudável de 1,0–1,2, porque a queda de 1,96 para 1,04 em 3 semanas coincide com o deploy da mudança.",
             "metrica_primaria": "ratio_funil_purchase_vs_compras",
