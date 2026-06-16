@@ -202,59 +202,74 @@ def fetch_nps_comments(service, start_date, end_date, top_n=30):
     Busca os principais comentários NPS nos últimos N dias.
     Retorna lista de dicts {texto, categoria, count} ordenada por count desc.
 
-    Requer que o GA4 tenha a dimensão customizada 'nps_comment' configurada
-    (event scope), junto com 'nps_number' (nota 0-10).
-    Não filtra por eventName — captura qualquer evento que carregue nps_comment.
+    Faz 3 queries separadas (promotor / neutro / detrator) para garantir
+    representação de cada categoria, independente do volume relativo.
+    top_n é dividido igualmente: ~10 por categoria (com top_n=30).
+
+    Requer que o GA4 tenha as dimensões customizadas 'nps_comment' e
+    'nps_number' configuradas (event scope).
     """
-    body = {
-        "dateRanges": [{"startDate": start_date, "endDate": end_date}],
-        "dimensions": [
-            {"name": "customEvent:nps_comment"},
-            {"name": "customEvent:nps_number"},
-        ],
-        "metrics": [{"name": "eventCount"}],
-        "dimensionFilter": {
-            "notExpression": {
-                "filter": {
-                    "fieldName": "customEvent:nps_comment",
-                    "stringFilter": {"matchType": "EXACT", "value": "(not set)"},
-                }
+    per_cat = max(5, top_n // 3)
+
+    # Faixas de score por categoria
+    categorias = [
+        ("promotor", 9, 10),
+        ("neutro",   7,  8),
+        ("detrator", 0,  6),
+    ]
+
+    def _score_filter(score_min, score_max):
+        """Filtro de dimensionFilter para faixa de nps_number."""
+        values = [str(s) for s in range(score_min, score_max + 1)]
+        return {
+            "andGroup": {
+                "expressions": [
+                    {
+                        "notExpression": {
+                            "filter": {
+                                "fieldName": "customEvent:nps_comment",
+                                "stringFilter": {"matchType": "EXACT", "value": "(not set)"},
+                            }
+                        }
+                    },
+                    {
+                        "filter": {
+                            "fieldName": "customEvent:nps_number",
+                            "inListFilter": {"values": values},
+                        }
+                    },
+                ]
             }
-        },
-        "orderBys": [{"metric": {"metricName": "eventCount"}, "desc": True}],
-        "limit": top_n * 5,
-    }
+        }
+
     results = []
-    try:
-        resp = (
-            service.properties()
-            .runReport(property=f"properties/{GA4_PROPERTY_ID}", body=body)
-            .execute()
-        )
-        for row in resp.get("rows", []):
-            texto     = row["dimensionValues"][0]["value"].strip()
-            raw_score = row["dimensionValues"][1]["value"]
-            count     = safe_int(row["metricValues"][0]["value"])
-            if not texto or texto in ("(not set)", "") or count == 0:
-                continue
-            if len(texto) < 3:
-                continue
-            try:
-                score = int(float(raw_score))
-            except (ValueError, TypeError):
-                continue
-            if score >= 9:
-                categoria = "promotor"
-            elif score >= 7:
-                categoria = "neutro"
-            else:
-                categoria = "detrator"
-            results.append({"texto": texto, "categoria": categoria, "count": count})
-        results.sort(key=lambda x: x["count"], reverse=True)
-        results = results[:top_n]
-    except Exception as e:
-        print(f"  AVISO: nao foi possivel buscar comentarios NPS - {e}")
-        results = []
+    for categoria, score_min, score_max in categorias:
+        body = {
+            "dateRanges": [{"startDate": start_date, "endDate": end_date}],
+            "dimensions": [
+                {"name": "customEvent:nps_comment"},
+                {"name": "customEvent:nps_number"},
+            ],
+            "metrics": [{"name": "eventCount"}],
+            "dimensionFilter": _score_filter(score_min, score_max),
+            "orderBys": [{"metric": {"metricName": "eventCount"}, "desc": True}],
+            "limit": per_cat,
+        }
+        try:
+            resp = (
+                service.properties()
+                .runReport(property=f"properties/{GA4_PROPERTY_ID}", body=body)
+                .execute()
+            )
+            for row in resp.get("rows", []):
+                texto = row["dimensionValues"][0]["value"].strip()
+                count = safe_int(row["metricValues"][0]["value"])
+                if not texto or texto in ("(not set)", "") or len(texto) < 3 or count == 0:
+                    continue
+                results.append({"texto": texto, "categoria": categoria, "count": count})
+        except Exception as e:
+            print(f"  AVISO: nao foi possivel buscar comentarios NPS ({categoria}) - {e}")
+
     return results
 
 
