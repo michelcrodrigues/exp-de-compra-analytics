@@ -199,11 +199,12 @@ def calc_cr(compras, sessoes):
 # ──────────────────────────────────────────────
 def fetch_nps_comments(service, start_date, end_date, top_n=30):
     """
-    Busca os principais comentários do evento nps_response nos últimos N dias.
+    Busca os principais comentários NPS nos últimos N dias.
     Retorna lista de dicts {texto, categoria, count} ordenada por count desc.
 
     Requer que o GA4 tenha a dimensão customizada 'nps_comment' configurada
-    no evento 'nps_response', junto com 'nps_number' (nota 0-10).
+    (event scope), junto com 'nps_number' (nota 0-10).
+    Não filtra por eventName — captura qualquer evento que carregue nps_comment.
     """
     body = {
         "dateRanges": [{"startDate": start_date, "endDate": end_date}],
@@ -213,9 +214,11 @@ def fetch_nps_comments(service, start_date, end_date, top_n=30):
         ],
         "metrics": [{"name": "eventCount"}],
         "dimensionFilter": {
-            "filter": {
-                "fieldName": "eventName",
-                "stringFilter": {"matchType": "EXACT", "value": "nps_response"},
+            "notExpression": {
+                "filter": {
+                    "fieldName": "customEvent:nps_comment",
+                    "stringFilter": {"matchType": "EXACT", "value": "(not set)"},
+                }
             }
         },
         "orderBys": [{"metric": {"metricName": "eventCount"}, "desc": True}],
