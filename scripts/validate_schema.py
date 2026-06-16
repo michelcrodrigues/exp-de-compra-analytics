@@ -68,7 +68,7 @@ EXPECTED_COLUMNS = [
 EXPECTED_SET = set(EXPECTED_COLUMNS)
 
 INS_ID_PATTERN     = re.compile(r'^INS-\d{4}-(\d{3})$')
-INS_EXP_ID_PATTERN = re.compile(r'^INS-EXP-(\d{3})$')
+INS_EXP_ID_PATTERN = re.compile(r'^INS-\d{4}-(\d{3})$')
 EXP_ID_PATTERN     = re.compile(r'^EXP-\d{4}-\d{3}$')
 
 REQUIRED_INSIGHT_FIELDS_LEGACY = ['id', 'tipo_acao', 'status', 'revisao', 'experimento_id']
@@ -131,10 +131,16 @@ def _validate_insight_items(weeks, source_label):
                     tmpl_id = tmpl.get('id', '')
                     m_exp   = INS_EXP_ID_PATTERN.match(tmpl_id) if tmpl_id else None
                     if not m_exp:
-                        errors.append(
-                            f"[{source_label}] Insight {ins_id}: experimento_template.id "
-                            f"'{tmpl_id}' invalido (esperado INS-EXP-NNN)."
-                        )
+                        if not tmpl_id:
+                            warn(
+                                f"[{source_label}] Insight {ins_id}: experimento_template.id "
+                                f"vazio (template incompleto — esperado INS-YYYY-NNN)."
+                            )
+                        else:
+                            errors.append(
+                                f"[{source_label}] Insight {ins_id}: experimento_template.id "
+                                f"'{tmpl_id}' invalido (esperado INS-YYYY-NNN)."
+                            )
                     elif ins_num and m_exp.group(1) != ins_num:
                         errors.append(
                             f"[{source_label}] Insight {ins_id}: numero do "
