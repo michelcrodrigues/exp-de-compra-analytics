@@ -1,5 +1,5 @@
 {
-  "gerado_em": "2026-06-17T15:05:08.262Z",
+  "gerado_em": "2026-06-17T16:17:44.283Z",
   "semanas": [
     {
       "semana": "2026-06-08",
@@ -57,65 +57,6 @@
         "diagnostico": "O NPS score W3 (81,23) subiu +2,4pts vs W2 (78,83), dentro da variação estável — não supera o threshold de +5pts para classificação como crescente. O histórico disponível é insuficiente para classificar o padrão temporal com confiança estatística (apenas 1 semana anterior no arquivo). No entanto, os temas negativos (taxa de serviço, ausência de parcelamento, falha na primeira compra) são idênticos aos da semana anterior, sugerindo padrão emergente — a partir de 3 semanas consecutivas, a classificação deverá ser atualizada para 'recorrente'. O único dia crítico de W3 foi 08/06 (segunda-feira), com 89 detratores vs média semanal de 68,4 (+1 desvio padrão) — pico típico de início de semana sem correlação confirmada com incidente técnico.",
         "dias_criticos": [
           "2026-06-08"
-        ]
-      }
-    },
-    {
-      "semana": "2026-06-09",
-      "label": "09/06 – 15/06/2026",
-      "gerado_em": "2026-06-16T00:00:00Z",
-      "nps_score": 80.27,
-      "nps_nota_media": 9.27,
-      "nps_respostas": 8932,
-      "nps_promotores": 7500,
-      "nps_neutros": 900,
-      "nps_detratores": 532,
-      "promotores": {
-        "total": 244,
-        "temas_principais": [
-          "satisfação geral com a experiência de compra",
-          "facilidade e praticidade do processo",
-          "elogio ao atendimento"
-        ],
-        "resumo": "Promotores expressam satisfação ampla com a jornada de compra, com elogios consistentes e genéricos que indicam ausência de fricção percebida.",
-        "insight": "O alto volume de promotores com comentários curtos e genéricos sugere que a experiência funcionou sem atrito perceptível — mas não gerou memória positiva diferenciada. Para mover o NPS além de 80, o time Senna precisa criar momentos de encantamento, não apenas ausência de problemas.",
-        "recorrente": false,
-        "semanas_recorrente": 1
-      },
-      "neutros": {
-        "total": 56,
-        "temas_principais": [
-          "taxa de serviço/conveniência considerada cara",
-          "ausência de parcelamento sem juros",
-          "falha no processamento do primeiro pagamento",
-          "divergência entre disponibilidade de assentos exibida e real"
-        ],
-        "resumo": "Neutros estão travados por barreiras financeiras e fricções de pagamento — taxa de serviço aparece em mais de 50% das menções, combinada com ausência de parcelamento sem juros.",
-        "insight": "A taxa de serviço é o principal bloqueio para conversão de neutros em promotores — recorrente, estrutural e percebida como injusta. Reduzir a percepção de custo adicional e corrigir a falha de pagamento no primeiro acesso têm impacto direto no NPS.",
-        "recorrente": false,
-        "semanas_recorrente": 1
-      },
-      "detratores": {
-        "total": 14,
-        "temas_principais": [
-          "indignação com o valor da taxa de serviço",
-          "possível confusão na escala NPS (texto positivo, nota baixa)"
-        ],
-        "resumo": "Grupo pequeno com dois padrões distintos: revolta com a taxa de serviço e um comentário positivo com nota baixa, sugerindo erro na escala.",
-        "insight": "O volume de detratores é baixo, mas a taxa de serviço se mantém como gatilho de insatisfação extrema. A anomalia pode indicar problema de UX na escala NPS.",
-        "recomendacao_produto": "Revisar a comunicação da taxa de serviço no checkout. Auditar a clareza da escala NPS no formulário pós-compra.",
-        "recorrente": false,
-        "semanas_recorrente": 1
-      },
-      "analise_temporal": {
-        "padrao": "pontual",
-        "tendencia": "estavel",
-        "diagnostico": "Os picos de detratores em 20-22/05 formam um cluster de 3 dias consecutivos seguido de episódio isolado em 01/06 — padrão típico de incidente operacional pontual. O NPS se manteve estável em torno de 80 ao longo do período.",
-        "dias_criticos": [
-          "2026-05-20",
-          "2026-05-21",
-          "2026-05-22",
-          "2026-06-01"
         ]
       }
     }
