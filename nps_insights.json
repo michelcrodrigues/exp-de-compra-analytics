@@ -1,6 +1,65 @@
 {
-  "gerado_em": "2026-06-16T21:52:34.878Z",
+  "gerado_em": "2026-06-17T15:05:08.262Z",
   "semanas": [
+    {
+      "semana": "2026-06-08",
+      "label": "08/06 – 14/06/2026",
+      "gerado_em": "2026-06-17T15:04:53.673Z",
+      "nps_score": 81.23,
+      "nps_nota_media": 9.31,
+      "nps_respostas": 11029,
+      "nps_promotores": 9438,
+      "nps_neutros": 1112,
+      "nps_detratores": 479,
+      "promotores": {
+        "total": 346,
+        "temas_principais": [
+          "satisfação genérica com a experiência de compra",
+          "elogio ao atendimento (ágil e de qualidade)",
+          "praticidade e facilidade do processo de compra"
+        ],
+        "resumo": "Os promotores desta semana expressam satisfação ampla com a jornada de compra, predominantemente através de comentários curtos e genéricos como 'Muito bom', 'Ótimo' e 'Excelente'. O segundo tema mais recorrente é o elogio ao atendimento — 'Ótimo atendimento', 'Excelente atendimento' e 'Atendimento rápido' — sugerindo que o suporte ao cliente é um diferencial percebido positivamente mesmo por usuários do canal digital.",
+        "insight": "O alto volume de promotores (9.438) com comentários genéricos e curtos indica que a experiência funcionou sem atrito perceptível, mas ainda não gera memória positiva diferenciada. O elogio ao atendimento, recorrente entre promotores, sugere oportunidade de usar a qualidade do atendimento como elemento de retenção e fidelização — conectando ao KR de Recorrência (meta 2,55 viagens/cliente). Para elevar o NPS além de 82, o time Senna precisa criar momentos de encantamento ativos, não apenas ausência de problemas.",
+        "recorrente": true,
+        "semanas_recorrente": 2
+      },
+      "neutros": {
+        "total": 91,
+        "temas_principais": [
+          "taxa de serviço/conveniência percebida como cara",
+          "ausência de parcelamento sem juros",
+          "falha na primeira compra sem retorno de suporte",
+          "burocracia e lentidão no processo de compra",
+          "divergência entre assentos exibidos como disponíveis e realidade"
+        ],
+        "resumo": "Os neutros estão bloqueados principalmente por barreiras financeiras e fricções no processo de pagamento. A taxa de serviço aparece em múltiplas variações como principal fonte de insatisfação, combinada com a ausência de parcelamento sem juros. Um segundo cluster relevante é a burocracia percebida — 'burocrático comprar passagem pelo site', 'site poderia ser mais ágil' — que aponta para fricções no fluxo de compra ainda percebidas como lentas ou complexas.",
+        "insight": "A taxa de serviço é o principal bloqueio estrutural para converter neutros em promotores. É um tema de precificação e percepção de valor, não de UX — o time de produto pode atuar na comunicação e no contexto de apresentação da taxa. A falha na primeira compra sem retorno de suporte é ponto de atenção para o time CX: usuários que não conseguem finalizar a primeira compra têm alta probabilidade de não retornar, impactando o KR de Recorrência.",
+        "recorrente": true,
+        "semanas_recorrente": 2
+      },
+      "detratores": {
+        "total": 35,
+        "temas_principais": [
+          "indignação com o valor da taxa de serviço",
+          "divergência de preço entre busca e checkout",
+          "app com erros funcionais",
+          "anomalia de escala NPS (comentário positivo com nota baixa)"
+        ],
+        "resumo": "O grupo de detratores (479, 4,3% das respostas) concentra sua insatisfação principalmente na taxa de serviço, com três variações de comentário expressando indignação explícita. Um novo tema relevante aparece: divergência de preço entre a busca e o checkout — 'ao procurar o valor nos mostram um preço e ao finalizar o valor é outro' — que além de gerar detração, indica possível problema técnico. A anomalia de escala NPS persiste: 'ADORO ESSA EMPRESA' com nota de detrator sugere confusão com a escala do formulário.",
+        "insight": "A taxa de serviço continua sendo o principal gatilho de detração extrema, consistente com a semana anterior. O tema de divergência de preço é novo e urgente: um usuário que vê um preço e encontra outro no checkout tem experiência que destrói confiança e converte diretamente em detrator ou abandono de funil. Este tema se conecta com a entrega SEN-402 (correção de lógica De/Por no preço) e deve ser verificado para confirmar que a correção foi suficiente para todos os fluxos.",
+        "recomendacao_produto": "1. Auditar exibição do preço final vs preço exibido na busca — verificar se o bug de divergência De/Por (SEN-402) foi completamente resolvido para todos os fluxos de compra. 2. Revisar comunicação da taxa de serviço no checkout — testar exibir o benefício associado para reduzir percepção de custo puro sem valor. 3. Auditar clareza da escala NPS no formulário pós-compra para eliminar anomalia de notas baixas com comentários positivos.",
+        "recorrente": true,
+        "semanas_recorrente": 2
+      },
+      "analise_temporal": {
+        "padrao": "sem_dados",
+        "tendencia": "estavel",
+        "diagnostico": "O NPS score W3 (81,23) subiu +2,4pts vs W2 (78,83), dentro da variação estável — não supera o threshold de +5pts para classificação como crescente. O histórico disponível é insuficiente para classificar o padrão temporal com confiança estatística (apenas 1 semana anterior no arquivo). No entanto, os temas negativos (taxa de serviço, ausência de parcelamento, falha na primeira compra) são idênticos aos da semana anterior, sugerindo padrão emergente — a partir de 3 semanas consecutivas, a classificação deverá ser atualizada para 'recorrente'. O único dia crítico de W3 foi 08/06 (segunda-feira), com 89 detratores vs média semanal de 68,4 (+1 desvio padrão) — pico típico de início de semana sem correlação confirmada com incidente técnico.",
+        "dias_criticos": [
+          "2026-06-08"
+        ]
+      }
+    },
     {
       "semana": "2026-06-09",
       "label": "09/06 – 15/06/2026",
