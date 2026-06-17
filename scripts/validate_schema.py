@@ -127,25 +127,34 @@ def _validate_insight_items(weeks, source_label):
                         f"experimento_template e null."
                     )
                 else:
-                    tmpl    = item['experimento_template']
-                    tmpl_id = tmpl.get('id', '')
-                    m_exp   = INS_EXP_ID_PATTERN.match(tmpl_id) if tmpl_id else None
-                    if not m_exp:
-                        if not tmpl_id:
-                            warn(
-                                f"[{source_label}] Insight {ins_id}: experimento_template.id "
-                                f"vazio (template incompleto — esperado INS-YYYY-NNN)."
-                            )
-                        else:
+                    tmpl = item['experimento_template']
+                    if not isinstance(tmpl, dict):
+                        warn(
+                            f"[{source_label}] Insight {ins_id}: experimento_template e uma "
+                            f"string em vez de objeto (formato legado) -- esperado objeto com "
+                            f"campo 'id'. Ignorando validacao de template."
+                        )
+                        tmpl = None
+                    if tmpl is not None:
+                        tmpl_id = tmpl.get('id', '')
+                        m_exp   = INS_EXP_ID_PATTERN.match(tmpl_id) if tmpl_id else None
+                        if not m_exp:
+                            if not tmpl_id:
+                                warn(
+                                    f"[{source_label}] Insight {ins_id}: experimento_template.id "
+                                    f"vazio (template incompleto -- esperado INS-YYYY-NNN)."
+                                )
+                            else:
+                                errors.append(
+                                    f"[{source_label}] Insight {ins_id}: experimento_template.id "
+                                    f"'{tmpl_id}' invalido (esperado INS-YYYY-NNN)."
+                                )
+                        elif ins_num and m_exp.group(1) != ins_num:
                             errors.append(
-                                f"[{source_label}] Insight {ins_id}: experimento_template.id "
-                                f"'{tmpl_id}' invalido (esperado INS-YYYY-NNN)."
+                                f"[{source_label}] Insight {ins_id}: numero do "
+                                f"experimento_template.id ({m_exp.group(1)}) diverge do "
+                                f"numero do insight ({ins_num}). Devem ser iguais."
                             )
-                    elif ins_num and m_exp.group(1) != ins_num:
-                        errors.append(
-                            f"[{source_label}] Insight {ins_id}: numero do "
-                            f"experimento_template.id ({m_exp.group(1)}) diverge do "
-                            f"numero do insight ({ins_num}). Devem ser iguais."
                         )
 
             item_date = item.get('data', '')
