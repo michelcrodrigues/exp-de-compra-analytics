@@ -200,16 +200,22 @@ def calc_cr(compras, sessoes):
 def fetch_nps_comments(service, start_date, end_date, top_n=30):
     """
     Busca os principais comentários NPS nos últimos N dias.
-    Retorna lista de dicts {texto, categoria, count} ordenada por count desc.
+    Retorna lista de dicts {texto, categoria, dispositivo, count} ordenada por count desc.
 
     Faz 3 queries separadas (promotor / neutro / detrator) para garantir
     representação de cada categoria, independente do volume relativo.
     top_n é dividido igualmente: ~10 por categoria (com top_n=30).
+    Cada combinação (texto, categoria, dispositivo) é uma entrada separada,
+    permitindo análise qualitativa por dispositivo.
 
     Requer que o GA4 tenha as dimensões customizadas 'nps_comment' e
     'nps_number' configuradas (event scope).
     """
-    per_cat = max(5, top_n // 3)
+    # Aumenta o limite por categoria para acomodar o split mobile/desktop
+    per_cat = max(8, (top_n // 3) * 2)
+
+    # Mapeamento de deviceCategory GA4 → rótulo normalizado
+    DEV_MAP = {"mobile": "mobile", "desktop": "desktop", "tablet": "mobile"}
 
     # Faixas de score por categoria
     categorias = [
@@ -249,6 +255,7 @@ def fetch_nps_comments(service, start_date, end_date, top_n=30):
             "dimensions": [
                 {"name": "customEvent:nps_comment"},
                 {"name": "customEvent:nps_number"},
+                {"name": "deviceCategory"},
             ],
             "metrics": [{"name": "eventCount"}],
             "dimensionFilter": _score_filter(score_min, score_max),
@@ -262,11 +269,18 @@ def fetch_nps_comments(service, start_date, end_date, top_n=30):
                 .execute()
             )
             for row in resp.get("rows", []):
-                texto = row["dimensionValues"][0]["value"].strip()
-                count = safe_int(row["metricValues"][0]["value"])
+                texto       = row["dimensionValues"][0]["value"].strip()
+                dev_raw     = row["dimensionValues"][2]["value"].lower()
+                dispositivo = DEV_MAP.get(dev_raw, dev_raw)  # fallback: valor bruto
+                count       = safe_int(row["metricValues"][0]["value"])
                 if not texto or texto in ("(not set)", "") or len(texto) < 3 or count == 0:
                     continue
-                results.append({"texto": texto, "categoria": categoria, "count": count})
+                results.append({
+                    "texto": texto,
+                    "categoria": categoria,
+                    "dispositivo": dispositivo,
+                    "count": count,
+                })
         except Exception as e:
             print(f"  AVISO: nao foi possivel buscar comentarios NPS ({categoria}) - {e}")
 
