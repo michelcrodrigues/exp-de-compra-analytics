@@ -457,6 +457,32 @@ tr.cmp-tr td{background:#f5f8ff;font-size:12px;color:var(--compare)}
 .nps-ins-temporal-header{font-size:13px;color:var(--text-secondary);margin-bottom:8px}
 .nps-ins-criticos{font-size:12px;color:var(--text-secondary);margin-top:8px}
 .nps-analise-rec{margin:8px 16px 4px;padding:10px 14px;border-radius:8px;background:#fff8e1;border-left:3px solid #f9a825;font-size:13px;color:var(--text-primary)}
+
+/* NPS nav: match ins-nav visual */
+#npsInsNav{width:190px}
+#npsInsNav .exp-nav-item{padding:5px 12px 5px 20px;font-size:12px;color:var(--neutral-600);font-weight:400}
+#npsInsNav .exp-nav-item.active{background:#e0eaff;color:#19398A;font-weight:600}
+#npsInsNav .exp-nav-week{font-size:12px;font-weight:500;display:block}
+#npsInsNav .exp-nav-meta{font-size:10px;color:var(--neutral-500);display:block;margin-top:2px}
+#npsInsNav .exp-nav-badge{margin-top:3px;display:inline-block}
+/* NPS score chips */
+.nps-ins-score-chip{padding:3px 10px;border-radius:12px;font-size:12px;font-weight:700}
+.nps-ins-score-chip.pos{background:#278A22;color:#fff}
+.nps-ins-score-chip.neu{background:#C3940F;color:#fff}
+.nps-ins-score-chip.neg{background:#E1393E;color:#fff}
+.nps-ins-score-chip.secondary{background:var(--neutral-200);color:var(--neutral-800);font-weight:600}
+/* NPS device breakdown row */
+.nps-ins-device-row{display:flex;gap:10px;flex-wrap:wrap;margin:8px 20px 4px;padding:10px 14px;background:var(--neutral-100);border-radius:var(--r-sm);border:1px solid var(--neutral-200)}
+.nps-ins-dev-chip{display:flex;align-items:center;gap:6px;font-size:12px;color:var(--neutral-700)}
+.nps-ins-dev-score{font-weight:700;font-size:13px}
+.nps-ins-dev-score.pos{color:#278A22}
+.nps-ins-dev-score.neu{color:#C3940F}
+.nps-ins-dev-score.neg{color:#E1393E}
+.nps-ins-dev-label{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:var(--neutral-500)}
+.nps-ins-dev-delta{font-size:11px;padding:1px 6px;border-radius:9999px;font-weight:600}
+.nps-ins-dev-delta.superior{background:#C6E5C3;color:#1A6B17}
+.nps-ins-dev-delta.inferior{background:#FAD1D7;color:#A01D22}
+
 </style>
 </head>
 <body>
@@ -2394,6 +2420,33 @@ function switchInsMode(mode){
   if(np)np.style.display=mode==='nps'?'':'none';
   if(mode==='nps')renderNpsInsights();
 }
+
+function getNpsWeekDeviceData(semanaStart) {
+  if (!semanaStart || !ALL || !ALL.length) return null;
+  const startDate = new Date(semanaStart + 'T00:00:00');
+  const endDate = new Date(startDate);
+  endDate.setDate(endDate.getDate() + 6);
+  const end = endDate.toISOString().slice(0, 10);
+  const days = ALL.filter(d => d.data >= semanaStart && d.data <= end);
+  if (!days.length) return null;
+  function aggDev(sfx) {
+    const resp = days.reduce((s, d) => s + (parseFloat(d['nps_respostas' + sfx]) || 0), 0);
+    if (!resp) return null;
+    const prom = days.reduce((s, d) => s + (parseFloat(d['nps_promotores' + sfx]) || 0), 0);
+    const detr = days.reduce((s, d) => s + (parseFloat(d['nps_detratores' + sfx]) || 0), 0);
+    const somaNotas = days.reduce((s, d) => {
+      return s + (parseFloat(d['nps_nota_media' + sfx]) || 0) * (parseFloat(d['nps_respostas' + sfx]) || 0);
+    }, 0);
+    const score = r4(((prom - detr) / resp) * 100);
+    const media = r4(somaNotas / resp);
+    return { resp: Math.round(resp), prom: Math.round(prom), detr: Math.round(detr), score, media };
+  }
+  const mobile  = aggDev('_mobile');
+  const desktop = aggDev('_desktop');
+  if (!mobile && !desktop) return null;
+  return { mobile, desktop };
+}
+
 function renderNpsInsights(){
   const navEl=document.getElementById('npsInsNav');
   const contentEl=document.getElementById('npsInsContent');
@@ -2409,7 +2462,7 @@ function renderNpsInsights(){
     const rec=[s.promotores,s.neutros,s.detratores].some(c=>c&&c.semanas_recorrente>=2);
     return '<div class="exp-nav-item'+(idx===0?' active':'')+'" onclick="selectNpsIns('+idx+')" id="npsNav-'+idx+'">'
       +'<span class="exp-nav-week">'+(s.label||s.semana)+'</span>'
-      +(s.nps_score!=null?'<span class="exp-nav-meta">NPS '+Math.round(s.nps_score)+'</span>':'')
+      +(s.nps_score!=null?'<span class="exp-nav-meta">NPS '+Math.round(s.nps_score)+(s.nps_nota_media!=null?' · '+s.nps_nota_media.toFixed(1):'')+'/10</span>':'')
       +(rec?'<span class="exp-nav-badge rec">Recorrente</span>':'')
       +(hasCrit?'<span class="exp-nav-badge crit">Dias críticos</span>':'')
       +'</div>';
@@ -2431,14 +2484,28 @@ function renderNpsInsWeek(idx){
   const catOrder=['promotores','neutros','detratores'];
   const catLabel={promotores:'Promotores',neutros:'Neutros',detratores:'Detratores'};
   const catCls={promotores:'promotor',neutros:'neutro',detratores:'detrator'};
+  const _devData = getNpsWeekDeviceData(s.semana);
+  const _npsChipCls = s.nps_score!=null ? (s.nps_score>=50?'pos':s.nps_score>=0?'neu':'neg') : 'neu';
   let html='<div class="nps-ins-week-header">'
     +'<h3 class="nps-ins-week-title">Semana '+escH(s.label||s.semana)+'</h3>'
     +(s.nps_score!=null?'<div class="nps-ins-scores">'
-      +'<span class="nps-ins-score-chip" style="background:'+npsScoreColor(s.nps_score)+'">NPS '+Math.round(s.nps_score)+'</span>'
-      +(s.nps_nota_media!=null?'<span class="nps-ins-score-chip secondary">Nota '+s.nps_nota_media.toFixed(1)+'/10</span>':'')
+      +'<span class="nps-ins-score-chip '+_npsChipCls+'">NPS '+Math.round(s.nps_score)+'</span>'
+      +(s.nps_nota_media!=null?'<span class="nps-ins-score-chip secondary">'+String.fromCodePoint(11088)+' '+s.nps_nota_media.toFixed(1)+'/10</span>':'')
       +(s.nps_respostas!=null?'<span class="nps-ins-score-chip secondary">'+s.nps_respostas.toLocaleString('pt-BR')+' respostas</span>':'')
       +'</div>':'')
     +'</div>';
+  if(_devData){
+    const _m=_devData.mobile, _d=_devData.desktop;
+    const _mCls=_m?(_m.score>=50?'pos':_m.score>=0?'neu':'neg'):'';
+    const _dCls=_d?(_d.score>=50?'pos':_d.score>=0?'neu':'neg'):'';
+    let _delta='';
+    if(_m&&_d){const diff=_m.score-_d.score;_delta=diff>5?'<span class="nps-ins-dev-delta superior">Mobile +'+r4(diff)+'pp</span>':diff<-5?'<span class="nps-ins-dev-delta inferior">Desktop +'+r4(-diff)+'pp</span>':'';}
+    html+='<div class="nps-ins-device-row">'
+      +(_m?'<div class="nps-ins-dev-chip"><span class="nps-ins-dev-label">Mobile</span><span class="nps-ins-dev-score '+_mCls+'">'+Math.round(_m.score)+'</span><span style="font-size:11px;color:var(--neutral-500)">'+_m.resp+' resp.</span></div>':'')
+      +(_d?'<div class="nps-ins-dev-chip"><span class="nps-ins-dev-label">Desktop</span><span class="nps-ins-dev-score '+_dCls+'">'+Math.round(_d.score)+'</span><span style="font-size:11px;color:var(--neutral-500)">'+_d.resp+' resp.</span></div>':'')
+      +(_delta?'<div style="margin-left:auto;align-self:center">'+_delta+'</div>':'')
+      +'</div>';
+  }
   catOrder.forEach(cat=>{
     const d=s[cat];
     if(!d||typeof d!=='object')return;
