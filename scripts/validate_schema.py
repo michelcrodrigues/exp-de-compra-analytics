@@ -1,5 +1,5 @@
 """
-validate_schema.py — Valida o data.json (e insights.json se existir) antes de commitar.
+validate_schema.py â Valida o data.json (e insights.json se existir) antes de commitar.
 
 Garante que:
   1. O arquivo existe e e JSON valido
@@ -155,7 +155,6 @@ def _validate_insight_items(weeks, source_label):
                                 f"experimento_template.id ({m_exp.group(1)}) diverge do "
                                 f"numero do insight ({ins_num}). Devem ser iguais."
                             )
-                        )
 
             item_date = item.get('data', '')
             is_new    = bool(item_date) and item_date >= STRUCTURED_FIELDS_CUTOFF
