@@ -1,6 +1,153 @@
 {
-  "gerado_em": "2026-06-17T16:17:44.283Z",
+  "gerado_em": "2026-06-23T16:33:11.518Z",
   "semanas": [
+    {
+      "semana": "2026-06-16",
+      "semana_fim": "2026-06-22",
+      "label": "16/06 – 22/06/2026",
+      "gerado_em": "2026-06-23T16:33:10.864Z",
+      "score": 80.9,
+      "nota_media": 9.3,
+      "respostas": 11274,
+      "promotores": 9606,
+      "neutros": 1179,
+      "detratores": 489,
+      "delta_score": -0.4,
+      "tendencia": "estavel",
+      "categorias": {
+        "promotores": {
+          "temas": [
+            {
+              "tema": "Elogio genérico de qualidade",
+              "descricao": "Feedbacks breves de alta satisfação sem detalhamento específico — 'Muito bom', 'Ótimo', 'Excelente', 'Nota 10'",
+              "volume_aproximado": "alto",
+              "exemplos": [
+                "Muito bom (69x)",
+                "Ótimo (63x)",
+                "Excelente (28x)",
+                "Nota 10"
+              ],
+              "acao": "nenhuma"
+            },
+            {
+              "tema": "Praticidade e facilidade de uso",
+              "descricao": "Elogios à facilidade de compra, rapidez do processo e conveniência do canal digital",
+              "volume_aproximado": "medio",
+              "exemplos": [
+                "Muito prático",
+                "Rápido e fácil",
+                "Comprei em minutos"
+              ],
+              "acao": "nenhuma"
+            },
+            {
+              "tema": "Atendimento e experiência positiva",
+              "descricao": "Satisfação com atendimento ao cliente, resolução de problemas e experiência geral de viagem",
+              "volume_aproximado": "baixo",
+              "exemplos": [
+                "Ótimo atendimento",
+                "Problema resolvido rapidamente"
+              ],
+              "acao": "nenhuma"
+            }
+          ],
+          "semanas_recorrente": 2,
+          "observacao": "Padrão idêntico à semana anterior (09-15/06). Não há novidade nos temas de promoção esta semana."
+        },
+        "neutros": {
+          "temas": [
+            {
+              "tema": "Taxa de serviço percebida como cara",
+              "descricao": "Reclamação direta sobre o valor da taxa de serviço cobrada na compra online — considerada desproporcional ao valor da passagem",
+              "volume_aproximado": "alto",
+              "exemplos": [
+                "Taxa de serviço muito cara",
+                "A taxa é quase 20% do valor da passagem",
+                "Taxa abusiva para compra online"
+              ],
+              "acao": "investigar",
+              "justificativa_acao": "Tema recorrente há 2 semanas — pode estar bloqueando conversão. Avaliar se há correlação com abandono de checkout."
+            },
+            {
+              "tema": "Ausência de parcelamento sem juros",
+              "descricao": "Pedido de parcelamento sem juros para compras de maior valor, comparando com concorrentes que oferecem essa opção",
+              "volume_aproximado": "medio",
+              "exemplos": [
+                "Deveria ter parcelamento sem juros",
+                "Outros sites parcelam em até 6x sem juros"
+              ],
+              "acao": "backlog",
+              "justificativa_acao": "Oportunidade de melhoria de conversão para tickets mais altos. Avaliar viabilidade com SMART."
+            },
+            {
+              "tema": "Falha ou fricção na primeira compra",
+              "descricao": "Usuários reportam dificuldade na primeira compra online — cadastro burocrático, dados solicitados em excesso, processo não intuitivo",
+              "volume_aproximado": "medio",
+              "exemplos": [
+                "Primeira compra foi complicada",
+                "Muitos dados para preencher",
+                "Processo burocrático"
+              ],
+              "acao": "investigar",
+              "justificativa_acao": "Fricção no onboarding de novos compradores impacta ativação. Verificar funil de first-time-buyers no GA4."
+            },
+            {
+              "tema": "Processo considerado burocrático",
+              "descricao": "Percepção geral de excesso de etapas ou documentação para concluir a compra",
+              "volume_aproximado": "baixo",
+              "exemplos": [
+                "Processo burocrático",
+                "Muitas etapas"
+              ],
+              "acao": "backlog"
+            }
+          ],
+          "semanas_recorrente": 2,
+          "observacao": "Mesmos temas da semana 09-15/06. Taxa de serviço e parcelamento são dores estruturais que persistem sem ação. Recomendado escalar para roadmap."
+        },
+        "detratores": {
+          "temas": [
+            {
+              "tema": "Taxa de serviço percebida como abusiva",
+              "descricao": "Versão mais intensa da reclamação de neutros — usuários classificam a taxa como abusiva ou injustificável, levando à nota baixa",
+              "volume_aproximado": "medio",
+              "exemplos": [
+                "Taxa de serviço absurda",
+                "Cobram uma taxa de serviço absurda para compra online — muito errado",
+                "Taxa ridícula"
+              ],
+              "acao": "escalar",
+              "justificativa_acao": "Mesma dor de neutros em versão detratora. Se não houver ação, continuará convertendo neutros em detratores ao longo do tempo."
+            },
+            {
+              "tema": "Atraso operacional de ônibus",
+              "descricao": "Reclamações sobre atrasos em viagens — problema operacional fora do escopo de produto digital, mas capturado no NPS",
+              "volume_aproximado": "baixo",
+              "exemplos": [
+                "Ônibus sempre atrasa",
+                "Saiu 40 min atrasado"
+              ],
+              "acao": "roteamento",
+              "justificativa_acao": "Escalar para operações/Expresso Guanabara. Não é ação de produto digital."
+            },
+            {
+              "tema": "Confusão com escala NPS",
+              "descricao": "Usuário que indica alta satisfação mas usa a escala de forma invertida ('0 = ruim' interpretado como '0 = ótimo'), gerando detrator falso",
+              "volume_aproximado": "baixo",
+              "exemplos": [
+                "ADORO ESSA EMPRESA, tudo que posso dizer — nota 0"
+              ],
+              "acao": "UX",
+              "justificativa_acao": "Indicador de problema de comunicação da escala NPS na interface. Considerar melhoria no copy do formulário para reduzir falsos detratores."
+            }
+          ],
+          "semanas_recorrente": 2,
+          "observacao": "Taxa de serviço é o único detrator acionável por produto. Confusão de escala pode inflar artificialmente os detratores — avaliar melhoria de UX no formulário NPS."
+        }
+      },
+      "resumo_executivo": "NPS estável em 80,9 pts (-0,4pts vs W2 81,3). Score e nota mantidos no patamar de julho: nota_media 9,30/10, 11.274 respostas. O resultado positivo de NPS em contraste com o crash de checkout→purchase desta semana confirma que a falha ocorreu especificamente na etapa de pagamento, não na experiência de produto percebida pelos usuários. Os padrões de feedback são idênticos à semana anterior: taxa de serviço percebida como cara continua sendo a principal dor estrutural de neutros e detratores, há 2 semanas consecutivas sem ação. Recomendado escalar essa dor para o roadmap do time Senna.",
+      "semanas_recorrente": 2
+    },
     {
       "semana": "2026-06-08",
       "label": "08/06 – 14/06/2026",
