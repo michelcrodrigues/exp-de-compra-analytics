@@ -1,6 +1,137 @@
 {
-  "gerado_em": "2026-06-17T15:02:01.885Z",
+  "gerado_em": "2026-06-23T16:30:11.381Z",
   "insights": [
+    {
+      "semana": "2026-06-16",
+      "label": "16/06 – 22/06/2026",
+      "gerado_em": "2026-06-23T16:30:11.381Z",
+      "items": [
+        {
+          "id": "INS-2026-036",
+          "canal": "site",
+          "tag": "Checkout→purchase colapsa -11.4pp (77.1% vs baseline 88.5%) — etapa de pagamento quebrando a conversão",
+          "classificacao": "Diagnóstico comprovado",
+          "prioridade": "Alta",
+          "data": "2026-06-23",
+          "diagnostico": "Na semana de 16 a 22 de junho, a etapa de finalização de compra no site entrou em colapso: a taxa de conversão de begin_checkout para purchase caiu de 88,5% (baseline das 4 semanas anteriores) para 77,1% — queda de -11,4pp, o maior recuo registrado nessa etapa desde o início do monitoramento. O problema é mais grave do que o número agregado revela: na semana anterior (08-14/06), essa mesma etapa estava em 81,5% e havia sinal positivo de melhora associado ao início do rollout do Mercado Pago (SEN-418). A reversão em W3 indica que algo mudou no fluxo de pagamento a partir de 16 de junho. O volume de sessões continuou crescendo (+5,3%) e o NPS se manteve estável em 80,9 — confirmando que a experiência até o checkout está funcionando e que o abandono ocorre especificamente na etapa de conclusão do pagamento.",
+          "evidencia": "W3 (16-22/06): begin_checkout = 49.789, purchase = 38.403, taxa checkout→purchase = 77,1%. Baseline agregado (19/05-15/06): 88,5% — gap de -11,4pp. Semana anterior (08-14/06): 81,5% — queda adicional de -4,4pp em W3. Por device: mobile checkout→purchase = 82,2% (vs baseline 94,5%, Δ -12,3pp) e desktop = 66,6% (vs baseline 77,1%, Δ -10,5pp). As etapas anteriores permanecem estáveis: search→cart Δ -0,2pp; cart→checkout Δ -0,8pp. O problema está exclusivamente na etapa de pagamento. NPS site W3 = 80,9 pontos (estável, -0,4pts vs W2), confirmando que quem concluiu a compra está satisfeito — o problema não é de experiência de produto, é de conclusão do pagamento.",
+          "plano_acao": "1. Verificar com urgência os logs do Mercado Pago (SEN-418) para identificar aumento de erros de payment gateway entre 15 e 22/06 — a feature flag pode ter ampliado o rollout nessa semana e introduzido falha em maior escala. 2. Segmentar a taxa checkout→purchase por variante do A/B redesign_checkout (campo redesign_checkout disponível no GA4 desde SEN-421, semana 08-14/06) para identificar se uma variante tem taxa significativamente menor. 3. Verificar no Sentry e no dashboard SMART se houve aumento de erros 4xx/5xx na API de finalização de compra durante 16-22/06. 4. Se a causa não for identificada em 48h, considerar rollback do Mercado Pago para feature flag desabilitada como medida de contenção enquanto o diagnóstico prossegue.",
+          "impacto": "Cada checkout que não se converte em compra é receita perdida imediata. Na semana W3, se a taxa se mantivesse no baseline de 88,5%, seriam 44.063 compras — versus as 38.403 realizadas — déficit estimado de ~5.660 compras apenas nesta semana. Projetar essa perda por 4 semanas sem correção significa aproximadamente R$1,5M-2M em receita não realizada, impacto direto e imediato no KR de Receita R$345M. Esta é a maior alavanca de recuperação de curto prazo disponível.",
+          "acompanhamento": "Monitorar checkout→purchase diariamente até o problema ser identificado e corrigido. Threshold de alerta imediato: qualquer dia com taxa abaixo de 75% deve acionar triagem técnica no mesmo dia. Meta de retorno: checkout→purchase ≥ 85% por pelo menos 2 semanas consecutivas após a correção. Comparar por variante A/B no GA4 semanalmente enquanto o experimento redesign_checkout estiver ativo.",
+          "texto": "Diagnóstico: checkout→purchase site colapsa de 88,5% (baseline) para 77,1% em W3 — queda de -11,4pp, maior da série histórica. Semana anterior estava em 81,5%. Sessões cresceram +5,3%, NPS estável em 80,9 — problema é exclusivo no pagamento.\n\nEvidência: begin_checkout=49.789, purchase=38.403 = 77,1%. Mobile: 82,2% (-12,3pp vs baseline 94,5%). Desktop: 66,6% (-10,5pp vs baseline 77,1%). Etapas anteriores estáveis. Déficit estimado: ~5.660 compras perdidas na semana.\n\nClassificação: Diagnóstico comprovado\n\nPlano de ação: 1. Logs Mercado Pago (SEN-418) 16-22/06. 2. Segmentar por variante A/B redesign_checkout (SEN-421) no GA4. 3. Sentry/SMART: erros API de pagamento. 4. Se causa não identificada em 48h, rollback do Mercado Pago.\n\nImpacto: ~5.660 compras perdidas/semana. Projeção 4 semanas: R$1,5M-2M de receita. KR Receita R$345M.\n\nPrioridade: Alta — maior impacto de conversão identificado nesta semana.\n\nAcompanhamento: Monitorar diariamente. Alerta <75%: triagem imediata. Meta: ≥85% por 2 semanas.",
+          "titulo_linear": "Investigar crash checkout→purchase -11.4pp no site (16-22/06): Mercado Pago, A/B checkout e erros de API",
+          "tipo_acao": "testar",
+          "testavel": true,
+          "criterio_confirmacao": "checkout→purchase site retorna a ≥85% por 2 semanas consecutivas após correção identificada e deployada",
+          "experimento_template": {
+            "id": "INS-2026-036",
+            "titulo": "Restaurar checkout→purchase site após crash de -11.4pp",
+            "hipotese": "A falha no checkout→purchase é causada por erro no rollout do Mercado Pago (SEN-418) ou por uma variante do A/B redesign_checkout — corrigir ou reverter a causa raiz restaurará a taxa acima de 85%.",
+            "metrica_primaria": "checkout_to_purchase_rate_site",
+            "guardrails": [
+              "NPS não cai abaixo de 78",
+              "Sessões totais não caem"
+            ],
+            "criterio_sucesso": "checkout→purchase ≥85% por 2 semanas consecutivas após correção",
+            "duracao_minima_dias": 14,
+            "notas": "Diagnóstico técnico obrigatório primeiro. Priorizar: (1) Segmentar GA4 por variante A/B, (2) Logs Mercado Pago, (3) Sentry API errors."
+          },
+          "status": "nunca_testada",
+          "experimento_id": null,
+          "revisao": null
+        },
+        {
+          "id": "INS-2026-037",
+          "canal": "conjunto",
+          "tag": "[Site vs App] Crash simultâneo checkout→purchase em site (-11.4pp) e app (-8.6pp) — issue sistêmica de backend, não de UX",
+          "classificacao": "Hipótese",
+          "prioridade": "Alta",
+          "data": "2026-06-23",
+          "diagnostico": "O crash de checkout→purchase não está isolado no site — ele se reproduz simultaneamente no app na mesma semana, com magnitude similar e sem relação com UX. O site caiu -11,4pp (baseline 88,5%→77,1%) e o app caiu -8,6pp (W2 68,7%→60,1%) na mesma janela de 16-22 de junho. Codebases completamente distintas, mesmo sintoma, mesma semana. Essa coincidência elimina qualquer hipótese de regressão de UI ou mudança de experiência específica de um canal. A causa mais provável é sistêmica: problema no backend de pagamento da plataforma SMART, na integração com gateway de pagamento, ou no rollout da feature do Mercado Pago que afeta ambos os canais na camada de API — não na camada de apresentação.",
+          "evidencia": "Site W3 checkout→purchase: 77,1% (baseline 88,5%, Δ -11,4pp; vs W2 81,5%, Δ -4,4pp). App W3 checkout→purchase: 60,1% (vs W2 68,7%, Δ -8,6pp). Site: impacto cross-device — mobile -12,3pp e desktop -10,5pp. App: impacto cross-platform — Android checkout→purchase 57,9% e iOS 63,1%. CR do app caiu de 7,97% para 5,97% (-2,0pp), a maior queda semanal registrada no canal. Etapas anteriores estáveis em ambos os canais. Sessões do app estáveis em ~183k (share 30,4%). A simultaneidade cross-canal, cross-device e cross-platform em uma única semana é o principal indicador diagnóstico de issue sistêmica.",
+          "plano_acao": "1. Convocar triagem técnica com time SMART para verificar logs de erros da API de pagamento e de finalização de compra durante 16-22/06 — tanto para transações do site quanto do app. 2. Verificar se o Mercado Pago (SEN-418) utiliza endpoint de API compartilhado entre site e app ou endpoints distintos — se compartilhado, é candidato direto à causa. 3. Mapear todos os deploys na plataforma SMART durante 15-22/06 para identificar se houve mudança que afetou a API de finalização de compra. 4. Cruzar com volume de erros no processamento de pagamento (Sentry, logs SMART) para determinar se a queda reflete erros de API ou comportamento de usuário.",
+          "impacto": "A combinação de crashes simultâneos em site e app gera impacto total estimado de aproximadamente 6.500-7.200 compras não realizadas nesta semana, considerando o déficit de ambos os canais. Com ticket médio estimado em R$75, o impacto de receita combinado é da ordem de R$490k-540k em uma única semana. Sem correção, esse impacto é acumulativo e prejudica diretamente o KR de Receita R$345M. O fato de o app também ser afetado dobra a urgência de diagnóstico.",
+          "acompanhamento": "Monitorar checkout→purchase em site e app separadamente cada semana. Qualquer nova queda simultânea ≥2pp nos dois canais deve acionar protocolo de incidente de infraestrutura imediato. Meta de recuperação: site ≥85% e app ≥65% dentro de 2 semanas após identificação e correção da causa raiz.",
+          "texto": "Diagnóstico: checkout→purchase caiu simultaneamente em site (-11,4pp → 77,1%) e app (-8,6pp → 60,1%) na semana 16-22/06. Codebases distintas, mesmo sintoma — indica causa sistêmica de backend, não regressão de UX.\n\nEvidência: Site: mobile -12,3pp, desktop -10,5pp. App: Android 57,9%, iOS 63,1%. CR app cai de 7,97% para 5,97% (-2,0pp), pior semana. Etapas anteriores estáveis em ambos os canais.\n\nClassificação: Hipótese\n\nPlano de ação: 1. Triagem SMART: logs API pagamento 16-22/06 para site e app. 2. Verificar endpoint Mercado Pago compartilhado. 3. Mapear deploys SMART nessa janela. 4. Cruzar com erros Sentry.\n\nImpacto: ~6.500-7.200 compras não realizadas na semana combinada. Estimado R$490k-540k de receita perdida. KR Receita R$345M.\n\nPrioridade: Alta — impacto combinado e sistêmico.\n\nAcompanhamento: Alerta em qualquer queda simultânea ≥2pp nos dois canais. Meta: site ≥85% e app ≥65% em 2 semanas.",
+          "titulo_linear": "Triagem sistêmica: crash checkout→purchase simultâneo em site e app — investigar API pagamento SMART e rollout Mercado Pago",
+          "tipo_acao": "testar",
+          "testavel": true,
+          "criterio_confirmacao": "Site checkout→purchase ≥85% E app checkout→purchase ≥65% por 2 semanas consecutivas após correção da causa raiz identificada",
+          "experimento_template": {
+            "id": "INS-2026-037",
+            "titulo": "Diagnóstico e correção da causa sistêmica do crash checkout→purchase site+app",
+            "hipotese": "A queda simultânea de checkout→purchase em site e app em 16-22/06 é causada por falha na API de pagamento compartilhada (gateway SMART ou Mercado Pago) — corrigir essa falha restabelecerá as taxas nos dois canais.",
+            "metrica_primaria": "checkout_to_purchase_rate_site_e_app",
+            "guardrails": [
+              "Sessões não caem em nenhum canal",
+              "NPS não cai abaixo de 78"
+            ],
+            "criterio_sucesso": "Site ≥85% e app ≥65% por 2 semanas consecutivas pós-correção",
+            "duracao_minima_dias": 14,
+            "notas": "Diagnóstico técnico obrigatório: começar pelos logs da API. Dependente do diagnóstico de INS-2026-036."
+          },
+          "status": "nunca_testada",
+          "experimento_id": null,
+          "revisao": null
+        },
+        {
+          "id": "INS-2026-038",
+          "canal": "app",
+          "tag": "[App] CR do app despenca -2.0pp (7.97%→5.97%) — pior semana de conversão da série histórica do canal",
+          "classificacao": "Resultado fora da curva",
+          "prioridade": "Alta",
+          "data": "2026-06-23",
+          "diagnostico": "O canal app registrou sua pior semana de conversão desde o início do monitoramento: o CR caiu de 7,97% em W2 (09-15/06) para 5,97% em W3 (16-22/06), queda de -2,0pp. A série histórica do app esteve consistente em W1 (7,94%) e W2 (7,97%) antes desta ruptura. A causa primária é o colapso do checkout→purchase (-8,6pp), parte da issue sistêmica de pagamento descrita em INS-2026-037. No nível de plataforma, Android (70,4% das sessões do app) apresenta CR de 4,63% com checkout→purchase de 57,9%, enquanto iOS chegou a 9,18% de CR com 63,1% de checkout→purchase — o iOS tem desempenho melhor mesmo num contexto de crash generalizado. O Android é o principal freio do CR agregado do app e o canal mais sensível à correção da causa raiz.",
+          "evidencia": "App CR trend: W1 = 7,94% | W2 = 7,97% | W3 = 5,97% (Δ W3 vs W2: -2,00pp). Sessões app W3: 183.168 (share 30,4% do total combinado — estável). Compras app W3: 10.939. Checkout→purchase app: W2 = 68,7% → W3 = 60,1% (Δ -8,6pp). Por plataforma: Android sessões = 128.954 (70,4%), CR Android = 4,63%, checkout→purchase Android = 57,9%. iOS sessões = 54.053 (29,5%), CR iOS = 9,18%, checkout→purchase iOS = 63,1%. NPS app: 0 respostas coletadas na semana — sem dados de satisfação do canal app nesta semana.",
+          "plano_acao": "1. Priorizar o diagnóstico da causa raiz do checkout→purchase do app dentro da triagem sistêmica de pagamento (INS-2026-037) — este insight é dependente da mesma causa. 2. Verificar logs de erros segmentados por plataforma (Android vs iOS) durante 16-22/06 para entender se o crash é diferenciado entre plataformas. 3. Após resolução da causa sistêmica, avaliar se o CR do app retorna ao patamar de 7,9%+ ou se persiste abaixo, indicando problema adicional específico do canal. 4. Não tomar decisões de roadmap ou budget de app baseadas nos dados desta semana até que a causa sistêmica seja resolvida e um ciclo limpo de 2 semanas seja observado.",
+          "impacto": "A queda de -2,0pp no CR do app representa aproximadamente 3.660 compras não realizadas nesta semana no canal app (183.168 sessões × 2,0pp). Esse volume é equivalente a aproximadamente 1 dia completo de vendas no app. Combinado com a queda do site, o impacto total estimado é o maior recuo semanal combinado desde o início do monitoramento, com risco real ao KR de Receita R$345M se não revertido na semana seguinte.",
+          "acompanhamento": "Monitorar CR app semanalmente segmentado por Android e iOS. Threshold de alerta: CR app abaixo de 6% por 2 semanas consecutivas deve acionar revisão dedicada do funil do app. Meta de recuperação: CR app ≥7,5% (retorno ao patamar de W1-W2) dentro de 2 semanas após correção da causa raiz. Monitorar checkout→purchase app separadamente — meta ≥65% como primeiro patamar de recuperação.",
+          "texto": "Diagnóstico: CR app despenca de 7,97% (W2) para 5,97% (W3), -2,0pp — pior semana da série. Sessões estáveis (183k). Causa: checkout→purchase caiu -8,6pp (68,7%→60,1%), parte da issue sistêmica de pagamento. Android (70% das sessões): CR 4,63%, checkout→purchase 57,9%. iOS: CR 9,18%, checkout→purchase 63,1%.\n\nEvidência: W1=7,94%→W2=7,97%→W3=5,97%. NPS app: sem respostas na semana.\n\nClassificação: Resultado fora da curva\n\nPlano de ação: 1. Diagnóstico sistêmico (ver INS-2026-037). 2. Logs Android vs iOS segmentados. 3. Avaliar CR pós-correção. 4. Não tomar decisões de roadmap com dados desta semana.\n\nImpacto: ~3.660 compras perdidas no app/semana. KR Receita R$345M.\n\nPrioridade: Alta — pior semana registrada, causa provavelmente sistêmica.\n\nAcompanhamento: CR app semanal por plataforma. Alerta se total <6% por 2 semanas. Meta: ≥7,5% após correção.",
+          "titulo_linear": "Investigar crash CR app (5.97%, -2.0pp): impacto do issue sistêmico de pagamento em Android e iOS",
+          "tipo_acao": "testar",
+          "testavel": true,
+          "criterio_confirmacao": "CR app retorna a ≥7,5% por 2 semanas consecutivas após correção da causa raiz do checkout→purchase",
+          "experimento_template": {
+            "id": "INS-2026-038",
+            "titulo": "Recuperação do CR do app após resolução do crash de checkout→purchase",
+            "hipotese": "O CR do app retornará a ≥7,5% após a correção da causa raiz do crash de checkout→purchase identificada em INS-2026-037, pois as sessões e os estágios anteriores do funil estão saudáveis.",
+            "metrica_primaria": "cr_app",
+            "guardrails": [
+              "Sessões app não caem",
+              "Checkout→purchase app não desce abaixo de 55%"
+            ],
+            "criterio_sucesso": "CR app ≥7,5% por 2 semanas consecutivas pós-correção",
+            "duracao_minima_dias": 14,
+            "notas": "Dependente da resolução de INS-2026-037. Monitorar Android e iOS separadamente."
+          },
+          "status": "nunca_testada",
+          "experimento_id": null,
+          "revisao": null
+        },
+        {
+          "id": "INS-2026-039",
+          "canal": "site",
+          "tag": "SEO orgânico consolida 17.2% do mix (71.8k sessões) com João Pessoa-PB saltando para 3ª origem de maior volume",
+          "classificacao": "Tendência",
+          "prioridade": "Média",
+          "data": "2026-06-23",
+          "diagnostico": "Em meio ao crash de conversão do checkout, o canal orgânico entregou o único sinal positivo da semana: 71.812 sessões em W3 (16-22/06), alta de +6,1% em relação a W2 (67.701 sessões), mantendo 17,2% de share de tráfego. O crescimento orgânico é sustentado — acumulou +24% em 4 semanas (baseline em ~57k) e segue na trajetória para a meta de 100k/semana. João Pessoa-PB emergiu como novidade relevante: saltou da 5ª para a 3ª posição de origem de rotas, com 10.679 sessões vs baseline de ~4.362 — volume 2,4x maior. O deploy de SEN-376 (schema markup nas páginas de destino, semana 08-14/06) é candidato plausível para esse crescimento específico de uma rota, pois pode ter melhorado a elegibilidade de páginas de destino de João Pessoa para rich results no Google.",
+          "evidencia": "Sessões orgânicas W3: 71.812 (17,2% de share). W2: 67.701 (17,2%). Delta: +4.111 sessões (+6,1%). Share pago W3: 51,3% (baseline 49,9%, +1,4pp). Top origens W3: Fortaleza-CE 25.687, Fortaleza-CE-TODOS 24.735, João Pessoa-PB 10.679, Rio de Janeiro-RJ-TODOS 9.817, Rio de Janeiro-RJ 1.784. Top origens baseline (19/05-15/06): Fortaleza-CE 102.437, João Pessoa-PB apenas 4.362. João Pessoa-PB subiu 2,4x em uma semana. Fortaleza-CE mantém liderança — os dois pares Fortaleza somam ~50k sessões/semana, mais que o dobro de qualquer outra origem.",
+          "plano_acao": "1. Verificar no Google Search Console se as páginas de destino de João Pessoa-PB apresentam aumento de impressões orgânicas a partir de 16/06 — correlacionar com o deploy do SEN-376 (schema markup nas páginas de destino). 2. Confirmar se o volume de sessões de João Pessoa-PB representa demanda de compra real — verificar o CR das sessões originadas nessa rota para distinguir de tráfego informacional. 3. Se crescimento orgânico de João Pessoa confirmado por 2 semanas consecutivas, priorizar criação de conteúdo SEO específico para rotas JP-PB. 4. Manter meta de 100k sessões orgânicas/semana até 14/07 — com 71,8k e +6% WoW, a meta está acessível em 3-4 semanas.",
+          "impacto": "Cada ponto percentual de share orgânico representa aproximadamente 4.200 sessões semanais sem custo incremental de mídia paga. O crescimento orgânico amortece parcialmente o impacto da queda de conversão desta semana — as sessões chegaram, ainda que a etapa de pagamento tenha falhado. Quando o checkout for corrigido, o volume orgânico estará pronto para converter. Impacto no KR de Receita R$345M via diversificação de canal e redução de dependência de mídia paga.",
+          "acompanhamento": "Monitorar sessões orgânicas semanalmente. Meta: 100k/semana até 14/07. Alerta: se cair abaixo de 65k/semana por 2 semanas consecutivas, verificar penalidade no Google Search Console. Monitorar João Pessoa-PB especificamente — se volume ≥10k por 3 semanas seguidas, criar iniciativa de conteúdo SEO para a rota.",
+          "texto": "Diagnóstico: SEO orgânico entrega único sinal positivo da semana — 71.812 sessões (+6,1% vs W2), 17,2% de share. João Pessoa-PB salta da 5ª para 3ª origem (10.679 vs ~4.362 na baseline, +2,4x). Trajetória para meta 100k/semana mantida.\n\nEvidência: Orgânico W3: 71.812 (17,2%). W2: 67.701. Top origens: Fortaleza ~50k, João Pessoa 10.679, RJ 9.817. SEN-376 (schema markup) deployado em 08-14/06 é candidato ao crescimento de JP-PB.\n\nClassificação: Tendência\n\nPlano de ação: 1. Search Console: impressões JP-PB pós-SEN-376. 2. Verificar CR das sessões de João Pessoa. 3. Conteúdo SEO JP-PB se crescimento confirmado. 4. Meta 100k/semana até 14/07.\n\nImpacto: 4.200 sessões/pp orgânico sem custo de mídia. Canal orgânico pronto para converter quando checkout for corrigido. KR Receita R$345M.\n\nPrioridade: Média — sinal positivo, mantém trajetória.\n\nAcompanhamento: Meta 100k/semana 14/07. Alerta <65k por 2 semanas.",
+          "titulo_linear": null,
+          "tipo_acao": "monitorar",
+          "testavel": false,
+          "criterio_confirmacao": null,
+          "experimento_template": null,
+          "status": "nunca_testada",
+          "experimento_id": null,
+          "revisao": null
+        }
+      ]
+    },
     {
       "semana": "2026-06-08",
       "label": "08/06 – 14/06/2026",
@@ -651,6 +782,53 @@
           }
         }
       ]
+    }
+  ],
+  "insights_conversao": [
+    {
+      "semana": "2026-06-16",
+      "label": "16/06 – 22/06/2026",
+      "tipo": "semanal",
+      "gerado_em": "2026-06-23T16:30:11.114Z",
+      "classificacao": "caiu_moderado",
+      "metricas": {
+        "cr_atual": {
+          "total": 8.48,
+          "mobile": 7.68,
+          "desktop": 11.67
+        },
+        "cr_baseline": {
+          "total": 9.19,
+          "mobile": 8.17,
+          "desktop": 13.06
+        },
+        "delta_pp": {
+          "total": -0.71,
+          "mobile": -0.49,
+          "desktop": -1.39
+        },
+        "sigma": 0.52,
+        "n_semanas_hist": 8
+      },
+      "hipoteses": [
+        {
+          "rank": 1,
+          "dispositivo": "total",
+          "titulo": "Rollout ampliado do Mercado Pago (SEN-418) introduziu falha no backend — queda simultânea em site e app confirma issue de API",
+          "evidencia": "Checkout→purchase site: 77,1% vs baseline 88,5% (Δ -11,4pp). App: 60,1% vs W2 68,7% (Δ -8,6pp). Queda cross-device (mobile -12,3pp e desktop -10,5pp) e cross-platform (Android 57,9% e iOS 63,1%) na mesma semana.",
+          "raciocinio": "Simultaneidade em site e app com codebases independentes elimina regressão de UX. Coincide com o período pós-ativação do Mercado Pago. Backend/API de pagamento é o nó comum mais provável.",
+          "time_para_confirmar": "Time Senna (SEN)"
+        },
+        {
+          "rank": 2,
+          "dispositivo": "total",
+          "titulo": "A/B redesign_checkout (SEN-421) pode ter variante com bug de pagamento em rampeamento no W3",
+          "evidencia": "Campo redesign_checkout adicionado em 08-14/06 (SEN-421). Se share do experimento cresceu em W3, uma variante com falha puxaria a taxa agregada para baixo.",
+          "raciocinio": "GA4 já tem campo redesign_checkout para segmentação. Se a variante problemática cresceu de forma não controlada em W3, o impacto agregado seria compatível com o observado.",
+          "time_para_confirmar": "Time Senna (SEN)"
+        }
+      ],
+      "monitorar": "Verificar checkout→purchase diariamente durante 23-29/06. Se taxa permanecer abaixo de 80% no site ou abaixo de 62% no app por mais de 3 dias, acionar triagem técnica com time SMART. Monitorar se a queda continua, estabiliza ou reverte — cada trajetória é diagnóstica."
     }
   ]
 }
