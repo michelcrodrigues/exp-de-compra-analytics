@@ -501,6 +501,41 @@ tr.cmp-tr td{background:#f5f8ff;font-size:12px;color:var(--compare)}
 .conv-tbl-title{font-size:11px;font-weight:700;color:var(--neutral-700,#495057);margin-bottom:8px;text-transform:uppercase;letter-spacing:.5px}
 .conv-diag{background:#EEF2FF;border-left:3px solid var(--brand-primary,#19398A);border-radius:0 var(--r-sm) var(--r-sm) 0;padding:12px 16px;margin-top:16px;font-size:13px;color:var(--neutral-800,#343A40);line-height:1.6}
 @media(max-width:900px){.conv-grid{grid-template-columns:1fr}}
+
+/* Insights Conversao */
+.conv-ins-card{background:var(--card-bg,#fff);border-radius:10px;padding:18px;margin-bottom:16px;border:1px solid var(--border-color,#e5e7eb)}
+.conv-ins-header{display:flex;align-items:center;gap:10px;margin-bottom:14px}
+.conv-ins-label{font-size:14px;font-weight:600;color:var(--text-secondary,#6b7280)}
+.conv-ins-badge{font-size:12px;font-weight:700;padding:3px 9px;border-radius:12px}
+.conv-ins-badge.badge-ok{background:#d1fae5;color:#065f46}
+.conv-ins-badge.badge-up{background:#dbeafe;color:#1e40af}
+.conv-ins-badge.badge-up-strong{background:#bfdbfe;color:#1e3a8a}
+.conv-ins-badge.badge-warn{background:#fef3c7;color:#92400e}
+.conv-ins-badge.badge-critical{background:#fee2e2;color:#991b1b}
+.conv-ins-badge.badge-neutral{background:#f3f4f6;color:#374151}
+.conv-ins-badge.small{font-size:11px;padding:2px 7px}
+.conv-ins-metrics{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-bottom:16px}
+.conv-ins-metric-item{background:var(--bg-secondary,#f9fafb);border-radius:8px;padding:10px;text-align:center}
+.conv-ins-metric-label{display:block;font-size:11px;color:var(--text-secondary,#6b7280);margin-bottom:4px}
+.conv-ins-metric-value{font-size:18px;font-weight:700;color:var(--text-primary,#111827)}
+.conv-ins-metric-value.neg{color:#dc2626}
+.conv-ins-metric-value.pos{color:#16a34a}
+.conv-ins-section-title{font-size:13px;font-weight:700;color:var(--text-secondary,#6b7280);text-transform:uppercase;letter-spacing:.05em;margin:16px 0 10px}
+.conv-ins-hipotese{border-left:3px solid var(--accent,#3b82f6);padding:10px 12px;margin-bottom:12px;background:var(--bg-secondary,#f9fafb);border-radius:0 8px 8px 0}
+.conv-ins-hip-header{display:flex;align-items:center;gap:8px;margin-bottom:6px;flex-wrap:wrap}
+.conv-ins-rank{background:var(--accent,#3b82f6);color:#fff;font-size:11px;font-weight:800;padding:2px 7px;border-radius:10px}
+.conv-ins-dev{font-size:12px;color:var(--text-secondary,#6b7280);font-weight:600}
+.conv-ins-titulo{font-size:14px;font-weight:700;color:var(--text-primary,#111827)}
+.conv-ins-evidencia,.conv-ins-raciocinio,.conv-ins-time{font-size:13px;color:var(--text-primary,#111827);margin-top:5px;line-height:1.5}
+.conv-ins-time{color:var(--text-secondary,#6b7280);font-size:12px}
+.conv-ins-monitorar{margin-top:16px;background:#eff6ff;border-radius:8px;padding:12px;font-size:13px;color:#1e40af}
+.conv-ins-empty-hyp{color:var(--text-secondary,#6b7280);font-size:14px;padding:12px 0;text-align:center}
+.conv-ins-hist-title{font-size:12px;font-weight:700;color:var(--text-secondary,#6b7280);text-transform:uppercase;margin:16px 0 8px}
+.conv-ins-hist{display:flex;flex-direction:column;gap:6px}
+.conv-ins-hist-item{display:flex;align-items:center;gap:8px;padding:6px 10px;background:var(--bg-secondary,#f9fafb);border-radius:6px;font-size:13px}
+.conv-ins-hist-label{color:var(--text-secondary,#6b7280);flex:1}
+.conv-ins-hist-delta{font-weight:700;color:var(--text-primary,#111827)}
+.insights-empty{color:var(--text-secondary,#6b7280);font-size:14px;padding:24px;text-align:center}
 </style>
 </head>
 <body>
@@ -957,6 +992,7 @@ tr.cmp-tr td{background:#f5f8ff;font-size:12px;color:var(--compare)}
       <div class="ins-mode-toggle">
         <button class="exp-mode-btn active" data-insmode="analytics" onclick="switchInsMode('analytics')">Insights Analytics</button>
         <button class="exp-mode-btn" data-insmode="nps" onclick="switchInsMode('nps')">Insights NPS</button>
+            <button class="exp-mode-btn" data-insmode="conversao" onclick="switchInsMode('conversao')">Insights Conversão</button>
       </div>
 
       <!-- Painel Analytics (insights semanais) -->
@@ -994,6 +1030,8 @@ tr.cmp-tr td{background:#f5f8ff;font-size:12px;color:var(--compare)}
       </div>
     </div>
     </div><!-- /section-pane in -->
+
+    <div id="insConvPanel" style="display:none"></div>
 
     <!-- EXPERIMENTOS -->
     <div class="section-pane" id="section-ex">
@@ -1297,7 +1335,8 @@ async function loadData(){
     if(!res.ok) throw new Error("HTTP "+res.status);
     const j=await res.json();
     ALL=(j.daily||[]).sort((a,b)=>a.data<b.data?-1:1);
-    INSIGHTS=j.insights||[];try{const ir=await fetch("insights.json?v="+Date.now());if(ir.ok){const ij=await ir.json();if(ij.insights&&ij.insights.length)INSIGHTS=ij.insights;}}catch(e){}
+    INSIGHTS=j.insights||[];
+    CONV_INSIGHTS=j.insights_conversao||[];try{const ir=await fetch("insights.json?v="+Date.now());if(ir.ok){const ij=await ir.json();if(ij.insights&&ij.insights.length)INSIGHTS=ij.insights;}}catch(e){}
     EXPERIMENTOS=j.experimentos||[];
     RESUMO_MENSAL=(j.resumo_mensal||[]).sort((a,b)=>b.mes<a.mes?-1:1);
     window._DATA=j; // expõe para renderNpsComentarios
@@ -1415,6 +1454,7 @@ function getCmp(){if(!C.active||!C.start||!C.end)return[];return applyFilters(ge
 // === renderConversao ===
 function renderConversao(pri, cmp) {
   var el = document.getElementById("convPanel");
+  renderConversaoInsights();
   if (!el) return;
   if (!pri || !pri.length) { el.innerHTML = ""; return; }
   var _r4 = function(v){ return Math.round(v * 10000) / 10000; };
@@ -1554,6 +1594,55 @@ function renderConversao(pri, cmp) {
     +"</div>"
     +'<div class="conv-diag">'+diagText+"</div>"
     +"</div>";
+}
+
+function renderConversaoInsights(){
+  var el=document.getElementById('insConvPanel');
+  if(!el)return;
+  if(!window.CONV_INSIGHTS||!CONV_INSIGHTS.length){el.innerHTML='<div class="insights-empty">Nenhum dado disponível ainda.</div>';return;}
+  var latest=CONV_INSIGHTS[0];
+  var clMap={'estavel':'badge-ok','subiu_moderado':'badge-up','subiu_significativo':'badge-up-strong','caiu_moderado':'badge-warn','caiu_significativo':'badge-critical'};
+  var cl=clMap[latest.classificacao]||'badge-neutral';
+  var clTxtMap={'estavel':'Estável','subiu_moderado':'Subiu moderado','subiu_significativo':'Subiu significativo','caiu_moderado':'Caiu moderado','caiu_significativo':'Caiu significativo','sem_referencia':'Sem referência'};
+  var clTxt=clTxtMap[latest.classificacao]||latest.classificacao;
+  var tipoLabel=latest.tipo==='mensal'?'Mês '+latest.label:'Semana '+latest.label;
+  var fmt=function(v){return v!=null?v.toFixed(2)+'%':'–';};
+  var fmtPP=function(v){return v!=null?(v>0?'+':'')+v.toFixed(2)+'pp':'–';};
+  var m=latest.metricas||{};
+  var dp=(m.delta_pp||{}).total;
+  var out='<div class="conv-ins-card">';
+  out+='<div class="conv-ins-header"><span class="conv-ins-label">'+tipoLabel+'</span><span class="conv-ins-badge '+cl+'">'+clTxt+'</span></div>';
+  out+='<div class="conv-ins-metrics">';
+  out+='<div class="conv-ins-metric-item"><span class="conv-ins-metric-label">CR Atual</span><span class="conv-ins-metric-value">'+fmt((m.cr_atual||{}).total)+'</span></div>';
+  out+='<div class="conv-ins-metric-item"><span class="conv-ins-metric-label">Baseline 4w</span><span class="conv-ins-metric-value">'+fmt((m.cr_baseline||{}).total)+'</span></div>';
+  out+='<div class="conv-ins-metric-item"><span class="conv-ins-metric-label">Delta</span><span class="conv-ins-metric-value '+(dp!=null&&dp<0?'neg':'pos')+'">'+fmtPP(dp)+'</span></div>';
+  out+='<div class="conv-ins-metric-item"><span class="conv-ins-metric-label">σ</span><span class="conv-ins-metric-value">'+(m.sigma!=null?m.sigma.toFixed(2):'–')+'</span></div>';
+  out+='</div>';
+  if(latest.hipoteses&&latest.hipoteses.length){
+    out+='<div class="conv-ins-section-title">Hipóteses</div>';
+    latest.hipoteses.forEach(function(hip){
+      var dev=hip.dispositivo==='mobile'?'📱 Mobile':hip.dispositivo==='desktop'?'💻 Desktop':'🌐 Total';
+      out+='<div class="conv-ins-hipotese"><div class="conv-ins-hip-header"><span class="conv-ins-rank">#'+hip.rank+'</span><span class="conv-ins-dev">'+dev+'</span><span class="conv-ins-titulo">'+hip.titulo+'</span></div>';
+      out+='<div class="conv-ins-evidencia"><strong>Evidência:</strong> '+hip.evidencia+'</div>';
+      out+='<div class="conv-ins-raciocinio">'+hip.raciocinio+'</div>';
+      out+='<div class="conv-ins-time">🔍 Confirmar com: <em>'+hip.time_para_confirmar+'</em></div></div>';
+    });
+  }else{
+    out+='<div class="conv-ins-empty-hyp">Conversão estável — sem hipóteses a investigar.</div>';
+  }
+  if(latest.monitorar)out+='<div class="conv-ins-monitorar"><strong>📊 Monitorar:</strong> '+latest.monitorar+'</div>';
+  out+='</div>';
+  if(CONV_INSIGHTS.length>1){
+    out+='<div class="conv-ins-hist-title">Períodos anteriores</div><div class="conv-ins-hist">';
+    CONV_INSIGHTS.slice(1,5).forEach(function(e){
+      var ec=clMap[e.classificacao]||'badge-neutral';
+      var edp=((e.metricas||{}).delta_pp||{}).total;
+      var lbl=e.tipo==='mensal'?'Mês '+e.label:e.label;
+      out+='<div class="conv-ins-hist-item"><span class="conv-ins-hist-label">'+lbl+'</span><span class="conv-ins-badge '+ec+' small">'+e.classificacao.replace(/_/g,' ')+'</span><span class="conv-ins-hist-delta">'+fmtPP(edp)+'</span></div>';
+    });
+    out+='</div>';
+  }
+  el.innerHTML=out;
 }
 
 function render(){
@@ -2582,6 +2671,7 @@ function switchInsMode(mode){
   document.querySelectorAll('[data-insmode]').forEach(b=>b.classList.toggle('active',b.dataset.insmode===mode));
   const ap=document.getElementById('insAnalyticsPanel');
   const np=document.getElementById('insNpsPanel');
+  document.getElementById('insConvPanel').style.display=mode==='conversao'?'':'none';
   if(ap)ap.style.display=mode==='analytics'?'':'none';
   if(np)np.style.display=mode==='nps'?'':'none';
   if(mode==='nps')renderNpsInsights();
