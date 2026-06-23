@@ -483,6 +483,24 @@ tr.cmp-tr td{background:#f5f8ff;font-size:12px;color:var(--compare)}
 .nps-ins-dev-delta.superior{background:#C6E5C3;color:#1A6B17}
 .nps-ins-dev-delta.inferior{background:#FAD1D7;color:#A01D22}
 
+
+/* ── Diagnóstico de Conversão ── */
+.conv-card{background:var(--surface-00,#fff);border-radius:var(--r-md);padding:24px;box-shadow:var(--shadow-01)}
+.conv-badge{display:inline-flex;align-items:center;gap:6px;font-size:11px;font-weight:700;padding:4px 12px;border-radius:9999px;text-transform:uppercase;letter-spacing:.6px}
+.conv-badge.estavel{background:#E8F5E9;color:#2E7D32}
+.conv-badge.subiu_mod,.conv-badge.subiu_sig{background:#C8E6C9;color:#1B5E20}
+.conv-badge.caiu_mod,.conv-badge.caiu_sig{background:#FFEBEE;color:#C62828}
+.conv-badge.sem_ref{background:#F5F5F5;color:#757575}
+.conv-metrics{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:12px;margin-top:16px}
+.conv-metric{background:var(--neutral-100,#F8F9FA);border-radius:var(--r-sm);padding:14px 16px}
+.conv-metric-lbl{font-size:10px;font-weight:700;color:var(--neutral-500,#6C757D);text-transform:uppercase;letter-spacing:.7px;margin-bottom:6px}
+.conv-metric-val{font-size:20px;font-weight:900;color:var(--brand-primary,#19398A)}
+.conv-metric-sub{font-size:11px;color:var(--neutral-500,#6C757D);margin-top:4px}
+.conv-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:16px}
+.conv-tbl-wrap{background:var(--neutral-100,#F8F9FA);border-radius:var(--r-sm);padding:14px 16px}
+.conv-tbl-title{font-size:11px;font-weight:700;color:var(--neutral-700,#495057);margin-bottom:8px;text-transform:uppercase;letter-spacing:.5px}
+.conv-diag{background:#EEF2FF;border-left:3px solid var(--brand-primary,#19398A);border-radius:0 var(--r-sm) var(--r-sm) 0;padding:12px 16px;margin-top:16px;font-size:13px;color:var(--neutral-800,#343A40);line-height:1.6}
+@media(max-width:900px){.conv-grid{grid-template-columns:1fr}}
 </style>
 </head>
 <body>
@@ -706,6 +724,9 @@ tr.cmp-tr td{background:#f5f8ff;font-size:12px;color:var(--compare)}
       </div>
     </div>
 
+      <!-- DIAGNÓSTICO DE CONVERSÃO -->
+      <div class="sec" style="margin-top:28px">Diagnóstico de Conversão</div>
+      <div id="convPanel"></div>
     <!-- AQUISIÇÃO -->
     <div class="tbc" id="tab-site-aq">
       <div class="sec">Sessões por canal e dispositivo</div>
@@ -1391,6 +1412,150 @@ function getCmp(){if(!C.active||!C.start||!C.end)return[];return applyFilters(ge
 // ════════════════════════════════════════════════════════
 // RENDER
 // ════════════════════════════════════════════════════════
+// === renderConversao ===
+function renderConversao(pri, cmp) {
+  var el = document.getElementById("convPanel");
+  if (!el) return;
+  if (!pri || !pri.length) { el.innerHTML = ""; return; }
+  var _r4 = function(v){ return Math.round(v * 10000) / 10000; };
+  var sStart = P.start, sEnd = P.end;
+  var totS = pri.reduce(function(a,d){ return a + (parseFloat(d.sessoes) || 0); }, 0);
+  var totC = pri.reduce(function(a,d){ return a + (parseFloat(d.compras) || 0); }, 0);
+  var crAtual = totS > 0 ? _r4(totC / totS * 100) : 0;
+  var bEnd = offDate(sStart, -1);
+  var bStart28 = offDate(sStart, -28);
+  var baseData = getRange(bStart28, bEnd);
+  var bSes = baseData.reduce(function(a,d){ return a + (parseFloat(d.sessoes) || 0); }, 0);
+  var bCom = baseData.reduce(function(a,d){ return a + (parseFloat(d.compras) || 0); }, 0);
+  var crBase = bSes > 0 ? _r4(bCom / bSes * 100) : null;
+  var yoyData = getRange(offDate(sStart, -364), offDate(sEnd, -364));
+  var ySes = yoyData.reduce(function(a,d){ return a + (parseFloat(d.sessoes) || 0); }, 0);
+  var yCom = yoyData.reduce(function(a,d){ return a + (parseFloat(d.compras) || 0); }, 0);
+  var crYoy = ySes > 0 ? _r4(yCom / ySes * 100) : null;
+  var crHist = [];
+  for (var wi = 1; wi <= 8; wi++) {
+    var ws = offDate(sStart, -wi * 7);
+    var we = offDate(sStart, -(wi * 7 - 6));
+    var wd = getRange(ws, we);
+    if (wd.length >= 5) {
+      var ts = wd.reduce(function(a,d){ return a + (parseFloat(d.sessoes)||0); }, 0);
+      var tc = wd.reduce(function(a,d){ return a + (parseFloat(d.compras)||0); }, 0);
+      if (ts > 0) crHist.push(tc / ts * 100);
+    }
+  }
+  var histMean = crHist.length > 0 ? crHist.reduce(function(a,b){return a+b;}) / crHist.length : 0;
+  var histStd = crHist.length > 1
+    ? Math.sqrt(crHist.reduce(function(a,b){return a+Math.pow(b-histMean,2);},0)/(crHist.length-1))
+    : 0;
+  var delta = crBase != null ? _r4(crAtual - crBase) : null;
+  var zScore = histStd > 0 && delta != null ? Math.abs(delta) / histStd : 0;
+  var dir = delta == null ? "sem_ref" : delta >= 0 ? "subiu" : "caiu";
+  var mag = histStd === 0 || crHist.length < 3 ? "sem_ref" : zScore > 2 ? "sig" : zScore > 1 ? "mod" : "est";
+  var classif = dir === "sem_ref" ? "sem_ref" : mag === "est" ? "estavel" : mag === "sem_ref" ? "sem_ref" : dir + "_" + mag;
+  var fS = pri.reduce(function(a,d){return a+(parseFloat(d.funil_search)||0);},0);
+  var fA = pri.reduce(function(a,d){return a+(parseFloat(d.funil_add_to_cart)||0);},0);
+  var fC = pri.reduce(function(a,d){return a+(parseFloat(d.funil_begin_checkout)||0);},0);
+  var fP = pri.reduce(function(a,d){return a+(parseFloat(d.funil_purchase)||0);},0);
+  var bFS = baseData.reduce(function(a,d){return a+(parseFloat(d.funil_search)||0);},0);
+  var bFA = baseData.reduce(function(a,d){return a+(parseFloat(d.funil_add_to_cart)||0);},0);
+  var bFC = baseData.reduce(function(a,d){return a+(parseFloat(d.funil_begin_checkout)||0);},0);
+  var bFP = baseData.reduce(function(a,d){return a+(parseFloat(d.funil_purchase)||0);},0);
+  var funil = [
+    {l:"Busca > Carrinho",   a:fS>0?_r4(fA/fS*100):0,  b:bFS>0?_r4(bFA/bFS*100):null},
+    {l:"Carrinho > Checkout",a:fA>0?_r4(fC/fA*100):0,  b:bFA>0?_r4(bFC/bFA*100):null},
+    {l:"Checkout > Compra",  a:fC>0?_r4(fP/fC*100):0,  b:bFC>0?_r4(bFP/bFC*100):null},
+  ].map(function(f){return Object.assign({},f,{dp:f.b!=null?_r4(f.a-f.b):null});});
+  var rawPri = P.start && P.end ? getRange(P.start,P.end) : [];
+  var CLIST = [
+    {l:"Organico",ks:"sessoes_organico",kc:"compras_organico"},
+    {l:"Direto",ks:"sessoes_direto",kc:"compras_direto"},
+    {l:"Pago",ks:"sessoes_pago",kc:"compras_pago"},
+    {l:"Social",ks:"sessoes_social",kc:"compras_social"},
+    {l:"E-mail",ks:"sessoes_email",kc:"compras_email"},
+    {l:"Referral",ks:"sessoes_referral",kc:"compras_referral"},
+  ];
+  var canalData = CLIST.map(function(c){
+    var cs=rawPri.reduce(function(a,d){return a+(parseFloat(d[c.ks])||0);},0);
+    var cc=rawPri.reduce(function(a,d){return a+(parseFloat(d[c.kc])||0);},0);
+    return {l:c.l,cs:cs,cc:cc,crC:cs>0?_r4(cc/cs*100):null,share:totS>0?_r4(cs/totS*100):0};
+  }).filter(function(c){return c.cs>0;});
+  var hasCanalCR = canalData.some(function(c){return c.crC!=null&&c.crC>0;});
+  var classMap = {
+    estavel:  {lbl:"Estavel",          cls:"estavel"},
+    subiu_mod:{lbl:"Subiu (moderado)", cls:"subiu_mod"},
+    subiu_sig:{lbl:"Subiu (signif.)",  cls:"subiu_sig"},
+    caiu_mod: {lbl:"Caiu (moderado)",  cls:"caiu_mod"},
+    caiu_sig: {lbl:"Caiu (signif.)",   cls:"caiu_sig"},
+    sem_ref:  {lbl:"Sem referencia",   cls:"sem_ref"},
+  };
+  var cm = classMap[classif] || classMap["sem_ref"];
+  var sigmaInfo = crHist.length >= 3 && histStd > 0
+    ? "sigma = " + histStd.toFixed(2) + " (" + crHist.length + " semanas)"
+    : "historico insuficiente para calculo de sigma";
+  var deltaStr = delta != null ? (delta > 0 ? "+" : "") + delta.toFixed(2) + "pp" : "-";
+  var diagText = "";
+  if (classif === "estavel") {
+    diagText = "Conversao estavel no periodo - CR de " + crAtual.toFixed(2) + "% em linha com o baseline de " + (crBase != null ? crBase.toFixed(2) : "-") + "% (delta " + deltaStr + ").";
+  } else {
+    var dirLbl = dir === "subiu" ? "subiu" : "caiu";
+    var magLbl = mag === "sig" ? "significativamente" : "moderadamente";
+    var stepCrit = funil.filter(function(f){return f.dp!=null;}).sort(function(a,b){return Math.abs(b.dp)-Math.abs(a.dp);})[0];
+    diagText = "A conversao " + dirLbl + " " + deltaStr + " vs o baseline de 28 dias - variacao " + magLbl + " (" + zScore.toFixed(1) + " sigma). CR atual: " + crAtual.toFixed(2) + "%.";
+    if (stepCrit && Math.abs(stepCrit.dp) > 0.3) {
+      diagText += " Etapa com maior impacto: " + stepCrit.l + " (" + (stepCrit.dp > 0 ? "+" : "") + stepCrit.dp.toFixed(1) + "pp vs baseline).";
+    }
+    if (crYoy != null) {
+      var dy = _r4(crAtual - crYoy);
+      diagText += " YoY: " + (dy > 0 ? "+" : "") + dy.toFixed(2) + "pp vs mesmo periodo do ano anterior.";
+    }
+  }
+  var thS  = "font-size:10px;color:#6C757D;text-align:right;padding:4px 0 4px 12px;border-bottom:1px solid #E9ECEF";
+  var thSL = "font-size:10px;color:#6C757D;text-align:left;padding:4px 0;border-bottom:1px solid #E9ECEF";
+  var funilRows = funil.map(function(f){
+    var dpColor = f.dp==null?"":f.dp>0.3?"var(--positive-700,#1B5E20)":f.dp<-0.3?"var(--negative-700,#C62828)":"#6C757D";
+    var dpStr = f.dp!=null?'<span style="font-weight:700;color:'+dpColor+'">'+( f.dp>0?"+":"")+f.dp.toFixed(1)+"pp</span>":"-";
+    return "<tr><td style=\"font-size:12px;padding:6px 0;color:#495057\">"+f.l+"</td>"
+      +"<td style=\"text-align:right;font-size:13px;font-weight:700;padding:6px 0 6px 12px;color:var(--brand-primary,#19398A)\">"+f.a.toFixed(1)+"%</td>"
+      +"<td style=\"text-align:right;font-size:12px;padding:6px 0 6px 12px;color:#6C757D\">"+(f.b!=null?f.b.toFixed(1)+"%":"-")+"</td>"
+      +"<td style=\"text-align:right;font-size:12px;padding:6px 0 6px 12px\">"+dpStr+"</td></tr>";
+  }).join("");
+  var maxCR = hasCanalCR ? Math.max.apply(null,canalData.filter(function(c){return c.crC!=null;}).map(function(c){return c.crC;})) : 0;
+  var canalRows = canalData.map(function(c){
+    var best = hasCanalCR && c.crC!=null && c.crC===maxCR;
+    return "<tr><td style=\"font-size:12px;padding:6px 0;color:#495057\">"+c.l+"</td>"
+      +"<td style=\"text-align:right;font-size:11px;padding:6px 0 6px 12px;color:#6C757D\">"+c.share.toFixed(1)+"% sess.</td>"
+      +'<td style="text-align:right;font-size:13px;font-weight:'+( best?"700":"400")+';padding:6px 0 6px 12px;color:'+( best?"var(--positive-700,#1B5E20)":"#343A40")+'">'
+      +(c.crC!=null&&c.crC>0?c.crC.toFixed(2)+"%":'<span style="color:#ADB5BD;font-size:11px">sem dados</span>')+'</td></tr>';
+  }).join("");
+  var yoyBlock = crYoy!=null
+    ? '<div class="conv-metric"><div class="conv-metric-lbl">YoY</div><div class="conv-metric-val">'+crYoy.toFixed(2)+'%</div><div class="conv-metric-sub">delta '+(_r4(crAtual-crYoy)>0?"+":"")+_r4(crAtual-crYoy).toFixed(2)+"pp</div></div>"
+    : "";
+  var canalTbl = canalData.length>0
+    ? '<table style="width:100%;border-collapse:collapse"><thead><tr>'
+      +'<th style="'+thSL+'">Canal</th><th style="'+thS+'">Sessoes</th><th style="'+thS+'">CR</th>'
+      +"</tr></thead><tbody>"+canalRows+"</tbody></table>"
+    : '<p style="font-size:12px;color:#6C757D;margin:8px 0">Sem dados de canal para o periodo.</p>';
+  var canalTitle = "CR por canal" + (hasCanalCR?"":'<span style="font-weight:400;font-size:10px;color:#ADB5BD"> dados a partir de jun/2026</span>');
+  el.innerHTML =
+    '<div class="conv-card">'
+    +'<div style="display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin-bottom:4px">'
+    +'<span class="conv-badge '+cm.cls+'">'+ cm.lbl+'</span>'
+    +'<span style="font-size:11px;color:#6C757D">'+sigmaInfo+'</span></div>'
+    +'<div class="conv-metrics">'
+    +'<div class="conv-metric"><div class="conv-metric-lbl">CR periodo</div><div class="conv-metric-val">'+crAtual.toFixed(2)+'%</div><div class="conv-metric-sub">'+pri.length+' dias</div></div>'
+    +'<div class="conv-metric"><div class="conv-metric-lbl">Baseline 28d</div><div class="conv-metric-val">'+( crBase!=null?crBase.toFixed(2)+"%":"-")+'</div><div class="conv-metric-sub">delta '+deltaStr+'</div></div>'
+    +yoyBlock+'</div>'
+    +'<div class="conv-grid">'
+    +'<div class="conv-tbl-wrap"><div class="conv-tbl-title">Funil</div>'
+    +'<table style="width:100%;border-collapse:collapse"><thead><tr>'
+    +'<th style="'+thSL+'">Etapa</th><th style="'+thS+'">Atual</th><th style="'+thS+'">Base 28d</th><th style="'+thS+'">Delta</th>'
+    +"</tr></thead><tbody>"+funilRows+"</tbody></table></div>"
+    +'<div class="conv-tbl-wrap"><div class="conv-tbl-title">'+canalTitle+"</div>"+canalTbl+"</div>"
+    +"</div>"
+    +'<div class="conv-diag">'+diagText+"</div>"
+    +"</div>";
+}
+
 function render(){
   const pri=getPri(), cmp=getCmp();
   renderKPIs(pri,cmp);
@@ -1400,6 +1565,7 @@ function render(){
   renderFunil(pri,cmp);
   renderRotas(pri,cmp);
   renderNPS(pri,cmp);
+  renderConversao(pri,cmp);
   renderInsights();
   renderExperimentos();
   renderResumoMensal();
