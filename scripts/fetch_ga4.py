@@ -371,6 +371,34 @@ def collect_metrics(service, date_str):
         else:
             m["sessoes_outros_canais"] += val
 
+
+    # ── Report 3b: compras por canal ─────────────────────────────────────────────
+    compras_canal_map = {
+        "organic search": "compras_organico",
+        "direct":         "compras_direto",
+        "paid search":    "compras_pago",
+        "organic social": "compras_social",
+        "email":          "compras_email",
+        "referral":       "compras_referral",
+    }
+    for k in compras_canal_map.values():
+        m[k] = 0
+    m["compras_outros_canais"] = 0
+
+    rows = run_report(
+        service, date_str,
+        ["sessionDefaultChannelGroup"],
+        ["transactions"],
+        limit=20,
+    )
+    for row in rows:
+        channel = row["dimensionValues"][0]["value"].lower()
+        val     = safe_int(row["metricValues"][0]["value"])
+        if channel in compras_canal_map:
+            m[compras_canal_map[channel]] = val
+        else:
+            m["compras_outros_canais"] += val
+
     # ── Report 4a: funil de eventos total ────────────────────────────────────
     funil_events = ["search", "select_item", "add_to_cart", "begin_checkout", "purchase"]
     funil_map = {e: f"funil_{e}" for e in funil_events}
