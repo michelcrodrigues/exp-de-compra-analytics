@@ -759,9 +759,7 @@ tr.cmp-tr td{background:#f5f8ff;font-size:12px;color:var(--compare)}
       </div>
     </div>
 
-      <!-- DIAGNÓSTICO DE CONVERSÃO -->
-      <div class="sec" style="margin-top:28px">Diagnóstico de Conversão</div>
-      <div id="convPanel"></div>
+      <!-- diagnóstico de conversão removido — ver Insights IA > Insights Conversão -->
     <!-- AQUISIÇÃO -->
     <div class="tbc" id="tab-site-aq">
       <div class="sec">Sessões por canal e dispositivo</div>
@@ -1336,7 +1334,7 @@ async function loadData(){
     const j=await res.json();
     ALL=(j.daily||[]).sort((a,b)=>a.data<b.data?-1:1);
     INSIGHTS=j.insights||[];
-    CONV_INSIGHTS=j.insights_conversao||[];try{const ir=await fetch("insights.json?v="+Date.now());if(ir.ok){const ij=await ir.json();if(ij.insights&&ij.insights.length)INSIGHTS=ij.insights;}}catch(e){}
+    CONV_INSIGHTS=j.insights_conversao||[];try{const ir=await fetch("insights.json?v="+Date.now());if(ir.ok){const ij=await ir.json();if(ij.insights&&ij.insights.length)INSIGHTS=ij.insights;if(ij.insights_conversao&&ij.insights_conversao.length)CONV_INSIGHTS=ij.insights_conversao;}}catch(e){}
     EXPERIMENTOS=j.experimentos||[];
     RESUMO_MENSAL=(j.resumo_mensal||[]).sort((a,b)=>b.mes<a.mes?-1:1);
     window._DATA=j; // expõe para renderNpsComentarios
@@ -2715,7 +2713,10 @@ function renderNpsInsights(){
   const semanas=data.semanas;
   navEl.innerHTML=semanas.map((s,idx)=>{
     const hasCrit=s.analise_temporal&&s.analise_temporal.dias_criticos&&s.analise_temporal.dias_criticos.length>0;
-    const rec=[s.promotores,s.neutros,s.detratores].some(c=>c&&c.semanas_recorrente>=2);
+    const _cats=s.categorias||{};
+    const rec=Object.values(_cats).some(c=>c&&c.semanas_recorrente>=2);
+    const _score=s.score!=null?s.score:s.nps_score;
+    const _media=s.nota_media!=null?s.nota_media:s.nps_nota_media;
     return '<div class="exp-nav-item'+(idx===0?' active':'')+'" onclick="selectNpsIns('+idx+')" id="npsNav-'+idx+'">'
       +'<span class="exp-nav-week">'+(s.label||s.semana)+'</span>'
       +(s.nps_score!=null?'<span class="exp-nav-meta">NPS '+Math.round(s.nps_score)+(s.nps_nota_media!=null?' · '+s.nps_nota_media.toFixed(1):'')+'/10</span>':'')
@@ -2741,13 +2742,17 @@ function renderNpsInsWeek(idx){
   const catLabel={promotores:'Promotores',neutros:'Neutros',detratores:'Detratores'};
   const catCls={promotores:'promotor',neutros:'neutro',detratores:'detrator'};
   const _devData = getNpsWeekDeviceData(s.semana);
-  const _npsChipCls = s.nps_score!=null ? (s.nps_score>=50?'pos':s.nps_score>=0?'neu':'neg') : 'neu';
+  // suporta schema novo (score/nota_media/respostas) e legado (nps_score/nps_nota_media/nps_respostas)
+  const _score=s.score!=null?s.score:s.nps_score;
+  const _media=s.nota_media!=null?s.nota_media:s.nps_nota_media;
+  const _respostas=s.respostas!=null?s.respostas:s.nps_respostas;
+  const _npsChipCls = _score!=null ? (_score>=50?'pos':_score>=0?'neu':'neg') : 'neu';
   let html='<div class="nps-ins-week-header">'
     +'<h3 class="nps-ins-week-title">Semana '+escH(s.label||s.semana)+'</h3>'
-    +(s.nps_score!=null?'<div class="nps-ins-scores">'
-      +'<span class="nps-ins-score-chip '+_npsChipCls+'">NPS '+Math.round(s.nps_score)+'</span>'
-      +(s.nps_nota_media!=null?'<span class="nps-ins-score-chip secondary">'+String.fromCodePoint(11088)+' '+s.nps_nota_media.toFixed(1)+'/10</span>':'')
-      +(s.nps_respostas!=null?'<span class="nps-ins-score-chip secondary">'+s.nps_respostas.toLocaleString('pt-BR')+' respostas</span>':'')
+    +(_score!=null?'<div class="nps-ins-scores">'
+      +'<span class="nps-ins-score-chip '+_npsChipCls+'">NPS '+Math.round(_score)+'</span>'
+      +(_media!=null?'<span class="nps-ins-score-chip secondary">'+String.fromCodePoint(11088)+' '+_media.toFixed(1)+'/10</span>':'')
+      +(_respostas!=null?'<span class="nps-ins-score-chip secondary">'+_respostas.toLocaleString('pt-BR')+' respostas</span>':'')
       +'</div>':'')
     +'</div>';
   if(_devData){
@@ -2762,24 +2767,34 @@ function renderNpsInsWeek(idx){
       +(_delta?'<div style="margin-left:auto;align-self:center">'+_delta+'</div>':'')
       +'</div>';
   }
+  // schema novo: categorias em s.categorias.{cat} com temas[] e semanas_recorrente
+  // schema legado: s.{cat} diretamente como objeto com temas_principais[], total, resumo, etc.
+  const _cats=s.categorias||{};
   catOrder.forEach(cat=>{
-    const d=s[cat];
-    if(!d||typeof d!=='object')return;
+    const d=_cats[cat]||(typeof s[cat]==='object'&&s[cat]!==null?s[cat]:null);
+    if(!d)return;
     const cls=catCls[cat];
+    // contagem: schema novo usa s[cat] como número; legado usa d.total
+    const dCount=typeof s[cat]==='number'?s[cat]:d.total;
+    // temas: schema novo usa d.temas[].tema; legado usa d.temas_principais[] de strings
+    const temasList=Array.isArray(d.temas)?d.temas.map(t=>t.tema):Array.isArray(d.temas_principais)?d.temas_principais:[];
     html+='<div class="nps-analise-cat-block">'
       +'<div class="nps-analise-cat-header">'
       +'<div class="nps-analise-cat-dot '+cls+'"></div>'
       +'<span class="nps-analise-cat-title">'+catLabel[cat]+'</span>'
-      +'<span class="nps-analise-cat-count">('+d.total+' menções)</span>'
-      +(d.recorrente&&d.semanas_recorrente>=2?'<span class="nps-ins-rec-badge">↩ '+d.semanas_recorrente+' sem. recorrente</span>':'')
+      +(dCount!=null?'<span class="nps-analise-cat-count">('+Number(dCount).toLocaleString('pt-BR')+' menções)</span>':'')
+      +(d.semanas_recorrente>=2?'<span class="nps-ins-rec-badge">↩ '+d.semanas_recorrente+' sem. recorrente</span>':'')
       +'</div>';
-    if(Array.isArray(d.temas_principais)&&d.temas_principais.length)
-      html+='<div class="nps-analise-temas">'+d.temas_principais.map(t=>'<span class="nps-analise-tema-tag '+cls+'">'+escH(String(t))+'</span>').join('')+'</div>';
-    if(d.resumo)html+='<div class="nps-analise-resumo">'+escH(String(d.resumo))+'</div>';
+    if(temasList.length)
+      html+='<div class="nps-analise-temas">'+temasList.map(t=>'<span class="nps-analise-tema-tag '+cls+'">'+escH(String(t))+'</span>').join('')+'</div>';
+    // observacao (schema novo) ou resumo (schema legado)
+    const obs=d.observacao||d.resumo;
+    if(obs)html+='<div class="nps-analise-resumo">'+escH(String(obs))+'</div>';
     if(d.insight)html+='<div class="nps-analise-insight">'+escH(String(d.insight))+'</div>';
     if(d.recomendacao_produto)html+='<div class="nps-analise-rec"><strong>Recomendação:</strong> '+escH(String(d.recomendacao_produto))+'</div>';
     html+='</div>';
   });
+  // analise_temporal (schema legado apenas)
   if(s.analise_temporal){
     const t=s.analise_temporal;
     html+='<div class="nps-ins-temporal">'
@@ -2790,6 +2805,9 @@ function renderNpsInsWeek(idx){
       html+='<div class="nps-ins-criticos">⚠️ Dias críticos: '+t.dias_criticos.map(d=>escH(d)).join(', ')+'</div>';
     html+='</div>';
   }
+  // resumo executivo (schema novo)
+  if(s.resumo_executivo)
+    html+='<div class="nps-analise-resumo" style="margin-top:16px;border-top:1px solid var(--neutral-200);padding-top:12px"><strong>Resumo executivo:</strong> '+escH(String(s.resumo_executivo))+'</div>';
   contentEl.innerHTML=html;
 }
 function renderExperimentos() {
