@@ -65,6 +65,8 @@ COLUMNS = [
     "duracao_media_mobile", "duracao_media_desktop", "duracao_media_tablet",
     "sessoes_organico", "sessoes_direto", "sessoes_pago",
     "sessoes_social", "sessoes_email", "sessoes_referral", "sessoes_outros_canais",
+    "compras_organico", "compras_direto", "compras_pago",
+    "compras_social", "compras_email", "compras_referral", "compras_outros_canais",
     "funil_search", "funil_select_item", "funil_add_to_cart",
     "funil_begin_checkout", "funil_purchase",
     "funil_search_mobile", "funil_select_item_mobile", "funil_add_to_cart_mobile",
@@ -196,7 +198,7 @@ def calc_cr(compras, sessoes):
         return round(compras / sessoes * 100, 4)
     return 0.0
 
-# ──────────────────────────────────────────────
+# ── fetch_nps_comments
 def fetch_nps_comments(service, start_date, end_date, top_n=30):
     """
     Busca os principais comentários NPS nos últimos N dias.
@@ -214,7 +216,7 @@ def fetch_nps_comments(service, start_date, end_date, top_n=30):
     # Aumenta o limite por categoria para acomodar o split mobile/desktop
     per_cat = max(8, (top_n // 3) * 2)
 
-    # Mapeamento de deviceCategory GA4 → rótulo normalizado
+    # Mapeamento de deviceCategory GA4 → rotulo normalizado
     DEV_MAP = {"mobile": "mobile", "desktop": "desktop", "tablet": "mobile"}
 
     # Faixas de score por categoria
@@ -305,7 +307,7 @@ def collect_metrics(service, date_str):
         m["usuarios"]          = safe_int(v[1]["value"])
         m["novos_usuarios"]    = safe_int(v[2]["value"])
         m["compras"]           = safe_int(v[3]["value"])
-        # bounceRate vem como decimal (0–1) — converter para percentual
+        # bounceRate vem como decimal (0–1) ┄ converter para percentual
         m["taxa_rejeicao_pct"] = round(safe_float(v[4]["value"]) * 100, 2)
         m["duracao_media_seg"] = safe_float(v[5]["value"], 2)
         m["pageviews"]         = safe_int(v[6]["value"])
@@ -370,34 +372,6 @@ def collect_metrics(service, date_str):
             m[channel_map[channel]] = val
         else:
             m["sessoes_outros_canais"] += val
-
-
-    # ── Report 3b: compras por canal ─────────────────────────────────────────────
-    compras_canal_map = {
-        "organic search": "compras_organico",
-        "direct":         "compras_direto",
-        "paid search":    "compras_pago",
-        "organic social": "compras_social",
-        "email":          "compras_email",
-        "referral":       "compras_referral",
-    }
-    for k in compras_canal_map.values():
-        m[k] = 0
-    m["compras_outros_canais"] = 0
-
-    rows = run_report(
-        service, date_str,
-        ["sessionDefaultChannelGroup"],
-        ["transactions"],
-        limit=20,
-    )
-    for row in rows:
-        channel = row["dimensionValues"][0]["value"].lower()
-        val     = safe_int(row["metricValues"][0]["value"])
-        if channel in compras_canal_map:
-            m[compras_canal_map[channel]] = val
-        else:
-            m["compras_outros_canais"] += val
 
 
     # ── Report 3b: compras por canal ─────────────────────────────────────────────
@@ -496,10 +470,6 @@ def collect_metrics(service, date_str):
             m[f"top_destino_{i}_sessoes"] = safe_int(row["metricValues"][0]["value"])
 
     # ── Report 7: NPS por dispositivo ────────────────────────────────────────
-    # Evento: nps_response | Dimensões customizadas: nps_number (0-10), nps_comment
-    # Quebra: deviceCategory (mobile / desktop / tablet)
-    # Classificação padrão NPS: promotores ≥ 9, neutros 7-8, detratores ≤ 6
-    # nps_soma_notas é acumulador interno (score × count) para calcular média — não exposto no schema.
     for dev in ("", "_mobile", "_desktop"):
         m[f"nps_respostas{dev}"]  = 0
         m[f"nps_promotores{dev}"] = 0
@@ -507,7 +477,7 @@ def collect_metrics(service, date_str):
         m[f"nps_detratores{dev}"] = 0
         m[f"nps_score{dev}"]      = 0.0
         m[f"nps_nota_media{dev}"] = 0.0
-        m[f"_nps_soma{dev}"]      = 0  # acumulador interno — removido antes de gravar
+        m[f"_nps_soma{dev}"]      = 0
 
     rows = run_report(
         service, date_str,
@@ -528,7 +498,6 @@ def collect_metrics(service, date_str):
         except (ValueError, TypeError):
             continue
 
-        # Categoria NPS padrão
         if score >= 9:
             cat = "promotores"
         elif score >= 7:
@@ -536,12 +505,10 @@ def collect_metrics(service, date_str):
         else:
             cat = "detratores"
 
-        # Acumula total
         m["nps_respostas"] += count
         m[f"nps_{cat}"]    += count
-        m["_nps_soma"]     += score * count  # para média ponderada
+        m["_nps_soma"]     += score * count
 
-        # Acumula por dispositivo (tablet absorvido somente no total)
         dev_key = dev_raw if dev_raw in ("mobile", "desktop") else None
         if dev_key:
             m[f"nps_respostas_{dev_key}"] += count
@@ -565,7 +532,6 @@ def collect_metrics(service, date_str):
     m["nps_nota_media_mobile"]  = calc_media(m["_nps_soma_mobile"],  m["nps_respostas_mobile"])
     m["nps_nota_media_desktop"] = calc_media(m["_nps_soma_desktop"], m["nps_respostas_desktop"])
 
-    # Remove acumuladores internos antes de retornar (não fazem parte do schema)
     for dev in ("", "_mobile", "_desktop"):
         m.pop(f"_nps_soma{dev}", None)
 
@@ -586,29 +552,27 @@ def metrics_to_record(date_str, m):
 def main():
     force_historical = os.environ.get("FORCE_HISTORICAL", "").lower() == "true"
     force_reprocess  = os.environ.get("FORCE_REPROCESS", "").lower() == "true"
-    today            = datetime.date.today()  # UTC no runner do GitHub Actions
+    today            = datetime.date.today()
     yesterday        = today - datetime.timedelta(days=1)
 
     print("Autenticando...")
     creds       = get_credentials()
     ga4_service = get_ga4_service(creds)
 
-    # ── FORCE_REPROCESS: apaga o arquivo e começa do zero ────────────────────
     if force_reprocess:
         print("FORCE_REPROCESS=true — apagando history.ndjson e reprocessando tudo.")
         reset_history_file()
-        force_historical = True  # implica modo histórico
+        force_historical = True
 
     existing_dates = load_existing_dates()
     print(f"Datas já no history.ndjson: {len(existing_dates)}")
 
-    # ── Modo de operação ─────────────────────────────────────────────────────
     historical_mode = force_historical or len(existing_dates) == 0
 
     if historical_mode:
         reason = "forçado via FORCE_HISTORICAL=true" if force_historical else "arquivo vazio/inexistente"
         print(f"MODO HISTÓRICO — {reason}")
-        print(f"  Coletando de {HISTORY_START} até {yesterday}")
+        print(f"  Coletando de {HRSTORY_START} até {yesterday}")
 
         dates_to_collect = []
         current = HISTORY_START
@@ -623,25 +587,16 @@ def main():
         print(f"  {total_days} dias para coletar — estimativa: ~{est_min} min")
 
     else:
-        # ── Modo diário: re-coleta sempre D-1, D-2 e D-3 ────────────────────
-        # Motivo: o GA4 finaliza dados em até ~72h após a sessão. Coletar D-1
-        # às 08:00 BRT significa que o dado tem apenas 8h — incompleto. Re-coletar
-        # os últimos 3 dias garante que, ao chegar no D-3, os dados estão finalizados.
-        # O export_data.py deduplica mantendo sempre o registro mais recente.
         dates_to_collect = []
         for lag in range(1, DAILY_REFRESH_DAYS + 1):
             d = today - datetime.timedelta(days=lag)
-            # Não coletar antes do início do histórico
             if d >= HISTORY_START:
                 dates_to_collect.append(d.strftime("%Y-%m-%d"))
 
         print(f"MODO DIÁRIO — re-coletando {len(dates_to_collect)} dia(s) recentes: {', '.join(dates_to_collect)}")
         print(f"  (D-1 a D-{DAILY_REFRESH_DAYS} sempre re-coletados para corrigir late-arriving data do GA4)")
 
-    # ── Comentarios NPS (ultimos 90 dias) ────────────────────────────────────
-    # Executado ANTES do check de dates_to_collect para garantir que os comentarios
-    # sejam sempre atualizados, mesmo quando o historico ja esta completo e nao ha
-    # novas datas de metricas para coletar.
+    # ── Comentarios NPS ────────────────────────────────────────────────────────
     nps_start = (today - datetime.timedelta(days=90)).strftime("%Y-%m-%d")
     nps_end   = yesterday.strftime("%Y-%m-%d")
     print("\nBuscando comentarios NPS (ultimos 90 dias)...")
@@ -659,7 +614,6 @@ def main():
         print("Nenhuma data para coletar.")
         sys.exit(0)
 
-    # ── Coleta e gravação ────────────────────────────────────────────────────
     total      = len(dates_to_collect)
     batch      = []
     rows_added = 0
@@ -681,7 +635,6 @@ def main():
             errors.append((date_str, str(e)))
             print(f"ERRO: {e}")
 
-        # Checkpoint a cada CHECKPOINT_EVERY dias (anti-timeout / perda de dados)
         if historical_mode and len(batch) >= CHECKPOINT_EVERY:
             print(f"  Gravando checkpoint ({rows_added} dias acumulados)...")
             append_records(batch)
@@ -691,12 +644,10 @@ def main():
         if historical_mode:
             time.sleep(PAUSE_BETWEEN_DAYS)
 
-    # ── Gravar restante ──────────────────────────────────────────────────────
     if batch:
-        print(f"\nGravando {len(batch)} registro(s) em {HISTORY_FILE}...")
+        print(f"\nGravando {len(batch)} registro(s) em {HRSTORY_FILE}...")
         append_records(batch)
 
-    # ── Relatorio final ──────────────────────────────────────────────────────
     print(f"\n{'='*50}")
     print(f"Registros adicionados : {rows_added}")
     print(f"Erros                 : {len(errors)}")
@@ -704,7 +655,7 @@ def main():
         print("Datas com erro:")
         for date_str, err in errors:
             print(f"  {date_str}: {err}")
-    print("Conclu\u00eddo.")
+    print("Concluído.")
 
     if errors:
         sys.exit(1)
