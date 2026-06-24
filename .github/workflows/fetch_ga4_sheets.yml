@@ -101,9 +101,8 @@ jobs:
         run: |
           git config user.name  "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          git stash push --include-untracked -- data/history.ndjson data.json data/history_app.ndjson data_app.json
-          git pull --rebase origin main
-          git stash pop
           git add data/history.ndjson data.json data/history_app.ndjson data_app.json
-          git diff --cached --quiet || git commit -m "chore: atualiza dados site + app [$(date -u '+%Y-%m-%d %H:%M')] UTC"
+          git diff --cached --quiet && echo "Nada a commitar." && exit 0
+          git commit -m "chore: atualiza dados site + app [$(date -u '+%Y-%m-%d %H:%M')] UTC"
+          git pull --rebase -Xours origin main
           git push
