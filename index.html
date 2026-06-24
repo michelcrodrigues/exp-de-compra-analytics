@@ -1623,7 +1623,7 @@ function renderConversaoInsights(){
     el.innerHTML='<div class="insights-empty">Nenhum dado disponível ainda.</div>';
     return;
   }
-  var canal=window.CONV_INS_CANAL||'total';
+  var canal=CONV_INS_CANAL||'total';
   var latest=CONV_INSIGHTS[0];
   var clMap={'estavel':'badge-ok','subiu_moderado':'badge-up','subiu_significativo':'badge-up-strong','caiu_moderado':'badge-warn','caiu_significativo':'badge-critical'};
   var cl=clMap[latest.classificacao]||'badge-neutral';
@@ -2866,7 +2866,7 @@ function renderNpsInsWeek(idx){
   const _media=s.nota_media!=null?s.nota_media:s.nps_nota_media;
   const _respostas=s.respostas!=null?s.respostas:s.nps_respostas;
   // canal selecionado no filtro de Insights NPS
-  const _insCanal=window.NPS_INS_CANAL||'total';
+  const _insCanal=NPS_INS_CANAL||'total';
   let _dispScore=_score, _dispMedia=_media, _dispResp=_respostas, _canalLabel='';
   if(_insCanal!=='total'&&_devData&&_devData[_insCanal]){
     const _ch=_devData[_insCanal];
