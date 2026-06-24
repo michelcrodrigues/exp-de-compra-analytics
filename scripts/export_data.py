@@ -121,6 +121,14 @@ def build_daily(records):
             "sessoes_email":         safe_int(r.get("sessoes_email")),
             "sessoes_referral":      safe_int(r.get("sessoes_referral")),
             "sessoes_outros_canais": safe_int(r.get("sessoes_outros_canais")),
+            # Compras por canal
+            "compras_organico":      safe_int(r.get("compras_organico")),
+            "compras_direto":        safe_int(r.get("compras_direto")),
+            "compras_pago":          safe_int(r.get("compras_pago")),
+            "compras_social":        safe_int(r.get("compras_social")),
+            "compras_email":         safe_int(r.get("compras_email")),
+            "compras_referral":      safe_int(r.get("compras_referral")),
+            "compras_outros_canais": safe_int(r.get("compras_outros_canais")),
             # Funil total
             "funil_search":         safe_int(r.get("funil_search")),
             "funil_select_item":    safe_int(r.get("funil_select_item")),
