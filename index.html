@@ -52,7 +52,7 @@ body{font-family:'Nunito Sans',sans-serif;background:var(--neutral-100);color:va
 
 /* Dropdown */
 .drw{position:relative}
-.dr-drop{position:fixed;top:auto;left:auto;background:#fff;border-radius:var(--r-md);box-shadow:0 8px 32px rgba(19,19,19,.18);z-index:9000;padding:16px;min-width:340px;display:none}
+.dr-drop{position:fixed;top:auto;left:auto;background:#fff;border-radius:var(--r-md);box-shadow:0 8px 32px rgba(19,19,19,.18);z-index:9000;padding:16px;min-width:340px;display:none;max-height:calc(100vh - 80px);overflow-y:auto}
 .dr-drop.open{display:block}
 .dr-drop.pri{border-top:3px solid var(--brand-primary)}
 .dr-drop.cmp{border-top:3px solid var(--compare)}
@@ -777,6 +777,8 @@ tr.cmp-tr td{background:#f5f8ff;font-size:12px;color:var(--compare)}
         <thead><tr><th>Dispositivo</th><th class="num">Sessões</th><th class="num">Compras</th><th class="num">CR %</th></tr></thead>
         <tbody id="tbDevs"></tbody>
       </table></div>
+      <div class="sec" style="margin-top:20px">Conversão por origem</div>
+      <div class="tc" id="origSiteWrap"></div>
     </div>
 
     <!-- FUNIL -->
@@ -882,6 +884,8 @@ tr.cmp-tr td{background:#f5f8ff;font-size:12px;color:var(--compare)}
             <thead><tr><th>Plataforma</th><th class="num">Sessões</th><th class="num">Compras</th><th class="num">CR %</th></tr></thead>
             <tbody id="appTbDevs"></tbody>
           </table></div>
+          <div class="sec" style="margin-top:20px">Conversão por origem</div>
+          <div class="tc" id="origAppWrap"></div>
         </div>
 
         <!-- App — Funil -->
@@ -1207,6 +1211,7 @@ function renderApp(){
   renderAppKPIs(pri,cmp);
   renderAppCharts(pri,cmp);
   renderAppAcquisicao(pri,cmp);
+  renderConversaoPorOrigem(getAppRange(),'origAppWrap',false);
   renderAppFunil(pri,cmp);
   renderAppNPS(getAppRange(),getAppCmp());
   renderComparativo();
@@ -1665,76 +1670,6 @@ function renderConversaoInsights(){
   if(latest.monitorar)out+='<div class="conv-ins-monitorar"><strong>📊 Monitorar:</strong> '+latest.monitorar+'</div>';
   out+='</div>';
 
-  // ── Conversão por origem ──────────────────────────────────────────────────
-  var rawPri=P.start&&P.end?getRange(P.start,P.end):[];
-  var ORIG_LIST=[
-    {l:'Orgânico',   ks:'sessoes_organico',  kc:'compras_organico'},
-    {l:'Pago',       ks:'sessoes_pago',       kc:'compras_pago'},
-    {l:'Direto',     ks:'sessoes_direto',     kc:'compras_direto'},
-    {l:'Social',     ks:'sessoes_social',     kc:'compras_social'},
-    {l:'E-mail',     ks:'sessoes_email',      kc:'compras_email'},
-    {l:'Referral',   ks:'sessoes_referral',   kc:'compras_referral'},
-  ];
-  var origData=ORIG_LIST.map(function(o){
-    var s=rawPri.reduce(function(a,d){return a+(parseFloat(d[o.ks])||0);},0);
-    var c=rawPri.reduce(function(a,d){return a+(parseFloat(d[o.kc])||0);},0);
-    return {l:o.l,s:s,c:c,cr:s>0?Math.round(c/s*10000)/100:null};
-  }).filter(function(o){return o.s>0;});
-  var hasComprasByOrig=origData.some(function(o){return o.c>0;});
-  out+='<div class="conv-ins-orig-wrap">';
-  out+='<div class="conv-ins-section-title">Conversão por origem<span style="font-size:11px;font-weight:400;color:var(--neutral-500);margin-left:8px">'+rawPri.length+' dias</span></div>';
-  if(!origData.length){
-    out+='<div class="conv-ins-empty-hyp">Nenhum dado de sessão por origem no período selecionado.</div>';
-  }else if(!hasComprasByOrig){
-    out+='<div class="conv-ins-empty-hyp" style="font-size:12px">Sessões por origem disponíveis, mas compras por origem pendentes.<br><span style="font-size:11px;color:var(--neutral-400)">Disponível após a próxima coleta do GA4 com o pipeline atualizado.</span></div>';
-    var totSess=origData.reduce(function(a,o){return a+o.s;},0);
-    out+='<table style="width:100%;border-collapse:collapse;margin-top:12px"><thead><tr>'
-      +'<th style="text-align:left;font-size:11px;color:var(--neutral-500);padding:4px 0;border-bottom:1px solid var(--neutral-200)">Origem</th>'
-      +'<th style="text-align:right;font-size:11px;color:var(--neutral-500);padding:4px 0;border-bottom:1px solid var(--neutral-200)">Sessões</th>'
-      +'<th style="text-align:right;font-size:11px;color:var(--neutral-500);padding:4px 0;border-bottom:1px solid var(--neutral-200)">Share</th>'
-      +'<th style="text-align:right;font-size:11px;color:var(--neutral-500);padding:4px 0;border-bottom:1px solid var(--neutral-200)">CR</th>'
-      +'</tr></thead><tbody>';
-    origData.forEach(function(o){
-      var share=totSess>0?Math.round(o.s/totSess*1000)/10:0;
-      out+='<tr>'
-        +'<td style="font-size:12px;padding:6px 0;color:var(--neutral-700)">'+o.l+'</td>'
-        +'<td style="text-align:right;font-size:12px;padding:6px 0 6px 12px;color:var(--neutral-700)">'+o.s.toLocaleString('pt-BR')+'</td>'
-        +'<td style="text-align:right;font-size:12px;padding:6px 0 6px 12px;color:var(--neutral-500)">'+share+'%</td>'
-        +'<td style="text-align:right;font-size:12px;padding:6px 0 6px 12px;color:var(--neutral-400)">–</td>'
-        +'</tr>';
-    });
-    out+='</tbody></table>';
-  }else{
-    var maxCR=Math.max.apply(null,origData.filter(function(o){return o.cr!=null;}).map(function(o){return o.cr;}));
-    var totSess=origData.reduce(function(a,o){return a+o.s;},0);
-    var totComp=origData.reduce(function(a,o){return a+o.c;},0);
-    out+='<table style="width:100%;border-collapse:collapse"><thead><tr>'
-      +'<th style="text-align:left;font-size:11px;color:var(--neutral-500);padding:4px 0;border-bottom:1px solid var(--neutral-200)">Origem</th>'
-      +'<th style="text-align:right;font-size:11px;color:var(--neutral-500);padding:4px 0;border-bottom:1px solid var(--neutral-200)">Sessões</th>'
-      +'<th style="text-align:right;font-size:11px;color:var(--neutral-500);padding:4px 0;border-bottom:1px solid var(--neutral-200)">Compras</th>'
-      +'<th style="text-align:right;font-size:11px;color:var(--neutral-500);padding:4px 0;border-bottom:1px solid var(--neutral-200)">CR</th>'
-      +'</tr></thead><tbody>';
-    origData.forEach(function(o){
-      var best=o.cr!=null&&o.cr===maxCR;
-      out+='<tr>'
-        +'<td style="font-size:12px;padding:6px 0;color:var(--neutral-700)">'+o.l+'</td>'
-        +'<td style="text-align:right;font-size:12px;padding:6px 0 6px 12px;color:var(--neutral-700)">'+o.s.toLocaleString('pt-BR')+'</td>'
-        +'<td style="text-align:right;font-size:12px;padding:6px 0 6px 12px;color:var(--neutral-700)">'+o.c.toLocaleString('pt-BR')+'</td>'
-        +'<td style="text-align:right;font-size:13px;font-weight:'+(best?'700':'400')+';padding:6px 0 6px 12px;color:'+(best?'var(--positive-700,#1B5E20)':'var(--neutral-700)')+'">'+(o.cr!=null?o.cr.toFixed(2)+'%':'–')+'</td>'
-        +'</tr>';
-    });
-    out+='<tr style="border-top:2px solid var(--neutral-200)">'
-      +'<td style="font-size:12px;font-weight:700;padding:6px 0;color:var(--neutral-800)">Total</td>'
-      +'<td style="text-align:right;font-size:12px;font-weight:700;padding:6px 0 6px 12px">'+totSess.toLocaleString('pt-BR')+'</td>'
-      +'<td style="text-align:right;font-size:12px;font-weight:700;padding:6px 0 6px 12px">'+totComp.toLocaleString('pt-BR')+'</td>'
-      +'<td style="text-align:right;font-size:12px;font-weight:700;padding:6px 0 6px 12px">'+(totSess>0?Math.round(totComp/totSess*10000)/100+'%':'–')+'</td>'
-      +'</tr>';
-    out+='</tbody></table>';
-  }
-  out+='</div>';
-
-  // histórico
-  if(CONV_INSIGHTS.length>1){
     out+='<div class="conv-ins-hist-title">Períodos anteriores</div><div class="conv-ins-hist">';
     CONV_INSIGHTS.slice(1,5).forEach(function(e){
       var ec=clMap[e.classificacao]||'badge-neutral';
@@ -1748,11 +1683,71 @@ function renderConversaoInsights(){
 }
 
 
+function renderConversaoPorOrigem(dataArr, containerId, hasCompras) {
+  var el = document.getElementById(containerId);
+  if (!el) return;
+  var ORIG = [
+    {l:'Orgânico',  ks:'sessoes_organico',  kc:'compras_organico'},
+    {l:'Pago',      ks:'sessoes_pago',       kc:'compras_pago'},
+    {l:'Direto',    ks:'sessoes_direto',     kc:'compras_direto'},
+    {l:'Social',    ks:'sessoes_social',     kc:'compras_social'},
+    {l:'E-mail',    ks:'sessoes_email',      kc:'compras_email'},
+    {l:'Referral',  ks:'sessoes_referral',   kc:'compras_referral'},
+  ];
+  var rows = ORIG.map(function(o) {
+    var s = dataArr.reduce(function(a,d){return a+(parseFloat(d[o.ks])||0);},0);
+    var c = hasCompras ? dataArr.reduce(function(a,d){return a+(parseFloat(d[o.kc])||0);},0) : null;
+    var cr = (hasCompras && s > 0) ? Math.round(c/s*10000)/100 : null;
+    return {l:o.l, s:s, c:c, cr:cr};
+  }).filter(function(o){return o.s > 0;});
+
+  if (!rows.length) { el.innerHTML='<div style="font-size:12px;color:var(--neutral-400);padding:8px 0">Sem dados de sessão por origem no período.</div>'; return; }
+
+  var hasC = hasCompras && rows.some(function(o){return o.c > 0;});
+  var totS = rows.reduce(function(a,o){return a+o.s;},0);
+  var totC = hasC ? rows.reduce(function(a,o){return a+o.c;},0) : null;
+  var maxCR = hasC ? Math.max.apply(null, rows.filter(function(o){return o.cr!=null;}).map(function(o){return o.cr;})) : null;
+
+  var thCR = hasC ? '<th class="num" style="font-size:11px;color:var(--neutral-500);padding:4px 0;border-bottom:1px solid var(--neutral-200)">CR %</th>' : '';
+  var thC  = hasC ? '<th class="num" style="font-size:11px;color:var(--neutral-500);padding:4px 0;border-bottom:1px solid var(--neutral-200)">Compras</th>' : '';
+  var out = '<table style="width:100%;border-collapse:collapse"><thead><tr>'
+    +'<th style="text-align:left;font-size:11px;color:var(--neutral-500);padding:4px 0;border-bottom:1px solid var(--neutral-200)">Origem</th>'
+    +'<th class="num" style="font-size:11px;color:var(--neutral-500);padding:4px 0;border-bottom:1px solid var(--neutral-200)">Sessões</th>'
+    +'<th class="num" style="font-size:11px;color:var(--neutral-500);padding:4px 0;border-bottom:1px solid var(--neutral-200)">Share</th>'
+    +thC+thCR+'</tr></thead><tbody>';
+
+  rows.forEach(function(o) {
+    var share = totS > 0 ? Math.round(o.s/totS*1000)/10 : 0;
+    var best = hasC && o.cr != null && o.cr === maxCR;
+    var tdC  = hasC ? '<td class="num" style="font-size:12px;padding:6px 0 6px 12px;color:var(--neutral-700)">'+o.c.toLocaleString('pt-BR')+'</td>' : '';
+    var crVal = o.cr != null ? o.cr.toFixed(2)+'%' : (hasCompras ? '<span style="font-size:11px;color:var(--neutral-400)">pendente</span>' : '–');
+    var tdCR = hasC ? '<td class="num" style="font-size:'+(best?'13':'12')+'px;font-weight:'+(best?'700':'400')+';padding:6px 0 6px 12px;color:'+(best?'var(--positive-700,#1B5E20)':'var(--neutral-700)')+'">'+crVal+'</td>' : '';
+    out += '<tr>'
+      +'<td style="font-size:12px;padding:6px 0;color:var(--neutral-700)">'+o.l+'</td>'
+      +'<td class="num" style="font-size:12px;padding:6px 0 6px 12px;color:var(--neutral-700)">'+o.s.toLocaleString('pt-BR')+'</td>'
+      +'<td class="num" style="font-size:12px;padding:6px 0 6px 12px;color:var(--neutral-500)">'+share+'%</td>'
+      +tdC+tdCR+'</tr>';
+  });
+
+  if (hasC && totC != null) {
+    var totCR = totS > 0 ? Math.round(totC/totS*10000)/100 : null;
+    out += '<tr style="border-top:2px solid var(--neutral-200)">'
+      +'<td style="font-size:12px;font-weight:700;padding:6px 0;color:var(--neutral-800)">Total</td>'
+      +'<td class="num" style="font-size:12px;font-weight:700;padding:6px 0 6px 12px">'+totS.toLocaleString('pt-BR')+'</td>'
+      +'<td class="num" style="font-size:12px;font-weight:700;padding:6px 0 6px 12px"></td>'
+      +'<td class="num" style="font-size:12px;font-weight:700;padding:6px 0 6px 12px">'+totC.toLocaleString('pt-BR')+'</td>'
+      +'<td class="num" style="font-size:12px;font-weight:700;padding:6px 0 6px 12px">'+(totCR!=null?totCR.toFixed(2)+'%':'–')+'</td></tr>';
+  }
+  out += '</tbody></table>';
+  el.innerHTML = out;
+}
+
 function render(){
   const pri=getPri(), cmp=getCmp();
   renderKPIs(pri,cmp);
   renderCharts(pri,cmp);
   renderAcquisicao(pri,cmp);
+  renderConversaoPorOrigem(pri,'origSiteWrap',true);
   renderBreakdownCharts();
   renderFunil(pri,cmp);
   renderRotas(pri,cmp);
