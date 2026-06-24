@@ -1021,15 +1021,30 @@ tr.cmp-tr td{background:#f5f8ff;font-size:12px;color:var(--compare)}
 
       <!-- Painel NPS (insights qualitativos) -->
       <div id="insNpsPanel" style="display:none">
+        <div class="ins-canal-bar" style="background:#fff;border-radius:var(--r-md);box-shadow:var(--shadow-01);padding:12px 16px;margin-bottom:16px;display:flex;align-items:center;gap:8px;flex-wrap:wrap">
+          <span class="flabel">Canal</span>
+          <button class="ins-canal-btn active" data-npsinscanal="total" onclick="setNpsInsCanal('total')">Total</button>
+          <button class="ins-canal-btn" data-npsinscanal="mobile" onclick="setNpsInsCanal('mobile')">Mobile</button>
+          <button class="ins-canal-btn" data-npsinscanal="desktop" onclick="setNpsInsCanal('desktop')">Desktop</button>
+        </div>
         <div class="exp-layout">
           <nav class="exp-nav" id="npsInsNav"></nav>
           <div class="exp-content" id="npsInsContent"></div>
         </div>
       </div>
+
+      <!-- Painel Conversão (insights de conversão) -->
+      <div id="insConvPanel" style="display:none">
+        <div class="ins-canal-bar" style="background:#fff;border-radius:var(--r-md);box-shadow:var(--shadow-01);padding:12px 16px;margin-bottom:16px;display:flex;align-items:center;gap:8px;flex-wrap:wrap">
+          <span class="flabel">Canal</span>
+          <button class="ins-canal-btn active" data-convinscanal="total" onclick="setConvInsCanal('total')">Total</button>
+          <button class="ins-canal-btn" data-convinscanal="mobile" onclick="setConvInsCanal('mobile')">Mobile</button>
+          <button class="ins-canal-btn" data-convinscanal="desktop" onclick="setConvInsCanal('desktop')">Desktop</button>
+        </div>
+        <div id="insConvContent"></div>
+      </div>
     </div>
     </div><!-- /section-pane in -->
-
-    <div id="insConvPanel" style="display:none"></div>
 
     <!-- EXPERIMENTOS -->
     <div class="section-pane" id="section-ex">
@@ -1096,6 +1111,8 @@ let P={start:null,end:null};
 let C={start:null,end:null,active:false};
 // Filtros de Insights
 let INS_CANAL="todos";   // todos | site | app | conjunto
+let CONV_INS_CANAL="total"; // total | mobile | desktop
+let NPS_INS_CANAL="total";  // total | mobile | desktop
 let INS_PRIO="todos";    // todos | Alta | Média | Baixa
 let INS_TMPL=false;      // false | true — mostrar só insights com template de experimento
 // Filtro de Canal nos Experimentos
@@ -1595,9 +1612,18 @@ function renderConversao(pri, cmp) {
 }
 
 function renderConversaoInsights(){
-  var el=document.getElementById('insConvPanel');
-  if(!el)return;
-  if(!window.CONV_INSIGHTS||!CONV_INSIGHTS.length){el.innerHTML='<div class="insights-empty">Nenhum dado disponível ainda.</div>';return;}
+  var el=document.getElementById('insConvContent');
+  if(!el){
+    // fallback: if called before DOM is ready, try again
+    var panel=document.getElementById('insConvPanel');
+    if(panel&&panel.style.display==='none')return; // panel hidden, skip
+    return;
+  }
+  if(!window.CONV_INSIGHTS||!CONV_INSIGHTS.length){
+    el.innerHTML='<div class="insights-empty">Nenhum dado disponível ainda.</div>';
+    return;
+  }
+  var canal=window.CONV_INS_CANAL||'total';
   var latest=CONV_INSIGHTS[0];
   var clMap={'estavel':'badge-ok','subiu_moderado':'badge-up','subiu_significativo':'badge-up-strong','caiu_moderado':'badge-warn','caiu_significativo':'badge-critical'};
   var cl=clMap[latest.classificacao]||'badge-neutral';
@@ -1607,34 +1633,112 @@ function renderConversaoInsights(){
   var fmt=function(v){return v!=null?v.toFixed(2)+'%':'–';};
   var fmtPP=function(v){return v!=null?(v>0?'+':'')+v.toFixed(2)+'pp':'–';};
   var m=latest.metricas||{};
-  var dp=(m.delta_pp||{}).total;
+  var crAtual=(m.cr_atual||{})[canal];
+  var crBase=(m.cr_baseline||{})[canal];
+  var dp=(m.delta_pp||{})[canal];
+  var sigma=m.sigma;
   var out='<div class="conv-ins-card">';
   out+='<div class="conv-ins-header"><span class="conv-ins-label">'+tipoLabel+'</span><span class="conv-ins-badge '+cl+'">'+clTxt+'</span></div>';
   out+='<div class="conv-ins-metrics">';
-  out+='<div class="conv-ins-metric-item"><span class="conv-ins-metric-label">CR Atual</span><span class="conv-ins-metric-value">'+fmt((m.cr_atual||{}).total)+'</span></div>';
-  out+='<div class="conv-ins-metric-item"><span class="conv-ins-metric-label">Baseline 4w</span><span class="conv-ins-metric-value">'+fmt((m.cr_baseline||{}).total)+'</span></div>';
+  out+='<div class="conv-ins-metric-item"><span class="conv-ins-metric-label">CR Atual</span><span class="conv-ins-metric-value">'+fmt(crAtual)+'</span></div>';
+  out+='<div class="conv-ins-metric-item"><span class="conv-ins-metric-label">Baseline 4w</span><span class="conv-ins-metric-value">'+fmt(crBase)+'</span></div>';
   out+='<div class="conv-ins-metric-item"><span class="conv-ins-metric-label">Delta</span><span class="conv-ins-metric-value '+(dp!=null&&dp<0?'neg':'pos')+'">'+fmtPP(dp)+'</span></div>';
-  out+='<div class="conv-ins-metric-item"><span class="conv-ins-metric-label">σ</span><span class="conv-ins-metric-value">'+(m.sigma!=null?m.sigma.toFixed(2):'–')+'</span></div>';
+  out+='<div class="conv-ins-metric-item"><span class="conv-ins-metric-label">σ</span><span class="conv-ins-metric-value">'+(sigma!=null?sigma.toFixed(2):'–')+'</span></div>';
   out+='</div>';
-  if(latest.hipoteses&&latest.hipoteses.length){
-    out+='<div class="conv-ins-section-title">Hipóteses</div>';
-    latest.hipoteses.forEach(function(hip){
+  // hipóteses — filtrar por canal
+  var hips=latest.hipoteses||[];
+  var filtHips=canal==='total'?hips:hips.filter(function(h){return h.dispositivo===canal||h.dispositivo==='total';});
+  if(filtHips.length){
+    out+='<div class="conv-ins-section-title">Hipóteses'+(canal!=='total'?' — '+canal[0].toUpperCase()+canal.slice(1):'')+'</div>';
+    filtHips.forEach(function(hip){
       var dev=hip.dispositivo==='mobile'?'📱 Mobile':hip.dispositivo==='desktop'?'💻 Desktop':'🌐 Total';
       out+='<div class="conv-ins-hipotese"><div class="conv-ins-hip-header"><span class="conv-ins-rank">#'+hip.rank+'</span><span class="conv-ins-dev">'+dev+'</span><span class="conv-ins-titulo">'+hip.titulo+'</span></div>';
       out+='<div class="conv-ins-evidencia"><strong>Evidência:</strong> '+hip.evidencia+'</div>';
       out+='<div class="conv-ins-raciocinio">'+hip.raciocinio+'</div>';
       out+='<div class="conv-ins-time">🔍 Confirmar com: <em>'+hip.time_para_confirmar+'</em></div></div>';
     });
+  }else if(canal!=='total'){
+    out+='<div class="conv-ins-empty-hyp">Nenhuma hipótese específica para '+canal+' neste período.</div>';
   }else{
     out+='<div class="conv-ins-empty-hyp">Conversão estável — sem hipóteses a investigar.</div>';
   }
   if(latest.monitorar)out+='<div class="conv-ins-monitorar"><strong>📊 Monitorar:</strong> '+latest.monitorar+'</div>';
   out+='</div>';
+
+  // ── Conversão por origem ──────────────────────────────────────────────────
+  var rawPri=P.start&&P.end?getRange(P.start,P.end):[];
+  var ORIG_LIST=[
+    {l:'Orgânico',   ks:'sessoes_organico',  kc:'compras_organico'},
+    {l:'Pago',       ks:'sessoes_pago',       kc:'compras_pago'},
+    {l:'Direto',     ks:'sessoes_direto',     kc:'compras_direto'},
+    {l:'Social',     ks:'sessoes_social',     kc:'compras_social'},
+    {l:'E-mail',     ks:'sessoes_email',      kc:'compras_email'},
+    {l:'Referral',   ks:'sessoes_referral',   kc:'compras_referral'},
+  ];
+  var origData=ORIG_LIST.map(function(o){
+    var s=rawPri.reduce(function(a,d){return a+(parseFloat(d[o.ks])||0);},0);
+    var c=rawPri.reduce(function(a,d){return a+(parseFloat(d[o.kc])||0);},0);
+    return {l:o.l,s:s,c:c,cr:s>0?Math.round(c/s*10000)/100:null};
+  }).filter(function(o){return o.s>0;});
+  var hasComprasByOrig=origData.some(function(o){return o.c>0;});
+  out+='<div class="conv-ins-orig-wrap">';
+  out+='<div class="conv-ins-section-title">Conversão por origem<span style="font-size:11px;font-weight:400;color:var(--neutral-500);margin-left:8px">'+rawPri.length+' dias</span></div>';
+  if(!origData.length){
+    out+='<div class="conv-ins-empty-hyp">Nenhum dado de sessão por origem no período selecionado.</div>';
+  }else if(!hasComprasByOrig){
+    out+='<div class="conv-ins-empty-hyp" style="font-size:12px">Sessões por origem disponíveis, mas compras por origem pendentes.<br><span style="font-size:11px;color:var(--neutral-400)">Disponível após a próxima coleta do GA4 com o pipeline atualizado.</span></div>';
+    var totSess=origData.reduce(function(a,o){return a+o.s;},0);
+    out+='<table style="width:100%;border-collapse:collapse;margin-top:12px"><thead><tr>'
+      +'<th style="text-align:left;font-size:11px;color:var(--neutral-500);padding:4px 0;border-bottom:1px solid var(--neutral-200)">Origem</th>'
+      +'<th style="text-align:right;font-size:11px;color:var(--neutral-500);padding:4px 0;border-bottom:1px solid var(--neutral-200)">Sessões</th>'
+      +'<th style="text-align:right;font-size:11px;color:var(--neutral-500);padding:4px 0;border-bottom:1px solid var(--neutral-200)">Share</th>'
+      +'<th style="text-align:right;font-size:11px;color:var(--neutral-500);padding:4px 0;border-bottom:1px solid var(--neutral-200)">CR</th>'
+      +'</tr></thead><tbody>';
+    origData.forEach(function(o){
+      var share=totSess>0?Math.round(o.s/totSess*1000)/10:0;
+      out+='<tr>'
+        +'<td style="font-size:12px;padding:6px 0;color:var(--neutral-700)">'+o.l+'</td>'
+        +'<td style="text-align:right;font-size:12px;padding:6px 0 6px 12px;color:var(--neutral-700)">'+o.s.toLocaleString('pt-BR')+'</td>'
+        +'<td style="text-align:right;font-size:12px;padding:6px 0 6px 12px;color:var(--neutral-500)">'+share+'%</td>'
+        +'<td style="text-align:right;font-size:12px;padding:6px 0 6px 12px;color:var(--neutral-400)">–</td>'
+        +'</tr>';
+    });
+    out+='</tbody></table>';
+  }else{
+    var maxCR=Math.max.apply(null,origData.filter(function(o){return o.cr!=null;}).map(function(o){return o.cr;}));
+    var totSess=origData.reduce(function(a,o){return a+o.s;},0);
+    var totComp=origData.reduce(function(a,o){return a+o.c;},0);
+    out+='<table style="width:100%;border-collapse:collapse"><thead><tr>'
+      +'<th style="text-align:left;font-size:11px;color:var(--neutral-500);padding:4px 0;border-bottom:1px solid var(--neutral-200)">Origem</th>'
+      +'<th style="text-align:right;font-size:11px;color:var(--neutral-500);padding:4px 0;border-bottom:1px solid var(--neutral-200)">Sessões</th>'
+      +'<th style="text-align:right;font-size:11px;color:var(--neutral-500);padding:4px 0;border-bottom:1px solid var(--neutral-200)">Compras</th>'
+      +'<th style="text-align:right;font-size:11px;color:var(--neutral-500);padding:4px 0;border-bottom:1px solid var(--neutral-200)">CR</th>'
+      +'</tr></thead><tbody>';
+    origData.forEach(function(o){
+      var best=o.cr!=null&&o.cr===maxCR;
+      out+='<tr>'
+        +'<td style="font-size:12px;padding:6px 0;color:var(--neutral-700)">'+o.l+'</td>'
+        +'<td style="text-align:right;font-size:12px;padding:6px 0 6px 12px;color:var(--neutral-700)">'+o.s.toLocaleString('pt-BR')+'</td>'
+        +'<td style="text-align:right;font-size:12px;padding:6px 0 6px 12px;color:var(--neutral-700)">'+o.c.toLocaleString('pt-BR')+'</td>'
+        +'<td style="text-align:right;font-size:13px;font-weight:'+(best?'700':'400')+';padding:6px 0 6px 12px;color:'+(best?'var(--positive-700,#1B5E20)':'var(--neutral-700)')+'">'+(o.cr!=null?o.cr.toFixed(2)+'%':'–')+'</td>'
+        +'</tr>';
+    });
+    out+='<tr style="border-top:2px solid var(--neutral-200)">'
+      +'<td style="font-size:12px;font-weight:700;padding:6px 0;color:var(--neutral-800)">Total</td>'
+      +'<td style="text-align:right;font-size:12px;font-weight:700;padding:6px 0 6px 12px">'+totSess.toLocaleString('pt-BR')+'</td>'
+      +'<td style="text-align:right;font-size:12px;font-weight:700;padding:6px 0 6px 12px">'+totComp.toLocaleString('pt-BR')+'</td>'
+      +'<td style="text-align:right;font-size:12px;font-weight:700;padding:6px 0 6px 12px">'+(totSess>0?Math.round(totComp/totSess*10000)/100+'%':'–')+'</td>'
+      +'</tr>';
+    out+='</tbody></table>';
+  }
+  out+='</div>';
+
+  // histórico
   if(CONV_INSIGHTS.length>1){
     out+='<div class="conv-ins-hist-title">Períodos anteriores</div><div class="conv-ins-hist">';
     CONV_INSIGHTS.slice(1,5).forEach(function(e){
       var ec=clMap[e.classificacao]||'badge-neutral';
-      var edp=((e.metricas||{}).delta_pp||{}).total;
+      var edp=((e.metricas||{}).delta_pp||{})[canal];
       var lbl=e.tipo==='mensal'?'Mês '+e.label:e.label;
       out+='<div class="conv-ins-hist-item"><span class="conv-ins-hist-label">'+lbl+'</span><span class="conv-ins-badge '+ec+' small">'+e.classificacao.replace(/_/g,' ')+'</span><span class="conv-ins-hist-delta">'+fmtPP(edp)+'</span></div>';
     });
@@ -1642,6 +1746,7 @@ function renderConversaoInsights(){
   }
   el.innerHTML=out;
 }
+
 
 function render(){
   const pri=getPri(), cmp=getCmp();
@@ -1652,7 +1757,7 @@ function render(){
   renderFunil(pri,cmp);
   renderRotas(pri,cmp);
   renderNPS(pri,cmp);
-  renderConversao(pri,cmp);
+  renderConversaoInsights();
   renderInsights();
   renderExperimentos();
   renderResumoMensal();
@@ -2669,10 +2774,24 @@ function switchInsMode(mode){
   document.querySelectorAll('[data-insmode]').forEach(b=>b.classList.toggle('active',b.dataset.insmode===mode));
   const ap=document.getElementById('insAnalyticsPanel');
   const np=document.getElementById('insNpsPanel');
-  document.getElementById('insConvPanel').style.display=mode==='conversao'?'':'none';
+  const cp=document.getElementById('insConvPanel');
   if(ap)ap.style.display=mode==='analytics'?'':'none';
   if(np)np.style.display=mode==='nps'?'':'none';
+  if(cp)cp.style.display=mode==='conversao'?'':'none';
   if(mode==='nps')renderNpsInsights();
+  if(mode==='conversao')renderConversaoInsights();
+}
+
+function setConvInsCanal(canal){
+  CONV_INS_CANAL=canal;
+  document.querySelectorAll('[data-convinscanal]').forEach(b=>b.classList.toggle('active',b.dataset.convinscanal===canal));
+  renderConversaoInsights();
+}
+
+function setNpsInsCanal(canal){
+  NPS_INS_CANAL=canal;
+  document.querySelectorAll('[data-npsinscanal]').forEach(b=>b.classList.toggle('active',b.dataset.npsinscanal===canal));
+  renderNpsInsWeek(window._npsInsSelected||0);
 }
 
 function getNpsWeekDeviceData(semanaStart) {
@@ -2719,7 +2838,7 @@ function renderNpsInsights(){
     const _media=s.nota_media!=null?s.nota_media:s.nps_nota_media;
     return '<div class="exp-nav-item'+(idx===0?' active':'')+'" onclick="selectNpsIns('+idx+')" id="npsNav-'+idx+'">'
       +'<span class="exp-nav-week">'+(s.label||s.semana)+'</span>'
-      +(s.nps_score!=null?'<span class="exp-nav-meta">NPS '+Math.round(s.nps_score)+(s.nps_nota_media!=null?' · '+s.nps_nota_media.toFixed(1):'')+'/10</span>':'')
+      +(_score!=null?'<span class="exp-nav-meta">NPS '+Math.round(_score)+(_media!=null?' · '+_media.toFixed(1):'')+'/10</span>':'')
       +(rec?'<span class="exp-nav-badge rec">Recorrente</span>':'')
       +(hasCrit?'<span class="exp-nav-badge crit">Dias críticos</span>':'')
       +'</div>';
@@ -2746,16 +2865,24 @@ function renderNpsInsWeek(idx){
   const _score=s.score!=null?s.score:s.nps_score;
   const _media=s.nota_media!=null?s.nota_media:s.nps_nota_media;
   const _respostas=s.respostas!=null?s.respostas:s.nps_respostas;
-  const _npsChipCls = _score!=null ? (_score>=50?'pos':_score>=0?'neu':'neg') : 'neu';
+  // canal selecionado no filtro de Insights NPS
+  const _insCanal=window.NPS_INS_CANAL||'total';
+  let _dispScore=_score, _dispMedia=_media, _dispResp=_respostas, _canalLabel='';
+  if(_insCanal!=='total'&&_devData&&_devData[_insCanal]){
+    const _ch=_devData[_insCanal];
+    _dispScore=_ch.score; _dispMedia=_ch.media; _dispResp=_ch.resp;
+    _canalLabel=' — '+(_insCanal==='mobile'?'Mobile':'Desktop');
+  }
+  const _npsChipCls = _dispScore!=null ? (_dispScore>=50?'pos':_dispScore>=0?'neu':'neg') : 'neu';
   let html='<div class="nps-ins-week-header">'
-    +'<h3 class="nps-ins-week-title">Semana '+escH(s.label||s.semana)+'</h3>'
-    +(_score!=null?'<div class="nps-ins-scores">'
-      +'<span class="nps-ins-score-chip '+_npsChipCls+'">NPS '+Math.round(_score)+'</span>'
-      +(_media!=null?'<span class="nps-ins-score-chip secondary">'+String.fromCodePoint(11088)+' '+_media.toFixed(1)+'/10</span>':'')
-      +(_respostas!=null?'<span class="nps-ins-score-chip secondary">'+_respostas.toLocaleString('pt-BR')+' respostas</span>':'')
+    +'<h3 class="nps-ins-week-title">Semana '+escH(s.label||s.semana)+_canalLabel+'</h3>'
+    +(_dispScore!=null?'<div class="nps-ins-scores">'
+      +'<span class="nps-ins-score-chip '+_npsChipCls+'">NPS '+Math.round(_dispScore)+'</span>'
+      +(_dispMedia!=null?'<span class="nps-ins-score-chip secondary">'+String.fromCodePoint(11088)+' '+_dispMedia.toFixed(1)+'/10</span>':'')
+      +(_dispResp!=null?'<span class="nps-ins-score-chip secondary">'+_dispResp.toLocaleString('pt-BR')+' respostas</span>':'')
       +'</div>':'')
     +'</div>';
-  if(_devData){
+  if(_insCanal==='total'&&_devData){
     const _m=_devData.mobile, _d=_devData.desktop;
     const _mCls=_m?(_m.score>=50?'pos':_m.score>=0?'neu':'neg'):'';
     const _dCls=_d?(_d.score>=50?'pos':_d.score>=0?'neu':'neg'):'';
@@ -2766,6 +2893,14 @@ function renderNpsInsWeek(idx){
       +(_d?'<div class="nps-ins-dev-chip"><span class="nps-ins-dev-label">Desktop</span><span class="nps-ins-dev-score '+_dCls+'">'+Math.round(_d.score)+'</span><span style="font-size:11px;color:var(--neutral-500)">'+_d.resp+' resp.</span></div>':'')
       +(_delta?'<div style="margin-left:auto;align-self:center">'+_delta+'</div>':'')
       +'</div>';
+  } else if(_insCanal!=='total'&&_devData){
+    const _oc=_insCanal==='mobile'?'desktop':'mobile';
+    const _other=_devData[_oc];
+    if(_other&&_dispScore!=null){
+      const diff=_dispScore-_other.score;
+      const _diffLbl=diff>5?'<span class="nps-ins-dev-delta superior">+'+r4(diff)+'pp vs '+_oc+'</span>':diff<-5?'<span class="nps-ins-dev-delta inferior">'+r4(diff)+'pp vs '+_oc+'</span>':'';
+      if(_diffLbl)html+='<div class="nps-ins-device-row">'+_diffLbl+'</div>';
+    }
   }
   // schema novo: categorias em s.categorias.{cat} com temas[] e semanas_recorrente
   // schema legado: s.{cat} diretamente como objeto com temas_principais[], total, resumo, etc.
@@ -4103,68 +4238,4 @@ function fmtDT(iso){if(!iso)return"";return new Date(iso).toLocaleString("pt-BR"
 function todayISO(){return new Date().toISOString().slice(0,10);}
 function isoD(d){return d.toISOString().slice(0,10);}
 function offDate(iso,days){const d=new Date(iso+"T12:00:00Z");d.setUTCDate(d.getUTCDate()+days);return isoD(d);}
-function offYears(iso,y){const d=new Date(iso+"T12:00:00Z");d.setUTCFullYear(d.getUTCFullYear()+y);return isoD(d);}
-function dateDiff(a,b){return Math.round((new Date(b)-new Date(a))/86400000);}
-
-
-// ════════════════════════════════════════════════════════
-// AUTENTICAÇÃO — Supabase
-// ════════════════════════════════════════════════════════
-const _SB_URL = 'https://ddspskifskoqznemxuuu.supabase.co';
-const _SB_KEY = 'sb_publishable_zY82pfmfz7OuD-RjLrEngA_cUzm7bVH';
-const _sb = supabase.createClient(_SB_URL, _SB_KEY);
-
-(async function(){
-  const { data: { session } } = await _sb.auth.getSession();
-  if(session){
-    document.getElementById('authScreen').classList.add('hidden');
-    loadData();
-    return;
-  }
-
-  async function tryLogin(){
-    const email = document.getElementById('authEmail').value.trim();
-    const password = document.getElementById('authInput').value;
-    const btn = document.getElementById('authBtn');
-    btn.disabled = true;
-    btn.textContent = 'Entrando...';
-
-    const { data, error } = await _sb.auth.signInWithPassword({ email, password });
-
-    if(error){
-      const err = document.getElementById('authError');
-      err.classList.add('show');
-      document.getElementById('authInput').value = '';
-      document.getElementById('authInput').focus();
-      setTimeout(() => err.classList.remove('show'), 3000);
-      btn.disabled = false;
-      btn.textContent = 'Entrar';
-      return;
-    }
-
-    await _sb.from('audit_log').insert({
-      user_email: email,
-      dashboard: 'exp-de-compra',
-      action: 'login'
-    });
-
-    document.getElementById('authScreen').classList.add('hidden');
-    loadData();
-  }
-
-  document.getElementById('authBtn').addEventListener('click', tryLogin);
-  document.getElementById('authInput').addEventListener('keydown', e => {
-    if(e.key === 'Enter') tryLogin();
-  });
-  document.getElementById('authEmail').addEventListener('keydown', e => {
-    if(e.key === 'Enter') document.getElementById('authInput').focus();
-  });
-})();
-
-async function logout(){
-  await _sb.auth.signOut();
-  location.reload();
-}
-</script>
-</body>
-</html>
+function offYears(iso,y){const d=new Date(iso
