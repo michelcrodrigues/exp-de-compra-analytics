@@ -572,7 +572,7 @@ def main():
     if historical_mode:
         reason = "forçado via FORCE_HISTORICAL=true" if force_historical else "arquivo vazio/inexistente"
         print(f"MODO HISTÓRICO — {reason}")
-        print(f"  Coletando de {HRSTORY_START} até {yesterday}")
+        print(f"  Coletando de {HISTORY_START} até {yesterday}")
 
         dates_to_collect = []
         current = HISTORY_START
@@ -645,7 +645,7 @@ def main():
             time.sleep(PAUSE_BETWEEN_DAYS)
 
     if batch:
-        print(f"\nGravando {len(batch)} registro(s) em {HRSTORY_FILE}...")
+        print(f"\nGravando {len(batch)} registro(s) em {HISTORY_FILE}...")
         append_records(batch)
 
     print(f"\n{'='*50}")
