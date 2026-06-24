@@ -4238,4 +4238,68 @@ function fmtDT(iso){if(!iso)return"";return new Date(iso).toLocaleString("pt-BR"
 function todayISO(){return new Date().toISOString().slice(0,10);}
 function isoD(d){return d.toISOString().slice(0,10);}
 function offDate(iso,days){const d=new Date(iso+"T12:00:00Z");d.setUTCDate(d.getUTCDate()+days);return isoD(d);}
-function offYears(iso,y){const d=new Date(iso
+function offYears(iso,y){const d=new Date(iso+"T12:00:00Z");d.setUTCFullYear(d.getUTCFullYear()+y);return isoD(d);}
+function dateDiff(a,b){return Math.round((new Date(b)-new Date(a))/86400000);}
+
+
+// ════════════════════════════════════════════════════════
+// AUTENTICAÇÃO — Supabase
+// ════════════════════════════════════════════════════════
+const _SB_URL = 'https://ddspskifskoqznemxuuu.supabase.co';
+const _SB_KEY = 'sb_publishable_zY82pfmfz7OuD-RjLrEngA_cUzm7bVH';
+const _sb = supabase.createClient(_SB_URL, _SB_KEY);
+
+(async function(){
+  const { data: { session } } = await _sb.auth.getSession();
+  if(session){
+    document.getElementById('authScreen').classList.add('hidden');
+    loadData();
+    return;
+  }
+
+  async function tryLogin(){
+    const email = document.getElementById('authEmail').value.trim();
+    const password = document.getElementById('authInput').value;
+    const btn = document.getElementById('authBtn');
+    btn.disabled = true;
+    btn.textContent = 'Entrando...';
+
+    const { data, error } = await _sb.auth.signInWithPassword({ email, password });
+
+    if(error){
+      const err = document.getElementById('authError');
+      err.classList.add('show');
+      document.getElementById('authInput').value = '';
+      document.getElementById('authInput').focus();
+      setTimeout(() => err.classList.remove('show'), 3000);
+      btn.disabled = false;
+      btn.textContent = 'Entrar';
+      return;
+    }
+
+    await _sb.from('audit_log').insert({
+      user_email: email,
+      dashboard: 'exp-de-compra',
+      action: 'login'
+    });
+
+    document.getElementById('authScreen').classList.add('hidden');
+    loadData();
+  }
+
+  document.getElementById('authBtn').addEventListener('click', tryLogin);
+  document.getElementById('authInput').addEventListener('keydown', e => {
+    if(e.key === 'Enter') tryLogin();
+  });
+  document.getElementById('authEmail').addEventListener('keydown', e => {
+    if(e.key === 'Enter') document.getElementById('authInput').focus();
+  });
+})();
+
+async function logout(){
+  await _sb.auth.signOut();
+  location.reload();
+}
+</script>
+</body>
+</html>
