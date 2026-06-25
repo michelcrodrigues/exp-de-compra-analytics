@@ -1728,7 +1728,6 @@ function renderConversaoPorOrigem(dataArr, containerId, hasCompras) {
   el.innerHTML = out;
 }
 
-}
 function render(){
   const pri=getPri(), cmp=getCmp();
   renderKPIs(pri,cmp);
@@ -4281,6 +4280,7 @@ const _sb = supabase.createClient(_SB_URL, _SB_KEY);
 async function logout(){
   await _sb.auth.signOut();
   location.reload();
+}
 }
 </script>
 </body>
