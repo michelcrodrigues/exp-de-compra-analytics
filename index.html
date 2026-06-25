@@ -1789,24 +1789,57 @@ function renderConversaoPorOrigem(dataArr, containerId, hasCompras, cmpDataArr, 
     {l:'Referral',  ks:'sessoes_referral',   kc:'compras_referral'},
   ];
   var hasCmp = !!(cmpDataArr && cmpDataArr.length);
+
+  // Para o Site (hasCompras=true): separar dias COM e SEM dados de compras por canal.
+  // Os campos compras_organico/pago/direto só existem a partir de jun/2026.
+  // Usar todos os dias para sessões/share, mas apenas os dias com dados válidos
+  // de compras para calcular o CR — evita CR deflacionado por denominador histórico.
+  var dataForCR = dataArr;
+  var crPeriodLabel = null;
+  if (hasCompras) {
+    var CANAL_KCS = ['compras_organico','compras_pago','compras_direto','compras_social','compras_email','compras_referral'];
+    var daysWithCanalData = dataArr.filter(function(d) {
+      return CANAL_KCS.some(function(k){ return (parseFloat(d[k])||0) > 0; });
+    });
+    if (daysWithCanalData.length > 0 && daysWithCanalData.length < dataArr.length) {
+      dataForCR = daysWithCanalData;
+      var crStart = daysWithCanalData[0].data;
+      var crEnd   = daysWithCanalData[daysWithCanalData.length - 1].data;
+      var fmt = function(s) { return s.slice(8,10) + '/' + s.slice(5,7) + '/' + s.slice(0,4); };
+      crPeriodLabel = 'CR calculado sobre ' + daysWithCanalData.length + ' dia(s) com dados por canal (' + fmt(crStart) + ' a ' + fmt(crEnd) + '). Sessões e share referem-se ao período completo selecionado.';
+    } else if (daysWithCanalData.length === 0) {
+      // Nenhum dado de canal no período — CR indisponível
+      dataForCR = [];
+      crPeriodLabel = 'Dados de compras por canal ainda não disponíveis neste período. Disponíveis a partir de jun/2026.';
+    }
+  }
+
   var rows = ORIG.map(function(o) {
+    // Sessões: período completo (para share representativo)
     var s = dataArr.reduce(function(a,d){return a+(parseFloat(d[o.ks])||0);},0);
-    var c = hasCompras ? dataArr.reduce(function(a,d){return a+(parseFloat(d[o.kc])||0);},0) : null;
-    var cr = (hasCompras && s > 0) ? Math.round(c/s*10000)/100 : null;
+    // Compras e CR: apenas dias com dados válidos de canal
+    var c = (hasCompras && dataForCR.length) ? dataForCR.reduce(function(a,d){return a+(parseFloat(d[o.kc])||0);},0) : null;
+    // Sessões do mesmo sub-período para calcular CR coerente
+    var sCR = (hasCompras && dataForCR.length) ? dataForCR.reduce(function(a,d){return a+(parseFloat(d[o.ks])||0);},0) : 0;
+    var cr = (hasCompras && dataForCR.length && sCR > 0) ? Math.round(c/sCR*10000)/100 : null;
     var sc = hasCmp ? cmpDataArr.reduce(function(a,d){return a+(parseFloat(d[o.ks])||0);},0) : null;
     var cc = (hasCmp && hasCmpCompras) ? cmpDataArr.reduce(function(a,d){return a+(parseFloat(d[o.kc])||0);},0) : null;
-    var crc = (hasCmp && hasCmpCompras && sc > 0) ? Math.round(cc/sc*10000)/100 : null;
-    return {l:o.l, s:s, c:c, cr:cr, sc:sc, cc:cc, crc:crc};
+    var scCR = (hasCmp && hasCmpCompras) ? cmpDataArr.reduce(function(a,d){return a+(parseFloat(d[o.ks])||0);},0) : 0;
+    var crc = (hasCmp && hasCmpCompras && scCR > 0) ? Math.round(cc/scCR*10000)/100 : null;
+    return {l:o.l, s:s, sCR:sCR, c:c, cr:cr, sc:sc, cc:cc, crc:crc};
   }).filter(function(o){return o.s > 0 || (o.sc && o.sc > 0);});
+
   if (!rows.length) {
     el.innerHTML = '<div style="font-size:12px;color:var(--text-secondary)">Sem dados de origem para o período.</div>';
     return;
   }
-  var totalS = rows.reduce(function(a,o){return a+o.s;},0);
-  var totalC = hasCompras ? rows.reduce(function(a,o){return a+(o.c||0);},0) : null;
-  var bestCR = hasCompras ? Math.max.apply(null,rows.map(function(o){return o.cr||0;})) : null;
-  var totalSC = hasCmp ? rows.reduce(function(a,o){return a+(o.sc||0);},0) : null;
-  var totalCC = (hasCmp && hasCmpCompras) ? rows.reduce(function(a,o){return a+(o.cc||0);},0) : null;
+  var totalS   = rows.reduce(function(a,o){return a+o.s;},0);
+  var totalSCR = rows.reduce(function(a,o){return a+o.sCR;},0);
+  var totalC   = (hasCompras && dataForCR.length) ? rows.reduce(function(a,o){return a+(o.c||0);},0) : null;
+  var bestCR   = (hasCompras && dataForCR.length) ? Math.max.apply(null,rows.map(function(o){return o.cr||0;})) : null;
+  var totalSC  = hasCmp ? rows.reduce(function(a,o){return a+(o.sc||0);},0) : null;
+  var totalCC  = (hasCmp && hasCmpCompras) ? rows.reduce(function(a,o){return a+(o.cc||0);},0) : null;
+
   function fmtDelta(v, isPercent) {
     if (v === null || v === undefined || isNaN(v)) return '';
     var sign = v > 0 ? '+' : '';
@@ -1816,36 +1849,51 @@ function renderConversaoPorOrigem(dataArr, containerId, hasCompras, cmpDataArr, 
       : sign + Math.round(v).toLocaleString('pt-BR');
     return '<span style="font-size:10px;color:' + color + ';margin-left:4px">' + txt + '</span>';
   }
-  var out = '<table style="width:100%;border-collapse:collapse;font-size:13px">';
+
+  var out = '';
+  // Aviso sobre período do CR quando sub-período diferente do selecionado
+  if (crPeriodLabel) {
+    var isWarn = dataForCR.length === 0;
+    out += '<div style="font-size:11px;padding:6px 10px;border-radius:6px;margin-bottom:10px;'
+      + (isWarn
+          ? 'background:#FFF8E1;border:1px solid #FFE082;color:#5D4037'
+          : 'background:#E8F5E9;border:1px solid #A5D6A7;color:#1B5E20')
+      + '">' + crPeriodLabel + '</div>';
+  }
+  if (dataForCR.length === 0 && hasCompras) {
+    out += '<div style="font-size:12px;color:var(--text-secondary)">Sessões por canal disponíveis abaixo. CR indisponível para este período.</div>';
+  }
+
+  out += '<table style="width:100%;border-collapse:collapse;font-size:13px">';
   out += '<thead><tr style="border-bottom:2px solid var(--neutral-200)">';
   out += '<th style="text-align:left;padding:6px 8px;font-weight:700;color:var(--text-secondary);font-size:11px">ORIGEM</th>';
   out += '<th style="text-align:right;padding:6px 8px;font-weight:700;color:var(--text-secondary);font-size:11px">SESSÕES</th>';
   if (!hasCmp) out += '<th style="text-align:right;padding:6px 8px;font-weight:700;color:var(--text-secondary);font-size:11px">SHARE</th>';
-  if (hasCompras) {
+  if (hasCompras && dataForCR.length > 0) {
     out += '<th style="text-align:right;padding:6px 8px;font-weight:700;color:var(--text-secondary);font-size:11px">COMPRAS</th>';
     out += '<th style="text-align:right;padding:6px 8px;font-weight:700;color:var(--text-secondary);font-size:11px">CR%</th>';
   }
   out += '</tr></thead><tbody>';
   rows.forEach(function(o) {
     var share = totalS > 0 ? Math.round(o.s/totalS*1000)/10 : 0;
-    var isBest = hasCompras && o.cr === bestCR && bestCR > 0;
+    var isBest = (hasCompras && dataForCR.length > 0) && o.cr === bestCR && bestCR > 0;
     var deltaS = (hasCmp && o.sc !== null) ? o.s - o.sc : null;
     out += '<tr style="border-bottom:1px solid var(--neutral-100);' + (isBest ? 'background:rgba(16,185,129,.07)' : '') + '">';
     out += '<td style="padding:6px 8px">' + o.l + (isBest ? ' <span style="font-size:10px;background:#10b981;color:#fff;border-radius:3px;padding:1px 4px">melhor CR</span>' : '') + '</td>';
     out += '<td style="text-align:right;padding:6px 8px">' + o.s.toLocaleString('pt-BR') + fmtDelta(deltaS, false) + '</td>';
     if (!hasCmp) out += '<td style="text-align:right;padding:6px 8px">' + share.toFixed(1) + '%</td>';
-    if (hasCompras) {
-      var deltaC = (hasCmp && hasCmpCompras && o.cc !== null && o.c !== null) ? o.c - o.cc : null;
-      var deltaCR = (hasCmp && hasCmpCompras && o.crc !== null && o.cr !== null) ? Math.round((o.cr - o.crc) * 100) / 100 : null;
+    if (hasCompras && dataForCR.length > 0) {
+      var deltaC   = (hasCmp && hasCmpCompras && o.cc !== null && o.c !== null) ? o.c - o.cc : null;
+      var deltaCR  = (hasCmp && hasCmpCompras && o.crc !== null && o.cr !== null) ? Math.round((o.cr - o.crc) * 100) / 100 : null;
       out += '<td style="text-align:right;padding:6px 8px">' + (o.c||0).toLocaleString('pt-BR') + fmtDelta(deltaC, false) + '</td>';
       out += '<td style="text-align:right;padding:6px 8px;font-weight:700;color:' + (isBest ? '#10b981' : 'inherit') + '">'
         + (o.cr !== null ? o.cr.toFixed(2) + '%' : '—') + fmtDelta(deltaCR, true) + '</td>';
     }
     out += '</tr>';
   });
-  // Linha de total — sempre para Site (hasCompras=true), omitida para App
-  if (hasCompras && totalC !== null) {
-    var totalCR = totalS > 0 ? Math.round(totalC/totalS*10000)/100 : 0;
+  // Linha de total
+  if (hasCompras && dataForCR.length > 0 && totalC !== null) {
+    var totalCR    = totalSCR > 0 ? Math.round(totalC/totalSCR*10000)/100 : 0;
     var totalCRCmp = (hasCmp && totalCC !== null && totalSC > 0) ? Math.round(totalCC/totalSC*10000)/100 : null;
     var dTotS  = hasCmp && totalSC !== null ? totalS - totalSC : null;
     var dTotC  = (hasCmp && totalCC !== null) ? totalC - totalCC : null;
@@ -1863,7 +1911,10 @@ function renderConversaoPorOrigem(dataArr, containerId, hasCompras, cmpDataArr, 
 }
 
 function renderSiteConvOrigem() {
-  // Dados crus do período (sem filtro de device/canal, pois origin é sempre agregado total)
+  // Dados brutos do período — sem filtro de device/canal.
+  // O GA4 não permite cruzar canal + device + compras num único report.
+  // A função detecta automaticamente quais dias têm dados de compras por canal
+  // e usa apenas esses dias para calcular CR, evitando deflação por histórico sem dados.
   var rawPri = (P.start && P.end) ? getRange(P.start, P.end) : [];
   var rawCmp = (C.active && C.start && C.end) ? getRange(C.start, C.end) : null;
   renderConversaoPorOrigem(rawPri, 'siteConvOrigem', true, rawCmp, rawCmp ? true : false);
