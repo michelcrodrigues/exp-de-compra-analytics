@@ -758,7 +758,7 @@ tr.cmp-tr td{background:#f5f8ff;font-size:12px;color:var(--compare)}
         </div>
       </div>
       <div class="sec" style="margin-top:28px">Conversão por origem</div>
-      <p style="font-size:12px;color:var(--neutral-500);margin-top:-8px;margin-bottom:12px">Sessões, compras e CR por canal de origem no período selecionado. Dados totais, independente do filtro de dispositivo.</p>
+      <p style="font-size:12px;color:var(--neutral-500);margin-top:-8px;margin-bottom:12px">Sessões, compras e CR por canal de origem no período selecionado. <strong>Sempre mostra dados totais</strong> — o GA4 não disponibiliza compras segmentadas por canal + dispositivo simultaneamente, por isso o filtro Mobile/Desktop/Tablet não altera esta tabela. Dados de CR por canal disponíveis a partir de jun/2026.</p>
       <div id="siteConvOrigem" style="margin-bottom:24px"></div>
     </div>
 
@@ -867,7 +867,7 @@ tr.cmp-tr td{background:#f5f8ff;font-size:12px;color:var(--compare)}
             <div class="cc"><div class="cc-title">Rejeição % por dia</div><div class="cc-legend" id="appLegBnc"></div><div class="cc-wrap"><canvas id="appCBnc"></canvas></div></div>
           </div>
           <div class="sec" style="margin-top:28px">Conversão por origem</div>
-          <p style="font-size:12px;color:var(--neutral-500);margin-top:-8px;margin-bottom:12px">Sessões por canal de origem no período selecionado — compras por canal ainda não disponíveis no App.</p>
+          <p style="font-size:12px;color:var(--neutral-500);margin-top:-8px;margin-bottom:12px">Sessões e share por canal de origem no período selecionado. <strong>Compras por canal não estão disponíveis no App</strong> — o GA4 não retorna conversões segmentadas por canal de aquisição para o App. Por isso, apenas sessões e share são exibidos. O filtro de plataforma (Android/iOS) também não altera esta tabela, pois os dados de origem são sempre agregados.</p>
           <div id="appConvOrigem" style="margin-bottom:24px"></div>
         </div>
 
@@ -1680,17 +1680,33 @@ function renderConvInsPeriod(idx) {
   var canal = CONV_INS_CANAL || 'total';
   var item = CONV_INSIGHTS[idx] !== undefined ? CONV_INSIGHTS[idx] : CONV_INSIGHTS[0];
   var clMap = {estavel:'badge-ok',subiu_moderado:'badge-up',subiu_significativo:'badge-up-strong',caiu_moderado:'badge-warn',caiu_significativo:'badge-critical'};
-  var cl = clMap[item.classificacao] || 'badge-neutral';
-  var clTxtMap = {estavel:'Estável',subiu_moderado:'Subiu moderado',subiu_significativo:'Subiu significativo',caiu_moderado:'Caiu moderado',caiu_significativo:'Caiu significativo',sem_referencia:'Sem referência'};
-  var clTxt = clTxtMap[item.classificacao] || item.classificacao;
+  var clTxtMap = {estavel:'Estável',subiu_moderado:'Subiu moderado',subiu_significativo:'Subiu significativo',caiu_moderado:'Caiu moderado',caiu_classificativo:'Caiu significativo',sem_referencia:'Sem referência'};
   var tipoLabel = item.tipo === 'mensal' ? 'Mês ' + item.label : 'Semana ' + item.label;
   var fmt = function(v) { return v != null ? v.toFixed(2) + '%' : '–'; };
   var fmtPP = function(v) { return v != null ? (v > 0 ? '+' : '') + v.toFixed(2) + 'pp' : '–'; };
   var m = item.metricas || {};
-  var crAtual = (m.cr_atual || {})[canal];
-  var crBase = (m.cr_baseline || {})[canal];
-  var dp = (m.delta_pp || {})[canal];
+
+  // Classificação: usar classificação por device quando disponível no campo dispositivos
+  var devData = (item.dispositivos || {})[canal];
+  var classifAtiva = (canal !== 'total' && devData && devData.classificacao)
+    ? devData.classificacao
+    : item.classificacao;
+  var cl = clMap[classifAtiva] || 'badge-neutral';
+  var clTxt = (clTxtMap[classifAtiva] || classifAtiva) + (canal !== 'total' ? ' (' + canal[0].toUpperCase() + canal.slice(1) + ')' : '');
+
+  // Métricas: preferir dados do bloco dispositivos quando filtro ativo e disponível
+  var crAtual, crBase, dp;
+  if (canal !== 'total' && devData) {
+    crAtual = devData.cr_atual != null ? devData.cr_atual : (m.cr_atual || {})[canal];
+    crBase  = devData.cr_baseline != null ? devData.cr_baseline : (m.cr_baseline || {})[canal];
+    dp      = devData.delta_pp != null ? devData.delta_pp : (m.delta_pp || {})[canal];
+  } else {
+    crAtual = (m.cr_atual || {})[canal];
+    crBase  = (m.cr_baseline || {})[canal];
+    dp      = (m.delta_pp || {})[canal];
+  }
   var sigma = m.sigma;
+
   var out = '<div class="conv-ins-card">';
   out += '<div class="conv-ins-header"><span class="conv-ins-label">' + tipoLabel + '</span><span class="conv-ins-badge ' + cl + '">' + clTxt + '</span></div>';
   out += '<div class="conv-ins-metrics">';
@@ -1699,14 +1715,51 @@ function renderConvInsPeriod(idx) {
   out += '<div class="conv-ins-metric-item"><span class="conv-ins-metric-label">Delta</span><span class="conv-ins-metric-value ' + (dp != null && dp < 0 ? 'neg' : 'pos') + '">' + fmtPP(dp) + '</span></div>';
   out += '<div class="conv-ins-metric-item"><span class="conv-ins-metric-label">σ</span><span class="conv-ins-metric-value">' + (sigma != null ? sigma.toFixed(2) : '–') + '</span></div>';
   out += '</div>';
+
+  // Hipóteses: combinar hipóteses gerais + hipóteses do bloco dispositivos (quando disponível)
   var hips = item.hipoteses || [];
-  var filtHips = canal === 'total' ? hips : hips.filter(function(h) { return h.dispositivo === canal || h.dispositivo === 'total'; });
+  var devHips = (canal !== 'total' && devData && Array.isArray(devData.hipoteses)) ? devData.hipoteses : [];
+  var filtHips;
+  if (canal === 'total') {
+    filtHips = hips;
+  } else {
+    // Hipóteses gerais filtradas por dispositivo + hipóteses específicas do device
+    var generalFiltered = hips.filter(function(h) { return h.dispositivo === canal || h.dispositivo === 'total'; });
+    filtHips = generalFiltered.concat(devHips);
+  }
+
+  // Contexto de funil por device
+  var funilDev = (canal !== 'total' && devData && devData.funil) ? devData.funil : null;
+
+  if (funilDev) {
+    out += '<div class="conv-ins-section-title">Funil — ' + canal[0].toUpperCase() + canal.slice(1) + '</div>';
+    var funilSteps = [
+      {k:'search_to_cart', l:'Busca → Carrinho'},
+      {k:'cart_to_checkout', l:'Carrinho → Checkout'},
+      {k:'checkout_to_purchase', l:'Checkout → Compra'}
+    ];
+    out += '<table style="width:100%;font-size:12px;border-collapse:collapse;margin-bottom:12px">';
+    funilSteps.forEach(function(fs) {
+      var fv = funilDev[fs.k] || {};
+      var dpColor = fv.delta_pp == null ? '#6C757D' : fv.delta_pp > 0.3 ? '#1B5E20' : fv.delta_pp < -0.3 ? '#C62828' : '#6C757D';
+      var dpStr = fv.delta_pp != null ? '<span style="font-weight:700;color:' + dpColor + '">' + (fv.delta_pp > 0 ? '+' : '') + fv.delta_pp.toFixed(1) + 'pp</span>' : '–';
+      var isCrit = funilDev.step_critico === fs.k;
+      out += '<tr style="border-bottom:1px solid #E9ECEF' + (isCrit ? ';background:rgba(198,40,40,.05)' : '') + '">'
+        + '<td style="padding:4px 8px;color:#495057">' + fs.l + (isCrit ? ' <span style="font-size:10px;background:#C62828;color:#fff;border-radius:3px;padding:1px 4px">crítico</span>' : '') + '</td>'
+        + '<td style="text-align:right;padding:4px 8px;font-weight:700;color:var(--brand-primary)">' + (fv.atual != null ? fv.atual.toFixed(1) + '%' : '–') + '</td>'
+        + '<td style="text-align:right;padding:4px 8px;color:#6C757D">' + (fv.baseline != null ? fv.baseline.toFixed(1) + '%' : '–') + '</td>'
+        + '<td style="text-align:right;padding:4px 8px">' + dpStr + '</td>'
+        + '</tr>';
+    });
+    out += '</table>';
+  }
+
   if (filtHips.length) {
     out += '<div class="conv-ins-section-title">Hipóteses' + (canal !== 'total' ? ' — ' + canal[0].toUpperCase() + canal.slice(1) : '') + '</div>';
     filtHips.forEach(function(hip) {
       var dev = hip.dispositivo === 'mobile' ? '📱 Mobile' : hip.dispositivo === 'desktop' ? '💻 Desktop' : '🌐 Total';
       out += '<div class="conv-ins-hipotese"><div class="conv-ins-hip-header">'
-        + '<span class="conv-ins-rank">#' + hip.rank + '</span>'
+        + '<span class="conv-ins-rank">#' + (hip.rank || '–') + '</span>'
         + '<span class="conv-ins-dev">' + dev + '</span>'
         + '<span class="conv-ins-titulo">' + hip.titulo + '</span></div>';
       out += '<div class="conv-ins-evidencia"><strong>Evidência:</strong> ' + hip.evidencia + '</div>';
@@ -1714,7 +1767,7 @@ function renderConvInsPeriod(idx) {
       out += '<div class="conv-ins-time">🔍 Confirmar com: <em>' + hip.time_para_confirmar + '</em></div></div>';
     });
   } else if (canal !== 'total') {
-    out += '<div class="conv-ins-empty-hyp">Nenhuma hipótese específica para ' + canal + ' neste período.</div>';
+    out += '<div class="conv-ins-empty-hyp">Nenhuma hipótese específica para ' + canal + ' neste período. A tarefa agendada preencherá hipóteses por device na próxima execução quando houver variação significativa.</div>';
   } else {
     out += '<div class="conv-ins-empty-hyp">Conversão estável — sem hipóteses a investigar.</div>';
   }
@@ -3849,11 +3902,12 @@ function openDrop(id, triggerEl){
   document.querySelectorAll(".dr-drop").forEach(d=>d.classList.remove("open"));
   const drop = document.getElementById(id);
   // Posicionar usando getBoundingClientRect do botão trigger
+  // position:fixed — coordenadas relativas à viewport, SEM somar window.scrollY
   if(triggerEl){
     const rect = triggerEl.getBoundingClientRect();
     const dropW = 340;
     const left  = Math.min(rect.left, window.innerWidth - dropW - 8);
-    drop.style.top  = (rect.bottom + window.scrollY + 8) + "px";
+    drop.style.top  = (rect.bottom + 8) + "px";
     drop.style.left = left + "px";
   }
   drop.classList.add("open");
