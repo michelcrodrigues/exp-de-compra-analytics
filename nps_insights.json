@@ -1,6 +1,62 @@
 {
-  "gerado_em": "2026-06-23T16:33:11.518Z",
+  "gerado_em": "2026-06-30T16:37:57.362Z",
   "semanas": [
+    {
+      "semana": "2026-06-22",
+      "label": "22/06 – 28/06/2026",
+      "gerado_em": "2026-06-30T12:00:00Z",
+      "nps_score": 81.42,
+      "nps_nota_media": 9.32,
+      "nps_respostas": 10206,
+      "nps_promotores": 8739,
+      "nps_neutros": 1038,
+      "nps_detratores": 429,
+      "promotores": {
+        "total": 330,
+        "temas_principais": [
+          "satisfação geral com a experiência de compra (elogios curtos e genéricos)",
+          "praticidade e facilidade do processo",
+          "qualidade percebida do atendimento"
+        ],
+        "resumo": "Promotores expressam satisfação ampla e genérica — comentários curtos como 'Muito bom', 'Ótimo', 'Excelente' dominam o volume (77, 70, 35 ocorrências respectivamente). O padrão é consistente com a semana anterior: alta satisfação sem memória positiva diferenciada.",
+        "insight": "O alto volume de promotores com comentários curtos e genéricos confirma que a experiência funcionou sem atrito perceptível — mas ainda não gera encantamento. Com NPS em 81.42 e meta em 60, há margem para criar momentos de diferenciação que transformem 'ótimo' em recomendação ativa.",
+        "recorrente": true,
+        "semanas_recorrente": 2
+      },
+      "neutros": {
+        "total": 119,
+        "temas_principais": [
+          "taxa de serviço percebida como alta e injustificada",
+          "ausência de parcelamento sem juros",
+          "falha no processamento do primeiro pagamento sem retorno",
+          "cupom de desconto ofertado mas invalidado na hora da compra",
+          "experiência de compra percebida como burocrática ou complicada"
+        ],
+        "resumo": "Neutros estão bloqueados por barreiras financeiras e fricções de pagamento. A taxa de serviço aparece em múltiplas variações ('taxa de serviço muito alta', 'taxa de embarque muito alta', 'absurdo cobrar taxa sem diferencial'). Falha no processamento do primeiro pagamento sem suporte e cupom inválido são os dois temas operacionais mais críticos desta semana.",
+        "insight": "A taxa de serviço é barreira estrutural e recorrente para conversão de neutros em promotores — aparece pela 2ª semana consecutiva com a mesma intensidade. O tema de falha no primeiro pagamento sem retorno é novo e pode estar correlacionado com a queda de checkout→purchase observada nos dados desta semana: usuários tentando comprar, falhando e não recebendo suporte proativo.",
+        "recorrente": true,
+        "semanas_recorrente": 2
+      },
+      "detratores": {
+        "total": 28,
+        "temas_principais": [
+          "mudança de valor de tarifa no momento da compra sem transparência",
+          "taxa de serviço de R$10 considerada absurda",
+          "comentário positivo com nota baixa (provável erro na escala NPS)"
+        ],
+        "resumo": "Volume pequeno de detratores com dois padrões distintos: indignação com taxa de serviço e falta de transparência no preço final, mais um comentário positivo ('ADORO ESSA EMPRESA') com nota baixa — indicando provável erro de preenchimento na escala.",
+        "insight": "A mudança de valor de tarifa no momento da compra (dynamic pricing ou taxa sobreposta ao final do checkout) é um gatilho de insatisfação extrema que vai além da taxa de serviço: o usuário percebe como trapaça. Esse tema é mais grave que a insatisfação com o valor em si — é quebra de confiança.",
+        "recomendacao_produto": "Revisar a comunicação de custo final no checkout — valor total deve ser visível antes de qualquer confirmação de pagamento. Investigar se há mudança de preço entre seleção de assento e conclusão da compra (possível bug ou comportamento não intencional do dynamic pricing). Auditar a clareza da escala NPS no formulário pós-compra — comentário 'ADORO ESSA EMPRESA' com nota baixa indica problema de UX no instrumento.",
+        "recorrente": true,
+        "semanas_recorrente": 2
+      },
+      "analise_temporal": {
+        "padrao": "recorrente",
+        "tendencia": "crescente",
+        "diagnostico": "Taxa de serviço e ausência de parcelamento sem juros aparecem pela 2ª semana consecutiva como principal driver de neutros e detratores — padrão estrutural, não pontual. NPS subiu de 80.56 para 81.42 (+0.86pts) mesmo com esses temas persistindo, o que indica que o volume de promotores compensou. O tema novo desta semana — falha no primeiro pagamento sem retorno — está potencialmente correlacionado com a queda de checkout→purchase identificada nos dados analíticos: usuários tentando pagar, falhando e não recebendo suporte.",
+        "dias_criticos": []
+      }
+    },
     {
       "semana": "2026-06-16",
       "semana_fim": "2026-06-22",
