@@ -1,6 +1,149 @@
 {
-  "gerado_em": "2026-06-23T16:30:11.381Z",
+  "gerado_em": "2026-06-30T16:36:14.639Z",
   "insights": [
+    {
+      "semana": "2026-06-22",
+      "label": "22/06 – 28/06/2026",
+      "gerado_em": "2026-06-30T16:36:14.638Z",
+      "items": [
+        {
+          "id": "INS-2026-040",
+          "canal": "site",
+          "tag": "checkout→purchase 3ª semana consecutiva em queda (82.5%→77.1%→73.1%) — padrão estrutural confirma causa do experimento de checkout acelerado",
+          "classificacao": "Diagnóstico comprovado",
+          "prioridade": "Alta",
+          "data": "2026-06-30",
+          "diagnostico": "A queda de checkout→purchase deixou de ser um incidente e se tornou uma tendência estrutural progressiva. Pela terceira semana consecutiva a taxa caiu: W1 (08-14/06): 82.5%, W2 (15-21/06): 77.1%, W3 (22-28/06): 73.1% — delta acumulado de -9.4pp. O alerta do Release Notes (Ciclo 13) confirma o contexto: 'Implementamos o experimento de checkout de um modo muito acelerado, o que não foi eficiente para a nossa aferição.' A primeira rodada de testes foi concluída e ajustes foram encaminhados — mas a queda ainda não foi revertida nos dados desta semana. Com o proxy reverso agora em funcionamento, a infraestrutura para um experimento mais controlado está disponível.",
+          "evidencia": "W1 (08-14/06): begin_checkout=47,580, purchase=39,253, checkout→purchase=82.5%. W2 (15-21/06): begin_checkout=49,789, purchase=38,403, checkout→purchase=77.1%. W3 (22-28/06): begin_checkout=52,886, purchase=38,638, checkout→purchase=73.1%. Delta acumulado vs W1: -9.4pp. Mobile W3: 77.8% (-7.4pp vs baseline 85.2%). Desktop W3: 63.1% (-5.4pp vs baseline 68.5%). Etapas anteriores estáveis: search→cart 10.2% (Δ 0pp), cart→checkout 65.5% (+0.7pp). Déficit estimado vs W1: ~10,200 compras/semana (36,579 realizadas vs ~46,800 se taxa se mantivesse em 82.5%).",
+          "plano_acao": "1. Confirmar com time SEN se os ajustes pós-primeira rodada de testes do checkout foram deployados antes ou depois de 22/06 — se após, monitorar W4 (29/06-05/07) para verificar recuperação. 2. Segmentar checkout→purchase por variante A/B redesign_checkout no GA4 — identificar qual variante tem taxa menor e concentrar os ajustes nela. 3. Se W4 (29/06-05/07) não reverter a tendência, considerar rollback do experimento enquanto próxima versão é refinada com metodologia controlada e sample size calculado. 4. Utilizar o proxy reverso (agora em funcionamento) como infraestrutura para próximo ciclo do experimento com controle adequado de tráfego.",
+          "impacto": "Déficit de ~10,200 compras/semana vs o patamar de W1 (quando checkout→purchase era 82.5%). Com ticket médio estimado ~R$75, impacto semanal de ~R$765k. Acumulado nas 3 semanas de queda: estimado R$1.5M-2M de receita não realizada. Impacto direto e imediato no KR Receita R$345M.",
+          "acompanhamento": "Monitorar checkout→purchase semanalmente. Threshold de recuperação: retorno acima de 79% (baseline histórico pré-experimento). Se W4 (29/06-05/07) apresentar taxa abaixo de 72%, acionar protocolo de reversão do experimento com urgência. Meta: checkout→purchase ≥79% por 2 semanas consecutivas após aplicação dos ajustes.",
+          "texto": "Diagnóstico: checkout→purchase em queda estrutural progressiva pelo 3ª semana — W1=82.5%, W2=77.1%, W3=73.1% (Δ acumulado -9.4pp). Release Notes Ciclo 13 confirma: experimento de checkout implementado de forma acelerada. Mobile: 77.8% (-7.4pp). Desktop: 63.1% (-5.4pp). Etapas anteriores estáveis.\n\nEvidência: W3 begin_checkout=52,886, purchase=38,638. Déficit estimado: ~10,200 compras/semana vs W1. Impacto acumulado 3 semanas: R$1.5M-2M.\n\nClassificação: Diagnóstico comprovado\n\nPlano de ação: 1. Confirmar se ajustes foram deployados antes/depois de 22/06. 2. Segmentar por variante A/B no GA4. 3. Se W4 sem melhora: rollback do experimento. 4. Proxy reverso disponível para próxima versão controlada.\n\nImpacto: ~10,200 compras/semana | ~R$765k/semana | KR Receita R$345M.\n\nPrioridade: Alta — tendência estrutural acelerada, 3ª semana consecutiva.\n\nAcompanhamento: Meta retorno ≥79%. Se W4 < 72%: rollback imediato.",
+          "titulo_linear": "checkout→purchase 3ª semana de queda (73.1%, -9.4pp acumulado): validar ajustes do experimento ou acionar rollback",
+          "tipo_acao": "testar",
+          "testavel": true,
+          "criterio_confirmacao": "checkout→purchase site retorna a ≥79% por 2 semanas consecutivas após aplicação dos ajustes do experimento",
+          "experimento_template": {
+            "id": "INS-2026-040",
+            "titulo": "Validar recuperação do checkout→purchase após ajustes do redesign de checkout (Ciclo 14)",
+            "hipotese": "Os ajustes identificados na primeira rodada de testes do experimento de checkout (Ciclo 13) vão reverter a queda de checkout→purchase, retornando a taxa acima de 79%.",
+            "metrica_primaria": "checkout_to_purchase_rate_site",
+            "guardrails": [
+              "NPS não cai abaixo de 79",
+              "Sessões totais não caem",
+              "CR mobile não cai abaixo de 7.5%"
+            ],
+            "criterio_sucesso": "checkout→purchase ≥79% por 2 semanas consecutivas pós-ajuste",
+            "duracao_minima_dias": 14,
+            "notas": "Se W4 não mostrar melhora: rollback imediato. Usar proxy reverso para controle de tráfego no próximo ciclo. Segmentar GA4 por variante A/B antes de qualquer rollback."
+          },
+          "status": "nunca_testada",
+          "experimento_id": null,
+          "revisao": null
+        },
+        {
+          "id": "INS-2026-041",
+          "canal": "conjunto",
+          "tag": "[Site vs App] Padrão conjunto de 3 semanas confirma falha estrutural: checkout→purchase em queda progressiva em site (-9.4pp) e app (-11.6pp)",
+          "classificacao": "Diagnóstico comprovado",
+          "prioridade": "Alta",
+          "data": "2026-06-30",
+          "diagnostico": "O que na semana de 16-22/06 parecia um incidente pontual de pagamento consolida-se como falha estrutural progressiva: checkout→purchase caiu pela 3ª semana consecutiva em ambos os canais de forma paralela. Site: 82.5%→77.1%→73.1% (Δ acumulado -9.4pp). App: 69.7%→61.2%→58.1% (Δ acumulado -11.6pp). A simultaneidade cross-canal durante 3 semanas seguidas, alinhada ao período de rollout do experimento de checkout, confirma que a causa não é de infraestrutura de pagamento pontual — seria agudo e não progressivo. O padrão indica mudança funcional no fluxo de checkout que está degradando sistematicamente a conclusão de pagamento em ambas as plataformas.",
+          "evidencia": "Site checkout→purchase: W1=82.5%, W2=77.1%, W3=73.1% (Δ 3 semanas: -9.4pp). App checkout→purchase: W1=69.7% (14,770/21,187), W2=61.2% (11,480/18,770), W3=58.1% (11,113/19,128) (Δ 3 semanas: -11.6pp). Total compras combinadas: W1=51,598 vs W3=47,692 — déficit semanal de 3,906 compras. CR site W3: 8.66% vs W1: 9.25% (-0.59pp). CR app W3: 6.10% vs W1: 8.06% (-1.96pp). Contexto: Release Notes Ciclo 13 alerta sobre experimento de checkout acelerado, sem eficiência para aferição.",
+          "plano_acao": "1. Confirmar com time SEN se o experimento de checkout afeta site e app no mesmo fluxo de backend ou se são pipelines distintos — se backend compartilhado, o ajuste de um canal deve beneficiar o outro. 2. Definir critério claro de sucesso pós-ajuste para W4: site ≥79% e app ≥65% por 2 semanas consecutivas. 3. Se W4 não mostrar melhora em ambos os canais, acionar protocolo de rollback e planejar próximo ciclo do experimento com duração mínima definida e sample size calculado. 4. NPS app sem respostas esta semana — ativar coleta para ter sinal de satisfação no canal app antes de qualquer novo rollout.",
+          "impacto": "Déficit combinado de ~3,906 compras/semana vs W1. Com ticket médio ~R$75, impacto de ~R$293k/semana. Projeção das 3 semanas de queda acumulada: R$700k-900k de receita combinada não realizada. Impacto no KR Receita R$345M e KR Conversão de ambas as plataformas.",
+          "acompanhamento": "Monitorar checkout→purchase em site e app separadamente cada semana. Qualquer nova semana com site <72% ou app <55% deve acionar reunião de triagem imediata com time SEN. Meta de recuperação: site ≥79% e app ≥65% até a semana de 13/07.",
+          "texto": "Diagnóstico: checkout→purchase em queda progressiva por 3 semanas em site e app simultaneamente. Site: 82.5%→77.1%→73.1% (-9.4pp). App: 69.7%→61.2%→58.1% (-11.6pp). Padrão cross-canal de 3 semanas confirma falha estrutural, não incidente pontual.\n\nEvidência: Compras combinadas W3=47,692 vs W1=51,598 (Δ -3,906/semana). CR site: -0.59pp vs W1. CR app: -1.96pp vs W1. Contexto: Release Notes Ciclo 13 confirma experimento de checkout acelerado.\n\nClassificação: Diagnóstico comprovado\n\nPlano de ação: 1. Confirmar se backend do checkout é compartilhado entre site e app. 2. Critério de sucesso W4: site ≥79% e app ≥65%. 3. Se W4 sem melhora: rollback. 4. Ativar NPS app para sinal de satisfação antes do próximo rollout.\n\nImpacto: ~R$293k/semana combinado | R$700k-900k acumulado 3 semanas | KR Receita R$345M.\n\nPrioridade: Alta — padrão sistêmico confirmado em ambos os canais.\n\nAcompanhamento: Alerta site <72% ou app <55%: triagem imediata. Meta: site ≥79% e app ≥65% até 13/07.",
+          "titulo_linear": "Diagnóstico conjunto site+app: 3 semanas de queda no checkout→purchase — definir critério de sucesso pós-ajuste e protocolo de rollback",
+          "tipo_acao": "testar",
+          "testavel": true,
+          "criterio_confirmacao": "Site checkout→purchase ≥79% E app checkout→purchase ≥65% por 2 semanas consecutivas após aplicação dos ajustes",
+          "experimento_template": {
+            "id": "INS-2026-041",
+            "titulo": "Validar recuperação combinada checkout→purchase site+app pós-ajustes Ciclo 14",
+            "hipotese": "Os ajustes do experimento de checkout beneficiam site e app simultaneamente, restaurando checkout→purchase acima de 79% no site e 65% no app.",
+            "metrica_primaria": "checkout_to_purchase_rate_site_e_app",
+            "guardrails": [
+              "NPS site não cai abaixo de 79",
+              "CR site não cai abaixo de 8.0%",
+              "CR app não cai abaixo de 5.5%"
+            ],
+            "criterio_sucesso": "Site ≥79% e app ≥65% por 2 semanas consecutivas pós-ajuste",
+            "duracao_minima_dias": 14,
+            "notas": "Dependente de INS-2026-040. Confirmar se backend é compartilhado antes de interpretar resultados separadamente."
+          },
+          "status": "nunca_testada",
+          "experimento_id": null,
+          "revisao": null
+        },
+        {
+          "id": "INS-2026-042",
+          "canal": "site",
+          "tag": "NPS 81.42 (+0.86pts) — máximo recente apesar do checkout pressionado: jornada pré-pagamento saudável, problema isolado na etapa final",
+          "classificacao": "Tendência",
+          "prioridade": "Baixa",
+          "data": "2026-06-30",
+          "diagnostico": "Apesar da deterioração progressiva no checkout→purchase, o NPS de compras subiu pelo segundo mês consecutivo: 81.42 em W3 vs 80.56 em W2 (+0.86pts), com 10,206 respostas válidas — volume suficiente para consistência estatística. O NPS está bem acima da meta do KR (60) e representa o melhor patamar das últimas semanas. A dissociação entre conversão caindo e NPS subindo tem interpretação direta: o problema está exclusivamente na etapa de pagamento, não na experiência de compra em si. Usuários que conseguem concluir a compra saem muito satisfeitos — o que confirma que a jornada de produto até o checkout está funcionando e que a causa da queda de conversão é técnica/funcional, não de experiência.",
+          "evidencia": "NPS score W3: 81.42 (+0.86pts vs W2=80.56). Respostas: 10,206. Distribuição: Promotores 8,739 (85.6%) / Neutros 1,038 (10.2%) / Detratores 429 (4.2%). NPS mobile W3: 82.09 (+1.63pts vs W2=80.46). NPS desktop W3: 78.97 (-2.12pts vs W2=81.09 — dentro do ruído com 2,263 respostas). Meta KR NPS=60: cumprida com +21.42pts de margem. Tendência: NPS estava em 81.23 em W1 → 80.56 em W2 → 81.42 em W3 — estável/levemente crescente.",
+          "plano_acao": "Nenhuma ação corretiva necessária na experiência de compra. Monitorar NPS desktop — caiu -2.12pts esta semana (78.97). Com 2,263 respostas, variação está dentro do ruído estatístico, mas requer atenção se desktop ficar abaixo de 77 por 2 semanas consecutivas. Quando checkout→purchase for corrigido, esperar aumento no volume de respostas (mais compras concluídas = mais avaliações) — observar se NPS se mantém acima de 80.",
+          "impacto": "Mantém KR NPS=60 bem cumprido com folga de +21pts. Sinal positivo para o roadmap: quando o checkout for corrigido, o produto está pronto para converter bem e com alta satisfação. Não há problema de experiência acumulado que precise de correção urgente.",
+          "acompanhamento": "Monitorar NPS score semanalmente. Meta: manter acima de 79. Atenção especial ao NPS desktop — se cair abaixo de 77 por 2 semanas consecutivas, investigar causas específicas do canal desktop (pode estar relacionado à queda de CR desktop).",
+          "texto": "Diagnóstico: NPS site sobe para 81.42 (+0.86pts vs W2), máximo recente, com 10,206 respostas. Mobile: 82.09 (+1.63pts). Desktop: 78.97 (-2.12pts, ruído estatístico com 2,263 respostas). NPS subindo enquanto checkout cai — confirma que o problema é técnico na etapa de pagamento, não de experiência.\n\nEvidência: Promotores 85.6%, Neutros 10.2%, Detratores 4.2%. Meta KR=60 cumprida com +21.42pts. Tendência: W1=81.23→W2=80.56→W3=81.42.\n\nClassificação: Tendência\n\nPlano de ação: Monitorar NPS desktop (78.97, -2.12pts). Alertar se desktop <77 por 2 semanas. Observar volume de respostas após correção do checkout.\n\nImpacto: KR NPS=60 cumprido com folga. Produto pronto para converter quando checkout for estabilizado.\n\nPrioridade: Baixa — sinal positivo, sem ação corretiva necessária.\n\nAcompanhamento: Meta ≥79. Alerta desktop <77 por 2 semanas.",
+          "titulo_linear": null,
+          "tipo_acao": "monitorar",
+          "testavel": false,
+          "criterio_confirmacao": null,
+          "experimento_template": null,
+          "status": "nunca_testada",
+          "experimento_id": null,
+          "revisao": null
+        },
+        {
+          "id": "INS-2026-043",
+          "canal": "site-desktop",
+          "tag": "[Desktop] CR caiu_moderado (11.74%, -1.02pp vs baseline) — checkout→purchase em 63.1% é o step crítico, etapas anteriores estáveis",
+          "classificacao": "Diagnóstico comprovado",
+          "prioridade": "Média",
+          "data": "2026-06-30",
+          "diagnostico": "O CR desktop foi o único device classificado como caiu_moderado nesta semana: 11.74% vs baseline 12.76%, queda de -1.02pp. O funil desktop revela exatamente onde está o problema: checkout→purchase em 63.1% vs baseline 68.5%, queda de -5.4pp — única etapa com variação negativa relevante. Search→cart (+0.3pp) e cart→checkout (+0.5pp) estão estáveis ou levemente melhorando. O problema está isolado na etapa final de pagamento. O desktop é proporcionalmente mais afetado que o mobile (CR mobile estável, -0.25pp), possivelmente porque o redesign de checkout priorizou a experiência mobile, introduzindo regressão específica em desktop — hipótese a verificar no GA4 por variante.",
+          "evidencia": "CR desktop W3: 11.74% vs baseline 12.76% (Δ -1.02pp, classificação caiu_moderado). CR mobile W3: 7.82% vs baseline 8.07% (Δ -0.25pp, estável). Funil desktop: search→cart=13.7% (Δ +0.3pp), cart→checkout=62.3% (Δ +0.5pp), checkout→purchase=63.1% (Δ -5.4pp vs baseline 68.5%). Sessões desktop W3: ~81,765 (19.4% do mix). Compras desktop W3: 10,456. Canal direto: CR 16.69% vs baseline 17.66% (Δ -0.97pp sem mudança de share — usuários de alta intenção também afetados).",
+          "plano_acao": "1. Segmentar no GA4 a taxa checkout→purchase por variante do A/B redesign_checkout para desktop — verificar se uma variante específica tem taxa significativamente menor em desktop. 2. Verificar se o layout do checkout redesenhado tem problemas específicos de usabilidade em tela maior (formulários, botões, fluxo de pagamento). 3. Monitorar CR desktop nas próximas 2 semanas — se retornar ao baseline (≥12.5%) após os ajustes do experimento, confirma que a causa era o checkout. 4. Atenção especial ao canal direto (CR -0.97pp) — usuários que chegam via marca própria com alta intenção de compra não devem ser impactados por falhas de checkout.",
+          "impacto": "A queda de -1.02pp no CR desktop representa ~835 compras/semana a menos em desktop (81,765 × 1.02%). Desktop tem ticket médio historicamente maior — impacto financeiro por compra acima da média. KR Receita R$345M.",
+          "acompanhamento": "Monitorar CR desktop semanalmente. Alerta: CR desktop abaixo de 11% por 2 semanas consecutivas. Meta de retorno: ≥12.5% após estabilização do checkout. Monitorar canal direto: se CR cair abaixo de 16% é sinal que usuários de alta intenção estão sendo impactados estruturalmente.",
+          "texto": "Diagnóstico: CR desktop caiu_moderado — 11.74% vs baseline 12.76% (Δ -1.02pp). Funil desktop: step crítico é checkout→purchase (63.1%, Δ -5.4pp); etapas anteriores estáveis (+0.3pp e +0.5pp). Queda mais intensa que no mobile (-0.25pp) — possível priorização mobile no redesign de checkout.\n\nEvidência: Sessões desktop ~81,765 (19.4% do mix). Canal direto: CR 16.69% vs 17.66% (-0.97pp, sem mudança de share). Search→cart e cart→checkout estáveis.\n\nClassificação: Diagnóstico comprovado\n\nPlano de ação: 1. Segmentar GA4 por variante A/B em desktop. 2. Verificar usabilidade do checkout em tela maior. 3. Monitorar retorno ≥12.5% pós-ajustes. 4. Canal direto: CR abaixo de 16% = alerta.\n\nImpacto: ~835 compras/semana perdidas em desktop | KR Receita R$345M.\n\nPrioridade: Média — caiu_moderado, causa conhecida (checkout), recuperável.\n\nAcompanhamento: Alerta CR desktop <11% por 2 semanas. Meta: ≥12.5% após estabilização.",
+          "titulo_linear": null,
+          "tipo_acao": "monitorar",
+          "testavel": false,
+          "criterio_confirmacao": null,
+          "experimento_template": null,
+          "status": "nunca_testada",
+          "experimento_id": null,
+          "revisao": null
+        },
+        {
+          "id": "INS-2026-044",
+          "canal": "site",
+          "tag": "Canal pago: share +2.5pp (52.7%) com CR -0.63pp (8.63%) — diluição de qualidade amplifica impacto do checkout pressionado",
+          "classificacao": "Hipótese",
+          "prioridade": "Média",
+          "data": "2026-06-30",
+          "diagnostico": "O canal pago ampliou sua participação no mix (52.7% vs baseline 50.2%, +2.5pp), mas perdeu eficiência de conversão (-0.63pp de CR, 8.63% vs baseline 9.26%). Sinal clássico de diluição de qualidade de tráfego: mais volume, menor intenção de compra. Canal direto (usuários de maior intenção) e orgânico também perderam CR, mas sem variação de share — o que confirma que parte da queda geral de CR é transversal ao checkout quebrado, não específica de canal. A hipótese é que o aumento de share pago trouxe audiências com menor intenção de compra, cujo impacto no CR agregado é amplificado pela etapa de pagamento já degradada. Importante: quando o checkout for corrigido, o CR pago deve voltar a ~9.26% se a qualidade de audiência for mantida.",
+          "evidencia": "Canal pago W3: share=52.7% (vs baseline 50.2%, Δ +2.5pp), CR=8.63% (vs baseline 9.26%, Δ -0.63pp). Canal direto: share=12.4% (estável), CR=16.69% (vs baseline 17.66%, Δ -0.97pp). Canal orgânico: share=17.2% (+0.2pp), CR=5.88% (vs baseline 6.27%, Δ -0.39pp). Queda de CR em todos os canais confirma causa transversal (checkout). A magnitude maior no canal direto (-0.97pp vs -0.63pp do pago) com share estável sugere que a queda pago tem componente adicional de qualidade de audiência.",
+          "plano_acao": "1. Verificar com time de mídia se houve mudança de público-alvo, campanha ou budget na semana 22-28/06 que explique o crescimento de share pago sem conversão proporcional. 2. Após correção do checkout, analisar CR pago isoladamente para distinguir impacto do pagamento de impacto de qualidade de audiência. 3. Se CR pago não retornar a ≥9.0% após estabilização do checkout, investigar qualidade das campanhas ativas. 4. Considerar reduzir budget em audiências de expansão enquanto checkout estiver degradado — cada sessão paga não convertida aumenta o CPA sem gerar receita.",
+          "impacto": "Se CR pago retornasse ao baseline de 9.26%, seriam ~2,800 compras adicionais/semana em sessões pagas (222,552 × 0.63%). Impacto no ROAS da mídia paga e eficiência de investimento. KR Receita R$345M.",
+          "acompanhamento": "Monitorar CR por canal semanalmente. Meta CR pago pós-estabilização do checkout: ≥9.0%. Alerta: se CR pago cair abaixo de 8.0% por 2 semanas consecutivas após correção do checkout, revisar estratégia de audiência. Monitorar canal direto — threshold mínimo: CR acima de 16%.",
+          "texto": "Diagnóstico: Canal pago cresceu +2.5pp de share (52.7%) mas perdeu -0.63pp de CR (8.63% vs baseline 9.26%) — sinal de diluição de qualidade de tráfego amplificando impacto do checkout pressionado. Canal direto (-0.97pp) e orgânico (-0.39pp) também perderam CR sem mudança de share, confirmando causa transversal.\n\nEvidência: Pago: share +2.5pp, CR -0.63pp. Direto: share 0pp, CR -0.97pp. Orgânico: share +0.2pp, CR -0.39pp. Queda de CR em todos os canais com magnitude proporcional à intensidade de uso do checkout.\n\nClassificação: Hipótese\n\nPlano de ação: 1. Verificar mudança de público/campanha pago na semana 22-28/06. 2. Após correção do checkout, isolar impacto de qualidade de audiência. 3. Se CR pago não recupera para ≥9.0% pós-checkout, investigar campanhas. 4. Reduzir budget em audiências de expansão enquanto checkout estiver degradado.\n\nImpacto: ~2,800 compras adicionais/semana se CR pago voltasse ao baseline | KR Receita R$345M.\n\nPrioridade: Média — hipótese, recuperável com correção do checkout.\n\nAcompanhamento: Meta CR pago pós-estabilização: ≥9.0%. Alerta <8.0% por 2 semanas.",
+          "titulo_linear": null,
+          "tipo_acao": "monitorar",
+          "testavel": false,
+          "criterio_confirmacao": null,
+          "experimento_template": null,
+          "status": "nunca_testada",
+          "experimento_id": null,
+          "revisao": null
+        }
+      ]
+    },
     {
       "semana": "2026-06-16",
       "label": "16/06 – 22/06/2026",
@@ -785,6 +928,193 @@
     }
   ],
   "insights_conversao": [
+    {
+      "semana": "2026-06-22",
+      "label": "22/06 – 28/06/2026",
+      "tipo": "semanal",
+      "gerado_em": "2026-06-30T12:00:00.000-03:00",
+      "classificacao": "estavel",
+      "metricas": {
+        "cr_atual": {
+          "total": 8.66,
+          "mobile": 7.82,
+          "desktop": 11.74
+        },
+        "cr_baseline": {
+          "total": 9.01,
+          "mobile": 8.07,
+          "desktop": 12.76
+        },
+        "delta_pp": {
+          "total": -0.35,
+          "mobile": -0.25,
+          "desktop": -1.02
+        },
+        "sigma": 0.57,
+        "n_semanas_hist": 8
+      },
+      "hipoteses": [
+        {
+          "hipotese": "O experimento de checkout implementado de forma acelerada (Ciclo 13) degradou a etapa checkout→purchase, que caiu -6.5pp vs baseline e -4.0pp vs W2, pela 3ª semana consecutiva.",
+          "evidencia": "checkout→purchase: W1=82.5% → W2=77.1% → W3=73.1% (Δ acumulado: -9.4pp). Release Notes Ciclo 13: alerta explícito sobre implementação acelerada do experimento.",
+          "canal_afetado": "site"
+        },
+        {
+          "hipotese": "Canal pago cresceu +2.5pp de share (52.7%) com queda de CR de -0.63pp (8.63%), sugerindo diluição de qualidade de audiência que amplifica o impacto do checkout pressionado.",
+          "evidencia": "Pago: share_atual=52.7% vs share_base=50.2%, CR_atual=8.63% vs CR_base=9.26% (Δ -0.63pp). Canal direto: CR 16.69% vs baseline 17.66% (Δ -0.97pp) — sem mudança de share.",
+          "canal_afetado": "site"
+        }
+      ],
+      "monitorar": "Monitorar checkout→purchase semanalmente — threshold de recuperação ≥79% (baseline pré-experimento). Se W4 (29/06-05/07) não reverter, protocolo de rollback do experimento.",
+      "dispositivos": {
+        "mobile": {
+          "classificacao": "estavel",
+          "cr_atual": 7.82,
+          "cr_baseline": 8.07,
+          "delta_pp": -0.25,
+          "canal_contexto": [
+            {
+              "nome": "Pago",
+              "share_sessoes_total": 52.7,
+              "cr_total": 8.63,
+              "delta_cr_pp": -0.63
+            },
+            {
+              "nome": "Orgânico",
+              "share_sessoes_total": 17.2,
+              "cr_total": 5.88,
+              "delta_cr_pp": -0.39
+            },
+            {
+              "nome": "Direto",
+              "share_sessoes_total": 12.4,
+              "cr_total": 16.69,
+              "delta_cr_pp": -0.97
+            },
+            {
+              "nome": "Social",
+              "share_sessoes_total": 1.6,
+              "cr_total": null,
+              "delta_cr_pp": null
+            }
+          ],
+          "funil": {
+            "step_critico": "checkout_to_purchase",
+            "checkout_to_purchase": {
+              "atual": 77.8,
+              "baseline": 85.2,
+              "delta_pp": -7.4
+            },
+            "cart_to_checkout": {
+              "atual": 67.1,
+              "baseline": 66.4,
+              "delta_pp": 0.7
+            },
+            "search_to_cart": {
+              "atual": 9.1,
+              "baseline": 9.1,
+              "delta_pp": 0
+            }
+          },
+          "hipoteses": [
+            {
+              "hipotese": "Checkout→purchase mobile em 77.8% (-7.4pp vs baseline 85.2%) é o principal driver da queda — magnitude maior que no desktop, correlacionada com o experimento de checkout acelerado.",
+              "evidencia": "Mobile checkout→purchase: 36,032 begin_checkout → 28,040 purchase = 77.8%. Baseline 85.2%. Δ -7.4pp. Cart→checkout e search→cart estáveis."
+            }
+          ],
+          "monitorar": "Checkout→purchase mobile: threshold de recuperação ≥83% (próximo ao baseline histórico). W4 é a semana decisiva para avaliar se os ajustes do experimento surtiram efeito."
+        },
+        "desktop": {
+          "classificacao": "caiu_moderado",
+          "cr_atual": 11.74,
+          "cr_baseline": 12.76,
+          "delta_pp": -1.02,
+          "canal_contexto": [
+            {
+              "nome": "Pago",
+              "share_sessoes_total": 52.7,
+              "cr_total": 8.63,
+              "delta_cr_pp": -0.63
+            },
+            {
+              "nome": "Orgânico",
+              "share_sessoes_total": 17.2,
+              "cr_total": 5.88,
+              "delta_cr_pp": -0.39
+            },
+            {
+              "nome": "Direto",
+              "share_sessoes_total": 12.4,
+              "cr_total": 16.69,
+              "delta_cr_pp": -0.97
+            },
+            {
+              "nome": "Social",
+              "share_sessoes_total": 1.6,
+              "cr_total": null,
+              "delta_cr_pp": null
+            }
+          ],
+          "funil": {
+            "step_critico": "checkout_to_purchase",
+            "checkout_to_purchase": {
+              "atual": 63.1,
+              "baseline": 68.5,
+              "delta_pp": -5.4
+            },
+            "cart_to_checkout": {
+              "atual": 62.3,
+              "baseline": 61.8,
+              "delta_pp": 0.5
+            },
+            "search_to_cart": {
+              "atual": 13.7,
+              "baseline": 13.4,
+              "delta_pp": 0.3
+            }
+          },
+          "hipoteses": [
+            {
+              "hipotese": "Checkout→purchase desktop em 63.1% (-5.4pp vs baseline 68.5%) responde pela classificação caiu_moderado. O redesign de checkout pode ter priorizado mobile, introduzindo regressão específica em desktop.",
+              "evidencia": "Desktop checkout→purchase: 16,580 begin_checkout → 10,456 purchase = 63.1% vs baseline 68.5%. CR desktop: 11.74% vs baseline 12.76% (Δ -1.02pp). Canal direto (alta intenção): CR 16.69% vs 17.66% (-0.97pp) sem mudança de share."
+            }
+          ],
+          "monitorar": "CR desktop abaixo de 11% por 2 semanas aciona revisão dedicada. Verificar no GA4 se variante A/B do checkout tem comportamento distinto em desktop. Meta: retorno a ≥12.5% após estabilização."
+        },
+        "app": {
+          "classificacao": "caiu_moderado",
+          "cr_atual": 6.1,
+          "cr_baseline": 7.37,
+          "delta_pp": -1.27,
+          "canal_contexto": [],
+          "funil": {
+            "step_critico": "checkout_to_purchase",
+            "checkout_to_purchase": {
+              "atual": 58.1,
+              "baseline": 66.1,
+              "delta_pp": -8
+            },
+            "cart_to_checkout": {
+              "atual": 14.6,
+              "baseline": 16.8,
+              "delta_pp": -2.2
+            },
+            "search_to_cart": {
+              "atual": 39.8,
+              "baseline": 37.5,
+              "delta_pp": 2.3
+            }
+          },
+          "hipoteses": [
+            {
+              "hipotese": "Checkout→purchase app em queda pelo 3ª semana consecutiva (69.7%→61.2%→58.1%) — padrão simultâneo com o site indica causa de backend compartilhada, não regressão de UX do app.",
+              "evidencia": "App checkout→purchase: W1=69.7%, W2=61.2%, W3=58.1% (Δ acumulado -11.6pp). App CR: W1=8.06%→W2=6.25%→W3=6.10%. NPS app: 0 respostas esta semana. Android CR: 4.76%, iOS: 9.23%."
+            }
+          ],
+          "monitorar": "Checkout→purchase app: meta ≥65% para sinal de recuperação. CR app: meta ≥7.0% como primeiro threshold. Monitorar Android vs iOS separadamente — gap atual: 4.76% vs 9.23%."
+        }
+      }
+    },
     {
       "semana": "2026-06-16",
       "label": "16/06 – 22/06/2026",
