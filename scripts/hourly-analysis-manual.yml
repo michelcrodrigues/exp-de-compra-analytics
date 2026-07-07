@@ -1,0 +1,66 @@
+name: Análise Horária GA4 (Manual - Incidente)
+
+# ATENÇÃO: este workflow é só para acionamento manual (workflow_dispatch).
+# Não tem 'schedule', então não entra no fluxo padrão/automático do repositório
+# e não interfere no update-data.yml existente. Roda uma vez, gera os arquivos
+# e disponibiliza como artifact para download — não commita nada no repositório.
+
+on:
+  workflow_dispatch:
+    inputs:
+      start_date:
+        description: 'Data inicial (AAAA-MM-DD) - inclua 2-3 semanas antes do incidente para baseline'
+        required: true
+        default: '2026-06-17'
+      end_date:
+        description: 'Data final (AAAA-MM-DD)'
+        required: true
+        default: '2026-07-07'
+
+jobs:
+  coleta-horaria:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout do repositório
+        uses: actions/checkout@v4
+
+      - name: Configurar Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Instalar dependências
+        run: pip install google-analytics-data google-auth google-api-python-client
+
+      - name: Criar arquivo de credenciais do Google
+        run: echo '${{ secrets.GA4_CREDENTIALS_JSON }}' > /tmp/ga4_credentials.json
+
+      - name: Coleta horária - SITE (property 326912205)
+        env:
+          GA4_CREDENTIALS_JSON: ${{ secrets.GA4_CREDENTIALS_JSON }}
+        run: |
+          python scripts/fetch_ga4_hourly.py \
+            --property-id 326912205 \
+            --start "${{ inputs.start_date }}" \
+            --end "${{ inputs.end_date }}" \
+            --output data/history_hourly_site.ndjson
+
+      - name: Coleta horária - APP (property 256859064)
+        env:
+          GA4_CREDENTIALS_JSON: ${{ secrets.GA4_CREDENTIALS_JSON }}
+        run: |
+          python scripts/fetch_ga4_hourly.py \
+            --property-id 256859064 \
+            --start "${{ inputs.start_date }}" \
+            --end "${{ inputs.end_date }}" \
+            --output data/history_hourly_app.ndjson
+
+      - name: Publicar arquivos como artifact (não commita no repositório)
+        uses: actions/upload-artifact@v4
+        with:
+          name: analise-horaria-ga4-${{ inputs.start_date }}-a-${{ inputs.end_date }}
+          path: |
+            data/history_hourly_site.ndjson
+            data/history_hourly_app.ndjson
+          retention-days: 14
