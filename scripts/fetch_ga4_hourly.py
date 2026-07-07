@@ -64,13 +64,15 @@ def safe_float(v, decimals=4):
         return 0.0
 
 
-def run_report(service, property_id, start_date, end_date, dimensions, metrics, limit=100000):
+def run_report(service, property_id, start_date, end_date, dimensions, metrics, limit=100000, dimension_filter=None):
     body = {
         "dateRanges": [{"startDate": start_date, "endDate": end_date}],
         "dimensions": [{"name": d} for d in dimensions],
         "metrics": [{"name": m} for m in metrics],
         "limit": limit,
     }
+    if dimension_filter:
+        body["dimensionFilter"] = dimension_filter
     for attempt in range(1, MAX_RETRIES + 1):
         try:
             resp = (
@@ -95,6 +97,16 @@ def format_hora(date_hour_str):
     return dt.strftime("%Y-%m-%dT%H:00")
 
 
+def is_valid_date_hour(date_hour_str):
+    """
+    O GA4 pode devolver um bucket agregado '(other)' quando a combinação de
+    dimensões tem cardinalidade muito alta (ex.: dateHour x eventName com
+    muitos tipos de evento). Essa linha não é uma data/hora real e deve ser
+    descartada, senão quebra o parse.
+    """
+    return bool(date_hour_str) and len(date_hour_str) == 10 and date_hour_str.isdigit()
+
+
 def collect_hourly(service, property_id, start_date, end_date):
     """Retorna dict {dateHour_str: {...metricas...}} já mesclado."""
     data = {}
@@ -111,6 +123,8 @@ def collect_hourly(service, property_id, start_date, end_date):
     )
     for row in rows:
         dh = row["dimensionValues"][0]["value"]
+        if not is_valid_date_hour(dh):
+            continue
         v = row["metricValues"]
         rec = ensure(dh)
         sessoes = safe_int(v[0]["value"])
@@ -129,7 +143,7 @@ def collect_hourly(service, property_id, start_date, end_date):
     for row in rows:
         dh = row["dimensionValues"][0]["value"]
         dev = row["dimensionValues"][1]["value"].lower()
-        if dev not in ("mobile", "desktop", "tablet"):
+        if not is_valid_date_hour(dh) or dev not in ("mobile", "desktop", "tablet"):
             continue
         v = row["metricValues"]
         rec = ensure(dh)
@@ -139,14 +153,24 @@ def collect_hourly(service, property_id, start_date, end_date):
         rec[f"duracao_media_{dev}"] = safe_float(v[3]["value"], 2)
 
     # ── Relatório 3: funil por hora (eventos-chave) ────────────────────────
+    # Filtra eventName já na query (inListFilter) — sem isso, a combinação
+    # dateHour x eventName inclui TODOS os eventos do site/app e o GA4 pode
+    # agregar o excesso num bucket "(other)" que não é uma hora válida.
+    funil_filter = {
+        "filter": {
+            "fieldName": "eventName",
+            "inListFilter": {"values": FUNNEL_EVENTS},
+        }
+    }
     rows = run_report(
         service, property_id, start_date, end_date, ["dateHour", "eventName"],
         ["eventCount"],
+        dimension_filter=funil_filter,
     )
     for row in rows:
         dh = row["dimensionValues"][0]["value"]
         event = row["dimensionValues"][1]["value"]
-        if event in FUNNEL_EVENTS:
+        if is_valid_date_hour(dh) and event in FUNNEL_EVENTS:
             rec = ensure(dh)
             rec[f"funil_{event}"] = safe_int(row["metricValues"][0]["value"])
 
