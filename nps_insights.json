@@ -1,6 +1,55 @@
 {
-  "gerado_em": "2026-06-30T16:37:57.362Z",
+  "gerado_em": "2026-07-07T15:14:28.376Z",
   "semanas": [
+    {
+      "semana": "2026-06-29",
+      "label": "29/06 – 05/07/2026",
+      "gerado_em": "2026-07-07T15:14:19.629Z",
+      "nps_score": 79.1,
+      "nps_nota_media": 9.25,
+      "nps_respostas": 11422,
+      "nps_promotores": 9613,
+      "nps_neutros": 1231,
+      "nps_detratores": 578,
+      "promotores": {
+        "total": 9613,
+        "temas_principais": [
+          "satisfação geral com a experiência de compra (elogios curtos e genéricos)",
+          "praticidade e facilidade do processo",
+          "qualidade percebida do atendimento"
+        ],
+        "resumo": "Padrão se mantém igual às duas semanas anteriores: alto volume de elogios curtos e genéricos ('Muito bom', 'Ótimo', 'Excelente'), sem menção a diferenciais específicos da experiência.",
+        "insight": "Com NPS score em 79,1 (acima da meta de 60) mas sem menção a momentos de encantamento específicos, a experiência funciona sem atrito mas não gera recomendação ativa diferenciada.",
+        "recorrente": true,
+        "semanas_recorrente": 3
+      },
+      "neutros": {
+        "total": 1231,
+        "temas_principais": [
+          "taxa de serviço percebida como alta",
+          "ausência de parcelamento sem juros",
+          "burocracia ou complexidade percebida no processo",
+          "falha pontual no processamento de pagamento sem retorno de suporte"
+        ],
+        "resumo": "Neutros concentram reclamações sobre custo percebido (taxa de serviço, parcelamento com juros) e fricção no processo de compra — tema recorrente há pelo menos 3 semanas.",
+        "insight": "A percepção de taxa de serviço alta e falta de parcelamento sem juros continua sendo o principal fator que impede neutros de virarem promotores.",
+        "recorrente": true,
+        "semanas_recorrente": 3
+      },
+      "detratores": {
+        "total": 578,
+        "temas_principais": [
+          "tarifa muda de valor no momento da compra sem explicação (transparência)",
+          "taxa de serviço de R$10 considerada absurda",
+          "atraso de ônibus / operação"
+        ],
+        "resumo": "Detratores seguem concentrados em dois temas recorrentes: variação de tarifa sem transparência no fluxo de compra e taxa de serviço percebida como abusiva. Um tema novo de atraso operacional apareceu, mas é de responsabilidade da operação, não do produto digital.",
+        "insight": "A falta de transparência sobre variação de preço no momento da compra é o detrator mais acionável pelo time de produto — é um problema de comunicação de UX, não de política comercial.",
+        "recomendacao_produto": "Exibir um texto explicativo claro sobre a política de preço dinâmico antes da tela de pagamento final, informando por que o valor pode variar até a confirmação, para reduzir a percepção de falta de transparência.",
+        "recorrente": true,
+        "semanas_recorrente": 3
+      }
+    },
     {
       "semana": "2026-06-22",
       "label": "22/06 – 28/06/2026",
