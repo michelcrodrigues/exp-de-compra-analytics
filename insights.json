@@ -1,6 +1,123 @@
 {
-  "gerado_em": "2026-07-01T12:55:52.150Z",
+  "gerado_em": "2026-07-07T15:14:02.372Z",
   "insights": [
+    {
+      "semana": "2026-06-29",
+      "label": "29/06 – 05/07/2026",
+      "gerado_em": "2026-07-07T15:14:02.372Z",
+      "items": [
+        {
+          "id": "INS-2026-045",
+          "canal": "site",
+          "tag": "Canal Direto perde conversão apesar de share estável",
+          "classificacao": "Diagnóstico comprovado",
+          "prioridade": "Média",
+          "data": "2026-07-07",
+          "diagnostico": "O CR do canal Direto caiu de 17,43% para 16,76% (-0,67pp) na semana, mesmo com share de sessões estável em torno de 12,2% do total. É o maior delta de CR por canal na semana, acima do limiar de significância adotado (0,3pp com share ≥5%).",
+          "evidencia": "Baseline (média 4 semanas): CR Direto 17,43%, share 12,3%. Semana atual: CR Direto 16,76%, share 12,2% (delta share -0,1pp). Nenhum outro canal teve queda de CR tão grande com share relevante — Pago caiu apenas -0,27pp e Orgânico subiu +0,34pp no mesmo período.",
+          "plano_acao": "Validar se houve mudança na landing page de entrada direta (favoritos, deep link do app, digitação de URL) ou se o perfil de usuários recorrentes mudou. Cruzar com as entregas do time SEN da semana para checar se alguma alteração tocou o fluxo de sessão direta. Se não houver explicação de produto, tratar como ruído estatístico e reavaliar na próxima semana.",
+          "impacto": "Receita (R$ 345M) — tráfego direto tem historicamente a maior conversão entre os canais; erosão sustentada nesse canal pesa desproporcionalmente na receita total.",
+          "acompanhamento": "Acompanhar CR do canal Direto nas próximas 2 semanas; se a queda persistir ou se aprofundar, escalar para prioridade Alta e abrir investigação dedicada.",
+          "texto": "Diagnóstico: O CR do canal Direto caiu de 17,43% para 16,76% (-0,67pp) na semana, mesmo com share de sessões estável (~12,2%).\n\nEvidência: Baseline 4 semanas: CR 17,43%, share 12,3%. Semana atual: CR 16,76%, share 12,2%. Maior delta de CR por canal na semana.\n\nClassificação: Diagnóstico comprovado\n\nPlano de ação: Validar mudança na landing de entrada direta e cruzar com entregas SEN da semana. Se sem explicação de produto, tratar como ruído e reavaliar.\n\nImpacto: Receita (R$ 345M) — canal com maior CR histórico perdendo eficiência.\n\nPrioridade: Média — delta relevante mas sem tendência de múltiplas semanas ainda.\n\nAcompanhamento: Acompanhar CR Direto nas próximas 2 semanas; escalar se persistir.",
+          "titulo_linear": null,
+          "tipo_acao": "monitorar",
+          "testavel": false,
+          "criterio_confirmacao": null,
+          "experimento_template": null,
+          "status": "nunca_testada",
+          "experimento_id": null,
+          "revisao": null
+        },
+        {
+          "id": "INS-2026-046",
+          "canal": "site-mobile",
+          "tag": "[Mobile] Queda de checkout_to_purchase puxa funil para baixo",
+          "classificacao": "Resultado fora da curva",
+          "prioridade": "Alta",
+          "data": "2026-07-07",
+          "diagnostico": "A etapa checkout→purchase no mobile caiu de 83,1% (baseline 4 semanas) para 79,8% (-3,3pp) — a maior queda isolada de todo o funil, em qualquer device. No desktop a queda foi menor (-1,5pp). Mobile responde por ~80% das sessões do site.",
+          "evidencia": "Funil mobile: search_to_cart 9,1% (baseline 9,0%, estável); cart_to_checkout 68,5% (baseline 66,8%, +1,7pp); checkout_to_purchase 79,8% (baseline 83,1%, -3,3pp). O ganho em cart_to_checkout está sendo anulado pela perda em checkout_to_purchase — CR mobile total ficou quase estável (8,08% vs baseline 7,94%), mascarando a deterioração no último step.",
+          "plano_acao": "Auditar eventos de begin_checkout e purchase no mobile via GA4/GTM para identificar erro de pagamento, timeout ou fricção nova no step final. Verificar logs de erro por gateway e taxa de abandono por método de pagamento. Levar hipótese ao squad Senna via Linear.",
+          "impacto": "Receita (R$ 345M) direta — cada ponto percentual perdido em checkout_to_purchase mobile representa milhares de compras não concluídas, considerando ~37.888 checkouts iniciados no mobile na semana.",
+          "acompanhamento": "Monitorar checkout_to_purchase mobile diariamente até estabilizar; se não houver causa identificável em produto, considerar erro de instrumentação GA4.",
+          "texto": "Diagnóstico: checkout→purchase mobile caiu -3,3pp (83,1% para 79,8%), maior queda de todo o funil.\n\nEvidência: cart_to_checkout mobile melhorou +1,7pp, mas checkout_to_purchase caiu -3,3pp, anulando o ganho. CR mobile total quase estável (8,08% vs 7,94%), mascarando a deterioração.\n\nClassificação: Resultado fora da curva\n\nPlano de ação: Auditar eventos GA4/GTM de checkout e pagamento no mobile; verificar logs de erro por gateway; levar ao squad Senna.\n\nImpacto: Receita — ~37.888 checkouts iniciados no mobile na semana, perda concentrada no último step.\n\nPrioridade: Alta — maior delta absoluto do funil, em canal de maior volume.\n\nAcompanhamento: Monitorar diariamente até estabilizar.",
+          "titulo_linear": "Investigar queda de checkout_to_purchase mobile (-3,3pp)",
+          "tipo_acao": "testar",
+          "testavel": true,
+          "criterio_confirmacao": "Se checkout_to_purchase mobile voltar a ficar ≥82% em 2 semanas após ação corretiva, hipótese de fricção pontual confirmada; se persistir abaixo de 80%, tratar como mudança estrutural.",
+          "experimento_template": "Hipótese: fricção introduzida no fluxo de pagamento mobile reduziu conclusão de compra. Métrica primária: checkout_to_purchase mobile. Guardrails: CR mobile total, taxa de erro de pagamento. Critério de sucesso: recuperar para ≥82%. Duração mínima: 2 semanas.",
+          "status": "nunca_testada",
+          "experimento_id": null,
+          "revisao": null
+        },
+        {
+          "id": "INS-2026-047",
+          "canal": "conjunto",
+          "tag": "[Site vs App] App converte 3,4pp abaixo do site",
+          "classificacao": "Correlação",
+          "prioridade": "Alta",
+          "data": "2026-07-07",
+          "diagnostico": "A conversão do App (5,48%) está 3,4pp abaixo da conversão do Site (8,89%) na mesma semana, divergência que já existia na semana anterior (App 6,10% vs Site 8,66%, -2,56pp).",
+          "evidencia": "Site: 449.751 sessões, CR 8,89%. App: 211.027 sessões, CR 5,48%. Rejeição também pior no app: 26,38% vs 23,19% no site (+3,19pp). O app já representa 31,9% do volume total de sessões (site+app), share que vem crescendo (30,6% em S1 para 31,9% em S3).",
+          "plano_acao": "Priorizar auditoria de UX de checkout no app, especialmente Android (ver INS-2026-048). Validar performance técnica (carregamento, crashes) e paridade de funcionalidades entre app e site (parcelamento, cupons, formas de pagamento).",
+          "impacto": "Receita (R$ 345M) e Recorrência — se o app continuar ganhando share de sessões sem equalizar conversão, o CR combinado do negócio tende a cair estruturalmente.",
+          "acompanhamento": "Acompanhar CR app vs site semanalmente e o share de sessões app/site; levar discussão de paridade de conversão ao squad Senna.",
+          "texto": "Diagnóstico: App converte 3,4pp abaixo do site (5,48% vs 8,89%), divergência recorrente há 2 semanas.\n\nEvidência: App 211.027 sessões CR 5,48%; Site 449.751 sessões CR 8,89%. Rejeição app +3,19pp pior. App já é 31,9% do volume total e crescendo.\n\nClassificação: Correlação\n\nPlano de ação: Auditar UX de checkout no app, priorizando Android; validar performance técnica e paridade de funcionalidades.\n\nImpacto: Receita e Recorrência — gap estrutural de conversão em canal que ganha share.\n\nPrioridade: Alta — volume relevante e tendência de crescimento sem correção do gap.\n\nAcompanhamento: Acompanhar CR app vs site semanalmente.",
+          "titulo_linear": null,
+          "tipo_acao": "monitorar",
+          "testavel": false,
+          "criterio_confirmacao": null,
+          "experimento_template": null,
+          "status": "nunca_testada",
+          "experimento_id": null,
+          "revisao": null
+        },
+        {
+          "id": "INS-2026-048",
+          "canal": "app",
+          "tag": "[App] Android converte quase metade do iOS",
+          "classificacao": "Diagnóstico comprovado",
+          "prioridade": "Alta",
+          "data": "2026-07-07",
+          "diagnostico": "Dentro do app, a conversão no Android (4,40%) é quase metade da do iOS (8,04%) — gap de 3,6pp. Android concentra 70,8% das sessões do app, arrastando a conversão média do app para baixo.",
+          "evidencia": "Android: 149.335 sessões, 6.574 compras, CR 4,40%. iOS: 62.185 sessões, 4.998 compras, CR 8,04%. Na semana anterior o padrão já existia (Android 4,76% vs iOS 9,22%), reforçando que não é ruído pontual.",
+          "plano_acao": "Investigar fricção específica de Android — tempo de carregamento, taxa de erro em métodos de pagamento populares (Pix, boleto), paridade de UI entre plataformas. Priorizar com squad Senna dado volume e recorrência do padrão.",
+          "impacto": "Receita (R$ 345M) — Android é a maior base de sessões do app; fechar parte do gap já teria efeito direto em compras.",
+          "acompanhamento": "Monitorar CR Android semanalmente; cruzar com dados de crash/performance quando disponíveis.",
+          "texto": "Diagnóstico: CR Android (4,40%) é quase metade do CR iOS (8,04%) dentro do app.\n\nEvidência: Android 149.335 sessões CR 4,40%; iOS 62.185 sessões CR 8,04%. Padrão recorrente — semana anterior Android 4,76% vs iOS 9,22%.\n\nClassificação: Diagnóstico comprovado\n\nPlano de ação: Investigar fricção técnica/UX específica de Android, priorizar com squad Senna.\n\nImpacto: Receita — Android é a maior base de sessões do app.\n\nPrioridade: Alta — gap grande, recorrente, em plataforma de maior volume.\n\nAcompanhamento: Monitorar CR Android semanalmente.",
+          "titulo_linear": "Investigar gap de conversão Android vs iOS no app",
+          "tipo_acao": "testar",
+          "testavel": true,
+          "criterio_confirmacao": "Se CR Android subir para ≥6% após intervenção, hipótese de fricção técnica confirmada.",
+          "experimento_template": "Hipótese: fricção técnica ou de UX no fluxo de pagamento Android reduz conversão. Métrica primária: CR Android. Guardrails: CR iOS, taxa de erro de pagamento Android. Critério de sucesso: CR Android ≥6% sustentado por 2 semanas. Duração mínima: 2 semanas.",
+          "status": "nunca_testada",
+          "experimento_id": null,
+          "revisao": null
+        },
+        {
+          "id": "INS-2026-049",
+          "canal": "app",
+          "tag": "[App] Sessões crescem 15,7% enquanto site cresce 6,5%",
+          "classificacao": "Tendência",
+          "prioridade": "Média",
+          "data": "2026-07-07",
+          "diagnostico": "O app cresceu 15,7% em sessões na semana (182.385 para 211.027) contra 6,5% do site (422.352 para 449.751) — o app está ganhando share de sessões (30,2% para 31,9% do volume total).",
+          "evidencia": "Série de 3 semanas — share do app: S1 30,6%, S2 30,2%, S3 31,9%. O crescimento não é reversão de queda anterior (S1→S2 estável), sugerindo aceleração real na semana mais recente.",
+          "plano_acao": "Confirmar se o crescimento é orgânico (uso recorrente de base já convertida) ou fruto de campanha/push notification da semana — cruzar com time de CRM/Martech. Se for expansão de base, é sinal positivo desde que a conversão do app seja equalizada (ver INS-2026-047).",
+          "impacto": "Recorrência e Identificação de base — app tende a favorecer recompra e dados de primeira parte.",
+          "acompanhamento": "Confirmar se a tendência se sustenta nas próximas 2 semanas antes de tratar como mudança estrutural de comportamento.",
+          "texto": "Diagnóstico: Sessões do app cresceram 15,7% na semana contra 6,5% do site — app ganha share (30,2% para 31,9%).\n\nEvidência: Share do app nas últimas 3 semanas: 30,6%, 30,2%, 31,9%. Aceleração na semana mais recente.\n\nClassificação: Tendência\n\nPlano de ação: Confirmar se é crescimento orgânico ou campanha pontual, cruzando com CRM/Martech.\n\nImpacto: Recorrência e Identificação de base.\n\nPrioridade: Média — tendência positiva mas ainda não confirmada em múltiplas semanas.\n\nAcompanhamento: Confirmar sustentação nas próximas 2 semanas.",
+          "titulo_linear": null,
+          "tipo_acao": "monitorar",
+          "testavel": false,
+          "criterio_confirmacao": null,
+          "experimento_template": null,
+          "status": "nunca_testada",
+          "experimento_id": null,
+          "revisao": null
+        }
+      ]
+    },
     {
       "semana": "2026-06-22",
       "label": "22/06 – 28/06/2026",
@@ -928,6 +1045,163 @@
     }
   ],
   "insights_conversao": [
+    {
+      "semana": "2026-06-29",
+      "label": "29/06 – 05/07/2026",
+      "tipo": "semanal",
+      "gerado_em": "2026-07-07T15:13:48.499Z",
+      "classificacao": "estavel",
+      "metricas": {
+        "cr_atual": {
+          "total": 8.89,
+          "mobile": 8.08,
+          "desktop": 12.01
+        },
+        "cr_baseline": {
+          "total": 8.82,
+          "mobile": 7.94,
+          "desktop": 12.29
+        },
+        "delta_pp": {
+          "total": 0.07,
+          "mobile": 0.14,
+          "desktop": -0.28
+        },
+        "sigma": 0.57,
+        "n_semanas_hist": 8
+      },
+      "hipoteses": [
+        {
+          "descricao": "Queda de CR no canal Direto é o driver mais relevante a monitorar apesar da conversão total estável.",
+          "evidencia": "Canal Direto: share 12,2% (baseline 12,3%), CR caiu de 17,43% para 16,76% (delta -0,67pp) — maior delta de CR entre canais com share ≥5%."
+        }
+      ],
+      "monitorar": "Acompanhar CR do canal Direto e a etapa checkout_to_purchase mobile, ambos com deterioração isolada mesmo com o CR total estável.",
+      "dispositivos": {
+        "mobile": {
+          "classificacao": "estavel",
+          "cr_atual": 8.08,
+          "cr_baseline": 7.94,
+          "delta_pp": 0.14,
+          "canal_contexto": [
+            {
+              "nome": "Pago",
+              "share_sessoes_total": 52,
+              "cr_total": 8.78,
+              "delta_cr_pp": -0.27
+            },
+            {
+              "nome": "Orgânico",
+              "share_sessoes_total": 17.3,
+              "cr_total": 6.4,
+              "delta_cr_pp": 0.34
+            },
+            {
+              "nome": "Direto",
+              "share_sessoes_total": 12.2,
+              "cr_total": 16.76,
+              "delta_cr_pp": -0.67
+            },
+            {
+              "nome": "Social",
+              "share_sessoes_total": 1.6,
+              "cr_total": null,
+              "delta_cr_pp": null
+            }
+          ],
+          "funil": {
+            "step_critico": "checkout_to_purchase",
+            "checkout_to_purchase": {
+              "atual": 79.8,
+              "baseline": 83.1,
+              "delta_pp": -3.3
+            },
+            "cart_to_checkout": {
+              "atual": 68.5,
+              "baseline": 66.8,
+              "delta_pp": 1.7
+            },
+            "search_to_cart": {
+              "atual": 9.1,
+              "baseline": 9,
+              "delta_pp": 0.1
+            }
+          },
+          "hipoteses": [
+            {
+              "descricao": "Fricção no fluxo final de pagamento mobile reduziu conclusão de compra.",
+              "evidencia": "checkout_to_purchase mobile caiu -3,3pp (83,1% para 79,8%), maior queda de todo o funil."
+            }
+          ],
+          "monitorar": "Acompanhar checkout_to_purchase mobile diariamente até estabilizar."
+        },
+        "desktop": {
+          "classificacao": "estavel",
+          "cr_atual": 12.01,
+          "cr_baseline": 12.29,
+          "delta_pp": -0.28,
+          "canal_contexto": [
+            {
+              "nome": "Pago",
+              "share_sessoes_total": 52,
+              "cr_total": 8.78,
+              "delta_cr_pp": -0.27
+            },
+            {
+              "nome": "Orgânico",
+              "share_sessoes_total": 17.3,
+              "cr_total": 6.4,
+              "delta_cr_pp": 0.34
+            },
+            {
+              "nome": "Direto",
+              "share_sessoes_total": 12.2,
+              "cr_total": 16.76,
+              "delta_cr_pp": -0.67
+            },
+            {
+              "nome": "Social",
+              "share_sessoes_total": 1.6,
+              "cr_total": null,
+              "delta_cr_pp": null
+            }
+          ],
+          "funil": {
+            "step_critico": "checkout_to_purchase",
+            "checkout_to_purchase": {
+              "atual": 65.3,
+              "baseline": 66.8,
+              "delta_pp": -1.5
+            },
+            "cart_to_checkout": {
+              "atual": 63.2,
+              "baseline": 62,
+              "delta_pp": 1.2
+            },
+            "search_to_cart": {
+              "atual": 13.1,
+              "baseline": 13.2,
+              "delta_pp": -0.1
+            }
+          },
+          "hipoteses": [],
+          "monitorar": "Acompanhar checkout_to_purchase desktop; queda menor que mobile (-1,5pp) mas na mesma direção."
+        },
+        "app": {
+          "classificacao": "caiu_moderado",
+          "cr_atual": 5.48,
+          "cr_baseline": 6.1,
+          "delta_pp": -0.62,
+          "hipoteses": [
+            {
+              "descricao": "Gap Android vs iOS explica a maior parte da conversão baixa do app.",
+              "evidencia": "Android: 149.335 sessões, CR 4,40%. iOS: 62.185 sessões, CR 8,04%."
+            }
+          ],
+          "monitorar": "Acompanhar CR app semanal e o gap Android/iOS."
+        }
+      }
+    },
     {
       "mes": "2026-06",
       "label": "Junho 2026",
