@@ -1,5 +1,5 @@
 {
-  "gerado_em": "2026-07-07T15:14:02.372Z",
+  "gerado_em": "2026-07-09T19:27:43.727Z",
   "insights": [
     {
       "semana": "2026-06-29",
@@ -1206,13 +1206,13 @@
       "mes": "2026-06",
       "label": "Junho 2026",
       "tipo": "mensal",
-      "gerado_em": "2026-07-01T12:55:20.875-03:00",
+      "gerado_em": "2026-07-09T19:25:56.318-03:00",
       "classificacao": "sem_referencia",
       "metricas": {
         "cr_atual": {
-          "total": 8.79,
-          "mobile": 7.91,
-          "desktop": 12.25
+          "total": 8.83,
+          "mobile": 7.95,
+          "desktop": 12.3
         },
         "cr_baseline": {
           "total": 9.65,
@@ -1220,9 +1220,9 @@
           "desktop": 14.04
         },
         "delta_pp": {
-          "total": -0.85,
-          "mobile": -0.6,
-          "desktop": -1.79
+          "total": -0.82,
+          "mobile": -0.56,
+          "desktop": -1.74
         },
         "sigma": null,
         "n_meses_hist": 1
@@ -1232,15 +1232,15 @@
           "rank": 1,
           "dispositivo": "desktop",
           "titulo": "Colapso do checkout→purchase no desktop explica a maior parte da queda de CR desktop",
-          "evidencia": "checkout→purchase desktop caiu de 86,9% (maio) para 66,7% (junho), -20,2pp; CR desktop caiu -12,7% no mês (14,04% para 12,25%)",
-          "raciocinio": "Uma queda concentrada na última etapa do funil, sem queda de sessões (site +4,0%), aponta para fricção ou falha no pagamento — mais provável em telas maiores por complexidade de formulário ou timeout de sessão.",
+          "evidencia": "checkout→purchase desktop caiu de 86,9% (maio) para 66,5% (junho), -20,4pp; CR desktop caiu -12,4% no mês (14,04% para 12,30%)",
+          "raciocinio": "Uma queda concentrada na última etapa do funil, sem queda de sessões (site +8,6%), aponta para fricção ou falha no pagamento — mais provável em telas maiores por complexidade de formulário ou timeout de sessão.",
           "time_para_confirmar": "Time Senna (SEN)"
         },
         {
           "rank": 2,
           "dispositivo": "total",
           "titulo": "Queda de conversão é transversal a todos os canais, descartando problema de mix",
-          "evidencia": "CR caiu em pago (-0,71pp), orgânico (-1,04pp) e direto (-1,36pp), com share de pago estável em 50,3% (idêntico a maio)",
+          "evidencia": "CR caiu em pago (-0,59pp), orgânico (-0,94pp) e direto (-1,11pp), com share de pago estável em ~50,7% (vs 50,3% em maio)",
           "raciocinio": "Se fosse problema de mix de canal, a queda seria concentrada em um canal com share crescente; a queda uniforme sugere causa de produto/checkout comum a todos os canais.",
           "time_para_confirmar": "Time de dados"
         },
@@ -1249,7 +1249,7 @@
           "dispositivo": "mobile",
           "titulo": "Integridade do funil mobile é questionável e pode mascarar o real tamanho do problema",
           "evidencia": "checkout→purchase mobile em maio foi de 106,96% (purchase > begin_checkout), matematicamente impossível — indício de falha de deduplicação/atribuição de eventos no GA4 mobile",
-          "raciocinio": "Sem corrigir a instrumentação, comparações mês a mês do funil mobile não são confiáveis, e a real extensão da queda de CR mobile (-7,0% em junho) pode estar sub ou superestimada.",
+          "raciocinio": "Sem corrigir a instrumentação, comparações mês a mês do funil mobile não são confiáveis, e a real extensão da queda de CR mobile (-6,6% em junho) pode estar sub ou superestimada.",
           "time_para_confirmar": "Time de dados"
         }
       ],
