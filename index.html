@@ -111,20 +111,33 @@ body{font-family:'Nunito Sans',sans-serif;background:var(--neutral-100);color:va
 .cc-wrap{position:relative;height:220px}
 
 /* Funil */
-.funil-wrap{background:#fff;border-radius:var(--r-md);padding:24px;box-shadow:var(--shadow-01)}
-.funil-steps{display:flex;flex-direction:column;gap:6px}
-.funil-row{display:flex;align-items:center;gap:12px}
+.funil-wrap{background:#fff;border-radius:var(--r-md);padding:24px;box-shadow:var(--shadow-01);overflow-x:auto}
+.funil-caption{font-size:12px;color:var(--neutral-500);margin-bottom:16px;line-height:1.5;max-width:760px}
+.funil-caption b{color:var(--neutral-700)}
+.funil-steps{display:flex;flex-direction:column;gap:6px;min-width:fit-content}
+.funil-row{display:flex;align-items:center;gap:12px;min-width:fit-content}
 .funil-row-lbl{font-size:12px;font-weight:700;color:var(--neutral-700);width:160px;text-align:right;flex-shrink:0;display:flex;flex-direction:column;gap:1px;line-height:1.25}
 .funil-row-lbl-evt{font-size:9px;font-weight:600;color:var(--neutral-500);font-family:'Courier New',Courier,monospace;letter-spacing:.2px}
-.funil-bars{flex:1;display:flex;flex-direction:column;gap:3px}
+.funil-bars{flex:1;min-width:160px;display:flex;flex-direction:column;gap:3px}
 .funil-bar-wrap{background:var(--neutral-100);border-radius:4px;height:28px;overflow:hidden;position:relative}
 .funil-bar{height:100%;border-radius:4px;transition:width .6s cubic-bezier(.4,0,.2,1);display:flex;align-items:center;padding:0 10px;min-width:50px}
 .funil-bar.pri{background:var(--brand-primary)}
 .funil-bar.cmp{background:var(--compare);opacity:.8}
 .funil-bar-val{font-size:11px;font-weight:700;color:#fff;white-space:nowrap}
-.funil-row-pct{font-size:11px;color:var(--neutral-500);width:auto;min-width:60px;flex-shrink:0;display:flex;align-items:center;gap:4px;flex-wrap:wrap}
 .funil-conn{width:2px;height:6px;background:var(--neutral-300);margin-left:175px}
 .funil-cmp-row{display:flex;align-items:center;gap:12px;margin-top:2px}
+/* Tabela de conversão do funil — dois grupos (vs. etapa anterior / vs. topo do funil) */
+.funil-pct-header{display:flex;align-items:flex-end;gap:12px;margin-bottom:8px;min-width:fit-content}
+.funil-pct-header-spacer{width:160px;flex-shrink:0}
+.funil-pct-header-fill{flex:1;min-width:160px}
+.funil-pct-header-group{display:flex;flex-direction:column;align-items:center;flex-shrink:0;border-left:1px solid var(--neutral-200);padding-left:10px}
+.funil-pct-header-title{font-size:9.5px;font-weight:800;color:var(--neutral-500);text-transform:uppercase;letter-spacing:.3px;margin-bottom:3px;white-space:nowrap}
+.funil-pct-header-cols{display:flex;gap:4px}
+.funil-pct-header-cols span{width:58px;text-align:center;font-size:9px;font-weight:700;color:var(--neutral-400);text-transform:uppercase;letter-spacing:.2px}
+.funil-pct-group{display:flex;gap:4px;flex-shrink:0;border-left:1px solid var(--neutral-200);padding-left:10px}
+.funil-pct-cell{width:58px;text-align:center;font-size:11.5px;font-weight:700;color:var(--neutral-700);white-space:nowrap}
+.funil-pct-cell.cmp{color:var(--compare);font-weight:600}
+.funil-pct-cell.dim{color:var(--neutral-300);font-weight:400}
 /* Granularidade dos gráficos de linha (Diário/Semanal/Mensal) */
 .sec-row{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px;margin-top:28px;margin-bottom:12px}
 .sec-row .sec{margin:0}
@@ -804,7 +817,11 @@ tr.cmp-tr td{background:#f5f8ff;font-size:12px;color:var(--compare)}
     <!-- FUNIL -->
     <div class="tbc" id="tab-site-fu">
       <div class="sec">Funil de conversão</div>
-      <div class="funil-wrap"><div class="funil-steps" id="funilSteps"></div></div>
+      <div class="funil-wrap">
+        <p class="funil-caption"><b>Duas leituras de conversão</b> em cada etapa: <b>vs. etapa anterior</b> (queda de uma etapa para a próxima) e <b>vs. topo do funil</b> (retenção acumulada desde a busca). Quando há um período de comparação ativo, cada leitura mostra também a % do período comparado e o <b>lift</b> entre as duas.</p>
+        <div id="funilHeader"></div>
+        <div class="funil-steps" id="funilSteps"></div>
+      </div>
     </div>
 
     <!-- ROTAS -->
@@ -919,7 +936,11 @@ tr.cmp-tr td{background:#f5f8ff;font-size:12px;color:var(--compare)}
         <!-- App — Funil -->
         <div class="tbc" id="tab-app-fu">
           <div class="sec">Funil de conversão</div>
-          <div class="funil-wrap"><div class="funil-steps" id="appFunilSteps"></div></div>
+          <div class="funil-wrap">
+            <p class="funil-caption"><b>Duas leituras de conversão</b> em cada etapa: <b>vs. etapa anterior</b> (queda de uma etapa para a próxima) e <b>vs. topo do funil</b> (retenção acumulada desde a busca). Quando há um período de comparação ativo, cada leitura mostra também a % do período comparado e o <b>lift</b> entre as duas.</p>
+            <div id="appFunilHeader"></div>
+            <div class="funil-steps" id="appFunilSteps"></div>
+          </div>
         </div>
 
         <!-- App — NPS -->
@@ -1375,6 +1396,52 @@ function renderAppAcquisicao(pri,cmp){
   }).join("");
 }
 
+// ════════════════════════════════════════════════════════
+// FUNIL — tabela de conversão (vs. etapa anterior / vs. topo do funil)
+// Compartilhado entre Site (renderFunil) e App (renderAppFunil)
+// ════════════════════════════════════════════════════════
+function funilPctCell(p,cls){
+  if(p==null) return `<div class="funil-pct-cell dim">—</div>`;
+  return `<div class="funil-pct-cell ${cls||""}">${p.toFixed(1)}%</div>`;
+}
+function funilLiftCell(lift){
+  if(lift==null) return `<div class="funil-pct-cell dim">—</div>`;
+  const cls=lift>0.1?"lift-pos":lift<-0.1?"lift-neg":"lift-nt";
+  return `<div class="funil-pct-cell ${cls}">${lift>0?"+":""}${lift.toFixed(1)}%</div>`;
+}
+function funilPctGroup(p,c,lift,hasCmp){
+  return `<div class="funil-pct-group">
+    ${funilPctCell(p)}
+    ${hasCmp?funilPctCell(c,"cmp"):`<div class="funil-pct-cell dim">—</div>`}
+    ${hasCmp?funilLiftCell(lift):`<div class="funil-pct-cell dim">—</div>`}
+  </div>`;
+}
+// pTotals/cTotals: arrays de totais absolutos por etapa (mesma ordem dos steps)
+function funilRowPctGroups(pTotals,cTotals,i,hasCmp){
+  const p_ant  = i>0 && pTotals[i-1]>0 ? (pTotals[i]/pTotals[i-1]*100) : null;
+  const p_topo = pTotals[0]>0 ? (pTotals[i]/pTotals[0]*100) : (i===0?100:0);
+  const c_ant  = hasCmp && i>0 && cTotals[i-1]>0 ? (cTotals[i]/cTotals[i-1]*100) : null;
+  const c_topo = hasCmp ? (cTotals[0]>0 ? (cTotals[i]/cTotals[0]*100) : (i===0?100:0)) : null;
+  const lift_ant  = (i>0 && p_ant!=null && c_ant!=null && c_ant>0) ? ((p_ant-c_ant)/c_ant*100) : null;
+  const lift_topo = (i>0 && hasCmp && c_topo!=null && c_topo>0) ? ((p_topo-c_topo)/c_topo*100) : null;
+  return funilPctGroup(p_ant,c_ant,lift_ant,hasCmp) + funilPctGroup(p_topo,c_topo,lift_topo,hasCmp);
+}
+function funilPctHeaderHTML(topoLabel){
+  return `
+    <div class="funil-pct-header">
+      <div class="funil-pct-header-spacer"></div>
+      <div class="funil-pct-header-fill"></div>
+      <div class="funil-pct-header-group">
+        <div class="funil-pct-header-title">vs. etapa anterior</div>
+        <div class="funil-pct-header-cols"><span>Período</span><span>Comp.</span><span>Lift</span></div>
+      </div>
+      <div class="funil-pct-header-group">
+        <div class="funil-pct-header-title">vs. topo (${topoLabel})</div>
+        <div class="funil-pct-header-cols"><span>Período</span><span>Comp.</span><span>Lift</span></div>
+      </div>
+    </div>`;
+}
+
 function renderAppFunil(pri,cmp){
   const steps=[
     {l:"Busca",                  k:"funil_search",         evt:"search"},
@@ -1389,16 +1456,15 @@ function renderAppFunil(pri,cmp){
   const totals=steps.map(s=>pri.reduce((a,d)=>a+(parseFloat(d[s.k])||0),0));
   const maxV=Math.max(...totals,1);
   const cmpTotals=hasCmp?steps.map(s=>cmp.reduce((a,d)=>a+(parseFloat(d[s.k])||0),0)):null;
+  const hdrEl=document.getElementById("appFunilHeader");
+  if(hdrEl) hdrEl.innerHTML=funilPctHeaderHTML(steps[0].l);
   const el=document.getElementById("appFunilSteps");
   if(!el) return;
   el.innerHTML=steps.map((s,i)=>{
     const v=totals[i];
-    const pct=i===0?100:totals[0]>0?r4(v/totals[0]*100):0;
     const barW=Math.round(v/maxV*100);
     const cv=cmpTotals?cmpTotals[i]:null;
     const cBarW=cv!=null?Math.round(cv/maxV*100):0;
-    const lift=hasCmp&&cv>0?((v-cv)/cv*100):null;
-    const lH=lift!=null?`<span class="${lift>0.1?"lift-pos":lift<-0.1?"lift-neg":"lift-nt"}" style="margin-left:6px">${lift>0?"+":""}${lift.toFixed(1)}%</span>`:"";
     const conn=i<steps.length-1?`<div class="funil-conn"></div>`:"";
     return `
       <div class="funil-row">
@@ -1407,7 +1473,7 @@ function renderAppFunil(pri,cmp){
           <div class="funil-bar-wrap"><div class="funil-bar pri" style="width:${barW}%"><span class="funil-bar-val">${fmtN(v)}</span></div></div>
           ${cv!=null?`<div class="funil-bar-wrap"><div class="funil-bar cmp" style="width:${cBarW}%"><span class="funil-bar-val">${fmtN(cv)}</span></div></div>`:""}
         </div>
-        <div class="funil-row-pct">${i===0?"100%":pct.toFixed(1)+"%"}${lH}</div>
+        ${funilRowPctGroups(totals,cmpTotals,i,hasCmp)}
       </div>${conn}`;
   }).join("");
 }
@@ -2188,7 +2254,7 @@ function renderAcquisicao(pri,cmp){
   const hasCmpDev=cmpAllDev.length>0;
 
   // Cabeçalho dinâmico
-  const thDevEl=document.querySelector("#tab-aq .tc:last-child thead tr");
+  const thDevEl=document.querySelector("#tab-site-aq .tc:last-child thead tr");
   if(thDevEl){
     thDevEl.innerHTML=hasCmpDev
       ?`<th>Dispositivo</th><th class="num">Sess.</th><th class="num">Comp.</th><th class="num">CR%</th><th class="num">Rejeição%</th><th class="num">Duração</th><th class="num cmp-th">Sess.cmp</th><th class="num cmp-th">Comp.cmp</th><th class="num cmp-th">CR%cmp</th><th class="num">↕Sess</th><th class="num">↕Comp</th><th class="num">↕CR</th>`
@@ -2318,20 +2384,20 @@ function renderFunil(pri,cmp){
   ];
   const priT=STEPS.map(s=>({...s,t:pri.reduce((x,d)=>x+(d[s.k]||0),0)}));
   const cmpT=hasCmp?STEPS.map(s=>({...s,t:cmp.reduce((x,d)=>x+(d[s.k]||0),0)})):[];
-  const maxP=priT[0]?.t||1;
-  const maxC=cmpT[0]?.t||1;
+  const pTotals=priT.map(s=>s.t);
+  const cTotals=hasCmp?cmpT.map(s=>s.t):null;
+  const maxP=pTotals[0]||1;
+  const maxC=cTotals?.[0]||1;
+  const hdrEl=document.getElementById("funilHeader");
+  if(hdrEl) hdrEl.innerHTML=funilPctHeaderHTML(STEPS[0].l);
   const el=document.getElementById("funilSteps");
   el.innerHTML="";
 
   priT.forEach((s,i)=>{
     if(i>0){const c=document.createElement("div");c.className="funil-conn";el.appendChild(c);}
     const pctP=maxP>0?(s.t/maxP*100):0;
-    const convP=i>0&&priT[i-1].t>0?(s.t/priT[i-1].t*100).toFixed(1)+"%":"—";
-    const cv=cmpT[i]?.t||0;
+    const cv=cTotals?cTotals[i]:0;
     const pctC=maxC>0?(cv/maxC*100):0;
-    const convC=hasCmp&&i>0&&cmpT[i-1].t>0?(cv/cmpT[i-1].t*100).toFixed(1)+"%":"";
-    const lift=hasCmp&&cv>0?((s.t-cv)/cv*100):null;
-    const lH=lift!=null?`<span class="${lift>0.1?"lift-pos":lift<-0.1?"lift-neg":"lift-nt"}" style="margin-left:6px">${lift>0?"+":""}${lift.toFixed(1)}%</span>`:"";
 
     const row=document.createElement("div");
     row.className="funil-row";
@@ -2343,7 +2409,7 @@ function renderFunil(pri,cmp){
         </div>
         ${hasCmp?`<div class="funil-bar-wrap"><div class="funil-bar cmp" style="width:${pctC}%"><span class="funil-bar-val" style="font-size:10px">${fmtN(cv)}</span></div></div>`:""}
       </div>
-      <div class="funil-row-pct">${i===0?"100%":convP}${lH}</div>`;
+      ${funilRowPctGroups(pTotals,cTotals,i,hasCmp)}`;
     el.appendChild(row);
   });
 }
