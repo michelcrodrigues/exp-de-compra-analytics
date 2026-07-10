@@ -1444,6 +1444,7 @@ function funilPctHeaderHTML(topoLabel){
 
 function renderAppFunil(pri,cmp){
   const steps=[
+    {l:"Sessões",                 k:"sessoes",              evt:"session_start"},
     {l:"Busca",                  k:"funil_search",         evt:"search"},
     {l:"Resultado da busca",     k:"funil_view_item",      evt:"view_item"},
     {l:"Comprar",                k:"funil_add_to_cart",    evt:"add_to_cart"},
@@ -2373,6 +2374,7 @@ function mkMultiLine(cid, seriesCfg, priRaw){
 function renderFunil(pri,cmp){
   const hasCmp=cmp.length>0;
   const STEPS=[
+    {l:"Sessões",               k:"sessoes",                   evt:"session_start"},
     {l:"Busca",                 k:"funil_search",              evt:"search"},
     {l:"Resultado da busca",    k:"funil_view_result_search",  evt:"view_result_search"},
     {l:"Selecionar viagem",     k:"funil_select_item",         evt:"select_item"},
