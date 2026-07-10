@@ -1,8 +1,10 @@
 """
 fetch_ga4_app.py — Coleta métricas diárias do GA4 do App e grava em data/history_app.ndjson.
 
-Estrutura análoga ao fetch_ga4.py (site web). Mesmos eventos, mesmo schema —
-a diferença é a property (App GA4) e a ausência de rotas (não aplicável ao app).
+Estrutura análoga ao fetch_ga4.py (site web). Mesma property de credenciais e mesmo
+schema de colunas (device/plataforma, canal, NPS) — a diferença é a property (App GA4),
+a ausência de rotas (não aplicável ao app) e os EVENTOS DE FUNIL, que são próprios do
+fluxo do app (ver `funil_events` abaixo — não são os mesmos nomes de evento do site).
 
 Modos de operação:
   HISTÓRICO — ativado por FORCE_HISTORICAL_APP=true ou arquivo vazio/inexistente
@@ -70,16 +72,16 @@ COLUMNS = [
     # mas mantemos as colunas para paridade de schema com o site
     "sessoes_organico", "sessoes_direto", "sessoes_pago",
     "sessoes_social", "sessoes_email", "sessoes_referral", "sessoes_outros_canais",
-    # Funil total
-    "funil_search", "funil_select_item", "funil_add_to_cart",
-    "funil_begin_checkout", "funil_purchase",
-    # Funil por dispositivo
-    "funil_search_mobile", "funil_select_item_mobile", "funil_add_to_cart_mobile",
-    "funil_begin_checkout_mobile", "funil_purchase_mobile",
-    "funil_search_desktop", "funil_select_item_desktop", "funil_add_to_cart_desktop",
-    "funil_begin_checkout_desktop", "funil_purchase_desktop",
-    "funil_search_tablet", "funil_select_item_tablet", "funil_add_to_cart_tablet",
-    "funil_begin_checkout_tablet", "funil_purchase_tablet",
+    # Funil total — estrutura atualizada do App (7 etapas, na ordem do fluxo real)
+    "funil_search", "funil_view_item", "funil_add_to_cart",
+    "funil_seat_selection", "funil_login_checkout", "funil_begin_checkout", "funil_purchase",
+    # Funil por plataforma (android → mobile, ios → desktop, outros → tablet)
+    "funil_search_mobile", "funil_view_item_mobile", "funil_add_to_cart_mobile",
+    "funil_seat_selection_mobile", "funil_login_checkout_mobile", "funil_begin_checkout_mobile", "funil_purchase_mobile",
+    "funil_search_desktop", "funil_view_item_desktop", "funil_add_to_cart_desktop",
+    "funil_seat_selection_desktop", "funil_login_checkout_desktop", "funil_begin_checkout_desktop", "funil_purchase_desktop",
+    "funil_search_tablet", "funil_view_item_tablet", "funil_add_to_cart_tablet",
+    "funil_seat_selection_tablet", "funil_login_checkout_tablet", "funil_begin_checkout_tablet", "funil_purchase_tablet",
     # Rotas — não aplicável ao app; preenchidas com strings/zeros vazios
     # mas mantidas para paridade de schema com o validate_schema_app.py
     "top_origem_1", "top_origem_1_sessoes",
@@ -367,7 +369,13 @@ def collect_metrics(service, date_str):
             m["sessoes_outros_canais"] += val
 
     # ── Report 4a: funil de eventos total ────────────────────────────────────
-    funil_events = ["search", "select_item", "add_to_cart", "begin_checkout", "purchase"]
+    # Estrutura atualizada do funil do App (ordem real do fluxo, diferente do site):
+    #   search → view_item → add_to_cart → seat_selection →
+    #   login_checkout → begin_checkout → purchase
+    funil_events = [
+        "search", "view_item", "add_to_cart", "seat_selection",
+        "login_checkout", "begin_checkout", "purchase",
+    ]
     funil_map = {e: f"funil_{e}" for e in funil_events}
     for k in funil_map.values():
         m[k] = 0

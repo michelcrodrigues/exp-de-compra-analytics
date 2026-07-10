@@ -114,7 +114,8 @@ body{font-family:'Nunito Sans',sans-serif;background:var(--neutral-100);color:va
 .funil-wrap{background:#fff;border-radius:var(--r-md);padding:24px;box-shadow:var(--shadow-01)}
 .funil-steps{display:flex;flex-direction:column;gap:6px}
 .funil-row{display:flex;align-items:center;gap:12px}
-.funil-row-lbl{font-size:12px;font-weight:700;color:var(--neutral-700);width:130px;text-align:right;flex-shrink:0}
+.funil-row-lbl{font-size:12px;font-weight:700;color:var(--neutral-700);width:160px;text-align:right;flex-shrink:0;display:flex;flex-direction:column;gap:1px;line-height:1.25}
+.funil-row-lbl-evt{font-size:9px;font-weight:600;color:var(--neutral-500);font-family:'Courier New',Courier,monospace;letter-spacing:.2px}
 .funil-bars{flex:1;display:flex;flex-direction:column;gap:3px}
 .funil-bar-wrap{background:var(--neutral-100);border-radius:4px;height:28px;overflow:hidden;position:relative}
 .funil-bar{height:100%;border-radius:4px;transition:width .6s cubic-bezier(.4,0,.2,1);display:flex;align-items:center;padding:0 10px;min-width:50px}
@@ -122,8 +123,12 @@ body{font-family:'Nunito Sans',sans-serif;background:var(--neutral-100);color:va
 .funil-bar.cmp{background:var(--compare);opacity:.8}
 .funil-bar-val{font-size:11px;font-weight:700;color:#fff;white-space:nowrap}
 .funil-row-pct{font-size:11px;color:var(--neutral-500);width:auto;min-width:60px;flex-shrink:0;display:flex;align-items:center;gap:4px;flex-wrap:wrap}
-.funil-conn{width:2px;height:6px;background:var(--neutral-300);margin-left:145px}
+.funil-conn{width:2px;height:6px;background:var(--neutral-300);margin-left:175px}
 .funil-cmp-row{display:flex;align-items:center;gap:12px;margin-top:2px}
+/* Granularidade dos gráficos de linha (Diário/Semanal/Mensal) */
+.sec-row{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px;margin-top:28px;margin-bottom:12px}
+.sec-row .sec{margin:0}
+.gran-toggle{display:flex;gap:6px}
 /* NPS */
 .nps-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:12px;margin-bottom:16px}
 .nps-score-card{background:#fff;border-radius:var(--r-md);padding:20px;box-shadow:var(--shadow-01);text-align:center;position:relative;overflow:hidden}
@@ -737,7 +742,14 @@ tr.cmp-tr td{background:#f5f8ff;font-size:12px;color:var(--compare)}
       </div>
       <div class="sec">KPIs do período</div>
       <div class="kpi-grid" id="kpiGrid"></div>
-      <div class="sec">Tendência diária</div>
+      <div class="sec-row">
+        <div class="sec" id="secTendSite">Tendência diária</div>
+        <div class="gran-toggle" data-gran-group="site">
+          <button class="fbtn active" data-gran="day">Diário</button>
+          <button class="fbtn" data-gran="week">Semanal</button>
+          <button class="fbtn" data-gran="month">Mensal</button>
+        </div>
+      </div>
       <div class="charts-grid">
         <div class="cc"><div class="cc-title">Sessões por dia</div><div class="cc-legend" id="legSess"></div><div class="cc-wrap"><canvas id="cSess"></canvas></div></div>
         <div class="cc"><div class="cc-title">Compras por dia</div><div class="cc-legend" id="legComp"></div><div class="cc-wrap"><canvas id="cComp"></canvas></div></div>
@@ -745,7 +757,14 @@ tr.cmp-tr td{background:#f5f8ff;font-size:12px;color:var(--compare)}
         <div class="cc"><div class="cc-title">Rejeição % por dia</div><div class="cc-legend" id="legBnc"></div><div class="cc-wrap"><canvas id="cBnc"></canvas></div></div>
       </div>
 
-      <div class="sec" style="margin-top:28px">Tendência por canal e dispositivo</div>
+      <div class="sec-row">
+        <div class="sec">Tendência por canal e dispositivo</div>
+        <div class="gran-toggle" data-gran-group="site">
+          <button class="fbtn active" data-gran="day">Diário</button>
+          <button class="fbtn" data-gran="week">Semanal</button>
+          <button class="fbtn" data-gran="month">Mensal</button>
+        </div>
+      </div>
       <p style="font-size:12px;color:var(--neutral-500);margin-top:-8px;margin-bottom:12px">Sessões diárias por canal de aquisição e por dispositivo — sempre mostra todos, independente dos filtros acima. Use para identificar de onde vieram aumentos ou quedas.</p>
       <div class="charts-grid">
         <div class="cc">
@@ -859,7 +878,14 @@ tr.cmp-tr td{background:#f5f8ff;font-size:12px;color:var(--compare)}
         <div class="tbc active" id="tab-app-vg">
           <div class="sec">KPIs do período</div>
           <div class="kpi-grid" id="appKpiGrid"></div>
-          <div class="sec">Tendência diária</div>
+          <div class="sec-row">
+            <div class="sec" id="secTendApp">Tendência diária</div>
+            <div class="gran-toggle" data-gran-group="app">
+              <button class="fbtn active" data-gran="day">Diário</button>
+              <button class="fbtn" data-gran="week">Semanal</button>
+              <button class="fbtn" data-gran="month">Mensal</button>
+            </div>
+          </div>
           <div class="charts-grid">
             <div class="cc"><div class="cc-title">Sessões por dia</div><div class="cc-legend" id="appLegSess"></div><div class="cc-wrap"><canvas id="appCSess"></canvas></div></div>
             <div class="cc"><div class="cc-title">Compras por dia</div><div class="cc-legend" id="appLegComp"></div><div class="cc-wrap"><canvas id="appCComp"></canvas></div></div>
@@ -1118,6 +1144,8 @@ let DEV="all";
 let CANAL="all"; // canal de aquisição — filtro local da Visão Geral
 let P={start:null,end:null};
 let C={start:null,end:null,active:false};
+// Granularidade dos gráficos de linha (Visão Geral + tendência por canal/dispositivo)
+let GRAN={site:"day",app:"day"};
 // Filtros de Insights
 let INS_CANAL="todos";   // todos | site | app | conjunto
 let CONV_INS_CANAL="total"; // total | mobile | desktop
@@ -1204,8 +1232,10 @@ function applyAppDev(data){
     taxa_rejeicao_pct:parseFloat(d["taxa_rejeicao_"+APP_DEV])||0,
     duracao_media_seg:parseFloat(d["duracao_media_"+APP_DEV])||0,
     funil_search:         parseFloat(d["funil_search_"+APP_DEV])||0,
-    funil_select_item:    parseFloat(d["funil_select_item_"+APP_DEV])||0,
+    funil_view_item:      parseFloat(d["funil_view_item_"+APP_DEV])||0,
     funil_add_to_cart:    parseFloat(d["funil_add_to_cart_"+APP_DEV])||0,
+    funil_seat_selection: parseFloat(d["funil_seat_selection_"+APP_DEV])||0,
+    funil_login_checkout: parseFloat(d["funil_login_checkout_"+APP_DEV])||0,
     funil_begin_checkout: parseFloat(d["funil_begin_checkout_"+APP_DEV])||0,
     funil_purchase:       parseFloat(d["funil_purchase_"+APP_DEV])||0,
   }));
@@ -1247,19 +1277,51 @@ function renderAppCharts(pri,cmp){
   ["appCSess","appCComp","appCCR","appCBnc"].forEach(id=>{
     if(CHARTS_APP[id]){CHARTS_APP[id].destroy();delete CHARTS_APP[id];}
   });
-  function mkLine(cid,legId,priData,cmpData,color,fmt){
+  const hasCmp=cmp.length>0;
+  const priG=aggregateByGranularity(pri,GRAN.app);
+  const cmpG=aggregateByGranularity(cmp,GRAN.app);
+
+  function mkLine(cid,legId,metric,color,fmt){
     const ctx=document.getElementById(cid);
     if(!ctx)return;
-    const labels=pri.map(d=>fmtDS(d.data));
-    const ds=[{label:"Período",data:priData,borderColor:color,backgroundColor:color+"22",fill:true,tension:.35,pointRadius:0,borderWidth:2}];
-    if(cmpData&&cmpData.length){ds.push({label:"Comparativo",data:cmpData,borderColor:"#6589D4",backgroundColor:"transparent",borderDash:[4,3],tension:.35,pointRadius:0,borderWidth:1.5});}
+    const labels=priG.map(d=>d._label||fmtDS(d.data));
+    const vals=priG.map(d=>parseFloat(d[metric])||0);
+    const cmpVals=cmpG.map(d=>parseFloat(d[metric])||0);
+    const cmpAligned=hasCmp?alignSeries(vals,cmpVals):[];
+    const ds=[{label:"Período",data:vals,borderColor:color,backgroundColor:color+"22",fill:true,tension:.35,pointRadius:priG.length>60?0:2,pointHoverRadius:5,borderWidth:2}];
+    if(hasCmp){ds.push({label:"Comparativo",data:cmpAligned,borderColor:"#6589D4",backgroundColor:"transparent",borderDash:[4,3],tension:.35,pointRadius:0,pointHoverRadius:4,borderWidth:1.5});}
     document.getElementById(legId).innerHTML=ds.map(s=>`<span class="cc-li"><span class="cc-dot" style="background:${s.borderColor}"></span>${s.label}</span>`).join("");
-    CHARTS_APP[cid]=new Chart(ctx,{type:"line",data:{labels,datasets:ds},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false},tooltip:{callbacks:{label:c=>fmt(c.raw)}}},scales:{x:{grid:{display:false},ticks:{font:{size:10},maxTicksLimit:8}},y:{grid:{color:"#f0f0f0"},ticks:{font:{size:10},callback:v=>fmt(v)}}}}});
+    CHARTS_APP[cid]=new Chart(ctx,{type:"line",data:{labels,datasets:ds},options:{
+      responsive:true,maintainAspectRatio:false,
+      interaction:{mode:"index",intersect:false},
+      plugins:{
+        legend:{display:false},
+        tooltip:{
+          callbacks:{
+            title:(items)=>{
+              const idx=items[0]?.dataIndex;
+              const d=priG[idx];
+              return d ? (d._title || (d.data?fmtDF(d.data):"")) : "";
+            },
+            label:(item)=>{
+              const v=item.parsed.y; if(v==null) return null;
+              return `${item.dataset.label}: ${fmt(v)}`;
+            },
+          },
+          backgroundColor:"rgba(14,14,14,0.88)",titleColor:"#fff",bodyColor:"#e0e0e0",
+          padding:10,bodyFont:{size:11,family:"'Nunito Sans'"},
+        },
+      },
+      scales:{
+        x:{grid:{display:false},ticks:{font:{size:10},maxTicksLimit:8}},
+        y:{grid:{color:"#f0f0f0"},ticks:{font:{size:10},callback:v=>fmt(v)}},
+      },
+    }});
   }
-  mkLine("appCSess","appLegSess",pri.map(d=>d.sessoes),cmp.map(d=>d.sessoes),"#19398A",fmtN);
-  mkLine("appCComp","appLegComp",pri.map(d=>d.compras),cmp.map(d=>d.compras),"#A43C3E",fmtN);
-  mkLine("appCCR","appLegCR",pri.map(d=>d.taxa_conversao_pct),cmp.map(d=>d.taxa_conversao_pct),"#278A22",v=>v.toFixed(2)+"%");
-  mkLine("appCBnc","appLegBnc",pri.map(d=>d.taxa_rejeicao_pct),cmp.map(d=>d.taxa_rejeicao_pct),"#C3940F",v=>v.toFixed(2)+"%");
+  mkLine("appCSess","appLegSess","sessoes","#19398A",fmtN);
+  mkLine("appCComp","appLegComp","compras","#A43C3E",fmtN);
+  mkLine("appCCR","appLegCR","taxa_conversao_pct","#278A22",v=>v.toFixed(2)+"%");
+  mkLine("appCBnc","appLegBnc","taxa_rejeicao_pct","#C3940F",v=>v.toFixed(2)+"%");
 }
 
 function renderAppAcquisicao(pri,cmp){
@@ -1315,15 +1377,18 @@ function renderAppAcquisicao(pri,cmp){
 
 function renderAppFunil(pri,cmp){
   const steps=[
-    {l:"Busca",k:"funil_search"},
-    {l:"Selecionar viagem",k:"funil_select_item"},
-    {l:"Adicionar ao carrinho",k:"funil_add_to_cart"},
-    {l:"Iniciar checkout",k:"funil_begin_checkout"},
-    {l:"Compra",k:"funil_purchase"},
+    {l:"Busca",                  k:"funil_search",         evt:"search"},
+    {l:"Resultado da busca",     k:"funil_view_item",      evt:"view_item"},
+    {l:"Comprar",                k:"funil_add_to_cart",    evt:"add_to_cart"},
+    {l:"Selecionar assento",     k:"funil_seat_selection", evt:"seat_selection"},
+    {l:"Dados do comprador",     k:"funil_login_checkout", evt:"login_checkout"},
+    {l:"Pagamento",              k:"funil_begin_checkout", evt:"begin_checkout"},
+    {l:"Compra",                 k:"funil_purchase",       evt:"purchase"},
   ];
+  const hasCmp=cmp.length>0;
   const totals=steps.map(s=>pri.reduce((a,d)=>a+(parseFloat(d[s.k])||0),0));
   const maxV=Math.max(...totals,1);
-  const cmpTotals=cmp.length?steps.map(s=>cmp.reduce((a,d)=>a+(parseFloat(d[s.k])||0),0)):null;
+  const cmpTotals=hasCmp?steps.map(s=>cmp.reduce((a,d)=>a+(parseFloat(d[s.k])||0),0)):null;
   const el=document.getElementById("appFunilSteps");
   if(!el) return;
   el.innerHTML=steps.map((s,i)=>{
@@ -1332,15 +1397,17 @@ function renderAppFunil(pri,cmp){
     const barW=Math.round(v/maxV*100);
     const cv=cmpTotals?cmpTotals[i]:null;
     const cBarW=cv!=null?Math.round(cv/maxV*100):0;
+    const lift=hasCmp&&cv>0?((v-cv)/cv*100):null;
+    const lH=lift!=null?`<span class="${lift>0.1?"lift-pos":lift<-0.1?"lift-neg":"lift-nt"}" style="margin-left:6px">${lift>0?"+":""}${lift.toFixed(1)}%</span>`:"";
     const conn=i<steps.length-1?`<div class="funil-conn"></div>`:"";
     return `
       <div class="funil-row">
-        <div class="funil-row-lbl">${s.l}</div>
+        <div class="funil-row-lbl"><div>${s.l}</div><div class="funil-row-lbl-evt">${s.evt}</div></div>
         <div class="funil-bars">
           <div class="funil-bar-wrap"><div class="funil-bar pri" style="width:${barW}%"><span class="funil-bar-val">${fmtN(v)}</span></div></div>
           ${cv!=null?`<div class="funil-bar-wrap"><div class="funil-bar cmp" style="width:${cBarW}%"><span class="funil-bar-val">${fmtN(cv)}</span></div></div>`:""}
         </div>
-        <div class="funil-row-pct">${pct.toFixed(1)}%</div>
+        <div class="funil-row-pct">${i===0?"100%":pct.toFixed(1)+"%"}${lH}</div>
       </div>${conn}`;
   }).join("");
 }
@@ -1451,7 +1518,7 @@ function applyFilters(data){
     }
 
     // ── Funil ─────────────────────────────────────
-    const FSTEPS = ["search","select_item","add_to_cart","begin_checkout","purchase"];
+    const FSTEPS = ["search","view_result_search","select_item","seat_selection","add_to_cart","login_checkout","begin_checkout","purchase"];
     const funil = {};
     const canalRatioFunil = CANAL!=="all"
       ? (parseFloat(d["sessoes_"+CANAL])||0) / (parseFloat(d.sessoes)||1)
@@ -1991,10 +2058,12 @@ function kpiCard(d){
 // ════════════════════════════════════════════════════════
 function renderCharts(pri,cmp){
   const hc=cmp.length>0;
-  mkLine("cSess","legSess",pri,cmp,"sessoes","Sessões","#19398A",hc);
-  mkLine("cComp","legComp",pri,cmp,"compras","Compras","#A43C3E",hc);
-  mkLine("cCR","legCR",pri,cmp,"taxa_conversao_pct","CR %","#278A22",hc);
-  mkLine("cBnc","legBnc",pri,cmp,"taxa_rejeicao_pct","Rejeição %","#C3940F",hc);
+  const priG=aggregateByGranularity(pri,GRAN.site);
+  const cmpG=aggregateByGranularity(cmp,GRAN.site);
+  mkLine("cSess","legSess",priG,cmpG,"sessoes","Sessões","#19398A",hc);
+  mkLine("cComp","legComp",priG,cmpG,"compras","Compras","#A43C3E",hc);
+  mkLine("cCR","legCR",priG,cmpG,"taxa_conversao_pct","CR %","#278A22",hc);
+  mkLine("cBnc","legBnc",priG,cmpG,"taxa_rejeicao_pct","Rejeição %","#C3940F",hc);
 }
 
 // ════════════════════════════════════════════════════════
@@ -2168,6 +2237,7 @@ function renderAcquisicao(pri,cmp){
 function renderBreakdownCharts(){
   const priRaw = P.start&&P.end ? getRange(P.start,P.end) : [];
   if(!priRaw.length) return;
+  const priG = aggregateByGranularity(priRaw,GRAN.site);
   const CANAL_CFG=[
     {label:"Orgânico",   key:"sessoes_organico",         color:"#19398A"},
     {label:"Direto",     key:"sessoes_direto",            color:"#A43C3E"},
@@ -2182,15 +2252,15 @@ function renderBreakdownCharts(){
     {label:"Desktop", key:"sessoes_desktop", color:"#A43C3E"},
     {label:"Tablet",  key:"sessoes_tablet",  color:"#C3940F"},
   ];
-  mkMultiLine("cCanalTrend", CANAL_CFG, priRaw);
-  mkMultiLine("cDevTrend",   DEV_CFG,   priRaw);
+  mkMultiLine("cCanalTrend", CANAL_CFG, priG);
+  mkMultiLine("cDevTrend",   DEV_CFG,   priG);
 }
 
 function mkMultiLine(cid, seriesCfg, priRaw){
   const ctx=document.getElementById(cid);
   if(!ctx) return;
   if(CHARTS[cid]) CHARTS[cid].destroy();
-  const labels=priRaw.map(d=>fmtDS(d.data));
+  const labels=priRaw.map(d=>d._label||fmtDS(d.data));
   const datasets=seriesCfg.map(cfg=>({
     label:cfg.label,
     data:priRaw.map(d=>parseFloat(d[cfg.key])||0),
@@ -2212,7 +2282,8 @@ function mkMultiLine(cid, seriesCfg, priRaw){
         callbacks:{
           title:(items)=>{
             const idx=items[0]?.dataIndex;
-            return priRaw[idx]?.data ? fmtDF(priRaw[idx].data) : "";
+            const d=priRaw[idx];
+            return d ? (d._title || (d.data?fmtDF(d.data):"")) : "";
           },
           label:(item)=>{
             const v=item.parsed.y;
@@ -2236,11 +2307,14 @@ function mkMultiLine(cid, seriesCfg, priRaw){
 function renderFunil(pri,cmp){
   const hasCmp=cmp.length>0;
   const STEPS=[
-    {l:"Busca",k:"funil_search"},
-    {l:"Seleciona item",k:"funil_select_item"},
-    {l:"Add ao carrinho",k:"funil_add_to_cart"},
-    {l:"Inicia checkout",k:"funil_begin_checkout"},
-    {l:"Compra",k:"funil_purchase"},
+    {l:"Busca",                 k:"funil_search",              evt:"search"},
+    {l:"Resultado da busca",    k:"funil_view_result_search",  evt:"view_result_search"},
+    {l:"Selecionar viagem",     k:"funil_select_item",         evt:"select_item"},
+    {l:"Selecionar assento",    k:"funil_seat_selection",      evt:"seat_selection"},
+    {l:"Comprar",               k:"funil_add_to_cart",         evt:"add_to_cart"},
+    {l:"Dados do comprador",    k:"funil_login_checkout",      evt:"login_checkout"},
+    {l:"Pagamento",             k:"funil_begin_checkout",      evt:"begin_checkout"},
+    {l:"Compra",                k:"funil_purchase",            evt:"purchase"},
   ];
   const priT=STEPS.map(s=>({...s,t:pri.reduce((x,d)=>x+(d[s.k]||0),0)}));
   const cmpT=hasCmp?STEPS.map(s=>({...s,t:cmp.reduce((x,d)=>x+(d[s.k]||0),0)})):[];
@@ -2262,7 +2336,7 @@ function renderFunil(pri,cmp){
     const row=document.createElement("div");
     row.className="funil-row";
     row.innerHTML=`
-      <div class="funil-row-lbl">${s.l}</div>
+      <div class="funil-row-lbl"><div>${s.l}</div><div class="funil-row-lbl-evt">${s.evt}</div></div>
       <div class="funil-bars">
         <div class="funil-bar-wrap">
           <div class="funil-bar pri" style="width:${pctP}%"><span class="funil-bar-val">${fmtN(s.t)}</span></div>
@@ -3675,7 +3749,7 @@ function mkLine(cid,lid,pri,cmp,metric,label,color,hasCmp){
 
   const priLabel=P.start&&P.end?fmtDF(P.start)+" – "+fmtDF(P.end):label;
   const cmpLabel=C.start&&C.end?fmtDF(C.start)+" – "+fmtDF(C.end):"Comparação";
-  const labels=pri.map(d=>fmtDS(d.data));
+  const labels=pri.map(d=>d._label||fmtDS(d.data));
   const vals=pri.map(d=>parseFloat(d[metric])||0);
   const cmpVals=cmp.map(d=>parseFloat(d[metric])||0);
   const cmpAligned=hasCmp&&cmp.length?alignSeries(vals,cmpVals):[];
@@ -3717,15 +3791,17 @@ function mkLine(cid,lid,pri,cmp,metric,label,color,hasCmp){
           title:(items)=>{
             const idx=items[0]?.dataIndex;
             const priDate=pri[idx]?.data||"";
+            const priTitle=pri[idx]?._title || (priDate?fmtDF(priDate):"");
             if(!hasCmp||!cmp.length){
-              return priDate?fmtDF(priDate):"";
+              return priTitle;
             }
             const out=[];
-            if(priDate) out.push("● "+fmtDF(priDate));
+            if(priTitle) out.push("● "+priTitle);
             const pos=idx/Math.max(vals.length-1,1)*Math.max(cmpVals.length-1,0);
             const ci=Math.round(pos);
             const cd=cmp[ci]?.data||"";
-            if(cd) out.push("◌ "+fmtDF(cd)+" (comparação)");
+            const cTitle=cmp[ci]?._title || (cd?fmtDF(cd):"");
+            if(cTitle) out.push("◌ "+cTitle+" (comparação)");
             return out;
           },
           label:(item)=>{
@@ -4421,6 +4497,98 @@ function todayISO(){return new Date().toISOString().slice(0,10);}
 function isoD(d){return d.toISOString().slice(0,10);}
 function offDate(iso,days){const d=new Date(iso+"T12:00:00Z");d.setUTCDate(d.getUTCDate()+days);return isoD(d);}
 function offYears(iso,y){const d=new Date(iso+"T12:00:00Z");d.setUTCFullYear(d.getUTCFullYear()+y);return isoD(d);}
+
+// ════════════════════════════════════════════════════════
+// GRANULARIDADE DOS GRÁFICOS DE LINHA (Diário / Semanal / Mensal)
+// ════════════════════════════════════════════════════════
+const MES_ABR=["Jan","Fev","Mar","Abr","Mai","Jun","Jul","Ago","Set","Out","Nov","Dez"];
+const MES_EXT=["janeiro","fevereiro","março","abril","maio","junho","julho","agosto","setembro","outubro","novembro","dezembro"];
+// Campos que precisam de média ponderada (por sessões) em vez de soma ao agrupar dias
+const GRAN_RATE_FIELDS=new Set(["taxa_conversao_pct","taxa_rejeicao_pct","duracao_media_seg"]);
+
+function isoMonday(dateStr){
+  const d=new Date(dateStr+"T12:00:00Z");
+  const day=(d.getUTCDay()+6)%7; // 0=segunda .. 6=domingo
+  d.setUTCDate(d.getUTCDate()-day);
+  return isoD(d);
+}
+function bucketKeyFor(dateStr,gran){
+  if(gran==="month") return dateStr.slice(0,7)+"-01";
+  if(gran==="week") return isoMonday(dateStr);
+  return dateStr;
+}
+function bucketLabelFor(key,gran,rows){
+  if(gran==="day") return fmtDS(key);
+  if(gran==="month"){
+    const m=parseInt(key.slice(5,7),10);
+    return MES_ABR[m-1]+"/"+key.slice(2,4);
+  }
+  const last=rows[rows.length-1].data;
+  return fmtDS(key)+"–"+fmtDS(last);
+}
+function bucketTitleFor(key,gran,rows){
+  if(gran==="day") return fmtDF(key);
+  if(gran==="month"){
+    const m=parseInt(key.slice(5,7),10);
+    return MES_EXT[m-1]+"/"+key.slice(0,4);
+  }
+  const last=rows[rows.length-1].data;
+  return fmtDF(key)+" – "+fmtDF(last);
+}
+function isNumericVal(v){
+  if(typeof v==="number") return isFinite(v);
+  if(typeof v==="string" && v.trim()!=="" && !isNaN(parseFloat(v))) return true;
+  return false;
+}
+// Agrupa um array de registros diários (já filtrados por device/canal) em buckets
+// de semana ou mês. Campos numéricos são somados; campos de taxa/duração usam
+// média ponderada por sessões (equivalente a recalcular a partir das somas).
+// Campos não numéricos (ex: nomes de origem/destino) mantêm o valor do 1º dia do bucket.
+function aggregateByGranularity(data,gran){
+  if(gran==="day"||!data||!data.length) return data;
+  const order=[], buckets={};
+  data.forEach(d=>{
+    const k=bucketKeyFor(d.data,gran);
+    if(!buckets[k]){buckets[k]=[];order.push(k);}
+    buckets[k].push(d);
+  });
+  return order.map(k=>{
+    const rows=buckets[k];
+    const keys=new Set();
+    rows.forEach(r=>Object.keys(r).forEach(kk=>keys.add(kk)));
+    const out={data:k};
+    keys.forEach(key=>{
+      if(key==="data") return;
+      if(GRAN_RATE_FIELDS.has(key)){ out[key]=wavg(rows,key,"sessoes"); return; }
+      const allNumeric=rows.every(r=>isNumericVal(r[key]));
+      out[key]=allNumeric
+        ? rows.reduce((s,r)=>s+(parseFloat(r[key])||0),0)
+        : rows[0][key];
+    });
+    out._label=bucketLabelFor(k,gran,rows);
+    out._title=bucketTitleFor(k,gran,rows);
+    return out;
+  });
+}
+const GRAN_TITLE={day:"diária",week:"semanal",month:"mensal"};
+function setGran(scope,val){
+  GRAN[scope]=val;
+  document.querySelectorAll('[data-gran-group="'+scope+'"] [data-gran]').forEach(b=>{
+    b.classList.toggle("active",b.dataset.gran===val);
+  });
+  const titleEl=document.getElementById(scope==="site"?"secTendSite":"secTendApp");
+  if(titleEl) titleEl.textContent="Tendência "+GRAN_TITLE[val];
+  if(scope==="site"){ render(); }
+  else if(scope==="app"){ if(APP_LOADED) renderApp(); }
+}
+document.addEventListener("DOMContentLoaded",()=>{
+  document.querySelectorAll("[data-gran]").forEach(btn=>{
+    btn.addEventListener("click",()=>{
+      const group=btn.closest("[data-gran-group]");
+      if(group) setGran(group.dataset.granGroup, btn.dataset.gran);
+    });
+  });
+});
 function dateDiff(a,b){return Math.round((new Date(b)-new Date(a))/86400000);}
 
 
