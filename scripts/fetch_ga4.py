@@ -67,13 +67,19 @@ COLUMNS = [
     "sessoes_social", "sessoes_email", "sessoes_referral", "sessoes_outros_canais",
     "compras_organico", "compras_direto", "compras_pago",
     "compras_social", "compras_email", "compras_referral", "compras_outros_canais",
-    "funil_search", "funil_select_item", "funil_add_to_cart",
+    # Funil total — estrutura atualizada (8 etapas, na ordem do fluxo real)
+    "funil_search", "funil_view_result_search", "funil_select_item",
+    "funil_seat_selection", "funil_add_to_cart", "funil_login_checkout",
     "funil_begin_checkout", "funil_purchase",
-    "funil_search_mobile", "funil_select_item_mobile", "funil_add_to_cart_mobile",
+    # Funil por dispositivo
+    "funil_search_mobile", "funil_view_result_search_mobile", "funil_select_item_mobile",
+    "funil_seat_selection_mobile", "funil_add_to_cart_mobile", "funil_login_checkout_mobile",
     "funil_begin_checkout_mobile", "funil_purchase_mobile",
-    "funil_search_desktop", "funil_select_item_desktop", "funil_add_to_cart_desktop",
+    "funil_search_desktop", "funil_view_result_search_desktop", "funil_select_item_desktop",
+    "funil_seat_selection_desktop", "funil_add_to_cart_desktop", "funil_login_checkout_desktop",
     "funil_begin_checkout_desktop", "funil_purchase_desktop",
-    "funil_search_tablet", "funil_select_item_tablet", "funil_add_to_cart_tablet",
+    "funil_search_tablet", "funil_view_result_search_tablet", "funil_select_item_tablet",
+    "funil_seat_selection_tablet", "funil_add_to_cart_tablet", "funil_login_checkout_tablet",
     "funil_begin_checkout_tablet", "funil_purchase_tablet",
     "top_origem_1", "top_origem_1_sessoes",
     "top_origem_2", "top_origem_2_sessoes",
@@ -402,7 +408,13 @@ def collect_metrics(service, date_str):
             m["compras_outros_canais"] += val
 
     # ── Report 4a: funil de eventos total ────────────────────────────────────
-    funil_events = ["search", "select_item", "add_to_cart", "begin_checkout", "purchase"]
+    # Estrutura atualizada do funil (na ordem real do fluxo de compra do site):
+    #   search → view_result_search → select_item → seat_selection →
+    #   add_to_cart → login_checkout → begin_checkout → purchase
+    funil_events = [
+        "search", "view_result_search", "select_item", "seat_selection",
+        "add_to_cart", "login_checkout", "begin_checkout", "purchase",
+    ]
     funil_map = {e: f"funil_{e}" for e in funil_events}
     for k in funil_map.values():
         m[k] = 0
