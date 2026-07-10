@@ -44,7 +44,7 @@ jobs:
     runs-on: ubuntu-latest
     env:
       FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true  # opt-in Node.js 24 (obrigatório a partir de 16/jun/2026)
-    timeout-minutes: 90  # aumentado para acomodar coleta do App em modo histórico
+    timeout-minutes: 180  # aumentado — reprocesso histórico completo de Site + App juntos pode passar de 90min
 
     permissions:
       contents: write
@@ -79,6 +79,16 @@ jobs:
       - name: "[Site] Passo 3 — Validar schema do data.json"
         run: python scripts/validate_schema.py
 
+      - name: "[Site] Commit intermediário — protege o progresso do Site antes de iniciar o App"
+        run: |
+          git config user.name  "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add data/history.ndjson data.json
+          git diff --cached --quiet && echo "Site: nada a commitar." && exit 0
+          git commit -m "chore: atualiza dados site [$(date -u '+%Y-%m-%d %H:%M')] UTC"
+          git pull --rebase -Xours origin main
+          git push
+
       # ── APP ───────────────────────────────────────────────────────────────
 
       - name: "[App] Passo 1 — Coletar GA4 App → data/history_app.ndjson"
@@ -97,12 +107,12 @@ jobs:
 
       # ── COMMIT ────────────────────────────────────────────────────────────
 
-      - name: "Passo final — Commitar todos os arquivos no repositório"
+      - name: "Passo final — Commitar dados do App no repositório"
         run: |
           git config user.name  "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add data/history.ndjson data.json data/history_app.ndjson data_app.json
-          git diff --cached --quiet && echo "Nada a commitar." && exit 0
-          git commit -m "chore: atualiza dados site + app [$(date -u '+%Y-%m-%d %H:%M')] UTC"
+          git add data/history_app.ndjson data_app.json
+          git diff --cached --quiet && echo "App: nada a commitar." && exit 0
+          git commit -m "chore: atualiza dados app [$(date -u '+%Y-%m-%d %H:%M')] UTC"
           git pull --rebase -Xours origin main
           git push
