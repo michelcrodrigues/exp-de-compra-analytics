@@ -129,16 +129,20 @@ def build_daily(records):
             "compras_email":         safe_int(r.get("compras_email")),
             "compras_referral":      safe_int(r.get("compras_referral")),
             "compras_outros_canais": safe_int(r.get("compras_outros_canais")),
-            # Funil total
-            "funil_search":         safe_int(r.get("funil_search")),
-            "funil_select_item":    safe_int(r.get("funil_select_item")),
-            "funil_add_to_cart":    safe_int(r.get("funil_add_to_cart")),
-            "funil_begin_checkout": safe_int(r.get("funil_begin_checkout")),
-            "funil_purchase":       safe_int(r.get("funil_purchase")),
+            # Funil total — estrutura atualizada (8 etapas, na ordem do fluxo real)
+            "funil_search":              safe_int(r.get("funil_search")),
+            "funil_view_result_search":  safe_int(r.get("funil_view_result_search")),
+            "funil_select_item":         safe_int(r.get("funil_select_item")),
+            "funil_seat_selection":      safe_int(r.get("funil_seat_selection")),
+            "funil_add_to_cart":         safe_int(r.get("funil_add_to_cart")),
+            "funil_login_checkout":      safe_int(r.get("funil_login_checkout")),
+            "funil_begin_checkout":      safe_int(r.get("funil_begin_checkout")),
+            "funil_purchase":            safe_int(r.get("funil_purchase")),
             # Funil por dispositivo
             **{
                 f"funil_{e}_{dev}": safe_int(r.get(f"funil_{e}_{dev}"))
-                for e in ["search", "select_item", "add_to_cart", "begin_checkout", "purchase"]
+                for e in ["search", "view_result_search", "select_item", "seat_selection",
+                          "add_to_cart", "login_checkout", "begin_checkout", "purchase"]
                 for dev in ["mobile", "desktop", "tablet"]
             },
             # Rotas
