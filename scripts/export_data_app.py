@@ -116,16 +116,19 @@ def build_daily(records):
             "sessoes_email":         safe_int(r.get("sessoes_email")),
             "sessoes_referral":      safe_int(r.get("sessoes_referral")),
             "sessoes_outros_canais": safe_int(r.get("sessoes_outros_canais")),
-            # Funil total
+            # Funil total — estrutura atualizada do App (7 etapas, na ordem do fluxo real)
             "funil_search":         safe_int(r.get("funil_search")),
-            "funil_select_item":    safe_int(r.get("funil_select_item")),
+            "funil_view_item":      safe_int(r.get("funil_view_item")),
             "funil_add_to_cart":    safe_int(r.get("funil_add_to_cart")),
+            "funil_seat_selection": safe_int(r.get("funil_seat_selection")),
+            "funil_login_checkout":  safe_int(r.get("funil_login_checkout")),
             "funil_begin_checkout": safe_int(r.get("funil_begin_checkout")),
             "funil_purchase":       safe_int(r.get("funil_purchase")),
             # Funil por dispositivo
             **{
                 f"funil_{e}_{dev}": safe_int(r.get(f"funil_{e}_{dev}"))
-                for e in ["search", "select_item", "add_to_cart", "begin_checkout", "purchase"]
+                for e in ["search", "view_item", "add_to_cart", "seat_selection",
+                          "login_checkout", "begin_checkout", "purchase"]
                 for dev in ["mobile", "desktop", "tablet"]
             },
             # Rotas — vazias no app
