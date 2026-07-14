@@ -1,6 +1,133 @@
 {
-  "gerado_em": "2026-07-09T19:27:43.727Z",
+  "gerado_em": "2026-07-14T15:15:34.301Z",
   "insights": [
+    {
+      "semana": "2026-07-06",
+      "label": "06/07 – 12/07/2026",
+      "gerado_em": "2026-07-14T15:15:34.301Z",
+      "items": [
+        {
+          "id": "INS-2026-050",
+          "canal": "site",
+          "tag": "Queda de conversão concentrada no checkout, taxa de serviço como hipótese recorrente",
+          "classificacao": "Diagnóstico comprovado",
+          "prioridade": "Alta",
+          "data": "2026-07-14",
+          "diagnostico": "A conversão do site caiu para 8,15% na semana de 06/07 a 12/07, queda moderada de 0,69pp (7,8%) frente à média das últimas 4 semanas (8,84%), desvio de 1,7 sigma sobre o histórico das últimas 8 semanas. O comparativo anual é positivo (+1,37pp vs mesmo período de 2025), então o problema é de curto prazo, não estrutural.",
+          "evidencia": "O funil mostra a queda concentrada quase inteiramente na etapa final: checkout→purchase caiu 5,1pp (71,7% vs 76,8% baseline), mobile -5,4pp (76,4% vs 81,8%) e desktop -4,4pp (62,1% vs 66,5%). As etapas anteriores não explicam a queda — cart→checkout melhorou (+0,7pp mobile, +1pp desktop). O NPS qualitativo mostra o tema 'taxa de serviço' e 'mudança de tarifa no momento da compra' recorrente em detratores há 5 semanas consecutivas (08/06, 22/06, 29/06, 06/07), e o Linear tem o chamado SEN-462 aberto sobre divergência de preços no site.",
+          "plano_acao": "1) Validar com UX/Pesquisa se a taxa de serviço está sendo exibida de forma clara e antecipada desde a busca/carrinho. 2) Priorizar o fechamento do SEN-462 (divergência de preços) e checar inconsistência entre valor da busca e do checkout. 3) Rodar teste A/B exibindo o valor total com taxas já na etapa de seleção de assento/carrinho para eliminar a surpresa no checkout.",
+          "impacto": "KR de Receita (R$ 345M) via queda direta de conversão, e KR de NPS (60) via manutenção de reclamação recorrente de detratores sobre transparência de preço.",
+          "prioridade_justificativa": "Alta — queda estatisticamente relevante (1,7σ), concentrada em um único step do funil em ambos os devices, com hipótese causal sustentada por evidência qualitativa recorrente há 5 semanas.",
+          "acompanhamento": "Monitorar CR semanal e taxa checkout→purchase nas próximas 2 semanas. Escalar como incidente de produto se a queda persistir ou aprofundar. Acompanhar reincidência do tema 'taxa de serviço' no NPS qualitativo.",
+          "texto": "Diagnóstico: A conversão do site caiu para 8,15% na semana de 06/07 a 12/07, queda moderada de 0,69pp (7,8%) frente à média das últimas 4 semanas (8,84%), desvio de 1,7 sigma sobre o histórico. O comparativo anual é positivo (+1,37pp vs 2025), logo o problema é de curto prazo.\n\nEvidência: checkout→purchase caiu 5,1pp (71,7% vs 76,8% baseline), mobile -5,4pp e desktop -4,4pp. Etapas anteriores não explicam a queda — cart→checkout melhorou. O tema 'taxa de serviço'/'mudança de tarifa no checkout' é recorrente em detratores do NPS há 5 semanas, e o SEN-462 (divergência de preços) segue aberto no Linear.\n\nClassificação: Diagnóstico comprovado\n\nPlano de ação: 1) Validar clareza e antecipação da exibição da taxa desde a busca/carrinho. 2) Priorizar o SEN-462. 3) Testar A/B exibindo valor total com taxas na seleção de assento/carrinho.\n\nImpacto: KR de Receita (R$ 345M) e KR de NPS (60).\n\nPrioridade: Alta — queda estatisticamente relevante, concentrada em um único step em ambos devices, com hipótese causal recorrente há 5 semanas.\n\nAcompanhamento: Monitorar CR e checkout→purchase nas próximas 2 semanas; acompanhar reincidência do tema no NPS qualitativo.",
+          "titulo_linear": "Testar exibição antecipada da taxa de serviço para reduzir abandono no checkout",
+          "tipo_acao": "testar",
+          "testavel": true,
+          "criterio_confirmacao": "Se o grupo teste com taxa exibida antecipadamente apresentar checkout→purchase pelo menos 3pp acima do grupo controle, com significância estatística, confirma-se a hipótese causal.",
+          "experimento_template": {
+            "hipotese": "Exibir a taxa de serviço de forma antecipada (na seleção de assento/carrinho) reduz o abandono na etapa checkout→purchase",
+            "metrica_primaria": "Taxa checkout→purchase",
+            "guardrails": [
+              "CR geral não deve cair",
+              "Tempo médio de sessão não deve aumentar significativamente"
+            ],
+            "criterio_sucesso": "checkout→purchase +3pp ou mais vs controle, com significância estatística",
+            "duracao_minima": "2 semanas"
+          },
+          "status": "nunca_testada",
+          "experimento_id": null,
+          "revisao": null
+        },
+        {
+          "id": "INS-2026-051",
+          "canal": "site",
+          "tag": "Mix de canal: Pago ganha share com CR mais baixo, Direto perde share e CR",
+          "classificacao": "Hipótese",
+          "prioridade": "Média",
+          "data": "2026-07-14",
+          "diagnostico": "O canal Pago aumentou participação nas sessões de 51,5% para 53,7% (+2,2pp), mas sua conversão caiu de 8,91% para 7,99% (-0,92pp). O canal Direto — historicamente o de maior CR — perdeu 1,1pp de share (12,5% → 11,4%) e teve CR reduzido em 1,37pp (17,14% → 15,77%).",
+          "evidencia": "Como Pago tem CR estruturalmente mais baixo que Direto, o crescimento do seu share dilui o CR blended do site, mesmo com Orgânico estável (17,2% share, -0,21pp de CR).",
+          "plano_acao": "Revisar com Growth/Mídia a qualidade do tráfego pago recente (campanhas, públicos, palavras-chave). Investigar por que o canal Direto está convertendo pior — pode indicar fricção em fluxo de retorno/login.",
+          "impacto": "KR de Receita — mix de canal com CR mais baixo reduz a eficiência do funil mesmo com mais sessões.",
+          "acompanhamento": "Acompanhar share e CR por canal nas próximas 2 semanas; cruzar com investimento em mídia paga do período.",
+          "texto": "Diagnóstico: Pago aumentou share de sessões de 51,5% para 53,7% mas com CR caindo de 8,91% para 7,99%. Direto perdeu 1,1pp de share e teve CR reduzido em 1,37pp.\n\nEvidência: Pago tem CR estruturalmente mais baixo que Direto — o crescimento do seu share dilui o CR blended do site.\n\nClassificação: Hipótese\n\nPlano de ação: Revisar qualidade do tráfego pago com Growth/Mídia; investigar queda de CR no canal Direto.\n\nImpacto: KR de Receita — mix de canal menos eficiente.\n\nPrioridade: Média — efeito mensurável mas não crítico isoladamente.\n\nAcompanhamento: Acompanhar share e CR por canal nas próximas 2 semanas.",
+          "titulo_linear": null,
+          "tipo_acao": "monitorar",
+          "testavel": false,
+          "criterio_confirmacao": null,
+          "experimento_template": null,
+          "status": "nunca_testada",
+          "experimento_id": null,
+          "revisao": null
+        },
+        {
+          "id": "INS-2026-052",
+          "canal": "app",
+          "tag": "[App] Gap persistente de conversão entre Android e iOS",
+          "classificacao": "Tendência",
+          "prioridade": "Média",
+          "data": "2026-07-14",
+          "diagnostico": "No app, a conversão de Android (4,44%) segue significativamente abaixo da de iOS (7,70%) — diferença de 3,26pp, quase 74% relativa.",
+          "evidencia": "O padrão se repete em relação à semana anterior (Android 4,40% vs iOS 8,04%), indicando tendência estável e não pontual.",
+          "plano_acao": "Auditar a experiência de checkout no Android: performance de carregamento, taxa de erro em pagamento e diferenças de layout/fluxo entre plataformas.",
+          "impacto": "KR de Receita — Android concentra a maior parte do volume de sessões do app (148 mil vs 63 mil no iOS), então mesmo um pequeno ganho de CR ali tem efeito desproporcional.",
+          "acompanhamento": "Rastrear CR por plataforma nas próximas semanas; abrir investigação técnica se o gap persistir além de 4 semanas.",
+          "texto": "Diagnóstico: Conversão Android (4,44%) segue bem abaixo de iOS (7,70%) no app — gap de 3,26pp.\n\nEvidência: Padrão se repete vs semana anterior (Android 4,40% vs iOS 8,04%) — tendência estável.\n\nClassificação: Tendência\n\nPlano de ação: Auditar checkout Android — performance, erros de pagamento, diferenças de fluxo.\n\nImpacto: KR de Receita — Android concentra a maior parte do volume do app.\n\nPrioridade: Média — gap grande mas estável, sem sinal de piora aguda.\n\nAcompanhamento: Rastrear CR por plataforma; investigação técnica se persistir além de 4 semanas.",
+          "titulo_linear": null,
+          "tipo_acao": "monitorar",
+          "testavel": false,
+          "criterio_confirmacao": null,
+          "experimento_template": null,
+          "status": "nunca_testada",
+          "experimento_id": null,
+          "revisao": null
+        },
+        {
+          "id": "INS-2026-053",
+          "canal": "conjunto",
+          "tag": "[Site vs App] App não acompanha o crescimento de sessões do site",
+          "classificacao": "Tendência",
+          "prioridade": "Baixa",
+          "data": "2026-07-14",
+          "diagnostico": "Sessões do site cresceram 13,1% na semana (508.674 vs ~449.724), enquanto sessões do app ficaram praticamente estáveis (+0,4%, 212.063 vs 211.129) — reduzindo o peso relativo do app na base total.",
+          "evidencia": "Compras no app caíram -1,1% na semana, enquanto no site cresceram 3,7%, reforçando que o crescimento do período é puxado majoritariamente pelo site (coincide com o aumento de share do canal Pago).",
+          "plano_acao": "Entender se o crescimento do site é sazonal/campanha específica e se há oportunidade de replicar a aquisição também para o app.",
+          "impacto": "KR de Recorrência e Identificação de base — app tende a gerar mais dados de identidade e recompra; se não cresce junto, a estratégia app-first perde tração relativa.",
+          "acompanhamento": "Comparar evolução do share app/site nas próximas 3-4 semanas para confirmar se é tendência ou variação pontual.",
+          "texto": "Diagnóstico: Sessões do site cresceram 13,1% na semana enquanto o app ficou estável (+0,4%).\n\nEvidência: Compras no app caíram -1,1% vs +3,7% no site — crescimento do período concentrado no site, coincidindo com aumento do canal Pago.\n\nClassificação: Tendência\n\nPlano de ação: Entender se o crescimento do site é sazonal/campanha e avaliar replicar aquisição para o app.\n\nImpacto: KR de Recorrência e Identificação de base.\n\nPrioridade: Baixa — sem urgência, mas relevante para estratégia app-first.\n\nAcompanhamento: Comparar share app/site nas próximas 3-4 semanas.",
+          "titulo_linear": null,
+          "tipo_acao": "monitorar",
+          "testavel": false,
+          "criterio_confirmacao": null,
+          "experimento_template": null,
+          "status": "nunca_testada",
+          "experimento_id": null,
+          "revisao": null
+        },
+        {
+          "id": "INS-2026-054",
+          "canal": "site",
+          "tag": "Queda leve na entrada do funil (search→carrinho), uniforme entre devices",
+          "classificacao": "Explicação",
+          "prioridade": "Baixa",
+          "data": "2026-07-14",
+          "diagnostico": "A taxa search→add_to_cart caiu 1pp em ambos os devices (mobile 8,2% vs 9,2% baseline; desktop 12,3% vs 13,3% baseline) — queda secundária frente aos 5,1pp perdidos no checkout.",
+          "evidencia": "O efeito é uniforme entre mobile e desktop e de magnitude pequena, sugerindo reflexo do mesmo mix de canal (mais tráfego pago, menor propensão a adicionar ao carrinho) e não um problema de UX na busca.",
+          "plano_acao": "Não requer ação isolada; tratar como decorrência do insight de mix de canal (INS-2026-051). Reavaliar se, corrigido o mix, a etapa volta ao patamar histórico.",
+          "impacto": "Menor — a etapa seguinte (cart→checkout) até melhorou, absorvendo parte do efeito.",
+          "acompanhamento": "Acompanhar em conjunto com o mix de canal nas próximas semanas.",
+          "texto": "Diagnóstico: search→carrinho caiu 1pp em ambos os devices, queda secundária frente ao checkout.\n\nEvidência: Efeito uniforme entre mobile e desktop, provável reflexo do mix de canal (mais Pago, menor propensão ao carrinho).\n\nClassificação: Explicação\n\nPlano de ação: Tratar junto do INS-2026-051; reavaliar após correção do mix.\n\nImpacto: Menor — cart→checkout compensou parte do efeito.\n\nPrioridade: Baixa.\n\nAcompanhamento: Acompanhar junto ao mix de canal.",
+          "titulo_linear": null,
+          "tipo_acao": "monitorar",
+          "testavel": false,
+          "criterio_confirmacao": null,
+          "experimento_template": null,
+          "status": "nunca_testada",
+          "experimento_id": null,
+          "revisao": null
+        }
+      ]
+    },
     {
       "semana": "2026-06-29",
       "label": "29/06 – 05/07/2026",
@@ -1045,6 +1172,169 @@
     }
   ],
   "insights_conversao": [
+    {
+      "semana": "2026-07-06",
+      "label": "06/07 – 12/07/2026",
+      "tipo": "semanal",
+      "gerado_em": "2026-07-14T12:00:00-03:00",
+      "classificacao": "caiu_moderado",
+      "metricas": {
+        "cr_atual": {
+          "total": 8.15,
+          "mobile": 7.35,
+          "desktop": 11.59
+        },
+        "cr_baseline": {
+          "total": 8.84,
+          "mobile": 8.01,
+          "desktop": 12.05
+        },
+        "delta_pp": {
+          "total": -0.69,
+          "mobile": -0.66,
+          "desktop": -0.46
+        },
+        "sigma": 0.4,
+        "n_semanas_hist": 8
+      },
+      "hipoteses": [
+        {
+          "hipotese": "Percepção de taxa/tarifa no checkout causando abandono na etapa final da compra",
+          "evidencia": "checkout→purchase caiu 5,1pp (71,7% vs 76,8% baseline), concentrado em mobile (-5,4pp) e desktop (-4,4pp); tema 'taxa de serviço' recorrente em detratores do NPS há 5 semanas; SEN-462 aberto no Linear sobre divergência de preços."
+        },
+        {
+          "hipotese": "Mix de canal: crescimento do Pago (share +2,2pp, CR -0,92pp) e perda de share do Direto (canal de maior CR, share -1,1pp, CR -1,37pp) dilui o CR blended",
+          "evidencia": "Pago: share 53,7% (base 51,5%), CR 7,99% (base 8,91%). Direto: share 11,4% (base 12,5%), CR 15,77% (base 17,14%)."
+        }
+      ],
+      "monitorar": "CR semanal, taxa checkout→purchase e recorrência do tema 'taxa de serviço' no NPS qualitativo nas próximas 2 semanas.",
+      "dispositivos": {
+        "mobile": {
+          "classificacao": "caiu_moderado",
+          "cr_atual": 7.35,
+          "cr_baseline": 8.01,
+          "delta_pp": -0.66,
+          "canal_contexto": [
+            {
+              "nome": "Pago",
+              "share_sessoes_total": 53.7,
+              "cr_total": 7.99,
+              "delta_cr_pp": -0.92
+            },
+            {
+              "nome": "Orgânico",
+              "share_sessoes_total": 17.2,
+              "cr_total": 5.89,
+              "delta_cr_pp": -0.21
+            },
+            {
+              "nome": "Direto",
+              "share_sessoes_total": 11.4,
+              "cr_total": 15.77,
+              "delta_cr_pp": -1.37
+            },
+            {
+              "nome": "Social",
+              "share_sessoes_total": 1.6,
+              "cr_total": null,
+              "delta_cr_pp": null
+            }
+          ],
+          "funil": {
+            "step_critico": "checkout_to_purchase",
+            "checkout_to_purchase": {
+              "atual": 76.4,
+              "baseline": 81.8,
+              "delta_pp": -5.4
+            },
+            "cart_to_checkout": {
+              "atual": 67.7,
+              "baseline": 67,
+              "delta_pp": 0.7
+            },
+            "search_to_cart": {
+              "atual": 8.2,
+              "baseline": 9.2,
+              "delta_pp": -1
+            }
+          },
+          "hipoteses": [
+            {
+              "hipotese": "Abandono no checkout mobile provavelmente ligado à percepção de taxa, já que a queda é ainda maior que no desktop",
+              "evidencia": "checkout→purchase mobile -5,4pp; mobile responde por 79,8% das sessões do site."
+            }
+          ],
+          "monitorar": "Taxa checkout→purchase mobile nas próximas semanas; comparar com testes de exibição de taxa."
+        },
+        "desktop": {
+          "classificacao": "caiu_moderado",
+          "cr_atual": 11.59,
+          "cr_baseline": 12.05,
+          "delta_pp": -0.46,
+          "canal_contexto": [
+            {
+              "nome": "Pago",
+              "share_sessoes_total": 53.7,
+              "cr_total": 7.99,
+              "delta_cr_pp": -0.92
+            },
+            {
+              "nome": "Orgânico",
+              "share_sessoes_total": 17.2,
+              "cr_total": 5.89,
+              "delta_cr_pp": -0.21
+            },
+            {
+              "nome": "Direto",
+              "share_sessoes_total": 11.4,
+              "cr_total": 15.77,
+              "delta_cr_pp": -1.37
+            },
+            {
+              "nome": "Social",
+              "share_sessoes_total": 1.6,
+              "cr_total": null,
+              "delta_cr_pp": null
+            }
+          ],
+          "funil": {
+            "step_critico": "checkout_to_purchase",
+            "checkout_to_purchase": {
+              "atual": 62.1,
+              "baseline": 66.5,
+              "delta_pp": -4.4
+            },
+            "cart_to_checkout": {
+              "atual": 62.9,
+              "baseline": 61.9,
+              "delta_pp": 1
+            },
+            "search_to_cart": {
+              "atual": 12.3,
+              "baseline": 13.3,
+              "delta_pp": -1
+            }
+          },
+          "hipoteses": [
+            {
+              "hipotese": "Queda no desktop é menos intensa que no mobile mas segue o mesmo padrão, reforçando causa comum de produto/preço e não específica de device",
+              "evidencia": "checkout→purchase desktop -4,4pp vs mobile -5,4pp; ambos tiveram cart→checkout estável ou melhor."
+            }
+          ],
+          "monitorar": "Taxa checkout→purchase desktop; comparar magnitude do gap com mobile."
+        },
+        "app": {
+          "classificacao": "estavel",
+          "cr_atual": 5.4,
+          "cr_baseline": 5.48,
+          "delta_pp": -0.08,
+          "canal_contexto": null,
+          "funil": null,
+          "hipoteses": [],
+          "monitorar": "Gap de conversão Android (4,44%) vs iOS (7,70%) no app — ver INS-2026-052. [Premissa: baseline do app é a semana anterior, não média de 4 semanas, por indisponibilidade de série completa de funil por plataforma nesta execução]"
+        }
+      }
+    },
     {
       "semana": "2026-06-29",
       "label": "29/06 – 05/07/2026",
