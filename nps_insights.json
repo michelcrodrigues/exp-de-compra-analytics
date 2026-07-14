@@ -1,6 +1,54 @@
 {
-  "gerado_em": "2026-07-07T15:14:28.376Z",
+  "gerado_em": "2026-07-14T15:16:13.554Z",
   "semanas": [
+    {
+      "semana": "2026-07-06",
+      "label": "06/07 – 12/07/2026",
+      "gerado_em": "2026-07-14T12:00:00-03:00",
+      "nps_score": 78.5,
+      "nps_nota_media": 9.24,
+      "nps_respostas": 12418,
+      "nps_promotores": 10355,
+      "nps_neutros": 1458,
+      "nps_detratores": 605,
+      "promotores": {
+        "total": 10355,
+        "temas_principais": [
+          "satisfação geral com a experiência de compra (elogios curtos e genéricos)",
+          "agilidade do processo de compra",
+          "qualidade percebida do atendimento"
+        ],
+        "resumo": "Padrão se mantém igual às semanas anteriores: alto volume de elogios curtos e genéricos ('Muito bom', 'Ótimo', 'Excelente'), sem menção a diferenciais específicos da experiência.",
+        "insight": "Com NPS score em 78,5 (acima da meta de 60) mas sem menção a momentos de encantamento específicos, a experiência funciona sem atrito mas não gera recomendação ativa diferenciada.",
+        "recorrente": true,
+        "semanas_recorrente": 4
+      },
+      "neutros": {
+        "total": 1458,
+        "temas_principais": [
+          "taxa de serviço percebida como alta",
+          "ausência de parcelamento sem juros",
+          "preocupação com segurança de mulheres na viagem",
+          "suporte insuficiente em falhas de compra"
+        ],
+        "resumo": "Reclamações recorrentes sobre o custo da taxa de serviço e falta de parcelamento sem juros, além de um relato pontual sobre falha no processamento da primeira compra sem retorno de suporte.",
+        "insight": "O incômodo com a taxa de serviço aparece tanto em neutros quanto em detratores — sinal consistente de que o tema pesa na percepção de preço mesmo quando não derruba a nota para detrator.",
+        "recorrente": true,
+        "semanas_recorrente": 4
+      },
+      "detratores": {
+        "total": 605,
+        "temas_principais": [
+          "taxa de serviço considerada abusiva",
+          "mudança de tarifa no momento da compra sem transparência"
+        ],
+        "resumo": "Volume baixo de comentários de detratores nesta semana, mas os dois temas presentes repetem exatamente o padrão das últimas 4-5 semanas: taxa de serviço alta e falta de transparência na variação de preço até o checkout.",
+        "insight": "A recorrência de 5 semanas consecutivas do tema 'taxa/tarifa no checkout' entre os detratores coincide, nesta semana, com a maior queda do funil de conversão estar exatamente na etapa checkout→purchase — forte indício de que a percepção de preço no checkout está custando conversão, não só NPS.",
+        "recomendacao_produto": "Testar exibição antecipada da taxa de serviço (na seleção de assento/carrinho) e priorizar o fechamento do SEN-462 (divergência de preços), conforme INS-2026-050.",
+        "recorrente": true,
+        "semanas_recorrente": 5
+      }
+    },
     {
       "semana": "2026-06-29",
       "label": "29/06 – 05/07/2026",
