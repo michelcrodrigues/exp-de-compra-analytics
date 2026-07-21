@@ -1,6 +1,160 @@
 {
-  "gerado_em": "2026-07-14T15:15:34.301Z",
+  "gerado_em": "2026-07-21T18:17:22.419Z",
   "insights": [
+    {
+      "semana": "2026-07-13",
+      "label": "13/07 – 19/07/2026",
+      "gerado_em": "2026-07-21T18:17:22.419Z",
+      "items": [
+        {
+          "id": "INS-2026-055",
+          "canal": "site",
+          "tag": "Checkout→purchase mobile cai pela 3ª semana seguida, SEN-462 segue sem movimento",
+          "classificacao": "Diagnóstico comprovado",
+          "prioridade": "Alta",
+          "data": "2026-07-21",
+          "diagnostico": "A conversão do site caiu 8,13% na semana de 13/07 a 19/07, queda moderada de 0,44pp (5,1%) frente à média das últimas 4 semanas (8,57%), desvio de aproximadamente 1,1 sigma sobre o histórico de 8 semanas — classificação caiu_moderado. O comparativo anual segue positivo (+1,31pp vs mesmo período de 2025), reforçando que o problema é conjuntural, não estrutural. Esta é a terceira semana consecutiva em que o mesmo padrão aparece: a queda está concentrada na etapa final do funil, não na captação ou no carrinho.",
+          "evidencia": "O funil mostra checkout→purchase caindo 1,2pp no total (72,9% vs 74,1% baseline), com o efeito fortemente concentrado em mobile: -2,0pp (77,0% vs 79,0%) contra -0,6pp em desktop (63,5% vs 64,1%). As etapas anteriores do funil não explicam a queda — search→cart estável (-0,1pp) e cart→checkout até melhorou (+0,3pp). O share de sessões mobile subiu 1,6pp (81,6% vs 80,0%), o que amplifica o peso da queda mobile no CR total. O tema 'taxa de serviço' e 'parcelamento sem juros' segue presente nos comentários de neutros e detratores desta semana (12 comentários de neutros, 8 deles citando taxa/parcelamento), o mesmo padrão relatado há duas semanas no INS-2026-050. O card SEN-462 (divergência de preços, apontado como hipótese causal em 14/07) não aparece entre as issues atualizadas nos últimos 14 dias — ou seja, não teve nenhum movimento desde então.",
+          "plano_acao": "1) Cobrar status do SEN-462 diretamente com o time Senna — o card está parado há mais de duas semanas enquanto o sintoma persiste. 2) Executar o teste A/B de exibição antecipada da taxa de serviço (na seleção de assento/carrinho) que já está desenhado desde a semana passada — ele ainda não foi rodado. 3) Segmentar a análise por conexão vs trecho único para verificar se o problema de classe de assento em conexões (SEN-495, entregue esta semana) já teve efeito ou se a causa é outra.",
+          "impacto": "KR de Receita (R$ 345M) via queda direta e recorrente de conversão mobile, que responde por 81,6% das sessões do site. KR de NPS (60) via manutenção do tema 'taxa de serviço' como reclamação recorrente entre neutros e detratores.",
+          "prioridade_justificativa": "Alta — padrão se repete pela terceira semana consecutiva, concentrado no mesmo device e na mesma etapa do funil, com hipótese causal já validada por evidência qualitativa recorrente, e a ação recomendada (teste A/B) segue sem execução.",
+          "acompanhamento": "Monitorar CR e checkout→purchase mobile nas próximas 2 semanas. Cobrar explicitamente o status do SEN-462 no ritual semanal com Senna. Escalar como incidente de produto se a queda persistir por mais uma semana sem o teste A/B ter sido iniciado.",
+          "texto": "Diagnóstico: A conversão do site caiu para 8,13% na semana de 13/07 a 19/07, queda moderada de 0,44pp frente à média das últimas 4 semanas (8,57%), 1,1 sigma sobre o histórico. YoY segue positivo (+1,31pp). Esta é a 3ª semana consecutiva com o mesmo padrão.\n\nEvidência: checkout→purchase caiu 1,2pp no total, concentrado em mobile (-2,0pp) vs desktop (-0,6pp). Etapas anteriores do funil não explicam a queda. Share mobile subiu 1,6pp, amplificando o efeito. O tema 'taxa de serviço' segue recorrente no NPS qualitativo. SEN-462 (divergência de preços) não teve nenhum movimento nos últimos 14 dias.\n\nClassificação: Diagnóstico comprovado\n\nPlano de ação: 1) Cobrar status do SEN-462. 2) Executar o teste A/B de exibição antecipada da taxa, já desenhado e ainda não rodado. 3) Verificar efeito do SEN-495 (classe de assento em conexões).\n\nImpacto: KR de Receita e KR de NPS.\n\nPrioridade: Alta — padrão recorrente há 3 semanas, hipótese validada, ação recomendada ainda não executada.\n\nAcompanhamento: Monitorar CR e checkout→purchase mobile; cobrar status do SEN-462 no ritual semanal; escalar se persistir.",
+          "titulo_linear": "Testar exibição antecipada da taxa de serviço no funil mobile para reduzir abandono no checkout",
+          "tipo_acao": "testar",
+          "testavel": true,
+          "criterio_confirmacao": "Se o grupo teste com taxa exibida antecipadamente apresentar checkout→purchase mobile pelo menos 3pp acima do grupo controle, com significância estatística, confirma-se a hipótese causal.",
+          "experimento_template": {
+            "hipotese": "Exibir a taxa de serviço de forma antecipada (na seleção de assento/carrinho) no mobile reduz o abandono na etapa checkout→purchase",
+            "metrica_primaria": "Taxa checkout→purchase mobile",
+            "guardrails": [
+              "CR geral não deve cair",
+              "Tempo médio de sessão não deve aumentar significativamente"
+            ],
+            "criterio_sucesso": "checkout→purchase mobile +3pp ou mais vs controle, com significância estatística",
+            "duracao_minima": "2 semanas"
+          },
+          "status": "nunca_testada",
+          "experimento_id": null,
+          "revisao": null
+        },
+        {
+          "id": "INS-2026-056",
+          "canal": "site",
+          "tag": "Canal Direto perde 1,6pp de conversão com share estável — maior CR do site em queda",
+          "classificacao": "Hipótese",
+          "prioridade": "Média",
+          "data": "2026-07-21",
+          "diagnostico": "O canal Direto — historicamente o de maior conversão do site — teve CR reduzido de 16,61% para 14,99% (-1,62pp) na semana, com share de sessões praticamente estável (12,1% vs 12,0% baseline, +0,1pp). É o maior delta de CR entre todos os canais analisados nesta semana, maior inclusive que a variação do canal Pago (-0,3pp, share -0,3pp).",
+          "evidencia": "Como o volume de sessões do canal não mudou, a queda de CR não pode ser explicada por diluição de mix — é conversão pior dentro do próprio canal. Direto tende a concentrar usuários recorrentes (bookmarks, digitação direta de URL, retorno de compra anterior), então uma queda de CR ali costuma indicar fricção em fluxo de retorno, login ou remarcação — áreas que tiveram entregas recentes (SEN-548, adaptação do novo checkout para remarcação, em 'In Validation').",
+          "plano_acao": "Investigar se o SEN-548 (checkout de remarcação) já está em produção e se introduziu alguma regressão para usuários recorrentes. Segmentar CR do canal Direto por novo vs recorrente para confirmar a hipótese de fluxo de retorno. Cruzar com o time de Growth/Mídia para descartar mudança na composição do tráfego direto (ex: campanha de app aberta em navegador).",
+          "impacto": "KR de Receita — Direto é o canal de maior eficiência de conversão do site; uma queda persistente ali tem efeito desproporcional na receita por sessão.",
+          "prioridade_justificativa": "Média — delta relevante e maior entre os canais, mas ainda sem confirmação de causa raiz; não é (ainda) um padrão recorrente como o do checkout mobile.",
+          "acompanhamento": "Acompanhar CR do canal Direto na próxima semana. Se a queda persistir por 2 semanas, elevar para Alta e tratar como investigação prioritária.",
+          "texto": "Diagnóstico: O canal Direto teve CR reduzido de 16,61% para 14,99% (-1,62pp) na semana, com share de sessões estável (+0,1pp) — é o maior delta de CR entre os canais analisados.\n\nEvidência: Sem mudança de volume, a queda não é diluição de mix, é conversão pior dentro do canal. Direto concentra usuários recorrentes, e o SEN-548 (checkout de remarcação) está em validação — possível regressão para esse público.\n\nClassificação: Hipótese\n\nPlano de ação: Investigar status do SEN-548 e possível regressão. Segmentar CR por novo vs recorrente. Descartar mudança de composição de tráfego com Growth/Mídia.\n\nImpacto: KR de Receita — Direto é o canal de maior eficiência de conversão do site.\n\nPrioridade: Média — delta relevante mas sem causa confirmada.\n\nAcompanhamento: Acompanhar CR do canal Direto na próxima semana; elevar prioridade se persistir.",
+          "titulo_linear": null,
+          "tipo_acao": "monitorar",
+          "testavel": false,
+          "criterio_confirmacao": null,
+          "experimento_template": null,
+          "status": "nunca_testada",
+          "experimento_id": null,
+          "revisao": null
+        },
+        {
+          "id": "INS-2026-057",
+          "canal": "app",
+          "tag": "[App] CR sobe 9,7% puxado por view→cart, não pela etapa de checkout",
+          "classificacao": "Correlação",
+          "prioridade": "Média",
+          "data": "2026-07-21",
+          "diagnostico": "A conversão do app subiu de 5,40% para 5,92% na semana (+9,7% WoW), a maior alta entre site e app. Olhando o funil completo, porém, o ganho não vem da etapa de checkout — checkout→purchase caiu 1,8pp (58,9% vs média de 60,7% nas duas semanas anteriores). O que puxou o CR para cima foi a etapa view_item→add_to_cart, que subiu de uma média de 36,4% para 40,3% (+3,9pp).",
+          "evidencia": "Quatro correções de bugs de checkout/pagamento foram entregues no app nesta semana (SEN-566 — transaction_identifier ausente, SEN-572 — payload vazio causando erro de 'formato de e-mail inválido', SEN-570 — falha no campo de data de nascimento, SEN-600 — gate do checkout até formulário de cartão válido). A expectativa natural seria essas correções aparecerem no checkout→purchase, mas essa etapa piorou, não melhorou — o que sugere que os fixes ou entraram tarde na semana (sem tempo de refletir no agregado semanal) ou o ganho de conversão tem outra causa, possivelmente ligada ao cache de imagem da home (SEN-527, em progresso) ou a alguma mudança de UX na listagem de produtos.",
+          "plano_acao": "Não comemorar o resultado como efeito dos fixes de checkout ainda — reavaliar checkout→purchase isoladamente na próxima semana, quando os 4 fixes já estarão em produção a semana inteira. Confirmar data exata de deploy de cada fix para cruzar com dados diários (não apenas semanais). Investigar o que mudou em view_item→add_to_cart.",
+          "impacto": "KR de Receita — o app já responde por 29,2% das sessões totais (site+app); qualquer ganho ou perda de eficiência ali afeta a receita agregada.",
+          "prioridade_justificativa": "Média — o resultado é positivo, mas a causa provável apontada pelos fixes de checkout não bate com os dados; risco de tirar a conclusão errada e não investigar a causa real do ganho.",
+          "acompanhamento": "Acompanhar checkout→purchase do app isoladamente na próxima semana, já com os 4 fixes rodando a semana inteira. Se a etapa não recuperar, investigar se as correções foram de fato liberadas para 100% dos usuários.",
+          "texto": "Diagnóstico: A conversão do app subiu 9,7% WoW (5,92% vs 5,40%), mas o funil mostra que o ganho não veio do checkout — checkout→purchase caiu 1,8pp. O ganho veio de view_item→add_to_cart, que subiu 3,9pp.\n\nEvidência: Quatro bugs de checkout foram corrigidos nesta semana (SEN-566, 572, 570, 600), mas a etapa que deveriam beneficiar piorou. O ganho real está numa etapa anterior do funil, possivelmente ligado a SEN-527 (cache de imagem) ou outra mudança de UX.\n\nClassificação: Correlação\n\nPlano de ação: Não atribuir o ganho aos fixes de checkout ainda. Reavaliar checkout→purchase isoladamente na próxima semana com os fixes rodando a semana inteira. Cruzar datas de deploy com dados diários.\n\nImpacto: KR de Receita — app já é 29,2% das sessões totais.\n\nPrioridade: Média — resultado positivo mas com causa mal atribuída.\n\nAcompanhamento: Acompanhar checkout→purchase do app na próxima semana.",
+          "titulo_linear": null,
+          "tipo_acao": "monitorar",
+          "testavel": false,
+          "criterio_confirmacao": null,
+          "experimento_template": null,
+          "status": "nunca_testada",
+          "experimento_id": null,
+          "revisao": null
+        },
+        {
+          "id": "INS-2026-058",
+          "canal": "app",
+          "tag": "[App] Evento login_checkout com contagem anômala no funil — possível problema de instrumentação",
+          "classificacao": "Explicação",
+          "prioridade": "Média",
+          "data": "2026-07-21",
+          "diagnostico": "O funil do app tem uma etapa seat_selection→login_checkout que apareceu zerada nas três últimas semanas, e a etapa seguinte (login_checkout→begin_checkout) apresentou um valor absurdo nesta semana — indicando que o evento login_checkout está sendo dividido por uma base quase nula. Isso não é uma variação de negócio, é um problema de instrumentação de analytics.",
+          "evidencia": "O Linear tem o card SEN-557 ('Verificar envio do evento login_checkout e implementar disparo') marcado como concluído nesta semana — ou seja, o time já identificou que esse evento não estava disparando corretamente e corrigiu. Os números desta semana confirmam o sintoma que motivou o card: o evento estava praticamente ausente do funil.",
+          "plano_acao": "Validar com o time de Digital Analytics/Martech se o disparo do evento login_checkout já está estabilizado após o SEN-557. Corrigir a lógica de cálculo do funil no data.json para essa etapa específica do app, hoje ela produz um dado inutilizável (division por quase zero). Só voltar a usar essa etapa do funil do app em análises futuras depois de confirmar volume consistente por pelo menos 1 semana completa.",
+          "impacto": "Qualidade de dado para o KR de Receita — sem esse evento confiável, não é possível medir corretamente onde o app perde usuários entre seleção de assento e checkout.",
+          "prioridade_justificativa": "Média — não afeta o negócio diretamente, mas compromete a confiabilidade de qualquer análise de funil do app nessa etapa até ser corrigido.",
+          "acompanhamento": "Verificar na próxima semana se o volume do evento login_checkout normalizou e se a etapa do funil voltou a fazer sentido matematicamente.",
+          "texto": "Diagnóstico: A etapa seat_selection→login_checkout do funil do app está zerada há 3 semanas, e a etapa seguinte mostrou um valor matematicamente absurdo nesta semana — sinal de instrumentação quebrada, não de comportamento real de usuário.\n\nEvidência: O SEN-557 ('Verificar envio do evento login_checkout e implementar disparo') foi concluído nesta semana, confirmando que o time já sabia do problema.\n\nClassificação: Explicação\n\nPlano de ação: Validar com Digital Analytics se o disparo já estabilizou. Corrigir o cálculo dessa etapa no data.json. Só reutilizar a etapa após confirmar 1 semana completa de dado consistente.\n\nImpacto: Qualidade de dado para o KR de Receita — sem esse evento, não dá pra medir onde o app perde usuário entre assento e checkout.\n\nPrioridade: Média — não é impacto direto de negócio, mas compromete confiabilidade de análise.\n\nAcompanhamento: Verificar normalização do evento na próxima semana.",
+          "titulo_linear": null,
+          "tipo_acao": "monitorar",
+          "testavel": false,
+          "criterio_confirmacao": null,
+          "experimento_template": null,
+          "status": "nunca_testada",
+          "experimento_id": null,
+          "revisao": null
+        },
+        {
+          "id": "INS-2026-059",
+          "canal": "conjunto",
+          "tag": "[Site vs App] NPS do app 24,8pp abaixo do site — primeira leitura com volume robusto",
+          "classificacao": "Diagnóstico comprovado",
+          "prioridade": "Alta",
+          "data": "2026-07-21",
+          "diagnostico": "Pela primeira vez o NPS do app tem volume de resposta suficiente para leitura confiável: 631 respostas nesta semana, contra 8 e 1 respostas nas duas semanas anteriores. Com esse volume, o NPS score do app fica em 54,8 (nota média 8,46/10), 24,8 pontos abaixo do NPS score do site, que está em 79,6 (nota média 9,25/10) com 13.131 respostas. O app sozinho já está abaixo da meta de NPS score 60 do KR da empresa.",
+          "evidencia": "A diferença aparece tanto no score quanto na nota média (site 9,25 vs app 8,46), então não é um artefato de cálculo — é uma experiência percebida como pior no app. Android e iOS estão relativamente próximos dentro do app (score 55,5 e 54,2 respectivamente), então a divergência não é um problema de plataforma específica, é do app como um todo frente ao site.",
+          "plano_acao": "Rodar a mesma análise qualitativa de comentários NPS que já existe para o site, mas segmentada para o app, assim que o volume de comentários livres do app for suficiente. Comparar a jornada de compra do app com a do site ponto a ponto (upgrade de SDK 55 concluído nesta semana pode ser um ponto de partida: validar se a experiência pós-upgrade mudou percepção). Levar este gap para a próxima reunião de squad Senna como tema dedicado — hoje o app é tratado com o mesmo padrão de qualidade do site nos rituais, mas os dados dizem que a experiência não está no mesmo patamar.",
+          "impacto": "KR de NPS (60) — o app puxa a média blended de NPS para baixo à medida que ganha share de sessões (hoje 29,2% do total). Se a tendência de crescimento do app continuar, esse gap vai pesar cada vez mais no KR agregado.",
+          "prioridade_justificativa": "Alta — primeira leitura estatisticamente válida do NPS do app, mostra o canal abaixo da meta da empresa, e o gap frente ao site é grande o suficiente para não ser explicado por ruído amostral.",
+          "acompanhamento": "Acompanhar se o NPS score do app se mantém na faixa 40-59 (zona de atenção) ou piora nas próximas semanas, agora que o volume de resposta é consistente. Iniciar coleta de comentários qualitativos do app com o mesmo rigor do site.",
+          "texto": "Diagnóstico: Pela primeira vez o NPS do app tem volume suficiente para leitura confiável (631 respostas). O score fica em 54,8, 24,8 pontos abaixo do site (79,6), e abaixo da meta de 60 do KR da empresa.\n\nEvidência: A diferença aparece tanto no score quanto na nota média (9,25 site vs 8,46 app). Android e iOS estão próximos entre si (55,5 vs 54,2), então o gap é do app como um todo, não de uma plataforma específica.\n\nClassificação: Diagnóstico comprovado\n\nPlano de ação: Rodar análise qualitativa de NPS segmentada para o app. Comparar jornada app vs site ponto a ponto. Levar o tema para a squad Senna como pauta dedicada.\n\nImpacto: KR de NPS (60) — app puxa a média para baixo e ganha share de sessões.\n\nPrioridade: Alta — primeira leitura estatisticamente válida, app abaixo da meta.\n\nAcompanhamento: Acompanhar evolução do score nas próximas semanas; iniciar coleta qualitativa do app.",
+          "titulo_linear": null,
+          "tipo_acao": "monitorar",
+          "testavel": false,
+          "criterio_confirmacao": null,
+          "experimento_template": null,
+          "status": "nunca_testada",
+          "experimento_id": null,
+          "revisao": null
+        },
+        {
+          "id": "INS-2026-060",
+          "canal": "app",
+          "tag": "[App] Share de sessões cai de 31,9% para 29,2% em 3 semanas",
+          "classificacao": "Tendência",
+          "prioridade": "Baixa",
+          "data": "2026-07-21",
+          "diagnostico": "O share de sessões do app frente ao total (site + app) vem recuando nas últimas 3 semanas: 31,9% → 29,4% → 29,2%. Não é uma queda abrupta, mas é uma tendência consistente de 3 semanas na mesma direção.",
+          "evidencia": "Em termos absolutos as sessões do app estão relativamente estáveis (211k, 212k, 207k nas 3 semanas), então o recuo de share é mais sobre o site estar crescendo/estabilizando em ritmo diferente do que uma perda absoluta de uso do app.",
+          "plano_acao": "Sem ação corretiva neste momento — é cedo para tratar como problema. Adicionar ao radar da próxima revisão quinzenal de insights para confirmar se a tendência continua por mais 2 semanas.",
+          "impacto": "Indiretamente relevante para o KR de Receita, já que o app converte melhor que o site em alguns canais (CR app 5,92% vs site 8,13% — na verdade o site converte melhor; o app tem menor CR, então uma migração para o app tende a reduzir o CR blended, mas o app também tem custo de aquisição e retenção diferentes).",
+          "prioridade_justificativa": "Baixa — tendência de 3 semanas ainda dentro de uma variação pequena (2,7pp), sem causa identificada, não amerita ação imediata.",
+          "acompanhamento": "Reavaliar na revisão quinzenal de insights (dia 1 ou 15) se o share do app continua recuando.",
+          "texto": "Diagnóstico: O share de sessões do app frente ao total vem recuando 3 semanas seguidas: 31,9% → 29,4% → 29,2%.\n\nEvidência: Em termos absolutos as sessões do app estão estáveis (211k-212k-207k), então o recuo de share reflete mais o comportamento relativo do site do que perda de uso do app.\n\nClassificação: Tendência\n\nPlano de ação: Sem ação corretiva agora — adicionar ao radar da próxima revisão quinzenal.\n\nImpacto: Indiretamente relevante para o KR de Receita dado o mix de conversão entre site e app.\n\nPrioridade: Baixa — variação pequena, sem causa identificada.\n\nAcompanhamento: Reavaliar na revisão quinzenal de insights.",
+          "titulo_linear": null,
+          "tipo_acao": "monitorar",
+          "testavel": false,
+          "criterio_confirmacao": null,
+          "experimento_template": null,
+          "status": "nunca_testada",
+          "experimento_id": null,
+          "revisao": null
+        }
+      ]
+    },
     {
       "semana": "2026-07-06",
       "label": "06/07 – 12/07/2026",
@@ -1172,6 +1326,216 @@
     }
   ],
   "insights_conversao": [
+    {
+      "semana": "2026-07-13",
+      "label": "13/07 – 19/07/2026",
+      "tipo": "semanal",
+      "gerado_em": "2026-07-21T12:00:00-03:00",
+      "classificacao": "caiu_moderado",
+      "metricas": {
+        "cr_atual": {
+          "total": 8.13,
+          "mobile": 7.36,
+          "desktop": 11.52
+        },
+        "cr_baseline": {
+          "total": 8.57,
+          "mobile": 7.75,
+          "desktop": 11.8
+        },
+        "delta_pp": {
+          "total": -0.44,
+          "mobile": -0.39,
+          "desktop": -0.28
+        },
+        "sigma": 0.41,
+        "n_semanas_hist": 8
+      },
+      "hipoteses": [
+        {
+          "hipotese": "Queda recorrente de checkout→purchase mobile ligada à percepção de taxa de serviço, sem tratamento do SEN-462",
+          "evidencia": "checkout→purchase mobile -2,0pp (77,0% vs 79,0% baseline), 3ª semana consecutiva; tema 'taxa de serviço' recorrente no NPS qualitativo; SEN-462 sem movimento há 14+ dias"
+        },
+        {
+          "hipotese": "Canal Direto perde conversão sem perder share — possível regressão em fluxo de retorno/remarcação",
+          "evidencia": "Direto: share estável (12,1% vs 12,0%), CR caiu de 16,61% para 14,99% (-1,62pp), maior delta de CR entre canais; SEN-548 (checkout de remarcação) em validação"
+        }
+      ],
+      "monitorar": "CR e checkout→purchase mobile nas próximas 2 semanas; status do SEN-462; evolução do CR do canal Direto",
+      "dispositivos": {
+        "mobile": {
+          "classificacao": "estavel",
+          "cr_atual": 7.36,
+          "cr_baseline": 7.75,
+          "delta_pp": -0.39,
+          "canal_contexto": [
+            {
+              "nome": "Pago",
+              "share_sessoes_total": 52.1,
+              "cr_total": 8.22,
+              "delta_cr_pp": -0.3
+            },
+            {
+              "nome": "Orgânico",
+              "share_sessoes_total": 17,
+              "cr_total": 5.87,
+              "delta_cr_pp": -0.14
+            },
+            {
+              "nome": "Direto",
+              "share_sessoes_total": 12.1,
+              "cr_total": 14.99,
+              "delta_cr_pp": -1.62
+            },
+            {
+              "nome": "Social",
+              "share_sessoes_total": 1.5,
+              "cr_total": null,
+              "delta_cr_pp": null
+            }
+          ],
+          "funil": {
+            "step_critico": "checkout_to_purchase",
+            "checkout_to_purchase": {
+              "atual": 77,
+              "baseline": 79,
+              "delta_pp": -2
+            },
+            "cart_to_checkout": {
+              "atual": 67.7,
+              "baseline": 67.3,
+              "delta_pp": 0.4
+            },
+            "search_to_cart": {
+              "atual": 8.7,
+              "baseline": 8.9,
+              "delta_pp": -0.2
+            }
+          },
+          "hipoteses": [
+            {
+              "hipotese": "Taxa de serviço percebida no checkout mobile segue como principal ponto de abandono",
+              "evidencia": "checkout→purchase mobile -2,0pp vs baseline, 3ª semana seguida; tema recorrente no NPS qualitativo"
+            }
+          ],
+          "monitorar": "checkout→purchase mobile nas próximas 2 semanas; execução do teste A/B de exibição antecipada da taxa"
+        },
+        "desktop": {
+          "classificacao": "estavel",
+          "cr_atual": 11.52,
+          "cr_baseline": 11.8,
+          "delta_pp": -0.28,
+          "canal_contexto": [
+            {
+              "nome": "Pago",
+              "share_sessoes_total": 52.1,
+              "cr_total": 8.22,
+              "delta_cr_pp": -0.3
+            },
+            {
+              "nome": "Orgânico",
+              "share_sessoes_total": 17,
+              "cr_total": 5.87,
+              "delta_cr_pp": -0.14
+            },
+            {
+              "nome": "Direto",
+              "share_sessoes_total": 12.1,
+              "cr_total": 14.99,
+              "delta_cr_pp": -1.62
+            },
+            {
+              "nome": "Social",
+              "share_sessoes_total": 1.5,
+              "cr_total": null,
+              "delta_cr_pp": null
+            }
+          ],
+          "funil": {
+            "step_critico": "checkout_to_purchase",
+            "checkout_to_purchase": {
+              "atual": 63.5,
+              "baseline": 64.1,
+              "delta_pp": -0.6
+            },
+            "cart_to_checkout": {
+              "atual": 62,
+              "baseline": 62.3,
+              "delta_pp": -0.3
+            },
+            "search_to_cart": {
+              "atual": 13.5,
+              "baseline": 13.1,
+              "delta_pp": 0.4
+            }
+          },
+          "hipoteses": [
+            {
+              "hipotese": "Canal Direto (maior peso relativo em desktop) perdendo conversão pode explicar parte da queda desktop",
+              "evidencia": "Direto CR -1,62pp na base total; desktop tem maior concentração histórica de tráfego direto/recorrente"
+            }
+          ],
+          "monitorar": "CR desktop e CR do canal Direto nas próximas semanas"
+        },
+        "app": {
+          "classificacao": "subiu_moderado",
+          "cr_atual": 5.923102563730961,
+          "cr_baseline": 5.44,
+          "delta_pp": 0.48,
+          "canal_contexto": [
+            {
+              "nome": "Pago",
+              "share_sessoes_total": 10.3,
+              "cr_total": null,
+              "delta_cr_pp": null
+            },
+            {
+              "nome": "Orgânico",
+              "share_sessoes_total": 3.3,
+              "cr_total": null,
+              "delta_cr_pp": null
+            },
+            {
+              "nome": "Direto",
+              "share_sessoes_total": 20.9,
+              "cr_total": null,
+              "delta_cr_pp": null
+            },
+            {
+              "nome": "Social",
+              "share_sessoes_total": 0,
+              "cr_total": null,
+              "delta_cr_pp": null
+            }
+          ],
+          "funil": {
+            "step_critico": "checkout_to_purchase (piorou, não é o driver do ganho)",
+            "checkout_to_purchase": {
+              "atual": 58.9,
+              "baseline": 60.7,
+              "delta_pp": -1.8
+            },
+            "cart_to_checkout": {
+              "atual": 14.1,
+              "baseline": 14.2,
+              "delta_pp": -0.1
+            },
+            "search_to_cart": {
+              "atual": null,
+              "baseline": null,
+              "delta_pp": null
+            }
+          },
+          "hipoteses": [
+            {
+              "hipotese": "Ganho de CR do app vem de view_item→add_to_cart (+3,9pp), não dos fixes de checkout entregues na semana",
+              "evidencia": "checkout→purchase caiu 1,8pp mesmo com 4 bugs de checkout corrigidos (SEN-566, 570, 572, 600)"
+            }
+          ],
+          "monitorar": "checkout→purchase do app isoladamente na próxima semana, com os fixes rodando os 7 dias completos"
+        }
+      }
+    },
     {
       "semana": "2026-07-06",
       "label": "06/07 – 12/07/2026",
