@@ -1,6 +1,60 @@
 {
-  "gerado_em": "2026-07-14T15:16:13.554Z",
+  "gerado_em": "2026-07-21T18:17:52.125Z",
   "semanas": [
+    {
+      "semana": "2026-07-13",
+      "label": "13/07 – 19/07/2026",
+      "gerado_em": "2026-07-21T18:17:43.792Z",
+      "nps_score": 79.59,
+      "nps_nota_media": 9.25,
+      "nps_respostas": 13131,
+      "nps_promotores": 11072,
+      "nps_neutros": 1438,
+      "nps_detratores": 621,
+      "promotores": {
+        "total": 12,
+        "temas_principais": [
+          "satisfação geral / elogio genérico ('muito bom', 'ótimo', 'excelente')",
+          "agilidade do processo",
+          "praticidade da compra",
+          "qualidade do atendimento"
+        ],
+        "resumo": "Promotores seguem concentrados em elogios curtos e genéricos ('muito bom', 'ótimo', 'top'), sem menção a features específicas — o mesmo padrão identificado em semanas anteriores.",
+        "insight": "Volume alto de comentários genéricos indica ausência de fricção percebida, mas também ausência de momentos de encantamento diferenciados. Para mover o NPS site além de 80 (hoje 79,6), a experiência precisa de pontos de surpresa positiva, não apenas fluidez.",
+        "recorrente": true,
+        "semanas_recorrente": 2
+      },
+      "neutros": {
+        "total": 12,
+        "temas_principais": [
+          "taxa de serviço considerada alta",
+          "ausência de parcelamento sem juros",
+          "percepção de compra cara/burocrática",
+          "insegurança/confusão no processo"
+        ],
+        "resumo": "Neutros seguem travados pela mesma barreira financeira das semanas anteriores: taxa de serviço e falta de parcelamento sem juros aparecem em pelo menos 5 dos 12 comentários, com queixas adicionais sobre burocracia e insegurança no fluxo.",
+        "insight": "A taxa de serviço continua sendo o principal bloqueio estrutural para conversão de neutros em promotores, e é o mesmo tema que aparece como hipótese causal na queda de checkout→purchase mobile (INS-2026-055) — o problema de produto e o problema de NPS são a mesma causa raiz.",
+        "recorrente": true,
+        "semanas_recorrente": 2
+      },
+      "detratores": {
+        "total": 1,
+        "temas_principais": [
+          "taxas abusivas"
+        ],
+        "resumo": "Único comentário de detrator da semana é direto e objetivo: 'Taxas abusivas' — reforça o mesmo tema de taxa de serviço presente em neutros.",
+        "insight": "Volume de detratores muito baixo esta semana (apenas 1 comentário, 621 detratores no total mas concentrados sem comentário livre), mas o único comentário disponível reforça a mesma causa raiz de taxa de serviço.",
+        "recomendacao_produto": "Revisar a comunicação e o valor percebido da taxa de serviço no checkout, com foco especial no fluxo mobile, onde a queda de conversão está concentrada. Avaliar viabilidade de parcelamento sem juros como alavanca de produto.",
+        "recorrente": true,
+        "semanas_recorrente": 2
+      },
+      "analise_temporal": {
+        "padrao": "recorrente",
+        "tendencia": "estavel",
+        "diagnostico": "O tema 'taxa de serviço / falta de parcelamento sem juros' aparece de forma consistente em neutros e detratores desde pelo menos a semana de 09/06 (registro histórico) e nas últimas semanas de insights.json (INS-2026-050, 051), configurando um padrão estrutural, não pontual. O NPS score do site se mantém estável na faixa 75-85 apesar disso, sugerindo que o tema afeta conversão mais do que promoção ativa.",
+        "dias_criticos": []
+      }
+    },
     {
       "semana": "2026-07-06",
       "label": "06/07 – 12/07/2026",
