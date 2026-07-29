@@ -1,6 +1,60 @@
 {
-  "gerado_em": "2026-07-21T18:17:52.125Z",
+  "gerado_em": "2026-07-29T17:53:15.500Z",
   "semanas": [
+    {
+      "semana": "2026-07-20",
+      "label": "20/07 – 26/07/2026",
+      "gerado_em": "2026-07-29T17:53:05.393Z",
+      "nps_score": 79.82,
+      "nps_nota_media": 9.27,
+      "nps_respostas": 12470,
+      "nps_promotores": null,
+      "nps_neutros": null,
+      "nps_detratores": null,
+      "promotores": {
+        "total": 12,
+        "temas_principais": [
+          "satisfação geral com a experiência de compra",
+          "agilidade do processo",
+          "elogio ao atendimento",
+          "qualidade percebida do serviço"
+        ],
+        "resumo": "Promotores expressam satisfação ampla e genérica com a jornada de compra — comentários curtos ('Muito bom', 'Ótimo', 'Excelente') sem menção a diferenciais específicos, com agilidade e atendimento como únicos temas um pouco mais concretos.",
+        "insight": "O padrão se repete semana após semana: alto volume de elogios genéricos indica ausência de fricção, não encantamento ativo. Para mover o NPS além dos 79-80 atuais, o time Senna precisa de momentos de superação de expectativa, não apenas manutenção da ausência de problemas.",
+        "recorrente": true,
+        "semanas_recorrente": 6
+      },
+      "neutros": {
+        "total": 12,
+        "temas_principais": [
+          "taxa de serviço considerada alta",
+          "ausência de parcelamento sem juros",
+          "confusão ou insegurança no processo de compra",
+          "percepção de burocracia"
+        ],
+        "resumo": "Neutros seguem travados pelo mesmo padrão das últimas semanas: taxa de serviço percebida como cara e ausência de parcelamento sem juros dominam as menções, com confusão pontual em preenchimento de dados e destino.",
+        "insight": "Taxa de serviço e falta de parcelamento sem juros são temas estruturais e recorrentes há pelo menos 5 semanas consecutivas — não é ruído, é uma barreira sistemática entre neutro e promotor. Enquanto não houver mudança na política de taxa ou comunicação de valor, essa categoria deve seguir estagnada.",
+        "recorrente": true,
+        "semanas_recorrente": 5
+      },
+      "detratores": {
+        "total": 1,
+        "temas_principais": [
+          "indignação com o valor da taxa de serviço ('taxas abusivas')"
+        ],
+        "resumo": "Grupo pequeno (n=40 dentro de 1 tema) mas concentrado exclusivamente na taxa de serviço, com linguagem de indignação ('abusivas').",
+        "insight": "O mesmo tema de taxa de serviço que trava os neutros aparece nos detratores com intensidade emocional mais alta — é o ponto único de fricção mais citado em todas as categorias de NPS nas últimas semanas.",
+        "recomendacao_produto": "Revisar a comunicação de valor da taxa de serviço no checkout (o que ela cobre) e avaliar viabilidade de parcelamento sem juros como teste controlado, dado que o tema é recorrente há 5+ semanas sem tratamento.",
+        "recorrente": true,
+        "semanas_recorrente": 5
+      },
+      "analise_temporal": {
+        "padrao": "recorrente",
+        "tendencia": "estavel",
+        "diagnostico": "O NPS se mantém estável em torno de 79-80 há várias semanas, com o mesmo tema de taxa de serviço dominando neutros e detratores de forma ininterrupta desde ao menos 22/06. Não há sinal de deterioração, mas também não há sinal de que o problema estrutural da taxa de serviço esteja sendo endereçado.",
+        "dias_criticos": []
+      }
+    },
     {
       "semana": "2026-07-13",
       "label": "13/07 – 19/07/2026",
