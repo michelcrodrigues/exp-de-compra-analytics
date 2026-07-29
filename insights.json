@@ -1,6 +1,146 @@
 {
-  "gerado_em": "2026-07-21T18:17:22.419Z",
+  "gerado_em": "2026-07-29T17:52:21.540Z",
   "insights": [
+    {
+      "semana": "2026-07-20",
+      "label": "20/07 – 26/07/2026",
+      "gerado_em": "2026-07-29T17:52:21.540Z",
+      "items": [
+        {
+          "id": "INS-2026-061",
+          "canal": "site",
+          "tag": "Canal Direto recupera CR parcialmente após fix de remarcação, mas segue -0,86pp abaixo do baseline",
+          "classificacao": "Hipótese",
+          "prioridade": "Média",
+          "data": "2026-07-20",
+          "diagnostico": "O canal Direto — historicamente o de maior conversão do site — perdeu 0,86pp de CR na semana (15,15% vs 16,01% de baseline), mesmo com share de sessões praticamente estável (11,7% vs 12,0%). É o maior delta de CR entre os canais de origem analisados, e o único com share relevante (≥5%) e queda de conversão simultânea.",
+          "evidencia": "Direto: share 11,7% (baseline 12,0%, -0,3pp) e CR 15,15% (baseline 16,01%, -0,86pp). Na semana anterior (13/07–19/07) a queda era maior: -1,62pp. SEN-548 ('Adaptar o novo checkout para remarcação no site') foi concluído em 21/07/2026, dentro da janela analisada.",
+          "classificacao_texto": "",
+          "texto": "Diagnóstico: O canal Direto perdeu 0,86pp de CR na semana, mesmo com share de sessões estável — é o canal de maior conversão do site perdendo força.\n\nEvidência: Direto caiu de 16,01% para 15,15% de CR (share estável em 11,7% vs 12,0% baseline). Na semana anterior a queda era de -1,62pp, portanto há recuperação parcial. SEN-548 (adaptação do novo checkout para remarcação) foi concluído em 21/07, dentro da janela analisada.\n\nClassificação: Hipótese\n\nPlano de ação: Acompanhar a curva do canal Direto nas próximas 2 semanas para confirmar se a recuperação parcial se sustenta. Se a queda persistir acima de -0,5pp, isolar via GA4 Explore se o atrito está concentrado em usuários de remarcação ou em compra nova.\n\nImpacto: Receita (R$ 345M) — Direto é o canal de maior CR do site, quedas aqui têm efeito desproporcional na receita marginal.\n\nPrioridade: Média — queda já em recuperação, mas ainda distante do baseline.\n\nAcompanhamento: CR do canal Direto semana a semana e status de adoção do novo checkout de remarcação (SEN-548) em produção.",
+          "plano_acao": "Acompanhar a curva do canal Direto nas próximas 2 semanas para confirmar se a recuperação parcial se sustenta. Se a queda persistir acima de -0,5pp, isolar via GA4 Explore se o atrito está concentrado em usuários de remarcação ou em compra nova.",
+          "impacto": "Receita (R$ 345M) — Direto é o canal de maior CR do site, quedas aqui têm efeito desproporcional na receita marginal.",
+          "acompanhamento": "CR do canal Direto semana a semana e status de adoção do novo checkout de remarcação (SEN-548) em produção.",
+          "titulo_linear": null,
+          "tipo_acao": "monitorar",
+          "testavel": false,
+          "criterio_confirmacao": null,
+          "experimento_template": null,
+          "status": "nunca_testada",
+          "experimento_id": null,
+          "revisao": null
+        },
+        {
+          "id": "INS-2026-062",
+          "canal": "site-mobile",
+          "tag": "[Mobile] Checkout→purchase encerra 3 semanas de queda — provável efeito de SEN-490 e SEN-548",
+          "classificacao": "Diagnóstico comprovado",
+          "prioridade": "Média",
+          "data": "2026-07-20",
+          "diagnostico": "O step checkout→purchase no mobile melhorou 0,3pp na semana (78,0% vs 77,7% de baseline), revertendo uma queda que já durava 3 semanas consecutivas segundo o histórico de insights (INS-2026-055). O CR mobile total ainda caiu (-0,62pp), mas o arrasto agora está concentrado em etapas anteriores do funil (cart→checkout, -0,4pp), não mais no fechamento da compra.",
+          "evidencia": "checkout→purchase mobile: 78,0% atual vs 77,7% baseline (+0,3pp), após -2,0pp reportado na semana de 13/07–19/07. SEN-490 ('Religar a tela de pagamento do novo checkout em 50%') e SEN-548 ('Adaptar o novo checkout para remarcação no site') foram concluídos em 21/07/2026, no início da semana analisada.",
+          "plano_acao": "Confirmar na próxima semana se a melhora do checkout→purchase mobile se sustenta com a expansão do rollout do novo checkout além dos 50% atuais. Investigar separadamente o cart→checkout mobile, que agora é o step mais fraco do funil mobile.",
+          "impacto": "Receita (R$ 345M) — mobile responde por 82,3% das sessões do site; qualquer movimento no checkout mobile tem efeito direto e amplo na receita.",
+          "acompanhamento": "checkout→purchase e cart→checkout mobile semana a semana, e % de rollout do novo checkout (atualmente 50%).",
+          "texto": "Diagnóstico: O checkout→purchase mobile melhorou 0,3pp na semana, revertendo 3 semanas seguidas de queda.\n\nEvidência: 78,0% atual vs 77,7% de baseline, após -2,0pp na semana anterior. SEN-490 (reabertura do novo checkout em 50%) e SEN-548 (checkout de remarcação) foram concluídos em 21/07, no início da janela analisada.\n\nClassificação: Diagnóstico comprovado\n\nPlano de ação: Confirmar sustentação da melhora na próxima semana e avaliar expansão do rollout do novo checkout além de 50%. Investigar separadamente o cart→checkout mobile, agora o step mais fraco do funil mobile (-0,4pp).\n\nImpacto: Receita — mobile é 82,3% das sessões do site.\n\nPrioridade: Média — sinal positivo, mas ainda 1 semana de dado, requer confirmação.\n\nAcompanhamento: checkout→purchase e cart→checkout mobile semana a semana, e % de rollout do novo checkout.",
+          "titulo_linear": null,
+          "tipo_acao": "monitorar",
+          "testavel": false,
+          "criterio_confirmacao": null,
+          "experimento_template": null,
+          "status": "nunca_testada",
+          "experimento_id": null,
+          "revisao": null
+        },
+        {
+          "id": "INS-2026-063",
+          "canal": "site-desktop",
+          "tag": "[Desktop] Checkout→purchase cai -0,9pp mascarado por ganho em search→cart — CR total falsamente estável",
+          "classificacao": "Hipótese",
+          "prioridade": "Média",
+          "data": "2026-07-20",
+          "diagnostico": "O CR desktop está praticamente estável (-0,16pp), mas essa estabilidade esconde uma dinâmica preocupante: o checkout→purchase caiu 0,9pp (62,6% vs 63,5% baseline) — a maior queda entre todos os steps de todos os devices — compensada por um ganho de 0,7pp no search→cart (13,8% vs 13,1%). O CR agregado mascara um problema real de fechamento de compra no desktop.",
+          "evidencia": "Desktop checkout→purchase: 62,6% atual vs 63,5% baseline (-0,9pp). Desktop search→cart: 13,8% vs 13,1% baseline (+0,7pp). CR desktop total: 11,55% vs 11,71% baseline (-0,16pp, classificado estável).",
+          "plano_acao": "Isolar no GA4 Explore se a queda do checkout→purchase desktop está concentrada em uma etapa específica do pagamento (seleção de forma de pagamento, revisão do pedido, confirmação). Não tratar o CR desktop como saudável apenas porque está agregadamente estável.",
+          "impacto": "Receita (R$ 345M) — desktop tem o maior CR do site (11,55%); uma queda continuada no fechamento da compra tem efeito desproporcional por sessão.",
+          "acompanhamento": "checkout→purchase desktop isolado do search→cart nas próximas semanas, para não deixar a média agregada esconder a deterioração.",
+          "texto": "Diagnóstico: CR desktop parece estável (-0,16pp), mas esconde uma queda real de 0,9pp no fechamento da compra (checkout→purchase), compensada por ganho na entrada do funil.\n\nEvidência: checkout→purchase desktop 62,6% vs 63,5% baseline (-0,9pp) — maior queda entre todos os steps analisados. search→cart desktop 13,8% vs 13,1% (+0,7pp) compensa no agregado.\n\nClassificação: Hipótese\n\nPlano de ação: Isolar no GA4 Explore em qual etapa específica do pagamento desktop está concentrada a queda. Não tratar o CR desktop como saudável só porque a média agregada está estável.\n\nImpacto: Receita — desktop tem o maior CR do site (11,55%).\n\nPrioridade: Média — risco de ficar invisível no indicador agregado.\n\nAcompanhamento: checkout→purchase desktop isolado do restante do funil nas próximas semanas.",
+          "titulo_linear": null,
+          "tipo_acao": "monitorar",
+          "testavel": false,
+          "criterio_confirmacao": null,
+          "experimento_template": null,
+          "status": "nunca_testada",
+          "experimento_id": null,
+          "revisao": null
+        },
+        {
+          "id": "INS-2026-064",
+          "canal": "app",
+          "tag": "[App] CR sobe pela 3ª semana seguida — agora puxado pelo checkout, coincidindo com onda de correções de bugs",
+          "classificacao": "Diagnóstico comprovado",
+          "prioridade": "Alta",
+          "data": "2026-07-20",
+          "diagnostico": "O CR do app subiu para 6,41% (vs 5,92% na semana anterior, +8,3%), a 3ª semana seguida de alta (5,40% → 5,92% → 6,41%). Diferente da semana anterior, quando o ganho vinha só do view→cart (INS-2026-057), agora todas as etapas do funil melhoraram, com destaque para o checkout→purchase (60,3% vs 58,9% baseline móvel, e 59,6% de baseline de 4 semanas), coincidindo com o pacote de 5 correções de bugs de checkout do app entregues em 21/07 (SEN-566, SEN-572, SEN-569, SEN-570, SEN-567).",
+          "evidencia": "CR app: 6,41% atual vs 5,92% semana anterior (+8,3%) vs 5,72% de baseline de 4 semanas (+0,69pp, classificado estável por alta variância histórica de 8 semanas — σ=1,28). Funil app: search→cart 41,8% (baseline 38,2%, +3,6pp), cart→checkout 14,8% (baseline 14,2%, +0,6pp), checkout→purchase 60,3% (baseline 59,6%, +0,7pp). Entregas SEN-566 (fix transaction_identifier, -28% de falhas de venda), SEN-572 (fix e-mail vazio), SEN-569 (fix data de volta), SEN-570 (fix data de nascimento), SEN-567 (remoção de modal de opt-in) concluídas em 21/07/2026.",
+          "plano_acao": "Confirmar sustentação do CR do app nas próximas 2 semanas. Se mantido, atualizar o baseline histórico do app, hoje distorcido por alta variância de meses anteriores. Priorizar próximas correções de bug no app pelo mesmo padrão: erros de payload identificados via taxa de falha de transação, não apenas por volume de chamados.",
+          "impacto": "Receita (R$ 345M) e Recorrência — app é o canal com maior potencial de crescimento de conversão no curto prazo dado o volume de bugs corrigidos recentemente.",
+          "acompanhamento": "CR do app e breakdown do funil (search→cart, cart→checkout, checkout→purchase) semana a semana; taxa de falha de transação do app no backoffice.",
+          "texto": "Diagnóstico: O CR do app sobe pela 3ª semana seguida (5,40% → 5,92% → 6,41%), agora puxado pelo checkout, não só pela entrada do funil como na semana anterior.\n\nEvidência: CR app +8,3% semana a semana. Todas as etapas do funil melhoraram: search→cart +3,6pp, cart→checkout +0,6pp, checkout→purchase +0,7pp vs baseline de 4 semanas. Coincide com 5 correções de bugs de checkout do app entregues em 21/07 (SEN-566 com -28% de falhas de venda, SEN-572, SEN-569, SEN-570, SEN-567).\n\nClassificação: Diagnóstico comprovado\n\nPlano de ação: Confirmar sustentação nas próximas 2 semanas. Atualizar baseline histórico do app, hoje distorcido por alta variância de meses anteriores (σ=1,28). Priorizar futuras correções pelo mesmo padrão de identificação via taxa de falha de transação.\n\nImpacto: Receita e Recorrência — app tem hoje o maior potencial de ganho de conversão de curto prazo.\n\nPrioridade: Alta — ligação direta e mensurável entre entregas do time e indicador de negócio.\n\nAcompanhamento: CR do app e funil completo semana a semana; taxa de falha de transação no backoffice.",
+          "titulo_linear": null,
+          "tipo_acao": "monitorar",
+          "testavel": false,
+          "criterio_confirmacao": null,
+          "experimento_template": null,
+          "status": "nunca_testada",
+          "experimento_id": null,
+          "revisao": null
+        },
+        {
+          "id": "INS-2026-065",
+          "canal": "conjunto",
+          "tag": "[Site vs App] Gap de NPS estreita para -21,3pt mas segue relevante; app ainda 2ª classe em satisfação",
+          "classificacao": "Tendência",
+          "prioridade": "Média",
+          "data": "2026-07-20",
+          "diagnostico": "O NPS do app segue significativamente abaixo do site, mas o gap está estreitando: -21,3pt nesta semana (58,5 vs 79,8) vs -24,8pt na semana anterior (INS-2026-059). O NPS do app subiu 3,7pt semana a semana (54,8 → 58,5), enquanto o do site ficou estável (79,6 → 79,8).",
+          "evidencia": "NPS site: 79,82 (12.470 respostas). NPS app: 58,51 (699 respostas), ante 54,83 na semana anterior. Gap: -21,3pt esta semana vs -24,8pt na semana anterior — redução de 3,5pt.",
+          "plano_acao": "Manter o app como prioridade de melhoria de satisfação — o volume de correções de bug entregues (ver INS acima) provavelmente está contribuindo para o fechamento do gap. Repetir a leitura na próxima quinzena para confirmar tendência antes de tratar como consolidada.",
+          "impacto": "NPS (meta 60) — o app está perto da meta agregada de 60, mas o site já está 20pt acima; equalizar a experiência entre canais é pré-requisito para o KR de NPS do grupo.",
+          "acompanhamento": "Gap de NPS score entre site e app nas próximas 2-3 semanas, e correlação com entregas de bugs do app.",
+          "texto": "Diagnóstico: O NPS do app segue abaixo do site, mas o gap está estreitando — de -24,8pt para -21,3pt em uma semana.\n\nEvidência: NPS site 79,82 (12.470 respostas) vs NPS app 58,51 (699 respostas, subiu de 54,83). Gap reduziu 3,5pt na semana.\n\nClassificação: Tendência\n\nPlano de ação: Manter o app como prioridade de satisfação — o volume de correções de bug recentes provavelmente contribui para o fechamento do gap. Confirmar tendência na próxima quinzena antes de considerá-la consolidada.\n\nImpacto: NPS (meta 60) — app está perto da meta agregada, site já está 20pt acima.\n\nPrioridade: Média — tendência positiva, mas de apenas 1 ponto de dado.\n\nAcompanhamento: Gap de NPS score entre site e app nas próximas 2-3 semanas.",
+          "titulo_linear": null,
+          "tipo_acao": "monitorar",
+          "testavel": false,
+          "criterio_confirmacao": null,
+          "experimento_template": null,
+          "status": "nunca_testada",
+          "experimento_id": null,
+          "revisao": null
+        },
+        {
+          "id": "INS-2026-066",
+          "canal": "app",
+          "tag": "[App] NPS Android 14,9pt abaixo do iOS, ambos com volume estatisticamente relevante",
+          "classificacao": "Diagnóstico comprovado",
+          "prioridade": "Média",
+          "data": "2026-07-20",
+          "diagnostico": "Dentro do app, o NPS do Android está 14,9pt abaixo do iOS (51,82 vs 66,67), com volume suficiente em ambas as plataformas para confirmar que a divergência é real, não ruído amostral. Android está na zona de atenção do KR de NPS (40-59), enquanto iOS já está acima da meta de 60.",
+          "evidencia": "NPS Android: 51,82 (384 respostas). NPS iOS: 66,67 (315 respostas). Divergência: 14,9pt, ambos com volume ≥15 respostas.",
+          "plano_acao": "Auditar a experiência pós-compra e de checkout especificamente na versão Android do app — a divergência de 14,9pt sugere fricção de plataforma, não apenas percepção geral de produto. Cruzar com crash rate e tempo de carregamento por plataforma se disponível.",
+          "impacto": "NPS (meta 60) — Android está abaixo da meta enquanto iOS já superou; tratar o app como um bloco único mascara essa diferença.",
+          "acompanhamento": "NPS score e nota média por plataforma (Android/iOS) semana a semana.",
+          "texto": "Diagnóstico: Dentro do app, o NPS do Android está 14,9pt abaixo do iOS — divergência estatisticamente relevante, não ruído.\n\nEvidência: NPS Android 51,82 (384 respostas) vs iOS 66,67 (315 respostas).\n\nClassificação: Diagnóstico comprovado\n\nPlano de ação: Auditar a experiência pós-compra e checkout especificamente no Android. Cruzar com crash rate e tempo de carregamento por plataforma, se disponível.\n\nImpacto: NPS (meta 60) — Android abaixo da meta, iOS já superou.\n\nPrioridade: Média — gap relevante mas dentro de contexto de app já em recuperação geral.\n\nAcompanhamento: NPS score e nota média por plataforma semana a semana.",
+          "titulo_linear": null,
+          "tipo_acao": "monitorar",
+          "testavel": false,
+          "criterio_confirmacao": null,
+          "experimento_template": null,
+          "status": "nunca_testada",
+          "experimento_id": null,
+          "revisao": null
+        }
+      ]
+    },
     {
       "semana": "2026-07-13",
       "label": "13/07 – 19/07/2026",
@@ -1326,6 +1466,195 @@
     }
   ],
   "insights_conversao": [
+    {
+      "semana": "2026-07-20",
+      "label": "20/07 – 26/07/2026",
+      "tipo": "semanal",
+      "gerado_em": "2026-07-29T17:52:09-03:00",
+      "classificacao": "caiu_moderado",
+      "metricas": {
+        "cr_atual": {
+          "total": 7.85,
+          "mobile": 7.03,
+          "desktop": 11.55
+        },
+        "cr_baseline": {
+          "total": 8.46,
+          "mobile": 7.65,
+          "desktop": 11.71
+        },
+        "delta_pp": {
+          "total": -0.61,
+          "mobile": -0.62,
+          "desktop": -0.16
+        },
+        "sigma": 0.46,
+        "n_semanas_hist": 8
+      },
+      "hipoteses": [
+        {
+          "hipotese": "Canal Direto perde CR mesmo com share estável, com recuperação parcial ligada a SEN-548",
+          "evidencia": "Direto: share 11,7% (baseline 12,0%), CR 15,15% (baseline 16,01%, -0,86pp); SEN-548 concluído em 21/07"
+        },
+        {
+          "hipotese": "Checkout→purchase mobile reverte 3 semanas de queda, coincidindo com SEN-490 e SEN-548",
+          "evidencia": "checkout→purchase mobile +0,3pp (78,0% vs 77,7% baseline), após -2,0pp na semana anterior"
+        },
+        {
+          "hipotese": "Checkout→purchase desktop piora e é mascarado pelo ganho em search→cart",
+          "evidencia": "checkout→purchase desktop -0,9pp (62,6% vs 63,5%); search→cart desktop +0,7pp (13,8% vs 13,1%)"
+        }
+      ],
+      "monitorar": "Acompanhar sustentação da recuperação do checkout mobile e isolar a causa da queda de checkout→purchase desktop, hoje o maior ponto de atrito do funil.",
+      "dispositivos": {
+        "mobile": {
+          "classificacao": "caiu_moderado",
+          "cr_atual": 7.03,
+          "cr_baseline": 7.65,
+          "delta_pp": -0.62,
+          "canal_contexto": [
+            {
+              "nome": "Pago",
+              "share_sessoes_total": 51.3,
+              "cr_total": 8.06,
+              "delta_cr_pp": -0.32
+            },
+            {
+              "nome": "Orgânico",
+              "share_sessoes_total": 16.6,
+              "cr_total": 5.95,
+              "delta_cr_pp": -0.06
+            },
+            {
+              "nome": "Direto",
+              "share_sessoes_total": 11.7,
+              "cr_total": 15.15,
+              "delta_cr_pp": -0.86
+            },
+            {
+              "nome": "Social",
+              "share_sessoes_total": 1.4,
+              "cr_total": null,
+              "delta_cr_pp": null
+            }
+          ],
+          "funil": {
+            "step_critico": "cart_to_checkout",
+            "checkout_to_purchase": {
+              "atual": 78,
+              "baseline": 77.7,
+              "delta_pp": 0.3
+            },
+            "cart_to_checkout": {
+              "atual": 67.3,
+              "baseline": 67.7,
+              "delta_pp": -0.4
+            },
+            "search_to_cart": {
+              "atual": 8.6,
+              "baseline": 8.7,
+              "delta_pp": -0.1
+            }
+          },
+          "hipoteses": [
+            {
+              "hipotese": "Recuperação do checkout→purchase mobile ligada à reabertura gradual do novo checkout (SEN-490, 50%) e adaptação para remarcação (SEN-548)",
+              "evidencia": "checkout→purchase mobile +0,3pp (78,0% vs 77,7% baseline) após -2,0pp na semana anterior; SEN-490 e SEN-548 concluídos em 21/07/2026"
+            }
+          ],
+          "monitorar": "Confirmar se a recuperação do checkout→purchase mobile se sustenta na próxima semana e investigar o cart→checkout, agora o step mais fraco do funil mobile."
+        },
+        "desktop": {
+          "classificacao": "estavel",
+          "cr_atual": 11.55,
+          "cr_baseline": 11.71,
+          "delta_pp": -0.16,
+          "canal_contexto": [
+            {
+              "nome": "Pago",
+              "share_sessoes_total": 51.3,
+              "cr_total": 8.06,
+              "delta_cr_pp": -0.32
+            },
+            {
+              "nome": "Orgânico",
+              "share_sessoes_total": 16.6,
+              "cr_total": 5.95,
+              "delta_cr_pp": -0.06
+            },
+            {
+              "nome": "Direto",
+              "share_sessoes_total": 11.7,
+              "cr_total": 15.15,
+              "delta_cr_pp": -0.86
+            },
+            {
+              "nome": "Social",
+              "share_sessoes_total": 1.4,
+              "cr_total": null,
+              "delta_cr_pp": null
+            }
+          ],
+          "funil": {
+            "step_critico": "checkout_to_purchase",
+            "checkout_to_purchase": {
+              "atual": 62.6,
+              "baseline": 63.5,
+              "delta_pp": -0.9
+            },
+            "cart_to_checkout": {
+              "atual": 62.4,
+              "baseline": 62.6,
+              "delta_pp": -0.2
+            },
+            "search_to_cart": {
+              "atual": 13.8,
+              "baseline": 13.1,
+              "delta_pp": 0.7
+            }
+          },
+          "hipoteses": [
+            {
+              "hipotese": "Desktop ganha eficiência na entrada do funil mas perde no fechamento, compensando o CR total e mantendo-o estável",
+              "evidencia": "search→cart desktop +0,7pp (13,8% vs 13,1%) compensa checkout→purchase -0,9pp (62,6% vs 63,5%); CR desktop -0,16pp"
+            }
+          ],
+          "monitorar": "Isolar em qual etapa específica do pagamento desktop a queda de checkout→purchase está concentrada, para não deixar o CR agregado mascarar a deterioração."
+        },
+        "app": {
+          "classificacao": "estavel",
+          "cr_atual": 6.41,
+          "cr_baseline": 5.72,
+          "delta_pp": 0.69,
+          "canal_contexto": null,
+          "funil": {
+            "step_critico": "search_to_cart",
+            "checkout_to_purchase": {
+              "atual": 60.3,
+              "baseline": 59.6,
+              "delta_pp": 0.7
+            },
+            "cart_to_checkout": {
+              "atual": 14.8,
+              "baseline": 14.2,
+              "delta_pp": 0.6
+            },
+            "search_to_cart": {
+              "atual": 41.8,
+              "baseline": 38.2,
+              "delta_pp": 3.6
+            }
+          },
+          "hipoteses": [
+            {
+              "hipotese": "CR do app sobe pela 3ª semana seguida, agora com melhora em todas as etapas do funil, coincidindo com pacote de correções de bugs de checkout entregues em 21/07 (SEN-566, SEN-572, SEN-569, SEN-570, SEN-567)",
+              "evidencia": "CR app 6,41% vs 5,92% semana anterior (+8,3%); funil: search→cart +3,6pp, cart→checkout +0,6pp, checkout→purchase +0,7pp vs baseline de 4 semanas"
+            }
+          ],
+          "monitorar": "CR e funil completo do app semana a semana; classificação estatística 'estável' reflete alta variância histórica (σ=1,28) e deve ser revista conforme a tendência de alta se consolida."
+        }
+      }
+    },
     {
       "semana": "2026-07-13",
       "label": "13/07 – 19/07/2026",
