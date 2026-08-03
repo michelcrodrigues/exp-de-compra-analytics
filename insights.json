@@ -1,5 +1,5 @@
 {
-  "gerado_em": "2026-07-29T17:52:21.540Z",
+  "gerado_em": "2026-08-03T19:34:39.795Z",
   "insights": [
     {
       "semana": "2026-07-20",
@@ -1544,6 +1544,59 @@
     }
   ],
   "insights_conversao": [
+    {
+      "mes": "2026-07",
+      "label": "Julho 2026",
+      "tipo": "mensal",
+      "gerado_em": "2026-08-03T09:00:00-03:00",
+      "classificacao": "sem_referencia",
+      "metricas": {
+        "cr_atual": {
+          "total": 8.29,
+          "mobile": 7.48,
+          "desktop": 11.63
+        },
+        "cr_baseline": {
+          "total": 9.24,
+          "mobile": 8.23,
+          "desktop": 13.17
+        },
+        "delta_pp": {
+          "total": -0.95,
+          "mobile": -0.75,
+          "desktop": -1.54
+        },
+        "sigma": 0.58,
+        "n_meses_hist": 2
+      },
+      "hipoteses": [
+        {
+          "rank": 1,
+          "dispositivo": "desktop",
+          "titulo": "Colapso do checkout→purchase desktop se aprofunda pelo 2º mês consecutivo",
+          "evidencia": "checkout→purchase desktop caiu de 86,9% (maio) para 66,5% (junho) e 64,3% (julho); CR desktop 1,54pp abaixo da média dos últimos 2 meses.",
+          "raciocinio": "Fricção de pagamento ou erro técnico específico do checkout desktop, ainda não corrigido apesar da recomendação de investigação urgente em junho.",
+          "time_para_confirmar": "Time Senna (SEN)"
+        },
+        {
+          "rank": 2,
+          "dispositivo": "mobile",
+          "titulo": "Queda de CR mobile pelo 3º mês consecutivo, concentrada no checkout→purchase",
+          "evidencia": "CR mobile 0,75pp abaixo da média dos últimos 2 meses; checkout→purchase mobile caiu de 82,7% (junho) para 79,6% (julho), -3,1pp.",
+          "raciocinio": "Mesma fricção de pagamento observada no desktop parece atingir o mobile, ainda que com menor intensidade absoluta — indica causa comum ao invés de específica de dispositivo.",
+          "time_para_confirmar": "Time Senna (SEN)"
+        },
+        {
+          "rank": 3,
+          "dispositivo": "total",
+          "titulo": "Mix de canal pago cresceu com CR do pago em queda, mas não explica sozinho a queda de CR",
+          "evidencia": "Share de sessões pagas subiu de 50,7% para 52,7% (+1,95pp) com CR do pago caindo de 9,05% para 8,25% (-8,9%); porém CR orgânico e direto também caíram (-1,1% e -9,6%).",
+          "raciocinio": "Se fosse apenas efeito de mix, os outros canais não cairiam simultaneamente — reforça que a causa é fricção no funil final, não mudança na composição de tráfego.",
+          "time_para_confirmar": "Time de mídia paga"
+        }
+      ],
+      "monitorar": "Se o checkout→purchase mobile e desktop se recuperarem em agosto sem intervenção, o padrão foi sazonal; se continuar abaixo de 80% (mobile) e 65% (desktop), confirma fricção de pagamento a corrigir."
+    },
     {
       "semana": "2026-07-20",
       "label": "20/07 – 26/07/2026",
