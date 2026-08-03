@@ -328,9 +328,15 @@
             "criterio_sucesso": "checkout→purchase +3pp ou mais vs controle, com significância estatística",
             "duracao_minima": "2 semanas"
           },
-          "status": "nunca_testada",
+          "status": "inconclusiva",
           "experimento_id": null,
-          "revisao": null
+          "revisao": {
+            "veredicto": "inconclusiva",
+            "evidencia": "O critério exige um teste A/B controlado (grupo teste vs. controle) comparando checkout→purchase. Não foi encontrada issue no Linear com o padrão [INS-2026-050], e não há registro de execução de teste controlado nos dados agregados. O prazo de 14 dias (vencido em 28/07) passou sem que o experimento fosse executado.",
+            "fonte": "combinado",
+            "observacao": "O teste A/B nunca foi executado pelo time. Recomenda-se criar formalmente a issue no Linear com o título '[INS-2026-050] ...' caso o time decida rodar o teste, ou tratar como consolidado no INS-2026-055 (mesma hipótese, semana seguinte), que mostra recuperação parcial orgânica do canal Direto sem intervenção controlada.",
+            "data_revisao": "2026-08-02"
+          }
         },
         {
           "id": "INS-2026-051",
@@ -467,9 +473,15 @@
           "testavel": true,
           "criterio_confirmacao": "Se checkout_to_purchase mobile voltar a ficar ≥82% em 2 semanas após ação corretiva, hipótese de fricção pontual confirmada; se persistir abaixo de 80%, tratar como mudança estrutural.",
           "experimento_template": "Hipótese: fricção introduzida no fluxo de pagamento mobile reduziu conclusão de compra. Métrica primária: checkout_to_purchase mobile. Guardrails: CR mobile total, taxa de erro de pagamento. Critério de sucesso: recuperar para ≥82%. Duração mínima: 2 semanas.",
-          "status": "nunca_testada",
+          "status": "testada_refutada",
           "experimento_id": null,
-          "revisao": null
+          "revisao": {
+            "veredicto": "testada_refutada",
+            "evidencia": "checkout→purchase mobile permaneceu abaixo do patamar de recuperação nas duas semanas seguintes à criação do insight: semana 08/07–14/07 = 75,36%, semana 15/07–21/07 = 77,52% — ambas abaixo dos 80% que o próprio critério definia como limiar de 'mudança estrutural'. A hipótese de fricção pontual foi refutada.",
+            "fonte": "dados",
+            "observacao": "A melhora sequencial (75,36% → 77,52%) indica recuperação parcial, mas insuficiente. Tratar a causa como estrutural (rollout do novo checkout), não pontual, em insights futuros sobre este funil.",
+            "data_revisao": "2026-08-02"
+          }
         },
         {
           "id": "INS-2026-047",
@@ -511,9 +523,15 @@
           "testavel": true,
           "criterio_confirmacao": "Se CR Android subir para ≥6% após intervenção, hipótese de fricção técnica confirmada.",
           "experimento_template": "Hipótese: fricção técnica ou de UX no fluxo de pagamento Android reduz conversão. Métrica primária: CR Android. Guardrails: CR iOS, taxa de erro de pagamento Android. Critério de sucesso: CR Android ≥6% sustentado por 2 semanas. Duração mínima: 2 semanas.",
-          "status": "nunca_testada",
+          "status": "inconclusiva",
           "experimento_id": null,
-          "revisao": null
+          "revisao": {
+            "veredicto": "inconclusiva",
+            "evidencia": "O critério exige CR do Android especificamente, mas a base de dados persistida do app (data_app.json) não contém quebra por sistema operacional (Android/iOS) — apenas por categoria de dispositivo. Não é possível confirmar ou refutar com os dados disponíveis nesta rodada.",
+            "fonte": "dados",
+            "observacao": "Recomenda-se avaliar com Digital Analytics/Martech se a dimensão de sistema operacional pode ser persistida no pipeline de exportação do app para viabilizar acompanhamento automatizado deste tipo de insight no futuro.",
+            "data_revisao": "2026-08-02"
+          }
         },
         {
           "id": "INS-2026-049",
@@ -575,9 +593,15 @@
             "duracao_minima_dias": 14,
             "notas": "Se W4 não mostrar melhora: rollback imediato. Usar proxy reverso para controle de tráfego no próximo ciclo. Segmentar GA4 por variante A/B antes de qualquer rollback."
           },
-          "status": "nunca_testada",
+          "status": "testada_refutada",
           "experimento_id": null,
-          "revisao": null
+          "revisao": {
+            "veredicto": "testada_refutada",
+            "evidencia": "checkout→purchase do site nas duas semanas seguintes (01/07–07/07 e 08/07–14/07): 75,41% e 70,99% — ambas abaixo do patamar de recuperação de 79%, com piora na segunda semana.",
+            "fonte": "dados",
+            "observacao": "A queda se aprofundou na segunda semana em vez de recuperar, enfraquecendo a hipótese de que os ajustes do experimento (Ciclo 14) resolveram o problema. Tratar como falha persistente, não recuperação em andamento.",
+            "data_revisao": "2026-08-02"
+          }
         },
         {
           "id": "INS-2026-041",
@@ -610,9 +634,15 @@
             "duracao_minima_dias": 14,
             "notas": "Dependente de INS-2026-040. Confirmar se backend é compartilhado antes de interpretar resultados separadamente."
           },
-          "status": "nunca_testada",
+          "status": "testada_refutada",
           "experimento_id": null,
-          "revisao": null
+          "revisao": {
+            "veredicto": "testada_refutada",
+            "evidencia": "Nem site nem app atingiram os patamares exigidos nas duas semanas seguintes (01/07–14/07): site 75,41%/70,99% (meta ≥79%); app 61,19%/59,81% (meta ≥65%).",
+            "fonte": "dados",
+            "observacao": "Falha conjunta em ambos os canais reforça que a causa é sistêmica ao backend de checkout compartilhado, não um efeito isolado de um canal.",
+            "data_revisao": "2026-08-02"
+          }
         },
         {
           "id": "INS-2026-042",
@@ -717,9 +747,15 @@
             "duracao_minima_dias": 14,
             "notas": "Diagnóstico técnico obrigatório primeiro. Priorizar: (1) Segmentar GA4 por variante A/B, (2) Logs Mercado Pago, (3) Sentry API errors."
           },
-          "status": "nunca_testada",
+          "status": "testada_refutada",
           "experimento_id": null,
-          "revisao": null
+          "revisao": {
+            "veredicto": "testada_refutada",
+            "evidencia": "checkout→purchase do site nas duas semanas seguintes (24/06–30/06 e 01/07–07/07): 72,35% e 75,41% — muito abaixo do patamar de 85% exigido.",
+            "fonte": "dados",
+            "observacao": "Mesmo com leve recuperação semana a semana, o gap frente ao patamar histórico (85%) permanece grande. Este insight foi sucedido por INS-2026-040/041 sobre o mesmo tema.",
+            "data_revisao": "2026-08-02"
+          }
         },
         {
           "id": "INS-2026-037",
@@ -751,9 +787,15 @@
             "duracao_minima_dias": 14,
             "notas": "Diagnóstico técnico obrigatório: começar pelos logs da API. Dependente do diagnóstico de INS-2026-036."
           },
-          "status": "nunca_testada",
+          "status": "testada_refutada",
           "experimento_id": null,
-          "revisao": null
+          "revisao": {
+            "veredicto": "testada_refutada",
+            "evidencia": "Site 72,35%/75,41% (meta ≥85%) e app 58,13%/61,19% (meta ≥65%) — ambos os canais ficaram abaixo dos patamares exigidos nas duas semanas seguintes.",
+            "fonte": "dados",
+            "observacao": "Padrão cross-canal confirmado como estrutural, consistente com o diagnóstico original.",
+            "data_revisao": "2026-08-02"
+          }
         },
         {
           "id": "INS-2026-038",
@@ -785,9 +827,15 @@
             "duracao_minima_dias": 14,
             "notas": "Dependente da resolução de INS-2026-037. Monitorar Android e iOS separadamente."
           },
-          "status": "nunca_testada",
+          "status": "testada_refutada",
           "experimento_id": null,
-          "revisao": null
+          "revisao": {
+            "veredicto": "testada_refutada",
+            "evidencia": "CR do app nas duas semanas seguintes (24/06–30/06 e 01/07–07/07): 6,32% e 5,17% — abaixo do patamar de 7,5% exigido, com piora na segunda semana.",
+            "fonte": "dados",
+            "observacao": "CR do app segue em deterioração, não recuperação, no período avaliado.",
+            "data_revisao": "2026-08-02"
+          }
         },
         {
           "id": "INS-2026-039",
@@ -880,9 +928,15 @@
           "testavel": false,
           "criterio_confirmacao": "checkout→purchase desktop ≥80% por 2 semanas consecutivas após mudança no checkout desktop",
           "experimento_template": null,
-          "status": "nunca_testada",
+          "status": "testada_refutada",
           "experimento_id": null,
-          "revisao": null
+          "revisao": {
+            "veredicto": "testada_refutada",
+            "evidencia": "checkout→purchase desktop nas duas semanas seguintes (18/06–24/06 e 25/06–01/07): 64,27% e 64,68% — bem abaixo do patamar de 80% exigido.",
+            "fonte": "dados",
+            "observacao": "Nota de qualidade de dado: o campo 'canal' deste insight está registrado como 'site-mobile' no dashboard, mas o critério de confirmação e o diagnóstico original referem-se a desktop. Recomenda-se corrigir a inconsistência na fonte.",
+            "data_revisao": "2026-08-02"
+          }
         },
         {
           "id": "INS-2026-033",
@@ -902,9 +956,15 @@
           "testavel": false,
           "criterio_confirmacao": "CR Android ≥7,5% por 2 semanas consecutivas após correção identificada",
           "experimento_template": null,
-          "status": "nunca_testada",
+          "status": "inconclusiva",
           "experimento_id": null,
-          "revisao": null
+          "revisao": {
+            "veredicto": "inconclusiva",
+            "evidencia": "O critério exige CR do Android especificamente, mas a base de dados persistida do app não contém quebra por sistema operacional. Não é possível confirmar ou refutar com os dados disponíveis nesta rodada.",
+            "fonte": "dados",
+            "observacao": "Mesma limitação estrutural identificada em INS-2026-048 e INS-2026-013 — persistir dimensão de OS no export do app.",
+            "data_revisao": "2026-08-02"
+          }
         },
         {
           "id": "INS-2026-034",
@@ -924,9 +984,15 @@
           "testavel": false,
           "criterio_confirmacao": "checkout→purchase app ≥77% por 2 semanas consecutivas (gap ≤5,5pp vs site)",
           "experimento_template": null,
-          "status": "nunca_testada",
+          "status": "testada_refutada",
           "experimento_id": null,
-          "revisao": null
+          "revisao": {
+            "veredicto": "testada_refutada",
+            "evidencia": "checkout→purchase do app nas duas semanas seguintes (18/06–24/06 e 25/06–01/07): 59,05% e 59,35% — muito abaixo do patamar de 77% exigido.",
+            "fonte": "dados",
+            "observacao": "Gap entre app e site permanece muito acima do limite de 5,5pp tolerado pelo critério.",
+            "data_revisao": "2026-08-02"
+          }
         },
         {
           "id": "INS-2026-035",
@@ -1014,9 +1080,15 @@
             "duracao_minima_dias": 14,
             "notas": "Antes de criar o experimento, rodar diagnóstico técnico (Crashlytics, Sentry, GA4 DebugView). O experimento deve ser criado apenas se a causa for comportamental/UX, não técnica."
           },
-          "status": "nunca_testada",
+          "status": "inconclusiva",
           "experimento_id": null,
-          "revisao": null
+          "revisao": {
+            "veredicto": "inconclusiva",
+            "evidencia": "O critério exige CR do iOS especificamente, mas a base de dados persistida do app não contém quebra por sistema operacional. Não é possível confirmar ou refutar com os dados disponíveis nesta rodada.",
+            "fonte": "dados",
+            "observacao": "Mesma limitação estrutural identificada em INS-2026-048 e INS-2026-033.",
+            "data_revisao": "2026-08-02"
+          }
         },
         {
           "id": "INS-2026-014",
@@ -1075,9 +1147,15 @@
             "duracao_minima_dias": 14,
             "notas": "Antes de desenhar o experimento, mapear quais telas aparecem entre add_to_cart e begin_checkout no app e comparar com o site."
           },
-          "status": "nunca_testada",
+          "status": "testada_refutada",
           "experimento_id": null,
-          "revisao": null
+          "revisao": {
+            "veredicto": "testada_refutada",
+            "evidencia": "A taxa add_to_cart→begin_checkout do app, de 20,10% na semana-base (04/06–11/06), caiu para 13,93% na última semana da janela de 28 dias (03/07–09/07) e ficou em 15,10% na média agregada do período — movimento na direção oposta à exigida (alta de 15%).",
+            "fonte": "dados",
+            "observacao": "O abandono entre carrinho e checkout no app piorou, não melhorou, no período avaliado. Recomenda-se nova investigação de causa raiz específica para esta etapa do funil do app.",
+            "data_revisao": "2026-08-02"
+          }
         },
         {
           "id": "INS-2026-016",
