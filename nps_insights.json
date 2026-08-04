@@ -1,6 +1,58 @@
 {
-  "gerado_em": "2026-07-29T17:53:15.500Z",
+  "gerado_em": "2026-08-04T21:46:42.284Z",
   "semanas": [
+    {
+      "semana": "2026-07-27",
+      "label": "27/07 – 02/08/2026",
+      "gerado_em": "2026-08-04T12:00:00-03:00",
+      "nps_score": 80.04,
+      "nps_nota_media": 9.28,
+      "nps_respostas": 11437,
+      "nps_promotores": null,
+      "nps_neutros": null,
+      "nps_detratores": null,
+      "promotores": {
+        "total": 11,
+        "temas_principais": [
+          "satisfação geral com a experiência de compra",
+          "elogio ao atendimento",
+          "avaliação genérica e curta, sem detalhamento do que funcionou bem"
+        ],
+        "resumo": "Promotores seguem expressando satisfação ampla e genérica com a jornada de compra — comentários curtos como \"Muito bom\", \"Ótimo\" e \"Excelente\" dominam, com pouco detalhamento sobre o que especificamente gerou a nota alta.",
+        "insight": "O padrão se repete em relação à leitura de 09/06: alto volume de elogios genéricos indica ausência de fricção percebida, mas não aponta para um momento de encantamento específico. Para mover o NPS de forma sustentada, o time Senna precisa identificar e potencializar momentos concretos de diferenciação, não apenas manter a ausência de problemas.",
+        "recorrente": true,
+        "semanas_recorrente": 2
+      },
+      "neutros": {
+        "total": 12,
+        "temas_principais": [
+          "taxa de serviço percebida como alta",
+          "ausência de parcelamento sem juros",
+          "percepção de preço elevado ou checkout burocrático/confuso"
+        ],
+        "resumo": "Neutros seguem travados majoritariamente por barreiras financeiras: taxa de serviço e falta de parcelamento sem juros aparecem em pelo menos 6 dos 12 temas mapeados, incluindo um relato explícito de piora (\"antes eu comprava em 6X s/juros\").",
+        "insight": "O mesmo padrão identificado na leitura de 09/06 se repete nesta semana — taxa de serviço e ausência de parcelamento sem juros continuam sendo o principal bloqueio para conversão de neutros em promotores. A recorrência em duas leituras distintas no tempo reforça que o problema é estrutural, não um evento pontual.",
+        "recorrente": true,
+        "semanas_recorrente": 2
+      },
+      "detratores": {
+        "total": 1,
+        "temas_principais": [
+          "indignação com o valor da taxa de serviço"
+        ],
+        "resumo": "Grupo pequeno e homogêneo nesta semana: o único tema registrado entre detratores foi revolta direta com a taxa de serviço (\"Taxas abusivas\", 48 menções), sem outros padrões distintos como visto na leitura anterior.",
+        "insight": "A taxa de serviço se mantém como o gatilho mais extremo de insatisfação entre os poucos detratores. Combinado com o padrão dos neutros, há evidência consistente de que o tema é o maior risco estrutural ao NPS, mesmo com o score total do site (80,04) confortavelmente acima da meta de 60.",
+        "recomendacao_produto": "Levar ao time de CRM/Pricing a avaliação de reintroduzir parcelamento sem juros em pelo menos uma faixa de valor, e revisar a comunicação da taxa de serviço no checkout para reduzir a percepção de custo oculto — o tema é recorrente em pelo menos duas leituras qualitativas (09/06 e a atual).",
+        "recorrente": true,
+        "semanas_recorrente": 2
+      },
+      "analise_temporal": {
+        "padrao": "recorrente",
+        "tendencia": "estavel",
+        "diagnostico": "O NPS score do site (80,04) está praticamente estável frente à última leitura qualitativa disponível (80,27 em 09/06), com nota média também estável (9,28 vs 9,27). O padrão qualitativo por trás desse score também não mudou: promotores seguem genéricos, neutros e detratores seguem ancorados no mesmo tema de taxa de serviço e ausência de parcelamento sem juros identificado há quase dois meses. Isso indica que, apesar do NPS site estar acima da meta, o problema estrutural de percepção de custo não foi endereçado no período.",
+        "dias_criticos": []
+      }
+    },
     {
       "semana": "2026-07-20",
       "label": "20/07 – 26/07/2026",
