@@ -1,6 +1,159 @@
 {
-  "gerado_em": "2026-08-03T19:34:39.795Z",
+  "gerado_em": "2026-08-04T21:45:51.694Z",
   "insights": [
+    {
+      "semana": "2026-07-27",
+      "label": "27/07 – 02/08/2026",
+      "gerado_em": "2026-08-04T21:45:51.694Z",
+      "items": [
+        {
+          "id": "INS-2026-067",
+          "canal": "site",
+          "tag": "CR do site sobe para 9,03% (+0,77pp vs baseline), puxado pelo fim do gargalo de checkout mobile",
+          "classificacao": "Diagnóstico comprovado",
+          "prioridade": "Alta",
+          "data": "2026-08-04",
+          "diagnostico": "O CR do site fechou a semana em 9,03%, 0,77pp acima da média das últimas 4 semanas (8,26%) e 1,18pp acima da semana anterior (7,85%). A classificação é de alta moderada (z=1,67 sobre o desvio-padrão histórico de 8 semanas). O driver não é difuso: está concentrado quase inteiramente na etapa checkout→purchase, que saltou de 73,2% para 83,8% (+10,6pp) — o maior delta absoluto de qualquer etapa do funil na semana.",
+          "evidencia": "Checkout→purchase total: 73,2% (baseline) → 83,8% (atual). No mobile o salto é ainda maior: 77,7% → 90,5% (+12,8pp). No mesmo período o Linear (time Senna) registra a correção do bug SEN-661 (checkbox de opt-in que não marcava no clique, prioridade Urgente) e o pacote completo de redesign do checkout mobile: remoção de navbar (SEN-604), condensação de CPF/data de nascimento (SEN-605) e redução de texto de opt-in em três telas (SEN-606, SEN-609, SEN-610), todos concluídos entre 27/07 e 29/07.",
+          "classificacao_completa": null,
+          "plano_acao": "Consolidar o pacote de checkout mobile como referência de padrão de UX para os próximos redesigns (aplicar a mesma lógica de menos scroll e menos campos por tela em outras etapas do funil). Priorizar a auditoria do card_to_checkout, que caiu -1,1pp no mesmo período — o ganho em checkout→purchase pode estar mascarando um início de atrito uma etapa antes. Manter o SEN-661 como caso de estudo: um bug de clique não registrado pode ter estado ativo por mais tempo do que o percebido — vale auditoria retroativa de quanto CR foi perdido enquanto o bug esteve no ar.",
+          "impacto": "Impacta diretamente o KR de Receita (R$ 345M) — a cada pp de CR recuperado no volume atual de sessões, o efeito em compras é imediato. Impacta também o KR de Recorrência indiretamente, já que menos fricção no checkout tende a melhorar a percepção da primeira compra. Nenhum guardrail negativo identificado: rejeição caiu -1,71pp no mesmo período, então o ganho não veio às custas de qualidade de sessão.",
+          "prioridade_justificativa": "Alta porque o efeito é grande (+10,6pp na etapa mais próxima da receita), comprovado por dado (não é hipótese) e replicável (o padrão de fix pode virar playbook).",
+          "acompanhamento": "Acompanhar se o ganho de checkout→purchase se sustenta nas próximas 2 semanas sem regressão. Monitorar especificamente o cart→checkout (-1,1pp) para garantir que não é o início de uma nova fricção. Cruzar com o Linear a cada semana para saber se novos fixes de checkout continuam sendo entregues ou se o pacote já esgotou seu efeito.",
+          "texto": "Diagnóstico: O CR do site fechou a semana em 9,03%, 0,77pp acima da média das últimas 4 semanas (8,26%) e 1,18pp acima da semana anterior (7,85%) — classificação de alta moderada (z=1,67). O driver está concentrado quase inteiramente na etapa checkout→purchase.\n\nEvidência: Checkout→purchase total salta de 73,2% para 83,8% (+10,6pp); no mobile, de 77,7% para 90,5% (+12,8pp) — maior delta absoluto do funil na semana. No Linear (Senna), entre 27/07 e 29/07 foram concluídos SEN-661 (bug urgente: checkbox de opt-in que não marcava no clique), SEN-604 (remoção de navbar no checkout mobile), SEN-605 (CPF e data de nascimento na mesma linha) e SEN-606/609/610 (redução de texto de opt-in em três telas).\n\nClassificação: Diagnóstico comprovado.\n\nPlano de ação: Consolidar o pacote de checkout mobile como playbook de UX para próximos redesigns. Auditar o cart→checkout (-1,1pp) para garantir que o ganho não está mascarando início de atrito uma etapa antes. Avaliar retroativamente quanto CR foi perdido enquanto o bug SEN-661 esteve ativo.\n\nImpacto: KR Receita (R$ 345M) diretamente — ganho de CR no volume atual de sessões se traduz em compras adicionais imediatas. Rejeição caiu -1,71pp no mesmo período, então o ganho não veio às custas de qualidade de sessão.\n\nPrioridade: Alta — efeito grande, comprovado por dado, e replicável como padrão de produto.\n\nAcompanhamento: Confirmar sustentação do ganho nas próximas 2 semanas e monitorar o cart→checkout para descartar nova fricção.",
+          "titulo_linear": null,
+          "tipo_acao": "monitorar",
+          "testavel": false,
+          "criterio_confirmacao": null,
+          "experimento_template": null,
+          "status": "nunca_testada",
+          "experimento_id": null,
+          "revisao": null
+        },
+        {
+          "id": "INS-2026-068",
+          "canal": "site-mobile",
+          "tag": "[Mobile] Checkout→purchase salta +12,8pp — maior ganho de qualquer etapa/dispositivo na semana",
+          "classificacao": "Tendência",
+          "prioridade": "Alta",
+          "data": "2026-08-04",
+          "diagnostico": "No mobile, a etapa checkout→purchase saltou de 77,7% (baseline 4 semanas) para 90,5% na semana atual — um ganho de 12,8pp, o maior de todo o funil, em qualquer dispositivo. O CR mobile total subiu 0,75pp (7,45%→8,20%), classificado como alta moderada, mas o efeito na etapa final do funil é desproporcionalmente maior que o efeito no CR agregado, o que indica que o ganho está sendo parcialmente diluído por outras etapas do funil mobile.",
+          "evidencia": "Checkout→purchase mobile: 77,7% → 90,5% (+12,8pp). Cart→checkout mobile no mesmo período: 67,8% → 66,8% (-1,0pp) — leve piora que compensa parte do ganho. Search→cart mobile: 8,6% → 8,9% (+0,3pp), estável. As entregas concluídas entre 27/07 e 29/07 no site mobile (SEN-604, 605, 606, 609, 610, 661, 618) foram todas direcionadas à tela de checkout/comprador/passageiro, exatamente a etapa que mais melhorou.",
+          "plano_acao": "Investigar por que o cart→checkout mobile piorou -1,0pp no mesmo período em que o checkout→purchase melhorou tanto — pode ser efeito colateral de alguma mudança de layout que adicionou fricção uma etapa antes (ex: remoção da navbar pode ter reduzido a visibilidade de algum CTA intermediário). Validar com gravações de sessão (se disponíveis) ou GA4 Explore segmentado por essa etapa específica.",
+          "impacto": "KR Receita — mobile responde por 80,6% das sessões do site, então qualquer ganho nessa etapa tem impacto desproporcional no volume total de compras.",
+          "acompanhamento": "Acompanhar se o cart→checkout mobile se estabiliza ou continua a cair nas próximas semanas — se continuar caindo, o ganho líquido de checkout→purchase pode não se sustentar.",
+          "texto": "Diagnóstico: No mobile, checkout→purchase saltou de 77,7% para 90,5% (+12,8pp), o maior ganho de qualquer etapa/dispositivo da semana — desproporcional ao ganho do CR mobile total (+0,75pp), sinal de que outra etapa está diluindo o efeito.\n\nEvidência: Cart→checkout mobile caiu -1,0pp (67,8%→66,8%) no mesmo período. As entregas concluídas entre 27/07 e 29/07 (SEN-604, 605, 606, 609, 610, 661, 618) miraram exatamente a etapa de checkout/comprador/passageiro no mobile.\n\nClassificação: Tendência.\n\nPlano de ação: Investigar se alguma mudança de layout (ex: remoção de navbar) introduziu fricção uma etapa antes do checkout. Validar com GA4 Explore segmentado.\n\nImpacto: Mobile é 80,6% das sessões do site — o efeito no volume de compras é desproporcional ao percentual de ganho.\n\nPrioridade: Alta — maior delta absoluto do funil na semana.\n\nAcompanhamento: Monitorar se cart→checkout mobile estabiliza ou segue caindo nas próximas semanas.",
+          "titulo_linear": null,
+          "tipo_acao": "monitorar",
+          "testavel": false,
+          "criterio_confirmacao": null,
+          "experimento_template": null,
+          "status": "nunca_testada",
+          "experimento_id": null,
+          "revisao": null
+        },
+        {
+          "id": "INS-2026-069",
+          "canal": "site",
+          "tag": "Canal Direto acelera CR (+1,26pp) e ganha share — maior CR de todos os canais mensuráveis",
+          "classificacao": "Hipótese",
+          "prioridade": "Média",
+          "data": "2026-08-04",
+          "diagnostico": "O canal Direto teve o maior ganho de CR entre os canais mensuráveis: 15,64% para 16,90% (+1,26pp), com share de sessões subindo de 11,9% para 12,4%. É também o canal com maior CR absoluto do site, folgado à frente de Pago (8,87%) e Orgânico (6,26%).",
+          "evidencia": "Direto: share 11,9%→12,4% (+0,5pp), CR 15,64%→16,90% (+1,26pp). Pago: share 52,3%→54,0% (+1,7pp), CR 8,24%→8,87% (+0,63pp) — cresce em volume sem diluir conversão. Ambos os canais atingem o critério de inclusão (delta CR ≥0,3pp com share ≥5%).",
+          "plano_acao": "Investigar se o crescimento de Direto é orgânico (recorrência de clientes que já compraram, digitando a URL direto ou usando favoritos/app) ou reflexo de alguma campanha de mídia paga sendo mal atribuída como Direto por perda de parâmetros UTM — o time SEN tem um item aberto (SEN-663: corrigir persistência de UTMs e atribuição de origem por sessão no App) que sugere que atribuição é um ponto de atenção ativo.",
+          "impacto": "KR Receita e KR Recorrência — se o crescimento de Direto for de fato recorrência orgânica, é um sinal positivo de fidelização; se for atribuição quebrada, o dado de mix de canais está distorcido e decisões de investimento em mídia paga podem estar erradas.",
+          "acompanhamento": "Cruzar o crescimento de Direto com o status do SEN-663 (correção de atribuição de UTM) — se o item for concluído e o share de Direto cair de volta, confirma que parte do crescimento observado era atribuição quebrada, não comportamento real de usuário.",
+          "texto": "Diagnóstico: O canal Direto teve o maior ganho de CR entre os canais mensuráveis (15,64%→16,90%, +1,26pp), com share também subindo (11,9%→12,4%). É o canal com maior CR absoluto do site.\n\nEvidência: Pago também cresce em share (+1,7pp) e CR (+0,63pp), sustentando volume sem diluir conversão. Ambos atingem o critério de |delta CR|≥0,3pp com share≥5%.\n\nClassificação: Hipótese.\n\nPlano de ação: Investigar se o crescimento de Direto é recorrência real ou atribuição quebrada — existe um item aberto no Linear (SEN-663) sobre correção de persistência de UTM e atribuição de origem, o que é um sinal de que a atribuição já é ponto de atenção conhecido.\n\nImpacto: Se for recorrência real, é sinal positivo de fidelização (KR Recorrência); se for atribuição quebrada, distorce decisões de investimento em mídia paga.\n\nPrioridade: Média — relevante mas ainda não comprovado.\n\nAcompanhamento: Cruzar evolução do share de Direto com a conclusão do SEN-663.",
+          "titulo_linear": null,
+          "tipo_acao": "monitorar",
+          "testavel": false,
+          "criterio_confirmacao": null,
+          "experimento_template": null,
+          "status": "nunca_testada",
+          "experimento_id": null,
+          "revisao": null
+        },
+        {
+          "id": "INS-2026-070",
+          "canal": "app",
+          "tag": "[App] CR sobe de forma significativa (+2,23pp) puxado pelo cart→checkout, mas segue -1pp abaixo do site",
+          "classificacao": "Tendência",
+          "prioridade": "Média",
+          "data": "2026-08-04",
+          "diagnostico": "O CR do app fechou a semana em 8,03%, 2,23pp acima da média das 4 semanas anteriores (5,80%) — desvio de 2,19 sigma sobre a volatilidade histórica, classificado como alta significativa. É a 2ª semana consecutiva de alta (semana anterior já havia subido para 6,41%). Apesar disso, o CR do app segue 1,00pp abaixo do CR do site (8,03% vs 9,03%).",
+          "evidencia": "Cart→checkout do app: 14,3% (baseline) → 18,8% (atual), +4,5pp — o maior ganho absoluto do funil app, maior inclusive que o ganho em checkout→purchase (+2,3pp: 60,2%→62,5%). No Linear, concluídos entre 27/07 e 31/07: SEN-611/612/613 (redução e padronização de texto de opt-in no app), SEN-614 (ajuste de layout da tela de cartão de crédito), SEN-650 (fix Passe Livre) e SEN-615 (correção de link de termos). Notável: o volume de respostas NPS do app caiu de 699 para 358 na mesma semana — quase pela metade.",
+          "plano_acao": "Auditar especificamente qual tela dentro do intervalo cart→checkout teve maior redução de abandono, cruzando com os deploys de opt-in (SEN-611/612/613) — são a mudança mais alinhada com essa etapa do funil. Investigar a queda de volume de respostas NPS (699→358): pode ser mudança no gatilho da pesquisa, o que comprometeria a comparabilidade das próximas semanas.",
+          "impacto": "KR Receita via app — o app representa 29% das sessões totais (site+app) e vem ganhando espaço relativo (28,3%→29,0% semana a semana). Um app crescendo em CR de forma sustentada reduz a dependência do site para a meta de receita.",
+          "acompanhamento": "Confirmar se a alta se sustenta por uma 3ª semana consecutiva. Monitorar separadamente o volume de respostas NPS do app — se a queda persistir, o dado de NPS app das próximas semanas pode não ser comparável ao histórico.",
+          "texto": "Diagnóstico: O CR do app fechou em 8,03%, 2,23pp acima da baseline de 4 semanas (5,80%) — desvio de 2,19 sigma, alta significativa, 2ª semana consecutiva de alta. Ainda assim, segue 1,00pp abaixo do CR do site.\n\nEvidência: Cart→checkout do app salta +4,5pp (14,3%→18,8%), o maior ganho do funil app. No Linear, concluídos na semana: SEN-611/612/613 (opt-in), SEN-614 (layout cartão), SEN-650 (fix Passe Livre), SEN-615 (link termos). O volume de respostas NPS do app caiu de 699 para 358 na mesma semana.\n\nClassificação: Tendência.\n\nPlano de ação: Auditar qual tela específica do cart→checkout mais reduziu abandono, cruzando com os deploys de opt-in. Investigar a queda de volume de NPS do app antes de comparar semanas futuras.\n\nImpacto: App é 29% das sessões totais e crescendo em share relativo — CR sustentado reduz dependência do site para a meta de receita.\n\nPrioridade: Média — tendência positiva mas ainda não é 3ª semana confirmada, e há um ponto de atenção de dado (queda de respostas NPS).\n\nAcompanhamento: Confirmar 3ª semana de alta e monitorar volume de respostas NPS do app.",
+          "titulo_linear": "[Analytics] Auditar drivers do salto de cart→checkout no app (semana 27/07–02/08) e queda de respostas NPS",
+          "tipo_acao": "testar",
+          "testavel": true,
+          "criterio_confirmacao": "Confirmar via GA4 Explore (app) qual tela dentro de cart→checkout teve maior redução de taxa de abandono na semana, cruzando com os deploys SEN-611/612/613/614/650/615. Confirmar junto ao time de Analytics se houve mudança no gatilho da pesquisa NPS do app que explique a queda de 699 para 358 respostas.",
+          "experimento_template": {
+            "hipotese": "O ganho de cart→checkout no app é causado pela redução de texto de opt-in (SEN-611/612/613), não pelo ajuste de layout do cartão de crédito (SEN-614), pois opt-in ocorre antes do checkout no funil.",
+            "metrica_primaria": "Taxa de conversão cart→checkout no app, segmentada por versão do app (antes/depois do release com SEN-611/612/613)",
+            "guardrails": "CR total do app não deve cair; taxa de erro de submissão de formulário de passageiro não deve subir",
+            "criterio_sucesso": "Cart→checkout mantém ganho de pelo menos +3pp mesmo isolando o efeito do fix de cartão de crédito",
+            "duracao_minima": "2 semanas adicionais de dados para confirmar que não é ruído de curto prazo"
+          },
+          "status": "nunca_testada",
+          "experimento_id": null,
+          "revisao": null
+        },
+        {
+          "id": "INS-2026-071",
+          "canal": "conjunto",
+          "tag": "[Site vs App] Gap de NPS se alarga para -25,3 pontos — App em zona de atenção (54,7) vs Site acima da meta (80,0)",
+          "classificacao": "Correlação",
+          "prioridade": "Alta",
+          "data": "2026-08-04",
+          "diagnostico": "O NPS score do app (54,75) está 25,3 pontos abaixo do NPS score do site (80,04), com volume robusto em ambos os lados (358 respostas no app, 11.437 no site — muito acima do limiar de 30 definido para considerar a divergência confiável). Pelo critério de classificação do KR de NPS (meta 60), o site está confortavelmente acima da meta enquanto o app está em zona de atenção (faixa 40-59).",
+          "evidencia": "NPS score: Site 80,04 vs App 54,75 (delta -25,3 pts). Nota média: Site 9,28 vs App 8,42 (delta -0,87). Rejeição: App 24,26% vs Site 21,46% (delta +2,81pp, pior no app). O gap de NPS não é novo — a semana anterior já havia insight registrado (INS-2026-065, mesma janela de análise) sobre o mesmo tema, o que caracteriza recorrência.",
+          "plano_acao": "Priorizar uma leitura qualitativa dedicada dos comentários de NPS do app (quando disponíveis via pesquisa futura) para identificar se o gap é de produto (bugs, fricção, performance) ou de expectativa (usuários do app comparam com apps de concorrentes, enquanto usuários do site comparam com outros sites de venda de passagem). Cruzar com o item já registrado no Linear (SEN-593, prioridade Urgente, em validação: corrigir evento Purchase/Confirmation Page View no Insider/App) — problemas de mensuração no pós-compra do app podem estar correlacionados com problemas reais de experiência pós-compra que rebaixam o NPS.",
+          "impacto": "KR de NPS (meta 60) — o app, isoladamente, está abaixo da meta corporativa mesmo com o site puxando a média geral para cima. Se o app continuar ganhando share de sessões (29% e subindo), o peso do NPS mais baixo do app na média consolidada tende a crescer.",
+          "acompanhamento": "Acompanhar se o gap se mantém, encolhe ou se alarga nas próximas 2-4 semanas. Cruzar com a conclusão do SEN-593 (evento de confirmação de compra no app) para avaliar se há relação entre qualidade de mensuração pós-compra e percepção do cliente.",
+          "texto": "Diagnóstico: O NPS score do app (54,75) está 25,3 pontos abaixo do site (80,04), com volume robusto nos dois lados (358 e 11.437 respostas). O app está em zona de atenção (faixa 40-59) frente à meta de 60, enquanto o site está confortavelmente acima.\n\nEvidência: Nota média App 8,42 vs Site 9,28 (delta -0,87). Rejeição App 24,26% vs Site 21,46% (delta +2,81pp). O tema já havia aparecido na semana anterior (INS-2026-065), caracterizando recorrência.\n\nClassificação: Correlação.\n\nPlano de ação: Priorizar leitura qualitativa dos comentários de NPS do app assim que disponíveis. Cruzar com o SEN-593 (Urgente, em validação: evento Purchase/Confirmation Page View no Insider/App) — problemas de mensuração pós-compra podem estar correlacionados com problemas reais de experiência.\n\nImpacto: KR de NPS (meta 60) — o app isoladamente está abaixo da meta, e seu peso na média consolidada tende a crescer com o aumento de share do canal.\n\nPrioridade: Alta — gap grande, recorrente, e com volume que descarta ruído estatístico.\n\nAcompanhamento: Acompanhar evolução do gap nas próximas semanas e relação com a conclusão do SEN-593.",
+          "titulo_linear": "[CX/App] Investigar causa-raiz do gap de NPS App vs Site (-25,3 pts, 2ª semana consecutiva)",
+          "tipo_acao": "testar",
+          "testavel": true,
+          "criterio_confirmacao": "Confirmar, via leitura de comentários NPS do app e cruzamento com o funil de pós-compra, se o gap é predominantemente de produto (bugs/fricção) ou de mensuração (SEN-593). Critério de confirmação: identificar ao menos 2 temas recorrentes nos comentários do app que expliquem parte do gap.",
+          "experimento_template": {
+            "hipotese": "O gap de NPS app vs site é parcialmente explicado por fricção na experiência pós-compra do app, correlacionada com a falha de mensuração do evento Purchase/Confirmation Page View (SEN-593)",
+            "metrica_primaria": "NPS score do app, segmentado por versão do app (antes/depois da correção do SEN-593)",
+            "guardrails": "NPS do site não deve ser afetado; volume de respostas do app deve se manter estável para comparabilidade",
+            "criterio_sucesso": "Gap de NPS app vs site reduz em pelo menos 8 pontos após a correção do evento e ajustes de produto decorrentes",
+            "duracao_minima": "4 semanas — NPS tem menor volume de resposta e exige mais tempo para estabilizar leitura"
+          },
+          "status": "nunca_testada",
+          "experimento_id": null,
+          "revisao": null
+        },
+        {
+          "id": "INS-2026-072",
+          "canal": "site",
+          "tag": "Taxa de serviço segue como principal gatilho de neutros e do único tema de detratores da semana",
+          "classificacao": "Diagnóstico comprovado",
+          "prioridade": "Média",
+          "data": "2026-08-04",
+          "diagnostico": "Dos 24 comentários de NPS mapeados na semana, o único tema de detrator registrado foi \"taxas abusivas\" (48 menções), e metade dos 12 temas de neutros (6 de 12) menciona explicitamente taxa de serviço, ausência de parcelamento sem juros, ou achar o preço/taxa caro. O mesmo tema já havia sido identificado como principal bloqueio de neutros em uma leitura qualitativa anterior (09/06), caracterizando recorrência de pelo menos 2 pontos no tempo.",
+          "evidencia": "Comentários de neutros: \"A taxa de serviço está alta e poderia parcelar sem juros\" (8), \"A taxa de serviço muito alta\" (8), \"Absurdo não parcelar sem juros\" (8), \"Achei ruim o parcelamento com juros no cartão de crédito, antes eu comprava em 6X s/juros\" (8), \"Acho as taxas para compra on line muito caras\" (8). Detrator: \"Taxas abusivas\" (48 menções, único tema desta categoria na semana).",
+          "plano_acao": "Levar para o time de CRM/Pricing a avaliação de reintroduzir parcelamento sem juros em pelo menos uma faixa de valor, já que ao menos um comentário indica que essa condição existia antes e foi percebida como piora (\"antes eu comprava em 6x sem juros\"). Revisar a comunicação da taxa de serviço no checkout para reduzir a percepção de custo oculto, mesmo sem alterar o valor da taxa.",
+          "impacto": "KR de NPS (60) e KR de Nota Reclame Aqui (≥8,0) — taxa de serviço é o tipo de reclamação que tende a migrar para o Reclame Aqui quando não endereçada, e é um tema estrutural, não pontual.",
+          "acompanhamento": "Acompanhar se o tema se mantém nas próximas leituras de NPS qualitativo (nps_insights.json) — se aparecer por 3 ou mais semanas consecutivas, o caso para ação de pricing/comunicação fica mais forte.",
+          "texto": "Diagnóstico: O único tema de detrator da semana foi \"taxas abusivas\" (48 menções), e metade dos temas de neutros também menciona taxa de serviço ou ausência de parcelamento sem juros. O tema já havia sido identificado como principal bloqueio de neutros em 09/06 — recorrência confirmada.\n\nEvidência: Comentários como \"A taxa de serviço está alta e poderia parcelar sem juros\" (8), \"Absurdo não parcelar sem juros\" (8), e um relato explícito de piora: \"antes eu comprava em 6X s/juros\".\n\nClassificação: Diagnóstico comprovado.\n\nPlano de ação: Levar ao time de CRM/Pricing a avaliação de reintroduzir parcelamento sem juros em alguma faixa de valor. Revisar a comunicação da taxa de serviço no checkout.\n\nImpacto: KR de NPS (60) e Nota Reclame Aqui (≥8,0) — tema estrutural com risco de migrar para reclamações públicas.\n\nPrioridade: Média — recorrente e estrutural, mas não é o maior driver de detratores em volume absoluto.\n\nAcompanhamento: Verificar se o tema persiste por 3+ semanas consecutivas nas próximas leituras de NPS qualitativo.",
+          "titulo_linear": null,
+          "tipo_acao": "monitorar",
+          "testavel": false,
+          "criterio_confirmacao": null,
+          "experimento_template": null,
+          "status": "nunca_testada",
+          "experimento_id": null,
+          "revisao": null
+        }
+      ]
+    },
     {
       "semana": "2026-07-20",
       "label": "20/07 – 26/07/2026",
@@ -1544,6 +1697,191 @@
     }
   ],
   "insights_conversao": [
+    {
+      "semana": "2026-07-27",
+      "label": "27/07 – 02/08/2026",
+      "tipo": "semanal",
+      "gerado_em": "2026-08-04T12:00:00-03:00",
+      "classificacao": "subiu_moderado",
+      "metricas": {
+        "cr_atual": {
+          "total": 9.03,
+          "mobile": 8.2,
+          "desktop": 12.4
+        },
+        "cr_baseline": {
+          "total": 8.26,
+          "mobile": 7.45,
+          "desktop": 11.67
+        },
+        "delta_pp": {
+          "total": 0.77,
+          "mobile": 0.75,
+          "desktop": 0.73
+        },
+        "sigma": 0.46,
+        "n_semanas_hist": 8
+      },
+      "hipoteses": [
+        {
+          "hipotese": "O salto em checkout→purchase (+10,6pp total, +12,8pp mobile) é explicado pela correção do bug de opt-in (SEN-661, Urgente) e pelo pacote de redesign do checkout mobile (SEN-604, 605, 606, 609, 610), todos concluídos entre 27/07 e 29/07.",
+          "evidencia": "Checkout→purchase total: 73,2%→83,8% (+10,6pp); mobile: 77,7%→90,5% (+12,8pp) — maior delta absoluto de qualquer etapa do funil na semana, coincidindo exatamente com a janela de entrega desses fixes."
+        },
+        {
+          "hipotese": "O canal Direto foi o maior driver de CR entre as origens: share subiu +0,5pp e CR subiu +1,26pp, o maior ganho de CR entre todos os canais mensuráveis.",
+          "evidencia": "Direto: share 11,9%→12,4%, CR 15,64%→16,90% (delta +1,26pp, share ≥5%). Pago: share 52,3%→54,0%, CR 8,24%→8,87% (delta +0,63pp, share ≥5%) — ambos atendem ao critério de inclusão de |delta CR|≥0,3pp com share≥5%."
+        }
+      ],
+      "monitorar": "Acompanhar se o ganho de checkout→purchase se sustenta nas próximas 2 semanas sem regressão do cart→checkout (-1,1pp) e se o canal Direto mantém o CR mais alto com o crescimento de share — cruzando com a conclusão do SEN-663 (correção de atribuição de UTM) para descartar distorção de atribuição.",
+      "dispositivos": {
+        "mobile": {
+          "classificacao": "subiu_moderado",
+          "cr_atual": 8.2,
+          "cr_baseline": 7.45,
+          "delta_pp": 0.75,
+          "canal_contexto": [
+            {
+              "nome": "Pago",
+              "share_sessoes_total": 54,
+              "cr_total": 8.87,
+              "delta_cr_pp": 0.63
+            },
+            {
+              "nome": "Orgânico",
+              "share_sessoes_total": 17.6,
+              "cr_total": 6.26,
+              "delta_cr_pp": 0.24
+            },
+            {
+              "nome": "Direto",
+              "share_sessoes_total": 12.4,
+              "cr_total": 16.9,
+              "delta_cr_pp": 1.26
+            },
+            {
+              "nome": "Social",
+              "share_sessoes_total": 1.5,
+              "cr_total": null,
+              "delta_cr_pp": null
+            }
+          ],
+          "funil": {
+            "step_critico": "checkout_to_purchase",
+            "checkout_to_purchase": {
+              "atual": 90.5,
+              "baseline": 77.7,
+              "delta_pp": 12.8
+            },
+            "cart_to_checkout": {
+              "atual": 66.8,
+              "baseline": 67.8,
+              "delta_pp": -1
+            },
+            "search_to_cart": {
+              "atual": 8.9,
+              "baseline": 8.6,
+              "delta_pp": 0.3
+            }
+          },
+          "hipoteses": [
+            {
+              "hipotese": "O ganho de checkout→purchase mobile é explicado pela correção do opt-in (SEN-661) e pelo redesign do checkout mobile lançados na mesma janela.",
+              "evidencia": "checkout→purchase mobile sobe +12,8pp, o maior delta absoluto de qualquer etapa/dispositivo da semana."
+            }
+          ],
+          "monitorar": "Monitorar se o ganho de +12,8pp se sustenta nas próximas 2 semanas e se o cart→checkout mobile (-1,0pp) não indica nova fricção introduzida pela remoção da navbar."
+        },
+        "desktop": {
+          "classificacao": "subiu_moderado",
+          "cr_atual": 12.4,
+          "cr_baseline": 11.67,
+          "delta_pp": 0.73,
+          "canal_contexto": [
+            {
+              "nome": "Pago",
+              "share_sessoes_total": 54,
+              "cr_total": 8.87,
+              "delta_cr_pp": 0.63
+            },
+            {
+              "nome": "Orgânico",
+              "share_sessoes_total": 17.6,
+              "cr_total": 6.26,
+              "delta_cr_pp": 0.24
+            },
+            {
+              "nome": "Direto",
+              "share_sessoes_total": 12.4,
+              "cr_total": 16.9,
+              "delta_cr_pp": 1.26
+            },
+            {
+              "nome": "Social",
+              "share_sessoes_total": 1.5,
+              "cr_total": null,
+              "delta_cr_pp": null
+            }
+          ],
+          "funil": {
+            "step_critico": "checkout_to_purchase",
+            "checkout_to_purchase": {
+              "atual": 69.9,
+              "baseline": 63.3,
+              "delta_pp": 6.6
+            },
+            "cart_to_checkout": {
+              "atual": 61.5,
+              "baseline": 62.6,
+              "delta_pp": -1.1
+            },
+            "search_to_cart": {
+              "atual": 14.1,
+              "baseline": 13.2,
+              "delta_pp": 0.9
+            }
+          },
+          "hipoteses": [
+            {
+              "hipotese": "Efeito de segunda ordem de fixes de backend compartilhados entre site e app, como a BFF Migration Phase 8a (SEN-518), concluída em 28/07.",
+              "evidencia": "checkout→purchase desktop sobe +6,6pp (63,3%→69,9%), menor que o ganho mobile mas ainda relevante frente ao volume menor do canal (88,5k sessões)."
+            }
+          ],
+          "monitorar": "Verificar se o ganho desktop se sustenta — volume menor (88,5k sessões) é mais sensível a ruído estatístico que o mobile."
+        },
+        "app": {
+          "classificacao": "subiu_significativo",
+          "cr_atual": 8.03,
+          "cr_baseline": 5.8,
+          "delta_pp": 2.23,
+          "canal_contexto": [],
+          "funil": {
+            "step_critico": "cart_to_checkout",
+            "checkout_to_purchase": {
+              "atual": 62.5,
+              "baseline": 60.2,
+              "delta_pp": 2.3
+            },
+            "cart_to_checkout": {
+              "atual": 18.8,
+              "baseline": 14.3,
+              "delta_pp": 4.5
+            },
+            "search_to_cart": {
+              "atual": 40.3,
+              "baseline": 38.6,
+              "delta_pp": 1.7
+            }
+          },
+          "hipoteses": [
+            {
+              "hipotese": "O ganho de cart→checkout no app (+4,5pp, maior da semana) é explicado pela redução e padronização de texto de opt-in (SEN-611/612/613), etapa que ocorre exatamente entre cart e checkout no funil do app.",
+              "evidencia": "cart→checkout do app sobe de 14,3% para 18,8%, o maior ganho absoluto do funil app, coincidindo com a conclusão do SEN-611/612/613 entre 27/07 e 28/07."
+            }
+          ],
+          "monitorar": "Confirmar 3ª semana consecutiva de alta do CR do app. Monitorar a queda de volume de respostas NPS do app (699→358) antes de comparar dados de NPS das próximas semanas — nota: campo canal_contexto vazio pois o App não possui compras segmentadas por canal de aquisição (limitação estrutural do GA4 App)."
+        }
+      }
+    },
     {
       "mes": "2026-07",
       "label": "Julho 2026",
