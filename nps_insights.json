@@ -1,6 +1,58 @@
 {
-  "gerado_em": "2026-08-04T21:47:31.738Z",
+  "gerado_em": "2026-08-11T17:28:21.293Z",
   "semanas": [
+    {
+      "semana": "2026-08-03",
+      "label": "03/08 – 09/08/2026",
+      "gerado_em": "2026-08-11T15:00:00-03:00",
+      "nps_score": 80.99,
+      "nps_nota_media": 9.3,
+      "nps_respostas": 12118,
+      "nps_promotores": 10332,
+      "nps_neutros": 1268,
+      "nps_detratores": 518,
+      "promotores": {
+        "total": 976,
+        "temas_principais": [
+          "satisfacao geral com a experiencia de compra",
+          "elogio ao atendimento",
+          "avaliacao positiva generica (bom/otimo/excelente)"
+        ],
+        "resumo": "Promotores concentram elogios curtos e genericos (Muito bom, Otimo, Excelente atendimento), sem mencao a fricao especifica — mesmo padrao qualitativo de semanas anteriores.",
+        "insight": "O alto volume de elogios genericos sugere ausencia de atrito percebido, mas tambem ausencia de momentos de encantamento diferenciados. Para o NPS subir de forma sustentavel acima do patamar atual, a experiencia precisa gerar memoria positiva especifica, nao apenas eliminacao de problemas.",
+        "recorrente": true,
+        "semanas_recorrente": 2
+      },
+      "neutros": {
+        "total": 107,
+        "temas_principais": [
+          "taxa de servico e ausencia de parcelamento sem juros (tema dominante)",
+          "percepcao de preco alto",
+          "confusao/inseguranca no processo"
+        ],
+        "resumo": "Neutros seguem travados majoritariamente por taxa de servico e ausencia de parcelamento sem juros (7 de 10 temas mapeados), com um subgrupo menor relatando confusao e inseguranca no fluxo.",
+        "insight": "O bloqueio de taxa de servico ja e estrutural — recorrente ha quase 2 meses consecutivos (ver INS-2026-072 e INS-2026-079). Resolver isso continua sendo o maior lever disponivel para converter neutros em promotores.",
+        "recorrente": true,
+        "semanas_recorrente": 8
+      },
+      "detratores": {
+        "total": 54,
+        "temas_principais": [
+          "indignacao com a taxa de servico (taxas abusivas)"
+        ],
+        "resumo": "Unico tema de detrator da semana e a taxa de servico, com alto volume de mencoes (54) — segue como principal gatilho de insatisfacao extrema, sem dispersao para outros temas.",
+        "insight": "A concentracao em um unico tema, sem dispersao, reforca que a taxa de servico nao e percepcao isolada — e ponto de atrito consolidado que ja deveria ter sido endereçado pelo pricing.",
+        "recomendacao_produto": "Levar com urgencia ao time de CRM/Pricing a reavaliacao de parcelamento sem juros em alguma faixa de valor, ou revisao da comunicacao da taxa de servico no checkout — o tema resiste ha quase 2 meses sem intervencao visivel.",
+        "recorrente": true,
+        "semanas_recorrente": 8
+      },
+      "analise_temporal": {
+        "padrao": "recorrente",
+        "tendencia": "estavel",
+        "diagnostico": "O NPS do site segue acima da meta (80,99, +0,95pt vs semana anterior), mas o tema de taxa de servico permanece cristalizado nos comentarios de neutros e detratores ha quase 2 meses consecutivos, sem sinal de resolucao. O score geral nao reflete esse bloqueio porque o volume de promotores segue muito maior que o de detratores, mas o tema e o unico ponto de atrito qualitativo identificavel na base.",
+        "dias_criticos": []
+      }
+    },
     {
       "semana": "2026-07-27",
       "label": "27/07 – 02/08/2026",
