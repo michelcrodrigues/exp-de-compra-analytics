@@ -1,6 +1,59 @@
 {
-  "gerado_em": "2026-08-11T17:28:21.293Z",
+  "gerado_em": "2026-08-18T17:16:15.684Z",
   "semanas": [
+    {
+      "semana": "2026-08-10",
+      "label": "10/08 – 16/08/2026",
+      "gerado_em": "2026-08-18T17:16:05.221Z",
+      "nps_score": 80.66,
+      "nps_nota_media": 9.29,
+      "nps_respostas": 11161,
+      "nps_promotores": 9522,
+      "nps_neutros": 1119,
+      "nps_detratores": 520,
+      "promotores": {
+        "total": 11,
+        "temas_principais": [
+          "satisfacao geral com a experiencia (otimo/bom/excelente)",
+          "elogio ao atendimento",
+          "agilidade do processo",
+          "praticidade da compra"
+        ],
+        "resumo": "Promotores seguem concentrados em elogios curtos e genericos, sem detalhamento especifico do que gerou a boa experiencia. Agilidade e praticidade aparecem como os unicos temas com algum conteudo alem de elogio puro.",
+        "insight": "O padrao se mantem identico ao observado desde junho: alto volume de promotores satisfeitos, mas sem sinal de encantamento diferenciado. Para mover o NPS acima do patamar atual, o time Senna precisa de momentos de experiencia memoravel, nao apenas ausencia de fricção.",
+        "recorrente": true,
+        "semanas_recorrente": 3
+      },
+      "neutros": {
+        "total": 11,
+        "temas_principais": [
+          "taxa de servico considerada alta",
+          "percepcao geral de preco elevado (caro)",
+          "ausencia de parcelamento sem juros"
+        ],
+        "resumo": "Neutros continuam bloqueados por percepcao de custo: taxa de servico e a reclamacao mais frequente, seguida de mencoes genericas a preco alto e falta de parcelamento sem juros.",
+        "insight": "Tema identico ao de junho e da semana passada — a taxa de servico e um bloqueio estrutural e recorrente para conversao de neutros em promotores, ha quase 2 meses sem mudanca de padrao.",
+        "recorrente": true,
+        "semanas_recorrente": 3
+      },
+      "detratores": {
+        "total": 1,
+        "temas_principais": [
+          "indignacao com taxas consideradas abusivas"
+        ],
+        "resumo": "Volume pequeno de comentarios agregados de detratores esta semana, mas o unico tema capturado repete a reclamacao de taxas abusivas ja vista nas semanas anteriores.",
+        "insight": "Mesmo com poucos comentarios agregados, o padrao de insatisfacao com taxas permanece o gatilho dominante entre detratores.",
+        "recomendacao_produto": "Revisar a comunicacao da taxa de servico no checkout e avaliar experimento de parcelamento sem juros, medindo impacto em NPS e em conversao.",
+        "recorrente": true,
+        "semanas_recorrente": 3
+      },
+      "analise_temporal": {
+        "padrao": "recorrente",
+        "tendencia": "estavel",
+        "diagnostico": "NPS score se mantem estavel na faixa 80-81 ha 3 semanas, bem acima da meta de 60. O tema de taxa de servico permanece o principal bloqueio de neutros e detratores ha quase 2 meses, sem sinal de mudanca.",
+        "dias_criticos": []
+      }
+    },
     {
       "semana": "2026-08-03",
       "label": "03/08 – 09/08/2026",
