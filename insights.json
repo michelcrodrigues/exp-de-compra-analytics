@@ -1,6 +1,175 @@
 {
-  "gerado_em": "2026-08-11T17:25:54.055Z",
+  "gerado_em": "2026-08-18T17:15:41.480Z",
   "insights": [
+    {
+      "semana": "2026-08-10",
+      "label": "10/08 – 16/08/2026",
+      "gerado_em": "2026-08-18T17:15:41.480Z",
+      "items": [
+        {
+          "id": "INS-2026-080",
+          "canal": "site",
+          "tag": "Checkout->purchase mobile segue em patamar anomalo pela 4a semana (96,4%) — Linear segue indisponivel para confirmar causa",
+          "classificacao": "Resultado fora da curva",
+          "prioridade": "Alta",
+          "data": "2026-08-18",
+          "diagnostico": "A etapa checkout->purchase do funil mobile no site permanece em um patamar estatisticamente atipico pela quarta semana consecutiva: 77,7% -> 90,5% -> 97,8% -> 96,4%. O nivel historico normal para essa etapa gira em torno de 70-85%. Isso ja havia sido sinalizado como potencial problema de instrumentacao na semana passada (INS-2026-073) e o padrao nao regrediu.",
+          "evidencia": "Checkout->purchase mobile: baseline movel (media das 4 semanas anteriores) de 85,6%, atual em 96,4% (+10,8pp). E o maior delta absoluto de qualquer etapa do funil nesta semana. Em paralelo, o CR mobile subiu para 9,65% (baseline 7,97%, +1,68pp), um resultado classificado como subiu_significativo (sigma 0,75, 8 semanas de historico).",
+          "classificacao_txt": "Resultado fora da curva",
+          "plano_acao": "Auditar no GA4/GTM os eventos begin_checkout e purchase no fluxo mobile web, verificando se houve mudanca de trigger, deduplicacao de evento ou alteracao de escopo entre 19/07 e hoje. Tentar reconectar o conector Linear - Guanabara para cruzar com deploys do time Senna no periodo, algo que ainda nao foi possivel nas ultimas duas execucoes desta automacao.",
+          "impacto": "Se for artefato de instrumentacao, o CR mobile e o CR total reportados estao superestimados ha um mes, distorcendo qualquer leitura de performance da Experiencia de Compra e o acompanhamento do KR de Receita (R$ 345M). Se for melhoria real de produto, e a maior alavanca de conversao do trimestre e merece ser entendida e replicada.",
+          "prioridade_txt": "Alta — decisao de dado ou de produto que ja se arrasta ha 4 semanas sem diagnostico fechado, e efeito acumulado no CR reportado e material.",
+          "acompanhamento": "Monitorar se o indicador regride para a faixa 70-85% nas proximas 2 semanas (o que confirmaria instrumentacao) ou se estabiliza acima de 90% com evidencia de causa de produto (o que confirmaria melhoria real). Reportar assim que o conector Linear - Guanabara for reautenticado.",
+          "titulo_linear": "Auditar instrumentacao GA4 do funil checkout->purchase mobile (Site)",
+          "tipo_acao": "testar",
+          "testavel": true,
+          "criterio_confirmacao": "Checkout->purchase mobile volta para faixa 70-85% apos correcao de instrumentacao, OU e confirmado via Linear/GTM que houve mudanca legitima de produto que explica o patamar de 90%+.",
+          "experimento_template": "Hipotese: o salto de checkout->purchase mobile de ~80% para 96%+ e causado por mudanca de instrumentacao (evento duplicado ou trigger alterado), nao por melhoria real de conversao. Metrica primaria: checkout_to_purchase_mobile. Guardrails: CR mobile, sessoes mobile. Criterio de sucesso: identificacao da causa raiz via auditoria de tags GTM/GA4 em ate 1 semana. Duracao minima: 1 semana de auditoria tecnica.",
+          "status": "nunca_testada",
+          "experimento_id": null,
+          "revisao": null,
+          "texto": "Diagnóstico: A etapa checkout->purchase do funil mobile no site permanece em um patamar estatisticamente atipico pela quarta semana consecutiva: 77,7% -> 90,5% -> 97,8% -> 96,4%. O nivel historico normal para essa etapa gira em torno de 70-85%. Isso ja havia sido sinalizado como potencial problema de instrumentacao na semana passada (INS-2026-073) e o padrao nao regrediu.\n\nEvidência: Checkout->purchase mobile: baseline movel (media das 4 semanas anteriores) de 85,6%, atual em 96,4% (+10,8pp). E o maior delta absoluto de qualquer etapa do funil nesta semana. Em paralelo, o CR mobile subiu para 9,65% (baseline 7,97%, +1,68pp), um resultado classificado como subiu_significativo (sigma 0,75, 8 semanas de historico).\n\nClassificação: Resultado fora da curva\n\nPlano de ação: Auditar no GA4/GTM os eventos begin_checkout e purchase no fluxo mobile web, verificando se houve mudanca de trigger, deduplicacao de evento ou alteracao de escopo entre 19/07 e hoje. Tentar reconectar o conector Linear - Guanabara para cruzar com deploys do time Senna no periodo, algo que ainda nao foi possivel nas ultimas duas execucoes desta automacao.\n\nImpacto: Se for artefato de instrumentacao, o CR mobile e o CR total reportados estao superestimados ha um mes, distorcendo qualquer leitura de performance da Experiencia de Compra e o acompanhamento do KR de Receita (R$ 345M). Se for melhoria real de produto, e a maior alavanca de conversao do trimestre e merece ser entendida e replicada.\n\nPrioridade: Alta — decisao de dado ou de produto que ja se arrasta ha 4 semanas sem diagnostico fechado, e efeito acumulado no CR reportado e material.\n\nAcompanhamento: Monitorar se o indicador regride para a faixa 70-85% nas proximas 2 semanas (o que confirmaria instrumentacao) ou se estabiliza acima de 90% com evidencia de causa de produto (o que confirmaria melhoria real). Reportar assim que o conector Linear - Guanabara for reautenticado."
+        },
+        {
+          "id": "INS-2026-081",
+          "canal": "conjunto",
+          "tag": "[Site vs App] App nao reproduz a anomalia do checkout->purchase mobile do site — enfraquece hipotese de fix compartilhado da semana passada",
+          "classificacao": "Correlação",
+          "prioridade": "Alta",
+          "data": "2026-08-18",
+          "diagnostico": "Na semana passada (INS-2026-075) levantamos a hipotese de que o site e o app estariam subindo juntos no checkout->purchase, sugerindo um fix compartilhado de plataforma. Os dados desta semana nao sustentam essa hipotese: o app manteve o checkout->purchase em patamar normal e estavel, enquanto o site mobile continua no patamar anomalo.",
+          "evidencia": "App: checkout->purchase em 65,7% esta semana vs baseline de 62,0% (+3,7pp, variacao normal). Site mobile: checkout->purchase em 96,4% vs baseline de 85,6% (+10,8pp, variacao atipica). A diferenca de magnitude e de mais de 3x entre as duas plataformas.",
+          "plano_acao": "Tratar o problema como especifico do site mobile web, nao como uma mudanca de plataforma ou de comportamento de usuario. Concentrar a auditoria tecnica (INS-2026-080) exclusivamente no stack de mensuracao do site, sem gastar tempo do time investigando o app.",
+          "impacto": "Evita que o time Senna e Martech tentem replicar no app algo que nao existe, e direciona o esforco de auditoria para o lugar certo — o funil web mobile.",
+          "prioridade_txt": "Alta — corrige o direcionamento de um insight de alta prioridade da semana anterior.",
+          "acompanhamento": "Reavaliar a cada semana se o app permanece estavel enquanto o site mobile segue elevado; se os dois convergirem no futuro, revisitar a hipotese de causa compartilhada.",
+          "titulo_linear": "Restringir escopo da auditoria de checkout->purchase ao site mobile web",
+          "tipo_acao": "testar",
+          "testavel": true,
+          "criterio_confirmacao": "App mantem checkout->purchase na faixa 55-70% nas proximas 2 semanas enquanto o site mobile permanece acima de 90%.",
+          "experimento_template": "Hipotese: a anomalia de checkout->purchase e isolada ao stack de mensuracao do site mobile web e nao afeta o app. Metrica primaria: checkout_to_purchase (site mobile vs app). Guardrails: CR mobile site, CR app. Criterio de sucesso: confirmacao de que o app segue em faixa normal por 2 semanas consecutivas. Duracao minima: 2 semanas.",
+          "status": "nunca_testada",
+          "experimento_id": null,
+          "revisao": null,
+          "texto": "Diagnóstico: Na semana passada (INS-2026-075) levantamos a hipotese de que o site e o app estariam subindo juntos no checkout->purchase, sugerindo um fix compartilhado de plataforma. Os dados desta semana nao sustentam essa hipotese: o app manteve o checkout->purchase em patamar normal e estavel, enquanto o site mobile continua no patamar anomalo.\n\nEvidência: App: checkout->purchase em 65,7% esta semana vs baseline de 62,0% (+3,7pp, variacao normal). Site mobile: checkout->purchase em 96,4% vs baseline de 85,6% (+10,8pp, variacao atipica). A diferenca de magnitude e de mais de 3x entre as duas plataformas.\n\nClassificação: Correlação\n\nPlano de ação: Tratar o problema como especifico do site mobile web, nao como uma mudanca de plataforma ou de comportamento de usuario. Concentrar a auditoria tecnica (INS-2026-080) exclusivamente no stack de mensuracao do site, sem gastar tempo do time investigando o app.\n\nImpacto: Evita que o time Senna e Martech tentem replicar no app algo que nao existe, e direciona o esforco de auditoria para o lugar certo — o funil web mobile.\n\nPrioridade: Alta — corrige o direcionamento de um insight de alta prioridade da semana anterior.\n\nAcompanhamento: Reavaliar a cada semana se o app permanece estavel enquanto o site mobile segue elevado; se os dois convergirem no futuro, revisitar a hipotese de causa compartilhada."
+        },
+        {
+          "id": "INS-2026-082",
+          "canal": "site",
+          "tag": "Canal Direto mantem o maior CR do site (18,39%) e ganha share (+1,6pp), puxando a conversao geral para cima",
+          "classificacao": "Hipótese",
+          "prioridade": "Média",
+          "data": "2026-08-18",
+          "diagnostico": "O canal Direto segue como o de maior conversao entre os canais de aquisicao do site e ainda ganhou participacao esta semana, o que contribui para o aumento do CR agregado observado.",
+          "evidencia": "Direto: share de sessoes subiu de 12,0% para 13,6% (+1,6pp) e CR subiu de 16,78% para 18,39% (+1,61pp). Pago, que concentra 52,1% das sessoes, tambem melhorou (CR 8,82% -> 10,24%, +1,42pp), mas seu share caiu levemente (-0,3pp).",
+          "plano_acao": "Entender com Martech/CRM se ha alguma acao de recorrencia (push, e-mail, notificacao) direcionando trafego direto de clientes ja convertidos, o que explicaria CR mais alto nesse canal. Nao ha alavanca clara de produto aqui — e principalmente um efeito de mix de canal.",
+          "impacto": "Mix de canal mais favoravel (mais Direto, CR de canal subindo em geral) e um dos fatores que sustenta o CR total acima do baseline, junto com o efeito do funil de checkout.",
+          "prioridade_txt": "Média — informativo para entender a composicao do resultado, mas sem acao de produto imediata associada.",
+          "acompanhamento": "Acompanhar se o ganho de share e CR do canal Direto se sustenta nas proximas semanas ou se e um efeito pontual de campanha de CRM.",
+          "titulo_linear": null,
+          "tipo_acao": "monitorar",
+          "testavel": false,
+          "criterio_confirmacao": null,
+          "experimento_template": null,
+          "status": "nunca_testada",
+          "experimento_id": null,
+          "revisao": null,
+          "texto": "Diagnóstico: O canal Direto segue como o de maior conversao entre os canais de aquisicao do site e ainda ganhou participacao esta semana, o que contribui para o aumento do CR agregado observado.\n\nEvidência: Direto: share de sessoes subiu de 12,0% para 13,6% (+1,6pp) e CR subiu de 16,78% para 18,39% (+1,61pp). Pago, que concentra 52,1% das sessoes, tambem melhorou (CR 8,82% -> 10,24%, +1,42pp), mas seu share caiu levemente (-0,3pp).\n\nClassificação: Hipótese\n\nPlano de ação: Entender com Martech/CRM se ha alguma acao de recorrencia (push, e-mail, notificacao) direcionando trafego direto de clientes ja convertidos, o que explicaria CR mais alto nesse canal. Nao ha alavanca clara de produto aqui — e principalmente um efeito de mix de canal.\n\nImpacto: Mix de canal mais favoravel (mais Direto, CR de canal subindo em geral) e um dos fatores que sustenta o CR total acima do baseline, junto com o efeito do funil de checkout.\n\nPrioridade: Média — informativo para entender a composicao do resultado, mas sem acao de produto imediata associada.\n\nAcompanhamento: Acompanhar se o ganho de share e CR do canal Direto se sustenta nas proximas semanas ou se e um efeito pontual de campanha de CRM."
+        },
+        {
+          "id": "INS-2026-083",
+          "canal": "conjunto",
+          "tag": "[Site vs App] Gap de NPS entre site e app encolhe de 27 para 18 pontos, mas volume de respostas do app cai pela 4a semana seguida",
+          "classificacao": "Tendência",
+          "prioridade": "Alta",
+          "data": "2026-08-18",
+          "diagnostico": "O NPS do app subiu de forma expressiva (53,6 -> 62,7, +9,1 pontos), reduzindo o gap para o site de 27 para cerca de 18 pontos. Ao mesmo tempo, o volume de respostas de NPS no app continua em queda livre pela quarta semana consecutiva, o que exige cautela antes de comemorar a melhora.",
+          "evidencia": "NPS app: score 62,7 (W2: 53,6), nota media 8,68 (W2: 8,39), com apenas 249 respostas — abaixo do minimo de 30 para leitura confiavel de tendencia isolada, mas dentro do limiar quando comparado ao historico (699 -> 358 -> 278 -> 249, queda acumulada de 64% em 4 semanas). NPS site: score 80,66, nota 9,29, com 11.161 respostas — volume mais de 40x maior que o do app.",
+          "plano_acao": "Investigar com o time por que a taxa de resposta da pesquisa de NPS no app esta caindo continuamente — pode ser problema de exibicao do formulario, fadiga de pop-up, ou mudanca de fluxo pos-compra no app. Enquanto o volume nao se estabilizar, tratar a melhora do score do app com ceticismo: pode refletir um vies de quem ainda responde, nao uma melhora real de experiencia.",
+          "impacto": "Se o gap de NPS entre site e app for real e estiver fechando, isso e uma boa noticia para o KR de NPS (meta 60) e para a estrategia de canal. Mas se for vies amostral por baixa resposta, o dado pode mascarar problemas reais de experiencia no app que deixaram de ser capturados.",
+          "prioridade_txt": "Alta — a tendencia de queda de volume ja dura um mes e compromete a confiabilidade de qualquer leitura de NPS no app daqui para frente.",
+          "acompanhamento": "Acompanhar volume de respostas de NPS do app semana a semana; se cair abaixo de 30 nas proximas semanas, sinalizar que a leitura de score deixa de ser confiavel e pausar comparacoes site vs app baseadas nesse indicador.",
+          "titulo_linear": null,
+          "tipo_acao": "monitorar",
+          "testavel": false,
+          "criterio_confirmacao": null,
+          "experimento_template": null,
+          "status": "nunca_testada",
+          "experimento_id": null,
+          "revisao": null,
+          "texto": "Diagnóstico: O NPS do app subiu de forma expressiva (53,6 -> 62,7, +9,1 pontos), reduzindo o gap para o site de 27 para cerca de 18 pontos. Ao mesmo tempo, o volume de respostas de NPS no app continua em queda livre pela quarta semana consecutiva, o que exige cautela antes de comemorar a melhora.\n\nEvidência: NPS app: score 62,7 (W2: 53,6), nota media 8,68 (W2: 8,39), com apenas 249 respostas — abaixo do minimo de 30 para leitura confiavel de tendencia isolada, mas dentro do limiar quando comparado ao historico (699 -> 358 -> 278 -> 249, queda acumulada de 64% em 4 semanas). NPS site: score 80,66, nota 9,29, com 11.161 respostas — volume mais de 40x maior que o do app.\n\nClassificação: Tendência\n\nPlano de ação: Investigar com o time por que a taxa de resposta da pesquisa de NPS no app esta caindo continuamente — pode ser problema de exibicao do formulario, fadiga de pop-up, ou mudanca de fluxo pos-compra no app. Enquanto o volume nao se estabilizar, tratar a melhora do score do app com ceticismo: pode refletir um vies de quem ainda responde, nao uma melhora real de experiencia.\n\nImpacto: Se o gap de NPS entre site e app for real e estiver fechando, isso e uma boa noticia para o KR de NPS (meta 60) e para a estrategia de canal. Mas se for vies amostral por baixa resposta, o dado pode mascarar problemas reais de experiencia no app que deixaram de ser capturados.\n\nPrioridade: Alta — a tendencia de queda de volume ja dura um mes e compromete a confiabilidade de qualquer leitura de NPS no app daqui para frente.\n\nAcompanhamento: Acompanhar volume de respostas de NPS do app semana a semana; se cair abaixo de 30 nas proximas semanas, sinalizar que a leitura de score deixa de ser confiavel e pausar comparacoes site vs app baseadas nesse indicador."
+        },
+        {
+          "id": "INS-2026-084",
+          "canal": "app",
+          "tag": "[App] Share de sessoes do app sobe para 31,3% em contexto de queda geral de trafego — nao e expansao de base, e resiliencia relativa",
+          "classificacao": "Explicação",
+          "prioridade": "Média",
+          "data": "2026-08-18",
+          "diagnostico": "O app vem ganhando participacao no total de sessoes (site + app) ha 3 semanas seguidas: 29,0% -> 29,9% -> 31,3%. Isso poderia ser lido como sinal de migracao de base para o app, mas o dado bruto mostra que o app tambem caiu em volume absoluto esta semana — apenas menos que o site.",
+          "evidencia": "Sessoes app: 197.426 (W2) -> 188.001 (W3), -4,8%. Sessoes site: 461.885 (W2) -> 411.815 (W3), -10,8%. O ganho de share do app e resultado de uma queda mais severa no site, nao de crescimento do app.",
+          "plano_acao": "Nao comunicar este dado como 'app crescendo' para stakeholders sem essa ressalva. Investigar a causa da queda de trafego no site (-10,8% e maior que a variacao tipica semana a semana) antes de atribuir o movimento a uma tendencia estrutural de canal.",
+          "impacto": "Uma leitura equivocada aqui pode levar a decisoes erradas de investimento entre site e app. O dado real e de contracao geral de demanda, com o site sendo mais afetado.",
+          "prioridade_txt": "Média — nao exige acao imediata, mas e um risco de comunicacao executiva se nao for corrigido na narrativa.",
+          "acompanhamento": "Se as sessoes do site voltarem a subir e o share do app continuar crescendo mesmo assim, ai sim havera evidencia de migracao real de base.",
+          "titulo_linear": null,
+          "tipo_acao": "monitorar",
+          "testavel": false,
+          "criterio_confirmacao": null,
+          "experimento_template": null,
+          "status": "nunca_testada",
+          "experimento_id": null,
+          "revisao": null,
+          "texto": "Diagnóstico: O app vem ganhando participacao no total de sessoes (site + app) ha 3 semanas seguidas: 29,0% -> 29,9% -> 31,3%. Isso poderia ser lido como sinal de migracao de base para o app, mas o dado bruto mostra que o app tambem caiu em volume absoluto esta semana — apenas menos que o site.\n\nEvidência: Sessoes app: 197.426 (W2) -> 188.001 (W3), -4,8%. Sessoes site: 461.885 (W2) -> 411.815 (W3), -10,8%. O ganho de share do app e resultado de uma queda mais severa no site, nao de crescimento do app.\n\nClassificação: Explicação\n\nPlano de ação: Nao comunicar este dado como 'app crescendo' para stakeholders sem essa ressalva. Investigar a causa da queda de trafego no site (-10,8% e maior que a variacao tipica semana a semana) antes de atribuir o movimento a uma tendencia estrutural de canal.\n\nImpacto: Uma leitura equivocada aqui pode levar a decisoes erradas de investimento entre site e app. O dado real e de contracao geral de demanda, com o site sendo mais afetado.\n\nPrioridade: Média — nao exige acao imediata, mas e um risco de comunicacao executiva se nao for corrigido na narrativa.\n\nAcompanhamento: Se as sessoes do site voltarem a subir e o share do app continuar crescendo mesmo assim, ai sim havera evidencia de migracao real de base."
+        },
+        {
+          "id": "INS-2026-085",
+          "canal": "site",
+          "tag": "Taxa de servico segue como bloqueio estrutural nos comentarios de NPS — padrao recorrente ha quase 2 meses, sem acao de produto registrada",
+          "classificacao": "Diagnóstico comprovado",
+          "prioridade": "Alta",
+          "data": "2026-08-18",
+          "diagnostico": "Pela enesima semana consecutiva, o tema mais citado por neutros e detratores no NPS e a taxa de servico/conveniencia, seguida de reclamacoes sobre ausencia de parcelamento sem juros. Este padrao ja havia sido identificado em junho e reforcado na semana passada (INS-2026-079); nao ha evidencia de que uma acao de produto tenha sido priorizada para trata-lo.",
+          "evidencia": "Nos 23 comentarios agregados desta semana: neutros citam 'Taxa de servico alta' (4), 'Taxa de servico muito alta' (4), 'Taxa muito alta' (4), 'Muitas taxas' (4), 'Caro'/'Muito carao' (6); detratores citam 'Taxas abusivas' (7). Isso e consistente com o padrao documentado desde 09/06/2026 em nps_insights.json.",
+          "plano_acao": "Levar para o squad Senna e para o Coordenador de CRM uma proposta concreta: revisar a comunicacao da taxa de servico no checkout (transparencia de custo antes do pagamento) e avaliar viabilidade de parcelamento sem juros como experimento controlado, medindo impacto em NPS e em conversao no checkout.",
+          "impacto": "Este e o principal fator estrutural represando o NPS abaixo do potencial maximo (score atual 80,66 e ja acima da meta de 60, mas o tema segue reduzindo neutros e gerando detratores evitaveis). Tambem pode estar associado a abandono no funil de checkout.",
+          "prioridade_txt": "Alta — quase dois meses de recorrencia sem que uma acao de produto tenha sido registrada como resposta.",
+          "acompanhamento": "Verificar na proxima revisao quinzenal de insights (dia 1 ou 15) se uma iniciativa foi aberta no Linear do squad Senna para tratar a percepcao de taxa de servico. Se nao houver, escalar formalmente.",
+          "titulo_linear": null,
+          "tipo_acao": "monitorar",
+          "testavel": false,
+          "criterio_confirmacao": null,
+          "experimento_template": null,
+          "status": "nunca_testada",
+          "experimento_id": null,
+          "revisao": null,
+          "texto": "Diagnóstico: Pela enesima semana consecutiva, o tema mais citado por neutros e detratores no NPS e a taxa de servico/conveniencia, seguida de reclamacoes sobre ausencia de parcelamento sem juros. Este padrao ja havia sido identificado em junho e reforcado na semana passada (INS-2026-079); nao ha evidencia de que uma acao de produto tenha sido priorizada para trata-lo.\n\nEvidência: Nos 23 comentarios agregados desta semana: neutros citam 'Taxa de servico alta' (4), 'Taxa de servico muito alta' (4), 'Taxa muito alta' (4), 'Muitas taxas' (4), 'Caro'/'Muito carao' (6); detratores citam 'Taxas abusivas' (7). Isso e consistente com o padrao documentado desde 09/06/2026 em nps_insights.json.\n\nClassificação: Diagnóstico comprovado\n\nPlano de ação: Levar para o squad Senna e para o Coordenador de CRM uma proposta concreta: revisar a comunicacao da taxa de servico no checkout (transparencia de custo antes do pagamento) e avaliar viabilidade de parcelamento sem juros como experimento controlado, medindo impacto em NPS e em conversao no checkout.\n\nImpacto: Este e o principal fator estrutural represando o NPS abaixo do potencial maximo (score atual 80,66 e ja acima da meta de 60, mas o tema segue reduzindo neutros e gerando detratores evitaveis). Tambem pode estar associado a abandono no funil de checkout.\n\nPrioridade: Alta — quase dois meses de recorrencia sem que uma acao de produto tenha sido registrada como resposta.\n\nAcompanhamento: Verificar na proxima revisao quinzenal de insights (dia 1 ou 15) se uma iniciativa foi aberta no Linear do squad Senna para tratar a percepcao de taxa de servico. Se nao houver, escalar formalmente."
+        },
+        {
+          "id": "INS-2026-086",
+          "canal": "site",
+          "tag": "Sessoes do site caem 10,8% na semana enquanto compras caem so 8,5% — parte do CR subiu por queda de trafego, nao so por melhora de funil",
+          "classificacao": "Explicação",
+          "prioridade": "Média",
+          "data": "2026-08-18",
+          "diagnostico": "O aumento do CR total do site nesta semana nao vem apenas de melhora nas etapas do funil — parte relevante e mecanica: as sessoes cairam mais que as compras, o que eleva o CR mesmo sem ganho equivalente em volume de vendas.",
+          "evidencia": "Sessoes: 461.885 (W2) -> 411.815 (W3), -10,8%. Compras: 47.446 (W2) -> 43.394 (W3), -8,5%. A queda de sessoes foi 2,3pp maior que a queda de compras, o que por si so already explicaria parte do salto de CR de 10,27% para 10,54%.",
+          "plano_acao": "Investigar a causa da queda de trafego de 10,8% junto com Martech/Midia — verificar se houve reducao de investimento em midia paga (o canal Pago concentra 52% das sessoes) ou fator sazonal do periodo. Nao tratar o aumento de CR como vitoria isolada de produto sem qualificar essa queda de demanda.",
+          "impacto": "Leitura direta do CR sem essa qualificacao pode gerar uma narrativa excessivamente otimista para o KR de Receita — CR mais alto com menos sessoes nao necessariamente significa mais receita.",
+          "prioridade_txt": "Média — nao muda a direcao do resultado (CR real tambem subiu, ver funil), mas e essencial para nao superestimar o ganho na comunicacao executiva.",
+          "acompanhamento": "Acompanhar se as sessoes se recuperam nas proximas semanas e se o CR se mantem acima do baseline mesmo com volume normalizado — isso confirmaria que o ganho de funil e real e nao apenas efeito de mix.",
+          "titulo_linear": null,
+          "tipo_acao": "monitorar",
+          "testavel": false,
+          "criterio_confirmacao": null,
+          "experimento_template": null,
+          "status": "nunca_testada",
+          "experimento_id": null,
+          "revisao": null,
+          "texto": "Diagnóstico: O aumento do CR total do site nesta semana nao vem apenas de melhora nas etapas do funil — parte relevante e mecanica: as sessoes cairam mais que as compras, o que eleva o CR mesmo sem ganho equivalente em volume de vendas.\n\nEvidência: Sessoes: 461.885 (W2) -> 411.815 (W3), -10,8%. Compras: 47.446 (W2) -> 43.394 (W3), -8,5%. A queda de sessoes foi 2,3pp maior que a queda de compras, o que por si so already explicaria parte do salto de CR de 10,27% para 10,54%.\n\nClassificação: Explicação\n\nPlano de ação: Investigar a causa da queda de trafego de 10,8% junto com Martech/Midia — verificar se houve reducao de investimento em midia paga (o canal Pago concentra 52% das sessoes) ou fator sazonal do periodo. Nao tratar o aumento de CR como vitoria isolada de produto sem qualificar essa queda de demanda.\n\nImpacto: Leitura direta do CR sem essa qualificacao pode gerar uma narrativa excessivamente otimista para o KR de Receita — CR mais alto com menos sessoes nao necessariamente significa mais receita.\n\nPrioridade: Média — nao muda a direcao do resultado (CR real tambem subiu, ver funil), mas e essencial para nao superestimar o ganho na comunicacao executiva.\n\nAcompanhamento: Acompanhar se as sessoes se recuperam nas proximas semanas e se o CR se mantem acima do baseline mesmo com volume normalizado — isso confirmaria que o ganho de funil e real e nao apenas efeito de mix."
+        }
+      ]
+    },
     {
       "semana": "2026-08-03",
       "label": "03/08 – 09/08/2026",
@@ -1884,6 +2053,195 @@
     }
   ],
   "insights_conversao": [
+    {
+      "semana": "2026-08-10",
+      "label": "10/08 – 16/08/2026",
+      "tipo": "semanal",
+      "gerado_em": "2026-08-18T17:15:27.037Z",
+      "classificacao": "subiu_significativo",
+      "metricas": {
+        "cr_atual": {
+          "total": 10.54,
+          "mobile": 9.65,
+          "desktop": 13.58
+        },
+        "cr_baseline": {
+          "total": 8.82,
+          "mobile": 7.97,
+          "desktop": 12.4
+        },
+        "delta_pp": {
+          "total": 1.72,
+          "mobile": 1.68,
+          "desktop": 1.18
+        },
+        "sigma": 0.75,
+        "n_semanas_hist": 8
+      },
+      "hipoteses": [
+        {
+          "tipo": "funil",
+          "descricao": "Checkout->purchase mobile segue anomalo pela 4a semana consecutiva e e o maior driver do CR do site",
+          "evidencia": "Checkout->purchase mobile: baseline 85,6% -> atual 96,4% (+10,8pp), sequencia 77,7%->90,5%->97,8%->96,4% em 4 semanas"
+        },
+        {
+          "tipo": "canal",
+          "descricao": "Canal Direto foi driver relevante de CR, ganhando share e conversao ao mesmo tempo",
+          "evidencia": "Direto: share 12,0%->13,6% (+1,6pp), CR 16,78%->18,39% (+1,61pp)"
+        },
+        {
+          "tipo": "canal",
+          "descricao": "Canal Pago tambem melhorou CR mantendo a maior parte do share",
+          "evidencia": "Pago: share 52,4%->52,1% (-0,3pp), CR 8,82%->10,24% (+1,42pp)"
+        }
+      ],
+      "monitorar": "Acompanhar se o checkout->purchase mobile regride para a faixa historica (70-85%) e se as sessoes do site voltam a crescer — a queda de 10,8% em sessoes esta inflando parte do CR reportado.",
+      "dispositivos": {
+        "mobile": {
+          "classificacao": "subiu_significativo",
+          "cr_atual": 9.65,
+          "cr_baseline": 7.97,
+          "delta_pp": 1.68,
+          "canal_contexto": [
+            {
+              "nome": "Pago",
+              "share_sessoes_total": 52.1,
+              "cr_total": 10.24,
+              "delta_cr_pp": 1.42
+            },
+            {
+              "nome": "Orgânico",
+              "share_sessoes_total": 17.6,
+              "cr_total": 7.11,
+              "delta_cr_pp": 0.83
+            },
+            {
+              "nome": "Direto",
+              "share_sessoes_total": 13.6,
+              "cr_total": 18.39,
+              "delta_cr_pp": 1.61
+            },
+            {
+              "nome": "Social",
+              "share_sessoes_total": 1.6,
+              "cr_total": null,
+              "delta_cr_pp": null
+            }
+          ],
+          "funil": {
+            "step_critico": "checkout_to_purchase",
+            "checkout_to_purchase": {
+              "atual": 96.4,
+              "baseline": 85.6,
+              "delta_pp": 10.8
+            },
+            "cart_to_checkout": {
+              "atual": 66.8,
+              "baseline": 67.1,
+              "delta_pp": -0.3
+            },
+            "search_to_cart": {
+              "atual": 9.8,
+              "baseline": 8.9,
+              "delta_pp": 0.9
+            }
+          },
+          "hipoteses": [
+            {
+              "tipo": "instrumentacao",
+              "descricao": "Checkout->purchase mobile em nivel estatisticamente atipico pela 4a semana seguida, possivel problema de tracking",
+              "evidencia": "96,4% atual vs baseline 85,6% (+10,8pp), sequencia de 4 semanas: 77,7%->90,5%->97,8%->96,4%"
+            }
+          ],
+          "monitorar": "Validar via auditoria GA4/GTM e via Linear (indisponivel nesta execucao) se ha causa de produto ou de instrumentacao para o patamar de 96%+."
+        },
+        "desktop": {
+          "classificacao": "subiu_moderado",
+          "cr_atual": 13.58,
+          "cr_baseline": 12.4,
+          "delta_pp": 1.18,
+          "canal_contexto": [
+            {
+              "nome": "Pago",
+              "share_sessoes_total": 52.1,
+              "cr_total": 10.24,
+              "delta_cr_pp": 1.42
+            },
+            {
+              "nome": "Orgânico",
+              "share_sessoes_total": 17.6,
+              "cr_total": 7.11,
+              "delta_cr_pp": 0.83
+            },
+            {
+              "nome": "Direto",
+              "share_sessoes_total": 13.6,
+              "cr_total": 18.39,
+              "delta_cr_pp": 1.61
+            },
+            {
+              "nome": "Social",
+              "share_sessoes_total": 1.6,
+              "cr_total": null,
+              "delta_cr_pp": null
+            }
+          ],
+          "funil": {
+            "step_critico": "checkout_to_purchase",
+            "checkout_to_purchase": {
+              "atual": 74.4,
+              "baseline": 68,
+              "delta_pp": 6.4
+            },
+            "cart_to_checkout": {
+              "atual": 60.6,
+              "baseline": 61.5,
+              "delta_pp": -0.9
+            },
+            "search_to_cart": {
+              "atual": 14.7,
+              "baseline": 14.2,
+              "delta_pp": 0.5
+            }
+          },
+          "hipoteses": [],
+          "monitorar": "Confirmar se o ganho de 6,4pp em checkout->purchase desktop se sustenta nas proximas semanas, dentro de faixa plausivel."
+        },
+        "app": {
+          "classificacao": "subiu_moderado",
+          "cr_atual": 8.54,
+          "cr_baseline": 7.24,
+          "delta_pp": 1.3,
+          "canal_contexto": [],
+          "funil": {
+            "step_critico": "cart_to_checkout",
+            "checkout_to_purchase": {
+              "atual": 65.7,
+              "baseline": 62,
+              "delta_pp": 3.7
+            },
+            "cart_to_checkout": {
+              "atual": 20.9,
+              "baseline": 17,
+              "delta_pp": 3.9
+            },
+            "search_to_cart": {
+              "atual": 41.1,
+              "baseline": 40.8,
+              "delta_pp": 0.3
+            }
+          },
+          "hipoteses": [
+            {
+              "tipo": "funil",
+              "descricao": "App nao reproduz a anomalia de checkout->purchase do site mobile — variacao dentro de faixa normal",
+              "evidencia": "App checkout->purchase 62,0% -> 65,7% (+3,7pp) vs site mobile 85,6% -> 96,4% (+10,8pp)"
+            }
+          ],
+          "monitorar": "Acompanhar se o app permanece estavel enquanto o site mobile segue elevado."
+        }
+      }
+    },
     {
       "semana": "2026-08-03",
       "label": "03/08 – 09/08/2026",
