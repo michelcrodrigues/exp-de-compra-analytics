@@ -1,6 +1,152 @@
 {
-  "gerado_em": "2026-08-18T17:15:41.480Z",
+  "gerado_em": "2026-08-27T19:57:54.937Z",
   "insights": [
+    {
+      "semana": "2026-08-17",
+      "label": "17/08 - 23/08/2026",
+      "gerado_em": "2026-08-27T19:54:38.000Z",
+      "items": [
+        {
+          "id": "INS-2026-087",
+          "canal": "conjunto",
+          "tag": "[Site vs App] Divergência estrutural de funil GA4 exige auditoria técnica",
+          "classificacao": "Explicação",
+          "prioridade": "Alta",
+          "data": "2026-08-27",
+          "texto": "Diagnóstico: O funil de conversão do GA4 do App diverge estruturalmente do funil do Site em todas as etapas, e a diferença é grande demais para ser explicada por comportamento de usuário: cart_to_checkout é 21,7% no App contra 64,8% no Site (43,1pp de diferença), enquanto search_to_cart é 43,1% no App contra 10,7% no Site — o padrão se inverte entre as duas propriedades, o que é o principal sinal de que não se trata de um problema de produto, e sim de definição de evento divergente entre as duas propriedades GA4 (326912205 para Site e 256859064 para App).\n\nEvidência: App: funil_search 261.257 → funil_add_to_cart 112.593 (43,1%) → funil_begin_checkout 24.426 (21,7% do carrinho) → funil_purchase 15.933 (65,2% do checkout). Site: funil_search 726.585 → funil_add_to_cart 77.805 (10,7%) → funil_begin_checkout 50.414 (64,8% do carrinho) → funil_purchase 44.424 (88,1% do checkout). Adicionalmente, o campo funil_select_item do App está zerado nas três últimas semanas (W1, W2 e W3), o que reforça a suspeita de gap de instrumentação — não existe cenário de produto em que 0% dos usuários selecionem um item antes de comprar.\n\nClassificação: Explicação\n\nPlano de ação: Abrir chamado técnico com o time Senna para auditoria comparada do GTM/SDK do App versus o container do Site, usando GA4 DebugView em paralelo nas duas plataformas. Confirmar especificamente se add_to_cart no App está disparando automaticamente ao entrar na tela de resultado (o que explicaria a taxa de 43,1% ante 10,7% do Site) e se begin_checkout está sendo subcontado. Corrigir a instrumentação antes de usar o funil do App como base para qualquer decisão de priorização de produto.\n\nImpacto: Enquanto a divergência não for esclarecida, nenhuma comparação de funil Site vs App é confiável, e isso compromete a leitura de onde investir esforço de conversão no App — risco direto para o KR de Receita, que depende de decisões corretas de priorização entre as duas frentes. Também compromete a leitura de sucesso das entregas recentes do App (redesign de checkout, Meus Bilhetes), já que não há como isolar o efeito delas no funil intermediário.\n\nPrioridade: Alta — compromete a confiabilidade de qualquer comparação de funil entre as duas plataformas\n\nAcompanhamento: Acompanhar a auditoria de instrumentação junto ao time Senna e revisar o funil do App assim que a correção (ou confirmação de que a diferença é esperada) for validada em GA4 DebugView. Até lá, tratar qualquer leitura de search_to_cart, cart_to_checkout ou checkout_to_purchase do App como não comparável ao Site nos relatórios semanais.",
+          "diagnostico": "O funil de conversão do GA4 do App diverge estruturalmente do funil do Site em todas as etapas, e a diferença é grande demais para ser explicada por comportamento de usuário: cart_to_checkout é 21,7% no App contra 64,8% no Site (43,1pp de diferença), enquanto search_to_cart é 43,1% no App contra 10,7% no Site — o padrão se inverte entre as duas propriedades, o que é o principal sinal de que não se trata de um problema de produto, e sim de definição de evento divergente entre as duas propriedades GA4 (326912205 para Site e 256859064 para App).",
+          "evidencia": "App: funil_search 261.257 → funil_add_to_cart 112.593 (43,1%) → funil_begin_checkout 24.426 (21,7% do carrinho) → funil_purchase 15.933 (65,2% do checkout). Site: funil_search 726.585 → funil_add_to_cart 77.805 (10,7%) → funil_begin_checkout 50.414 (64,8% do carrinho) → funil_purchase 44.424 (88,1% do checkout). Adicionalmente, o campo funil_select_item do App está zerado nas três últimas semanas (W1, W2 e W3), o que reforça a suspeita de gap de instrumentação — não existe cenário de produto em que 0% dos usuários selecionem um item antes de comprar.",
+          "plano_acao": "Abrir chamado técnico com o time Senna para auditoria comparada do GTM/SDK do App versus o container do Site, usando GA4 DebugView em paralelo nas duas plataformas. Confirmar especificamente se add_to_cart no App está disparando automaticamente ao entrar na tela de resultado (o que explicaria a taxa de 43,1% ante 10,7% do Site) e se begin_checkout está sendo subcontado. Corrigir a instrumentação antes de usar o funil do App como base para qualquer decisão de priorização de produto.",
+          "impacto": "Enquanto a divergência não for esclarecida, nenhuma comparação de funil Site vs App é confiável, e isso compromete a leitura de onde investir esforço de conversão no App — risco direto para o KR de Receita, que depende de decisões corretas de priorização entre as duas frentes. Também compromete a leitura de sucesso das entregas recentes do App (redesign de checkout, Meus Bilhetes), já que não há como isolar o efeito delas no funil intermediário.",
+          "acompanhamento": "Acompanhar a auditoria de instrumentação junto ao time Senna e revisar o funil do App assim que a correção (ou confirmação de que a diferença é esperada) for validada em GA4 DebugView. Até lá, tratar qualquer leitura de search_to_cart, cart_to_checkout ou checkout_to_purchase do App como não comparável ao Site nos relatórios semanais.",
+          "titulo_linear": null,
+          "tipo_acao": "monitorar",
+          "testavel": false,
+          "criterio_confirmacao": null,
+          "experimento_template": null,
+          "status": "nunca_testada",
+          "experimento_id": null,
+          "revisao": null
+        },
+        {
+          "id": "INS-2026-088",
+          "canal": "conjunto",
+          "tag": "[Site vs App] Gap de 21,6 pontos de NPS deixa o App na zona de atenção",
+          "classificacao": "Correlação",
+          "prioridade": "Alta",
+          "data": "2026-08-27",
+          "texto": "Diagnóstico: O NPS do App (59,8) está 21,6 pontos abaixo do NPS do Site (81,4) na mesma semana, com volume suficiente em ambos os lados para sustentar a comparação (10.603 respostas no Site e 281 no App, acima do piso de 30). O Site está bem acima da meta de 60; o App está na zona de atenção (40–59), a um passo de cair para a faixa abaixo do esperado se a tendência recente (queda de 2,87 pontos frente à semana anterior) continuar.\n\nEvidência: NPS Site: 81,41 (nota média 9,33/10, 10.603 respostas). NPS App: 59,79 (nota média 8,59/10, 281 respostas), vindo de 62,65 na semana anterior (-2,87 pontos). Rejeição do App também é maior que a do Site (27,58% vs 21,74%, +5,85pp), consistente com uma experiência percebida como mais fricционada no App.\n\nClassificação: Correlação\n\nPlano de ação: Cruzar os comentários qualitativos de NPS do App (quando o volume permitir) com os principais bugs abertos no Linear para o App — hoje há pelo menos 6 bugs em Backlog relacionados a pagamento e status de pedido (SEN-784, SEN-796, SEN-797, SEN-787, SEN-780, SEN-786) que não entraram em desenvolvimento esta semana. Priorizar esses bugs de pagamento no próximo ciclo do time Senna antes de investir em novas features do App, já que problemas de pagamento tendem a ser os que mais corroem NPS.\n\nImpacto: Um App com NPS 21,6 pontos abaixo do Site, mesmo representando cerca de 31% das sessões e 28% das compras do ecossistema digital, é um risco direto para o KR de NPS consolidado (meta 60) — o Site sozinho está carregando a média para cima. Se o share do App continuar crescendo (como vem acontecendo em participação de compras, de 26,6% para 27,8% em três semanas) e o gap de NPS não fechar, o NPS agregado da vertical tende a cair.\n\nPrioridade: Alta — App na zona de atenção do KR de NPS e com tendência recente de queda\n\nAcompanhamento: Monitorar semanalmente o NPS do App separado do Site (já feito neste relatório) e sinalizar como insight de prioridade Alta se o score do App cruzar abaixo de 40 (faixa abaixo do esperado) com volume ≥20 respostas. Acompanhar também se os bugs de pagamento listados no Linear entram em progresso nas próximas duas semanas.",
+          "diagnostico": "O NPS do App (59,8) está 21,6 pontos abaixo do NPS do Site (81,4) na mesma semana, com volume suficiente em ambos os lados para sustentar a comparação (10.603 respostas no Site e 281 no App, acima do piso de 30). O Site está bem acima da meta de 60; o App está na zona de atenção (40–59), a um passo de cair para a faixa abaixo do esperado se a tendência recente (queda de 2,87 pontos frente à semana anterior) continuar.",
+          "evidencia": "NPS Site: 81,41 (nota média 9,33/10, 10.603 respostas). NPS App: 59,79 (nota média 8,59/10, 281 respostas), vindo de 62,65 na semana anterior (-2,87 pontos). Rejeição do App também é maior que a do Site (27,58% vs 21,74%, +5,85pp), consistente com uma experiência percebida como mais fricционada no App.",
+          "plano_acao": "Cruzar os comentários qualitativos de NPS do App (quando o volume permitir) com os principais bugs abertos no Linear para o App — hoje há pelo menos 6 bugs em Backlog relacionados a pagamento e status de pedido (SEN-784, SEN-796, SEN-797, SEN-787, SEN-780, SEN-786) que não entraram em desenvolvimento esta semana. Priorizar esses bugs de pagamento no próximo ciclo do time Senna antes de investir em novas features do App, já que problemas de pagamento tendem a ser os que mais corroem NPS.",
+          "impacto": "Um App com NPS 21,6 pontos abaixo do Site, mesmo representando cerca de 31% das sessões e 28% das compras do ecossistema digital, é um risco direto para o KR de NPS consolidado (meta 60) — o Site sozinho está carregando a média para cima. Se o share do App continuar crescendo (como vem acontecendo em participação de compras, de 26,6% para 27,8% em três semanas) e o gap de NPS não fechar, o NPS agregado da vertical tende a cair.",
+          "acompanhamento": "Monitorar semanalmente o NPS do App separado do Site (já feito neste relatório) e sinalizar como insight de prioridade Alta se o score do App cruzar abaixo de 40 (faixa abaixo do esperado) com volume ≥20 respostas. Acompanhar também se os bugs de pagamento listados no Linear entram em progresso nas próximas duas semanas.",
+          "titulo_linear": null,
+          "tipo_acao": "monitorar",
+          "testavel": false,
+          "criterio_confirmacao": null,
+          "experimento_template": null,
+          "status": "nunca_testada",
+          "experimento_id": null,
+          "revisao": null
+        },
+        {
+          "id": "INS-2026-089",
+          "canal": "app",
+          "tag": "[App] CR sobe de forma sustentada há 4 semanas, mascarado pelo sigma",
+          "classificacao": "Tendência",
+          "prioridade": "Média",
+          "data": "2026-08-27",
+          "texto": "Diagnóstico: O CR do App vem subindo de forma consistente há quatro semanas — não é ruído de amostra. A classificação automática por desvio-padrão marca a semana como 'estável' porque o sigma histórico (1,38pp) está inflado pela própria tendência de alta, mascarando um movimento real que uma leitura mecânica do número não captura.\n\nEvidência: Série semanal de CR do App, da mais antiga para a mais recente: 6,10% → 5,48% → 5,40% → 5,92% → 6,41% → 8,03% → 8,71% → 8,54% → 8,60% (esta semana). As últimas quatro semanas estão consistentemente acima de 8%, contra uma média de ~5,8% nas quatro semanas anteriores — um ganho estrutural de mais de 2,5pp. O período coincide com a entrega de SEN-746 (seguro-viagem no checkout do App, concluído em 25/08), SEN-560 e SEN-602 (correções de mapa e memória Android, concluídas em 18/08) e o redesign em andamento de Meus Bilhetes (SEN-721) e Cancelamento (SEN-723).\n\nClassificação: Tendência\n\nPlano de ação: Não é necessário nenhuma ação corretiva — a recomendação é justamente não deixar essa tendência passar despercebida pela classificação automática. Adicionar ao próximo MBR uma visão de série temporal (e não apenas semana vs baseline) para o CR do App, e formalizar como hipótese de causa a entrega de SEN-730 (novas telas de comprador e passageiro do App, ainda em validação) como próximo evento a monitorar para ver se sustenta ou acelera o movimento.\n\nImpacto: Se a tendência se confirmar nas próximas duas semanas, o CR do App pode estar se aproximando de um novo patamar estrutural, o que é diretamente relevante para o KR de Receita — o App converte pior que o Site hoje (8,60% vs 9,98%), e fechar esse gap tem efeito multiplicativo dado o volume de sessões do App (180 mil/semana).\n\nPrioridade: Média — tendência positiva a confirmar, sem ação corretiva necessária\n\nAcompanhamento: Acompanhar se o CR do App se mantém acima de 8% nas próximas duas semanas (confirmação de novo patamar) ou recua para a faixa de 6-7% (indicando que as últimas semanas foram um pico pontual, não uma tendência). Cruzar o resultado com a conclusão do redesign de checkout (SEN-730) quando ele sair de validação.",
+          "diagnostico": "O CR do App vem subindo de forma consistente há quatro semanas — não é ruído de amostra. A classificação automática por desvio-padrão marca a semana como 'estável' porque o sigma histórico (1,38pp) está inflado pela própria tendência de alta, mascarando um movimento real que uma leitura mecânica do número não captura.",
+          "evidencia": "Série semanal de CR do App, da mais antiga para a mais recente: 6,10% → 5,48% → 5,40% → 5,92% → 6,41% → 8,03% → 8,71% → 8,54% → 8,60% (esta semana). As últimas quatro semanas estão consistentemente acima de 8%, contra uma média de ~5,8% nas quatro semanas anteriores — um ganho estrutural de mais de 2,5pp. O período coincide com a entrega de SEN-746 (seguro-viagem no checkout do App, concluído em 25/08), SEN-560 e SEN-602 (correções de mapa e memória Android, concluídas em 18/08) e o redesign em andamento de Meus Bilhetes (SEN-721) e Cancelamento (SEN-723).",
+          "plano_acao": "Não é necessário nenhuma ação corretiva — a recomendação é justamente não deixar essa tendência passar despercebida pela classificação automática. Adicionar ao próximo MBR uma visão de série temporal (e não apenas semana vs baseline) para o CR do App, e formalizar como hipótese de causa a entrega de SEN-730 (novas telas de comprador e passageiro do App, ainda em validação) como próximo evento a monitorar para ver se sustenta ou acelera o movimento.",
+          "impacto": "Se a tendência se confirmar nas próximas duas semanas, o CR do App pode estar se aproximando de um novo patamar estrutural, o que é diretamente relevante para o KR de Receita — o App converte pior que o Site hoje (8,60% vs 9,98%), e fechar esse gap tem efeito multiplicativo dado o volume de sessões do App (180 mil/semana).",
+          "acompanhamento": "Acompanhar se o CR do App se mantém acima de 8% nas próximas duas semanas (confirmação de novo patamar) ou recua para a faixa de 6-7% (indicando que as últimas semanas foram um pico pontual, não uma tendência). Cruzar o resultado com a conclusão do redesign de checkout (SEN-730) quando ele sair de validação.",
+          "titulo_linear": null,
+          "tipo_acao": "monitorar",
+          "testavel": false,
+          "criterio_confirmacao": null,
+          "experimento_template": null,
+          "status": "nunca_testada",
+          "experimento_id": null,
+          "revisao": null
+        },
+        {
+          "id": "INS-2026-090",
+          "canal": "site",
+          "tag": "[Site] Canal Direto perde volume mas ganha qualidade no CR",
+          "classificacao": "Explicação",
+          "prioridade": "Baixa",
+          "data": "2026-08-27",
+          "texto": "Diagnóstico: A conversão do Site ficou estatisticamente estável na semana (CR 9,98% vs baseline de 9,42%, dentro de 1 sigma), mas por trás da média há dois movimentos reais que a classificação agregada esconde: o canal Direto está trazendo menos sessões porém mais qualificadas, e a etapa de checkout_to_purchase melhorou de forma consistente em mobile e desktop.\n\nEvidência: Canal Direto: sessões caíram de ~56.635/semana (média das 4 semanas anteriores) para 46.296 (-18,3%), mas compras caíram bem menos, de ~10.002/semana para 9.706 (-3,0%) — o CR do canal subiu de 17,66% para 20,97% (+3,31pp). No funil, checkout_to_purchase subiu de 90,4% para 95,7% em mobile (+5,3pp) e de 70,6% para 73,2% em desktop (+2,6pp) frente à média das 4 semanas anteriores.\n\nClassificação: Explicação\n\nPlano de ação: Nenhuma ação corretiva é necessária — o ponto é não interpretar a queda de volume do canal Direto como um problema isolado sem olhar o CR junto. Vale investigar com o time de mídia/CRM se algo mudou na aquisição Direto (ex: menos notificações push de reengajamento, menos tráfego de marca) que explique a redução de volume, para decidir se vale recuperar volume mantendo a qualidade atual.\n\nImpacto: Em receita absoluta, o ganho de CR do canal Direto não compensa totalmente a perda de volume — compras do canal caíram 3% mesmo com CR maior. Se a queda de sessões Direto for tendência (e não sazonalidade) e continuar, o CR total do Site pode parecer 'estável' por mais algumas semanas enquanto a receita do canal encolhe.\n\nPrioridade: Baixa — sinal positivo no CR, mas com alerta de queda de volume a acompanhar\n\nAcompanhamento: Acompanhar o volume absoluto de sessões e compras do canal Direto nas próximas duas semanas — se a queda de sessões persistir sem estabilizar, tratar como tendência e investigar a causa raiz na aquisição, não apenas comemorar o CR mais alto.",
+          "diagnostico": "A conversão do Site ficou estatisticamente estável na semana (CR 9,98% vs baseline de 9,42%, dentro de 1 sigma), mas por trás da média há dois movimentos reais que a classificação agregada esconde: o canal Direto está trazendo menos sessões porém mais qualificadas, e a etapa de checkout_to_purchase melhorou de forma consistente em mobile e desktop.",
+          "evidencia": "Canal Direto: sessões caíram de ~56.635/semana (média das 4 semanas anteriores) para 46.296 (-18,3%), mas compras caíram bem menos, de ~10.002/semana para 9.706 (-3,0%) — o CR do canal subiu de 17,66% para 20,97% (+3,31pp). No funil, checkout_to_purchase subiu de 90,4% para 95,7% em mobile (+5,3pp) e de 70,6% para 73,2% em desktop (+2,6pp) frente à média das 4 semanas anteriores.",
+          "plano_acao": "Nenhuma ação corretiva é necessária — o ponto é não interpretar a queda de volume do canal Direto como um problema isolado sem olhar o CR junto. Vale investigar com o time de mídia/CRM se algo mudou na aquisição Direto (ex: menos notificações push de reengajamento, menos tráfego de marca) que explique a redução de volume, para decidir se vale recuperar volume mantendo a qualidade atual.",
+          "impacto": "Em receita absoluta, o ganho de CR do canal Direto não compensa totalmente a perda de volume — compras do canal caíram 3% mesmo com CR maior. Se a queda de sessões Direto for tendência (e não sazonalidade) e continuar, o CR total do Site pode parecer 'estável' por mais algumas semanas enquanto a receita do canal encolhe.",
+          "acompanhamento": "Acompanhar o volume absoluto de sessões e compras do canal Direto nas próximas duas semanas — se a queda de sessões persistir sem estabilizar, tratar como tendência e investigar a causa raiz na aquisição, não apenas comemorar o CR mais alto.",
+          "titulo_linear": null,
+          "tipo_acao": "monitorar",
+          "testavel": false,
+          "criterio_confirmacao": null,
+          "experimento_template": null,
+          "status": "nunca_testada",
+          "experimento_id": null,
+          "revisao": null
+        },
+        {
+          "id": "INS-2026-091",
+          "canal": "site",
+          "tag": "[Site] Percepção de taxa de serviço alta trava NPS há 5+ semanas sem ação",
+          "classificacao": "Tendência",
+          "prioridade": "Alta",
+          "data": "2026-08-27",
+          "texto": "Diagnóstico: A percepção de 'taxa de serviço alta' e a ausência de parcelamento sem juros seguem como o principal bloqueio de neutros e detratores do NPS do Site há pelo menos cinco semanas consecutivas, sem que nenhuma ação de produto tenha sido tomada para tratar a causa. É o tema mais recorrente do histórico qualitativo de NPS analisado (nps_insights.json), citado nas semanas de 13/07, 20/07, 27/07, 03/08, 10/08 e novamente nesta semana.\n\nEvidência: Nos comentários desta semana: 'Taxa de serviço muito alta' (4), 'Taxa muito alta' (4), 'Muitas taxas' (3), 'Muito caro' (3) entre neutros, e 'Taxas abusivas' (8) entre detratores — o único tema capturado nesta categoria. O histórico de nps_insights.json mostra o mesmo tema dominando neutros e detratores desde pelo menos 13/07/2026, com a recomendação de produto repetida semana após semana sem mudança de status.\n\nClassificação: Tendência\n\nPlano de ação: Estruturar um experimento controlado de comunicação de taxa de serviço no checkout (ex: exibir a composição do valor antes do último passo, testar copy explicativa) e, em paralelo, avaliar viabilidade comercial de parcelamento sem juros em parcelas específicas. Isso não é mais uma hipótese nova — é uma dívida de produto identificada há 5+ semanas que precisa entrar no board do Senna como iniciativa, não apenas como insight recorrente do relatório semanal.\n\nImpacto: Esse bloqueio afeta diretamente o KR de NPS (meta 60) ao impedir que neutros migrem para promotores, e tem efeito indireto em conversão — percepção de preço alto no checkout é uma causa clássica de abandono no step de pagamento. Cinco semanas sem ação é tempo suficiente para que isso deixe de ser tratado como ruído qualitativo e passe a ser tratado como prioridade de roadmap.\n\nPrioridade: Alta — bloqueio recorrente e não endereçado há mais de um mês, com efeito direto no KR de NPS\n\nAcompanhamento: Acompanhar se o tema 'taxa de serviço' sai do Top 3 de temas de neutros/detratores após a criação e execução do experimento. Se nenhuma ação for aberta no Linear nas próximas duas semanas, escalar como risco de execução ao invés de repetir o mesmo insight pela sétima vez.",
+          "diagnostico": "A percepção de 'taxa de serviço alta' e a ausência de parcelamento sem juros seguem como o principal bloqueio de neutros e detratores do NPS do Site há pelo menos cinco semanas consecutivas, sem que nenhuma ação de produto tenha sido tomada para tratar a causa. É o tema mais recorrente do histórico qualitativo de NPS analisado (nps_insights.json), citado nas semanas de 13/07, 20/07, 27/07, 03/08, 10/08 e novamente nesta semana.",
+          "evidencia": "Nos comentários desta semana: 'Taxa de serviço muito alta' (4), 'Taxa muito alta' (4), 'Muitas taxas' (3), 'Muito caro' (3) entre neutros, e 'Taxas abusivas' (8) entre detratores — o único tema capturado nesta categoria. O histórico de nps_insights.json mostra o mesmo tema dominando neutros e detratores desde pelo menos 13/07/2026, com a recomendação de produto repetida semana após semana sem mudança de status.",
+          "plano_acao": "Estruturar um experimento controlado de comunicação de taxa de serviço no checkout (ex: exibir a composição do valor antes do último passo, testar copy explicativa) e, em paralelo, avaliar viabilidade comercial de parcelamento sem juros em parcelas específicas. Isso não é mais uma hipótese nova — é uma dívida de produto identificada há 5+ semanas que precisa entrar no board do Senna como iniciativa, não apenas como insight recorrente do relatório semanal.",
+          "impacto": "Esse bloqueio afeta diretamente o KR de NPS (meta 60) ao impedir que neutros migrem para promotores, e tem efeito indireto em conversão — percepção de preço alto no checkout é uma causa clássica de abandono no step de pagamento. Cinco semanas sem ação é tempo suficiente para que isso deixe de ser tratado como ruído qualitativo e passe a ser tratado como prioridade de roadmap.",
+          "acompanhamento": "Acompanhar se o tema 'taxa de serviço' sai do Top 3 de temas de neutros/detratores após a criação e execução do experimento. Se nenhuma ação for aberta no Linear nas próximas duas semanas, escalar como risco de execução ao invés de repetir o mesmo insight pela sétima vez.",
+          "titulo_linear": "Experimento: comunicação de taxa de serviço no checkout + viabilidade de parcelamento sem juros",
+          "tipo_acao": "testar",
+          "testavel": true,
+          "criterio_confirmacao": "Redução da menção a \"taxa\"/\"caro\"/\"parcelamento\" como tema dominante de neutros e detratores por 2 semanas consecutivas após o experimento, sem queda de CR no step de pagamento.",
+          "experimento_template": {
+            "hipotese": "Explicitar a composição da taxa de serviço antes do último passo do checkout reduz a percepção de cobrança abusiva e move parte dos neutros para promotores, sem reduzir a conversão no checkout.",
+            "metrica_primaria": "NPS score e nota média de neutros/detratores no step pós-compra",
+            "guardrails": "CR do step checkout_to_purchase não pode cair mais de 1pp frente ao baseline durante o teste",
+            "criterio_sucesso": "Queda de pelo menos 30% na menção ao tema \"taxa\"/\"caro\" em neutros e detratores, mantendo CR de checkout estável",
+            "duracao_minima": "2 semanas completas de exposição, com volume mínimo de 30 respostas de NPS por grupo",
+            "se_inconclusivo": "Estender por mais 2 semanas isolando apenas o grupo mobile, que concentra a maior parte das respostas de NPS"
+          },
+          "status": "nunca_testada",
+          "experimento_id": null,
+          "revisao": null
+        },
+        {
+          "id": "INS-2026-092",
+          "canal": "app",
+          "tag": "[App] Correções de estabilidade Android ainda não aparecem no NPS",
+          "classificacao": "Correlação",
+          "prioridade": "Média",
+          "data": "2026-08-27",
+          "texto": "Diagnóstico: O time Senna concluiu, nesta semana e na anterior, um conjunto relevante de correções de estabilidade e fluxo no App (SEN-710: mitigação de travamentos Android por causa do Microsoft Clarity; SEN-602: investigação de OOM do Clarity no Android; SEN-747: correção de troca de e-mail no pagamento; SEN-560: correção de layout do mapa nos detalhes da viagem), mas o NPS do App caiu 2,87 pontos na semana (62,65 → 59,79) e a rejeição subiu (26,78% → 27,58%). As entregas ainda não aparecem refletidas nos indicadores — o que é esperado no curto prazo, mas precisa ser monitorado.\n\nEvidência: Linear (squad Senna): SEN-710 e SEN-602 concluídos em 18/08 (travamentos e uso de memória por causa do SDK do Clarity no Android); SEN-747 concluído em 18/08 (bug de troca de e-mail no pagamento); SEN-560 concluído em 18/08 (layout do mapa). Indicadores da mesma janela: NPS App 59,79 (-2,87pts vs semana anterior), rejeição 27,58% (+0,80pp vs semana anterior), CR App 8,60% (+0,06pp, estável).\n\nClassificação: Correlação\n\nPlano de ação: Não presumir que as correções de estabilidade Android 'não funcionaram' — travamentos e uso de memória tendem a afetar principalmente usuários com aparelhos mais antigos ou específicos, uma fração que pode não estar bem representada nos 145 respondentes de NPS mobile desta semana. Validar diretamente no Crashlytics/Clarity se a taxa de crash Android caiu na semana da entrega, em vez de inferir a partir do NPS agregado.\n\nImpacto: Se as correções técnicas estiverem funcionando mas o NPS não refletir isso, o risco é o time interpretar erroneamente que o trabalho não teve efeito e despriorizar estabilidade em favor de features — o oposto do que os dados de crash sugeririam. Vale a pena para o KR de NPS confirmar a causa raiz antes de tirar conclusões.\n\nPrioridade: Média — acompanhamento necessário antes de qualquer conclusão sobre efetividade das entregas\n\nAcompanhamento: Cruzar a taxa de crash-free sessions do App (fonte: Crashlytics/Clarity, fora do escopo deste relatório de GA4) com o NPS mobile do App nas próximas duas semanas. Se o NPS do App continuar caindo mesmo com crash-free subindo, o problema está em outro lugar (provavelmente nos bugs de pagamento listados no Linear em Backlog, ver INS-2026-088).",
+          "diagnostico": "O time Senna concluiu, nesta semana e na anterior, um conjunto relevante de correções de estabilidade e fluxo no App (SEN-710: mitigação de travamentos Android por causa do Microsoft Clarity; SEN-602: investigação de OOM do Clarity no Android; SEN-747: correção de troca de e-mail no pagamento; SEN-560: correção de layout do mapa nos detalhes da viagem), mas o NPS do App caiu 2,87 pontos na semana (62,65 → 59,79) e a rejeição subiu (26,78% → 27,58%). As entregas ainda não aparecem refletidas nos indicadores — o que é esperado no curto prazo, mas precisa ser monitorado.",
+          "evidencia": "Linear (squad Senna): SEN-710 e SEN-602 concluídos em 18/08 (travamentos e uso de memória por causa do SDK do Clarity no Android); SEN-747 concluído em 18/08 (bug de troca de e-mail no pagamento); SEN-560 concluído em 18/08 (layout do mapa). Indicadores da mesma janela: NPS App 59,79 (-2,87pts vs semana anterior), rejeição 27,58% (+0,80pp vs semana anterior), CR App 8,60% (+0,06pp, estável).",
+          "plano_acao": "Não presumir que as correções de estabilidade Android 'não funcionaram' — travamentos e uso de memória tendem a afetar principalmente usuários com aparelhos mais antigos ou específicos, uma fração que pode não estar bem representada nos 145 respondentes de NPS mobile desta semana. Validar diretamente no Crashlytics/Clarity se a taxa de crash Android caiu na semana da entrega, em vez de inferir a partir do NPS agregado.",
+          "impacto": "Se as correções técnicas estiverem funcionando mas o NPS não refletir isso, o risco é o time interpretar erroneamente que o trabalho não teve efeito e despriorizar estabilidade em favor de features — o oposto do que os dados de crash sugeririam. Vale a pena para o KR de NPS confirmar a causa raiz antes de tirar conclusões.",
+          "acompanhamento": "Cruzar a taxa de crash-free sessions do App (fonte: Crashlytics/Clarity, fora do escopo deste relatório de GA4) com o NPS mobile do App nas próximas duas semanas. Se o NPS do App continuar caindo mesmo com crash-free subindo, o problema está em outro lugar (provavelmente nos bugs de pagamento listados no Linear em Backlog, ver INS-2026-088).",
+          "titulo_linear": null,
+          "tipo_acao": "monitorar",
+          "testavel": false,
+          "criterio_confirmacao": null,
+          "experimento_template": null,
+          "status": "nunca_testada",
+          "experimento_id": null,
+          "revisao": null
+        }
+      ]
+    },
     {
       "semana": "2026-08-10",
       "label": "10/08 – 16/08/2026",
@@ -2053,6 +2199,210 @@
     }
   ],
   "insights_conversao": [
+    {
+      "semana": "2026-08-17",
+      "label": "17/08 - 23/08/2026",
+      "tipo": "semanal",
+      "gerado_em": "2026-08-27T16:54:38-03:00",
+      "classificacao": "estavel",
+      "metricas": {
+        "cr_atual": {
+          "total": 9.98,
+          "mobile": 9.11,
+          "desktop": 13.67
+        },
+        "cr_baseline": {
+          "total": 9.42,
+          "mobile": 8.54,
+          "desktop": 12.92
+        },
+        "delta_pp": {
+          "total": 0.56,
+          "mobile": 0.57,
+          "desktop": 0.75
+        },
+        "sigma": 0.99,
+        "n_semanas_hist": 8
+      },
+      "hipoteses": [
+        {
+          "tema": "canal_origem",
+          "hipotese": "O canal Direto está entregando tráfego mais qualificado: volume de sessões caiu (baseline 56.635/semana -> 46.296 esta semana, -18,3%) mas as compras caíram bem menos (baseline 10.002/semana -> 9.706, -3,0%), elevando o CR de 17,66% para 20,97% (+3,31pp). Isso puxa o CR total para cima mesmo com a queda de volume.",
+          "evidencia": "canal Direto: share de sessões 12,3% -> 11,4% (-0,9pp), CR 17,66% -> 20,97% (+3,31pp); sessões absolutas -18,3% vs compras absolutas -3,0% no mesmo canal."
+        }
+      ],
+      "monitorar": "Acompanhar se a queda de volume do canal Direto é pontual (sazonalidade) ou início de tendência — se persistir, o ganho de CR será insuficiente para compensar a perda de sessões em receita absoluta.",
+      "dispositivos": {
+        "mobile": {
+          "classificacao": "estavel",
+          "cr_atual": 9.11,
+          "cr_baseline": 8.54,
+          "delta_pp": 0.57,
+          "canal_contexto": [
+            {
+              "nome": "Pago",
+              "share_sessoes_total": 52.9,
+              "cr_total": 9.52,
+              "delta_cr_pp": 0.23
+            },
+            {
+              "nome": "Orgânico",
+              "share_sessoes_total": 17,
+              "cr_total": 6.8,
+              "delta_cr_pp": 0.22
+            },
+            {
+              "nome": "Direto",
+              "share_sessoes_total": 11.4,
+              "cr_total": 20.97,
+              "delta_cr_pp": 3.31
+            },
+            {
+              "nome": "Social",
+              "share_sessoes_total": 1.6,
+              "cr_total": null,
+              "delta_cr_pp": null
+            }
+          ],
+          "funil": {
+            "step_critico": "checkout_to_purchase",
+            "checkout_to_purchase": {
+              "atual": 95.7,
+              "baseline": 90.4,
+              "delta_pp": 5.3
+            },
+            "cart_to_checkout": {
+              "atual": 66.7,
+              "baseline": 66.9,
+              "delta_pp": -0.2
+            },
+            "search_to_cart": {
+              "atual": 9.4,
+              "baseline": 9.2,
+              "delta_pp": 0.2
+            }
+          },
+          "hipoteses": [
+            {
+              "tema": "canal_origem",
+              "hipotese": "O mesmo efeito de qualidade do canal Direto (CR +3,31pp, share <=share total do site) contribui para o CR mobile, já que mobile concentra ~80% das sessões do site.",
+              "evidencia": "canal Direto: CR 17,66% -> 20,97% (+3,31pp) com share 11,4% (>5%), mobile responde por 79,7% das sessões totais."
+            }
+          ],
+          "monitorar": "Observar se o ganho de +5,3pp em checkout_to_purchase mobile se sustenta na próxima semana ou é ruído de amostra pequena em dias específicos."
+        },
+        "desktop": {
+          "classificacao": "estavel",
+          "cr_atual": 13.67,
+          "cr_baseline": 12.92,
+          "delta_pp": 0.75,
+          "canal_contexto": [
+            {
+              "nome": "Pago",
+              "share_sessoes_total": 52.9,
+              "cr_total": 9.52,
+              "delta_cr_pp": 0.23
+            },
+            {
+              "nome": "Orgânico",
+              "share_sessoes_total": 17,
+              "cr_total": 6.8,
+              "delta_cr_pp": 0.22
+            },
+            {
+              "nome": "Direto",
+              "share_sessoes_total": 11.4,
+              "cr_total": 20.97,
+              "delta_cr_pp": 3.31
+            },
+            {
+              "nome": "Social",
+              "share_sessoes_total": 1.6,
+              "cr_total": null,
+              "delta_cr_pp": null
+            }
+          ],
+          "funil": {
+            "step_critico": "checkout_to_purchase",
+            "checkout_to_purchase": {
+              "atual": 73.2,
+              "baseline": 70.6,
+              "delta_pp": 2.6
+            },
+            "cart_to_checkout": {
+              "atual": 61.3,
+              "baseline": 61.1,
+              "delta_pp": 0.2
+            },
+            "search_to_cart": {
+              "atual": 14.5,
+              "baseline": 14.5,
+              "delta_pp": 0
+            }
+          },
+          "hipoteses": [],
+          "monitorar": "Desktop segue com CR quase 50% acima do mobile (13,67% vs 9,11%) — gap estrutural conhecido, não há sinal novo esta semana que justifique ação imediata."
+        },
+        "app": {
+          "classificacao": "subiu_tendencia_sustentada",
+          "cr_atual": 8.601459789338444,
+          "cr_baseline": 7.92,
+          "delta_pp": 0.68,
+          "canal_contexto": [
+            {
+              "nome": "Pago",
+              "share_sessoes_total": 9.6,
+              "cr_total": null,
+              "delta_cr_pp": null
+            },
+            {
+              "nome": "Orgânico",
+              "share_sessoes_total": 3.2,
+              "cr_total": null,
+              "delta_cr_pp": null
+            },
+            {
+              "nome": "Direto",
+              "share_sessoes_total": 21.2,
+              "cr_total": null,
+              "delta_cr_pp": null
+            },
+            {
+              "nome": "Social",
+              "share_sessoes_total": 0,
+              "cr_total": null,
+              "delta_cr_pp": null
+            }
+          ],
+          "funil": {
+            "step_critico": "cart_to_checkout",
+            "checkout_to_purchase": {
+              "atual": 65.2,
+              "baseline": null,
+              "delta_pp": null
+            },
+            "cart_to_checkout": {
+              "atual": 21.7,
+              "baseline": null,
+              "delta_pp": null
+            },
+            "search_to_cart": {
+              "atual": 43.1,
+              "baseline": null,
+              "delta_pp": null
+            }
+          },
+          "hipoteses": [
+            {
+              "tema": "tendencia_estrutural",
+              "hipotese": "O CR do App vem subindo de forma consistente há 4 semanas (5,40% -> 5,48% -> 6,10% -> 6,41% -> 8,03% -> 8,71% -> 8,54% -> 8,60%), não é ruído — a classificação automática por sigma marca \"estável\" porque o desvio-padrão histórico está inflado pela própria tendência.",
+              "evidencia": "Série de CR semanal do App (8 semanas, mais recente primeiro): 8,54%; 8,71%; 8,03%; 6,41%; 5,92%; 5,40%; 5,48%; 6,10%. Ganho de +2,5pp a +3pp nas últimas 4 semanas vs as 4 anteriores, coincidindo com o período de entregas do redesign de Checkout, Meus Bilhetes e Cancelamento do App."
+            }
+          ],
+          "monitorar": "Confirmar se o patamar de ~8,5-8,7% se sustenta nas próximas 2 semanas (validação de tendência vs platô) e cruzar com o rollout completo do redesign de checkout do App (SEN-730, ainda em validação)."
+        }
+      }
+    },
     {
       "semana": "2026-08-10",
       "label": "10/08 – 16/08/2026",
