@@ -1,6 +1,190 @@
 {
-  "gerado_em": "2026-08-27T19:57:54.937Z",
+  "gerado_em": "2026-09-01T15:33:47.783Z",
   "insights": [
+    {
+      "semana": "2026-08-24",
+      "label": "24/08 – 30/08/2026",
+      "gerado_em": "2026-09-01T15:33:47.782Z",
+      "items": [
+        {
+          "id": "INS-2026-093",
+          "canal": "site",
+          "tag": "Conversão caiu na finalização de compra, concentrada pós-redesign do checkout",
+          "classificacao": "Hipótese",
+          "prioridade": "Alta",
+          "data": "2026-09-01",
+          "texto": "Diagnóstico: A conversão do site caiu de forma moderada na semana de 24/08 a 30/08: CR de 8,89% frente a uma baseline de 9,96% (média das últimas 4 semanas), delta de -1,07pp (-10,7%), classificado como queda moderada (z≈1,02σ sobre a variação histórica). O recuo é recente, não estrutural: o CR está 0,52pp acima do mesmo período do ano passado (8,37% em 2025).\n\nEvidência: O funil mostra que a perda não está na entrada (search_to_cart caiu apenas 0,4pp e cart_to_checkout até subiu 0,6pp), mas sim na etapa final: checkout_to_purchase caiu 8,1pp (79,7% vs 87,8% de baseline). O efeito é uniforme entre canais de origem — Pago (-1,21pp), Orgânico (-0,99pp) e Direto (-0,86pp) — o que descarta problema de mix de tráfego e aponta para causa comum no fluxo de checkout. A taxa de rejeição também subiu 4,29pp (26,08% vs 21,79%) na mesma janela.\n\nClassificação: Hipótese\n\nPlano de ação: 1) Auditar no GA4 DebugView e no GTM Preview o disparo do evento purchase e o funil de pagamento no site desde 25/08, data em que o SEN-729 (redesign completo das telas de comprador e passageiro do checkout do site) foi concluído. 2) Comparar a taxa de finalização de compra dia a dia antes e depois do deploy do SEN-729 para isolar o efeito do release. 3) Corrigir com urgência o SEN-774 (checkout de cartão sem trava de submissão, hoje em backlog), que pode estar gerando falhas de idempotência exatamente na etapa que mais caiu. 4) Se a hipótese for confirmada, avaliar rollback parcial ou hotfix do novo fluxo de checkout antes da próxima semana.\n\nImpacto: Impacta diretamente o KR de Receita (R$ 345M): a projeção simples de manter o CR na baseline de 9,96% em vez de 8,89% representaria cerca de 4.200 compras adicionais na semana, considerando o volume de 393.878 sessões observado. Também pressiona o KR de NPS indiretamente, já que falhas de checkout tendem a gerar detratores.\n\nPrioridade: Alta — impacto direto em receita, com causa provável identificada (deploy de checkout na mesma semana) e correção tecnicamente viável no curto prazo.\n\nAcompanhamento: Monitorar checkout_to_purchase diariamente a partir de 25/08; se a taxa não recuperar para acima de 85% em mobile e 72% em desktop até o fim da próxima semana, tratar como regressão confirmada do SEN-729 e escalar para rollback.",
+          "diagnostico": "A conversão do site caiu de forma moderada na semana de 24/08 a 30/08: CR de 8,89% frente a uma baseline de 9,96% (média das últimas 4 semanas), delta de -1,07pp (-10,7%), classificado como queda moderada (z≈1,02σ sobre a variação histórica). O recuo é recente, não estrutural: o CR está 0,52pp acima do mesmo período do ano passado (8,37% em 2025).",
+          "evidencia": "O funil mostra que a perda não está na entrada (search_to_cart caiu apenas 0,4pp e cart_to_checkout até subiu 0,6pp), mas sim na etapa final: checkout_to_purchase caiu 8,1pp (79,7% vs 87,8% de baseline). O efeito é uniforme entre canais de origem — Pago (-1,21pp), Orgânico (-0,99pp) e Direto (-0,86pp) — o que descarta problema de mix de tráfego e aponta para causa comum no fluxo de checkout. A taxa de rejeição também subiu 4,29pp (26,08% vs 21,79%) na mesma janela.",
+          "plano_acao": "1) Auditar no GA4 DebugView e no GTM Preview o disparo do evento purchase e o funil de pagamento no site desde 25/08, data em que o SEN-729 (redesign completo das telas de comprador e passageiro do checkout do site) foi concluído. 2) Comparar a taxa de finalização de compra dia a dia antes e depois do deploy do SEN-729 para isolar o efeito do release. 3) Corrigir com urgência o SEN-774 (checkout de cartão sem trava de submissão, hoje em backlog), que pode estar gerando falhas de idempotência exatamente na etapa que mais caiu. 4) Se a hipótese for confirmada, avaliar rollback parcial ou hotfix do novo fluxo de checkout antes da próxima semana.",
+          "impacto": "Impacta diretamente o KR de Receita (R$ 345M): a projeção simples de manter o CR na baseline de 9,96% em vez de 8,89% representaria cerca de 4.200 compras adicionais na semana, considerando o volume de 393.878 sessões observado. Também pressiona o KR de NPS indiretamente, já que falhas de checkout tendem a gerar detratores.",
+          "acompanhamento": "Monitorar checkout_to_purchase diariamente a partir de 25/08; se a taxa não recuperar para acima de 85% em mobile e 72% em desktop até o fim da próxima semana, tratar como regressão confirmada do SEN-729 e escalar para rollback.",
+          "titulo_linear": "Investigar impacto do redesign de checkout do site (SEN-729) na taxa de finalização de compra (checkout_to_purchase)",
+          "tipo_acao": "testar",
+          "testavel": true,
+          "criterio_confirmacao": "Hipótese confirmada se a checkout_to_purchase do site permanecer abaixo de 82% (frente a 87,8% de baseline) por mais de 5 dias consecutivos após 25/08, sem recuperação; refutada se retornar a >=85% nos dias seguintes ao deploy do SEN-729, indicando causa externa (ex.: instabilidade de gateway de pagamento).",
+          "experimento_template": {
+            "hipotese": "O redesign das telas de comprador e passageiro no checkout do site (SEN-729) introduziu fricção ou bug que reduz a taxa de finalização de compra.",
+            "metrica_primaria": "checkout_to_purchase (site, total e por device)",
+            "guardrails": [
+              "CR total do site",
+              "taxa de rejeição",
+              "tempo médio de checkout",
+              "volume de erros de pagamento no Sentry/BFF"
+            ],
+            "criterio_sucesso": "checkout_to_purchase volta a >=85% (mobile) e >=72% (desktop) em até 7 dias",
+            "duracao_minima": "7 dias corridos após o deploy (25/08 a 01/09) para captar efeito completo de uma semana",
+            "plano_se_inconclusivo": "Rodar teste A/B controlado entre o checkout antigo e o novo (SEN-729) por 2 semanas, com grupo de controle, antes de decidir manter ou reverter."
+          },
+          "status": "nunca_testada",
+          "experimento_id": null,
+          "revisao": null
+        },
+        {
+          "id": "INS-2026-094",
+          "canal": "site-desktop",
+          "tag": "[Desktop] CR fora da curva: -2,19pp, dois pontos de fricção simultâneos no funil",
+          "classificacao": "Resultado fora da curva",
+          "prioridade": "Alta",
+          "data": "2026-09-01",
+          "texto": "Diagnóstico: O CR do desktop caiu de forma significativa (>2 desvios-padrão da série histórica): 11,26% frente a uma baseline de 13,45% (média 4 semanas), delta de -2,19pp, z≈2,08σ — a maior anomalia entre os cortes analisados esta semana.\n\nEvidência: A queda no desktop combina dois efeitos simultâneos: search_to_cart caiu 1,5pp (13,2% vs 14,7% de baseline) e checkout_to_purchase caiu 5,2pp (68,0% vs 73,2%). Isoladamente nenhum dos dois seria crítico, mas a soma dos dois efeitos no mesmo dispositivo explica por que o desktop, e não o mobile, aparece como o desvio estatístico mais forte da semana — mesmo o mobile tendo sofrido uma queda ainda maior em pontos percentuais na etapa de checkout (-9,7pp).\n\nClassificação: Resultado fora da curva\n\nPlano de ação: 1) Isolar no GA4 Explore o funil desktop por semana para confirmar se a queda de search_to_cart é sazonal (menor densidade de buscas específicas) ou ligada a alguma mudança de listagem/ordenação de resultados (ver SEN-781, concluído em 28/08, sobre priorização de viagens diretas). 2) Validar se o checkout desktop sofre o mesmo problema investigado no INS relacionado ao SEN-729. 3) Rodar sessão de usabilidade gravada (Clarity/Hotjar) filtrando desktop na semana para identificar pontos de abandono.\n\nImpacto: Desktop converte quase 30% acima do mobile (11,26% vs 8,18% esta semana) e concentra o público de maior ticket médio historicamente — uma queda de 2,19pp neste segmento tem peso desproporcional na Receita (R$ 345M) frente ao seu volume de sessões (20,6% do total).\n\nPrioridade: Alta — desvio estatístico mais forte da semana, em um segmento de alto valor por sessão.\n\nAcompanhamento: Acompanhar search_to_cart e checkout_to_purchase desktop separadamente nas próximas 2 semanas; se ambos não recuperarem parcialmente, abrir investigação técnica dedicada com o time Senna.",
+          "diagnostico": "O CR do desktop caiu de forma significativa (>2 desvios-padrão da série histórica): 11,26% frente a uma baseline de 13,45% (média 4 semanas), delta de -2,19pp, z≈2,08σ — a maior anomalia entre os cortes analisados esta semana.",
+          "evidencia": "A queda no desktop combina dois efeitos simultâneos: search_to_cart caiu 1,5pp (13,2% vs 14,7% de baseline) e checkout_to_purchase caiu 5,2pp (68,0% vs 73,2%). Isoladamente nenhum dos dois seria crítico, mas a soma dos dois efeitos no mesmo dispositivo explica por que o desktop, e não o mobile, aparece como o desvio estatístico mais forte da semana — mesmo o mobile tendo sofrido uma queda ainda maior em pontos percentuais na etapa de checkout (-9,7pp).",
+          "plano_acao": "1) Isolar no GA4 Explore o funil desktop por semana para confirmar se a queda de search_to_cart é sazonal (menor densidade de buscas específicas) ou ligada a alguma mudança de listagem/ordenação de resultados (ver SEN-781, concluído em 28/08, sobre priorização de viagens diretas). 2) Validar se o checkout desktop sofre o mesmo problema investigado no INS relacionado ao SEN-729. 3) Rodar sessão de usabilidade gravada (Clarity/Hotjar) filtrando desktop na semana para identificar pontos de abandono.",
+          "impacto": "Desktop converte quase 30% acima do mobile (11,26% vs 8,18% esta semana) e concentra o público de maior ticket médio historicamente — uma queda de 2,19pp neste segmento tem peso desproporcional na Receita (R$ 345M) frente ao seu volume de sessões (20,6% do total).",
+          "acompanhamento": "Acompanhar search_to_cart e checkout_to_purchase desktop separadamente nas próximas 2 semanas; se ambos não recuperarem parcialmente, abrir investigação técnica dedicada com o time Senna.",
+          "titulo_linear": null,
+          "tipo_acao": "monitorar",
+          "testavel": false,
+          "criterio_confirmacao": null,
+          "experimento_template": null,
+          "status": "nunca_testada",
+          "experimento_id": null,
+          "revisao": null
+        },
+        {
+          "id": "INS-2026-095",
+          "canal": "site-mobile",
+          "tag": "[Mobile] Queda de 9,7pp na finalização de compra fica mascarada pelo CR agregado",
+          "classificacao": "Explicação",
+          "prioridade": "Alta",
+          "data": "2026-09-01",
+          "texto": "Diagnóstico: A finalização de compra no mobile despencou 9,7pp na semana (85,4% vs 95,1% de baseline) — a maior queda absoluta entre todos os steps de funil e dispositivos analisados — mas essa deterioração fica escondida quando se olha apenas o CR mobile agregado, que caiu só 0,88pp e é classificado como 'estável' (z=0,84).\n\nEvidência: checkout_to_purchase mobile: 85,4% atual vs 95,1% baseline (delta -9,7pp). Isso ocorre porque a etapa de checkout representa uma fração pequena do funil total de sessões mobile (apenas quem chega ao carrinho e ao checkout é afetado diretamente), diluindo o impacto no CR agregado. Em volume absoluto, isso significa milhares de usuários que chegaram a iniciar o checkout no mobile e não concluíram a compra nesta semana, mais do que em qualquer semana recente.\n\nClassificação: Explicação\n\nPlano de ação: Não tratar o CR mobile 'estável' como sinal de que está tudo bem no mobile. Auditar prioritariamente a experiência de checkout mobile (onde está a maior parte do volume do site — 79,8% das sessões), especialmente após o SEN-729. Validar em GTM Preview + GA4 DebugView se o evento de purchase mobile está disparando corretamente e sem duplicidade/perda.\n\nImpacto: Mobile concentra quase 80% do volume de sessões do site; mesmo um efeito 'diluído' no CR agregado representa a maior perda absoluta de compras potenciais da semana, com risco direto ao KR de Receita.\n\nPrioridade: Alta — o indicador agregado esconde o problema mais grave da semana; ignorá-lo por causa da classificação 'estável' do CR mobile seria um erro de leitura.\n\nAcompanhamento: Acompanhar checkout_to_purchase mobile isoladamente (não apenas o CR mobile) nas próximas semanas; tratar como regressão confirmada se permanecer abaixo de 88% por mais de 5 dias.",
+          "diagnostico": "A finalização de compra no mobile despencou 9,7pp na semana (85,4% vs 95,1% de baseline) — a maior queda absoluta entre todos os steps de funil e dispositivos analisados — mas essa deterioração fica escondida quando se olha apenas o CR mobile agregado, que caiu só 0,88pp e é classificado como 'estável' (z=0,84).",
+          "evidencia": "checkout_to_purchase mobile: 85,4% atual vs 95,1% baseline (delta -9,7pp). Isso ocorre porque a etapa de checkout representa uma fração pequena do funil total de sessões mobile (apenas quem chega ao carrinho e ao checkout é afetado diretamente), diluindo o impacto no CR agregado. Em volume absoluto, isso significa milhares de usuários que chegaram a iniciar o checkout no mobile e não concluíram a compra nesta semana, mais do que em qualquer semana recente.",
+          "plano_acao": "Não tratar o CR mobile 'estável' como sinal de que está tudo bem no mobile. Auditar prioritariamente a experiência de checkout mobile (onde está a maior parte do volume do site — 79,8% das sessões), especialmente após o SEN-729. Validar em GTM Preview + GA4 DebugView se o evento de purchase mobile está disparando corretamente e sem duplicidade/perda.",
+          "impacto": "Mobile concentra quase 80% do volume de sessões do site; mesmo um efeito 'diluído' no CR agregado representa a maior perda absoluta de compras potenciais da semana, com risco direto ao KR de Receita.",
+          "acompanhamento": "Acompanhar checkout_to_purchase mobile isoladamente (não apenas o CR mobile) nas próximas semanas; tratar como regressão confirmada se permanecer abaixo de 88% por mais de 5 dias.",
+          "titulo_linear": "Auditar funil de checkout mobile pós-SEN-729: queda de 9,7pp em checkout_to_purchase não capturada pelo CR mobile agregado",
+          "tipo_acao": "testar",
+          "testavel": true,
+          "criterio_confirmacao": "Confirmada se checkout_to_purchase mobile permanecer abaixo de 88% por mais de 5 dias consecutivos; refutada se recuperar para >=93% na próxima leitura semanal.",
+          "experimento_template": {
+            "hipotese": "O novo fluxo de checkout mobile (SEN-729) tem uma etapa com fricção ou erro que reduz a conclusão de compra, sem reduzir sessões nem adição ao carrinho.",
+            "metrica_primaria": "checkout_to_purchase mobile",
+            "guardrails": [
+              "CR mobile total",
+              "tempo médio até compra",
+              "taxa de erro de pagamento mobile"
+            ],
+            "criterio_sucesso": "checkout_to_purchase mobile >= 93% (retorno próximo à baseline)",
+            "duracao_minima": "7 dias corridos",
+            "plano_se_inconclusivo": "Gravar sessões mobile (Clarity) no funil de checkout para identificar visualmente o ponto exato de abandono."
+          },
+          "status": "nunca_testada",
+          "experimento_id": null,
+          "revisao": null
+        },
+        {
+          "id": "INS-2026-096",
+          "canal": "conjunto",
+          "tag": "[Site vs App] Checkout piora no site e melhora no app na mesma semana — sinal contra causa externa",
+          "classificacao": "Correlação",
+          "prioridade": "Alta",
+          "data": "2026-09-01",
+          "texto": "Diagnóstico: Enquanto a finalização de compra do site piorou (-8,1pp), a do app melhorou no mesmo período (+1,9pp: 66,6% vs 64,7% de baseline) e o CR total do app ficou estável (-0,10pp, dentro do normal). A divergência entre os dois canais no mesmo step do funil, na mesma semana, é o dado mais forte a favor da hipótese de causa específica do site.\n\nEvidência: Checkout_to_purchase: site 79,7% (baseline 87,8%, delta -8,1pp) vs app 66,6% (baseline 64,7%, delta +1,9pp). Isso é consistente com o estado das entregas no Linear: o redesign de checkout do site (SEN-729) foi concluído em 25/08, dentro da semana analisada, enquanto o redesign equivalente do app (SEN-730) segue em validação, ainda não plenamente lançado. Se a causa fosse um problema externo comum (ex.: instabilidade do gateway de pagamento), o efeito apareceria nos dois canais simultaneamente — não é o que os dados mostram.\n\nClassificação: Correlação\n\nPlano de ação: Tratar o app como grupo de comparação natural: acompanhar se o checkout_to_purchase do app cai quando o SEN-730 for concluído e lançado. Se cair de forma parecida ao que ocorreu no site, é forte evidência de que o padrão de redesign (não uma falha pontual) tem impacto negativo em conversão e precisa de revisão de UX antes do rollout completo.\n\nImpacto: Serve de sinal de alerta antecipado para o rollout do SEN-730 no app — evita repetir no app o mesmo problema de receita já em curso no site.\n\nPrioridade: Alta — informa diretamente a decisão de lançamento do SEN-730 no app.\n\nAcompanhamento: No lançamento do SEN-730 (app), comparar checkout_to_purchase da primeira semana pós-deploy com a baseline atual do app (64,7%); se cair de forma parecida ao site, suspender o rollout e revisar o fluxo antes de prosseguir.",
+          "diagnostico": "Enquanto a finalização de compra do site piorou (-8,1pp), a do app melhorou no mesmo período (+1,9pp: 66,6% vs 64,7% de baseline) e o CR total do app ficou estável (-0,10pp, dentro do normal). A divergência entre os dois canais no mesmo step do funil, na mesma semana, é o dado mais forte a favor da hipótese de causa específica do site.",
+          "evidencia": "Checkout_to_purchase: site 79,7% (baseline 87,8%, delta -8,1pp) vs app 66,6% (baseline 64,7%, delta +1,9pp). Isso é consistente com o estado das entregas no Linear: o redesign de checkout do site (SEN-729) foi concluído em 25/08, dentro da semana analisada, enquanto o redesign equivalente do app (SEN-730) segue em validação, ainda não plenamente lançado. Se a causa fosse um problema externo comum (ex.: instabilidade do gateway de pagamento), o efeito apareceria nos dois canais simultaneamente — não é o que os dados mostram.",
+          "plano_acao": "Tratar o app como grupo de comparação natural: acompanhar se o checkout_to_purchase do app cai quando o SEN-730 for concluído e lançado. Se cair de forma parecida ao que ocorreu no site, é forte evidência de que o padrão de redesign (não uma falha pontual) tem impacto negativo em conversão e precisa de revisão de UX antes do rollout completo.",
+          "impacto": "Serve de sinal de alerta antecipado para o rollout do SEN-730 no app — evita repetir no app o mesmo problema de receita já em curso no site.",
+          "acompanhamento": "No lançamento do SEN-730 (app), comparar checkout_to_purchase da primeira semana pós-deploy com a baseline atual do app (64,7%); se cair de forma parecida ao site, suspender o rollout e revisar o fluxo antes de prosseguir.",
+          "titulo_linear": "Usar app como grupo de controle para validar causa da queda de checkout_to_purchase no site antes do rollout do SEN-730",
+          "tipo_acao": "testar",
+          "testavel": true,
+          "criterio_confirmacao": "Confirmada se, ao lançar o SEN-730 no app, o checkout_to_purchase do app cair de forma comparável (>=5pp) à queda observada no site; refutada se o app mantiver checkout_to_purchase estável após o rollout.",
+          "experimento_template": {
+            "hipotese": "O padrão de redesign de checkout (novas telas de comprador/passageiro) reduz a taxa de finalização de compra independentemente da plataforma (site ou app).",
+            "metrica_primaria": "checkout_to_purchase (comparação site vs app, pré e pós rollout do SEN-730)",
+            "guardrails": [
+              "CR total do app",
+              "NPS pós-compra do app",
+              "volume de erros de checkout no app"
+            ],
+            "criterio_sucesso": "checkout_to_purchase do app se mantém dentro de 2pp da baseline pré-rollout",
+            "duracao_minima": "7 dias corridos após o lançamento do SEN-730",
+            "plano_se_inconclusivo": "Rollout gradual (feature flag) do SEN-730 para parte da base do app, comparando com grupo de controle no fluxo antigo."
+          },
+          "status": "nunca_testada",
+          "experimento_id": null,
+          "revisao": null
+        },
+        {
+          "id": "INS-2026-097",
+          "canal": "conjunto",
+          "tag": "[Site vs App] Gap de NPS de 18 pontos: app oscila perto do piso da meta (60)",
+          "classificacao": "Tendência",
+          "prioridade": "Média",
+          "data": "2026-09-01",
+          "texto": "Diagnóstico: Existe um gap estrutural e recorrente de NPS entre site e app: nesta semana, NPS score do site foi 80,52 contra 62,21 do app — 18,3 pontos de diferença, muito acima do limiar de 10 pontos que justifica hipótese explicativa, com volume suficiente nos dois canais (10.018 respostas no site, 262 no app). O padrão se repete nas 3 últimas semanas (gap de 18,0 e 21,6 pontos nas duas semanas anteriores), não é um evento isolado.\n\nEvidência: NPS score: site 80,52 (W3), 81,41 (W2), 80,66 (W1) — estável e confortavelmente acima da meta corporativa (KR NPS = 60). App: 62,21 (W3), 59,79 (W2) — abaixo da meta na semana passada e apenas 2,2 pontos acima dela nesta semana. Nota média segue o mesmo padrão: site 9,30/10, app 8,68/10.\n\nClassificação: Tendência\n\nPlano de ação: 1) Levar ao time Senna e Design de Produto uma investigação qualitativa específica da experiência do app (não apenas do checkout) — o gap é amplo demais para ser explicado só pela etapa de compra. 2) Comparar app com site nos mesmos momentos de jornada (busca, seleção, pagamento, pós-compra) para isolar onde a percepção do app é pior. 3) Se o app permanecer abaixo de 60 em mais de uma leitura consecutiva, tratar como risco ao KR de NPS corporativo, já que o app representa ~31% do volume total de sessões e sua fraqueza dilui o resultado combinado.\n\nImpacto: Risco direto ao KR de NPS (meta 60): o app já operou abaixo da meta na semana anterior (59,79) e está apenas 2,2 pontos acima dela agora — uma oscilação normal pode levá-lo de volta para a zona de atenção (40-59).\n\nPrioridade: Média — o app já está dentro da meta nesta leitura, mas com margem mínima e tendência de oscilar abaixo dela; não é uma crise imediata, mas exige atenção continuada.\n\nAcompanhamento: Acompanhar NPS score do app semana a semana; se cair novamente abaixo de 60, escalar para prioridade Alta e acionar investigação qualitativa dedicada à experiência do app.",
+          "diagnostico": "Existe um gap estrutural e recorrente de NPS entre site e app: nesta semana, NPS score do site foi 80,52 contra 62,21 do app — 18,3 pontos de diferença, muito acima do limiar de 10 pontos que justifica hipótese explicativa, com volume suficiente nos dois canais (10.018 respostas no site, 262 no app). O padrão se repete nas 3 últimas semanas (gap de 18,0 e 21,6 pontos nas duas semanas anteriores), não é um evento isolado.",
+          "evidencia": "NPS score: site 80,52 (W3), 81,41 (W2), 80,66 (W1) — estável e confortavelmente acima da meta corporativa (KR NPS = 60). App: 62,21 (W3), 59,79 (W2) — abaixo da meta na semana passada e apenas 2,2 pontos acima dela nesta semana. Nota média segue o mesmo padrão: site 9,30/10, app 8,68/10.",
+          "plano_acao": "1) Levar ao time Senna e Design de Produto uma investigação qualitativa específica da experiência do app (não apenas do checkout) — o gap é amplo demais para ser explicado só pela etapa de compra. 2) Comparar app com site nos mesmos momentos de jornada (busca, seleção, pagamento, pós-compra) para isolar onde a percepção do app é pior. 3) Se o app permanecer abaixo de 60 em mais de uma leitura consecutiva, tratar como risco ao KR de NPS corporativo, já que o app representa ~31% do volume total de sessões e sua fraqueza dilui o resultado combinado.",
+          "impacto": "Risco direto ao KR de NPS (meta 60): o app já operou abaixo da meta na semana anterior (59,79) e está apenas 2,2 pontos acima dela agora — uma oscilação normal pode levá-lo de volta para a zona de atenção (40-59).",
+          "acompanhamento": "Acompanhar NPS score do app semana a semana; se cair novamente abaixo de 60, escalar para prioridade Alta e acionar investigação qualitativa dedicada à experiência do app.",
+          "titulo_linear": null,
+          "tipo_acao": "monitorar",
+          "testavel": false,
+          "criterio_confirmacao": null,
+          "experimento_template": null,
+          "status": "nunca_testada",
+          "experimento_id": null,
+          "revisao": null
+        },
+        {
+          "id": "INS-2026-098",
+          "canal": "site",
+          "tag": "Taxa de serviço: 8ª semana como tema recorrente de detratores, sem ação de produto",
+          "classificacao": "Tendência",
+          "prioridade": "Alta",
+          "data": "2026-09-01",
+          "texto": "Diagnóstico: O tema 'taxa de serviço muito alta / ausência de parcelamento sem juros' aparece nos comentários de neutros e detratores do NPS pela 8ª semana consecutiva, sem nenhum item correspondente em aberto no Linear do time Senna — é um bloqueio de pricing/produto identificado e não endereçado há dois meses.\n\nEvidência: Comentários desta semana: 'Taxa de serviço muito alta' (4), 'Taxa muito alta' (4), 'Muitas taxas' (3), 'Muito caro' (3) entre neutros, e 'Taxas abusivas' (8) entre detratores. O histórico de nps_insights.json mostra o mesmo tema como 'recorrente: true' com 'semanas_recorrente' entre 7 e 8 desde pelo menos 27/07. Na varredura do Linear (time Senna, últimos 14 dias), não há nenhuma issue aberta, em progresso ou concluída sobre taxa de serviço, parcelamento sem juros ou comunicação de preço no checkout.\n\nClassificação: Tendência\n\nPlano de ação: Criar issue no Linear (Senna) para: (1) revisar a comunicação da taxa de serviço no checkout, testando transparência antecipada do valor total antes da tela de pagamento; (2) avaliar com o time de Pricing/CRM um experimento de parcelamento sem juros em alguma faixa de valor, medindo impacto em NPS e em CR. Sem essa ação, o tema deve continuar aparecendo nas próximas leituras semanais de NPS sem qualquer mudança.\n\nImpacto: Afeta diretamente o KR de NPS (meta 60): mesmo com o NPS site em patamar confortável (80,5), a taxa de serviço é o único gatilho de insatisfação extrema entre detratores há dois meses — resolver isso é a alavanca mais clara disponível hoje para reduzir detratores e converter neutros em promotores.\n\nPrioridade: Alta — problema estrutural, com causa identificada, sem custo de investigação adicional (já mapeado há 8 semanas) e sem nenhuma ação de produto registrada até o momento.\n\nAcompanhamento: Verificar na próxima leitura de NPS se o tema segue aparecendo; se sim, escalar formalmente para o time de Pricing/CRM com o histórico de 8 semanas de recorrência como evidência.",
+          "diagnostico": "O tema 'taxa de serviço muito alta / ausência de parcelamento sem juros' aparece nos comentários de neutros e detratores do NPS pela 8ª semana consecutiva, sem nenhum item correspondente em aberto no Linear do time Senna — é um bloqueio de pricing/produto identificado e não endereçado há dois meses.",
+          "evidencia": "Comentários desta semana: 'Taxa de serviço muito alta' (4), 'Taxa muito alta' (4), 'Muitas taxas' (3), 'Muito caro' (3) entre neutros, e 'Taxas abusivas' (8) entre detratores. O histórico de nps_insights.json mostra o mesmo tema como 'recorrente: true' com 'semanas_recorrente' entre 7 e 8 desde pelo menos 27/07. Na varredura do Linear (time Senna, últimos 14 dias), não há nenhuma issue aberta, em progresso ou concluída sobre taxa de serviço, parcelamento sem juros ou comunicação de preço no checkout.",
+          "plano_acao": "Criar issue no Linear (Senna) para: (1) revisar a comunicação da taxa de serviço no checkout, testando transparência antecipada do valor total antes da tela de pagamento; (2) avaliar com o time de Pricing/CRM um experimento de parcelamento sem juros em alguma faixa de valor, medindo impacto em NPS e em CR. Sem essa ação, o tema deve continuar aparecendo nas próximas leituras semanais de NPS sem qualquer mudança.",
+          "impacto": "Afeta diretamente o KR de NPS (meta 60): mesmo com o NPS site em patamar confortável (80,5), a taxa de serviço é o único gatilho de insatisfação extrema entre detratores há dois meses — resolver isso é a alavanca mais clara disponível hoje para reduzir detratores e converter neutros em promotores.",
+          "acompanhamento": "Verificar na próxima leitura de NPS se o tema segue aparecendo; se sim, escalar formalmente para o time de Pricing/CRM com o histórico de 8 semanas de recorrência como evidência.",
+          "titulo_linear": "Revisar comunicação de taxa de serviço no checkout e avaliar experimento de parcelamento sem juros (tema recorrente há 8 semanas no NPS)",
+          "tipo_acao": "testar",
+          "testavel": true,
+          "criterio_confirmacao": "Confirmada como alavanca válida se, após o experimento de comunicação/parcelamento, o volume de menções ao tema 'taxa de serviço' cair entre detratores/neutros e o NPS score não piorar.",
+          "experimento_template": {
+            "hipotese": "Maior transparência sobre a taxa de serviço no checkout, ou oferta de parcelamento sem juros em alguma faixa de valor, reduz a insatisfação de neutros e detratores.",
+            "metrica_primaria": "Proporção de comentários de NPS mencionando taxa/preço entre neutros e detratores",
+            "guardrails": [
+              "CR do checkout",
+              "receita média por transação",
+              "NPS score geral"
+            ],
+            "criterio_sucesso": "Redução de pelo menos 30% nas menções ao tema em 4 semanas, sem queda de CR",
+            "duracao_minima": "4 semanas para captar efeito em volume suficiente de respostas de NPS",
+            "plano_se_inconclusivo": "Testar comunicação isolada (sem custo de parcelamento) primeiro, como etapa de menor risco antes de qualquer mudança de pricing."
+          },
+          "status": "nunca_testada",
+          "experimento_id": null,
+          "revisao": null
+        }
+      ]
+    },
     {
       "semana": "2026-08-17",
       "label": "17/08 - 23/08/2026",
@@ -2199,6 +2383,220 @@
     }
   ],
   "insights_conversao": [
+    {
+      "semana": "2026-08-24",
+      "label": "24/08 – 30/08/2026",
+      "tipo": "semanal",
+      "gerado_em": "2026-09-01T12:33:33-03:00",
+      "classificacao": "caiu_moderado",
+      "metricas": {
+        "cr_atual": {
+          "total": 8.89,
+          "mobile": 8.18,
+          "desktop": 11.26
+        },
+        "cr_baseline": {
+          "total": 9.96,
+          "mobile": 9.06,
+          "desktop": 13.45
+        },
+        "delta_pp": {
+          "total": -1.07,
+          "mobile": -0.88,
+          "desktop": -2.19
+        },
+        "sigma": 1.05,
+        "n_semanas_hist": 8
+      },
+      "hipoteses": [
+        {
+          "hipotese": "Redesign do checkout do site (SEN-729) impactou negativamente a finalização de compra",
+          "evidencia": "checkout_to_purchase do site caiu de 87,8% para 79,7% (-8,1pp) na semana em que o SEN-729 foi concluído (25/08); no mesmo período, o checkout_to_purchase do app, que não recebeu o redesign equivalente (SEN-730 ainda em validação), subiu de 64,7% para 66,6% (+1,9pp)."
+        },
+        {
+          "hipotese": "Queda de CR não é explicada por mix de canal — é comum a todos os canais de origem, o que aponta para causa de produto/checkout e não de qualidade de tráfego",
+          "evidencia": "CR caiu de forma semelhante em Pago (-1,21pp, share 52%), Orgânico (-0,99pp, share 17,8%) e Direto (-0,86pp, share 12,1%)."
+        },
+        {
+          "hipotese": "Bug conhecido de ausência de trava de submissão no checkout de cartão (SEN-774, em backlog) pode estar gerando falhas de confirmação de compra",
+          "evidencia": "SEN-774 registra conflitos de idempotência em internal-sale por falta de submit lock no checkout, ainda não corrigido; coincide com a semana de maior queda em checkout_to_purchase (-8,1pp)."
+        }
+      ],
+      "monitorar": "Acompanhar checkout_to_purchase diário desde 25/08 (deploy do SEN-729) e comparar com o app após o rollout do SEN-730; se a queda persistir por mais de 1 semana, escalar para rollback ou hotfix.",
+      "dispositivos": {
+        "mobile": {
+          "classificacao": "estavel",
+          "cr_atual": 8.18,
+          "cr_baseline": 9.06,
+          "delta_pp": -0.88,
+          "canal_contexto": [
+            {
+              "nome": "Pago",
+              "share_sessoes_total": 52,
+              "cr_total": 8.49,
+              "delta_cr_pp": -1.21
+            },
+            {
+              "nome": "Orgânico",
+              "share_sessoes_total": 17.8,
+              "cr_total": 5.81,
+              "delta_cr_pp": -0.99
+            },
+            {
+              "nome": "Direto",
+              "share_sessoes_total": 12.1,
+              "cr_total": 18.21,
+              "delta_cr_pp": -0.86
+            },
+            {
+              "nome": "Social",
+              "share_sessoes_total": 1.5,
+              "cr_total": null,
+              "delta_cr_pp": null
+            }
+          ],
+          "funil": {
+            "step_critico": "checkout_to_purchase",
+            "checkout_to_purchase": {
+              "atual": 85.4,
+              "baseline": 95.1,
+              "delta_pp": -9.7
+            },
+            "cart_to_checkout": {
+              "atual": 67.3,
+              "baseline": 66.7,
+              "delta_pp": 0.6
+            },
+            "search_to_cart": {
+              "atual": 9.4,
+              "baseline": 9.4,
+              "delta_pp": 0
+            }
+          },
+          "hipoteses": [
+            {
+              "hipotese": "Queda acentuada na finalização de compra mobile está sendo mascarada pela classificação agregada 'estável' do CR mobile",
+              "evidencia": "checkout_to_purchase mobile caiu 9,7pp (85,4% vs 95,1% baseline) — maior queda absoluta entre todos os steps e dispositivos — enquanto o CR mobile geral caiu apenas 0,88pp (z=0,84, classificado estável)."
+            }
+          ],
+          "monitorar": "Monitorar checkout_to_purchase mobile diariamente; se permanecer abaixo de 88% por mais de 5 dias, tratar como regressão confirmada do SEN-729 no mobile, independentemente da classificação agregada do CR."
+        },
+        "desktop": {
+          "classificacao": "caiu_significativo",
+          "cr_atual": 11.26,
+          "cr_baseline": 13.45,
+          "delta_pp": -2.19,
+          "canal_contexto": [
+            {
+              "nome": "Pago",
+              "share_sessoes_total": 52,
+              "cr_total": 8.49,
+              "delta_cr_pp": -1.21
+            },
+            {
+              "nome": "Orgânico",
+              "share_sessoes_total": 17.8,
+              "cr_total": 5.81,
+              "delta_cr_pp": -0.99
+            },
+            {
+              "nome": "Direto",
+              "share_sessoes_total": 12.1,
+              "cr_total": 18.21,
+              "delta_cr_pp": -0.86
+            },
+            {
+              "nome": "Social",
+              "share_sessoes_total": 1.5,
+              "cr_total": null,
+              "delta_cr_pp": null
+            }
+          ],
+          "funil": {
+            "step_critico": "checkout_to_purchase",
+            "checkout_to_purchase": {
+              "atual": 68,
+              "baseline": 73.2,
+              "delta_pp": -5.2
+            },
+            "cart_to_checkout": {
+              "atual": 61.1,
+              "baseline": 60.9,
+              "delta_pp": 0.2
+            },
+            "search_to_cart": {
+              "atual": 13.2,
+              "baseline": 14.7,
+              "delta_pp": -1.5
+            }
+          },
+          "hipoteses": [
+            {
+              "hipotese": "Queda desktop combina dois efeitos: menor eficiência de busca-para-carrinho e finalização de compra mais fraca",
+              "evidencia": "search_to_cart desktop caiu 1,5pp (13,2% vs 14,7%) e checkout_to_purchase caiu 5,2pp (68% vs 73,2%) simultaneamente, dobrando o impacto no CR desktop (z=2,08, >2 desvios)."
+            }
+          ],
+          "monitorar": "Verificar se a queda de search_to_cart desktop é sazonal ou ligada a mudança de layout/ordenação (SEN-781); acompanhar recuperação de checkout_to_purchase desktop nas próximas 2 semanas."
+        },
+        "app": {
+          "classificacao": "estavel",
+          "cr_atual": 8.37,
+          "cr_baseline": 8.47,
+          "delta_pp": -0.1,
+          "canal_contexto": [
+            {
+              "nome": "Pago",
+              "share_sessoes_total": 9,
+              "cr_total": null,
+              "delta_cr_pp": null
+            },
+            {
+              "nome": "Orgânico",
+              "share_sessoes_total": 2.5,
+              "cr_total": null,
+              "delta_cr_pp": null
+            },
+            {
+              "nome": "Direto",
+              "share_sessoes_total": 22,
+              "cr_total": null,
+              "delta_cr_pp": null
+            },
+            {
+              "nome": "Social",
+              "share_sessoes_total": 0,
+              "cr_total": null,
+              "delta_cr_pp": null
+            }
+          ],
+          "funil": {
+            "step_critico": "checkout_to_purchase (em melhora, não em queda)",
+            "checkout_to_purchase": {
+              "atual": 66.6,
+              "baseline": 64.7,
+              "delta_pp": 1.9
+            },
+            "cart_to_checkout": {
+              "atual": 21.6,
+              "baseline": 20.5,
+              "delta_pp": 1.1
+            },
+            "search_to_cart": {
+              "atual": 42.4,
+              "baseline": 41.3,
+              "delta_pp": 1.1
+            }
+          },
+          "hipoteses": [
+            {
+              "hipotese": "O app não sofreu o mesmo efeito negativo do site porque ainda não recebeu o redesign equivalente de checkout (SEN-730 em validação) — funciona como grupo de comparação natural para a hipótese do INS-2026-093",
+              "evidencia": "checkout_to_purchase do app subiu 1,9pp (66,6% vs 64,7% baseline) na mesma semana em que o do site caiu 8,1pp."
+            }
+          ],
+          "monitorar": "Ao lançar o SEN-730 (redesign de checkout do app), comparar checkout_to_purchase da primeira semana pós-deploy com a baseline atual (64,7%); se cair de forma parecida ao site, suspender o rollout."
+        }
+      }
+    },
     {
       "semana": "2026-08-17",
       "label": "17/08 - 23/08/2026",
