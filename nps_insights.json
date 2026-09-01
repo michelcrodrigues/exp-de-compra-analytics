@@ -1,6 +1,60 @@
 {
-  "gerado_em": "2026-08-27T19:58:06.895Z",
+  "gerado_em": "2026-09-01T15:34:37.766Z",
   "semanas": [
+    {
+      "semana": "2026-08-24",
+      "label": "24/08 – 30/08/2026",
+      "gerado_em": "2026-09-01T12:34:27-03:00",
+      "nps_score": 80.52,
+      "nps_nota_media": 9.3,
+      "nps_respostas": 10018,
+      "nps_promotores": 8514,
+      "nps_neutros": 1057,
+      "nps_detratores": 447,
+      "promotores": {
+        "total": 11,
+        "temas_principais": [
+          "satisfação geral com a experiência (ótimo/bom/excelente/top)",
+          "elogio ao atendimento",
+          "praticidade da compra",
+          "agilidade do processo"
+        ],
+        "resumo": "Promotores seguem concentrados em elogios curtos e genéricos (Ótimo, Muito bom, Excelente, Top), sem detalhamento específico do que gerou a boa experiência — agilidade e praticidade aparecem como os únicos temas com algum conteúdo além do elogio puro.",
+        "insight": "O padrão se mantém idêntico ao observado nas últimas semanas: alto volume de promotores satisfeitos, mas sem sinal de encantamento diferenciado. Para mover o NPS de forma sustentável, o time Senna precisa de momentos de experiência memorável, não apenas ausência de fricção.",
+        "recorrente": true,
+        "semanas_recorrente": 5
+      },
+      "neutros": {
+        "total": 8,
+        "temas_principais": [
+          "taxa de serviço considerada alta",
+          "percepção geral de preço elevado (caro)",
+          "lentidão percebida no processo",
+          "satisfação moderada genérica (bom/ótimo)"
+        ],
+        "resumo": "Neutros continuam bloqueados por percepção de custo: taxa de serviço e menções genéricas a preço alto concentram a maior parte dos comentários negativos, com um tema novo e pontual de lentidão aparecendo esta semana.",
+        "insight": "Tema de taxa de serviço idêntico ao das últimas 5 semanas — segue sendo um bloqueio estrutural e recorrente para conversão de neutros em promotores, sem mudança de padrão nem ação de produto registrada. A menção a lentidão é pontual e deve ser monitorada para ver se recorre.",
+        "recorrente": true,
+        "semanas_recorrente": 5
+      },
+      "detratores": {
+        "total": 1,
+        "temas_principais": [
+          "indignação com taxas consideradas abusivas"
+        ],
+        "resumo": "Volume pequeno de comentários agregados de detratores esta semana, mas o único tema capturado repete a reclamação de taxas abusivas já vista nas semanas anteriores.",
+        "insight": "Mesmo com poucos comentários agregados, o padrão de insatisfação com taxas permanece o gatilho dominante entre detratores, consistente com o histórico das últimas 5 semanas — e sem nenhuma issue correspondente aberta no Linear do time Senna até o momento.",
+        "recomendacao_produto": "Revisar a comunicação da taxa de serviço no checkout e avaliar experimento de parcelamento sem juros em alguma faixa de valor, medindo impacto em NPS e em conversão (ver INS-2026-098).",
+        "recorrente": true,
+        "semanas_recorrente": 5
+      },
+      "analise_temporal": {
+        "padrao": "recorrente",
+        "tendencia": "estavel",
+        "diagnostico": "NPS score do site se mantém estável na faixa 80-81 pela 5ª semana consecutiva, bem acima da meta de 60. O tema de taxa de serviço permanece o principal bloqueio de neutros e detratores há pelo menos 8 semanas (ver histórico), sem sinal de mudança nem ação de produto correspondente registrada no Linear.",
+        "dias_criticos": []
+      }
+    },
     {
       "semana": "2026-08-17",
       "label": "17/08 - 23/08/2026",
