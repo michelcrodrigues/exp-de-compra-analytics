@@ -1,6 +1,135 @@
 {
-  "gerado_em": "2026-09-01T15:33:47.783Z",
+  "gerado_em": "2026-09-09T13:16:52.862Z",
   "insights": [
+    {
+      "semana": "2026-08-31",
+      "label": "31/08 – 06/09/2026",
+      "gerado_em": "2026-09-09T13:16:52.862Z",
+      "items": [
+        {
+          "id": "INS-2026-099",
+          "canal": "conjunto",
+          "tag": "Checkout do site piora (-14,4pp) por bug de duplo-submit não corrigido (SEN-774)",
+          "classificacao": "Hipótese",
+          "prioridade": "Alta",
+          "data": "2026-09-09",
+          "texto": "Diagnóstico: A conversão do site caiu de forma moderada na semana de 31/08 a 06/09: CR de 8,02% frente à baseline de 9,92% (média das últimas 4 semanas), delta de -1,90pp (-19,2%), classificado como queda moderada (z≈1,81σ). Diferente da semana anterior, o CR agora também está abaixo do mesmo período do ano passado (8,81% em 2025, delta YoY de -0,79pp), indicando que a fraqueza deixou de ser apenas sazonal. A queda não é nova: a semana passada (24/08-30/08) já havia registrado queda moderada de -1,07pp no mesmo step do funil, e nesta semana o quadro piorou.\n\nEvidência: O funil mostra que toda a perda está concentrada na etapa final: checkout_to_purchase caiu 14,4pp (72,6% vs 87,0% de baseline), enquanto search_to_cart subiu levemente (+0,6pp) e cart_to_checkout caiu apenas -4,6pp — descartando problema de topo de funil ou de qualidade de tráfego. No Linear, o time Senna documentou a causa técnica em 24/08 (SEN-774): o formulário de cartão de crédito do site (CreditCardForm.tsx) não tem trava de submissão dupla, gerando erro 400 de conflito de idempotência no Mercado Pago quando o usuário clica mais de uma vez ou o botão reabilita antes do redirecionamento. O mesmo bug existia no app (SEN-777) e foi corrigido em 01/09 — desde então, o CR do app permanece estável (8,37% vs baseline 8,56%, -0,19pp) e o checkout_to_purchase do app até melhorou (+1,4pp). No site, o SEN-774 segue em Backlog, sem responsável e sem início, e a taxa de rejeição subiu 2,93pp na mesma janela — compatível com usuários que tentam pagar, esbarram no erro e abandonam a sessão.\n\nClassificação: Hipótese\n\nPlano de ação: 1) Priorizar imediatamente o SEN-774 no próximo ciclo do time Senna, usando a correção já validada em produção no app (SEN-777) como referência de implementação — trava síncrona de submissão e bloqueio do botão até o redirecionamento. 2) Antes do fix, auditar no Grafana o volume de erros 400 de idempotência no endpoint /sn-bff-ms/internal-sale (canal web) na semana de 31/08 a 06/09 para quantificar as tentativas de compra perdidas. 3) Após o deploy, comparar checkout_to_purchase dia a dia (mobile e desktop) para confirmar a recuperação. 4) Reavaliar o rollout do SEN-729 (hoje em 25% da base) — o SEN-762, que ajustaria os percentuais dos experimentos no Flipt, também está parado em Backlog e deveria ser retomado somente após a correção do SEN-774.\n\nImpacto: Impacta diretamente o KR de Receita (R$ 345M): mantendo o CR na baseline de 9,92% em vez de 8,02% nesta semana, a Guanabara teria vendido aproximadamente 8.150 passagens a mais sobre as 429.389 sessões observadas. É a segunda semana consecutiva de queda no mesmo step do funil, o que eleva o risco de a perda se tornar recorrente caso o SEN-774 continue sem dono. Também há risco reputacional: falhas de pagamento tendem a gerar detratores e reclamações no SAC/Reclame Aqui, pressionando indiretamente o KR de Nota RA (≥8,0).\n\nPrioridade: Alta — dois KRs relevantes em risco (Receita e indiretamente RA), causa técnica já identificada e documentada pelo próprio time, com prova de conceito de correção funcionando em produção no app; o único bloqueio é priorização.\n\nAcompanhamento: Monitorar checkout_to_purchase do site diariamente (mobile e desktop) e o volume de erros 400 de idempotência no Grafana; se o SEN-774 não for iniciado até o fim da próxima semana e o checkout_to_purchase não voltar a pelo menos 85% (mobile) e 72% (desktop), escalar como incidente de produto para a liderança de Tech.",
+          "diagnostico": "A conversão do site caiu de forma moderada na semana de 31/08 a 06/09: CR de 8,02% frente à baseline de 9,92% (média das últimas 4 semanas), delta de -1,90pp (-19,2%), classificado como queda moderada (z≈1,81σ). Diferente da semana anterior, o CR agora também está abaixo do mesmo período do ano passado (8,81% em 2025, delta YoY de -0,79pp), indicando que a fraqueza deixou de ser apenas sazonal. A queda não é nova: a semana passada (24/08-30/08) já havia registrado queda moderada de -1,07pp no mesmo step do funil, e nesta semana o quadro piorou.",
+          "evidencia": "O funil mostra que toda a perda está concentrada na etapa final: checkout_to_purchase caiu 14,4pp (72,6% vs 87,0% de baseline), enquanto search_to_cart subiu levemente (+0,6pp) e cart_to_checkout caiu apenas -4,6pp. No Linear, o time Senna documentou a causa técnica em 24/08 (SEN-774): o formulário de cartão de crédito do site não tem trava de submissão dupla, gerando erro 400 de conflito de idempotência no Mercado Pago. O mesmo bug existia no app (SEN-777) e foi corrigido em 01/09 — desde então, o CR do app permanece estável (-0,19pp) e o checkout_to_purchase do app até melhorou (+1,4pp). No site, o SEN-774 segue em Backlog, sem responsável, e a rejeição subiu 2,93pp na mesma janela.",
+          "plano_acao": "1) Priorizar imediatamente o SEN-774 usando a correção já validada em produção no app (SEN-777) como referência. 2) Auditar no Grafana o volume de erros 400 de idempotência no endpoint /sn-bff-ms/internal-sale (canal web) na semana de 31/08 a 06/09. 3) Após o deploy, comparar checkout_to_purchase dia a dia (mobile e desktop). 4) Reavaliar o rollout do SEN-729 (25% da base) — o SEN-762 (ajuste de percentuais no Flipt) também está parado em Backlog e só deve ser retomado após a correção do SEN-774.",
+          "impacto": "Impacta diretamente o KR de Receita (R$ 345M): mantendo o CR na baseline de 9,92% em vez de 8,02%, a Guanabara teria vendido aproximadamente 8.150 passagens a mais sobre as 429.389 sessões observadas. É a segunda semana consecutiva de queda no mesmo step do funil. Falhas de pagamento também tendem a gerar detratores, pressionando indiretamente o KR de Nota RA (≥8,0).",
+          "acompanhamento": "Monitorar checkout_to_purchase do site diariamente (mobile e desktop) e o volume de erros 400 de idempotência no Grafana; se o SEN-774 não for iniciado até o fim da próxima semana e a taxa não voltar a pelo menos 85% (mobile) e 72% (desktop), escalar como incidente de produto.",
+          "titulo_linear": "Priorizar SEN-774 (trava de duplo-submit no cartão de crédito do site) usando a correção do SEN-777 (app) como referência",
+          "tipo_acao": "testar",
+          "testavel": true,
+          "criterio_confirmacao": "Hipótese confirmada se, após o deploy da correção do SEN-774, o checkout_to_purchase do site subir para >=85% (mobile) e >=72% (desktop) em até 7 dias e o volume de erros 400 de idempotência no Grafana cair para próximo de zero; refutada se a taxa permanecer no patamar atual mesmo após a correção.",
+          "experimento_template": {
+            "hipotese": "A ausência de trava de submissão dupla no formulário de cartão de crédito do site (SEN-774) está causando conflitos de idempotência no Mercado Pago e reduzindo a taxa de finalização de compra.",
+            "metrica_primaria": "checkout_to_purchase (site, total e por device)",
+            "guardrails": [
+              "CR total do site",
+              "taxa de rejeição",
+              "volume de erros 400 de idempotência no Grafana (/sn-bff-ms/internal-sale, canal web)",
+              "tempo médio de checkout"
+            ],
+            "criterio_sucesso": "checkout_to_purchase volta a >=85% (mobile) e >=72% (desktop) em até 7 dias após o deploy",
+            "duracao_minima": "7 dias corridos após o deploy do fix",
+            "plano_se_inconclusivo": "Auditar GA4 DebugView e Grafana para descartar causas adicionais (ex.: instabilidade do gateway Mercado Pago, mudança de rollout do SEN-729) antes de investir em novas alterações no checkout."
+          },
+          "status": "nunca_testada",
+          "experimento_id": null,
+          "revisao": null
+        },
+        {
+          "id": "INS-2026-100",
+          "canal": "site-desktop",
+          "tag": "[Desktop] Pior queda de conversão do site (z>2σ), mesmo bug de checkout",
+          "classificacao": "Resultado fora da curva",
+          "prioridade": "Alta",
+          "data": "2026-09-09",
+          "texto": "Diagnóstico: O CR de desktop caiu de 13,16% (baseline) para 9,91% nesta semana, delta de -3,25pp, um desvio de aproximadamente 3,1σ sobre a variação histórica das últimas 8 semanas — a queda mais severa entre todos os recortes de device analisados, acima do limiar de 2σ que caracteriza um resultado fora da curva.\n\nEvidência: O funil de desktop mostra search_to_cart e cart_to_checkout relativamente estáveis (+0,9pp e -7,9pp), mas checkout_to_purchase caiu 12,4pp (60,6% vs 73,0% de baseline). O padrão é consistente com o mesmo bug de duplo-submit no cartão de crédito (SEN-774, ver insight de checkout), com desktop respondendo pela maior compressão relativa entre os devices do site.\n\nClassificação: Resultado fora da curva\n\nPlano de ação: 1) Segmentar a auditoria de erros de idempotência no Grafana por device para confirmar se desktop concentra proporcionalmente mais tentativas de duplo clique. 2) Validar manualmente o fluxo de cartão de crédito em desktop no GTM Preview/GA4 DebugView antes e depois do fix do SEN-774. 3) Incluir desktop explicitamente nos testes de regressão do SEN-774 antes do deploy.\n\nImpacto: Desktop responde por cerca de 2.910 compras a menos que o esperado na baseline (89.731 sessões x 3,25pp de CR perdido), uma fração desproporcional da perda total de receita da semana considerando que desktop é apenas ~21% das sessões do site.\n\nPrioridade: Alta — desvio estatístico maior que 2 sigma é, por definição, um sinal que não pode ser tratado como ruído normal de semana.\n\nAcompanhamento: Acompanhar o CR de desktop separadamente do CR geral do site até a correção do SEN-774; se o desvio persistir acima de 2σ por mais de duas semanas consecutivas, tratar como prioridade P0 independente do andamento em mobile.",
+          "diagnostico": "O CR de desktop caiu de 13,16% (baseline) para 9,91% nesta semana, delta de -3,25pp, um desvio de aproximadamente 3,1σ sobre a variação histórica das últimas 8 semanas — a queda mais severa entre todos os recortes de device analisados, acima do limiar de 2σ que caracteriza um resultado fora da curva.",
+          "evidencia": "O funil de desktop mostra search_to_cart e cart_to_checkout relativamente estáveis (+0,9pp e -7,9pp), mas checkout_to_purchase caiu 12,4pp (60,6% vs 73,0% de baseline). O padrão é consistente com o mesmo bug de duplo-submit no cartão de crédito (SEN-774), com desktop respondendo pela maior compressão relativa entre os devices do site.",
+          "plano_acao": "1) Segmentar a auditoria de erros de idempotência no Grafana por device. 2) Validar manualmente o fluxo de cartão de crédito em desktop no GTM Preview/GA4 DebugView antes e depois do fix do SEN-774. 3) Incluir desktop explicitamente nos testes de regressão do SEN-774.",
+          "impacto": "Desktop responde por cerca de 2.910 compras a menos que o esperado na baseline, uma fração desproporcional da perda total considerando que desktop é apenas ~21% das sessões do site.",
+          "acompanhamento": "Acompanhar o CR de desktop separadamente até a correção do SEN-774; se o desvio persistir acima de 2σ por mais de duas semanas consecutivas, tratar como prioridade P0 independente do andamento em mobile.",
+          "titulo_linear": null,
+          "tipo_acao": "monitorar",
+          "testavel": false,
+          "criterio_confirmacao": null,
+          "experimento_template": null,
+          "status": "nunca_testada",
+          "experimento_id": null,
+          "revisao": null
+        },
+        {
+          "id": "INS-2026-101",
+          "canal": "site",
+          "tag": "Canal Pago perde share (-10,8pp) e eficiência (-1,78pp de CR) na semana",
+          "classificacao": "Correlação",
+          "prioridade": "Média",
+          "data": "2026-09-09",
+          "texto": "Diagnóstico: O canal Pago foi o maior contribuidor ponderado para a queda de CR do site nesta semana: share de sessões caiu de 52,3% (baseline) para 41,5% (-10,8pp) e o CR do canal também recuou de 9,65% para 7,87% (-1,78pp) — deterioração simultânea de volume e eficiência. Em contribuição ponderada (share x delta de CR), o Pago responde por cerca de -0,74pp da queda total de -1,90pp no CR do site, mais que qualquer outro canal isoladamente.\n\nEvidência: Enquanto o Pago perdia share, Orgânico (+6,1pp, de 17,3% para 23,4%) e Direto (+1,2pp, de 12,2% para 13,4%) ganharam participação, mas com qualidade pior: o CR de Direto caiu de 19,48% para 15,22% (-4,26pp), a maior queda percentual entre os canais, e o de Orgânico caiu -0,36pp. Como a queda de checkout_to_purchase foi generalizada entre todos os canais de origem, é pouco provável que a causa seja apenas mix de tráfego — mais provável é que a fricção no checkout (SEN-774) esteja afetando todos os canais, e que adicionalmente o time de mídia paga tenha reduzido investimento nesta semana.\n\nClassificação: Correlação\n\nPlano de ação: 1) Confirmar com o time de mídia paga se houve redução de budget, pausa de campanha ou mudança de segmentação entre 31/08 e 06/09. 2) Cruzar a queda de share do Pago com o calendário de campanhas ativas no período. 3) Se não houver explicação de mídia, tratar a queda de CR do Pago como mais um efeito do problema de checkout.\n\nImpacto: Contribui com a maior fatia ponderada da queda de Receita (KR R$ 345M) entre os canais de origem analisados. Se a causa for redução de investimento em mídia paga, a ação corretiva é de orçamento/mídia, não de produto.\n\nPrioridade: Média — impacto relevante em receita, mas a causa raiz ainda não está isolada entre efeito de mídia e efeito de checkout.\n\nAcompanhamento: Acompanhar semanalmente o share e o CR do canal Pago; se a recuperação do CR geral pós-fix do SEN-774 não vier acompanhada de recuperação do share do Pago, escalar para o time de mídia paga como investigação separada.",
+          "diagnostico": "O canal Pago foi o maior contribuidor ponderado para a queda de CR do site nesta semana: share de sessões caiu de 52,3% para 41,5% (-10,8pp) e o CR do canal também recuou de 9,65% para 7,87% (-1,78pp). Em contribuição ponderada, o Pago responde por cerca de -0,74pp da queda total de -1,90pp, mais que qualquer outro canal isoladamente.",
+          "evidencia": "Orgânico (+6,1pp de share) e Direto (+1,2pp) ganharam participação, mas com qualidade pior: CR de Direto caiu -4,26pp e o de Orgânico -0,36pp. A queda de checkout_to_purchase foi generalizada entre canais, o que aponta para fricção de checkout comum somada a possível redução de investimento em mídia paga.",
+          "plano_acao": "1) Confirmar com o time de mídia paga se houve redução de budget ou pausa de campanha no período. 2) Cruzar a queda de share do Pago com o calendário de campanhas ativas. 3) Se não houver explicação de mídia, tratar como efeito adicional do problema de checkout.",
+          "impacto": "Contribui com a maior fatia ponderada da queda de Receita entre os canais de origem. Se a causa for redução de investimento em mídia paga, a ação corretiva é de orçamento, não de produto.",
+          "acompanhamento": "Acompanhar semanalmente o share e o CR do canal Pago; se a recuperação do CR geral pós-fix do SEN-774 não vier acompanhada de recuperação do share do Pago, escalar para o time de mídia paga.",
+          "titulo_linear": null,
+          "tipo_acao": "monitorar",
+          "testavel": false,
+          "criterio_confirmacao": null,
+          "experimento_template": null,
+          "status": "nunca_testada",
+          "experimento_id": null,
+          "revisao": null
+        },
+        {
+          "id": "INS-2026-102",
+          "canal": "site",
+          "tag": "Sessões via e-mail caem 80% em duas semanas (1.314 → 262)",
+          "classificacao": "Tendência",
+          "prioridade": "Baixa",
+          "data": "2026-09-09",
+          "texto": "Diagnóstico: As sessões do site originadas do canal e-mail caíram de forma consistente nas últimas três semanas: 1.314 (17/08-23/08) → 633 (24/08-30/08) → 262 (31/08-06/09), queda acumulada de aproximadamente 80%. O volume é pequeno em termos absolutos (0,06% das sessões totais do site nesta semana), mas a tendência é clara e sustentada por três semanas consecutivas, o que descarta ruído pontual.\n\nEvidência: Não há indicação nos dados de GA4 sobre a causa (o dado é apenas de sessões por canal, sem detalhe de campanha); a hipótese mais provável, dado o padrão de queda abrupta e contínua, é uma régua de e-mail do CRM que parou de disparar ou uma campanha recorrente descontinuada, e não uma mudança de comportamento do usuário.\n\nClassificação: Tendência\n\nPlano de ação: 1) Verificar com o squad de CRM se alguma régua ou campanha de e-mail programada para este período foi pausada, despriorizada ou teve problema de disparo no Insider. 2) Confirmar se há mudança recente de classificação de UTM redirecionando essas sessões para outro canal (ex.: direto ou referral) em vez de e-mail — isso seria um problema de mensuração, não de negócio.\n\nImpacto: Impacto direto em Receita é mínimo dado o volume baixo, mas o canal e-mail normalmente está ligado a jornadas de recorrência e reativação — se a causa for uma régua parada, o impacto real está no KR de Recorrência (2,55 viagens/cliente), não fica visível apenas nesta métrica de sessões do site.\n\nPrioridade: Baixa — volume pequeno em termos absolutos, mas motivo suficiente para uma verificação rápida com CRM, já que readequação de régua é de baixo esforço.\n\nAcompanhamento: Acompanhar sessoes_email nas próximas duas semanas; se a queda persistir sem explicação de CRM ou UTM, aprofundar a investigação junto ao squad de Martech sobre a integração de disparo do Insider.",
+          "diagnostico": "As sessões do site originadas do canal e-mail caíram de forma consistente nas últimas três semanas: 1.314 → 633 → 262, queda acumulada de aproximadamente 80%. O volume é pequeno em termos absolutos, mas a tendência é sustentada por três semanas consecutivas.",
+          "evidencia": "Não há detalhe de campanha nos dados de GA4; a hipótese mais provável é uma régua de e-mail do CRM que parou de disparar ou uma campanha descontinuada, e não uma mudança de comportamento do usuário.",
+          "plano_acao": "1) Verificar com o squad de CRM se alguma régua ou campanha de e-mail foi pausada ou teve problema de disparo no Insider. 2) Confirmar se há mudança de classificação de UTM redirecionando sessões para outro canal.",
+          "impacto": "Impacto direto em Receita é mínimo dado o volume baixo, mas se a causa for uma régua parada, o impacto real está no KR de Recorrência (2,55 viagens/cliente).",
+          "acompanhamento": "Acompanhar sessoes_email nas próximas duas semanas; se a queda persistir sem explicação, aprofundar junto ao squad de Martech sobre a integração de disparo do Insider.",
+          "titulo_linear": null,
+          "tipo_acao": "monitorar",
+          "testavel": false,
+          "criterio_confirmacao": null,
+          "experimento_template": null,
+          "status": "nunca_testada",
+          "experimento_id": null,
+          "revisao": null
+        },
+        {
+          "id": "INS-2026-103",
+          "canal": "conjunto",
+          "tag": "[Site vs App] App estável enquanto site cai — não há migração de tráfego",
+          "classificacao": "Diagnóstico comprovado",
+          "prioridade": "Média",
+          "data": "2026-09-09",
+          "texto": "Diagnóstico: O app manteve conversão estável nesta semana (CR de 8,37% vs baseline de 8,56%, delta de -0,19pp, dentro da faixa normal) enquanto o site caiu -1,90pp no mesmo período — divergência que reforça que o problema é específico da experiência do site (bug SEN-774 no checkout), não um efeito de mercado, sazonalidade ou qualidade de tráfego que afetaria os dois canais igualmente.\n\nEvidência: O share de sessões do app sobre o total (site + app) ficou estável nas últimas três semanas: 30,86% (17/08-23/08), 30,85% (24/08-30/08) e 30,65% (31/08-06/09) — não há sinal de migração de usuários do site para o app nem de expansão de base via app. Em volume absoluto, o site segue muito maior que o app tanto em sessões (429.389 vs 189.858) quanto em compras (34.440 vs 15.899). A rejeição do app (23,88%) também é mais baixa que a do site (25,82%), delta de -1,94pp, consistente com uma experiência mais estável no app nesta semana.\n\nClassificação: Diagnóstico comprovado\n\nPlano de ação: 1) Usar o app como grupo de controle natural para medir o efeito do fix do SEN-774 no site — se após a correção o CR do site convergir para o padrão do app, é evidência adicional de causalidade. 2) Não investir em iniciativas de migração de tráfego site→app neste momento; resolver o checkout do site tem impacto maior e mais rápido no KR de Receita.\n\nImpacto: Confirma que a alavanca de maior impacto imediato em Receita é a correção do checkout do site, não uma estratégia de canal. Também informa o KR de Identificação de base: como o app não está crescendo em participação, iniciativas de identificação via app não devem ser priorizadas com base em uma tendência de migração que não existe.\n\nPrioridade: Média — não é uma ação corretiva em si, mas contextualiza corretamente a prioridade das ações de SEN-774 e canal Pago como as alavancas certas.\n\nAcompanhamento: Reavaliar mensalmente o share de sessões app/site; se o app começar a crescer de forma consistente acima de 32-33% de participação, revisar a hipótese e o roadmap de investimento entre os dois canais.",
+          "diagnostico": "O app manteve conversão estável nesta semana (CR de 8,37% vs baseline de 8,56%, -0,19pp) enquanto o site caiu -1,90pp no mesmo período — divergência que reforça que o problema é específico da experiência do site (SEN-774), não um efeito de mercado ou sazonalidade.",
+          "evidencia": "O share de sessões do app sobre o total ficou estável nas últimas três semanas (30,86% → 30,85% → 30,65%) — sem sinal de migração. O site segue muito maior que o app em sessões (429.389 vs 189.858) e compras (34.440 vs 15.899). A rejeição do app (23,88%) é mais baixa que a do site (25,82%).",
+          "plano_acao": "1) Usar o app como grupo de controle natural para medir o efeito do fix do SEN-774 no site. 2) Não investir em iniciativas de migração de tráfego site→app neste momento.",
+          "impacto": "Confirma que a alavanca de maior impacto imediato em Receita é a correção do checkout do site, não uma estratégia de canal. Informa também o KR de Identificação de base.",
+          "acompanhamento": "Reavaliar mensalmente o share de sessões app/site; se o app crescer de forma consistente acima de 32-33% de participação, revisar a hipótese e o roadmap de investimento entre os dois canais.",
+          "titulo_linear": null,
+          "tipo_acao": "monitorar",
+          "testavel": false,
+          "criterio_confirmacao": null,
+          "experimento_template": null,
+          "status": "nunca_testada",
+          "experimento_id": null,
+          "revisao": null
+        }
+      ]
+    },
     {
       "semana": "2026-08-24",
       "label": "24/08 – 30/08/2026",
@@ -2383,6 +2512,192 @@
     }
   ],
   "insights_conversao": [
+    {
+      "semana": "2026-08-31",
+      "label": "31/08 – 06/09/2026",
+      "tipo": "semanal",
+      "gerado_em": "2026-09-09T10:00:00-03:00",
+      "classificacao": "caiu_moderado",
+      "metricas": {
+        "cr_atual": {
+          "total": 8.02,
+          "mobile": 7.55,
+          "desktop": 9.91
+        },
+        "cr_baseline": {
+          "total": 9.92,
+          "mobile": 9.06,
+          "desktop": 13.16
+        },
+        "delta_pp": {
+          "total": -1.9,
+          "mobile": -1.51,
+          "desktop": -3.25
+        },
+        "sigma": 1.05,
+        "n_semanas_hist": 8
+      },
+      "hipoteses": [
+        {
+          "hipotese": "Bug de duplo-submit no checkout de cartão de crédito do site (SEN-774), sem correção, é a causa técnica da queda de checkout_to_purchase.",
+          "evidencia": "checkout_to_purchase caiu 14,4pp (72,6% vs 87,0% baseline) enquanto search_to_cart subiu 0,6pp; o mesmo bug no app (SEN-777) foi corrigido em 01/09 e o CR do app ficou estável (-0,19pp) na mesma semana."
+        },
+        {
+          "hipotese": "Queda de share e eficiência do canal Pago (possível redução de investimento em mídia) amplifica o efeito da queda de CR geral.",
+          "evidencia": "Share de sessões Pago caiu de 52,3% para 41,5% (-10,8pp, share >=5%) e CR do canal caiu de 9,65% para 7,87% (-1,78pp) — maior contribuição ponderada (~-0,74pp) entre os canais para a queda geral de -1,90pp."
+        }
+      ],
+      "monitorar": "Acompanhar checkout_to_purchase do site diariamente (mobile e desktop), o status do SEN-774 no Linear, e o share/CR do canal Pago; escalar como incidente de produto se não houver recuperação até o fim da próxima semana.",
+      "dispositivos": {
+        "mobile": {
+          "classificacao": "caiu_moderado",
+          "cr_atual": 7.55,
+          "cr_baseline": 9.06,
+          "delta_pp": -1.51,
+          "canal_contexto": [
+            {
+              "nome": "Pago",
+              "share_sessoes_total": 41.5,
+              "cr_total": 7.87,
+              "delta_cr_pp": -1.78
+            },
+            {
+              "nome": "Orgânico",
+              "share_sessoes_total": 23.4,
+              "cr_total": 6.35,
+              "delta_cr_pp": -0.36
+            },
+            {
+              "nome": "Direto",
+              "share_sessoes_total": 13.4,
+              "cr_total": 15.22,
+              "delta_cr_pp": -4.26
+            },
+            {
+              "nome": "Social",
+              "share_sessoes_total": 1.6,
+              "cr_total": null,
+              "delta_cr_pp": null
+            }
+          ],
+          "funil": {
+            "step_critico": "checkout_to_purchase",
+            "checkout_to_purchase": {
+              "atual": 78.3,
+              "baseline": 94.1,
+              "delta_pp": -15.8
+            },
+            "cart_to_checkout": {
+              "atual": 64.1,
+              "baseline": 66.8,
+              "delta_pp": -2.7
+            },
+            "search_to_cart": {
+              "atual": 9.9,
+              "baseline": 9.6,
+              "delta_pp": 0.3
+            }
+          },
+          "hipoteses": [
+            "Queda de checkout_to_purchase no mobile (-15,8pp) coincide com o bug de duplo-submit no checkout de cartão do site (SEN-774), ainda não corrigido — mobile concentra 78,3% das sessões do site e responde pela maior parte do volume afetado."
+          ],
+          "monitorar": "Acompanhar checkout_to_purchase mobile diariamente; meta de recuperação: >=85% até o fim da próxima semana."
+        },
+        "desktop": {
+          "classificacao": "caiu_significativo",
+          "cr_atual": 9.91,
+          "cr_baseline": 13.16,
+          "delta_pp": -3.25,
+          "canal_contexto": [
+            {
+              "nome": "Pago",
+              "share_sessoes_total": 41.5,
+              "cr_total": 7.87,
+              "delta_cr_pp": -1.78
+            },
+            {
+              "nome": "Orgânico",
+              "share_sessoes_total": 23.4,
+              "cr_total": 6.35,
+              "delta_cr_pp": -0.36
+            },
+            {
+              "nome": "Direto",
+              "share_sessoes_total": 13.4,
+              "cr_total": 15.22,
+              "delta_cr_pp": -4.26
+            },
+            {
+              "nome": "Social",
+              "share_sessoes_total": 1.6,
+              "cr_total": null,
+              "delta_cr_pp": null
+            }
+          ],
+          "funil": {
+            "step_critico": "checkout_to_purchase",
+            "checkout_to_purchase": {
+              "atual": 60.6,
+              "baseline": 73,
+              "delta_pp": -12.4
+            },
+            "cart_to_checkout": {
+              "atual": 52.8,
+              "baseline": 60.7,
+              "delta_pp": -7.9
+            },
+            "search_to_cart": {
+              "atual": 15.4,
+              "baseline": 14.5,
+              "delta_pp": 0.9
+            }
+          },
+          "hipoteses": [
+            "Desktop teve a queda de CR mais severa do site (-3,25pp, z≈3,1σ) com checkout_to_purchase caindo 12,4pp mesmo com search_to_cart e cart_to_checkout relativamente estáveis, indicando fricção concentrada na etapa de pagamento, consistente com o bug SEN-774 (duplo submit no cartão de crédito)."
+          ],
+          "monitorar": "Acompanhar checkout_to_purchase desktop diariamente; meta de recuperação: >=72% até o fim da próxima semana; se não recuperar, tratar como regressão confirmada."
+        },
+        "app": {
+          "classificacao": "estavel",
+          "cr_atual": 8.37,
+          "cr_baseline": 8.56,
+          "delta_pp": -0.19,
+          "cr_android": {
+            "atual": 6.57,
+            "baseline": 6.57,
+            "delta_pp": 0,
+            "classificacao": "estavel"
+          },
+          "cr_ios": {
+            "atual": 12.04,
+            "baseline": 13.16,
+            "delta_pp": -1.12,
+            "classificacao": "estavel"
+          },
+          "canal_contexto_nota": "GA4 App não retorna conversão segmentada por canal de aquisição — apenas share de sessões, sem CR por canal.",
+          "funil": {
+            "step_critico": "nenhum — todas as etapas estáveis ou em leve alta",
+            "search_to_cart": {
+              "atual": 39.3,
+              "baseline": 41.8,
+              "delta_pp": -2.5
+            },
+            "cart_to_checkout": {
+              "atual": 21.1,
+              "baseline": 21.3,
+              "delta_pp": -0.2
+            },
+            "checkout_to_purchase": {
+              "atual": 67.1,
+              "baseline": 65.7,
+              "delta_pp": 1.4
+            }
+          },
+          "hipoteses": [],
+          "monitorar": "Usar o app como grupo de controle do fix do SEN-774 no site: se o CR do site convergir para o padrão estável do app após a correção, reforça a causalidade do diagnóstico."
+        }
+      }
+    },
     {
       "semana": "2026-08-24",
       "label": "24/08 – 30/08/2026",
