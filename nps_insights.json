@@ -1,6 +1,61 @@
 {
-  "gerado_em": "2026-09-01T15:34:37.766Z",
+  "gerado_em": "2026-09-09T13:18:59.896Z",
   "semanas": [
+    {
+      "semana": "2026-08-31",
+      "label": "31/08 – 06/09/2026",
+      "gerado_em": "2026-09-09T10:00:00-03:00",
+      "nps_score": 81.16,
+      "nps_nota_media": 9.31,
+      "nps_respostas": 10027,
+      "nps_promotores": 8580,
+      "nps_neutros": 1005,
+      "nps_detratores": 442,
+      "promotores": {
+        "total": 11,
+        "temas_principais": [
+          "satisfação geral com a experiência (ótimo/bom/excelente/top)",
+          "elogio ao atendimento",
+          "praticidade da compra",
+          "agilidade do processo"
+        ],
+        "resumo": "Promotores seguem concentrados em elogios curtos e genéricos (Ótimo, Muito bom, Excelente, Top), sem detalhamento específico do que gerou a boa experiência — agilidade e praticidade continuam sendo os únicos temas com algum conteúdo além do elogio puro.",
+        "insight": "O padrão se mantém idêntico ao observado nas últimas seis semanas: alto volume de promotores satisfeitos, mas sem sinal de encantamento diferenciado. Para mover o NPS de forma sustentável, o time Senna precisa de momentos de experiência memorável, não apenas ausência de fricção.",
+        "recorrente": true,
+        "semanas_recorrente": 6
+      },
+      "neutros": {
+        "total": 10,
+        "temas_principais": [
+          "taxa de serviço considerada alta",
+          "percepção geral de preço elevado (caro)",
+          "ausência de parcelamento sem juros",
+          "lentidão percebida no processo",
+          "satisfação moderada genérica (bom/ótimo)"
+        ],
+        "resumo": "Neutros continuam bloqueados por percepção de custo: taxa de serviço, preço alto e ausência de parcelamento sem juros concentram a maior parte dos comentários negativos, com a menção a lentidão reaparecendo pela segunda semana consecutiva.",
+        "insight": "Tema de taxa de serviço idêntico ao das últimas seis semanas — segue sendo um bloqueio estrutural e recorrente para conversão de neutros em promotores, sem mudança de padrão nem ação de produto registrada. A lentidão, que apareceu como tema pontual na semana passada, se repetiu nesta semana e deve passar a ser tratada como tema emergente, não mais pontual.",
+        "recorrente": true,
+        "semanas_recorrente": 6
+      },
+      "detratores": {
+        "total": 1,
+        "temas_principais": [
+          "indignação com taxas consideradas abusivas"
+        ],
+        "resumo": "Volume pequeno de comentários agregados de detratores esta semana, mas o único tema capturado repete a reclamação de taxas abusivas já vista nas semanas anteriores.",
+        "insight": "Mesmo com poucos comentários agregados, o padrão de insatisfação com taxas permanece o gatilho dominante entre detratores, consistente com o histórico das últimas seis semanas — e sem nenhuma issue correspondente aberta no Linear do time Senna até o momento.",
+        "recomendacao_produto": "Revisar a comunicação da taxa de serviço no checkout e avaliar experimento de parcelamento sem juros em alguma faixa de valor, medindo impacto em NPS e em conversão. Priorizar, porém, a correção do SEN-774 (bug de checkout, ver insights.json desta semana) antes de qualquer novo experimento de taxas, já que o impacto em Receita do problema técnico é maior e mais urgente que o desconforto crônico de preço.",
+        "recorrente": true,
+        "semanas_recorrente": 6
+      },
+      "analise_temporal": {
+        "padrao": "recorrente",
+        "tendencia": "estavel",
+        "diagnostico": "NPS score do site se mantém estável na faixa 80-81 pela 6ª semana consecutiva, bem acima da meta de 60. O tema de taxa de serviço permanece o principal bloqueio de neutros e detratores há pelo menos 9 semanas, sem sinal de mudança nem ação de produto correspondente registrada no Linear. Nesta semana, a prioridade não deve ser o tema de taxas (estrutural e de menor urgência relativa), e sim o problema técnico de checkout (SEN-774), que está deprimindo a conversão do site de forma aguda e crescente.",
+        "dias_criticos": []
+      }
+    },
     {
       "semana": "2026-08-24",
       "label": "24/08 – 30/08/2026",
