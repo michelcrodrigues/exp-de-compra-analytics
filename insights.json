@@ -1,6 +1,145 @@
 {
-  "gerado_em": "2026-09-09T13:16:52.862Z",
+  "gerado_em": "2026-09-15T15:21:15.981Z",
   "insights": [
+    {
+      "semana": "2026-09-07",
+      "label": "07/09 – 13/09/2026",
+      "gerado_em": "2026-09-15T15:21:15.981Z",
+      "items": [
+        {
+          "id": "INS-2026-104",
+          "canal": "site",
+          "tag": "Queda de conversão concentrada no checkout — bug SEN-774 sem correção há 3 semanas",
+          "classificacao": "Hipótese",
+          "prioridade": "Alta",
+          "data": "2026-09-15",
+          "diagnostico": "O CR do site caiu de forma moderada nesta semana (8,10% vs baseline de 9,36%, δ -1,26pp / -13,5%, também -0,59pp abaixo do mesmo período do ano passado), e essa já é a quarta semana consecutiva de recuo desde o pico de 10,54% registrado em 10-16/08. A queda está concentrada nas etapas de meio e fim de funil: cart_to_checkout caiu 6,1pp (57,4% vs 63,5%) e checkout_to_purchase caiu 4,2pp (78,2% vs 82,4%), enquanto search_to_cart até melhorou (+0,6pp), o que isola o problema no fluxo de checkout e não na atração ou no início da jornada. O bug SEN-774 (checkout de cartão de crédito do site sem trava de submit, gerando conflitos de idempotência) segue em status Backlog desde 25/08 e já havia sido apontado como causa provável nas análises de 24/08 e 31/08.",
+          "evidencia": "CR atual 8,10% vs baseline (média 4 semanas) 9,36%, δ -1,26pp, sigma histórico 1,06 (classificação caiu_moderado). Funil: cart_to_checkout 57,4% vs 63,5% baseline (-6,1pp); checkout_to_purchase 78,2% vs 82,4% baseline (-4,2pp); search_to_cart 11,5% vs 10,9% baseline (+0,6pp). SEN-774 (Backlog, sem data de início) é a mesma causa técnica citada nas duas análises semanais anteriores (24/08 e 31/08), sem indicação de priorização entre essas datas.",
+          "plano_acao": "Escalar SEN-774 para o time Senna como bloqueio de conversão com 3+ semanas de idade, solicitando priorização explícita no próximo planejamento de sprint. Validar com o time se SEN-876 e SEN-892 (ambos entregues em 10-11/09, relacionados a saveSaleBuyer) resolvem parcialmente o mesmo tipo de falha, já que a curva diária mostra recuperação de CR de 6,87% (07/09) para 8,45-8,46% (12-13/09) coincidindo com essas entregas. Se a recuperação não se sustentar nas próximas duas semanas, tratar como prioridade Urgente equivalente à SEN-901 (App).",
+          "impacto": "Afeta diretamente o KR de Receita (R$ 345M) e a meta de conversão do squad Experiência de Compra — uma recuperação de 1,26pp no CR equivale a um ganho relevante de compras semanais sem qualquer investimento adicional em tráfego. Também impacta a eficiência de mídia paga, já que o canal Pago perdeu share e CR na mesma semana.",
+          "acompanhamento": "Acompanhar diariamente o CR do site nas próximas duas semanas para confirmar se a tendência de recuperação intrassemana observada em 10-13/09 se sustenta e se aproxima do baseline de 9,36%. Verificar especificamente a evolução de cart_to_checkout e checkout_to_purchase, que são as etapas mais afetadas. Cobrar status de SEN-774 no próximo ritual do Senna.",
+          "titulo_linear": null,
+          "tipo_acao": "monitorar",
+          "testavel": false,
+          "criterio_confirmacao": null,
+          "experimento_template": null,
+          "status": "nunca_testada",
+          "experimento_id": null,
+          "revisao": null,
+          "texto": "Diagnóstico: O CR do site caiu de forma moderada nesta semana (8,10% vs baseline de 9,36%, δ -1,26pp / -13,5%, também -0,59pp abaixo do mesmo período do ano passado), e essa já é a quarta semana consecutiva de recuo desde o pico de 10,54% registrado em 10-16/08. A queda está concentrada nas etapas de meio e fim de funil: cart_to_checkout caiu 6,1pp (57,4% vs 63,5%) e checkout_to_purchase caiu 4,2pp (78,2% vs 82,4%), enquanto search_to_cart até melhorou (+0,6pp), o que isola o problema no fluxo de checkout e não na atração ou no início da jornada. O bug SEN-774 (checkout de cartão de crédito do site sem trava de submit, gerando conflitos de idempotência) segue em status Backlog desde 25/08 e já havia sido apontado como causa provável nas análises de 24/08 e 31/08.\n\nEvidência: CR atual 8,10% vs baseline (média 4 semanas) 9,36%, δ -1,26pp, sigma histórico 1,06 (classificação caiu_moderado). Funil: cart_to_checkout 57,4% vs 63,5% baseline (-6,1pp); checkout_to_purchase 78,2% vs 82,4% baseline (-4,2pp); search_to_cart 11,5% vs 10,9% baseline (+0,6pp). SEN-774 (Backlog, sem data de início) é a mesma causa técnica citada nas duas análises semanais anteriores (24/08 e 31/08), sem indicação de priorização entre essas datas.\n\nClassificação: Hipótese\n\nPlano de ação: Escalar SEN-774 para o time Senna como bloqueio de conversão com 3+ semanas de idade, solicitando priorização explícita no próximo planejamento de sprint. Validar com o time se SEN-876 e SEN-892 (ambos entregues em 10-11/09, relacionados a saveSaleBuyer) resolvem parcialmente o mesmo tipo de falha, já que a curva diária mostra recuperação de CR de 6,87% (07/09) para 8,45-8,46% (12-13/09) coincidindo com essas entregas. Se a recuperação não se sustentar nas próximas duas semanas, tratar como prioridade Urgente equivalente à SEN-901 (App).\n\nImpacto: Afeta diretamente o KR de Receita (R$ 345M) e a meta de conversão do squad Experiência de Compra — uma recuperação de 1,26pp no CR equivale a um ganho relevante de compras semanais sem qualquer investimento adicional em tráfego. Também impacta a eficiência de mídia paga, já que o canal Pago perdeu share e CR na mesma semana.\n\nPrioridade: Alta\n\nAcompanhamento: Acompanhar diariamente o CR do site nas próximas duas semanas para confirmar se a tendência de recuperação intrassemana observada em 10-13/09 se sustenta e se aproxima do baseline de 9,36%. Verificar especificamente a evolução de cart_to_checkout e checkout_to_purchase, que são as etapas mais afetadas. Cobrar status de SEN-774 no próximo ritual do Senna."
+        },
+        {
+          "id": "INS-2026-105",
+          "canal": "site-desktop",
+          "tag": "[Desktop] Cart_to_checkout despenca 9,3pp — o dobro da queda no mobile",
+          "classificacao": "Resultado fora da curva",
+          "prioridade": "Alta",
+          "data": "2026-09-15",
+          "diagnostico": "A etapa cart_to_checkout no desktop caiu 9,3pp (49,3% vs baseline de 58,6%), quase o dobro da queda observada no mobile (-4,4pp, 61,8% vs 66,2%) para o mesmo período. Essa assimetria indica que o problema técnico ou de UX no fluxo de checkout é mais severo no desktop do que no mobile, o que é atípico já que historicamente o desktop converte melhor (CR desktop de 10,22% ainda supera o mobile de 7,62% mesmo com essa queda). O canal Direto, que tem maior participação de acessos diretos via desktop, também registrou a maior queda de CR entre os canais (-2,88pp), reforçando que o problema pode estar concentrado na experiência de checkout desktop.",
+          "evidencia": "cart_to_checkout desktop: 49,3% atual vs 58,6% baseline (-9,3pp). cart_to_checkout mobile: 61,8% atual vs 66,2% baseline (-4,4pp) — menos da metade da queda absoluta do desktop. CR desktop total: 10,22% vs baseline 12,1% (-1,88pp, classificação caiu_moderado). Canal Direto: CR caiu de 18,05% para 15,17% (-2,88pp), maior queda entre os canais analisados.",
+          "plano_acao": "Abrir um spike no Senna para investigar tecnicamente a etapa cart_to_checkout no desktop, incluindo revisão de logs de erro, rastreamento de abandono por breakpoint de tela e comparação de tempo de carregamento entre mobile e desktop nessa etapa. Priorizar essa investigação acima de melhorias cosméticas, dado o tamanho do gap (quase o dobro do mobile) e o fato de o desktop ainda ser o device de maior CR absoluto — perder eficiência ali tem custo desproporcional em receita.",
+          "impacto": "Recuperar parte dos 9,3pp de queda no desktop teria impacto direto e desproporcional na receita, já que o desktop converte a taxas mais altas que o mobile (10,22% vs 7,62%). Também afeta a percepção de qualidade do canal Direto, que é o mais qualificado e mais caro de se perder.",
+          "acompanhamento": "Acompanhar a abertura e o andamento do spike no Linear (Senna). Medir cart_to_checkout desktop semanalmente até identificar e corrigir a causa raiz. Comparar a evolução do desktop com o mobile para confirmar se o gap está se fechando.",
+          "titulo_linear": "Spike: investigar causa da queda de cart_to_checkout no desktop (-9,3pp) — Experiência de Compra",
+          "tipo_acao": "testar",
+          "testavel": true,
+          "criterio_confirmacao": "Se, após instrumentação de logs/erros no fluxo de checkout desktop, for identificada uma falha técnica específica (ex.: erro de submit, timeout, incompatibilidade de payload) que explique a maior parte dos -9,3pp, a hipótese é confirmada; se os logs não mostrarem anomalia técnica proporcional à queda, a causa provável passa a ser de UX (fricção introduzida por mudança recente de layout ou fluxo).",
+          "experimento_template": "Hipótese: uma falha técnica ou de UX específica do fluxo desktop está bloqueando a transição de carrinho para checkout. Métrica primária: taxa cart_to_checkout desktop. Guardrails: cart_to_checkout mobile e CR geral não podem piorar durante a investigação. Critério de sucesso: identificar e corrigir a causa raiz, recuperando ao menos 5 dos 9,3pp de queda em 2 semanas após o fix. Duração mínima: 1 semana de instrumentação + 2 semanas de observação pós-fix. Se inconclusivo: expandir para sessão de gravação de tela (session replay) no fluxo desktop.",
+          "status": "nunca_testada",
+          "experimento_id": null,
+          "revisao": null,
+          "texto": "Diagnóstico: A etapa cart_to_checkout no desktop caiu 9,3pp (49,3% vs baseline de 58,6%), quase o dobro da queda observada no mobile (-4,4pp, 61,8% vs 66,2%) para o mesmo período. Essa assimetria indica que o problema técnico ou de UX no fluxo de checkout é mais severo no desktop do que no mobile, o que é atípico já que historicamente o desktop converte melhor (CR desktop de 10,22% ainda supera o mobile de 7,62% mesmo com essa queda). O canal Direto, que tem maior participação de acessos diretos via desktop, também registrou a maior queda de CR entre os canais (-2,88pp), reforçando que o problema pode estar concentrado na experiência de checkout desktop.\n\nEvidência: cart_to_checkout desktop: 49,3% atual vs 58,6% baseline (-9,3pp). cart_to_checkout mobile: 61,8% atual vs 66,2% baseline (-4,4pp) — menos da metade da queda absoluta do desktop. CR desktop total: 10,22% vs baseline 12,1% (-1,88pp, classificação caiu_moderado). Canal Direto: CR caiu de 18,05% para 15,17% (-2,88pp), maior queda entre os canais analisados.\n\nClassificação: Resultado fora da curva\n\nPlano de ação: Abrir um spike no Senna para investigar tecnicamente a etapa cart_to_checkout no desktop, incluindo revisão de logs de erro, rastreamento de abandono por breakpoint de tela e comparação de tempo de carregamento entre mobile e desktop nessa etapa. Priorizar essa investigação acima de melhorias cosméticas, dado o tamanho do gap (quase o dobro do mobile) e o fato de o desktop ainda ser o device de maior CR absoluto — perder eficiência ali tem custo desproporcional em receita.\n\nImpacto: Recuperar parte dos 9,3pp de queda no desktop teria impacto direto e desproporcional na receita, já que o desktop converte a taxas mais altas que o mobile (10,22% vs 7,62%). Também afeta a percepção de qualidade do canal Direto, que é o mais qualificado e mais caro de se perder.\n\nPrioridade: Alta\n\nAcompanhamento: Acompanhar a abertura e o andamento do spike no Linear (Senna). Medir cart_to_checkout desktop semanalmente até identificar e corrigir a causa raiz. Comparar a evolução do desktop com o mobile para confirmar se o gap está se fechando."
+        },
+        {
+          "id": "INS-2026-106",
+          "canal": "site",
+          "tag": "Canais Direto e Pago perdem eficiência de conversão na mesma semana",
+          "classificacao": "Correlação",
+          "prioridade": "Média",
+          "data": "2026-09-15",
+          "diagnostico": "Os dois maiores canais de sessão do site pioraram simultaneamente: o canal Pago perdeu 3,3pp de share (de 49,5% para 46,2%) e 1,21pp de CR (de 9,09% para 7,88%), enquanto o canal Direto, apesar de ganhar 0,9pp de share (de 12,6% para 13,5%), teve a maior queda de CR entre todos os canais (-2,88pp, de 18,05% para 15,17%). O fato de a queda de CR ser generalizada entre canais — inclusive no Direto, que não depende de qualidade de mídia — sustenta que a causa principal é de produto (checkout) e não de tráfego, mas a perda de eficiência do Pago é um problema adicional e paralelo que merece atenção de mídia.",
+          "evidencia": "Canal Pago: share 46,2% atual vs 49,5% baseline (-3,3pp); CR 7,88% vs 9,09% baseline (-1,21pp). Canal Direto: share 13,5% vs 12,6% baseline (+0,9pp); CR 15,17% vs 18,05% baseline (-2,88pp), maior delta entre os canais analisados. Canal Orgânico: CR 5,83% vs 6,5% baseline (-0,67pp).",
+          "plano_acao": "Levar a queda de share e eficiência do canal Pago para o time de mídia paga, para verificar se houve redução de investimento, mudança de campanha ou piora de qualidade de leads na semana. Como a queda de CR é comum a todos os canais, não recomendar ajuste de mix de mídia como solução isolada — o problema de checkout (insight INS-2026-104) precisa ser resolvido primeiro, pois está mascarando a real eficiência de cada canal.",
+          "impacto": "Afeta diretamente o KR de Receita, já que Pago e Direto somam quase 60% das sessões do site. Uma queda de eficiência de mídia paga sem correção pode levar a decisões equivocadas de redução ou realocação de budget baseadas em uma causa raiz (checkout) que não tem relação com a qualidade do tráfego comprado.",
+          "acompanhamento": "Acompanhar semanalmente o share e o CR por canal para verificar se a recuperação do checkout (uma vez corrigido SEN-774) traz de volta a eficiência de todos os canais de forma proporcional, o que confirmaria a hipótese de causa comum de produto.",
+          "titulo_linear": null,
+          "tipo_acao": "monitorar",
+          "testavel": false,
+          "criterio_confirmacao": null,
+          "experimento_template": null,
+          "status": "nunca_testada",
+          "experimento_id": null,
+          "revisao": null,
+          "texto": "Diagnóstico: Os dois maiores canais de sessão do site pioraram simultaneamente: o canal Pago perdeu 3,3pp de share (de 49,5% para 46,2%) e 1,21pp de CR (de 9,09% para 7,88%), enquanto o canal Direto, apesar de ganhar 0,9pp de share (de 12,6% para 13,5%), teve a maior queda de CR entre todos os canais (-2,88pp, de 18,05% para 15,17%). O fato de a queda de CR ser generalizada entre canais — inclusive no Direto, que não depende de qualidade de mídia — sustenta que a causa principal é de produto (checkout) e não de tráfego, mas a perda de eficiência do Pago é um problema adicional e paralelo que merece atenção de mídia.\n\nEvidência: Canal Pago: share 46,2% atual vs 49,5% baseline (-3,3pp); CR 7,88% vs 9,09% baseline (-1,21pp). Canal Direto: share 13,5% vs 12,6% baseline (+0,9pp); CR 15,17% vs 18,05% baseline (-2,88pp), maior delta entre os canais analisados. Canal Orgânico: CR 5,83% vs 6,5% baseline (-0,67pp).\n\nClassificação: Correlação\n\nPlano de ação: Levar a queda de share e eficiência do canal Pago para o time de mídia paga, para verificar se houve redução de investimento, mudança de campanha ou piora de qualidade de leads na semana. Como a queda de CR é comum a todos os canais, não recomendar ajuste de mix de mídia como solução isolada — o problema de checkout (insight INS-2026-104) precisa ser resolvido primeiro, pois está mascarando a real eficiência de cada canal.\n\nImpacto: Afeta diretamente o KR de Receita, já que Pago e Direto somam quase 60% das sessões do site. Uma queda de eficiência de mídia paga sem correção pode levar a decisões equivocadas de redução ou realocação de budget baseadas em uma causa raiz (checkout) que não tem relação com a qualidade do tráfego comprado.\n\nPrioridade: Média\n\nAcompanhamento: Acompanhar semanalmente o share e o CR por canal para verificar se a recuperação do checkout (uma vez corrigido SEN-774) traz de volta a eficiência de todos os canais de forma proporcional, o que confirmaria a hipótese de causa comum de produto."
+        },
+        {
+          "id": "INS-2026-107",
+          "canal": "app",
+          "tag": "[App] Queda severa de CR no iOS pode ser subestimação de GA4, não perda real (SEN-901)",
+          "classificacao": "Hipótese",
+          "prioridade": "Alta",
+          "data": "2026-09-15",
+          "diagnostico": "O CR do App no iOS (campo desktop no data_app.json) caiu de forma significativa esta semana: 8,77% vs baseline de 12,83% (-4,06pp, ~3,8 desvios-padrão acima do normal), muito além do que a variação normal explicaria. Essa queda coincide diretamente com um bug identificado pelo próprio time Senna: SEN-901, 'Stop GA4 iOS from dropping purchase events with invalid payloads', prioridade Urgente, iniciado em 14/09 — um dia após o fim da semana analisada — e ainda em validação. O padrão do funil do App reforça essa leitura: checkout_to_purchase caiu 2,7pp enquanto cart_to_checkout na verdade melhorou (+1,1pp), ou seja, o usuário está completando o checkout, mas o evento de compra não está sendo registrado corretamente no GA4 — um padrão típico de perda de evento, não de abandono real.",
+          "evidencia": "CR App desktop (iOS): 8,77% atual vs 12,83% baseline (-4,06pp), sigma histórico 1,08 → desvio de ~3,8σ, muito acima do limiar de 2σ para 'significativo'. CR App mobile (Android): 6,09% vs 6,54% baseline (-0,45pp, estável) — a queda não se repete no Android, o que aponta para causa específica de plataforma iOS. Funil do App: cart_to_checkout +1,1pp (22,4% vs 21,3%) e checkout_to_purchase -2,7pp (63,5% vs 66,2%) — perda concentrada exatamente na etapa final, coerente com evento de purchase não disparado. SEN-901 (Urgent, In Validation, iniciado 14/09) trata exatamente da perda de eventos de purchase no iOS por payloads inválidos.",
+          "plano_acao": "Não tratar essa queda como uma perda real de conversão até a validação de SEN-901 ser concluída e publicada. Solicitar ao time Senna uma estimativa de quantos eventos de purchase foram descartados no período, cruzando com dados de backoffice (transações reais), para quantificar se a queda é 100% mensuração ou parcialmente real. Comunicar à diretoria que o número de CR iOS desta semana está sob suspeita de subestimação antes de qualquer decisão baseada nele.",
+          "impacto": "Se confirmado que é 100% um problema de mensuração, o impacto real em receita é zero, mas o risco é decisório: relatar essa queda como real ao invés de sinalizar a suspeita de bug poderia levar a ações desnecessárias (ex.: reduzir investimento em iOS, abrir investigação de UX). Também afeta a confiabilidade dos KRs de conversão App reportados no MBR se não for corrigido a tempo.",
+          "acompanhamento": "Acompanhar a conclusão da validação de SEN-901 e verificar se o CR iOS se recupera automaticamente para perto de 12-13% assim que o fix for publicado, sem qualquer mudança de produto. Se a métrica não se corrigir sozinha, reabrir a investigação como perda real de conversão.",
+          "titulo_linear": null,
+          "tipo_acao": "monitorar",
+          "testavel": false,
+          "criterio_confirmacao": null,
+          "experimento_template": null,
+          "status": "nunca_testada",
+          "experimento_id": null,
+          "revisao": null,
+          "texto": "Diagnóstico: O CR do App no iOS (campo desktop no data_app.json) caiu de forma significativa esta semana: 8,77% vs baseline de 12,83% (-4,06pp, ~3,8 desvios-padrão acima do normal), muito além do que a variação normal explicaria. Essa queda coincide diretamente com um bug identificado pelo próprio time Senna: SEN-901, 'Stop GA4 iOS from dropping purchase events with invalid payloads', prioridade Urgente, iniciado em 14/09 — um dia após o fim da semana analisada — e ainda em validação. O padrão do funil do App reforça essa leitura: checkout_to_purchase caiu 2,7pp enquanto cart_to_checkout na verdade melhorou (+1,1pp), ou seja, o usuário está completando o checkout, mas o evento de compra não está sendo registrado corretamente no GA4 — um padrão típico de perda de evento, não de abandono real.\n\nEvidência: CR App desktop (iOS): 8,77% atual vs 12,83% baseline (-4,06pp), sigma histórico 1,08 → desvio de ~3,8σ, muito acima do limiar de 2σ para 'significativo'. CR App mobile (Android): 6,09% vs 6,54% baseline (-0,45pp, estável) — a queda não se repete no Android, o que aponta para causa específica de plataforma iOS. Funil do App: cart_to_checkout +1,1pp (22,4% vs 21,3%) e checkout_to_purchase -2,7pp (63,5% vs 66,2%) — perda concentrada exatamente na etapa final, coerente com evento de purchase não disparado. SEN-901 (Urgent, In Validation, iniciado 14/09) trata exatamente da perda de eventos de purchase no iOS por payloads inválidos.\n\nClassificação: Hipótese\n\nPlano de ação: Não tratar essa queda como uma perda real de conversão até a validação de SEN-901 ser concluída e publicada. Solicitar ao time Senna uma estimativa de quantos eventos de purchase foram descartados no período, cruzando com dados de backoffice (transações reais), para quantificar se a queda é 100% mensuração ou parcialmente real. Comunicar à diretoria que o número de CR iOS desta semana está sob suspeita de subestimação antes de qualquer decisão baseada nele.\n\nImpacto: Se confirmado que é 100% um problema de mensuração, o impacto real em receita é zero, mas o risco é decisório: relatar essa queda como real ao invés de sinalizar a suspeita de bug poderia levar a ações desnecessárias (ex.: reduzir investimento em iOS, abrir investigação de UX). Também afeta a confiabilidade dos KRs de conversão App reportados no MBR se não for corrigido a tempo.\n\nPrioridade: Alta\n\nAcompanhamento: Acompanhar a conclusão da validação de SEN-901 e verificar se o CR iOS se recupera automaticamente para perto de 12-13% assim que o fix for publicado, sem qualquer mudança de produto. Se a métrica não se corrigir sozinha, reabrir a investigação como perda real de conversão."
+        },
+        {
+          "id": "INS-2026-108",
+          "canal": "conjunto",
+          "tag": "[Site vs App] Divergência de 16,9 pontos de NPS entre site e app",
+          "classificacao": "Correlação",
+          "prioridade": "Média",
+          "data": "2026-09-15",
+          "diagnostico": "O NPS score do site (82,3) está 16,9 pontos acima do NPS score do App (65,3) nesta semana, uma divergência relevante mesmo com volume de respostas suficiente em ambos os canais (9.330 no site e 352 no app). Os dois canais seguem acima da meta de NPS = 60, mas o app está em zona mais próxima do limite de atenção, enquanto o site está confortavelmente acima. A nota média segue o mesmo padrão, com o app 0,48 pontos abaixo do site (8,86 vs 9,34).",
+          "evidencia": "NPS score site: 82,28 (9.330 respostas). NPS score app: 65,34 (352 respostas). Delta: -16,9 pontos. Nota média site: 9,34 vs app: 8,86 (delta -0,48). Ambos os canais estão acima do KR de NPS (60), mas o app está a apenas 5,3 pontos da zona de atenção (40-59).",
+          "plano_acao": "Solicitar ao squad de CX/Experiência de Compra uma leitura qualitativa dos comentários de NPS específicos do App (não capturados nesta análise, que usa apenas comentários do site) para identificar se a causa da nota mais baixa é de usabilidade do app, performance, ou os mesmos temas de taxa/preço já recorrentes no site. Considerar isso um sinal de atenção, não de crise, dado que o app ainda está acima da meta.",
+          "impacto": "Impacta o KR de NPS (meta 60) de forma direta no canal App, que está mais próximo do limite de atenção do que o site. Também é relevante para a decisão de priorização de investimento entre site e app, já que o app já concentra ~31% das sessões e a experiência percebida ali é sensivelmente pior.",
+          "acompanhamento": "Acompanhar a evolução do NPS score do app nas próximas semanas para verificar se a divergência é pontual ou uma tendência estrutural. Se a divergência persistir ou aumentar por mais de 3 semanas consecutivas, escalar como insight de Alta prioridade.",
+          "titulo_linear": null,
+          "tipo_acao": "monitorar",
+          "testavel": false,
+          "criterio_confirmacao": null,
+          "experimento_template": null,
+          "status": "nunca_testada",
+          "experimento_id": null,
+          "revisao": null,
+          "texto": "Diagnóstico: O NPS score do site (82,3) está 16,9 pontos acima do NPS score do App (65,3) nesta semana, uma divergência relevante mesmo com volume de respostas suficiente em ambos os canais (9.330 no site e 352 no app). Os dois canais seguem acima da meta de NPS = 60, mas o app está em zona mais próxima do limite de atenção, enquanto o site está confortavelmente acima. A nota média segue o mesmo padrão, com o app 0,48 pontos abaixo do site (8,86 vs 9,34).\n\nEvidência: NPS score site: 82,28 (9.330 respostas). NPS score app: 65,34 (352 respostas). Delta: -16,9 pontos. Nota média site: 9,34 vs app: 8,86 (delta -0,48). Ambos os canais estão acima do KR de NPS (60), mas o app está a apenas 5,3 pontos da zona de atenção (40-59).\n\nClassificação: Correlação\n\nPlano de ação: Solicitar ao squad de CX/Experiência de Compra uma leitura qualitativa dos comentários de NPS específicos do App (não capturados nesta análise, que usa apenas comentários do site) para identificar se a causa da nota mais baixa é de usabilidade do app, performance, ou os mesmos temas de taxa/preço já recorrentes no site. Considerar isso um sinal de atenção, não de crise, dado que o app ainda está acima da meta.\n\nImpacto: Impacta o KR de NPS (meta 60) de forma direta no canal App, que está mais próximo do limite de atenção do que o site. Também é relevante para a decisão de priorização de investimento entre site e app, já que o app já concentra ~31% das sessões e a experiência percebida ali é sensivelmente pior.\n\nPrioridade: Média\n\nAcompanhamento: Acompanhar a evolução do NPS score do app nas próximas semanas para verificar se a divergência é pontual ou uma tendência estrutural. Se a divergência persistir ou aumentar por mais de 3 semanas consecutivas, escalar como insight de Alta prioridade."
+        },
+        {
+          "id": "INS-2026-109",
+          "canal": "site-mobile",
+          "tag": "[Mobile] CR aparenta estável, mas funil interno de checkout já está deteriorando",
+          "classificacao": "Explicação",
+          "prioridade": "Média",
+          "data": "2026-09-15",
+          "diagnostico": "O CR mobile do site está classificado como 'estável' no agregado (7,62% vs baseline de 8,62%, -1,0pp, dentro de 1 desvio-padrão), o que poderia sugerir que o mobile não foi afetado pelo mesmo problema de checkout do desktop. Mas o funil interno conta outra história: cart_to_checkout mobile caiu 4,4pp (61,8% vs 66,2%) e checkout_to_purchase caiu 4,9pp (84,0% vs 88,9%) — quedas relevantes e na mesma direção do desktop. O que mantém o CR agregado dentro da faixa 'estável' é uma melhora de 0,4pp em search_to_cart (10,1% vs 9,7%), que compensa parte da perda nas etapas seguintes. Ou seja, a classificação estatística está mascarando um problema real de checkout que também existe no mobile, só que parcialmente absorvido por mais usuários entrando no funil.",
+          "evidencia": "CR mobile: 7,62% atual vs 8,62% baseline (-1,0pp, classificação estável, dentro de 1σ=1,06). search_to_cart mobile: 10,1% vs 9,7% baseline (+0,4pp). cart_to_checkout mobile: 61,8% vs 66,2% baseline (-4,4pp). checkout_to_purchase mobile: 84,0% vs 88,9% baseline (-4,9pp).",
+          "plano_acao": "Não tratar o mobile como 'sem problema' apenas porque a classificação agregada é estável. Incluir o mobile no escopo de investigação do checkout (mesmo spike proposto para o desktop em INS-2026-105), já que os deltas absolutos de cart_to_checkout e checkout_to_purchase são de magnitude parecida com o desktop, apenas mascarados por um funil de entrada mais forte.",
+          "impacto": "Se a causa raiz de checkout (SEN-774 ou correlatos) for corrigida apenas pensando no desktop, a melhoria esperada no mobile pode ficar sub-dimensionada, já que o problema também está presente ali. Mobile representa 80% das sessões do site (315k de 394k), então qualquer ganho de eficiência ali tem impacto amplo em volume absoluto de compras.",
+          "acompanhamento": "Acompanhar separadamente search_to_cart, cart_to_checkout e checkout_to_purchase no mobile nas próximas semanas — não apenas o CR agregado — para garantir que a melhora na entrada do funil não continue mascarando a deterioração real do checkout.",
+          "titulo_linear": null,
+          "tipo_acao": "monitorar",
+          "testavel": false,
+          "criterio_confirmacao": null,
+          "experimento_template": null,
+          "status": "nunca_testada",
+          "experimento_id": null,
+          "revisao": null,
+          "texto": "Diagnóstico: O CR mobile do site está classificado como 'estável' no agregado (7,62% vs baseline de 8,62%, -1,0pp, dentro de 1 desvio-padrão), o que poderia sugerir que o mobile não foi afetado pelo mesmo problema de checkout do desktop. Mas o funil interno conta outra história: cart_to_checkout mobile caiu 4,4pp (61,8% vs 66,2%) e checkout_to_purchase caiu 4,9pp (84,0% vs 88,9%) — quedas relevantes e na mesma direção do desktop. O que mantém o CR agregado dentro da faixa 'estável' é uma melhora de 0,4pp em search_to_cart (10,1% vs 9,7%), que compensa parte da perda nas etapas seguintes. Ou seja, a classificação estatística está mascarando um problema real de checkout que também existe no mobile, só que parcialmente absorvido por mais usuários entrando no funil.\n\nEvidência: CR mobile: 7,62% atual vs 8,62% baseline (-1,0pp, classificação estável, dentro de 1σ=1,06). search_to_cart mobile: 10,1% vs 9,7% baseline (+0,4pp). cart_to_checkout mobile: 61,8% vs 66,2% baseline (-4,4pp). checkout_to_purchase mobile: 84,0% vs 88,9% baseline (-4,9pp).\n\nClassificação: Explicação\n\nPlano de ação: Não tratar o mobile como 'sem problema' apenas porque a classificação agregada é estável. Incluir o mobile no escopo de investigação do checkout (mesmo spike proposto para o desktop em INS-2026-105), já que os deltas absolutos de cart_to_checkout e checkout_to_purchase são de magnitude parecida com o desktop, apenas mascarados por um funil de entrada mais forte.\n\nImpacto: Se a causa raiz de checkout (SEN-774 ou correlatos) for corrigida apenas pensando no desktop, a melhoria esperada no mobile pode ficar sub-dimensionada, já que o problema também está presente ali. Mobile representa 80% das sessões do site (315k de 394k), então qualquer ganho de eficiência ali tem impacto amplo em volume absoluto de compras.\n\nPrioridade: Média\n\nAcompanhamento: Acompanhar separadamente search_to_cart, cart_to_checkout e checkout_to_purchase no mobile nas próximas semanas — não apenas o CR agregado — para garantir que a melhora na entrada do funil não continue mascarando a deterioração real do checkout."
+        }
+      ]
+    },
     {
       "semana": "2026-08-31",
       "label": "31/08 – 06/09/2026",
@@ -2512,6 +2651,206 @@
     }
   ],
   "insights_conversao": [
+    {
+      "semana": "2026-09-07",
+      "label": "07/09 – 13/09/2026",
+      "tipo": "semanal",
+      "gerado_em": "2026-09-15T12:19:21-03:00",
+      "classificacao": "caiu_moderado",
+      "metricas": {
+        "cr_atual": {
+          "total": 8.1,
+          "mobile": 7.62,
+          "desktop": 10.22
+        },
+        "cr_baseline": {
+          "total": 9.36,
+          "mobile": 8.62,
+          "desktop": 12.1
+        },
+        "delta_pp": {
+          "total": -1.26,
+          "mobile": -1,
+          "desktop": -1.88
+        },
+        "sigma": 1.06,
+        "n_semanas_hist": 8
+      },
+      "hipoteses": [
+        {
+          "hipotese": "Bug SEN-774 (checkout de cartão de crédito do site sem trava de submit) segue em backlog e é a causa técnica mais provável da queda concentrada em cart_to_checkout e checkout_to_purchase.",
+          "evidencia": "cart_to_checkout caiu 6,1pp (57,4% vs baseline 63,5%) e checkout_to_purchase caiu 4,2pp (78,2% vs 82,4%); SEN-774 permanece em status Backlog desde 25/08, mesma causa já apontada nas semanas de 24/08 e 31/08."
+        },
+        {
+          "hipotese": "Queda de share e eficiência do canal Direto é o principal driver de canal: tráfego mais qualificado historicamente também sentiu a piora, reforçando causa de produto.",
+          "evidencia": "Canal Direto: share de sessões subiu de 12,6% para 13,5% (+0,9pp) e CR caiu de 18,05% para 15,17% (-2,88pp); canal Pago: share caiu de 49,5% para 46,2% (-3,3pp) e CR caiu de 9,09% para 7,88% (-1,21pp)."
+        },
+        {
+          "hipotese": "Fixes de checkout entregues em 10-11/09 pelo Senna (SEN-876, SEN-892) correlacionam com recuperação intrassemana do CR.",
+          "evidencia": "CR diário subiu de 6,87% (07/09) para 8,45-8,46% (12-13/09), com pico de 9,66% em 11/09, dia da entrega de SEN-892."
+        }
+      ],
+      "monitorar": "Acompanhar se a recuperação intrassemana se sustenta e aproxima o CR do baseline de 9,36%; cobrar priorização de SEN-774 (ainda em backlog) e validar se novos fixes de checkout resolvem o gargalo em cart_to_checkout no desktop.",
+      "dispositivos": {
+        "mobile": {
+          "classificacao": "estavel",
+          "cr_atual": 7.62,
+          "cr_baseline": 8.62,
+          "delta_pp": -1,
+          "canal_contexto": [
+            {
+              "nome": "Pago",
+              "share_sessoes_total": 46.2,
+              "cr_total": 7.88,
+              "delta_cr_pp": -1.21
+            },
+            {
+              "nome": "Orgânico",
+              "share_sessoes_total": 19.1,
+              "cr_total": 5.83,
+              "delta_cr_pp": -0.67
+            },
+            {
+              "nome": "Direto",
+              "share_sessoes_total": 13.5,
+              "cr_total": 15.17,
+              "delta_cr_pp": -2.88
+            },
+            {
+              "nome": "Social",
+              "share_sessoes_total": 1.6,
+              "cr_total": null,
+              "delta_cr_pp": null
+            }
+          ],
+          "funil": {
+            "step_critico": "checkout_to_purchase",
+            "checkout_to_purchase": {
+              "atual": 84,
+              "baseline": 88.9,
+              "delta_pp": -4.9
+            },
+            "cart_to_checkout": {
+              "atual": 61.8,
+              "baseline": 66.2,
+              "delta_pp": -4.4
+            },
+            "search_to_cart": {
+              "atual": 10.1,
+              "baseline": 9.7,
+              "delta_pp": 0.4
+            }
+          },
+          "hipoteses": [
+            {
+              "hipotese": "Apesar do CR mobile aparecer estável no agregado, o funil interno piorou de forma relevante: cart_to_checkout caiu 4,4pp e checkout_to_purchase caiu 4,9pp, mascarados por uma melhora de 0,4pp em search_to_cart — o mesmo problema de checkout do desktop provavelmente também afeta o mobile, só que compensado por mais usuários entrando no funil.",
+              "evidencia": "search_to_cart mobile: 10,1% vs baseline 9,7% (+0,4pp); cart_to_checkout mobile: 61,8% vs 66,2% (-4,4pp); checkout_to_purchase mobile: 84,0% vs 88,9% (-4,9pp)."
+            }
+          ],
+          "monitorar": "Monitorar separadamente as etapas do funil mobile (não só o CR agregado) para garantir que a queda real de checkout não continue mascarada pela classificação estável."
+        },
+        "desktop": {
+          "classificacao": "caiu_moderado",
+          "cr_atual": 10.22,
+          "cr_baseline": 12.1,
+          "delta_pp": -1.88,
+          "canal_contexto": [
+            {
+              "nome": "Pago",
+              "share_sessoes_total": 46.2,
+              "cr_total": 7.88,
+              "delta_cr_pp": -1.21
+            },
+            {
+              "nome": "Orgânico",
+              "share_sessoes_total": 19.1,
+              "cr_total": 5.83,
+              "delta_cr_pp": -0.67
+            },
+            {
+              "nome": "Direto",
+              "share_sessoes_total": 13.5,
+              "cr_total": 15.17,
+              "delta_cr_pp": -2.88
+            },
+            {
+              "nome": "Social",
+              "share_sessoes_total": 1.6,
+              "cr_total": null,
+              "delta_cr_pp": null
+            }
+          ],
+          "funil": {
+            "step_critico": "cart_to_checkout",
+            "checkout_to_purchase": {
+              "atual": 64.8,
+              "baseline": 69.1,
+              "delta_pp": -4.3
+            },
+            "cart_to_checkout": {
+              "atual": 49.3,
+              "baseline": 58.6,
+              "delta_pp": -9.3
+            },
+            "search_to_cart": {
+              "atual": 15.7,
+              "baseline": 14.5,
+              "delta_pp": 1.2
+            }
+          },
+          "hipoteses": [
+            {
+              "hipotese": "O desktop concentra o efeito mais severo da queda de checkout: cart_to_checkout caiu 9,3pp, quase o dobro do mobile (-4,4pp) — aponta para um problema técnico ou de UX mais grave no fluxo de checkout desktop, coerente com o histórico do bug SEN-774 e com a maior queda de CR estar no canal Direto (tipicamente mais associado a acesso desktop).",
+              "evidencia": "cart_to_checkout desktop: 49,3% vs baseline 58,6% (-9,3pp); CR desktop total: 10,22% vs baseline 12,1% (-1,88pp), classificado como caiu_moderado."
+            }
+          ],
+          "monitorar": "Acompanhar se as correções de checkout (SEN-876, SEN-892) reduzem o gap de cart_to_checkout no desktop nas próximas semanas; se não houver recuperação, escalar um spike dedicado ao desktop."
+        },
+        "app": {
+          "classificacao": "caiu_moderado",
+          "cr_atual": 6.96,
+          "cr_baseline": 8.47,
+          "delta_pp": -1.51,
+          "cr_mobile_android": {
+            "atual": 6.09,
+            "baseline": 6.54,
+            "delta_pp": -0.45,
+            "classificacao": "estavel"
+          },
+          "cr_desktop_ios": {
+            "atual": 8.77,
+            "baseline": 12.83,
+            "delta_pp": -4.06,
+            "classificacao": "caiu_significativo"
+          },
+          "funil": {
+            "step_critico": "checkout_to_purchase",
+            "checkout_to_purchase": {
+              "atual": 63.5,
+              "baseline": 66.2,
+              "delta_pp": -2.7
+            },
+            "cart_to_checkout": {
+              "atual": 22.4,
+              "baseline": 21.3,
+              "delta_pp": 1.1
+            },
+            "search_to_cart": {
+              "atual": 39.8,
+              "baseline": 41.4,
+              "delta_pp": -1.6
+            }
+          },
+          "hipoteses": [
+            {
+              "hipotese": "A queda de CR no App iOS é 'caiu_significativo' (-4,06pp, ~3,8σ) e coincide com um bug conhecido e ainda não corrigido de GA4 no iOS que descarta eventos de purchase com payloads inválidos (SEN-901, prioridade Urgente, em validação desde 14/09) — é provável que parte relevante dessa queda seja subestimação de mensuração, não perda real de conversão.",
+              "evidencia": "CR App iOS: 8,77% vs baseline 12,83% (-4,06pp, sigma 1,08 → z≈3,8); funil do App mostra checkout_to_purchase caindo -2,7pp enquanto cart_to_checkout melhorou +1,1pp, padrão consistente com evento de compra não disparando após o checkout; SEN-901 (Urgent) foi iniciado em 14/09, um dia após o fim da semana analisada."
+            }
+          ],
+          "monitorar": "Acompanhar se o CR do App iOS se recupera assim que SEN-901 for validado e publicado; se a métrica corrigir sozinha, confirma que era subestimação de mensuração, não queda real de conversão."
+        }
+      }
+    },
     {
       "semana": "2026-08-31",
       "label": "31/08 – 06/09/2026",
