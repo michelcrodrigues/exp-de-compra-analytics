@@ -1,6 +1,45 @@
 {
-  "gerado_em": "2026-09-09T13:18:59.896Z",
+  "gerado_em": "2026-09-15T15:21:57.543Z",
   "semanas": [
+    {
+      "semana": "2026-09-07",
+      "label": "07/09 – 13/09/2026",
+      "gerado_em": "2026-09-15T12:19:21-03:00",
+      "promotores": {
+        "temas_principais": [
+          "satisfação geral com a experiência (ótimo/bom/excelente/top)",
+          "elogio ao atendimento",
+          "praticidade da compra",
+          "agilidade do processo"
+        ],
+        "resumo": "Promotores elogiam de forma genérica a experiência de compra, destacando principalmente o atendimento e a praticidade/agilidade do processo de compra de passagem.",
+        "insight": "A satisfação dos promotores é consistente e recorrente há pelo menos 4 semanas, mas os comentários são majoritariamente genéricos (\"ótimo\", \"bom\", \"excelente\") e agregam pouco valor diagnóstico — não indicam quais funcionalidades específicas geram esse sentimento.",
+        "recorrente": true,
+        "semanas_recorrente": 4
+      },
+      "neutros": {
+        "temas_principais": [
+          "taxa de serviço considerada alta",
+          "percepção de preço elevado (caro)",
+          "lentidão percebida no processo",
+          "processo considerado confuso"
+        ],
+        "resumo": "Neutros seguem concentrando reclamações sobre o valor da taxa de serviço e a percepção geral de preço, com menções pontuais a lentidão e confusão no fluxo.",
+        "insight": "A recorrência da reclamação sobre taxa de serviço (presente há pelo menos 4 semanas) sugere que essa é uma barreira estrutural de percepção de valor, não um evento pontual — provavelmente é o que impede parte desses usuários de migrar para promotores.",
+        "recorrente": true,
+        "semanas_recorrente": 4
+      },
+      "detratores": {
+        "temas_principais": [
+          "indignação com taxas consideradas abusivas"
+        ],
+        "resumo": "Os detratores concentram sua insatisfação quase exclusivamente na taxa de serviço, descrita como abusiva.",
+        "insight": "Esse é o único tema relevante de detratores há pelo menos 4 semanas consecutivas — a ausência de outros temas (bugs, atendimento, etc.) indica que o principal risco de nota baixa no site hoje é de percepção de preço/taxa, não de qualidade técnica ou operacional.",
+        "recomendacao_produto": "Avaliar com o time comercial/financeiro uma revisão da comunicação da taxa de serviço no checkout (transparência de composição do valor) ou testar a exibição antecipada do valor total, já que o problema é recorrente há mais de um mês sem sinal de tratamento.",
+        "recorrente": true,
+        "semanas_recorrente": 4
+      }
+    },
     {
       "semana": "2026-08-31",
       "label": "31/08 – 06/09/2026",
