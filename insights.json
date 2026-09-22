@@ -1,6 +1,154 @@
 {
-  "gerado_em": "2026-09-15T15:21:15.981Z",
+  "gerado_em": "2026-09-22T17:17:35.136Z",
   "insights": [
+    {
+      "semana": "2026-09-14",
+      "label": "14/09 – 20/09/2026",
+      "gerado_em": "2026-09-22T17:17:35.136Z",
+      "items": [
+        {
+          "id": "INS-2026-110",
+          "canal": "app",
+          "tag": "Checkout→compra do app despenca ~20pp na semana (Android e iOS)",
+          "classificacao": "Resultado fora da curva",
+          "prioridade": "Alta",
+          "data": "2026-09-22",
+          "texto": "Diagnóstico: A conversão checkout→compra do app caiu de ~65,6% (média das 4 semanas anteriores) para 45,0% nesta semana — uma queda de 20,6pp, estatisticamente significativa (z=2,15 sobre o CR agregado do app, que caiu de 8,08% para 6,26%, -1,82pp).\n\nEvidência: O colapso é simultâneo em Android (64,9%→44,5%, -20,4pp) e iOS (61,7%→45,5%, -16,2pp), o que descarta bug de um cliente específico e aponta para algo compartilhado (gateway de pagamento, serviço de checkout ou cálculo de taxa). O volume de begin_checkout na verdade cresceu nas duas plataformas (Android 13.434→16.523, iOS 11.229→13.821) — ou seja, não é queda de demanda, é queda de finalização. Olhando o dia a dia: segunda-feira (14/09) ainda estava em 58,4%, mas despenca a partir de 15/09 (48,9%) até o piso de 40,0% em 17/09, sem recuperação completa até o fim da semana (44,3% em 20/09). O padrão sugere uma mudança (deploy, configuração ou dependência externa) que entrou em produção entre 15 e 16/09 e não foi revertida.\n\nClassificação: Resultado fora da curva\n\nPlano de ação: (1) Cruzar a janela de 15–16/09 com o histórico de deploys do app no Linear (squad Senna) — este ciclo não teve acesso ao conector Linear, então essa correlação direta ainda não foi feita e é o primeiro passo. (2) Verificar logs do gateway de pagamento/checkout do app nesse período por erros ou timeouts. (3) Confirmar se o evento de GA4 \"purchase\" está disparando corretamente no app — descartar que seja um problema de mensuração (evento não disparando) e não uma queda real de receita, cruzando com as transações reais do backoffice antes de tratar isso como perda de receita confirmada.\n\nImpacto: Em volume, a queda equivale a aproximadamente 1.550 compras a menos no app apenas nesta semana (vs. o patamar da semana anterior). Afeta diretamente a meta de conversão do app e, por associação direta de experiência, a nota de NPS do app (ver insight correlacionado). Se não resolvido, também distorce qualquer decisão de investimento em mídia paga para o app, pois o tráfego adicional não está convertendo.\n\nPrioridade: Alta — é o maior desvio estatístico da semana em qualquer canal, afeta as duas plataformas do app simultaneamente e ainda está sem causa raiz identificada.\n\nAcompanhamento: Monitorar checkout_to_purchase do app diariamente (não semanalmente) até confirmar reversão para a faixa de 60-67%; se em 3 dias úteis não houver correção, escalar como incidente para Senna independente do fechamento do ciclo semanal.",
+          "diagnostico": "A conversão checkout→compra do app caiu 20,6pp na semana (65,6%→45,0%), com queda estatisticamente significativa no CR agregado do app (z=2,15). Padrão idêntico em Android e iOS aponta causa compartilhada, não bug de plataforma.",
+          "evidencia": "Android: 64,9%→44,5% (-20,4pp). iOS: 61,7%→45,5% (-16,2pp). Begin_checkout cresceu nas duas plataformas (não é queda de demanda). Onset entre 15 e 16/09, sem recuperação completa até 20/09 (pior dia 17/09 com 40,0%).",
+          "plano_acao": "Cruzar janela 15-16/09 com deploys do Linear (squad Senna, não acessível neste ciclo); checar logs do gateway de pagamento; confirmar que o evento GA4 'purchase' está disparando corretamente antes de tratar como perda de receita real.",
+          "impacto": "~1.550 compras a menos no app nesta semana vs. semana anterior; risco de distorcer decisões de mídia paga para o app; efeito direto sobre NPS do app.",
+          "acompanhamento": "Monitorar checkout_to_purchase do app diariamente; escalar como incidente se não corrigir em 3 dias úteis.",
+          "titulo_linear": null,
+          "tipo_acao": "monitorar",
+          "testavel": false,
+          "criterio_confirmacao": null,
+          "experimento_template": null,
+          "status": "nunca_testada",
+          "experimento_id": null,
+          "revisao": null
+        },
+        {
+          "id": "INS-2026-111",
+          "canal": "conjunto",
+          "tag": "[Site vs App] App ganha share de sessão mas perde share de compra frente ao site",
+          "classificacao": "Correlação",
+          "prioridade": "Alta",
+          "data": "2026-09-22",
+          "texto": "Diagnóstico: Nas últimas 3 semanas, o app aumentou sua participação nas sessões totais (30,7%→30,8%→31,7%) mas reduziu sua participação nas compras totais (31,6%→27,7%→26,3%) — uma divergência de sinal oposto que se acentua semana a semana.\n\nEvidência: Isso não é migração saudável de público (que elevaria as duas métricas juntas); é o app trazendo proporcionalmente mais tráfego e entregando proporcionalmente menos vendas. O CR do app (6,26%) já está 1,91pp abaixo do CR do site (8,17%) nesta semana, e essa distância vinha de -0,-something menor nas semanas anteriores — a lacuna está abrindo.\n\nClassificação: Correlação\n\nPlano de ação: Tratar a queda de conversão do app (insight correlacionado sobre o colapso de checkout) como prioridade imediata, pois cada ponto percentual a mais de share de sessão que o app ganha, nas condições atuais, dilui o CR consolidado do produto como um todo. Revisar se há ações de aquisição (mídia, push, CRM) direcionando desproporcionalmente mais tráfego para o app nas últimas semanas sem qualificação equivalente à do site.\n\nImpacto: Efeito direto no CR blended do produto (site + app). Se a tendência de crescimento de share do app continuar sem correção da conversão, o CR consolidado do negócio cai mesmo que o site se mantenha estável.\n\nPrioridade: Alta — é uma tendência de 3 semanas, não um ponto isolado, e amplifica o impacto de qualquer problema de conversão do app.\n\nAcompanhamento: Acompanhar semanalmente o par (share de sessões do app, share de compras do app); o alerta correto é quando as duas linhas se abrem, não o nível absoluto de nenhuma delas.",
+          "diagnostico": "App cresce em share de sessões (30,7%→31,7% em 3 semanas) mas cai em share de compras (31,6%→26,3%) no mesmo período — divergência que se acentua semana a semana.",
+          "evidencia": "CR do app 1,91pp abaixo do site nesta semana. Compras do app caíram apesar de sessões estáveis/crescentes.",
+          "plano_acao": "Priorizar correção da conversão do app (ver insight de checkout); revisar se aquisição está direcionando tráfego desproporcional ao app sem qualificação equivalente.",
+          "impacto": "Pressiona para baixo o CR consolidado (site+app) mesmo com site estável.",
+          "acompanhamento": "Acompanhar semanalmente o par share-de-sessão vs share-de-compra do app; alerta é a abertura do gap, não o nível absoluto.",
+          "titulo_linear": null,
+          "tipo_acao": "monitorar",
+          "testavel": false,
+          "criterio_confirmacao": null,
+          "experimento_template": null,
+          "status": "nunca_testada",
+          "experimento_id": null,
+          "revisao": null
+        },
+        {
+          "id": "INS-2026-112",
+          "canal": "app",
+          "tag": "[App] NPS despenca de 65,3 para 55,9 e sai da meta (KR 60) na mesma semana da quebra de checkout",
+          "classificacao": "Correlação",
+          "prioridade": "Alta",
+          "data": "2026-09-22",
+          "texto": "Diagnóstico: O NPS score do app caiu de 65,3 (semana anterior, dentro da meta) para 55,9 nesta semana — uma queda de 9,4 pontos, mudando de classificação de \"dentro da meta\" para \"zona de atenção\" (KR Guanabara = 60). O volume de respostas mais que dobrou (352→897), o que dá confiança estatística ao número — não é ruído de amostra pequena.\n\nEvidência: A nota média também caiu (8,86→8,48) e a queda é simétrica entre plataformas: Android 61,1→51,3 (-9,8) e iOS 69,2→60,7 (-8,5). A janela coincide exatamente com a semana do colapso de checkout→compra do app (insight correlacionado) — usuários que tentam comprar e não conseguem finalizar são o gatilho mais direto de nota baixa.\n\nClassificação: Correlação\n\nPlano de ação: Não tratar isso como um problema de NPS isolado (não é sobre atendimento ou UX geral) — é consequência provável do incidente de checkout. Resolver a causa raiz do checkout deve ser o plano de ação; medir se o NPS do app se recupera junto com o checkout_to_purchase nas próximas 1-2 semanas como forma de confirmar a causalidade.\n\nImpacto: KR de NPS do app (meta 60) descumprido nesta semana. Se persistir, é o segundo indicador (além de conversão) afetado pelo mesmo incidente.\n\nPrioridade: Alta — sai da meta de um KR, com volume de resposta robusto (897), e tem correlação temporal direta e específica com o colapso de checkout.\n\nAcompanhamento: Acompanhar NPS do app na próxima semana em paralelo ao checkout_to_purchase; se os dois se recuperarem juntos, confirma a causalidade; se o NPS não recuperar mesmo com o checkout normalizado, há um segundo problema a investigar.",
+          "diagnostico": "NPS do app caiu 9,4 pontos (65,3→55,9), saindo da meta de 60, com volume de resposta quase triplicado (352→897) — queda simétrica em Android (-9,8) e iOS (-8,5), na mesma semana do colapso de checkout.",
+          "evidencia": "Nota média caiu de 8,86 para 8,48. Queda coincide exatamente com a janela do incidente de checkout→compra do app.",
+          "plano_acao": "Não tratar isoladamente — resolver a causa raiz do checkout; usar a recuperação (ou não) do NPS nas próximas semanas para confirmar a causalidade.",
+          "impacto": "KR de NPS do app (meta 60) descumprido nesta semana.",
+          "acompanhamento": "Acompanhar NPS do app junto ao checkout_to_purchase nas próximas 1-2 semanas para confirmar se andam juntos.",
+          "titulo_linear": null,
+          "tipo_acao": "monitorar",
+          "testavel": false,
+          "criterio_confirmacao": null,
+          "experimento_template": null,
+          "status": "nunca_testada",
+          "experimento_id": null,
+          "revisao": null
+        },
+        {
+          "id": "INS-2026-113",
+          "canal": "site",
+          "tag": "CR do site estagnado ~2,4pp abaixo do nível de agosto; cart→checkout não recuperou em 3 semanas",
+          "classificacao": "Hipótese",
+          "prioridade": "Alta",
+          "data": "2026-09-22",
+          "texto": "Diagnóstico: O classificador automático (baseline móvel de 4 semanas) aponta CR do site como \"estável\" nesta semana (8,17% vs. 8,75% de baseline, -0,58pp). Isso é tecnicamente correto mas esconde o quadro maior: o CR do site caiu de 10,54% (semana de 10-16/08) para ~8,0-8,2% nas últimas 3 semanas — uma queda de ~2,4pp (-22% relativo) que simplesmente parou de piorar, sem sinal de recuperação.\n\nEvidência: A etapa cart→checkout é a origem: caiu de ~65% (semanas de meados de agosto) para 57-60% desde a semana de 31/08 e não voltou a subir em 3 semanas consecutivas (60,1%→57,4%→57,5%). O mesmo padrão aparece em todos os canais de origem — CR de Pago caiu de 10,24% para 7,75%, Direto de 18,39%/20,97% para 15,11%, Orgânico de 7,11% para 5,17% no mesmo intervalo — descartando que seja apenas mix de canal. O tema mais recorrente de detratores no NPS (\"taxa de serviço considerada abusiva\") está presente há 5 semanas consecutivas, com o mesmo período de início.\n\nClassificação: Hipótese\n\nPlano de ação: Testar exibição antecipada e mais transparente da composição da taxa de serviço (já no carrinho, antes do checkout) para verificar se cart→checkout recupera. Isso já era uma recomendação registrada há 4 semanas no histórico de NPS sem execução — este ciclo reforça a urgência com dado quantitativo de funil, não só qualitativo.\n\nImpacto: Recuperar cart→checkout ao patamar de agosto (~65%) implicaria CR do site voltando a ~9,5-10%, adicionando uma faixa estimada de +1.500 a +2.000 compras/semana no patamar atual de sessões.\n\nPrioridade: Alta — decisão de baseline móvel mascara uma queda real e sustentada; o problema já tem 3 semanas sem melhora e recomendação de produto pendente há um mês.\n\nAcompanhamento: Rodar o teste de transparência de taxa e medir cart→checkout diariamente por pelo menos 2 semanas; critério de sucesso abaixo.",
+          "diagnostico": "Classificação automática diz 'estável' (baseline já incorpora a queda), mas o CR real caiu ~2,4pp desde agosto e está em platô há 3 semanas sem recuperação, com cart→checkout como etapa de origem.",
+          "evidencia": "Cart→checkout caiu de ~65% para 57-60% desde 31/08, sem recuperação em 3 semanas. Queda de CR presente em todos os canais (Pago, Direto, Orgânico), não é mix de canal. Tema de NPS 'taxa abusiva' recorrente no mesmo período (5 semanas).",
+          "plano_acao": "Testar exibição antecipada/transparente da taxa de serviço no carrinho; medir efeito em cart→checkout.",
+          "impacto": "Recuperação ao patamar de agosto implicaria CR voltando a ~9,5-10%, estimado em +1.500 a +2.000 compras/semana.",
+          "acompanhamento": "Medir cart→checkout diariamente durante o teste, por pelo menos 2 semanas.",
+          "titulo_linear": "Testar transparência de taxa de serviço no carrinho (recuperar cart→checkout)",
+          "tipo_acao": "testar",
+          "testavel": true,
+          "criterio_confirmacao": "cart→checkout do site volta a ≥62% de forma sustentada por pelo menos 5 dias consecutivos após a mudança",
+          "experimento_template": {
+            "hipotese": "Exibir a composição da taxa de serviço já no carrinho (antes do checkout) reduz o abandono causado por surpresa de preço na etapa seguinte.",
+            "metrica_primaria": "cart_to_checkout (site, total e por device)",
+            "guardrails": [
+              "checkout_to_purchase não pode piorar",
+              "tempo médio de sessão não pode aumentar de forma anômala"
+            ],
+            "duracao_minima_dias": 14,
+            "publico": "100% do tráfego de carrinho, teste A/B 50/50"
+          },
+          "status": "nunca_testada",
+          "experimento_id": null,
+          "revisao": null
+        },
+        {
+          "id": "INS-2026-114",
+          "canal": "site",
+          "tag": "Detratores citam 'taxa de serviço abusiva' pela 5ª semana consecutiva sem ação registrada",
+          "classificacao": "Diagnóstico comprovado",
+          "prioridade": "Alta",
+          "data": "2026-09-22",
+          "texto": "Diagnóstico: O tema \"taxas abusivas\" é o motivo dominante de nota baixa de detratores no site há pelo menos 5 semanas consecutivas (confirmado no histórico de nps_insights.json, que já registrava 4 semanas na semana passada). Não há sinal de tratamento — a recomendação de produto já constava no histórico e se repete nesta semana.\n\nEvidência: Nesta semana, \"Taxas abusivas\" segue como o comentário de detrator mais frequente (8 ocorrências, mobile), e o tema irmão em neutros (\"taxa de serviço muito alta\" / \"taxa muito alta\") também persiste. Este é o mesmo período em que o CR do site caiu ~2,4pp e a etapa cart→checkout não recuperou (ver insight de CR), o que reforça que não é só percepção — há efeito comportamental mensurável.\n\nClassificação: Diagnóstico comprovado (recorrência confirmada por 5 semanas de histórico)\n\nPlano de ação: Escalar para o time comercial/financeiro como decisão pendente, não como novo achado — a recomendação de rever a comunicação da taxa no checkout já foi feita há um mês. Se a decisão for não alterar a taxa, ao menos testar a transparência de exibição (ver insight de CR/funil) como mitigação de percepção sem mudar o valor cobrado.\n\nImpacto: Recorrência de 5 semanas sem ação eleva o risco de esse padrão se tornar uma percepção de marca consolidada, mais difícil de reverter do que um problema pontual.\n\nPrioridade: Alta — mesmo tema, 5 semanas seguidas, sem decisão tomada; risco de virar percepção de marca fixa.\n\nAcompanhamento: Se o tema aparecer pela 6ª semana consecutiva sem uma decisão formal do time comercial/financeiro, escalar como bloqueio de produto, não apenas insight recorrente.",
+          "diagnostico": "'Taxas abusivas' é o tema dominante de detratores há 5 semanas consecutivas, sem ação registrada apesar de recomendação já feita há um mês.",
+          "evidencia": "8 menções a 'taxas abusivas' nesta semana (detratores, mobile); tema irmão 'taxa muito alta' presente em neutros. Coincide com a janela de queda de cart→checkout do site.",
+          "plano_acao": "Escalar como decisão pendente ao comercial/financeiro; se não houver mudança de taxa, testar transparência de exibição como mitigação.",
+          "impacto": "Risco de a percepção de taxa abusiva se consolidar como percepção de marca, mais difícil de reverter.",
+          "acompanhamento": "Se reaparecer na 6ª semana sem decisão, escalar como bloqueio de produto.",
+          "titulo_linear": null,
+          "tipo_acao": "monitorar",
+          "testavel": false,
+          "criterio_confirmacao": null,
+          "experimento_template": null,
+          "status": "nunca_testada",
+          "experimento_id": null,
+          "revisao": null
+        },
+        {
+          "id": "INS-2026-115",
+          "canal": "site",
+          "tag": "Canal Direto: CR em queda estrutural de ~21% para ~15% em 5 semanas, apesar de share estável",
+          "classificacao": "Tendência",
+          "prioridade": "Média",
+          "data": "2026-09-22",
+          "texto": "Diagnóstico: O canal Direto, historicamente o de maior CR do site, caiu de 20,97% (semana de 17-23/08, pico recente) para 15,11% nesta semana — uma queda de quase 6pp em 5 semanas — enquanto seu share de sessões se manteve estável (11,4%→13,7%).\n\nEvidência: Como o share não mudou, a queda não é explicada por composição de público (ex.: mais tráfego direto de baixa intenção entrando na base) — é queda de conversão do mesmo tipo de usuário. O CR de Direto está em platô nas últimas 3 semanas (15,22%→15,17%→15,11%), sugerindo que, como no site em geral, a queda parou mas não recuperou.\n\nClassificação: Tendência\n\nPlano de ação: Investigar se usuários de tráfego direto (tipicamente clientes recorrentes ou que já decidiram comprar) estão encontrando a mesma fricção de cart→checkout identificada no insight geral do site — se sim, o direto é o canal mais revelador porque tem menos ruído de qualificação de tráfego.\n\nImpacto: Direto converte ~2x a taxa média do site; uma recuperação de 15,1% para ~19-20% neste canal teria efeito desproporcional no CR consolidado dado o valor por sessão desse tráfego.\n\nPrioridade: Média — é uma tendência de 5 semanas, mas já mostra sinais de estabilização no mesmo patamar mais baixo, não piora aguda nesta semana especificamente.\n\nAcompanhamento: Acompanhar CR de Direto nas próximas 2-3 semanas junto com o teste de transparência de taxa (insight de CR do site); se Direto recuperar mais rápido que os outros canais quando a taxa for testada, confirma que a fricção é de checkout e não de qualidade de tráfego.",
+          "diagnostico": "CR do canal Direto caiu de ~21% para ~15% em 5 semanas com share de sessões estável (11,4%→13,7%) — não é mix de tráfego, é queda de conversão do mesmo público.",
+          "evidencia": "CR em platô nas últimas 3 semanas (15,22%→15,17%→15,11%). Direto converte ~2x a média do site.",
+          "plano_acao": "Investigar se tráfego direto sofre a mesma fricção de cart→checkout do site geral; usar como canal-teste para isolar causa.",
+          "impacto": "Recuperação de Direto para ~19-20% teria efeito desproporcional no CR consolidado dado seu alto valor por sessão.",
+          "acompanhamento": "Acompanhar CR de Direto em paralelo ao teste de transparência de taxa nas próximas 2-3 semanas.",
+          "titulo_linear": null,
+          "tipo_acao": "monitorar",
+          "testavel": false,
+          "criterio_confirmacao": null,
+          "experimento_template": null,
+          "status": "nunca_testada",
+          "experimento_id": null,
+          "revisao": null
+        }
+      ]
+    },
     {
       "semana": "2026-09-07",
       "label": "07/09 – 13/09/2026",
@@ -2651,6 +2799,223 @@
     }
   ],
   "insights_conversao": [
+    {
+      "semana": "2026-09-14",
+      "label": "14/09 – 20/09/2026",
+      "tipo": "semanal",
+      "gerado_em": "2026-09-22T09:00:00-03:00",
+      "classificacao": "estavel",
+      "metricas": {
+        "cr_atual": {
+          "total": 8.17,
+          "mobile": 7.61,
+          "desktop": 10.41
+        },
+        "cr_baseline": {
+          "total": 8.75,
+          "mobile": 8.12,
+          "desktop": 11.27
+        },
+        "delta_pp": {
+          "total": -0.58,
+          "mobile": -0.51,
+          "desktop": -0.86
+        },
+        "sigma": 1.07,
+        "n_semanas_hist": 8
+      },
+      "hipoteses": [
+        {
+          "tipo": "canal_origem",
+          "texto": "Mix-shift para Pago: share subiu de 46,2% para 51,9% na semana enquanto o CR de Pago caiu -0,74pp (8,49%→7,75% vs baseline) — canal de menor conversão relativa ganhando peso pressiona o CR global para baixo.",
+          "evidencia": "share_pago: 46,2%→51,9% (semana anterior→atual); cr_pago: 8,49%(baseline)→7,75%(atual), delta -0,74pp"
+        },
+        {
+          "tipo": "canal_origem",
+          "texto": "Direto teve a maior queda proporcional de CR entre os canais com share relevante: -2,09pp (17,2%→15,11%), mesmo mantendo share estável — não é mix, é queda de conversão do mesmo público de alta intenção.",
+          "evidencia": "cr_direto: 17,2%(baseline)→15,11%(atual), delta -2,09pp; share_direto estável em ~13,7%"
+        },
+        {
+          "tipo": "funil",
+          "texto": "Cart→checkout caiu -4,2pp de forma uniforme entre mobile (-3,8pp) e desktop (-4,9pp), coincidindo com o tema recorrente de NPS sobre taxa de serviço abusiva (5 semanas consecutivas) — sugere fricção de percepção de preço no carrinho.",
+          "evidencia": "cart_to_checkout: 61,7%(baseline)→57,5%(atual) total; mobile 64,9%→61,1%; desktop 55,8%→50,9%"
+        }
+      ],
+      "monitorar": "Acompanhar diariamente se cart→checkout do site volta a ≥60% nas próximas 2 semanas; se não recuperar, tratar como mudança estrutural (preço/taxa), não sazonalidade, e cruzar com o app para checar se o mesmo padrão se repete.",
+      "dispositivos": {
+        "mobile": {
+          "classificacao": "estavel",
+          "cr_atual": 7.61,
+          "cr_baseline": 8.12,
+          "delta_pp": -0.51,
+          "canal_contexto": [
+            {
+              "nome": "Pago",
+              "share_sessoes_total": 51.9,
+              "cr_total": 7.75,
+              "delta_cr_pp": -0.74
+            },
+            {
+              "nome": "Orgânico",
+              "share_sessoes_total": 18.1,
+              "cr_total": 5.17,
+              "delta_cr_pp": -1.03
+            },
+            {
+              "nome": "Direto",
+              "share_sessoes_total": 13.7,
+              "cr_total": 15.11,
+              "delta_cr_pp": -2.09
+            },
+            {
+              "nome": "Social",
+              "share_sessoes_total": 1.6,
+              "cr_total": null,
+              "delta_cr_pp": null
+            }
+          ],
+          "funil": {
+            "step_critico": "cart_to_checkout",
+            "checkout_to_purchase": {
+              "atual": 87.4,
+              "baseline": 85.7,
+              "delta_pp": 1.7
+            },
+            "cart_to_checkout": {
+              "atual": 61.1,
+              "baseline": 64.9,
+              "delta_pp": -3.8
+            },
+            "search_to_cart": {
+              "atual": 9.6,
+              "baseline": 9.7,
+              "delta_pp": -0.1
+            }
+          },
+          "hipoteses": [
+            {
+              "texto": "Cart→checkout mobile caiu -3,8pp (64,9%→61,1%), coincidindo com tema de NPS 'taxas abusivas' registrado especificamente em comentários mobile (8 ocorrências) — mobile responde por ~79% das sessões do site, então este é o maior efeito absoluto no CR total.",
+              "evidencia": "delta_pp cart_to_checkout mobile: -3,8; 8 menções de detratores mobile a 'taxas abusivas'; mobile = 79,3% das sessões do site"
+            }
+          ],
+          "monitorar": "Acompanhar cart→checkout mobile diariamente — é o device com maior peso no CR consolidado do site (~79% das sessões)."
+        },
+        "desktop": {
+          "classificacao": "estavel",
+          "cr_atual": 10.41,
+          "cr_baseline": 11.27,
+          "delta_pp": -0.86,
+          "canal_contexto": [
+            {
+              "nome": "Pago",
+              "share_sessoes_total": 51.9,
+              "cr_total": 7.75,
+              "delta_cr_pp": -0.74
+            },
+            {
+              "nome": "Orgânico",
+              "share_sessoes_total": 18.1,
+              "cr_total": 5.17,
+              "delta_cr_pp": -1.03
+            },
+            {
+              "nome": "Direto",
+              "share_sessoes_total": 13.7,
+              "cr_total": 15.11,
+              "delta_cr_pp": -2.09
+            },
+            {
+              "nome": "Social",
+              "share_sessoes_total": 1.6,
+              "cr_total": null,
+              "delta_cr_pp": null
+            }
+          ],
+          "funil": {
+            "step_critico": "cart_to_checkout",
+            "checkout_to_purchase": {
+              "atual": 66.5,
+              "baseline": 66.6,
+              "delta_pp": -0.1
+            },
+            "cart_to_checkout": {
+              "atual": 50.9,
+              "baseline": 55.8,
+              "delta_pp": -4.9
+            },
+            "search_to_cart": {
+              "atual": 14.1,
+              "baseline": 14.7,
+              "delta_pp": -0.6
+            }
+          },
+          "hipoteses": [
+            {
+              "texto": "Cart→checkout desktop caiu -4,9pp (55,8%→50,9%), delta maior que o de mobile (-3,8pp) — como o problema atinge as duas plataformas do site, e desktop até mais, aponta para algo comum a ambas (ex.: valor da taxa exibido no carrinho) e não para um problema específico de UX mobile.",
+              "evidencia": "delta_pp cart_to_checkout desktop: -4,9 vs mobile: -3,8"
+            }
+          ],
+          "monitorar": "Comparar cart→checkout desktop vs mobile nas próximas semanas; se desktop continuar caindo mais, isolar o que é específico da experiência desktop de carrinho."
+        },
+        "app": {
+          "classificacao": "caiu_significativo",
+          "cr_atual": 6.26,
+          "cr_baseline": 8.08,
+          "delta_pp": -1.82,
+          "canal_contexto": [
+            {
+              "nome": "Pago",
+              "share_sessoes_total": 8.8,
+              "cr_total": null,
+              "delta_cr_pp": null
+            },
+            {
+              "nome": "Orgânico",
+              "share_sessoes_total": 1.9,
+              "cr_total": null,
+              "delta_cr_pp": null
+            },
+            {
+              "nome": "Direto",
+              "share_sessoes_total": 22.7,
+              "cr_total": null,
+              "delta_cr_pp": null
+            },
+            {
+              "nome": "Social",
+              "share_sessoes_total": 0,
+              "cr_total": null,
+              "delta_cr_pp": null
+            }
+          ],
+          "funil": {
+            "step_critico": "checkout_to_purchase",
+            "checkout_to_purchase": {
+              "atual": 45,
+              "baseline": 65.6,
+              "delta_pp": -20.6
+            },
+            "cart_to_checkout": {
+              "atual": 25.4,
+              "baseline": 21.7,
+              "delta_pp": 3.7
+            },
+            "search_to_cart": {
+              "atual": 43.8,
+              "baseline": 41.1,
+              "delta_pp": 2.7
+            }
+          },
+          "hipoteses": [
+            {
+              "texto": "Checkout→compra do app colapsou -20,6pp (65,6%→45,0%), simultaneamente em Android (-20,4pp) e iOS (-16,2pp), com begin_checkout em alta nas duas plataformas — não é queda de demanda, é falha de finalização, provavelmente de causa compartilhada (gateway de pagamento ou serviço de checkout).",
+              "evidencia": "checkout_to_purchase app: 65,6%(baseline)→45,0%(atual); Android 64,9%→44,5%; iOS 61,7%→45,5%; CR agregado do app caiu -1,82pp com z=2,15 (caiu_significativo)"
+            }
+          ],
+          "monitorar": "Monitorar checkout_to_purchase do app diariamente até confirmar reversão para 60-67%; cruzar com Linear/Senna assim que o conector estiver disponível para identificar o deploy causador."
+        }
+      }
+    },
     {
       "semana": "2026-09-07",
       "label": "07/09 – 13/09/2026",
