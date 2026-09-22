@@ -1,6 +1,50 @@
 {
-  "gerado_em": "2026-09-15T15:21:57.543Z",
+  "gerado_em": "2026-09-22T17:18:01.906Z",
   "semanas": [
+    {
+      "semana": "2026-09-14",
+      "label": "14/09 – 20/09/2026",
+      "gerado_em": "2026-09-22T09:00:00-03:00",
+      "nps_score": 81.81939179024286,
+      "nps_nota_media": 9.33521384053299,
+      "nps_respostas": 9306,
+      "promotores": {
+        "temas_principais": [
+          "satisfação geral com o serviço ('ótimo'/'excelente'/'bom')",
+          "praticidade da compra",
+          "rapidez no processo",
+          "qualidade do atendimento"
+        ],
+        "resumo": "Promotores concentram elogios genéricos à experiência ('ótimo', 'excelente', 'bom'), com menções específicas e recorrentes a praticidade, rapidez e qualidade do atendimento. Não há críticas relevantes nesse grupo.",
+        "insight": "A satisfação alta está ligada à experiência central de comprar a passagem (praticidade, rapidez, atendimento) — é uma força distinta da insatisfação de neutros/detratores com preço/taxa, ou seja, o problema de percepção de taxa não está contaminando a base de promotores, está represado nos grupos neutro e detrator.",
+        "recorrente": true,
+        "semanas_recorrente": 5
+      },
+      "neutros": {
+        "temas_principais": [
+          "taxa de serviço considerada alta",
+          "percepção de preço elevado (caro)",
+          "lentidão percebida no processo",
+          "processo considerado confuso"
+        ],
+        "resumo": "Neutros em geral ainda descrevem a experiência como 'boa', mas o segundo padrão mais comum é a menção à taxa de serviço como alta e ao preço como elevado, com queixas pontuais de lentidão e confusão no processo.",
+        "insight": "A nota neutra (em vez de promotora) em boa parte desse grupo parece ser causada pela percepção de taxa/preço — um cliente satisfeito com o serviço central ainda assim não vira promotor por causa da taxa. Esse padrão é recorrente há pelo menos 5 semanas.",
+        "recorrente": true,
+        "semanas_recorrente": 5
+      },
+      "detratores": {
+        "temas_principais": [
+          "taxa de serviço considerada abusiva"
+        ],
+        "resumo": "Praticamente toda a insatisfação forte de detratores nesta semana é sobre a taxa de serviço, descrita como abusiva. Não há menção a bugs, atendimento ruim ou falhas operacionais.",
+        "insight": "Confirma, pela 5ª semana consecutiva, que o principal risco de nota baixa no site hoje é percepção de preço/taxa — não qualidade técnica ou operacional. A ausência de qualquer outro tema por 5 semanas seguidas é, em si, um dado forte de que este é o único problema relevante de detratores no momento.",
+        "recomendacao_produto": "Rever com o time comercial/financeiro a comunicação da taxa de serviço no checkout (transparência de composição do valor) ou testar exibição antecipada do valor total no carrinho — recomendação já registrada há mais de um mês sem execução; ver insight de produto sobre teste de transparência de taxa vinculado à queda de cart→checkout.",
+        "recorrente": true,
+        "semanas_recorrente": 5
+      },
+      "padrao": "recorrente",
+      "tendencia": "estavel"
+    },
     {
       "semana": "2026-09-07",
       "label": "07/09 – 13/09/2026",
