@@ -1,6 +1,154 @@
 {
-  "gerado_em": "2026-09-22T17:17:35.136Z",
+  "gerado_em": "2026-09-30T13:08:00.363Z",
   "insights": [
+    {
+      "semana": "2026-09-21",
+      "label": "21/09 – 27/09/2026",
+      "gerado_em": "2026-09-30T13:08:00.362Z",
+      "items": [
+        {
+          "id": "INS-2026-116",
+          "data": "2026-09-29",
+          "canal": "app",
+          "tag": "[App] CR caiu de 8,5% para 6,5% desde 07/09; checkout para compra despencou",
+          "classificacao": "Resultado fora da curva",
+          "prioridade": "Alta",
+          "diagnostico": "A conversão do app quebrou a partir da semana de 07/09 e não voltou. O CR foi de uma faixa estável de 8,4% a 8,7% (semanas de 03/08 a 31/08) para 6,97%, 6,27% e 6,54% nas três semanas seguintes. A queda está concentrada em checkout para compra, não em tráfego nem em intenção de compra. O baseline de 4 semanas (7,50%) já está contaminado pela queda e por isso o desvio parece pequeno (-0,96pp); contra a faixa pré-quebra o desvio é de cerca de -2,0pp.",
+          "evidencia": "Checkout para compra no app: 65% a 67% até 31/08, 63% em 07/09, 45% em 14/09 e 42% em 21/09. Carrinho para checkout subiu de 21% para 26% no mesmo período, ou seja, mais gente entra no checkout e menos finaliza. iOS caiu de 12% a 13,5% de CR para 8,8% a 9,6%, Android ficou praticamente parado (6,5% para 5,1%). Rejeição do app subiu de 23,9% para 31,1%. Na semana atual: 181.936 sessões (+4,0%), 11.897 compras (+8,4%), CR 6,54% (+4,2% vs semana anterior, recuperação parcial).",
+          "plano_acao": "Abrir investigação imediata com o time Senna sobre o que mudou no app entre 01/09 e 07/09 (release, SDK de pagamento, antifraude, meios de pagamento, evento purchase). Separar queda real de queda de mensuração: cruzar compras do GA4 com transações do backoffice do app na mesma janela. Se o backoffice confirmar queda, priorizar correção como incidente de produto e revisar taxa de aprovação por meio de pagamento e por sistema operacional. Se não confirmar, corrigir a instrumentação do evento purchase.",
+          "impacto": "KR de conversão do app e receita do canal que já representa 32% das sessões. Cada 1pp de CR no app equivale a aproximadamente 1.800 compras por semana. O funil de NPS do app também é afetado indiretamente.",
+          "acompanhamento": "Monitorar diariamente checkout para compra no app por sistema operacional. Critério de normalização: retorno acima de 60% por 7 dias seguidos. Validar contra transações do backoffice antes de qualquer conclusão sobre causa.",
+          "titulo_linear": "Investigar queda de checkout para compra no app (65% para 42%) desde 07/09",
+          "tipo_acao": "testar",
+          "testavel": false,
+          "criterio_confirmacao": "Causa confirmada quando a queda de checkout para compra coincidir com uma mudança identificável (release, meio de pagamento ou instrumentação) e o backoffice mostrar o mesmo padrão de transações, ou quando a correção devolver a taxa a mais de 60%.",
+          "experimento_template": null,
+          "texto": "Diagnóstico: A conversão do app quebrou a partir da semana de 07/09 e não voltou. O CR foi de uma faixa estável de 8,4% a 8,7% (semanas de 03/08 a 31/08) para 6,97%, 6,27% e 6,54% nas três semanas seguintes. A queda está concentrada em checkout para compra, não em tráfego nem em intenção de compra. O baseline de 4 semanas (7,50%) já está contaminado pela queda e por isso o desvio parece pequeno (-0,96pp); contra a faixa pré-quebra o desvio é de cerca de -2,0pp.\n\nEvidência: Checkout para compra no app: 65% a 67% até 31/08, 63% em 07/09, 45% em 14/09 e 42% em 21/09. Carrinho para checkout subiu de 21% para 26% no mesmo período, ou seja, mais gente entra no checkout e menos finaliza. iOS caiu de 12% a 13,5% de CR para 8,8% a 9,6%, Android ficou praticamente parado (6,5% para 5,1%). Rejeição do app subiu de 23,9% para 31,1%. Na semana atual: 181.936 sessões (+4,0%), 11.897 compras (+8,4%), CR 6,54% (+4,2% vs semana anterior, recuperação parcial).\n\nClassificação: Resultado fora da curva\n\nPlano de ação: Abrir investigação imediata com o time Senna sobre o que mudou no app entre 01/09 e 07/09 (release, SDK de pagamento, antifraude, meios de pagamento, evento purchase). Separar queda real de queda de mensuração: cruzar compras do GA4 com transações do backoffice do app na mesma janela. Se o backoffice confirmar queda, priorizar correção como incidente de produto e revisar taxa de aprovação por meio de pagamento e por sistema operacional. Se não confirmar, corrigir a instrumentação do evento purchase.\n\nImpacto: KR de conversão do app e receita do canal que já representa 32% das sessões. Cada 1pp de CR no app equivale a aproximadamente 1.800 compras por semana. O funil de NPS do app também é afetado indiretamente.\n\nPrioridade: Alta, perda sustentada por 3 semanas em 32% das sessões totais, concentrada em um único degrau do funil\n\nAcompanhamento: Monitorar diariamente checkout para compra no app por sistema operacional. Critério de normalização: retorno acima de 60% por 7 dias seguidos. Validar contra transações do backoffice antes de qualquer conclusão sobre causa.",
+          "status": "nunca_testada",
+          "experimento_id": null,
+          "revisao": null
+        },
+        {
+          "id": "INS-2026-117",
+          "data": "2026-09-29",
+          "canal": "site",
+          "tag": "Site: CR estável, mas cai em todos os canais enquanto o pago ganha share",
+          "classificacao": "Tendência",
+          "prioridade": "Média",
+          "diagnostico": "O CR do site ficou em 8,01%, dentro da faixa estável (baseline de 8,29%, -0,28pp, sigma 1,02). O que merece atenção é que o CR caiu em todos os canais ao mesmo tempo e o mix migrou para o canal pago. Isso sugere perda de eficiência do funil como um todo, e não apenas efeito de mix. O YoY também está abaixo: -0,54pp contra 8,55% do mesmo período de 2025.",
+          "evidencia": "Pago: share de 47,7% para 52,2% (198.657 sessões, +1,5% vs semana anterior) e CR de 8,01% para 7,57%. Orgânico: share de 19,7% para 17,4% (-2,7% em sessões) e CR de 5,85% para 5,17%. Direto: CR de 15,86% para 15,19%. Sessões 380.908 (+1,0%), compras 30.505 (-1,0%), CR -1,9% vs semana anterior. A rejeição média caiu para 19,78% (baseline 24,0%), menor nível recente, o que é incomum com CR caindo.",
+          "plano_acao": "Solicitar ao time de mídia a distribuição de sessões e compras do pago por campanha nas duas últimas semanas para separar efeito de público de efeito de página. Validar com Martech se houve mudança de instrumentação ou de definição de sessão que explique a rejeição em queda. Se a rejeição menor for real, investigar se está entrando tráfego menos qualificado que navega mas não compra.",
+          "impacto": "CR do site e custo por aquisição do pago. Se o mix continuar migrando sem melhora de CR, o KR de conversão perde cerca de 0,1pp por semana.",
+          "acompanhamento": "Acompanhar CR por canal e share do pago nas próximas 2 semanas. Sinal de alerta: share do pago acima de 53% com CR do pago abaixo de 7,5%. Verificar a rejeição em paralelo.",
+          "titulo_linear": null,
+          "tipo_acao": "monitorar",
+          "testavel": false,
+          "criterio_confirmacao": null,
+          "experimento_template": null,
+          "texto": "Diagnóstico: O CR do site ficou em 8,01%, dentro da faixa estável (baseline de 8,29%, -0,28pp, sigma 1,02). O que merece atenção é que o CR caiu em todos os canais ao mesmo tempo e o mix migrou para o canal pago. Isso sugere perda de eficiência do funil como um todo, e não apenas efeito de mix. O YoY também está abaixo: -0,54pp contra 8,55% do mesmo período de 2025.\n\nEvidência: Pago: share de 47,7% para 52,2% (198.657 sessões, +1,5% vs semana anterior) e CR de 8,01% para 7,57%. Orgânico: share de 19,7% para 17,4% (-2,7% em sessões) e CR de 5,85% para 5,17%. Direto: CR de 15,86% para 15,19%. Sessões 380.908 (+1,0%), compras 30.505 (-1,0%), CR -1,9% vs semana anterior. A rejeição média caiu para 19,78% (baseline 24,0%), menor nível recente, o que é incomum com CR caindo.\n\nClassificação: Tendência\n\nPlano de ação: Solicitar ao time de mídia a distribuição de sessões e compras do pago por campanha nas duas últimas semanas para separar efeito de público de efeito de página. Validar com Martech se houve mudança de instrumentação ou de definição de sessão que explique a rejeição em queda. Se a rejeição menor for real, investigar se está entrando tráfego menos qualificado que navega mas não compra.\n\nImpacto: CR do site e custo por aquisição do pago. Se o mix continuar migrando sem melhora de CR, o KR de conversão perde cerca de 0,1pp por semana.\n\nPrioridade: Média, CR total dentro da faixa, porém queda uniforme por canal e mix piorando indicam erosão lenta\n\nAcompanhamento: Acompanhar CR por canal e share do pago nas próximas 2 semanas. Sinal de alerta: share do pago acima de 53% com CR do pago abaixo de 7,5%. Verificar a rejeição em paralelo.",
+          "status": "nunca_testada",
+          "experimento_id": null,
+          "revisao": null
+        },
+        {
+          "id": "INS-2026-118",
+          "data": "2026-09-29",
+          "canal": "site-desktop",
+          "tag": "[Desktop] Busca para carrinho caiu 2pp e checkout compensou",
+          "classificacao": "Hipótese",
+          "prioridade": "Média",
+          "diagnostico": "No desktop, a etapa busca para carrinho caiu de 14,6% para 12,6% (-2,0pp), a maior queda do funil do site. As etapas seguintes melhoraram (carrinho para checkout +3,3pp e checkout para compra de 66,2% vs 64,8%), o que segura o CR em 10,06%. A hipótese é de piora na qualidade ou na relevância da intenção que chega à busca, e não de problema de checkout.",
+          "evidencia": "Desktop: 77.628 sessões (+2,3%), 7.810 compras (-1,1%), CR 10,06% contra baseline de 10,45% (-0,39pp, estável). Funil desktop: busca para carrinho 12,6% (baseline 14,6%), carrinho para checkout 56,6% (baseline 53,3%). No total do site, busca para carrinho foi de 11,1% para 10,1%. O pago ganhou 4,5pp de share no total do site no mesmo período.",
+          "plano_acao": "Cortar busca para carrinho do desktop por canal e por rota para verificar se a queda está concentrada no pago ou em rotas específicas. Revisar com o time Senna se houve mudança na página de resultados de busca no desktop. Só abrir teste se o corte localizar uma rota ou componente específico.",
+          "impacto": "CR desktop e etapa de topo do funil. Sem correção, a compensação nas etapas finais tende a se esgotar, já que checkout para compra tem pouco espaço acima de 66%.",
+          "acompanhamento": "Monitorar busca para carrinho desktop por 2 semanas. Sinal de alerta: abaixo de 12,5% por duas semanas seguidas, ou compensação nas etapas finais revertendo.",
+          "titulo_linear": null,
+          "tipo_acao": "monitorar",
+          "testavel": false,
+          "criterio_confirmacao": null,
+          "experimento_template": null,
+          "texto": "Diagnóstico: No desktop, a etapa busca para carrinho caiu de 14,6% para 12,6% (-2,0pp), a maior queda do funil do site. As etapas seguintes melhoraram (carrinho para checkout +3,3pp e checkout para compra de 66,2% vs 64,8%), o que segura o CR em 10,06%. A hipótese é de piora na qualidade ou na relevância da intenção que chega à busca, e não de problema de checkout.\n\nEvidência: Desktop: 77.628 sessões (+2,3%), 7.810 compras (-1,1%), CR 10,06% contra baseline de 10,45% (-0,39pp, estável). Funil desktop: busca para carrinho 12,6% (baseline 14,6%), carrinho para checkout 56,6% (baseline 53,3%). No total do site, busca para carrinho foi de 11,1% para 10,1%. O pago ganhou 4,5pp de share no total do site no mesmo período.\n\nClassificação: Hipótese\n\nPlano de ação: Cortar busca para carrinho do desktop por canal e por rota para verificar se a queda está concentrada no pago ou em rotas específicas. Revisar com o time Senna se houve mudança na página de resultados de busca no desktop. Só abrir teste se o corte localizar uma rota ou componente específico.\n\nImpacto: CR desktop e etapa de topo do funil. Sem correção, a compensação nas etapas finais tende a se esgotar, já que checkout para compra tem pouco espaço acima de 66%.\n\nPrioridade: Média, desktop tem o maior CR do site e a perda no topo do funil só está mascarada pelo ganho nas etapas finais\n\nAcompanhamento: Monitorar busca para carrinho desktop por 2 semanas. Sinal de alerta: abaixo de 12,5% por duas semanas seguidas, ou compensação nas etapas finais revertendo.",
+          "status": "nunca_testada",
+          "experimento_id": null,
+          "revisao": null
+        },
+        {
+          "id": "INS-2026-119",
+          "data": "2026-09-29",
+          "canal": "conjunto",
+          "tag": "[Site vs App] Gap de CR de 1,5pp e de NPS de 19 pontos; app já é 32% das sessões",
+          "classificacao": "Correlação",
+          "prioridade": "Média",
+          "diagnostico": "O app cresce em participação e converte menos que o site. CR do app 6,54% contra 8,01% do site (-1,47pp), rejeição de 31,15% contra 19,78% (+11,4pp) e NPS de 63,7 contra 83,2 (-19,5 pontos). Como as três métricas apontam na mesma direção com volume relevante, a diferença tem componente de experiência do app, e não apenas de público. Parte do gap de CR é recente: até 31/08 o app estava em 8,4% a 8,7%, praticamente igual ao site.",
+          "evidencia": "Share de sessões do app: 30,8%, 31,7% e 32,3% nas últimas 3 semanas. Share de compras do app: 27,7%, 26,3% e 28,1%, portanto o app leva mais sessões do que compras. Nota média 8,70 no app contra 9,37 no site. Volume de NPS: 1.331 respostas no app e 9.024 no site, ambos acima do mínimo de 30. Sessões do app cresceram 4,0% na semana enquanto as do site cresceram 1,0%.",
+          "plano_acao": "Tratar o gap de CR do app como consequência principal do problema de checkout descrito no insight do app, e recalcular o gap depois da correção. Para NPS e rejeição, cruzar com Zoho Desk os motivos de contato originados no app. Definir com Produto se o app terá meta de CR própria enquanto o share de sessões continuar subindo.",
+          "impacto": "Conversão consolidada do grupo e KR de NPS de 60. Com o app em 32% das sessões, o CR consolidado passa a depender cada vez mais dele.",
+          "acompanhamento": "Acompanhar semanalmente o gap de CR e de NPS entre canais e o share de sessões do app. Sinal de alerta: share do app acima de 33% com CR abaixo de 7%.",
+          "titulo_linear": null,
+          "tipo_acao": "monitorar",
+          "testavel": false,
+          "criterio_confirmacao": null,
+          "experimento_template": null,
+          "texto": "Diagnóstico: O app cresce em participação e converte menos que o site. CR do app 6,54% contra 8,01% do site (-1,47pp), rejeição de 31,15% contra 19,78% (+11,4pp) e NPS de 63,7 contra 83,2 (-19,5 pontos). Como as três métricas apontam na mesma direção com volume relevante, a diferença tem componente de experiência do app, e não apenas de público. Parte do gap de CR é recente: até 31/08 o app estava em 8,4% a 8,7%, praticamente igual ao site.\n\nEvidência: Share de sessões do app: 30,8%, 31,7% e 32,3% nas últimas 3 semanas. Share de compras do app: 27,7%, 26,3% e 28,1%, portanto o app leva mais sessões do que compras. Nota média 8,70 no app contra 9,37 no site. Volume de NPS: 1.331 respostas no app e 9.024 no site, ambos acima do mínimo de 30. Sessões do app cresceram 4,0% na semana enquanto as do site cresceram 1,0%.\n\nClassificação: Correlação\n\nPlano de ação: Tratar o gap de CR do app como consequência principal do problema de checkout descrito no insight do app, e recalcular o gap depois da correção. Para NPS e rejeição, cruzar com Zoho Desk os motivos de contato originados no app. Definir com Produto se o app terá meta de CR própria enquanto o share de sessões continuar subindo.\n\nImpacto: Conversão consolidada do grupo e KR de NPS de 60. Com o app em 32% das sessões, o CR consolidado passa a depender cada vez mais dele.\n\nPrioridade: Média, app cresce em participação e opera com CR, rejeição e NPS piores que o site\n\nAcompanhamento: Acompanhar semanalmente o gap de CR e de NPS entre canais e o share de sessões do app. Sinal de alerta: share do app acima de 33% com CR abaixo de 7%.",
+          "status": "nunca_testada",
+          "experimento_id": null,
+          "revisao": null
+        },
+        {
+          "id": "INS-2026-120",
+          "data": "2026-09-29",
+          "canal": "site",
+          "tag": "Site: taxa de serviço segue como único tema de detratores pela 6ª semana",
+          "classificacao": "Diagnóstico comprovado",
+          "prioridade": "Baixa",
+          "diagnostico": "O NPS do site está em 83,2 (+1,4 ponto), nota média 9,37, com 9.024 respostas, bem acima do KR de 60. A insatisfação restante é um único tema: taxa de serviço percebida como abusiva ou alta. Este é o mesmo tema das cinco semanas anteriores, o que indica problema estrutural de percepção de preço e não ruído.",
+          "evidencia": "Promotores 7.844 (86,9%), neutros 848 (9,4%), detratores 332 (3,7%). NPS mobile 83,8 (nota 9,40, 7.103 respostas) e desktop 81,2 (nota 9,26, 1.885 respostas). Comentários de detratores dominados por taxas abusivas; comentários de neutros citam taxa muito alta, preço, processo confuso, lentidão e ausência de parcelamento em até 6x sem juros. Promotores citam praticidade, rapidez e atendimento.",
+          "plano_acao": "Testar a exibição da composição da taxa de serviço já no carrinho, antes do checkout, para reduzir a surpresa de preço. Em paralelo, levantar com o time comercial se a comunicação de parcelamento em até 6x sem juros está clara nas telas de pagamento, já que apareceu em comentários de neutros.",
+          "impacto": "NPS do site (KR de 60, atualmente cumprido com folga) e etapa carrinho para checkout, que a transparência de taxa pode melhorar.",
+          "acompanhamento": "Acompanhar a proporção de detratores citando taxa. Critério de confirmação do teste: melhora em carrinho para checkout sem piora em checkout para compra.",
+          "titulo_linear": "Teste A/B: exibir composição da taxa de serviço no carrinho",
+          "tipo_acao": "testar",
+          "testavel": true,
+          "criterio_confirmacao": "Melhora estatisticamente significativa de carrinho para checkout no grupo de teste, sem piora em checkout para compra, mantendo o NPS de detratores citando taxa estável ou menor.",
+          "experimento_template": {
+            "hipotese": "Exibir a composição da taxa de serviço já no carrinho (antes do checkout) reduz o abandono causado por surpresa de preço na etapa seguinte.",
+            "metrica_primaria": "cart_to_checkout (site, total e por device)",
+            "guardrails": [
+              "checkout_to_purchase não pode piorar",
+              "tempo médio de sessão não pode aumentar de forma anômala"
+            ],
+            "duracao_minima_dias": 14,
+            "publico": "100% do tráfego de carrinho, teste A/B 50/50"
+          },
+          "texto": "Diagnóstico: O NPS do site está em 83,2 (+1,4 ponto), nota média 9,37, com 9.024 respostas, bem acima do KR de 60. A insatisfação restante é um único tema: taxa de serviço percebida como abusiva ou alta. Este é o mesmo tema das cinco semanas anteriores, o que indica problema estrutural de percepção de preço e não ruído.\n\nEvidência: Promotores 7.844 (86,9%), neutros 848 (9,4%), detratores 332 (3,7%). NPS mobile 83,8 (nota 9,40, 7.103 respostas) e desktop 81,2 (nota 9,26, 1.885 respostas). Comentários de detratores dominados por taxas abusivas; comentários de neutros citam taxa muito alta, preço, processo confuso, lentidão e ausência de parcelamento em até 6x sem juros. Promotores citam praticidade, rapidez e atendimento.\n\nClassificação: Diagnóstico comprovado\n\nPlano de ação: Testar a exibição da composição da taxa de serviço já no carrinho, antes do checkout, para reduzir a surpresa de preço. Em paralelo, levantar com o time comercial se a comunicação de parcelamento em até 6x sem juros está clara nas telas de pagamento, já que apareceu em comentários de neutros.\n\nImpacto: NPS do site (KR de 60, atualmente cumprido com folga) e etapa carrinho para checkout, que a transparência de taxa pode melhorar.\n\nPrioridade: Baixa, NPS de 83,2 está acima da meta de 60 e detratores são 3,7% das respostas, mas o tema é recorrente e sem tratamento\n\nAcompanhamento: Acompanhar a proporção de detratores citando taxa. Critério de confirmação do teste: melhora em carrinho para checkout sem piora em checkout para compra.",
+          "status": "nunca_testada",
+          "experimento_id": null,
+          "revisao": null
+        },
+        {
+          "id": "INS-2026-121",
+          "data": "2026-09-29",
+          "canal": "app",
+          "tag": "[App] NPS subiu para 63,7, mas Android está 11 pontos abaixo do iOS",
+          "classificacao": "Explicação",
+          "prioridade": "Média",
+          "diagnostico": "O NPS do app subiu 7,7 pontos, de 56,0 para 63,7, e voltou à zona da meta de 60, mas a melhora é desigual. Android está em 58,0 e iOS em 69,5, uma diferença de 11,5 pontos, com volume acima de 15 respostas em cada plataforma. A mesma ordem aparece no CR (Android 5,13% contra iOS 9,58%), o que sugere que o Android concentra a pior experiência.",
+          "evidencia": "App: 1.331 respostas (contra 897 na semana anterior e 352 duas semanas atrás), nota média 8,70. Android: NPS 58,0, nota 8,50, 666 respostas. iOS: NPS 69,5, nota 8,90, 665 respostas. O volume de respostas quase quadruplicou em três semanas, então parte da variação de score pode vir de mudança de amostra e não apenas de experiência.",
+          "plano_acao": "Verificar com o time Senna se houve mudança na coleta de NPS do app nas últimas 3 semanas (gatilho, frequência ou público). Cortar o NPS do Android por versão do app e por motivo do comentário. Considerar o Android como prioridade na investigação do checkout descrita no insight de CR do app.",
+          "impacto": "KR de NPS de 60 no app e conversão do Android, que representa 68% das sessões do app.",
+          "acompanhamento": "Monitorar NPS por plataforma nas próximas 2 semanas, com atenção ao volume de respostas. Sinal de alerta: NPS Android abaixo de 55 com mais de 300 respostas.",
+          "titulo_linear": null,
+          "tipo_acao": "monitorar",
+          "testavel": false,
+          "criterio_confirmacao": null,
+          "experimento_template": null,
+          "texto": "Diagnóstico: O NPS do app subiu 7,7 pontos, de 56,0 para 63,7, e voltou à zona da meta de 60, mas a melhora é desigual. Android está em 58,0 e iOS em 69,5, uma diferença de 11,5 pontos, com volume acima de 15 respostas em cada plataforma. A mesma ordem aparece no CR (Android 5,13% contra iOS 9,58%), o que sugere que o Android concentra a pior experiência.\n\nEvidência: App: 1.331 respostas (contra 897 na semana anterior e 352 duas semanas atrás), nota média 8,70. Android: NPS 58,0, nota 8,50, 666 respostas. iOS: NPS 69,5, nota 8,90, 665 respostas. O volume de respostas quase quadruplicou em três semanas, então parte da variação de score pode vir de mudança de amostra e não apenas de experiência.\n\nClassificação: Explicação\n\nPlano de ação: Verificar com o time Senna se houve mudança na coleta de NPS do app nas últimas 3 semanas (gatilho, frequência ou público). Cortar o NPS do Android por versão do app e por motivo do comentário. Considerar o Android como prioridade na investigação do checkout descrita no insight de CR do app.\n\nImpacto: KR de NPS de 60 no app e conversão do Android, que representa 68% das sessões do app.\n\nPrioridade: Média, diferença entre plataformas com volume suficiente e coerente com a diferença de CR\n\nAcompanhamento: Monitorar NPS por plataforma nas próximas 2 semanas, com atenção ao volume de respostas. Sinal de alerta: NPS Android abaixo de 55 com mais de 300 respostas.",
+          "status": "nunca_testada",
+          "experimento_id": null,
+          "revisao": null
+        }
+      ]
+    },
     {
       "semana": "2026-09-14",
       "label": "14/09 – 20/09/2026",
@@ -2799,6 +2947,212 @@
     }
   ],
   "insights_conversao": [
+    {
+      "semana": "2026-09-21",
+      "label": "21/09 – 27/09/2026",
+      "tipo": "semanal",
+      "gerado_em": "2026-09-29T14:00:00-03:00",
+      "classificacao": "estavel",
+      "metricas": {
+        "cr_atual": {
+          "total": 8.01,
+          "mobile": 7.42,
+          "desktop": 10.06
+        },
+        "cr_baseline": {
+          "total": 8.29,
+          "mobile": 7.74,
+          "desktop": 10.45
+        },
+        "delta_pp": {
+          "total": -0.28,
+          "mobile": -0.32,
+          "desktop": -0.39
+        },
+        "sigma": 1.02,
+        "n_semanas_hist": 8
+      },
+      "hipoteses": [
+        {
+          "hipotese": "Perda de eficiência do canal pago: o share de sessões subiu e o CR do canal caiu, puxando o CR total para baixo.",
+          "evidencia": "Pago: share de sessões de 47.7% para 52.2% (198.657 sessões, +1,5% vs semana anterior) e CR de 8.01% para 7.57% (-0.44pp). Orgânico e direto também recuaram (-0,68pp e -0,67pp), então o efeito não é apenas de mix."
+        }
+      ],
+      "monitorar": "Conversão estável na semana, CR 8,01% em linha com o baseline de 8,29% (delta -0,28pp, -3,4%). Acompanhar share do pago acima de 53% com CR do pago abaixo de 7,5% e a busca para carrinho no desktop.",
+      "dispositivos": {
+        "mobile": {
+          "classificacao": "estavel",
+          "cr_atual": 7.42,
+          "cr_baseline": 7.74,
+          "delta_pp": -0.32,
+          "canal_contexto": [
+            {
+              "nome": "Pago",
+              "share_sessoes_total": 52.2,
+              "cr_total": 7.57,
+              "delta_cr_pp": -0.44
+            },
+            {
+              "nome": "Orgânico",
+              "share_sessoes_total": 17.4,
+              "cr_total": 5.17,
+              "delta_cr_pp": -0.68
+            },
+            {
+              "nome": "Direto",
+              "share_sessoes_total": 13.8,
+              "cr_total": 15.19,
+              "delta_cr_pp": -0.67
+            },
+            {
+              "nome": "Social",
+              "share_sessoes_total": 1.5,
+              "cr_total": null,
+              "delta_cr_pp": null
+            }
+          ],
+          "funil": {
+            "step_critico": "checkout_to_purchase",
+            "checkout_to_purchase": {
+              "atual": 87.8,
+              "baseline": 83.5,
+              "delta_pp": 4.3
+            },
+            "cart_to_checkout": {
+              "atual": 64.7,
+              "baseline": 63.6,
+              "delta_pp": 1.1
+            },
+            "search_to_cart": {
+              "atual": 9.1,
+              "baseline": 9.8,
+              "delta_pp": -0.7
+            }
+          },
+          "hipoteses": [
+            {
+              "hipotese": "Canal pago com mais peso e CR menor pressiona o CR mobile sem mudança no funil do dispositivo.",
+              "evidencia": "Pago com share de 52.2% (+4,5pp) e CR 7.57% (-0.44pp); CR mobile em 7.42% contra baseline de 7.74% (-0.32pp)."
+            }
+          ],
+          "monitorar": "Acompanhar o CR mobile (79,7% das sessões) e a busca para carrinho, que caiu 0,7pp enquanto checkout para compra subiu 4,3pp."
+        },
+        "desktop": {
+          "classificacao": "estavel",
+          "cr_atual": 10.06,
+          "cr_baseline": 10.45,
+          "delta_pp": -0.39,
+          "canal_contexto": [
+            {
+              "nome": "Pago",
+              "share_sessoes_total": 52.2,
+              "cr_total": 7.57,
+              "delta_cr_pp": -0.44
+            },
+            {
+              "nome": "Orgânico",
+              "share_sessoes_total": 17.4,
+              "cr_total": 5.17,
+              "delta_cr_pp": -0.68
+            },
+            {
+              "nome": "Direto",
+              "share_sessoes_total": 13.8,
+              "cr_total": 15.19,
+              "delta_cr_pp": -0.67
+            },
+            {
+              "nome": "Social",
+              "share_sessoes_total": 1.5,
+              "cr_total": null,
+              "delta_cr_pp": null
+            }
+          ],
+          "funil": {
+            "step_critico": "cart_to_checkout",
+            "checkout_to_purchase": {
+              "atual": 66.2,
+              "baseline": 64.8,
+              "delta_pp": 1.4
+            },
+            "cart_to_checkout": {
+              "atual": 56.6,
+              "baseline": 53.3,
+              "delta_pp": 3.3
+            },
+            "search_to_cart": {
+              "atual": 12.6,
+              "baseline": 14.6,
+              "delta_pp": -2
+            }
+          },
+          "hipoteses": [
+            {
+              "hipotese": "Canal pago com mais peso e CR menor pressiona o CR desktop sem mudança no funil do dispositivo.",
+              "evidencia": "Pago com share de 52.2% (+4,5pp) e CR 7.57% (-0.44pp); CR desktop em 10.06% contra baseline de 10.45% (-0.39pp)."
+            }
+          ],
+          "monitorar": "Acompanhar busca para carrinho no desktop (12,6% contra 14,6% de baseline) e se a compensação nas etapas finais se sustenta."
+        },
+        "app": {
+          "classificacao": "caiu_moderado",
+          "cr_atual": 6.54,
+          "cr_baseline": 7.5,
+          "delta_pp": -0.96,
+          "canal_contexto": [
+            {
+              "nome": "Pago",
+              "share_sessoes_total": 8.9,
+              "cr_total": null,
+              "delta_cr_pp": null
+            },
+            {
+              "nome": "Orgânico",
+              "share_sessoes_total": 1.7,
+              "cr_total": null,
+              "delta_cr_pp": null
+            },
+            {
+              "nome": "Direto",
+              "share_sessoes_total": 23.2,
+              "cr_total": null,
+              "delta_cr_pp": null
+            },
+            {
+              "nome": "Social",
+              "share_sessoes_total": 0,
+              "cr_total": null,
+              "delta_cr_pp": null
+            }
+          ],
+          "funil": {
+            "step_critico": "checkout_to_purchase",
+            "checkout_to_purchase": {
+              "atual": 42,
+              "baseline": 59.9,
+              "delta_pp": -17.9
+            },
+            "cart_to_checkout": {
+              "atual": 25.8,
+              "baseline": 22.6,
+              "delta_pp": 3.2
+            },
+            "search_to_cart": {
+              "atual": 44.8,
+              "baseline": 41.2,
+              "delta_pp": 3.6
+            }
+          },
+          "hipoteses": [
+            {
+              "hipotese": "Quebra em checkout para compra no app a partir de 07/09, mais forte no iOS, por mudança de release, meio de pagamento ou instrumentação.",
+              "evidencia": "Checkout para compra de 65% a 67% até 31/08 para 42% em 21/09; iOS de 12% a 13,5% de CR para 9,6%; carrinho para checkout subiu de 21% para 26%. O baseline de 4 semanas (7,50%) está contaminado pela queda; contra a média de 8,5% pré-quebra o desvio é de cerca de -2,0pp (aproximadamente 2 sigma)."
+            }
+          ],
+          "monitorar": "Acompanhar diariamente checkout para compra no app por sistema operacional e validar contra transações do backoffice."
+        }
+      }
+    },
     {
       "semana": "2026-09-14",
       "label": "14/09 – 20/09/2026",
