@@ -1,6 +1,47 @@
 {
-  "gerado_em": "2026-09-30T13:08:10.540Z",
+  "gerado_em": "2026-10-06T17:13:56.395Z",
   "semanas": [
+    {
+      "semana": "2026-09-28",
+      "label": "28/09 – 04/10/2026",
+      "gerado_em": "2026-10-06T14:13:41-03:00",
+      "nps_score": 82.0411372210844,
+      "nps_nota_media": 9.341349574215803,
+      "nps_respostas": 9277,
+      "promotores": {
+        "temas_principais": [
+          "satisfação geral com o serviço ('ótimo', 'muito bom', 'excelente')",
+          "praticidade da compra",
+          "qualidade do atendimento"
+        ],
+        "resumo": "Promotores concentram elogios genéricos como 'ótimo', 'muito bom' e 'excelente', com menções a praticidade e a atendimento. Não há críticas relevantes nesse grupo.",
+        "insight": "A satisfação está ligada à experiência central de comprar a passagem e segue independente da insatisfação de neutros e detratores com taxa de serviço."
+      },
+      "neutros": {
+        "temas_principais": [
+          "taxa de serviço considerada alta",
+          "ausência de parcelamento em até 6x sem juros",
+          "processo confuso",
+          "avaliações genéricas ('bom', 'legal')"
+        ],
+        "resumo": "Neutros repetem o tema de taxa de serviço alta e acrescentam o pedido de parcelamento em até 6x sem juros e menções a processo confuso. Parte dos comentários é genérica, sem tema acionável.",
+        "insight": "A nota neutra mistura sensibilidade a preço e atrito de entendimento do processo; a taxa de serviço é o denominador comum com os detratores.",
+        "recorrente": true,
+        "semanas_recorrente": 7
+      },
+      "detratores": {
+        "temas_principais": [
+          "taxa de serviço considerada abusiva"
+        ],
+        "resumo": "A insatisfação forte de detratores é quase toda sobre a taxa de serviço, descrita como abusiva. Há ainda comentários positivos ('Bom') com nota baixa, sugerindo erro de leitura da escala.",
+        "insight": "Sétima semana consecutiva com a taxa de serviço como único tema de nota baixa no site. O problema é de percepção de preço, não de qualidade técnica ou operacional.",
+        "recomendacao_produto": "Testar a exibição da composição da taxa de serviço no carrinho, antes do checkout, e alinhar com o comercial a comunicação do parcelamento em até 6x sem juros; recomendação aberta há mais de sete semanas sem execução.",
+        "recorrente": true,
+        "semanas_recorrente": 7
+      },
+      "padrao": "recorrente",
+      "tendencia": "estavel"
+    },
     {
       "semana": "2026-09-21",
       "label": "21/09 – 27/09/2026",
