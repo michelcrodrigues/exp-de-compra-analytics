@@ -1,6 +1,176 @@
 {
-  "gerado_em": "2026-10-06T17:13:54.253Z",
+  "gerado_em": "2026-10-13T17:18:37.135Z",
   "insights": [
+    {
+      "semana": "2026-10-05",
+      "label": "05/10 – 11/10/2026",
+      "gerado_em": "2026-10-13T17:18:37.135Z",
+      "items": [
+        {
+          "id": "INS-2026-128",
+          "data": "2026-10-13",
+          "canal": "site",
+          "tag": "Site: CR sobe para 8,43% com sessões +2,4%; direto e desktop concentram o ganho",
+          "classificacao": "Explicação",
+          "prioridade": "Média",
+          "diagnostico": "O CR do site subiu de 7,57% para 8,43% (+0,86pp na semana) com sessões praticamente estáveis (+2,4%), e as compras cresceram 14,1%. O ganho não veio de volume, veio de conversão, e se concentra no canal direto e no desktop. Mesmo com o rebote, o CR segue abaixo do patamar de 10,3% de agosto e 0,17pp abaixo do mesmo período de 2025 (8,60%), então é recuperação parcial, não retomada.",
+          "evidencia": "Direto: sessões -6,9% (57.957 para 53.956), compras +17,0% (8.220 para 9.618) e CR de 14,18% para 17,83% (+3,65pp), contra 14,90% no baseline de 4 semanas. Desktop: sessões +2,1% e compras +25,5%, CR de 9,73% para 11,97% (baseline 10,11%). Pago: sessões +9,2%, compras +13,7%, CR de 7,59% para 7,91%. Orgânico: CR de 4,95% para 5,59%. Mobile, que é 79,2% das sessões, subiu só 0,52pp (6,99% para 7,51%). A classificação do CR contra o baseline é estável (+0,47pp, sigma de 1,06), mas o sigma de 8 semanas inclui o degrau de agosto e deixa a régua leniente.",
+          "plano_acao": "1) Validar com o backoffice se o salto de compras do canal direto (+1.398 compras) é real ou efeito de atribuição, cruzando com a planilha de Receita por Canal. 2) Verificar com CRM e Martech se houve disparo de campanha (WhatsApp, push, e-mail) na semana de 05/10 que explique tráfego direto de alta intenção. 3) Abrir o CR por device e canal em conjunto na próxima rodada para separar mudança de mix de mudança de comportamento. 4) Não comunicar o rebote como tendência antes de duas semanas consecutivas acima de 8%.",
+          "impacto": "KR de conversão de Experiência de Compra e leitura de GMV do site. Se o ganho for atribuição, o CR real do site segue em torno de 7,6% a 8,0% e o diagnóstico da queda de agosto continua em aberto. A decisão de investimento em mídia depende de qual das duas leituras vale.",
+          "acompanhamento": "Acompanhar o CR total do site nas semanas de 12/10 e 19/10 contra o piso de 8%, o CR do direto contra 15% e o CR desktop contra 10,5%. Se o direto voltar a 14% a 15% com sessões estáveis, tratar a semana de 05/10 como pico pontual. Reportar também a razão compras GA4 sobre eventos de purchase, que está em 88% há três semanas.",
+          "titulo_linear": null,
+          "tipo_acao": "monitorar",
+          "testavel": false,
+          "criterio_confirmacao": null,
+          "experimento_template": null,
+          "texto": "Diagnóstico: O CR do site subiu de 7,57% para 8,43% (+0,86pp na semana) com sessões praticamente estáveis (+2,4%), e as compras cresceram 14,1%. O ganho não veio de volume, veio de conversão, e se concentra no canal direto e no desktop. Mesmo com o rebote, o CR segue abaixo do patamar de 10,3% de agosto e 0,17pp abaixo do mesmo período de 2025 (8,60%), então é recuperação parcial, não retomada.\n\nEvidência: Direto: sessões -6,9% (57.957 para 53.956), compras +17,0% (8.220 para 9.618) e CR de 14,18% para 17,83% (+3,65pp), contra 14,90% no baseline de 4 semanas. Desktop: sessões +2,1% e compras +25,5%, CR de 9,73% para 11,97% (baseline 10,11%). Pago: sessões +9,2%, compras +13,7%, CR de 7,59% para 7,91%. Orgânico: CR de 4,95% para 5,59%. Mobile, que é 79,2% das sessões, subiu só 0,52pp (6,99% para 7,51%). A classificação do CR contra o baseline é estável (+0,47pp, sigma de 1,06), mas o sigma de 8 semanas inclui o degrau de agosto e deixa a régua leniente.\n\nClassificação: Explicação\n\nPlano de ação: 1) Validar com o backoffice se o salto de compras do canal direto (+1.398 compras) é real ou efeito de atribuição, cruzando com a planilha de Receita por Canal. 2) Verificar com CRM e Martech se houve disparo de campanha (WhatsApp, push, e-mail) na semana de 05/10 que explique tráfego direto de alta intenção. 3) Abrir o CR por device e canal em conjunto na próxima rodada para separar mudança de mix de mudança de comportamento. 4) Não comunicar o rebote como tendência antes de duas semanas consecutivas acima de 8%.\n\nImpacto: KR de conversão de Experiência de Compra e leitura de GMV do site. Se o ganho for atribuição, o CR real do site segue em torno de 7,6% a 8,0% e o diagnóstico da queda de agosto continua em aberto. A decisão de investimento em mídia depende de qual das duas leituras vale.\n\nPrioridade: Média, o rebote é relevante para o KR de conversão, mas ainda não está confirmado como tendência e depende de validação de atribuição.\n\nAcompanhamento: Acompanhar o CR total do site nas semanas de 12/10 e 19/10 contra o piso de 8%, o CR do direto contra 15% e o CR desktop contra 10,5%. Se o direto voltar a 14% a 15% com sessões estáveis, tratar a semana de 05/10 como pico pontual. Reportar também a razão compras GA4 sobre eventos de purchase, que está em 88% há três semanas.",
+          "status": "nunca_testada",
+          "experimento_id": null,
+          "revisao": null
+        },
+        {
+          "id": "INS-2026-129",
+          "data": "2026-10-13",
+          "canal": "site",
+          "tag": "Site: begin_checkout +19,7% e rejeição -3,6pp pedem validação de tracking",
+          "classificacao": "Hipótese",
+          "prioridade": "Alta",
+          "diagnostico": "Dois indicadores se moveram juntos de forma atípica: a rejeição caiu de 19,91% para 16,32% e os eventos de begin_checkout cresceram 19,7% contra sessões +2,4%. Como checkout para compra caiu 6,0pp contra o baseline (79,0% para 73,0%) enquanto o CR subiu, o funil está registrando mais entradas em checkout do que a compra confirma. A leitura mais provável é mudança no momento em que o evento dispara, e não piora real do checkout.",
+          "evidencia": "Eventos semana contra semana: search +10,5%, add_to_cart +17,8%, begin_checkout +19,7% e purchase +13,6%, com sessões +2,4% e compras GA4 +14,1%. Carrinho para checkout subiu de 59,9% (baseline) para 64,3% e checkout para compra caiu de 79,0% para 73,0%, com queda mais forte no mobile (85,7% para 78,8%, -6,9pp) que no desktop (64,9% para 62,2%, -2,7pp). A duração média subiu 9,0% (299s para 326s). No Linear, o SEN-1113 (exigir dados do comprador antes da lista de formas de pagamento no checkout) foi concluído em 07/10, dentro da semana, e é o candidato principal; a camada de mensuração v2 (SEN-1077) só foi concluída em 13/10 e não explica a semana.",
+          "plano_acao": "1) Pedir ao time Senna a data e o ponto exato de disparo do begin_checkout após o SEN-1113 e comparar com a regra anterior. 2) Reprocessar o funil de 05/10 a 11/10 usando apenas sessões com purchase confirmado para medir checkout para compra sem o efeito do evento. 3) Confirmar se a definição de sessão engajada ou o tratamento de consentimento mudou na semana, já que a rejeição cai 4,5pp contra o baseline. 4) Enquanto não houver resposta, usar CR e compras como referência e tratar as etapas do funil como indicativas.",
+          "impacto": "Confiabilidade de todas as leituras de funil do site, do diagnóstico de abandono em checkout e dos KRs que dependem de etapa. Uma decisão de produto baseada em checkout para compra de 73% pode estar errada em até 6pp.",
+          "acompanhamento": "Confirmar a causa até a análise da semana de 12/10. Monitorar a rejeição (referência abaixo de 17%), a razão begin_checkout por sessão (0,131 nesta semana contra 0,112 na anterior) e checkout para compra. Se a razão normalizar após a correção do disparo, reclassificar como Diagnóstico comprovado.",
+          "titulo_linear": null,
+          "tipo_acao": "monitorar",
+          "testavel": false,
+          "criterio_confirmacao": null,
+          "experimento_template": null,
+          "texto": "Diagnóstico: Dois indicadores se moveram juntos de forma atípica: a rejeição caiu de 19,91% para 16,32% e os eventos de begin_checkout cresceram 19,7% contra sessões +2,4%. Como checkout para compra caiu 6,0pp contra o baseline (79,0% para 73,0%) enquanto o CR subiu, o funil está registrando mais entradas em checkout do que a compra confirma. A leitura mais provável é mudança no momento em que o evento dispara, e não piora real do checkout.\n\nEvidência: Eventos semana contra semana: search +10,5%, add_to_cart +17,8%, begin_checkout +19,7% e purchase +13,6%, com sessões +2,4% e compras GA4 +14,1%. Carrinho para checkout subiu de 59,9% (baseline) para 64,3% e checkout para compra caiu de 79,0% para 73,0%, com queda mais forte no mobile (85,7% para 78,8%, -6,9pp) que no desktop (64,9% para 62,2%, -2,7pp). A duração média subiu 9,0% (299s para 326s). No Linear, o SEN-1113 (exigir dados do comprador antes da lista de formas de pagamento no checkout) foi concluído em 07/10, dentro da semana, e é o candidato principal; a camada de mensuração v2 (SEN-1077) só foi concluída em 13/10 e não explica a semana.\n\nClassificação: Hipótese\n\nPlano de ação: 1) Pedir ao time Senna a data e o ponto exato de disparo do begin_checkout após o SEN-1113 e comparar com a regra anterior. 2) Reprocessar o funil de 05/10 a 11/10 usando apenas sessões com purchase confirmado para medir checkout para compra sem o efeito do evento. 3) Confirmar se a definição de sessão engajada ou o tratamento de consentimento mudou na semana, já que a rejeição cai 4,5pp contra o baseline. 4) Enquanto não houver resposta, usar CR e compras como referência e tratar as etapas do funil como indicativas.\n\nImpacto: Confiabilidade de todas as leituras de funil do site, do diagnóstico de abandono em checkout e dos KRs que dependem de etapa. Uma decisão de produto baseada em checkout para compra de 73% pode estar errada em até 6pp.\n\nPrioridade: Alta, todas as leituras de funil do site dependem da confiabilidade desses eventos e a queda de 6,0pp em checkout para compra pode ser artefato.\n\nAcompanhamento: Confirmar a causa até a análise da semana de 12/10. Monitorar a rejeição (referência abaixo de 17%), a razão begin_checkout por sessão (0,131 nesta semana contra 0,112 na anterior) e checkout para compra. Se a razão normalizar após a correção do disparo, reclassificar como Diagnóstico comprovado.",
+          "status": "nunca_testada",
+          "experimento_id": null,
+          "revisao": null
+        },
+        {
+          "id": "INS-2026-130",
+          "data": "2026-10-13",
+          "canal": "site-desktop",
+          "tag": "[Desktop] CR 11,97%, +1,86pp acima do baseline; compras +25,5% com sessões +2,1%",
+          "classificacao": "Resultado fora da curva",
+          "prioridade": "Média",
+          "diagnostico": "O desktop foi o único device a sair da faixa de estabilidade, com CR de 11,97% contra 10,11% de baseline (+1,86pp, classificação subiu_moderado). As compras desktop cresceram 25,5% em uma semana com sessões praticamente estáveis (+2,1%). Ao contrário do mobile, o funil desktop se moveu de forma coerente em todas as etapas, o que sugere ganho real de conversão.",
+          "evidencia": "Desktop semana contra semana: add_to_cart +22,7% (26.174 para 32.104), begin_checkout +26,4% (15.340 para 19.396), eventos de purchase +25,8% (9.592 para 12.071) e compras +25,5% (8.466 para 10.626), contra sessões +2,1% (86.997 para 88.801). Carrinho para checkout foi de 53,7% para 60,4% (+6,7pp) e checkout para compra de 64,9% para 62,2% (-2,7pp). No mobile, begin_checkout subiu 16,4% e compras 9,8%, ou seja, os eventos crescem mais que as compras, o que não ocorre no desktop. O salto do canal direto (CR de 17,83%) coincide com o desktop, mas o canal não é segmentado por device.",
+          "plano_acao": "1) Cruzar o canal direto por device na fonte do GA4 para confirmar se o salto de CR do direto é majoritariamente desktop. 2) Verificar se houve ação comercial ou de CRM voltada a clientes recorrentes de desktop (e-mail, link direto) entre 05/10 e 11/10. 3) Esperar duas semanas de sustentação antes de recalibrar o baseline de desktop.",
+          "impacto": "KR de conversão do site, já que o desktop responde por 20,3% das sessões e 28,8% das compras. Cada 1pp de CR desktop equivale a cerca de 888 compras por semana.",
+          "acompanhamento": "Monitorar CR desktop acima de 11% na semana de 12/10 e a razão entre o crescimento de eventos e o de compras, hoje próxima de 1,0 no desktop. Se o CR cair abaixo de 10,5% com carrinho para checkout voltando a 54%, classificar a semana de 05/10 como pico pontual.",
+          "titulo_linear": null,
+          "tipo_acao": "monitorar",
+          "testavel": false,
+          "criterio_confirmacao": null,
+          "experimento_template": null,
+          "texto": "Diagnóstico: O desktop foi o único device a sair da faixa de estabilidade, com CR de 11,97% contra 10,11% de baseline (+1,86pp, classificação subiu_moderado). As compras desktop cresceram 25,5% em uma semana com sessões praticamente estáveis (+2,1%). Ao contrário do mobile, o funil desktop se moveu de forma coerente em todas as etapas, o que sugere ganho real de conversão.\n\nEvidência: Desktop semana contra semana: add_to_cart +22,7% (26.174 para 32.104), begin_checkout +26,4% (15.340 para 19.396), eventos de purchase +25,8% (9.592 para 12.071) e compras +25,5% (8.466 para 10.626), contra sessões +2,1% (86.997 para 88.801). Carrinho para checkout foi de 53,7% para 60,4% (+6,7pp) e checkout para compra de 64,9% para 62,2% (-2,7pp). No mobile, begin_checkout subiu 16,4% e compras 9,8%, ou seja, os eventos crescem mais que as compras, o que não ocorre no desktop. O salto do canal direto (CR de 17,83%) coincide com o desktop, mas o canal não é segmentado por device.\n\nClassificação: Resultado fora da curva\n\nPlano de ação: 1) Cruzar o canal direto por device na fonte do GA4 para confirmar se o salto de CR do direto é majoritariamente desktop. 2) Verificar se houve ação comercial ou de CRM voltada a clientes recorrentes de desktop (e-mail, link direto) entre 05/10 e 11/10. 3) Esperar duas semanas de sustentação antes de recalibrar o baseline de desktop.\n\nImpacto: KR de conversão do site, já que o desktop responde por 20,3% das sessões e 28,8% das compras. Cada 1pp de CR desktop equivale a cerca de 888 compras por semana.\n\nPrioridade: Média, o desktop é 28,8% das compras e o movimento é favorável, mas precisa de confirmação de sustentação antes de recalibrar metas.\n\nAcompanhamento: Monitorar CR desktop acima de 11% na semana de 12/10 e a razão entre o crescimento de eventos e o de compras, hoje próxima de 1,0 no desktop. Se o CR cair abaixo de 10,5% com carrinho para checkout voltando a 54%, classificar a semana de 05/10 como pico pontual.",
+          "status": "nunca_testada",
+          "experimento_id": null,
+          "revisao": null
+        },
+        {
+          "id": "INS-2026-131",
+          "data": "2026-10-13",
+          "canal": "app",
+          "tag": "[App] CR em 5,33%, menor das 9 semanas; sessões +11,2% e compras -3,4%",
+          "classificacao": "Resultado fora da curva",
+          "prioridade": "Alta",
+          "diagnostico": "O CR do app caiu de 6,14% para 5,33% e é o menor da janela de nove semanas, depois de operar em torno de 8,5% até o início de agosto. As sessões cresceram 11,2% (191.079 para 212.486) e as compras caíram 3,4% (11.734 para 11.336), ou seja, o volume adicional entrou sem converter. Contra o baseline de 4 semanas (6,48%) a queda é de 1,15pp, classificada como caiu_moderado, mas o baseline já está contaminado pelo degrau.",
+          "evidencia": "Android: CR de 4,94% para 4,13% (baseline 5,32%), sessões 149.350 (+13,0%) e compras 6.168 (-5,5%). iOS: CR de 8,72% para 8,24% (baseline 8,99%), sessões +5,1% e compras -0,7%. Funil contra baseline: busca para carrinho de 42,3% para 39,1% (-3,3pp), carrinho para checkout de 24,7% para 22,6% (-2,1pp) e checkout para compra de 46,8% para 42,2% (-4,5pp). Semana contra semana a perda está a montante: checkout para compra melhorou 1,3pp enquanto busca para carrinho caiu 2,0pp e carrinho para checkout 2,3pp. Sessões do pago cresceram 23,4% (16.434 para 20.275) e 67% das sessões não têm canal atribuído, o que limita a leitura de origem; o SEN-1124 (queda de rastreabilidade de sessões via push) segue em revisão.",
+          "plano_acao": "1) Segmentar o app por origem de sessão com o time Senna (SEN-1124) para descobrir de onde vêm as 31,6 mil sessões adicionais por semana contra o baseline e se são campanhas pagas de baixa intenção. 2) Validar com Marketing se houve aumento de investimento em pago de app na semana de 05/10 e qual o CR esperado dessas campanhas. 3) Priorizar a correção da ordem do funil e dos eventos de carrinho e checkout (SEN-1098 e SEN-1099), porque busca para carrinho de 39% é incompatível com o comportamento do site (10,3%) e indica evento fora de ordem. 4) Cruzar com os bugs de conversão em validação (SEN-1049, SEN-1051, SEN-1052 e SEN-1054) e confirmar a data de release de cada um.",
+          "impacto": "KR de conversão do app e GMV. Com 212 mil sessões por semana, cada 1pp de CR do app equivale a cerca de 2.125 compras semanais; a diferença contra o patamar de 8,5% representa perto de 6,8 mil compras por semana não realizadas.",
+          "acompanhamento": "Acompanhar o CR do app contra 5,5% na semana de 12/10, as sessões do pago e o CR Android contra 4,5%. Se as sessões continuarem crescendo acima de 8% com compras estáveis, tratar como problema de qualidade de tráfego e não de produto. Reavaliar a classificação com sigma recalculado após quatro semanas no novo patamar.",
+          "titulo_linear": null,
+          "tipo_acao": "monitorar",
+          "testavel": false,
+          "criterio_confirmacao": null,
+          "experimento_template": null,
+          "texto": "Diagnóstico: O CR do app caiu de 6,14% para 5,33% e é o menor da janela de nove semanas, depois de operar em torno de 8,5% até o início de agosto. As sessões cresceram 11,2% (191.079 para 212.486) e as compras caíram 3,4% (11.734 para 11.336), ou seja, o volume adicional entrou sem converter. Contra o baseline de 4 semanas (6,48%) a queda é de 1,15pp, classificada como caiu_moderado, mas o baseline já está contaminado pelo degrau.\n\nEvidência: Android: CR de 4,94% para 4,13% (baseline 5,32%), sessões 149.350 (+13,0%) e compras 6.168 (-5,5%). iOS: CR de 8,72% para 8,24% (baseline 8,99%), sessões +5,1% e compras -0,7%. Funil contra baseline: busca para carrinho de 42,3% para 39,1% (-3,3pp), carrinho para checkout de 24,7% para 22,6% (-2,1pp) e checkout para compra de 46,8% para 42,2% (-4,5pp). Semana contra semana a perda está a montante: checkout para compra melhorou 1,3pp enquanto busca para carrinho caiu 2,0pp e carrinho para checkout 2,3pp. Sessões do pago cresceram 23,4% (16.434 para 20.275) e 67% das sessões não têm canal atribuído, o que limita a leitura de origem; o SEN-1124 (queda de rastreabilidade de sessões via push) segue em revisão.\n\nClassificação: Resultado fora da curva\n\nPlano de ação: 1) Segmentar o app por origem de sessão com o time Senna (SEN-1124) para descobrir de onde vêm as 31,6 mil sessões adicionais por semana contra o baseline e se são campanhas pagas de baixa intenção. 2) Validar com Marketing se houve aumento de investimento em pago de app na semana de 05/10 e qual o CR esperado dessas campanhas. 3) Priorizar a correção da ordem do funil e dos eventos de carrinho e checkout (SEN-1098 e SEN-1099), porque busca para carrinho de 39% é incompatível com o comportamento do site (10,3%) e indica evento fora de ordem. 4) Cruzar com os bugs de conversão em validação (SEN-1049, SEN-1051, SEN-1052 e SEN-1054) e confirmar a data de release de cada um.\n\nImpacto: KR de conversão do app e GMV. Com 212 mil sessões por semana, cada 1pp de CR do app equivale a cerca de 2.125 compras semanais; a diferença contra o patamar de 8,5% representa perto de 6,8 mil compras por semana não realizadas.\n\nPrioridade: Alta, o app perdeu cerca de 3,2pp de CR contra o patamar de início de agosto, equivalente a perto de 6,8 mil compras semanais.\n\nAcompanhamento: Acompanhar o CR do app contra 5,5% na semana de 12/10, as sessões do pago e o CR Android contra 4,5%. Se as sessões continuarem crescendo acima de 8% com compras estáveis, tratar como problema de qualidade de tráfego e não de produto. Reavaliar a classificação com sigma recalculado após quatro semanas no novo patamar.",
+          "status": "nunca_testada",
+          "experimento_id": null,
+          "revisao": null
+        },
+        {
+          "id": "INS-2026-132",
+          "data": "2026-10-13",
+          "canal": "conjunto",
+          "tag": "[Site vs App] App é 32,7% das sessões e só 23,5% das compras; não há migração",
+          "classificacao": "Correlação",
+          "prioridade": "Alta",
+          "diagnostico": "As sessões do app subiram para 32,7% do total (30,9% na semana anterior), mas a participação do app nas compras caiu de 26,6% para 23,5% (cerca de 28% três semanas atrás). Não há migração de compra do site para o app, há expansão de sessões sem conversão equivalente. A diferença de CR entre os canais abriu para 3,10pp (site 8,43% contra app 5,33%), ante 1,43pp na semana anterior.",
+          "evidencia": "Rejeição: app 27,23% contra site 16,32% (+10,9pp). NPS: app 66,90 (nota 8,86) contra site 80,39 (nota 9,29), diferença de 13,5 pontos com 1.299 respostas no app e 10.956 no site. Funil: checkout para compra de 42,2% no app contra 73,0% no site (-30,8pp), incompatível com um checkout real e coerente com problemas de medição do app (firebase_error = 5 no begin_checkout, SEN-1099, e purchase client-side, SEN-1101). Tendência divergente: o site ganhou 0,86pp de CR na semana e o app perdeu 0,81pp, então as variações não são correlacionadas. O NPS do app subiu 2,6 pontos enquanto o CR caiu, o que reforça que o NPS mede quem comprou e não enxerga a perda de conversão.",
+          "plano_acao": "1) Apresentar a visão consolidada site e app no próximo MBR com CR, compras e share de compras, evitando comunicar sessões do app como adoção. 2) Definir com Marketing e CRM se o objetivo do app no trimestre é migrar compra ou ampliar base, e qual CR mínimo é aceitável para o pago de app. 3) Antecipar no Linear os itens de mensuração do app (SEN-1090 em validação e SEN-1098, SEN-1099 e SEN-1101 em backlog), porque o funil do app hoje não sustenta decisão por etapa.",
+          "impacto": "Estratégia de migração para o app, alocação de mídia paga entre site e app e KRs de conversão consolidada. Se o app seguir crescendo em sessões a 11% por semana com CR de 5,3%, o CR consolidado tende a cair mesmo com o site estável.",
+          "acompanhamento": "Acompanhar o share de compras do app (hoje 23,5%) contra o share de sessões (32,7%), a diferença de CR entre canais (3,10pp) e o NPS app contra site. A diferença só deve ser considerada estrutural se persistir acima de 2pp por quatro semanas após a correção da mensuração.",
+          "titulo_linear": null,
+          "tipo_acao": "monitorar",
+          "testavel": false,
+          "criterio_confirmacao": null,
+          "experimento_template": null,
+          "texto": "Diagnóstico: As sessões do app subiram para 32,7% do total (30,9% na semana anterior), mas a participação do app nas compras caiu de 26,6% para 23,5% (cerca de 28% três semanas atrás). Não há migração de compra do site para o app, há expansão de sessões sem conversão equivalente. A diferença de CR entre os canais abriu para 3,10pp (site 8,43% contra app 5,33%), ante 1,43pp na semana anterior.\n\nEvidência: Rejeição: app 27,23% contra site 16,32% (+10,9pp). NPS: app 66,90 (nota 8,86) contra site 80,39 (nota 9,29), diferença de 13,5 pontos com 1.299 respostas no app e 10.956 no site. Funil: checkout para compra de 42,2% no app contra 73,0% no site (-30,8pp), incompatível com um checkout real e coerente com problemas de medição do app (firebase_error = 5 no begin_checkout, SEN-1099, e purchase client-side, SEN-1101). Tendência divergente: o site ganhou 0,86pp de CR na semana e o app perdeu 0,81pp, então as variações não são correlacionadas. O NPS do app subiu 2,6 pontos enquanto o CR caiu, o que reforça que o NPS mede quem comprou e não enxerga a perda de conversão.\n\nClassificação: Correlação\n\nPlano de ação: 1) Apresentar a visão consolidada site e app no próximo MBR com CR, compras e share de compras, evitando comunicar sessões do app como adoção. 2) Definir com Marketing e CRM se o objetivo do app no trimestre é migrar compra ou ampliar base, e qual CR mínimo é aceitável para o pago de app. 3) Antecipar no Linear os itens de mensuração do app (SEN-1090 em validação e SEN-1098, SEN-1099 e SEN-1101 em backlog), porque o funil do app hoje não sustenta decisão por etapa.\n\nImpacto: Estratégia de migração para o app, alocação de mídia paga entre site e app e KRs de conversão consolidada. Se o app seguir crescendo em sessões a 11% por semana com CR de 5,3%, o CR consolidado tende a cair mesmo com o site estável.\n\nPrioridade: Alta, a leitura de adoção do app por sessões está distorcida e afeta decisões de mídia e de roadmap.\n\nAcompanhamento: Acompanhar o share de compras do app (hoje 23,5%) contra o share de sessões (32,7%), a diferença de CR entre canais (3,10pp) e o NPS app contra site. A diferença só deve ser considerada estrutural se persistir acima de 2pp por quatro semanas após a correção da mensuração.",
+          "status": "nunca_testada",
+          "experimento_id": null,
+          "revisao": null
+        },
+        {
+          "id": "INS-2026-133",
+          "data": "2026-10-13",
+          "canal": "site",
+          "tag": "Site: NPS cai pela 3ª semana (80,39); detratores +42% com respostas +18%",
+          "classificacao": "Tendência",
+          "prioridade": "Média",
+          "diagnostico": "O NPS do site caiu de 82,04 para 80,39 e acumula três semanas de queda (83,24, 82,04 e 80,39), sem sair da faixa dentro da meta de 60. O que muda é a composição: os detratores cresceram 42,2% (353 para 502) contra respostas +18,1% (9.277 para 10.956). O desktop cai mais que o mobile e já está em 77,70.",
+          "evidencia": "Mobile: NPS de 83,12 para 81,22 (-1,90) com 8.305 respostas; desktop: de 78,75 para 77,70 (-1,05) com 2.597 respostas, e 3,5 pontos abaixo de três semanas atrás (81,22). Nota média de 9,34 para 9,29. A participação de detratores foi de 3,8% para 4,6%. Nos comentários, taxa de serviço aparece em neutros e detratores pela 8ª semana consecutiva (Taxas abusivas, Taxa de serviço abusiva, Taxa de serviço muito alta), com pedido de parcelamento em até 6x sem juros e o comentário Confuso.",
+          "plano_acao": "1) Executar a recomendação de teste da composição da taxa de serviço no carrinho (insight dedicado nesta rodada). 2) Segmentar o NPS desktop por rota e forma de pagamento para entender a queda acumulada de 3,5 pontos em três semanas. 3) Verificar com CX no Zoho Desk se há tickets sobre confusão no fluxo de compra desktop que expliquem o comentário Confuso.",
+          "impacto": "KR de NPS (meta 60) segue folgado, mas a trajetória reduz a margem e o tema de preço é o único sustentado. Risco de a queda aparecer no MBR sem explicação.",
+          "acompanhamento": "Monitorar NPS total acima de 80, participação de detratores abaixo de 4,5% e NPS desktop acima de 77. Se o NPS cair 5 pontos ou mais contra 83,24, abrir insight de prioridade Alta.",
+          "titulo_linear": null,
+          "tipo_acao": "monitorar",
+          "testavel": false,
+          "criterio_confirmacao": null,
+          "experimento_template": null,
+          "texto": "Diagnóstico: O NPS do site caiu de 82,04 para 80,39 e acumula três semanas de queda (83,24, 82,04 e 80,39), sem sair da faixa dentro da meta de 60. O que muda é a composição: os detratores cresceram 42,2% (353 para 502) contra respostas +18,1% (9.277 para 10.956). O desktop cai mais que o mobile e já está em 77,70.\n\nEvidência: Mobile: NPS de 83,12 para 81,22 (-1,90) com 8.305 respostas; desktop: de 78,75 para 77,70 (-1,05) com 2.597 respostas, e 3,5 pontos abaixo de três semanas atrás (81,22). Nota média de 9,34 para 9,29. A participação de detratores foi de 3,8% para 4,6%. Nos comentários, taxa de serviço aparece em neutros e detratores pela 8ª semana consecutiva (Taxas abusivas, Taxa de serviço abusiva, Taxa de serviço muito alta), com pedido de parcelamento em até 6x sem juros e o comentário Confuso.\n\nClassificação: Tendência\n\nPlano de ação: 1) Executar a recomendação de teste da composição da taxa de serviço no carrinho (insight dedicado nesta rodada). 2) Segmentar o NPS desktop por rota e forma de pagamento para entender a queda acumulada de 3,5 pontos em três semanas. 3) Verificar com CX no Zoho Desk se há tickets sobre confusão no fluxo de compra desktop que expliquem o comentário Confuso.\n\nImpacto: KR de NPS (meta 60) segue folgado, mas a trajetória reduz a margem e o tema de preço é o único sustentado. Risco de a queda aparecer no MBR sem explicação.\n\nPrioridade: Média, o NPS segue bem acima da meta de 60, mas a trajetória e o crescimento de detratores reduzem a margem.\n\nAcompanhamento: Monitorar NPS total acima de 80, participação de detratores abaixo de 4,5% e NPS desktop acima de 77. Se o NPS cair 5 pontos ou mais contra 83,24, abrir insight de prioridade Alta.",
+          "status": "nunca_testada",
+          "experimento_id": null,
+          "revisao": null
+        },
+        {
+          "id": "INS-2026-134",
+          "data": "2026-10-13",
+          "canal": "site",
+          "tag": "Site: taxa de serviço segue como único tema de detratores pela 8ª semana",
+          "classificacao": "Diagnóstico comprovado",
+          "prioridade": "Alta",
+          "diagnostico": "A taxa de serviço é o único tema de detratores e o principal de neutros pela 8ª semana consecutiva, sem execução da recomendação aberta desde a semana de 21/09. Os detratores cresceram 42% na semana e o tema permanece o mesmo, o que indica problema de percepção de preço e não de operação. A hipótese testável é que mostrar a composição da taxa antes do checkout reduz a surpresa de preço e melhora a conversão de carrinho para checkout e o NPS de detratores.",
+          "evidencia": "Comentários da semana: Taxas abusivas (5) e Taxa de serviço abusiva (3) entre detratores; Taxa de serviço muito alta (4), Era para dividir até 6x sem juros (3) e Confuso (3) entre neutros. Detratores: 502 (4,6% das respostas, contra 3,8%). Carrinho para checkout do site em 64,3% e checkout para compra em 73,0%, ambos com ruído de mensuração (ver insight sobre begin_checkout), por isso o desfecho primário deve ser compra por sessão com carrinho e não só a etapa.",
+          "plano_acao": "1) Priorizar no backlog do Senna o teste A/B de composição da taxa de serviço no carrinho (50/50, 14 dias), com desenho já descrito em INS-2026-120. 2) Alinhar com o Comercial a comunicação do parcelamento em até 6x sem juros. 3) Iniciar somente após o esclarecimento do begin_checkout (insight sobre tracking) para não contaminar a métrica primária. 4) Registrar o resultado no dashboard ao fim do experimento.",
+          "impacto": "NPS (detratores), carrinho para checkout, CR do site e percepção de preço. Um ganho sustentado de 0,5pp de CR equivale a cerca de 2.200 compras semanais.",
+          "acompanhamento": "Acompanhar semanalmente o número de comentários sobre taxa e a participação de detratores. Se o teste não for iniciado até o fim de outubro, tratar como risco para a campanha de Black Friday e escalar ao Senna.",
+          "titulo_linear": "Teste A/B: exibir composição da taxa de serviço no carrinho",
+          "tipo_acao": "testar",
+          "testavel": true,
+          "criterio_confirmacao": "Melhora estatisticamente significativa de carrinho para checkout e de compra por sessão com carrinho no grupo de teste, sem piora em checkout para compra, e com participação de detratores citando taxa estável ou menor.",
+          "experimento_template": {
+            "hipotese": "Exibir a composição da taxa de serviço já no carrinho (antes do checkout) reduz o abandono causado por surpresa de preço na etapa seguinte e a participação de detratores que citam a taxa.",
+            "metrica_primaria": "compra por sessão com carrinho e cart_to_checkout (site, total e por device)",
+            "guardrails": [
+              "checkout_to_purchase não pode piorar",
+              "tempo médio de sessão não pode aumentar de forma anômala"
+            ],
+            "duracao_minima_dias": 14,
+            "publico": "100% do tráfego de carrinho, teste A/B 50/50"
+          },
+          "texto": "Diagnóstico: A taxa de serviço é o único tema de detratores e o principal de neutros pela 8ª semana consecutiva, sem execução da recomendação aberta desde a semana de 21/09. Os detratores cresceram 42% na semana e o tema permanece o mesmo, o que indica problema de percepção de preço e não de operação. A hipótese testável é que mostrar a composição da taxa antes do checkout reduz a surpresa de preço e melhora a conversão de carrinho para checkout e o NPS de detratores.\n\nEvidência: Comentários da semana: Taxas abusivas (5) e Taxa de serviço abusiva (3) entre detratores; Taxa de serviço muito alta (4), Era para dividir até 6x sem juros (3) e Confuso (3) entre neutros. Detratores: 502 (4,6% das respostas, contra 3,8%). Carrinho para checkout do site em 64,3% e checkout para compra em 73,0%, ambos com ruído de mensuração (ver insight sobre begin_checkout), por isso o desfecho primário deve ser compra por sessão com carrinho e não só a etapa.\n\nClassificação: Diagnóstico comprovado\n\nPlano de ação: 1) Priorizar no backlog do Senna o teste A/B de composição da taxa de serviço no carrinho (50/50, 14 dias), com desenho já descrito em INS-2026-120. 2) Alinhar com o Comercial a comunicação do parcelamento em até 6x sem juros. 3) Iniciar somente após o esclarecimento do begin_checkout (insight sobre tracking) para não contaminar a métrica primária. 4) Registrar o resultado no dashboard ao fim do experimento.\n\nImpacto: NPS (detratores), carrinho para checkout, CR do site e percepção de preço. Um ganho sustentado de 0,5pp de CR equivale a cerca de 2.200 compras semanais.\n\nPrioridade: Alta, a recomendação está aberta há oito semanas sem execução e a Black Friday (26/10 a 30/11) amplifica a sensibilidade a preço.\n\nAcompanhamento: Acompanhar semanalmente o número de comentários sobre taxa e a participação de detratores. Se o teste não for iniciado até o fim de outubro, tratar como risco para a campanha de Black Friday e escalar ao Senna.",
+          "status": "nunca_testada",
+          "experimento_id": null,
+          "revisao": null
+        }
+      ]
+    },
     {
       "semana": "2026-09-28",
       "label": "28/09 – 04/10/2026",
@@ -3086,6 +3256,224 @@
     }
   ],
   "insights_conversao": [
+    {
+      "semana": "2026-10-05",
+      "label": "05/10 – 11/10/2026",
+      "tipo": "semanal",
+      "gerado_em": "2026-10-13T14:18:27-03:00",
+      "classificacao": "estavel",
+      "metricas": {
+        "cr_atual": {
+          "total": 8.43,
+          "mobile": 7.51,
+          "desktop": 11.97
+        },
+        "cr_baseline": {
+          "total": 7.96,
+          "mobile": 7.41,
+          "desktop": 10.11
+        },
+        "delta_pp": {
+          "total": 0.47,
+          "mobile": 0.1,
+          "desktop": 1.86
+        },
+        "sigma": 1.06,
+        "n_semanas_hist": 8
+      },
+      "hipoteses": [
+        {
+          "hipotese": "Efeito do canal direto: menos sessões e mais compras, o que sugere campanha ou público recorrente de alta intenção, ou mudança de atribuição.",
+          "evidencia": "Direto: share de sessões de 13,6% (baseline) para 12,3%, sessões -6,9% na semana (57.957 para 53.956), compras +17,0% (8.220 para 9.618) e CR de 14,90% (baseline) para 17,83% (+2,93pp). O direto respondeu por 1.398 das 4.554 compras adicionais da semana (30,7%) com 12,3% das sessões. Pago: share de 50,1% para 53,4% e CR de 7,69% para 7,91% (+0,22pp); orgânico: CR de 5,29% para 5,59% (+0,30pp), com 17,7% das sessões."
+        },
+        {
+          "hipotese": "O desktop teve ganho real de conversão, pois todas as etapas do funil cresceram em proporção às compras.",
+          "evidencia": "Desktop com sessões +2,1% (86.997 para 88.801): add_to_cart +22,7%, begin_checkout +26,4%, purchase +25,8% e compras +25,5% (8.466 para 10.626). CR de 9,73% para 11,97% e de 10,11% (baseline) para 11,97%."
+        },
+        {
+          "hipotese": "Parte do movimento no funil é de mensuração: o disparo de begin_checkout pode ter mudado, inflando a entrada em checkout e reduzindo checkout para compra.",
+          "evidencia": "begin_checkout +19,7% contra sessões +2,4% e compras +14,1%; checkout para compra de 79,0% (baseline) para 73,0% (-6,0pp) com CR em alta; rejeição de 19,91% para 16,32% na mesma semana. SEN-1113 (dados do comprador antes das formas de pagamento) concluído em 07/10."
+        }
+      ],
+      "monitorar": "Conversão estável na semana, CR 8,43% em linha com o baseline de 7,96% (δ 0,47pp, 5,9%). Atenção: o sigma de 8 semanas (1,06) inclui o degrau de agosto, então a classificação estável é leniente; acompanhar CR do direto acima de 15%, CR desktop acima de 10,5% e a razão begin_checkout por sessão (0,131) para confirmar se o disparo mudou.",
+      "dispositivos": {
+        "mobile": {
+          "classificacao": "estavel",
+          "cr_atual": 7.51,
+          "cr_baseline": 7.41,
+          "delta_pp": 0.1,
+          "canal_contexto": [
+            {
+              "nome": "Pago",
+              "share_sessoes_total": 53.4,
+              "cr_total": 7.91,
+              "delta_cr_pp": 0.22
+            },
+            {
+              "nome": "Orgânico",
+              "share_sessoes_total": 17.7,
+              "cr_total": 5.59,
+              "delta_cr_pp": 0.3
+            },
+            {
+              "nome": "Direto",
+              "share_sessoes_total": 12.3,
+              "cr_total": 17.83,
+              "delta_cr_pp": 2.93
+            },
+            {
+              "nome": "Social",
+              "share_sessoes_total": 1.3,
+              "cr_total": null,
+              "delta_cr_pp": null
+            }
+          ],
+          "funil": {
+            "step_critico": "checkout_to_purchase (-6,9pp contra o baseline)",
+            "checkout_to_purchase": {
+              "atual": 78.8,
+              "baseline": 85.7,
+              "delta_pp": -6.9
+            },
+            "cart_to_checkout": {
+              "atual": 66.6,
+              "baseline": 63.3,
+              "delta_pp": 3.3
+            },
+            "search_to_cart": {
+              "atual": 9,
+              "baseline": 9.4,
+              "delta_pp": -0.4
+            }
+          },
+          "hipoteses": [
+            {
+              "hipotese": "A queda de checkout para compra no mobile vem de inflação de begin_checkout e não de perda real de compra.",
+              "evidencia": "Mobile com begin_checkout +16,4% (32.187 para 37.476) contra compras +9,8% (23.723 para 26.051) e eventos de purchase +9,2%; checkout para compra de 85,7% (baseline) para 78,8% enquanto o CR mobile subiu 0,52pp na semana (6,99% para 7,51%)."
+            }
+          ],
+          "monitorar": "CR mobile estável em 7,51%; acompanhar se checkout para compra mobile volta a 83% ou mais depois do esclarecimento do disparo de begin_checkout."
+        },
+        "desktop": {
+          "classificacao": "subiu_moderado",
+          "cr_atual": 11.97,
+          "cr_baseline": 10.11,
+          "delta_pp": 1.86,
+          "canal_contexto": [
+            {
+              "nome": "Pago",
+              "share_sessoes_total": 53.4,
+              "cr_total": 7.91,
+              "delta_cr_pp": 0.22
+            },
+            {
+              "nome": "Orgânico",
+              "share_sessoes_total": 17.7,
+              "cr_total": 5.59,
+              "delta_cr_pp": 0.3
+            },
+            {
+              "nome": "Direto",
+              "share_sessoes_total": 12.3,
+              "cr_total": 17.83,
+              "delta_cr_pp": 2.93
+            },
+            {
+              "nome": "Social",
+              "share_sessoes_total": 1.3,
+              "cr_total": null,
+              "delta_cr_pp": null
+            }
+          ],
+          "funil": {
+            "step_critico": "cart_to_checkout (+6,7pp contra o baseline)",
+            "checkout_to_purchase": {
+              "atual": 62.2,
+              "baseline": 64.9,
+              "delta_pp": -2.7
+            },
+            "cart_to_checkout": {
+              "atual": 60.4,
+              "baseline": 53.7,
+              "delta_pp": 6.7
+            },
+            "search_to_cart": {
+              "atual": 13.9,
+              "baseline": 13.6,
+              "delta_pp": 0.3
+            }
+          },
+          "hipoteses": [
+            {
+              "hipotese": "O desktop capturou a maior parte do ganho do canal direto, pois o salto de compras é proporcional em todas as etapas.",
+              "evidencia": "Compras desktop +25,5% (8.466 para 10.626) com sessões +2,1%; CR direto do site de 14,90% (baseline) para 17,83%, mas sem segmentação por device. Desktop é 28,8% das compras com 20,3% das sessões."
+            }
+          ],
+          "monitorar": "Confirmar se o CR desktop se mantém acima de 11% na semana de 12/10 antes de recalibrar o baseline; se voltar a 10,5% com carrinho para checkout de 54%, tratar como pico pontual."
+        },
+        "app": {
+          "classificacao": "caiu_moderado",
+          "cr_atual": 5.33,
+          "cr_baseline": 6.48,
+          "delta_pp": -1.15,
+          "canal_contexto": [
+            {
+              "nome": "Pago",
+              "share_sessoes_total": 9.5,
+              "cr_total": null,
+              "delta_cr_pp": null
+            },
+            {
+              "nome": "Orgânico",
+              "share_sessoes_total": 1.5,
+              "cr_total": null,
+              "delta_cr_pp": null
+            },
+            {
+              "nome": "Direto",
+              "share_sessoes_total": 21.8,
+              "cr_total": null,
+              "delta_cr_pp": null
+            },
+            {
+              "nome": "Social",
+              "share_sessoes_total": 0.1,
+              "cr_total": null,
+              "delta_cr_pp": null
+            }
+          ],
+          "funil": {
+            "step_critico": "checkout_to_purchase (-4,5pp contra o baseline), com busca para carrinho (-3,3pp) e carrinho para checkout (-2,1pp) também em queda",
+            "checkout_to_purchase": {
+              "atual": 42.2,
+              "baseline": 46.8,
+              "delta_pp": -4.5
+            },
+            "cart_to_checkout": {
+              "atual": 22.6,
+              "baseline": 24.7,
+              "delta_pp": -2.1
+            },
+            "search_to_cart": {
+              "atual": 39.1,
+              "baseline": 42.3,
+              "delta_pp": -3.3
+            }
+          },
+          "hipoteses": [
+            {
+              "hipotese": "O volume adicional de sessões, puxado por pago, entrou com baixa intenção e não converteu.",
+              "evidencia": "Sessões do app +11,2% (191.079 para 212.486) e compras -3,4% (11.734 para 11.336). Sessões do pago +23,4% (16.434 para 20.275) e share de 8,7% (baseline) para 9,5%; 67% das sessões sem canal atribuído. Android CR de 4,94% para 4,13% e iOS de 8,72% para 8,24%."
+            },
+            {
+              "hipotese": "A perda de conversão está a montante do checkout: a leitura de funil do app é parcialmente medição, já que busca para carrinho é de 39%.",
+              "evidencia": "Semana contra semana: busca para carrinho de 41,0% para 39,1% (-2,0pp) e carrinho para checkout de 24,9% para 22,6% (-2,3pp), enquanto checkout para compra subiu de 40,9% para 42,2% (+1,3pp). Busca para carrinho no site é de 10,3%. Itens SEN-1098 e SEN-1099 de ajuste de funil seguem em backlog."
+            }
+          ],
+          "monitorar": "CR do app abaixo de 5,5% e CR Android abaixo de 4,5% por mais uma semana confirmam novo patamar; acompanhar sessões do pago e a rastreabilidade de sessões via push (SEN-1124)."
+        }
+      }
+    },
     {
       "semana": "2026-09-28",
       "label": "28/09 – 04/10/2026",
