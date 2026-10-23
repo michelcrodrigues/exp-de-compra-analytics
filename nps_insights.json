@@ -1,6 +1,46 @@
 {
-  "gerado_em": "2026-10-13T17:19:04.233Z",
+  "gerado_em": "2026-10-23T16:15:04.631Z",
   "semanas": [
+    {
+      "semana": "2026-10-12",
+      "label": "12/10 – 18/10/2026",
+      "gerado_em": "2026-10-23T13:14:10-03:00",
+      "nps_score": 81.15260520094562,
+      "nps_nota_media": 9.309606619385342,
+      "nps_respostas": 10575,
+      "promotores": {
+        "temas_principais": [
+          "satisfação geral com o serviço ('ótimo', 'muito bom', 'excelente', 'top')",
+          "qualidade do atendimento",
+          "praticidade e rapidez da compra"
+        ],
+        "resumo": "Promotores seguem com elogios curtos ('Ótimo', 'Muito bom', 'Excelente', 'Top'), com menções recorrentes a atendimento, praticidade e rapidez. Não há críticas relevantes nesse grupo.",
+        "insight": "A satisfação continua ancorada na facilidade de comprar a passagem e no atendimento, e permanece independente da insatisfação com preço que aparece em neutros e detratores."
+      },
+      "neutros": {
+        "temas_principais": [
+          "taxa de serviço considerada alta",
+          "ausência de parcelamento em até 6x sem juros",
+          "processo confuso",
+          "lentidão",
+          "avaliações genéricas ('bom', 'legal', 'ótimo')"
+        ],
+        "resumo": "Neutros repetem a taxa de serviço alta ('Taxa de serviço muito alta', 'Muitas taxas') e o pedido de parcelamento em até 6x sem juros, e acrescentam 'Confuso' e 'Lento' como pontos de atrito pontuais. Boa parte das respostas é genérica, sem motivo explícito.",
+        "insight": "Neutros estão a um passo de promotores: o que os separa é preço percebido (taxa e parcelamento) e um atrito de clareza no fluxo, ambos tratáveis sem mexer na proposta de valor."
+      },
+      "detratores": {
+        "temas_principais": [
+          "taxa de serviço considerada abusiva"
+        ],
+        "resumo": "Os poucos comentários de detratores da semana ('Taxas abusivas', 'Taxa de serviço abusiva') giram exclusivamente em torno da taxa de serviço, sem outro tema relevante. Detratores caíram de 4,58% para 4,21% das respostas.",
+        "insight": "A taxa de serviço é o único motivo explícito de detração e já é tratada como problema recorrente; o sinal é estável, não crescente, o que indica custo de oportunidade e não crise.",
+        "recomendacao_produto": "Decidir até 26/10 se o teste A/B de exibição da composição da taxa de serviço no carrinho (INS-2026-139, continuidade de INS-2026-134) entra na Black Friday, iniciando até 02/11 para cumprir 14 dias, e alinhar com o Comercial a comunicação do parcelamento em até 6x sem juros; a recomendação está aberta há mais de oito semanas sem execução. Se não houver capacidade para o teste, registrar a decisão de não testar.",
+        "recorrente": true,
+        "semanas_recorrente": 9
+      },
+      "padrao": "recorrente",
+      "tendencia": "estável"
+    },
     {
       "semana": "2026-10-05",
       "label": "05/10 – 11/10/2026",
