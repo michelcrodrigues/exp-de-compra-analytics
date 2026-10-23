@@ -1,5 +1,5 @@
 {
-  "gerado_em": "2026-10-13T17:18:37.135Z",
+  "gerado_em": "2026-10-23T16:10:29.249Z",
   "insights": [
     {
       "semana": "2026-10-05",
@@ -3256,6 +3256,59 @@
     }
   ],
   "insights_conversao": [
+    {
+      "mes": "2026-09",
+      "label": "Setembro 2026",
+      "tipo": "mensal",
+      "gerado_em": "2026-10-23T13:10:09-03:00",
+      "classificacao": "caiu_moderado",
+      "metricas": {
+        "cr_atual": {
+          "total": 7.98,
+          "mobile": 7.47,
+          "desktop": 9.97
+        },
+        "cr_baseline": {
+          "total": 8.92,
+          "mobile": 7.98,
+          "desktop": 12.66
+        },
+        "delta_pp": {
+          "total": -0.94,
+          "mobile": -0.51,
+          "desktop": -2.69
+        },
+        "sigma": 0.68,
+        "n_meses_hist": 3
+      },
+      "hipoteses": [
+        {
+          "rank": 1,
+          "dispositivo": "desktop",
+          "titulo": "Atrito no checkout desktop derrubou o CR do dispositivo",
+          "evidencia": "CR desktop 9,97% vs 13,20% em agosto (-3,24pp) e 2,69pp abaixo do baseline de 12,66%; carrinho para checkout 52,5% vs 60,8% (-8,3pp) e checkout para compra 64,4% vs 72,7% (-8,2pp).",
+          "raciocinio": "Queda simultânea e de mesma magnitude nas duas etapas finais sugere falha ou fricção no fluxo de login/pagamento em desktop, possivelmente ligada a mudança recente no checkout.",
+          "time_para_confirmar": "Time Senna (SEN)"
+        },
+        {
+          "rank": 2,
+          "dispositivo": "total",
+          "titulo": "Queda generalizada em todos os canais, apontando problema no site e não no mix",
+          "evidencia": "CR direto 15,03% vs 19,36% (-4,3pp), pago 7,68% vs 9,64% (-1,9pp), orgânico 5,55% vs 6,73% (-1,2pp); share de pago caiu de 51,9% para 48,4%; mobile checkout para compra 84,7% vs 93,5% (-8,8pp).",
+          "raciocinio": "Se a queda fosse de mix de mídia, o canal direto (maior intenção) ficaria estável; a queda em todos os canais aponta para atrito comum no funil final.",
+          "time_para_confirmar": "Time de dados"
+        },
+        {
+          "rank": 3,
+          "dispositivo": "total",
+          "titulo": "Regressão à média após agosto atipicamente alto",
+          "evidencia": "CR de agosto 9,89% estava 1,4σ acima da média histórica de 8,92% (σ 0,68); setembro, 7,98%, ficou 1,4σ abaixo e 0,70pp abaixo de setembro/2025 (8,68%).",
+          "raciocinio": "Parte da queda reflete o retorno de um pico atípico de agosto, mas o CR de setembro ficar abaixo de jun/jul (8,83% e 8,29%) indica que não explica tudo.",
+          "time_para_confirmar": "Time de dados"
+        }
+      ],
+      "monitorar": "Observar em outubro se o CR do desktop e a etapa checkout para compra (86,6% em agosto, 78,2% em setembro) voltam ao patamar anterior; se persistirem baixos, confirma atrito estrutural no checkout."
+    },
     {
       "semana": "2026-10-05",
       "label": "05/10 – 11/10/2026",
