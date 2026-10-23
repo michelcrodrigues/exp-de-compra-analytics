@@ -10475,6 +10475,296 @@
       "gerado_em": "2026-10-23T13:10:09-03:00"
     },
     {
+      "mes": "2026-08",
+      "label": "Agosto 2026",
+      "classificacao": "crescimento",
+      "metricas": {
+        "sessoes": {
+          "valor": 1847769,
+          "delta_mes_anterior_pct": -15.45,
+          "delta_ano_anterior_pct": 0.09
+        },
+        "compras": {
+          "valor": 182798,
+          "delta_mes_anterior_pct": 0.92,
+          "delta_ano_anterior_pct": 23.05
+        },
+        "taxa_conversao_pct": {
+          "valor": 9.89,
+          "delta_mes_anterior_pct": 19.37,
+          "delta_ano_anterior_pct": 22.94
+        },
+        "taxa_rejeicao_pct": {
+          "valor": 22.97,
+          "delta_mes_anterior_pct": 0.3,
+          "delta_ano_anterior_pct": 1.78
+        },
+        "nps": {
+          "respostas": 48278,
+          "promotores": 41183,
+          "neutros": 5003,
+          "detratores": 2092,
+          "score": 81,
+          "nota_media": 9.31,
+          "delta_score_mes_anterior": 1.63,
+          "delta_nota_media_mes_anterior": 0.05
+        }
+      },
+      "analise_dispositivos": {
+        "mobile": {
+          "sessoes": {
+            "valor": 1474646,
+            "share_pct": 79.81,
+            "delta_mes_anterior_pct": -16.36,
+            "delta_ano_anterior_pct": -1.69
+          },
+          "compras": {
+            "valor": 133219,
+            "share_pct": 72.88,
+            "delta_mes_anterior_pct": 1.02,
+            "delta_ano_anterior_pct": 21.08
+          },
+          "taxa_conversao_pct": {
+            "valor": 9.03,
+            "delta_mes_anterior_pct": 20.78,
+            "delta_ano_anterior_pct": 23.16
+          },
+          "taxa_rejeicao_pct": {
+            "valor": 22.54,
+            "delta_mes_anterior_pct": 1.48,
+            "delta_ano_anterior_pct": 1.78
+          },
+          "nps": {
+            "respostas": 37299,
+            "score": 81.8,
+            "nota_media": 9.34,
+            "delta_score_mes_anterior": 1.33,
+            "delta_nota_media_mes_anterior": 0.04
+          },
+          "analise": "O mobile concentrou 79,8% das sessões e 72,9% das compras, com CR de 9,03% (+1,55pp vs julho) e rejeição de 22,54%, menor que a do desktop. O ganho veio da etapa checkout para compra, que saltou de 79,6% para 93,5% (+13,9pp), revertendo a queda que motivou a recomendação de julho. NPS 81,8 e nota 9,34 (37.299 respostas), em linha com o geral. O CR segue 4,2pp abaixo do desktop, padrão estrutural de menor intenção em tela pequena, e o padrão de julho (queda de CR mobile) foi revertido."
+        },
+        "desktop": {
+          "sessoes": {
+            "valor": 368529,
+            "share_pct": 19.94,
+            "delta_mes_anterior_pct": -11.19,
+            "delta_ano_anterior_pct": 6.81
+          },
+          "compras": {
+            "valor": 48661,
+            "share_pct": 26.62,
+            "delta_mes_anterior_pct": 0.84,
+            "delta_ano_anterior_pct": 28.59
+          },
+          "taxa_conversao_pct": {
+            "valor": 13.2,
+            "delta_mes_anterior_pct": 13.55,
+            "delta_ano_anterior_pct": 20.4
+          },
+          "taxa_rejeicao_pct": {
+            "valor": 24.83,
+            "delta_mes_anterior_pct": -1.43,
+            "delta_ano_anterior_pct": 3.5
+          },
+          "nps": {
+            "respostas": 10785,
+            "score": 78.4,
+            "nota_media": 9.2,
+            "delta_score_mes_anterior": 2.85,
+            "delta_nota_media_mes_anterior": 0.09
+          },
+          "analise": "O desktop respondeu por 19,9% das sessões e 26,6% das compras, com CR de 13,20% (+1,58pp vs julho) e rejeição de 24,83%, maior que a do mobile. O checkout para compra subiu de 64,3% para 72,7% (+8,4pp), mas carrinho para checkout recuou 1,5pp, então a recuperação do desktop foi menor que a do mobile. NPS 78,4 e nota 9,20 (10.785 respostas), 3,4 pontos abaixo do mobile, sem divergência relevante. O desktop continua sendo o dispositivo de maior conversão, e a correção pedida em julho aparenta ter surtido efeito parcial."
+        }
+      },
+      "analise_app": {
+        "classificacao": "crescimento",
+        "metricas": {
+          "sessoes": {
+            "valor": 821080,
+            "delta_mes_anterior_pct": -10.26,
+            "delta_ano_anterior_pct": -23.74
+          },
+          "compras": {
+            "valor": 70002,
+            "delta_mes_anterior_pct": 25.92,
+            "delta_ano_anterior_pct": 149.85
+          },
+          "taxa_conversao_pct": {
+            "valor": 8.53,
+            "delta_mes_anterior_pct": 40.32,
+            "delta_ano_anterior_pct": 227.61
+          },
+          "taxa_rejeicao_pct": {
+            "valor": 26.44,
+            "delta_mes_anterior_pct": 6.91,
+            "delta_ano_anterior_pct": -52.15
+          },
+          "nps": {
+            "respostas": 1191,
+            "promotores": 879,
+            "neutros": 141,
+            "detratores": 171,
+            "score": 59.4,
+            "nota_media": 8.58,
+            "delta_score_mes_anterior": 3.21,
+            "delta_nota_media_mes_anterior": 0.06
+          }
+        },
+        "android": {
+          "sessoes": {
+            "valor": 575841,
+            "share_pct": 70.13,
+            "delta_mes_anterior_pct": -9.87,
+            "delta_ano_anterior_pct": -38.08
+          },
+          "compras": {
+            "valor": 37835,
+            "share_pct": 54.05,
+            "delta_mes_anterior_pct": 23.1,
+            "delta_ano_anterior_pct": 138.29
+          },
+          "taxa_conversao_pct": {
+            "valor": 6.57,
+            "delta_mes_anterior_pct": 36.58,
+            "delta_ano_anterior_pct": 284.82
+          },
+          "taxa_rejeicao_pct": {
+            "valor": 32.84,
+            "delta_mes_anterior_pct": 12.39,
+            "delta_ano_anterior_pct": -46.96
+          },
+          "nps": {
+            "respostas": 624,
+            "score": 60.6,
+            "nota_media": 8.65,
+            "delta_score_mes_anterior": 6.35,
+            "delta_nota_media_mes_anterior": 0.25
+          },
+          "analise": "O Android tem 70,1% das sessões do App, CR de 6,57% (+1,76pp vs julho) e rejeição de 32,84%, 2,8 vezes a do iOS e em alta de 12,4% no mês. NPS 60,6 e nota 8,65 (624 respostas), alta de 6,4 pontos e agora na meta de 60, mas com volume ainda baixo para comparações firmes. O Android converte menos que o iOS (6,57% contra 13,03%) e que o site mobile (9,03%), consistente com a rejeição elevada. A comparação anual do Android (sessões -38,1%, rejeição 33% contra 62% em agosto/2025) deve ser lida com cautela, pois a base de 2025 parece distorcida."
+        },
+        "ios": {
+          "sessoes": {
+            "valor": 246856,
+            "share_pct": 30.06,
+            "delta_mes_anterior_pct": -9.83,
+            "delta_ano_anterior_pct": 66.18
+          },
+          "compras": {
+            "valor": 32167,
+            "share_pct": 45.95,
+            "delta_mes_anterior_pct": 29.42,
+            "delta_ano_anterior_pct": 164.97
+          },
+          "taxa_conversao_pct": {
+            "valor": 13.03,
+            "delta_mes_anterior_pct": 43.53,
+            "delta_ano_anterior_pct": 59.44
+          },
+          "taxa_rejeicao_pct": {
+            "valor": 11.57,
+            "delta_mes_anterior_pct": -16.31,
+            "delta_ano_anterior_pct": -17.88
+          },
+          "nps": {
+            "respostas": 567,
+            "score": 58.2,
+            "nota_media": 8.5,
+            "delta_score_mes_anterior": -0.3,
+            "delta_nota_media_mes_anterior": -0.15
+          },
+          "analise": "O iOS tem 30,1% das sessões do App, CR de 13,03% (+3,95pp vs julho) e rejeição de 11,57%, a menor entre todas as plataformas. NPS 58,2 e nota 8,50 (567 respostas), estável (-0,3 ponto) e ligeiramente abaixo da meta de 60. Converte mais que o site (9,89%) e que o Android, mas a satisfação fica abaixo do Android neste mês, divergência de apenas 2,4 pontos, sem hipótese específica."
+        },
+        "comparativo_site": {
+          "delta_cr_pp": -1.37,
+          "delta_rejeicao_pp": 3.46,
+          "delta_nps_score_pp": -21.52,
+          "delta_nota_media_pp": -0.73,
+          "canal_maior_compras": "site"
+        },
+        "analise_conjunta": "Migração de canal: o App representa 30,8% das sessões somadas de site e App (29,5% em julho), alta de 1,3pp. O aumento de share vem de queda menor no App (-10,3% de sessões contra -15,5% no site) e não de crescimento do App, já que os novos usuários caíram nos dois canais (App -13,0%, site -17,5%). É sinal de base do App mais fiel ao canal e menos dependente de tráfego de aquisição, e não de expansão de base. A comparação anual do App (compras +149,9%) está inflada por uma base de agosto/2025 com rejeição de 55% no Android, possível problema de medição.\n\nConversão, experiência e satisfação: o CR do App (8,53%) está 1,37pp abaixo do site (9,89%), diferença causada pelo Android (6,57%), pois o iOS (13,03%) supera o site. A rejeição do App é 3,5pp maior (26,44% contra 22,97%), puxada pelo Android (32,84%). No NPS, o App (59,4, nota 8,58, 1.191 respostas) está 21,5 pontos abaixo do site (81,0, nota 9,31), com volume suficiente nos dois canais, e a nota média confirma o score. A diferença é compatível com público e jornada diferentes e experiência técnica pior no Android, e não com problema geral de serviço.\n\nImplicações: o NPS do App (59,4) está a 0,6 ponto da meta de 60 e subiu 3,2 pontos, então a prioridade do mês é consolidar essa melhora e atacar a rejeição do Android. No site, a prioridade é validar se o salto do checkout é real. Funcionalidades do site ausentes no App, como composição da taxa de serviço e parcelamento, devem ser verificadas como causa de retorno ao site."
+      },
+      "analise_qualitativa_nps": {
+        "semanas_analisadas": 5,
+        "semanas_sem_dados": 0,
+        "promotores": {
+          "temas_consolidados": [
+            "satisfação geral com a experiência",
+            "elogio ao atendimento",
+            "agilidade do processo",
+            "praticidade da compra",
+            "avaliação positiva genérica"
+          ],
+          "temas_recorrentes": [
+            "satisfação geral com a experiência",
+            "elogio ao atendimento",
+            "agilidade do processo",
+            "praticidade da compra"
+          ],
+          "narrativa": "Os promotores elogiam de forma consistente a experiência geral, o atendimento, a agilidade e a praticidade da compra nas cinco semanas do mês. A recorrência indica um diferencial consolidado e estável na jornada central de compra."
+        },
+        "neutros": {
+          "temas_consolidados": [
+            "taxa de serviço considerada alta",
+            "percepção geral de preço elevado",
+            "ausência de parcelamento sem juros",
+            "lentidão percebida no processo",
+            "confusão/insegurança no processo",
+            "satisfação moderada genérica"
+          ],
+          "temas_recorrentes": [
+            "taxa de serviço considerada alta",
+            "percepção geral de preço elevado",
+            "ausência de parcelamento sem juros"
+          ],
+          "narrativa": "Os neutros concentram críticas à taxa de serviço, ao preço e à falta de parcelamento sem juros, com lentidão e confusão no processo aparecendo de forma pontual. São experiências medianas por fricção de preço e comunicação, com potencial de virar promotores se a composição da taxa e o parcelamento forem explicados antes do checkout."
+        },
+        "detratores": {
+          "temas_consolidados": [
+            "indignação com a taxa de serviço considerada abusiva"
+          ],
+          "temas_recorrentes": [
+            "indignação com a taxa de serviço considerada abusiva"
+          ],
+          "narrativa": "A insatisfação dos detratores se resume a um único tema, a indignação com a taxa de serviço, presente nas cinco semanas do mês e há mais de oito semanas consecutivas segundo o acompanhamento semanal. O problema é de percepção de preço e não de qualidade técnica. A recomendação de transparência da taxa segue sem execução e pressiona o KR NPS = 60 e a nota do Reclame Aqui (meta 8,0).",
+          "recomendacao_produto": "Testar a exibição da composição da taxa de serviço no carrinho, antes do checkout, e alinhar com o comercial a comunicação do parcelamento em até 6x sem juros."
+        },
+        "padrao_dominante": "recorrente",
+        "diagnostico_mensal": "O NPS quantitativo do site é alto (81,0) e subiu 1,6 ponto sobre julho, mas os comentários mostram uma base polarizada: os 4,3% de detratores (2.092 respostas) criticam quase exclusivamente a taxa de serviço, e os neutros somam preço e falta de parcelamento. Os números não revelam que o principal risco é de percepção de preço, que pode pesar na etapa carrinho para checkout, que recuou levemente em agosto. Em relação a julho, o quadro qualitativo é de continuidade, sem melhora nem piora: o mesmo tema recorrente de detratores persiste. A análise usa comentários da janela de 90 dias do GA4, refletindo sentimento acumulado, e se refere ao site (o nps_insights.json não cobre o App). A principal ação estratégica é executar o teste de transparência da taxa e do parcelamento, aberto desde julho."
+      },
+      "recomendacoes": [
+        {
+          "acao": "Validar o salto de checkout para compra (+11,9pp) cruzando funil_purchase do GA4 com compras de backoffice e com os deploys de agosto, antes de tratá-lo como ganho estrutural.",
+          "tipo": "investigar",
+          "dispositivo": "ambos",
+          "justificativa": "Checkout para compra subiu de 74,7% para 86,6% (mobile 79,6% para 93,5%) em um mês, magnitude incomum que pode indicar melhoria real ou mudança de medição.",
+          "impacto_esperado": "Confiabilidade do CR do site (9,89%) e leitura correta da tendência de conversão."
+        },
+        {
+          "acao": "Corrigir a comunicação da taxa de serviço: exibir a composição da taxa no carrinho e comunicar o parcelamento em até 6x sem juros antes do checkout.",
+          "tipo": "corrigir",
+          "dispositivo": "ambos",
+          "justificativa": "A taxa de serviço é o único tema dos detratores do site em todas as semanas do mês e a recomendação de teste de julho segue sem execução (NPS site 81,0, nota 9,31).",
+          "impacto_esperado": "KR NPS = 60, nota do Reclame Aqui (meta 8,0) e etapa carrinho para checkout (-1,1pp no mês)."
+        },
+        {
+          "acao": "Investigar a rejeição do App Android (carregamento inicial, desempenho e versões) e a diferença de conversão para o iOS.",
+          "tipo": "investigar",
+          "dispositivo": "android",
+          "justificativa": "Rejeição de 32,84% (+12,4% no mês) e CR de 6,57%, contra 11,57% e 13,03% no iOS.",
+          "impacto_esperado": "CR do App e consolidação do NPS Android na meta de 60 (60,6 com 624 respostas)."
+        },
+        {
+          "acao": "Testar melhorias no checkout do iOS e na comunicação de preço do App para levar o NPS iOS à meta.",
+          "tipo": "testar",
+          "dispositivo": "ios",
+          "justificativa": "NPS iOS 58,2 (nota 8,50) estável há dois meses (58,5 em julho), logo abaixo da meta de 60.",
+          "impacto_esperado": "KR NPS = 60 no App."
+        }
+      ],
+      "narrativa": "Agosto reverteu a sequência de três quedas mensais de conversão de maio a julho: o CR subiu 1,60pp vs julho e as compras ficaram estáveis, mesmo com sessões 15,5% menores após o pico de tráfego de julho. A melhora veio das etapas finais do funil, principalmente checkout para compra, e atingiu todos os canais, com destaque para o direto, o que aponta efeito do próprio site e não de mix de mídia. O desktop manteve o maior CR e o mobile recuperou mais, endereçando o alerta de julho sobre o checkout mobile. Na comparação anual, compras e CR seguem bem à frente de agosto de 2025. O NPS (81,0, 48.278 respostas) subiu 1,6 ponto, reforçando que satisfação e conversão evoluíram juntas, embora a taxa de serviço continue como tema recorrente dos detratores, problema de percepção de preço que a recomendação de julho ainda não endereçou.\n\nA conversão subiu 1,60pp vs julho, alta moderada (1,4σ acima da média histórica de 8,92%), para um CR de 9,89% e +1,85pp vs agosto/2025. O step crítico foi checkout para compra (+11,9pp, de 74,7% para 86,6%), mais forte no mobile (+13,9pp) que no desktop (+8,4pp). Hipóteses: (1) melhoria real ou mudança de medição no checkout, pois um salto de 11,9pp em um mês é incomum; (2) a alta em todos os canais (direto +3,7pp, pago +1,4pp, orgânico +0,7pp), com share de pago praticamente estável (-0,8pp), descarta mix como causa; (3) normalização do tráfego após julho, com sessões -15,5% e compras +0,9%, indicando menos tráfego de baixa intenção. Monitorar em setembro se o checkout para compra se mantém acima de 80%; se voltar a cerca de 75%, o salto de agosto era pontual.",
+      "gerado_em": "2026-10-23T13:13:25-03:00"
+    },
+    {
       "mes": "2026-07",
       "label": "Julho 2026",
       "classificacao": "alerta",
