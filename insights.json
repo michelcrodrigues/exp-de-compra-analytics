@@ -1,5 +1,5 @@
 {
-  "gerado_em": "2026-10-23T16:10:29.249Z",
+  "gerado_em": "2026-10-23T16:13:53.330Z",
   "insights": [
     {
       "semana": "2026-10-05",
@@ -3308,6 +3308,59 @@
         }
       ],
       "monitorar": "Observar em outubro se o CR do desktop e a etapa checkout para compra (86,6% em agosto, 78,2% em setembro) voltam ao patamar anterior; se persistirem baixos, confirma atrito estrutural no checkout."
+    },
+    {
+      "mes": "2026-08",
+      "label": "Agosto 2026",
+      "tipo": "mensal",
+      "gerado_em": "2026-10-23T13:13:25-03:00",
+      "classificacao": "subiu_moderado",
+      "metricas": {
+        "cr_atual": {
+          "total": 9.89,
+          "mobile": 9.03,
+          "desktop": 13.2
+        },
+        "cr_baseline": {
+          "total": 8.92,
+          "mobile": 7.98,
+          "desktop": 12.66
+        },
+        "delta_pp": {
+          "total": 0.97,
+          "mobile": 1.05,
+          "desktop": 0.55
+        },
+        "sigma": 0.68,
+        "n_meses_hist": 3
+      },
+      "hipoteses": [
+        {
+          "rank": 1,
+          "dispositivo": "mobile",
+          "titulo": "Salto de checkout para compra, maior no mobile, sustentou a alta do CR",
+          "evidencia": "Checkout para compra 86,6% vs 74,7% em julho (+11,9pp); no mobile 93,5% vs 79,6% (+13,9pp); CR mobile 9,03% vs baseline de 7,98% (+1,05pp).",
+          "raciocinio": "Um ganho dessa magnitude em um mês aponta para correção real no checkout (resposta ao alerta de julho) ou mudança na medição do evento de compra, e precisa ser validado com o backoffice.",
+          "time_para_confirmar": "Time Senna (SEN)"
+        },
+        {
+          "rank": 2,
+          "dispositivo": "total",
+          "titulo": "Alta generalizada em todos os canais, apontando efeito do site e não do mix",
+          "evidencia": "CR direto 19,36% vs 15,70% (+3,7pp), pago 9,63% vs 8,25% (+1,4pp), orgânico 6,73% vs 6,02% (+0,7pp); share de pago 51,9% vs 52,7% (-0,8pp).",
+          "raciocinio": "Se a melhora fosse de mix, o share de canais de maior intenção teria mudado; a alta em todos os canais indica melhoria comum no funil final.",
+          "time_para_confirmar": "Time de dados"
+        },
+        {
+          "rank": 3,
+          "dispositivo": "total",
+          "titulo": "Normalização do tráfego após o pico de julho elevou a taxa sem perder compras",
+          "evidencia": "Sessões 1,85M vs 2,19M (-15,5%) e compras 182,8 mil vs 181,1 mil (+0,9%); CR 9,89% está 1,4σ acima da média histórica de 8,92%.",
+          "raciocinio": "Julho trouxe volume extra de baixa intenção; com menos sessões marginais e compras estáveis, a taxa sobe mecanicamente.",
+          "time_para_confirmar": "Time de mídia paga"
+        }
+      ],
+      "monitorar": "Observar em setembro se o checkout para compra (86,6% em agosto) se mantém acima de 80%; queda a cerca de 75% indicaria que o salto de agosto foi pontual ou de medição."
     },
     {
       "semana": "2026-10-05",
