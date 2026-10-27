@@ -1,6 +1,51 @@
 {
-  "gerado_em": "2026-10-23T16:15:04.631Z",
+  "gerado_em": "2026-10-27T17:13:56.822Z",
   "semanas": [
+    {
+      "semana": "2026-10-19",
+      "label": "19/10 – 25/10/2026",
+      "gerado_em": "2026-10-27T14:13:56.822-03:00",
+      "nps_score": 79.82,
+      "nps_nota_media": 9.28,
+      "nps_respostas": 9319,
+      "promotores": {
+        "count": 7876,
+        "percentual": 84.5,
+        "temas_principais": [
+          "satisfação geral com o serviço ('ótimo', 'muito bom', 'excelente', 'top')",
+          "qualidade do atendimento",
+          "praticidade e rapidez da compra"
+        ],
+        "resumo": "Os promotores seguem expressando satisfação geral em termos curtos, com 'Ótimo' (137), 'Muito bom' (100) e 'Bom' (92) liderando, e elogiam o atendimento ('Ótimo atendimento' 69, 'Excelente atendimento' 38) e a praticidade (31).",
+        "insight": "O elogio é genérico e centrado em atendimento e praticidade, não em preço ou oferta, o que confirma que o fluxo de compra entrega quando conclui, mas não explica a queda de conversão da semana."
+      },
+      "neutros": {
+        "count": 1005,
+        "percentual": 10.8,
+        "temas_principais": [
+          "avaliação genérica positiva sem entusiasmo ('bom', 'legal')",
+          "parcelamento: esperava 6x sem juros",
+          "interface confusa e lenta",
+          "taxa de serviço considerada abusiva (desktop)"
+        ],
+        "resumo": "Os neutros misturam elogios mornos ('Bom' 16, 'Ótimo' 6) com fricções pontuais: parcelamento esperado em 6x sem juros (3), 'Confuso' (3), 'Lento' (3) e 'Taxa de serviço abusiva' no desktop (3).",
+        "insight": "Os neutros apontam atritos de experiência (clareza e velocidade) e de condição comercial (parcelamento), os mesmos pontos que podem pesar na passagem de carrinho para checkout e no mobile."
+      },
+      "detratores": {
+        "count": 438,
+        "percentual": 4.7,
+        "temas_principais": [
+          "taxa de serviço considerada abusiva"
+        ],
+        "resumo": "Os comentários de detratores da semana ('Taxas abusivas' e 'Taxa de serviço abusiva', 10 menções, todas no mobile) giram exclusivamente em torno da taxa de serviço. Os detratores subiram de 4,21% para 4,70% das respostas.",
+        "insight": "A taxa de serviço continua sendo o único motivo explícito de detração e está sem teste há 10 semanas; o sinal subiu levemente, e como o NPS só mede quem comprou, o efeito real no abandono de carrinho é maior do que o NPS mostra.",
+        "recomendacao_produto": "Iniciar o teste A/B de composição da taxa de serviço no carrinho (INS-2026-146) com dono e data nesta semana, antes do pico da Black Friday.",
+        "recorrente": true,
+        "semanas_recorrente": 5
+      },
+      "padrao": "recorrente",
+      "tendencia": "estável"
+    },
     {
       "semana": "2026-10-12",
       "label": "12/10 – 18/10/2026",
