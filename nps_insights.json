@@ -1,6 +1,51 @@
 {
-  "gerado_em": "2026-10-27T17:13:56.822Z",
+  "gerado_em": "2026-11-03T17:14:21.135Z",
   "semanas": [
+    {
+      "semana": "2026-10-26",
+      "label": "26/10 – 01/11/2026",
+      "gerado_em": "2026-11-03T14:13:58-03:00",
+      "nps_score": 81.76,
+      "nps_nota_media": 9.33,
+      "nps_respostas": 10349,
+      "promotores": {
+        "count": 8884,
+        "percentual": 85.8,
+        "temas_principais": [
+          "satisfação geral com o serviço (ótimo, muito bom, excelente, top)",
+          "qualidade do atendimento",
+          "praticidade e agilidade da compra"
+        ],
+        "resumo": "Os promotores seguem elogiando em termos curtos: \"Ótimo\" (136), \"Muito bom\" (98) e \"Bom\" (86) lideram, com \"Ótimo atendimento\" (72), \"Excelente atendimento\" (36), \"Praticidade\" (31) e \"Agilidade\" (22).",
+        "insight": "O elogio é genérico e centrado em atendimento e praticidade, não em preço ou oferta. O fluxo entrega quando conclui, e esse sentimento não explica a queda de CR da semana."
+      },
+      "neutros": {
+        "count": 1042,
+        "percentual": 10.1,
+        "temas_principais": [
+          "avaliação positiva sem entusiasmo (bom, legal)",
+          "parcelamento: esperava 6x sem juros",
+          "interface confusa e lenta",
+          "taxa de serviço abusiva (desktop)"
+        ],
+        "resumo": "Neutros misturam elogios mornos (\"Bom\" 12 e 6, \"Ótimo\" 6) com fricções pontuais: 6x sem juros (3), \"Confuso\" (3), \"Lento\" (3) e \"Taxa de serviço abusiva\" no desktop (3).",
+        "insight": "Os neutros apontam atritos de clareza e velocidade e uma condição comercial (parcelamento), pontos que pesam na Black Friday com tráfego frio e no mobile."
+      },
+      "detratores": {
+        "count": 423,
+        "percentual": 4.1,
+        "temas_principais": [
+          "taxa de serviço considerada abusiva"
+        ],
+        "resumo": "Os detratores da semana citam apenas \"Taxas abusivas\" (6 menções no mobile) e \"Taxa de serviço abusiva\" no desktop (2 com texto \"...\"). O volume de comentários é baixo, mas o tema é o mesmo de semanas anteriores.",
+        "insight": "A taxa de serviço segue como único motivo de detração. Quando a compra concluída é elogiada e a única queixa é o preço final, o problema é de percepção de valor, não de usabilidade.",
+        "recomendacao_produto": "Iniciar o teste A/B de composição da taxa de serviço no carrinho (INS-2026-155) com dono e data, usando add_to_cart para purchase como métrica primária enquanto o begin_checkout estiver quebrado.",
+        "recorrente": true,
+        "semanas_recorrente": 6
+      },
+      "padrao": "recorrente",
+      "tendencia": "estável"
+    },
     {
       "semana": "2026-10-19",
       "label": "19/10 – 25/10/2026",
