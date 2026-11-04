@@ -1,5 +1,5 @@
 {
-  "gerado_em": "2026-11-03T17:14:18.412Z",
+  "gerado_em": "2026-11-04T14:46:25.006Z",
   "insights": [
     {
       "semana": "2026-10-26",
@@ -3835,6 +3835,59 @@
     }
   ],
   "insights_conversao": [
+    {
+      "mes": "2026-10",
+      "label": "Outubro 2026",
+      "tipo": "mensal",
+      "gerado_em": "2026-11-04T11:45:46-03:00",
+      "classificacao": "caiu_moderado",
+      "metricas": {
+        "cr_atual": {
+          "total": 7.83,
+          "mobile": 6.98,
+          "desktop": 11.28
+        },
+        "cr_baseline": {
+          "total": 8.93,
+          "mobile": 8,
+          "desktop": 11.6
+        },
+        "delta_pp": {
+          "total": -1.1,
+          "mobile": -1.02,
+          "desktop": -0.32
+        },
+        "sigma": 0.83,
+        "n_meses_hist": 5
+      },
+      "hipoteses": [
+        {
+          "rank": 1,
+          "dispositivo": "mobile",
+          "titulo": "Mobile perdeu conversão no topo e no fechamento do funil",
+          "evidencia": "CR mobile 6,98% vs 7,47% em setembro (-0,49pp) e baseline de 3 meses de 8,0%; busca para carrinho 8,85% vs 9,55% (-0,70pp); checkout para compra 83,65% vs 84,69% (-1,04pp); share de sessões mobile 80,5% vs 79,1% (+1,4pp).",
+          "raciocinio": "Maior peso de um dispositivo que converte menos e perda de eficiência em pagamento e inclusão no carrinho reduzem o CR consolidado.",
+          "time_para_confirmar": "Time Senna (SEN)"
+        },
+        {
+          "rank": 2,
+          "dispositivo": "total",
+          "titulo": "Mix de canal deslocou tráfego do direto para o pago",
+          "evidencia": "Share de pago 50,8% vs 48,4% (+2,4pp) e direto 11,9% vs 13,6% (-1,7pp); CR direto 17,0% vs CR pago 7,7% (estável); CR orgânico 5,2% vs 5,6%.",
+          "raciocinio": "Mais sessões de pago com CR menor que o direto diluem a conversão do total, sem queda de CR do próprio canal pago.",
+          "time_para_confirmar": "Time de mídia paga"
+        },
+        {
+          "rank": 3,
+          "dispositivo": "total",
+          "titulo": "Menor avanço de busca para carrinho nos dois dispositivos",
+          "evidencia": "Busca para carrinho 10,03% vs 10,77% (-0,74pp), com mobile -0,70pp e desktop -0,73pp; desktop teve ganho em carrinho para checkout (+3,84pp) e checkout para compra (+2,52pp).",
+          "raciocinio": "O recuo simultâneo no topo do funil sugere sessões com menor intenção ou atrito de seleção de assentos e preço, compensado a jusante pelo desktop.",
+          "time_para_confirmar": "Time de dados"
+        }
+      ],
+      "monitorar": "Verificar em novembro se busca para carrinho volta a 10,8% e se o CR mobile recupera a faixa de 7,5%, com share de pago abaixo de 50%, para confirmar a hipótese 1."
+    },
     {
       "semana": "2026-10-26",
       "label": "26/10 – 01/11/2026",
