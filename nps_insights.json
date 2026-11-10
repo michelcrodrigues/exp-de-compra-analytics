@@ -1,6 +1,55 @@
 {
-  "gerado_em": "2026-11-03T17:14:21.135Z",
+  "gerado_em": "2026-11-10T17:17:21.307Z",
   "semanas": [
+    {
+      "semana": "2026-11-02",
+      "label": "02/11 – 08/11/2026",
+      "gerado_em": "2026-11-10T14:16:32-03:00",
+      "nps_score": 81.78,
+      "nps_nota_media": 9.34,
+      "nps_respostas": 10485,
+      "promotores": {
+        "count": 8997,
+        "percentual": 85.8,
+        "temas_principais": [
+          "satisfação geral com o serviço (ótimo, muito bom, excelente, top)",
+          "qualidade do atendimento",
+          "praticidade e agilidade da compra"
+        ],
+        "resumo": "Os promotores repetem elogios curtos: \"Ótimo\" (139), \"Muito bom\" (94), \"Bom\" (79 e 29) e \"Otimo\" (71) lideram, seguidos de \"Ótimo atendimento\" (71), \"Excelente\" (62), \"Top\" (38) e \"Excelente atendimento\" (34). \"Praticidade\" (28) e \"Agilidade\" (24) são os únicos elogios ligados à experiência de compra.",
+        "insight": "O sentimento positivo é estável e genérico, centrado em atendimento e praticidade. Ele não reage à queda de CR das últimas três semanas, o que reforça que quem conclui a compra sai satisfeito e que a perda está antes da conclusão, não na experiência de quem compra.",
+        "recorrente": true,
+        "semanas_recorrente": 5
+      },
+      "neutros": {
+        "count": 1066,
+        "percentual": 10.2,
+        "temas_principais": [
+          "avaliação positiva sem entusiasmo (bom, legal)",
+          "parcelamento: esperava 6x sem juros",
+          "taxa de serviço alta (mobile e desktop)",
+          "conforto a bordo: carregamento de celular e conectividade"
+        ],
+        "resumo": "Os neutros seguem com \"Bom\" (14 e 7), \"Ótimo\" (6) e \"Legal\" (3), sem entusiasmo. As queixas concretas são \"Era para dividir até 6x sem juros\" (3), \"Taxa de serviço abusiva\" no desktop (3) e \"Taxa muito alta\" no mobile (3). Aparece um tema novo, fora da compra: carregamento de celular e conectividade a bordo (2).",
+        "insight": "Parcelamento e taxa aparecem há cinco semanas seguidas entre os neutros, o que mostra que a percepção de custo total trava a recomendação de quem compra. O tema de conforto a bordo é operacional e deve ir para CX, não para o funil.",
+        "recorrente": true,
+        "semanas_recorrente": 5
+      },
+      "detratores": {
+        "count": 422,
+        "percentual": 4,
+        "temas_principais": [
+          "taxa de serviço considerada abusiva"
+        ],
+        "resumo": "Os detratores citam apenas \"Taxas abusivas\" (3 e 3 no mobile). O volume de comentários segue baixo e o tema é o mesmo das semanas anteriores.",
+        "insight": "A taxa de serviço é o único motivo de detração há sete semanas. Com a compra concluída sendo elogiada, o problema é de percepção de valor do preço final, não de usabilidade, e ganha peso na Black Friday, quando o cliente compara preço com mais atenção.",
+        "recomendacao_produto": "Colocar em execução o teste A/B de composição da taxa de serviço no carrinho (INS-2026-155) com dono e data no Senna, medindo add_to_cart para purchase enquanto o begin_checkout desktop não estiver normalizado.",
+        "recorrente": true,
+        "semanas_recorrente": 7
+      },
+      "padrao": "recorrente",
+      "tendencia": "estável"
+    },
     {
       "semana": "2026-10-26",
       "label": "26/10 – 01/11/2026",
