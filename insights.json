@@ -1,6 +1,145 @@
 {
-  "gerado_em": "2026-11-10T17:16:48.120Z",
+  "gerado_em": "2026-11-17T17:12:57.953Z",
   "insights": [
+    {
+      "semana": "2026-11-09",
+      "label": "09/11 – 15/11/2026",
+      "gerado_em": "2026-11-17T17:12:57.953Z",
+      "items": [
+        {
+          "id": "INS-2026-166",
+          "canal": "conjunto",
+          "tag": "[Site vs App] 11/11 sem dados no GA4: site zerado e app com 736 sessões",
+          "classificacao": "Resultado fora da curva",
+          "prioridade": "Alta",
+          "data": "2026-11-17",
+          "texto": "Diagnóstico: Em 11/11 o site registrou 0 sessões e 0 compras e o app registrou 736 sessões e 10 compras, contra médias de cerca de 65 mil e 28 mil sessões por dia. Isso pode ser indisponibilidade real da plataforma ou falha de coleta do GA4, e o dado atual não permite separar as duas hipóteses. O painel mostra sessões -13,5% e compras -15,2% no site e -16,0% e -16,8% no app, mas quase tudo isso é o dia ausente.\n\nEvidência: Site: 393.480 sessões e 28.056 compras em 6 dias com dado, contra 454.679 e 33.078 na semana anterior; por dia com dado são 65.580 sessões (+1,0%) e 4.676 compras (-1,0%). App: 170.209 sessões ex-11/11, 28.368 por dia contra 29.062 (-2,4%), e 1.605 compras por dia contra 1.655 (-3,0%). O site tem 0 em todos os campos do dia, o app tem 3 respostas de NPS contra cerca de 170 nos demais dias. SEN-1297 (erros 500 por divergência de tipo de flag no Flipt) foi concluído em 12/11, o que é um candidato a investigar, mas não há evidência de ligação.\n\nClassificação: Resultado fora da curva\n\nPlano de ação: Confirmar com Infra e SEN se houve incidente em 11/11 (Cloudflare, BFF, Flipt, Sentry) e a janela exata. Cruzar com transações do backoffice do dia para saber se vendas ocorreram sem registro no GA4 ou se não houve venda. Se foi falha de coleta, abrir ação de reprocessamento ou anotar o dia como lacuna no dashboard; se foi queda real, estimar receita perdida e registrar post-mortem antes de 27/11.\n\nImpacto: Receita e KR de R$ 345M se houve indisponibilidade; confiabilidade do baseline de 4 semanas e do CR semanal em qualquer caso. Ordem de grandeza se foi queda real: cerca de 4,7 mil compras no site e 1,6 mil no app em um dia. O efeito se estende ao baseline de 4 semanas, que passa a incluir um dia zerado nas somas de sessões e compras. Comparações semana a semana de volume ficam enviesadas em cerca de 13% até o dia sair da janela.\n\nPrioridade: Alta (possível indisponibilidade ou falha de coleta a 16 dias da Black Friday, sem causa identificada)\n\nAcompanhamento: Resposta de Infra e backoffice até a próxima weekly. Passar a cobrir 11/11 com anotação no dashboard e criar alerta de dia com sessões abaixo de 50% da média móvel de 7 dias, para que a próxima lacuna seja vista no mesmo dia. Registrar o resultado da investigação no insight da próxima semana. Se a causa for técnica, listar a ação preventiva com dono e data.",
+          "diagnostico": "Em 11/11 o site registrou 0 sessões e 0 compras e o app registrou 736 sessões e 10 compras, contra médias de cerca de 65 mil e 28 mil sessões por dia. Isso pode ser indisponibilidade real da plataforma ou falha de coleta do GA4, e o dado atual não permite separar as duas hipóteses. O painel mostra sessões -13,5% e compras -15,2% no site e -16,0% e -16,8% no app, mas quase tudo isso é o dia ausente.",
+          "evidencia": "Site: 393.480 sessões e 28.056 compras em 6 dias com dado, contra 454.679 e 33.078 na semana anterior; por dia com dado são 65.580 sessões (+1,0%) e 4.676 compras (-1,0%). App: 170.209 sessões ex-11/11, 28.368 por dia contra 29.062 (-2,4%), e 1.605 compras por dia contra 1.655 (-3,0%). O site tem 0 em todos os campos do dia, o app tem 3 respostas de NPS contra cerca de 170 nos demais dias. SEN-1297 (erros 500 por divergência de tipo de flag no Flipt) foi concluído em 12/11, o que é um candidato a investigar, mas não há evidência de ligação.",
+          "plano_acao": "Confirmar com Infra e SEN se houve incidente em 11/11 (Cloudflare, BFF, Flipt, Sentry) e a janela exata. Cruzar com transações do backoffice do dia para saber se vendas ocorreram sem registro no GA4 ou se não houve venda. Se foi falha de coleta, abrir ação de reprocessamento ou anotar o dia como lacuna no dashboard; se foi queda real, estimar receita perdida e registrar post-mortem antes de 27/11.",
+          "impacto": "Receita e KR de R$ 345M se houve indisponibilidade; confiabilidade do baseline de 4 semanas e do CR semanal em qualquer caso. Ordem de grandeza se foi queda real: cerca de 4,7 mil compras no site e 1,6 mil no app em um dia. O efeito se estende ao baseline de 4 semanas, que passa a incluir um dia zerado nas somas de sessões e compras. Comparações semana a semana de volume ficam enviesadas em cerca de 13% até o dia sair da janela.",
+          "acompanhamento": "Resposta de Infra e backoffice até a próxima weekly. Passar a cobrir 11/11 com anotação no dashboard e criar alerta de dia com sessões abaixo de 50% da média móvel de 7 dias, para que a próxima lacuna seja vista no mesmo dia. Registrar o resultado da investigação no insight da próxima semana. Se a causa for técnica, listar a ação preventiva com dono e data.",
+          "titulo_linear": null,
+          "tipo_acao": "monitorar",
+          "testavel": false,
+          "criterio_confirmacao": null,
+          "experimento_template": null,
+          "status": "nunca_testada",
+          "experimento_id": null,
+          "revisao": null
+        },
+        {
+          "id": "INS-2026-167",
+          "canal": "site",
+          "tag": "Site: CR 7,13% não recupera, abaixo da meta de 7,8% e do corte de 7,5%",
+          "classificacao": "Tendência",
+          "prioridade": "Alta",
+          "data": "2026-11-17",
+          "texto": "Diagnóstico: O CR do site foi 7,13%, 0,44pp abaixo do baseline de 7,57% (0,9σ, classificação estável) e 0,59pp abaixo do mesmo período de 2025. A estabilidade estatística esconde o problema: o baseline ainda carrega semanas de 8,0% a 8,4% e o CR está em 7,1% a 7,4% desde 22/10. A régua que definimos na semana passada foi 7,8% para recuperação e 7,5% para confirmar patamar baixo, e o resultado ficou abaixo dos dois.\n\nEvidência: CR semanal: 8,29% (12/10), 7,29% (19/10), 7,41% (26/10), 7,28% (02/11), 7,13% (09/11). CR diário de 09/11 a 15/11 ex-11/11: 7,32%, 7,01%, 7,26%, 7,06%, 7,21% e 6,88%, sem dia acima de 7,8%. Mobile 6,29% (-0,43pp, estável) e desktop 10,19% (-0,83pp, caiu moderado). Compras por dia de dado em -1,0% com sessões por dia em +1,0%.\n\nClassificação: Tendência\n\nPlano de ação: Tratar o patamar como problema de demanda ou oferta e não de experiência, já que o begin_checkout está normalizado desde 05/11. Fechar o cruzamento com transações do backoffice pendente desde a semana passada para separar perda real de efeito de mensuração. Comparar antecedência de compra e mix de rotas antes e depois de 22/10 para testar a hipótese de demanda adiada para a Black Friday.\n\nImpacto: KR de receita digital. A 7,8% de CR, com as 393 mil sessões da semana, seriam cerca de 30,7 mil compras contra 28,1 mil observadas, perto de 2,6 mil compras a menos (ainda sem o dia 11/11). O efeito é maior no direto e no pago, que concentram 62% das sessões. A Black Friday amplia o tamanho de qualquer diferença de CR.\n\nPrioridade: Alta (quarta semana no patamar baixo, com a Black Friday em 10 dias)\n\nAcompanhamento: CR diário até 30/11 com marcação do início da campanha de Black Friday em 26/10 e da semana de pico. Se o CR não subir na semana de 16/11 com tráfego de campanha, escalar para revisão de oferta e preço antes de 27/11. Revisar na weekly de 24/11 com o dado do backoffice. Decidir ali se algum ajuste de oferta entra antes do pico.",
+          "diagnostico": "O CR do site foi 7,13%, 0,44pp abaixo do baseline de 7,57% (0,9σ, classificação estável) e 0,59pp abaixo do mesmo período de 2025. A estabilidade estatística esconde o problema: o baseline ainda carrega semanas de 8,0% a 8,4% e o CR está em 7,1% a 7,4% desde 22/10. A régua que definimos na semana passada foi 7,8% para recuperação e 7,5% para confirmar patamar baixo, e o resultado ficou abaixo dos dois.",
+          "evidencia": "CR semanal: 8,29% (12/10), 7,29% (19/10), 7,41% (26/10), 7,28% (02/11), 7,13% (09/11). CR diário de 09/11 a 15/11 ex-11/11: 7,32%, 7,01%, 7,26%, 7,06%, 7,21% e 6,88%, sem dia acima de 7,8%. Mobile 6,29% (-0,43pp, estável) e desktop 10,19% (-0,83pp, caiu moderado). Compras por dia de dado em -1,0% com sessões por dia em +1,0%.",
+          "plano_acao": "Tratar o patamar como problema de demanda ou oferta e não de experiência, já que o begin_checkout está normalizado desde 05/11. Fechar o cruzamento com transações do backoffice pendente desde a semana passada para separar perda real de efeito de mensuração. Comparar antecedência de compra e mix de rotas antes e depois de 22/10 para testar a hipótese de demanda adiada para a Black Friday.",
+          "impacto": "KR de receita digital. A 7,8% de CR, com as 393 mil sessões da semana, seriam cerca de 30,7 mil compras contra 28,1 mil observadas, perto de 2,6 mil compras a menos (ainda sem o dia 11/11). O efeito é maior no direto e no pago, que concentram 62% das sessões. A Black Friday amplia o tamanho de qualquer diferença de CR.",
+          "acompanhamento": "CR diário até 30/11 com marcação do início da campanha de Black Friday em 26/10 e da semana de pico. Se o CR não subir na semana de 16/11 com tráfego de campanha, escalar para revisão de oferta e preço antes de 27/11. Revisar na weekly de 24/11 com o dado do backoffice. Decidir ali se algum ajuste de oferta entra antes do pico.",
+          "titulo_linear": null,
+          "tipo_acao": "monitorar",
+          "testavel": false,
+          "criterio_confirmacao": null,
+          "experimento_template": null,
+          "status": "nunca_testada",
+          "experimento_id": null,
+          "revisao": null
+        },
+        {
+          "id": "INS-2026-168",
+          "canal": "site",
+          "tag": "Site: rejeição sobe de 15% para 23% ao longo da semana, desktop chega a 30%",
+          "classificacao": "Resultado fora da curva",
+          "prioridade": "Alta",
+          "data": "2026-11-17",
+          "texto": "Diagnóstico: A rejeição média ponderada foi 19,53%, 1,64pp acima do baseline de 17,89%, mas a média esconde a trajetória: 15,1% em 09/11 e 22,7% em 15/11, com salto logo após o dia sem dados. No desktop a rejeição chegou a 30,4% em 14/11 e a duração média caiu para 241 segundos em 15/11, contra cerca de 320 segundos nos dias anteriores. É o tipo de padrão que costuma indicar mudança na composição do tráfego ou bots, não piora de experiência.\n\nEvidência: Rejeição mobile: 15,0% (09/11), 21,1% (12/11), 21,4% (14/11), 23,1% (15/11). Rejeição desktop: 18,2% (09/11), 23,5% (12/11), 30,4% (14/11), 27,2% (15/11). Sessões por dia ficaram estáveis, e sessões de e-mail passaram de 134 em 09/11 para 361 em 12/11. Em Linear, SEN-1296 (bloqueio de ASNs de scraper no WAF) e SEN-1263 (bloqueio de user agents) foram concluídos entre 09/11 e 12/11.\n\nClassificação: Resultado fora da curva\n\nPlano de ação: Quebrar a rejeição de 12/11 a 15/11 por canal, landing page, navegador e país no GA4 para localizar o segmento que subiu. Verificar com Infra se o tráfego bloqueado pelo WAF deixou de ser filtrado ou se há novo scraper passando. Se o segmento for campanha de Black Friday ou e-mail, revisar a aderência da landing à oferta.\n\nImpacto: Qualidade do CR, que tem rejeição inflada no denominador, e eficiência de mídia paga (50,7% das sessões). Também contamina o baseline de rejeição usado nas próximas semanas. O risco maior é de leitura, porque a rejeição alta reduz o CR sem que haja problema de checkout. Uma decisão errada de produto sobre o funil seria cara na semana de maior tráfego.\n\nPrioridade: Alta (subida contínua em 5 dias sem queda proporcional de sessões pagas, com duração caindo no fim da semana)\n\nAcompanhamento: Rejeição diária por device até voltar a 17% a 19%. Se continuar acima de 22% por mais 3 dias com sessões estáveis, tratar como tráfego não humano e pedir filtro no GA4 e no WAF. Registrar o segmento responsável assim que identificado. Reportar na próxima weekly com o veredito de tráfego humano ou não humano.",
+          "diagnostico": "A rejeição média ponderada foi 19,53%, 1,64pp acima do baseline de 17,89%, mas a média esconde a trajetória: 15,1% em 09/11 e 22,7% em 15/11, com salto logo após o dia sem dados. No desktop a rejeição chegou a 30,4% em 14/11 e a duração média caiu para 241 segundos em 15/11, contra cerca de 320 segundos nos dias anteriores. É o tipo de padrão que costuma indicar mudança na composição do tráfego ou bots, não piora de experiência.",
+          "evidencia": "Rejeição mobile: 15,0% (09/11), 21,1% (12/11), 21,4% (14/11), 23,1% (15/11). Rejeição desktop: 18,2% (09/11), 23,5% (12/11), 30,4% (14/11), 27,2% (15/11). Sessões por dia ficaram estáveis, e sessões de e-mail passaram de 134 em 09/11 para 361 em 12/11. Em Linear, SEN-1296 (bloqueio de ASNs de scraper no WAF) e SEN-1263 (bloqueio de user agents) foram concluídos entre 09/11 e 12/11.",
+          "plano_acao": "Quebrar a rejeição de 12/11 a 15/11 por canal, landing page, navegador e país no GA4 para localizar o segmento que subiu. Verificar com Infra se o tráfego bloqueado pelo WAF deixou de ser filtrado ou se há novo scraper passando. Se o segmento for campanha de Black Friday ou e-mail, revisar a aderência da landing à oferta.",
+          "impacto": "Qualidade do CR, que tem rejeição inflada no denominador, e eficiência de mídia paga (50,7% das sessões). Também contamina o baseline de rejeição usado nas próximas semanas. O risco maior é de leitura, porque a rejeição alta reduz o CR sem que haja problema de checkout. Uma decisão errada de produto sobre o funil seria cara na semana de maior tráfego.",
+          "acompanhamento": "Rejeição diária por device até voltar a 17% a 19%. Se continuar acima de 22% por mais 3 dias com sessões estáveis, tratar como tráfego não humano e pedir filtro no GA4 e no WAF. Registrar o segmento responsável assim que identificado. Reportar na próxima weekly com o veredito de tráfego humano ou não humano.",
+          "titulo_linear": null,
+          "tipo_acao": "monitorar",
+          "testavel": false,
+          "criterio_confirmacao": null,
+          "experimento_template": null,
+          "status": "nunca_testada",
+          "experimento_id": null,
+          "revisao": null
+        },
+        {
+          "id": "INS-2026-169",
+          "canal": "site",
+          "tag": "Site: funil_purchase 17% acima de compras e baseline do funil contaminado",
+          "classificacao": "Diagnóstico comprovado",
+          "prioridade": "Alta",
+          "data": "2026-11-17",
+          "texto": "Diagnóstico: O begin_checkout voltou a ser medido em 05/11, mas o funil_purchase continua cerca de 17% maior que as compras reais todos os dias (razão de 1,16 a 1,19). Por isso o checkout para compra de 65,3% está superestimado, e o valor real é próximo de 55,7% (28.056 compras sobre 50.327 begin_checkout). Além disso o baseline de 4 semanas inclui dias com begin_checkout quebrado e purchase acima de 100% do checkout, então o delta de -16pp contra o baseline (81,3% para 65,3%) é artefato.\n\nEvidência: Razão funil_purchase por compras entre 1,16 e 1,19 em todos os 13 dias de 02/11 a 15/11. Purchase por begin_checkout: 102% a 104% de 02/11 a 04/11 e 64% a 70% desde 05/11. Contra o bloco pós-correção (05 a 08/11), a semana tem begin_checkout por carrinho de 63,8% contra 62,1% e checkout para compra de 65,3% contra 68,4% (-3,1pp), que é a comparação válida. SEN-1088, que remove o purchase do navegador na ativação do server-side, está em Backlog.\n\nClassificação: Diagnóstico comprovado\n\nPlano de ação: Priorizar o SEN-1088 antes de 27/11 e registrar a data de ativação do purchase server-side no dashboard. Até lá, usar compras como numerador do funil e nunca funil_purchase. Reiniciar o baseline do funil em 05/11 para que o delta semanal volte a ser comparável.\n\nImpacto: Confiança nas decisões de funil durante a Black Friday e nos testes do squad que usam checkout para compra como guardrail. Sem a correção, qualquer variação real de 3pp fica menor que o erro de medida de 10pp. O erro de medida de 17% também infla a taxa de conversão de checkout em qualquer relatório que use o evento. A Black Friday será avaliada em cima desses números.\n\nPrioridade: Alta (a Black Friday será lida pelo funil e hoje as duas pontas do checkout estão distorcidas)\n\nAcompanhamento: Razão funil_purchase por compras diária, esperada em 1,00 após o SEN-1088. Reavaliar o step crítico do funil com baseline iniciado em 05/11. Reportar a data de ativação do server-side no dashboard. Revisar os guardrails de experimentos que usam o evento.",
+          "diagnostico": "O begin_checkout voltou a ser medido em 05/11, mas o funil_purchase continua cerca de 17% maior que as compras reais todos os dias (razão de 1,16 a 1,19). Por isso o checkout para compra de 65,3% está superestimado, e o valor real é próximo de 55,7% (28.056 compras sobre 50.327 begin_checkout). Além disso o baseline de 4 semanas inclui dias com begin_checkout quebrado e purchase acima de 100% do checkout, então o delta de -16pp contra o baseline (81,3% para 65,3%) é artefato.",
+          "evidencia": "Razão funil_purchase por compras entre 1,16 e 1,19 em todos os 13 dias de 02/11 a 15/11. Purchase por begin_checkout: 102% a 104% de 02/11 a 04/11 e 64% a 70% desde 05/11. Contra o bloco pós-correção (05 a 08/11), a semana tem begin_checkout por carrinho de 63,8% contra 62,1% e checkout para compra de 65,3% contra 68,4% (-3,1pp), que é a comparação válida. SEN-1088, que remove o purchase do navegador na ativação do server-side, está em Backlog.",
+          "plano_acao": "Priorizar o SEN-1088 antes de 27/11 e registrar a data de ativação do purchase server-side no dashboard. Até lá, usar compras como numerador do funil e nunca funil_purchase. Reiniciar o baseline do funil em 05/11 para que o delta semanal volte a ser comparável.",
+          "impacto": "Confiança nas decisões de funil durante a Black Friday e nos testes do squad que usam checkout para compra como guardrail. Sem a correção, qualquer variação real de 3pp fica menor que o erro de medida de 10pp. O erro de medida de 17% também infla a taxa de conversão de checkout em qualquer relatório que use o evento. A Black Friday será avaliada em cima desses números.",
+          "acompanhamento": "Razão funil_purchase por compras diária, esperada em 1,00 após o SEN-1088. Reavaliar o step crítico do funil com baseline iniciado em 05/11. Reportar a data de ativação do server-side no dashboard. Revisar os guardrails de experimentos que usam o evento.",
+          "titulo_linear": null,
+          "tipo_acao": "monitorar",
+          "testavel": false,
+          "criterio_confirmacao": null,
+          "experimento_template": null,
+          "status": "nunca_testada",
+          "experimento_id": null,
+          "revisao": null
+        },
+        {
+          "id": "INS-2026-170",
+          "canal": "app",
+          "tag": "[App] CR 5,64% sobe 0,79pp sobre baseline baixo, funil do app segue sem leitura confiável",
+          "classificacao": "Tendência",
+          "prioridade": "Média",
+          "data": "2026-11-17",
+          "texto": "Diagnóstico: O CR do app foi 5,64% contra 4,85% do baseline (+0,79pp, estável), e o Android subiu de 3,38% para 4,35% enquanto o iOS ficou em 8,78%. A melhora é real contra o baseline, mas o baseline reflete semanas de outubro com CR de 3,8% a 5,4%, coincidentes com eventos disparando em duplicidade. O CR do app está 1,30pp abaixo do mesmo período de 2025 (6,94%), então ainda não voltou ao patamar histórico.\n\nEvidência: CR semanal do app: 4,44%, 3,82%, 5,35%, 6,14%, 6,54%, 6,27% e 5,64% nas últimas semanas, com a semana atual abaixo das duas anteriores. Compras por dia de dado -3,0% contra a semana anterior e sessões -2,4%. O funil do app mostra add_to_cart em 37,8% das buscas e begin_checkout em 22,2% do carrinho, números incompatíveis com o site (10,2% e 63,8%). SEN-1265 e SEN-1266 (eventos duplicados e parâmetros fora de contrato) foram concluídos em 17/11.\n\nClassificação: Tendência\n\nPlano de ação: Marcar 17/11 como corte de mensuração do app e reiniciar a leitura do funil a partir dessa data. Validar em 3 a 5 dias se add_to_cart por busca cai para uma faixa plausível. Manter o acompanhamento do gap Android contra iOS em 4,35% contra 8,78% como maior alavanca do app.\n\nImpacto: Receita do app (cerca de 25,6% das compras totais) e leitura do funil do app para a Black Friday, em que o webview dedicado SEN-1274 ainda está em validação. O app responde por cerca de 30% das sessões totais e 25,6% das compras. Uma leitura errada do funil do app pode redirecionar o esforço do squad para o ponto errado.\n\nPrioridade: Média (indicador melhora, mas o baseline é de semanas de tracking duplicado e os eventos só foram corrigidos em 17/11)\n\nAcompanhamento: Funil do app semanal a partir de 17/11 e CR Android com marcação dos deploys do SEN-1274 e SEN-1230. Se o add_to_cart por busca não cair após a correção, a duplicidade tem outra origem. Revisar a leitura na weekly de 24/11 com sete dias pós-correção. Atualizar o baseline do app a partir de 17/11.",
+          "diagnostico": "O CR do app foi 5,64% contra 4,85% do baseline (+0,79pp, estável), e o Android subiu de 3,38% para 4,35% enquanto o iOS ficou em 8,78%. A melhora é real contra o baseline, mas o baseline reflete semanas de outubro com CR de 3,8% a 5,4%, coincidentes com eventos disparando em duplicidade. O CR do app está 1,30pp abaixo do mesmo período de 2025 (6,94%), então ainda não voltou ao patamar histórico.",
+          "evidencia": "CR semanal do app: 4,44%, 3,82%, 5,35%, 6,14%, 6,54%, 6,27% e 5,64% nas últimas semanas, com a semana atual abaixo das duas anteriores. Compras por dia de dado -3,0% contra a semana anterior e sessões -2,4%. O funil do app mostra add_to_cart em 37,8% das buscas e begin_checkout em 22,2% do carrinho, números incompatíveis com o site (10,2% e 63,8%). SEN-1265 e SEN-1266 (eventos duplicados e parâmetros fora de contrato) foram concluídos em 17/11.",
+          "plano_acao": "Marcar 17/11 como corte de mensuração do app e reiniciar a leitura do funil a partir dessa data. Validar em 3 a 5 dias se add_to_cart por busca cai para uma faixa plausível. Manter o acompanhamento do gap Android contra iOS em 4,35% contra 8,78% como maior alavanca do app.",
+          "impacto": "Receita do app (cerca de 25,6% das compras totais) e leitura do funil do app para a Black Friday, em que o webview dedicado SEN-1274 ainda está em validação. O app responde por cerca de 30% das sessões totais e 25,6% das compras. Uma leitura errada do funil do app pode redirecionar o esforço do squad para o ponto errado.",
+          "acompanhamento": "Funil do app semanal a partir de 17/11 e CR Android com marcação dos deploys do SEN-1274 e SEN-1230. Se o add_to_cart por busca não cair após a correção, a duplicidade tem outra origem. Revisar a leitura na weekly de 24/11 com sete dias pós-correção. Atualizar o baseline do app a partir de 17/11.",
+          "titulo_linear": null,
+          "tipo_acao": "monitorar",
+          "testavel": false,
+          "criterio_confirmacao": null,
+          "experimento_template": null,
+          "status": "nunca_testada",
+          "experimento_id": null,
+          "revisao": null
+        },
+        {
+          "id": "INS-2026-171",
+          "canal": "conjunto",
+          "tag": "[Site vs App] Gap de NPS cai para 10,7 pts, app sobe 4,2 pts com detratores -37%",
+          "classificacao": "Correlação",
+          "prioridade": "Baixa",
+          "data": "2026-11-17",
+          "texto": "Diagnóstico: O NPS do site foi 81,03 (nota 9,31) e o do app 70,36 (nota 8,96), um gap de 10,7 pontos que caiu dos 15,7 da semana anterior. O app subiu 4,2 pontos, puxado pelo iOS (72,35, +7,2) e com detratores caindo de 150 para 95. O site ficou estável com leve queda no desktop (77,62, -2,0). Os dois canais estão acima da meta de 60, então a divergência é de nível de excelência e não de risco.\n\nEvidência: Site: 9.103 respostas, 85,4% promotores, 10,2% neutros e 4,4% detratores. App: 1.029 respostas, 79,6% promotores, 11,2% neutros e 9,2% detratores. Android 68,73 (566 respostas) e iOS 72,35 (463). A taxa de serviço segue como único tema de detração no site pela oitava semana, e parcelamento em 6x sem juros como queixa de neutros.\n\nClassificação: Correlação\n\nPlano de ação: Não abrir ação de produto para o gap, e sim comparar a metodologia de coleta: no site a pesquisa tende a ser pós-compra e no app pode ter gatilho diferente. Seguir com a recomendação aberta de teste de composição da taxa de serviço no carrinho (INS-2026-155), que é o único tema de detração recorrente. Registrar o gap como indicador de acompanhamento, sem meta própria. Revisitar quando a amostra de comentários do app estiver disponível.\n\nImpacto: KR de NPS (60). O risco é de leitura, porque um NPS de 81 por amostra de compradores pode esconder a experiência de quem abandona. O app tem 1.029 respostas contra 9.103 do site, então a margem de erro do NPS do app é maior. O ganho de 4,2 pontos pode oscilar na próxima semana.\n\nPrioridade: Baixa (NPS dos dois canais está acima do KR de 60, e a divergência depende de viés de amostra)\n\nAcompanhamento: Gap de NPS semanal e volume de detratores do app. Se o gap voltar acima de 15 pontos com mais de 30 respostas em cada canal, investigar diferença de gatilho de coleta entre site e app. Registrar os comentários do app quando coletados. Atualizar o gap na próxima weekly.",
+          "diagnostico": "O NPS do site foi 81,03 (nota 9,31) e o do app 70,36 (nota 8,96), um gap de 10,7 pontos que caiu dos 15,7 da semana anterior. O app subiu 4,2 pontos, puxado pelo iOS (72,35, +7,2) e com detratores caindo de 150 para 95. O site ficou estável com leve queda no desktop (77,62, -2,0). Os dois canais estão acima da meta de 60, então a divergência é de nível de excelência e não de risco.",
+          "evidencia": "Site: 9.103 respostas, 85,4% promotores, 10,2% neutros e 4,4% detratores. App: 1.029 respostas, 79,6% promotores, 11,2% neutros e 9,2% detratores. Android 68,73 (566 respostas) e iOS 72,35 (463). A taxa de serviço segue como único tema de detração no site pela oitava semana, e parcelamento em 6x sem juros como queixa de neutros.",
+          "plano_acao": "Não abrir ação de produto para o gap, e sim comparar a metodologia de coleta: no site a pesquisa tende a ser pós-compra e no app pode ter gatilho diferente. Seguir com a recomendação aberta de teste de composição da taxa de serviço no carrinho (INS-2026-155), que é o único tema de detração recorrente. Registrar o gap como indicador de acompanhamento, sem meta própria. Revisitar quando a amostra de comentários do app estiver disponível.",
+          "impacto": "KR de NPS (60). O risco é de leitura, porque um NPS de 81 por amostra de compradores pode esconder a experiência de quem abandona. O app tem 1.029 respostas contra 9.103 do site, então a margem de erro do NPS do app é maior. O ganho de 4,2 pontos pode oscilar na próxima semana.",
+          "acompanhamento": "Gap de NPS semanal e volume de detratores do app. Se o gap voltar acima de 15 pontos com mais de 30 respostas em cada canal, investigar diferença de gatilho de coleta entre site e app. Registrar os comentários do app quando coletados. Atualizar o gap na próxima weekly.",
+          "titulo_linear": null,
+          "tipo_acao": "monitorar",
+          "testavel": false,
+          "criterio_confirmacao": null,
+          "experimento_template": null,
+          "status": "nunca_testada",
+          "experimento_id": null,
+          "revisao": null
+        }
+      ]
+    },
     {
       "semana": "2026-11-02",
       "label": "02/11 – 08/11/2026",
@@ -4003,6 +4142,232 @@
     }
   ],
   "insights_conversao": [
+    {
+      "semana": "2026-11-09",
+      "label": "09/11 – 15/11/2026",
+      "tipo": "semanal",
+      "gerado_em": "2026-11-17T14:12:57-03:00",
+      "classificacao": "estavel",
+      "metricas": {
+        "cr_atual": {
+          "total": 7.13,
+          "mobile": 6.29,
+          "desktop": 10.19
+        },
+        "cr_baseline": {
+          "total": 7.57,
+          "mobile": 6.72,
+          "desktop": 11.02
+        },
+        "delta_pp": {
+          "total": -0.44,
+          "mobile": -0.43,
+          "desktop": -0.83
+        },
+        "sigma": 0.47,
+        "n_semanas_hist": 8
+      },
+      "hipoteses": [
+        {
+          "hipotese": "A semana é estável pela régua de σ, mas o CR segue no patamar baixo aberto em 22/10 e abaixo de 7,5%, o que sugere demanda adiada para a Black Friday ou oferta menos competitiva.",
+          "evidencia": "CR semanal 7,29% (19/10), 7,41% (26/10), 7,28% (02/11) e 7,13% (09/11), sem dia acima de 7,8%; YoY 7,72% e delta de -0,59pp."
+        },
+        {
+          "hipotese": "O canal direto é o maior driver da queda de CR, seguido pelo pago, consistente com recorrentes adiando a compra para a Black Friday.",
+          "evidencia": "Direto: share 11,4% para 11,3%, CR 16,92% para 15,57% (-1,35pp). Pago: share 49,8% para 50,7%, CR 7,51% para 6,79% (-0,72pp), com sessões por dia estáveis e compras -18,0% sobre a semana anterior em 6 dias. Orgânico: share 17,6% para 15,5%, CR 4,98% para 4,55% (-0,43pp)."
+        },
+        {
+          "hipotese": "O delta de funil contra o baseline não é causal: begin_checkout só foi normalizado em 05/11 e funil_purchase está 17% acima das compras.",
+          "evidencia": "Checkout para compra 81,3% no baseline contra 65,3%, mas 68,4% no bloco pós-correção de 05 a 08/11 (-3,1pp); razão funil_purchase por compras de 1,16 a 1,19."
+        }
+      ],
+      "monitorar": "CR diário na semana de 16/11 com tráfego de campanha: abaixo de 7,5% mantém o diagnóstico de demanda ou oferta; acima de 7,8% indica recuperação. Confirmar também a causa do dia 11/11 sem dados.",
+      "dispositivos": {
+        "mobile": {
+          "classificacao": "estavel",
+          "cr_atual": 6.29,
+          "cr_baseline": 6.72,
+          "delta_pp": -0.43,
+          "canal_contexto": [
+            {
+              "nome": "Pago",
+              "share_sessoes_total": 50.7,
+              "cr_total": 6.79,
+              "delta_cr_pp": -0.72
+            },
+            {
+              "nome": "Orgânico",
+              "share_sessoes_total": 15.5,
+              "cr_total": 4.55,
+              "delta_cr_pp": -0.43
+            },
+            {
+              "nome": "Direto",
+              "share_sessoes_total": 11.3,
+              "cr_total": 15.57,
+              "delta_cr_pp": -1.35
+            },
+            {
+              "nome": "Social",
+              "share_sessoes_total": 1.3,
+              "cr_total": null,
+              "delta_cr_pp": null
+            }
+          ],
+          "funil": {
+            "step_critico": "checkout_to_purchase (-21,6pp, efeito de mensuração)",
+            "checkout_to_purchase": {
+              "atual": 63.7,
+              "baseline": 85.3,
+              "delta_pp": -21.6
+            },
+            "cart_to_checkout": {
+              "atual": 73.5,
+              "baseline": 59.6,
+              "delta_pp": 13.9
+            },
+            "search_to_cart": {
+              "atual": 8.8,
+              "baseline": 8.8,
+              "delta_pp": 0
+            }
+          },
+          "hipoteses": [
+            {
+              "hipotese": "O delta do funil mobile é artefato do begin_checkout quebrado até 04/11 e não perda real de checkout.",
+              "evidencia": "Mobile cart para checkout 73,5% contra 59,6% e checkout para compra 63,7% contra 85,3%, com purchase acima de 100% do checkout em 02 a 04/11 (104% a 112%). A busca para carrinho ficou em 8,8%, igual ao baseline."
+            }
+          ],
+          "monitorar": "Checkout para compra mobile com baseline iniciado em 05/11 (cerca de 65%) e razão funil_purchase por compras."
+        },
+        "desktop": {
+          "classificacao": "caiu_moderado",
+          "cr_atual": 10.19,
+          "cr_baseline": 11.02,
+          "delta_pp": -0.83,
+          "canal_contexto": [
+            {
+              "nome": "Pago",
+              "share_sessoes_total": 50.7,
+              "cr_total": 6.79,
+              "delta_cr_pp": -0.72
+            },
+            {
+              "nome": "Orgânico",
+              "share_sessoes_total": 15.5,
+              "cr_total": 4.55,
+              "delta_cr_pp": -0.43
+            },
+            {
+              "nome": "Direto",
+              "share_sessoes_total": 11.3,
+              "cr_total": 15.57,
+              "delta_cr_pp": -1.35
+            },
+            {
+              "nome": "Social",
+              "share_sessoes_total": 1.3,
+              "cr_total": null,
+              "delta_cr_pp": null
+            }
+          ],
+          "funil": {
+            "step_critico": "checkout_to_purchase (-3,6pp)",
+            "checkout_to_purchase": {
+              "atual": 69.6,
+              "baseline": 73.2,
+              "delta_pp": -3.6
+            },
+            "cart_to_checkout": {
+              "atual": 47.4,
+              "baseline": 50.6,
+              "delta_pp": -3.2
+            },
+            "search_to_cart": {
+              "atual": 13.8,
+              "baseline": 13.3,
+              "delta_pp": 0.5
+            }
+          },
+          "hipoteses": [
+            {
+              "hipotese": "O CR desktop caiu de forma moderada e a rejeição desktop subiu na segunda metade da semana, o que sugere tráfego de menor qualidade e não falha de checkout.",
+              "evidencia": "CR desktop 10,19% contra 11,02% (-0,83pp, 0,9σ do total, caiu moderado); rejeição desktop de 18,2% (09/11) para 30,4% (14/11) e duração média de 241 segundos em 15/11. Direto, canal de maior CR (15,57%), perdeu 1,35pp."
+            }
+          ],
+          "monitorar": "Rejeição e CR desktop por canal nos próximos 7 dias; se a rejeição ficar acima de 25% com CR desktop abaixo de 10%, tratar como tráfego não humano."
+        },
+        "app": {
+          "classificacao": "estavel",
+          "cr_atual": 5.64,
+          "cr_baseline": 4.85,
+          "delta_pp": 0.79,
+          "android": {
+            "cr_atual": 4.35,
+            "cr_baseline": 3.38,
+            "delta_pp": 0.97,
+            "classificacao": "subiu_moderado"
+          },
+          "ios": {
+            "cr_atual": 8.78,
+            "cr_baseline": 8.33,
+            "delta_pp": 0.45,
+            "classificacao": "estavel"
+          },
+          "canal_contexto": [
+            {
+              "nome": "Pago",
+              "share_sessoes_total": 8.3,
+              "cr_total": null,
+              "delta_cr_pp": null
+            },
+            {
+              "nome": "Orgânico",
+              "share_sessoes_total": 1.6,
+              "cr_total": null,
+              "delta_cr_pp": null
+            },
+            {
+              "nome": "Direto",
+              "share_sessoes_total": 22.9,
+              "cr_total": null,
+              "delta_cr_pp": null
+            },
+            {
+              "nome": "Social",
+              "share_sessoes_total": 0,
+              "cr_total": null,
+              "delta_cr_pp": null
+            }
+          ],
+          "funil": {
+            "step_critico": "checkout_to_purchase (-3,0pp, funil sem leitura confiável)",
+            "checkout_to_purchase": {
+              "atual": 41.2,
+              "baseline": 44.2,
+              "delta_pp": -3
+            },
+            "cart_to_checkout": {
+              "atual": 22.2,
+              "baseline": 20.9,
+              "delta_pp": 1.3
+            },
+            "search_to_cart": {
+              "atual": 37.8,
+              "baseline": 37.7,
+              "delta_pp": 0.1
+            }
+          },
+          "hipoteses": [
+            {
+              "hipotese": "A melhora do Android é recuperação de um baseline deprimido por tracking duplicado e o funil do app só será comparável após o corte de 17/11 (SEN-1265).",
+              "evidencia": "Android 4,35% contra 3,38% de baseline, com CR semanal do app de 3,82% a 5,35% em outubro e 6,27% a 6,54% nas duas semanas anteriores; add_to_cart em 37,8% das buscas contra 10,2% no site."
+            }
+          ],
+          "monitorar": "Funil e CR Android semanal a partir de 17/11, com o webview de Black Friday (SEN-1274) como evento de deploy."
+        }
+      }
+    },
     {
       "semana": "2026-11-02",
       "label": "02/11 – 08/11/2026",
